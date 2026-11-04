@@ -1,17 +1,17 @@
 {
- "built_at": "2026-11-04T06:44:12+00:00",
+ "built_at": "2026-11-04T08:11:10+00:00",
  "current_term": "2026-fa",
  "next_term": "2027-sp",
  "terms": {
   "2026-fa": {
    "label": "Fall 2026",
    "source": "wade-course-catalog + web availability",
-   "checked_at": "2026-11-04T06:51:34+00:00"
+   "checked_at": "2026-11-04T08:09:58+00:00"
   },
   "2027-sp": {
    "label": "Spring 2027",
    "source": "wade-course-catalog + web availability",
-   "checked_at": "2026-11-04T07:03:40+00:00"
+   "checked_at": "2026-11-04T07:47:21+00:00"
   }
  },
  "gpa": {
