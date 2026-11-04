@@ -1,10 +1,43 @@
 # Progress
 
+## Final summary
+
+**Live URL:** none yet; the repo still needs to be created and pushed (Needs a human #1, below). **Run locally:**
+`pip install -r requirements.txt && (cd web && npm ci) && make data && make build && make serve`, then open
+http://localhost:4173.
+
+**What works** (all phases 0-8, Final QA and the deploy workflow are done):
+- Data pipeline (`make data`, ~25 s): 14 terms of Course Explorer sections (Fall 2022 to Spring 2027), GPA by course
+  and instructor with same-term grade disparity, one instructor identity across sources, offering patterns +
+  Fall 2027 outlook, a change timeline, exam/grading profiles backed by quotes, and a Teachers-Ranked-Excellent join.
+- Site (7,026 static course pages): search (codes in any spelling, titles, instructors), course pages
+  (summary, sections with copy-CRN and live-seat links, instructor cards, grade chart, changes, student notes),
+  gen-ed finder, schedule builder (exact branch-and-bound, about 0.5 s for a heavy 6-course cart, calendar, .ics,
+  share links that keep rules, clash explanations).
+- Verified: pytest 147, Vitest 47, Playwright 25, Lighthouse course page 99/100/100, data audit 10/10 courses
+  matching raw sources, failure drills, and an independent reviewer that finished the student task with 0 blockers
+  (round 2: 0 majors).
+
+**Known issues:**
+- RMP data is not included: the host was blocked here. The client is built and tested, and the site says
+  "RMP unavailable" with search links. It fills in once the nightly workflow runs on GitHub.
+- Spring 2027 seat status isn't published in the snapshot (taken before registration opened), so the site says
+  "Not published" and links to live seats. Fall 2026 status is from 2026-03-25.
+- Exam/grading profiles are thin (66), because section notes, RMP reviews and student notes were unavailable.
+- .ics instruction dates are estimates (`web/lib/terms.ts`).
+- STAT instructor-to-GPA match rate is 78.9% on lecture sections (target 80%): new instructors and real ambiguity.
+- Search has no typo tolerance; near-duplicate schedules that differ only by a same-time section still appear
+  separately; renumbered courses aren't linked.
+
 ## Needs a human
 
 1. **Create the private GitHub repo and push.** This session could not create repos (token is bound to
-   pre-attached repos). Run, from the project root:
+   pre-attached repos). From the project root:
    `gh repo create illini-scheduler --private --source . --push`
+   Then enable Pages with the Actions source: `gh api -X POST repos/<owner>/illini-scheduler/pages -f build_type=workflow`
+   (or Settings → Pages → Source: GitHub Actions), and run `gh workflow run pages.yml`.
+   **Note:** GitHub Pages on a *private* repository needs a paid plan (GitHub Pro/Team). On a free plan, either make
+   the repo public or keep it private and run the site locally (`make build && make serve`).
 2. **Network access for live sources (optional).** This session's network blocked `courses.illinois.edu`
    and `www.ratemyprofessors.com`. Once pushed, GitHub Actions has open internet and the nightly workflow
    fetches both.
@@ -264,3 +297,32 @@ the upstream course-catalog CSV for Spring 2027; GPA = Fall 2015+ rows of the GP
 GitHub Pages), ruff + mypy + ESLint + tsc clean. Lighthouse (mobile): course page 99/100/100
 (perf/a11y/best practices), home 99/93→fixed, gen-eds 92/100/100, schedule 99/94→fixed (an `aria-controls` that
 pointed at a not-yet-rendered list).
+
+**Independent reviewer (sub-agent that only saw the running app).** Task: "Plan a Spring schedule as a Stats & CS
+freshman: CS 124, MATH 231, STAT 200, one Humanities gen ed with the highest GPA, no 8am classes."
+- Round 1: task completed, **0 blockers**, 6 majors, about 20 minor/polish items. Majors: (1) the gen-ed finder's top pick
+  clashed with STAT 200 and the builder only said "no schedule"; (2) opening a share link overwrote your own list
+  and dropped the rules; (3) stacked/invalid CRN locks silently produced schedules missing a course; (4) two
+  different "course average" numbers on one page; (5) gen-ed filters lost on Back/reload; (6) special/restricted
+  sections (CS 124 WWC, MATH 231 AD@) suggested without warning. All fixed (DECISIONS.md D9), plus most
+  minors. Each fix has a Playwright test (`tests/e2e/review-fixes.spec.ts`).
+- Round 2 (same reviewer, rebuilt site): **all 6 majors fixed, no new blockers or majors.** Its final plan:
+  CS 124 AL1 + AYH, MATH 231 CL1 + CDZ, STAT 200 L1, CWL 207 A2: expected GPA 3.56, Fridays off, earliest
+  11:00am, no 8am in any of the 15 schedules. Leftovers it noted were fixed (nav label, the discussion lock now
+  lists only the locked lecture's group) or are known issues (below).
+
+Final test counts: pytest 147, Vitest 47, Playwright 25 (all also pass under the `/illini-scheduler/` Pages base
+path). Lighthouse (mobile): home 99/100/100, course page 99/100/100, schedule 99/100/100, gen-eds 86/100/100.
+The gen-eds score was measured while the reviewer's browser was running in parallel; it was 92 when measured alone.
+
+QA complete.
+
+### Deploy
+
+- `.github/workflows/pages.yml` is written (push to main, nightly 09:00 UTC, manual; Python + Node, `make data`,
+  lint + tests, `make build` with `BASE_PATH=/<repo>`, Playwright against the build, commit refreshed data summaries
+  only after tests pass, `upload-pages-artifact` + `deploy-pages`).
+- **Not deployed from this session.** There is no GitHub remote, because this session can't create repositories
+  (D0.2). So `gh api -X POST repos/{owner}/{repo}/pages -f build_type=workflow`, `gh workflow run pages.yml` and
+  the live smoke tests couldn't run. Instead the Playwright suite ran against `make build` served locally, both at
+  `/` and under `/illini-scheduler/` (the path Pages will use): 25/25 pass.

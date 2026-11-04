@@ -197,3 +197,32 @@ Every judgment call made during the autonomous build, newest phase last.
   (`web/lib/terms.ts`; the academic calendar page was blocked) and the UI says so.
 - **D8.6 Cart** lives in localStorage and in the URL (`?c=CS124,MATH231!12345&t=2027-sp`; `!CRN` = locked).
   A URL with `c` replaces the stored cart so shared links open exactly.
+
+## Final QA — fixes from the independent reviewer
+
+- **D9.1 Impossible schedules explain themselves.** When nothing fits, the builder lists course pairs that can
+  never coexist ("GER 261 (TR 11:00am–12:20pm) always overlaps STAT 200 ..."). When one course can't fit, it says
+  why (invalid locked pair, only special sections left, or which rules exclude it), and the schedules are labelled
+  "(without X)" instead of looking complete.
+- **D9.2 Share links don't overwrite your list.** If you already have a saved list, a shared link is shown with
+  "Use this list / Back to my list". Links now carry the rules (`e`, `nf`, `b`, `w`, `sp`) and the open schedule
+  (`i`), and a link with rules regenerates automatically. Rules are also remembered in localStorage.
+- **D9.3 Special sections.** Sections with a symbol in the code (`AD@`) or a lecture whose letter group lacks the
+  discussion/lab every other group has (CS 124 `WWC`, `CSP`/online-program sections) are flagged "special" on course
+  pages and skipped by the builder unless "Include special sections" is on or the CRN is locked (48 sections in Spring
+  2027: 41 lecture-without-discussion, 7 symbol codes).
+- **D9.4 Locks** are one select per component (Lecture / Discussion / Lab), so "any section" clears a lock and two
+  lectures can't both be locked.
+- **D9.5 One GPA basis per number.** Instructor cards show the instructor's all-time GPA (the same basis as the ±
+  delta, which compares with the course *in the same terms*), with recent GPA in parentheses. The course figure
+  in that section is labelled "All-time course average" with its term range. The summary box keeps the
+  recent average and says so.
+- **D9.6 Gen-ed finder** keeps filters in the URL (Back, reload and links preserve them), defaults to "Only GPA from
+  200+ students" so one-term n=42 courses don't top the list, shows % A, and adds Composition I.
+- **D9.7 Smaller fixes:** Enter in the builder's search adds the course; lower-case course URLs redirect; "cs-124"
+  parses; "biggest recent change" only looks at the last two terms; "New instructor" wording says "no record of
+  teaching it Fall 2022 to Fall 2026"; full last names from Course Explorer replace the GPA dataset's clipped ones;
+  the RMP weight is disabled while RMP is unavailable; cart count in the nav; compact mobile nav and calendar labels.
+- **D9.8 Not changed:** typo-tolerant search ("calclus") and "calc 2" synonyms, and collapsing near-duplicate
+  schedules that differ only by a same-time discussion (they're listed under "Same-time alternatives").
+  Known issues.
