@@ -2,7 +2,7 @@
 
 ## Final summary
 
-**Live URL:** none yet; the repo still needs to be created and pushed (Needs a human #1, below). **Run locally:**
+**Live URL:** none yet; the public repo still needs to be created and pushed (Needs a human #1, below). Once Pages is on it will be `https://<owner>.github.io/illini-scheduler/`. **Run locally:**
 `pip install -r requirements.txt && (cd web && npm ci) && make data && make build && make serve`, then open
 http://localhost:4173.
 
@@ -31,13 +31,12 @@ http://localhost:4173.
 
 ## Needs a human
 
-1. **Create the private GitHub repo and push.** This session could not create repos (token is bound to
-   pre-attached repos). From the project root:
-   `gh repo create illini-scheduler --private --source . --push`
+1. **Create the public GitHub repo and push.** This session can't create repositories (its GitHub access is
+   limited to repos attached when the session started). From the project root:
+   `gh repo create illini-scheduler --public --source . --push`
    Then enable Pages with the Actions source: `gh api -X POST repos/<owner>/illini-scheduler/pages -f build_type=workflow`
-   (or Settings → Pages → Source: GitHub Actions), and run `gh workflow run pages.yml`.
-   **Note:** GitHub Pages on a *private* repository needs a paid plan (GitHub Pro/Team). On a free plan, either make
-   the repo public or keep it private and run the site locally (`make build && make serve`).
+   (or Settings → Pages → Source: GitHub Actions), and run `gh workflow run pages.yml`. The site will be at
+   `https://<owner>.github.io/illini-scheduler/`.
 2. **Network access for live sources (optional).** This session's network blocked `courses.illinois.edu`
    and `www.ratemyprofessors.com`. Once pushed, GitHub Actions has open internet and the nightly workflow
    fetches both.
