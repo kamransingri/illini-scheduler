@@ -105,3 +105,20 @@ Acceptance:
 - TRE: 2,521 instructors with an "Excellent/Outstanding" badge since Fall 2020.
 
 Phase 3 complete.
+
+### Phase 4 — Offering history and course changes
+
+Built `pipeline/offerings.py`: offerings per term (49,380 course-terms), pattern labels + Fall 2027 prediction
+(8,612 courses), change timeline (7,746 changes: 2,181 description, 539 prerequisite, 211 gen-ed, 210 title,
+205 credit hours, 2,709 delivery, 1,691 new-instructor rows).
+
+Acceptance:
+- Pattern labeler tests on synthetic histories (every term, fall only, spring only, odd/even years, irregular,
+  summer only, none, almost every term, summer suffix) and predictor tests: pass.
+- A real change: **CS 225** prerequisites gained CS 413 in Spring 2023 and MATH 314 in Fall 2025
+  (confirmed by printing the stored prereq text per term; detector reports "Prerequisite changed: now lists
+  MATH 314"). A fixture-based test does the same for STAT 107's Spring 2027 description change.
+- A stable course: **MATH 221** has no catalog changes Fall 2024 to Spring 2027 (test asserts zero non-instructor changes)
+  and is labelled "Fall only" (High for Fall 2027).
+
+Phase 4 complete.

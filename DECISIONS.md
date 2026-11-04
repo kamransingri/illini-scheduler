@@ -98,3 +98,24 @@ Every judgment call made during the autonomous build, newest phase last.
   search page. Tests use HANDMADE fixtures with invented placeholder values.
 - **D3.6 Teachers Ranked as Excellent.** Instructor-role rows since Fall 2020 are joined on (last name, course
   number, compatible initial) among instructors who taught that number; only unique matches get a badge.
+
+## Phase 4 — Offering history and course changes
+
+- **D4.1 History window.** The last 8 regular terms *published* (Fall 2023 to Spring 2027) plus the last 3 summers.
+  Course Explorer only publishes one term ahead, so the prediction targets the first unpublished term
+  (**Fall 2027**). For Spring 2027 the UI uses the published schedule directly ("Offered in Spring 2027: yes/no").
+- **D4.2 Labels.** Every fall and spring / Fall only / Spring only / Fall|Spring, odd|even years /
+  Almost every fall and spring (7 of 8) / Irregular (k of the last 8) / Summer only / Not offered recently, with
+  ", plus summers" when it ran in at least 2 of the last 3 summers.
+- **D4.3 Prediction.** High = ran every time in that season in the window (or matches an odd/even-year pattern);
+  Medium = at least half the time and at least once in the last 4 regular terms; otherwise Low. The reason string
+  says which.
+- **D4.4 Changes** compare consecutive *regular* offerings (summer listings often differ in format) over the whole
+  window, so the UI can show a timeline. Text is compared after lower-casing and stripping punctuation/whitespace;
+  long text gets a word-level diff. Delivery mode buckets primary sections by online share (≥ 90% online,
+  ≤ 10% in-person, else hybrid) and needs a 30-point swing to count. "New instructor" is only computed for the
+  latest offering against all earlier ones (more than 3 new names collapse into one line), because multi-section
+  courses like RHET 105 rotate dozens of instructors every term.
+- **D4.5 Prerequisite summaries** say "now lists CS 413", not "now requires", because most UIUC prerequisite
+  lists are alternatives ("One of CS 173, CS 413, ...").
+- **D4.6 Renumbering** isn't detected; there's no structured link between old and new numbers in the data. Known gap.
