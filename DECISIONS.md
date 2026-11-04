@@ -245,3 +245,10 @@ Every judgment call made during the autonomous build, newest phase last.
   after the second pass, so that term fell back to the mirror (snapshot 2026-10-30), as designed. RMP worked: 20 min
   of lookups, exam profiles went from 66 to 530. The RMP cache is now saved even when later steps fail (separate
   restore/save steps), so lookups are never thrown away.
+- **D10.6 RMP access and `tisuela/ratemyprof-api`.** Early in the build, this session's network policy blocked
+  `www.ratemyprofessors.com` (proxy 403), so RMP could only run on GitHub Actions. The allowlist now includes it
+  (the bare `ratemyprofessors.com` is still blocked but unused). The suggested library scrapes the legacy
+  `/filter/professor/?...&sid=` endpoint, which now returns **404**; RMP moved to the GraphQL API our client already
+  uses, so the library wasn't adopted. Two fixes came from verifying real data: a profile with 0 ratings is shown as
+  "no ratings yet" (RMP reports it as 0.0, which read as a terrible score), and name searches return 20 results
+  instead of 8 so common last names ("Thomas, D") don't push the right person off the list.
