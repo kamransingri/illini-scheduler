@@ -82,3 +82,10 @@ def test_disabled(tmp_path):
     c = rmp.RmpClient(tmp_path, enabled=False)
     with pytest.raises(rmp.RmpUnavailable):
         c.find_school()
+
+
+def test_zero_ratings_is_no_data_not_a_bad_score():
+    t = rmp.parse_teacher({"legacyId": 1, "firstName": "A", "lastName": "B", "department": "Chemistry",
+                           "avgRating": 0, "avgDifficulty": 0, "wouldTakeAgainPercent": -1, "numRatings": 0})
+    assert t.avg_rating is None and t.avg_difficulty is None and t.would_take_again_pct is None
+    assert t.num_ratings == 0

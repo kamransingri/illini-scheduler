@@ -35,7 +35,7 @@ SCHOOL_QUERY = """query SchoolSearch($query: SchoolSearchQuery!) {
 }"""
 
 TEACHER_QUERY = """query TeacherSearch($query: TeacherSearchQuery!) {
-  newSearch { teachers(query: $query, first: 8) { edges { node {
+  newSearch { teachers(query: $query, first: 20) { edges { node {
     id legacyId firstName lastName department avgRating avgDifficulty wouldTakeAgainPercent numRatings
     teacherRatingTags { tagName tagCount }
     ratings(first: 20) { edges { node { comment class date } } }
@@ -100,6 +100,10 @@ def parse_teacher(node: dict[str, Any]) -> RmpTeacher:
         reviews.append({"text": comment, "course": (r.get("class") or "").upper(), "date": (r.get("date") or "")[:10]})
     reviews.sort(key=lambda r: r["date"], reverse=True)
     wta = node.get("wouldTakeAgainPercent")
+    n = int(node.get("numRatings") or 0)
+    if n == 0:  # RMP reports 0.0 for a profile nobody has rated; that is "no data", not a bad score
+        node = {**node, "avgRating": None, "avgDifficulty": None}
+        wta = None
     return RmpTeacher(
         rmp_id=str(node.get("legacyId") or node.get("id")), first_name=node.get("firstName", ""),
         last_name=node.get("lastName", ""), department=node.get("department") or "",

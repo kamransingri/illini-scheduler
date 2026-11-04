@@ -337,7 +337,14 @@ function InstructorCard({ course, ins, rmpStatus }: { course: Course; ins: Instr
         </p>
       )}
       <div className="mt-3 border-t border-line pt-2 text-sm">
-        {ins.rmp ? (
+        {ins.rmp && ins.rmp.num_ratings === 0 ? (
+          <p className="text-xs text-muted">
+            On Rate My Professors but no ratings yet.{" "}
+            <a href={ins.rmp.url} className="text-brand-dark underline" rel="noopener">
+              Rate My Professors page ↗
+            </a>
+          </p>
+        ) : ins.rmp ? (
           <div>
             <div className="flex flex-wrap gap-x-4 gap-y-1">
               <Metric source={`Rate My Professors, ${fmtInt(ins.rmp.num_ratings)} ratings, fetched ${fmtDate(ins.rmp.fetched_at)}`}>

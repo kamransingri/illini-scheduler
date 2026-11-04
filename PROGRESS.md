@@ -37,15 +37,13 @@ and 8 smoke tests against the live URL: all passed.
 ## Needs a human
 
 Done: the repo is public and pushed, Pages is on (Source: GitHub Actions), and the site is deployed.
-These checks remain. This build session's network blocks `*.github.io`, `courses.illinois.edu`,
-`ratemyprofessors.com` and Wade's visualization site:
+These checks remain. This build session's network blocks `*.github.io`, `courses.illinois.edu` and Wade's
+visualization site:
 
-1. **RMP matches.** Open 5 instructor cards that show RMP numbers on the live site, follow "Rate My Professors
-   page", and confirm each is the right person (UIUC, right department).
-2. **Course Explorer spot check.** Compare 3 MATH 221 Fall 2026 sections (CRN, time, room) on
+1. **Course Explorer spot check.** Compare 3 MATH 221 Fall 2026 sections (CRN, time, room) on
    https://kamransingri.github.io/illini-scheduler/course/MATH/221/ with
    https://courses.illinois.edu/schedule/2026/fall/MATH/221
-3. **Wade's visualizations.** Compare the CS 124 / MATH 221 instructor order with
+2. **Wade's visualizations.** Compare the CS 124 / MATH 221 instructor order with
    https://waf.web.engr.illinois.edu/discovery/grade_disparity_between_sections_at_uiuc/ and the top 10 Hist & Phil
    gen-eds with http://waf.cs.illinois.edu/discovery/every_gen_ed_at_uiuc_by_gpa/ (expected differences:
    PROGRESS.md Phases 2 and 7).
@@ -340,3 +338,20 @@ QA complete.
 - Run 41774876513: refresh ✓, lint/unit ✓, build ✓, 25/25 Playwright ✓, data summaries committed ✓, deploy ✓,
   **8/8 smoke tests against https://kamransingri.github.io/illini-scheduler/ ✓**.
 - Docs-only commits (`*.md`, `screenshots/`) no longer trigger the 30-minute refresh.
+
+### RMP verification (done)
+
+Five random Spring 2027 lecture instructors that the pipeline matched (seed 20261104), each opened on RMP and
+confirmed to be the same person at UIUC (school id 1112):
+
+| Course | Course Explorer name | RMP match | RMP department | Rating (ratings) | Page check |
+|---|---|---|---|---|---|
+| ARTD 426 | Mukachirayil, S | [Savio Mukachirayil](https://www.ratemyprofessors.com/professor/2985112) | Design | 3.5 (2) | ✓ UIUC page, name matches |
+| IS 534 | Song, Y | [Yoo-Seong Song](https://www.ratemyprofessors.com/professor/1861158) | Information Science | 5 (4) | ✓ UIUC page, name matches |
+| THEA 591 | Morrissette, J | [J.W. Morrissette](https://www.ratemyprofessors.com/professor/1434220) | Theater | 4.9 (45) | ✓ UIUC page, name matches |
+| CS 525 | Gupta, I | [Indranil Gupta](https://www.ratemyprofessors.com/professor/831224) | Computer Science | 3.5 (25) | ✓ UIUC page, name matches |
+| BIOP 599 | Leckband, D | [Deborah Leckband](https://www.ratemyprofessors.com/professor/2912380) | Chemistry | no ratings yet | ✓ UIUC page, name matches |
+
+5/5 correct. Leckband's zero-rating profile exposed a display bug (0.0 shown as a score), fixed in D10.6. Also
+checked by hand: Challen (CS), Lewis (CS), Erickson (CS), Whittlesey (MATH), Findley (STAT) all match the right UIUC
+profiles.
