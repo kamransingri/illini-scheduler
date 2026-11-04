@@ -4,7 +4,7 @@ import AddToCart from "@/components/AddToCart";
 import CourseDetail from "@/components/CourseDetail";
 import Metric from "@/components/Metric";
 import { courseParams, getCourse, getMeta } from "@/lib/data";
-import { cisUrl, fmtDate, fmtGpa, fmtInt, fmtPct, GENED_NAMES, termLabel, termRange } from "@/lib/format";
+import { cisUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, termLabel, termRange } from "@/lib/format";
 
 export const dynamicParams = false;
 
