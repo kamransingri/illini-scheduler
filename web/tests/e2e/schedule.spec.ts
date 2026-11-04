@@ -11,7 +11,7 @@ async function addViaSearch(page: import("@playwright/test").Page, q: string) {
 test("CS 124 + MATH 221 + RHET 105 + STAT 107, no 8am: no schedule has an 8am class", async ({ page }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(String(e)));
-  await page.goto("/schedule/");
+  await page.goto("./schedule/");
   await addViaSearch(page, "cs124");
   await addViaSearch(page, "rhet105");
   await addViaSearch(page, "stat107");
@@ -41,15 +41,15 @@ test("CS 124 + MATH 221 + RHET 105 + STAT 107, no 8am: no schedule has an 8am cl
 });
 
 test("cart survives reload and the URL is shareable", async ({ page }) => {
-  await page.goto("/schedule/?c=CS124,STAT107&t=2027-sp");
+  await page.goto("./schedule/?c=CS124,STAT107&t=2027-sp");
   await expect(page.getByTestId("cart").locator("li")).toHaveCount(2);
-  await page.goto("/schedule/");
+  await page.goto("./schedule/");
   await expect(page.getByTestId("cart").locator("li")).toHaveCount(2);
   expect(page.url()).toContain("c=CS124%2CSTAT107");
 });
 
 test("6-course cart generates quickly in the browser", async ({ page }) => {
-  await page.goto("/schedule/?c=PHYS211,RHET105,CHEM102,MATH231,CS124,ECON102&t=2027-sp");
+  await page.goto("./schedule/?c=PHYS211,RHET105,CHEM102,MATH231,CS124,ECON102&t=2027-sp");
   await expect(page.getByTestId("cart").locator("li")).toHaveCount(6);
   await expect(page.getByRole("button", { name: "Generate schedules" })).toBeEnabled();
   await page.waitForTimeout(500);
@@ -60,6 +60,6 @@ test("6-course cart generates quickly in the browser", async ({ page }) => {
 });
 
 test("empty cart shows guidance, not a blank page", async ({ page }) => {
-  await page.goto("/schedule/?c=");
+  await page.goto("./schedule/?c=");
   await expect(page.getByText("Your cart is empty")).toBeVisible();
 });

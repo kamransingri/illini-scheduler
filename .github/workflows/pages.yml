@@ -1,0 +1,72 @@
+name: Refresh data and deploy to GitHub Pages
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 9 * * *" # nightly, 09:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11", cache: pip }
+      - uses: actions/setup-node@v4
+        with: { node-version: "22", cache: npm, cache-dependency-path: web/package-lock.json }
+      - run: pip install -r requirements.txt
+      - run: cd web && npm ci
+      - name: Restore RMP cache (7-day responses)
+        uses: actions/cache@v4
+        with:
+          path: data/raw/rmp
+          key: rmp-${{ github.run_id }}
+          restore-keys: rmp-
+      - name: Refresh data (Course Explorer API when reachable, Wade's datasets, RMP)
+        run: make data
+      - name: Lint + type check + unit tests
+        run: make lint && make test
+      - name: Build static site
+        run: make build
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}
+      - name: End-to-end tests against the build
+        run: |
+          cd web
+          npx playwright install --with-deps chromium
+          mkdir -p ../site/${{ github.event.repository.name }}
+          cp -r out/. ../site/${{ github.event.repository.name }}/
+          (npx serve ../site -l 4173 --no-clipboard &) && sleep 3
+          E2E_BASE_URL=http://127.0.0.1:4173/${{ github.event.repository.name }}/ npx playwright test
+      - name: Commit refreshed data summaries (only after tests pass)
+        if: github.event_name != 'pull_request'
+        run: |
+          mkdir -p data/snapshot
+          cp web/public/data/meta.json data/snapshot/meta.json
+          git config user.name "illini-scheduler-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/unmatched.csv data/snapshot/meta.json
+          git diff --cached --quiet || (git commit -m "data: nightly refresh $(date -u +%F)" && git push)
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: web/out }
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
