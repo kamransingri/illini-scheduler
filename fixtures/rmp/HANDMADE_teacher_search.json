@@ -1,0 +1,17 @@
+{"_comment": "HANDMADE FIXTURE: shape of RMP GraphQL newSearch.teachers; names and numbers are invented placeholders, not real ratings.",
+ "data": {"newSearch": {"teachers": {"edges": [
+   {"node": {"id": "VGVhY2hlci0x", "legacyId": 111, "firstName": "Testa", "lastName": "Example", "department": "Computer Science",
+     "avgRating": 4.2, "avgDifficulty": 3.1, "wouldTakeAgainPercent": 87.5, "numRatings": 40,
+     "teacherRatingTags": [{"tagName": "Tough grader", "tagCount": 3}, {"tagName": "Amazing lectures", "tagCount": 12}, {"tagName": "Clear grading criteria", "tagCount": 7}],
+     "ratings": {"edges": [
+       {"node": {"comment": "Three midterms and a final, all in the CBTF. Homework on PrairieLearn every week.", "class": "cs999", "date": "2025-12-10 03:00:00 +0000 UTC"}},
+       {"node": {"comment": "No curve but lots of partial credit.", "class": "CS999", "date": "2026-05-01 03:00:00 +0000 UTC"}},
+       {"node": {"comment": "", "class": "CS999", "date": "2026-05-02 03:00:00 +0000 UTC"}},
+       {"node": {"comment": "LONG REVIEW lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat", "class": "CS999", "date": "2024-01-01 03:00:00 +0000 UTC"}},
+       {"node": {"comment": "Attendance is mandatory with iClicker.", "class": "CS999", "date": "2023-01-01 03:00:00 +0000 UTC"}}
+     ]}}},
+   {"node": {"id": "VGVhY2hlci0y", "legacyId": 222, "firstName": "Other", "lastName": "Example", "department": "Music",
+     "avgRating": 2.0, "avgDifficulty": 4.0, "wouldTakeAgainPercent": -1, "numRatings": 5, "teacherRatingTags": [], "ratings": {"edges": []}}},
+   {"node": {"id": "VGVhY2hlci0z", "legacyId": 333, "firstName": "Testa", "lastName": "Exampleton", "department": "Computer Science",
+     "avgRating": 3.0, "avgDifficulty": 3.0, "wouldTakeAgainPercent": 50, "numRatings": 9, "teacherRatingTags": [], "ratings": {"edges": []}}}
+ ]}}}}

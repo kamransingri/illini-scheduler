@@ -1,0 +1,3 @@
+subject,raw_name,instructor_key
+# Add rows to force a Course Explorer name onto a GPA-dataset identity, e.g.:
+# STAT,"Wang, S",wang|shiyu

@@ -44,6 +44,7 @@ class NameParts:
     first_initial: str        # '' when unknown
     first_name: str | None    # letters only, None when only an initial is known
     display: str              # 'Jeff Erickson' / 'J. Erickson'
+    truncated: bool = False   # raw last name is exactly 15 chars, i.e. possibly cut off by the GPA dataset
 
     @property
     def key(self) -> str:
@@ -78,19 +79,21 @@ def parse_name(raw: str) -> NameParts | None:
         display = f"{initial.upper()}. {pretty_last}"
     else:
         display = pretty_last
-    return NameParts(last=last, first_initial=initial, first_name=first_name, display=display)
+    raw_last = raw.split(",")[0].strip() if "," in raw else ""
+    return NameParts(last=last, first_initial=initial, first_name=first_name, display=display,
+                     truncated=len(raw_last) == GPA_LAST_TRUNC)
 
 
 def instructor_key(p: NameParts) -> str:
     return f"{p.last}|{p.first_name or p.first_initial}"
 
 
-def last_compatible(a: str, b: str) -> bool:
+def last_compatible(a: NameParts, b: NameParts) -> bool:
     """Equal, or one is the GPA dataset's 15-char truncation of the other (compared on letters)."""
-    if a == b:
+    if a.last == b.last:
         return True
-    short, long_ = sorted((a, b), key=len)
-    return len(short) >= GPA_LAST_TRUNC - 2 and long_.startswith(short)
+    short, long_ = sorted((a, b), key=lambda p: len(p.last))
+    return short.truncated and len(short.last) >= 8 and long_.last.startswith(short.last)
 
 
 def first_compatible(a: NameParts, b: NameParts) -> bool:
@@ -105,7 +108,7 @@ def first_compatible(a: NameParts, b: NameParts) -> bool:
 
 
 def compatible(a: NameParts, b: NameParts) -> bool:
-    return last_compatible(a.last, b.last) and first_compatible(a, b)
+    return last_compatible(a, b) and first_compatible(a, b)
 
 
 @dataclass
@@ -132,7 +135,7 @@ class InstructorMatcher:
         c = cands.get(p.key)
         if c is None:
             c = cands[p.key] = Candidate(p, raw, {})
-            self.global_by_last[p.last[:GPA_LAST_TRUNC - 2]].append((subject, c))
+            self.global_by_last[p.last[:8]].append((subject, c))
         prev = c.courses.get((subject, number))
         if prev is None or term_order(term) > term_order(prev):
             c.courses[(subject, number)] = term
@@ -149,7 +152,7 @@ class InstructorMatcher:
         method = "subject"
         if not cands:
             # Cross-listed courses are often recorded under one subject only; accept a unique global match.
-            pool = {id(c): c for _s, c in self.global_by_last.get(p.last[:GPA_LAST_TRUNC - 2], [])
+            pool = {id(c): c for _s, c in self.global_by_last.get(p.last[:8], [])
                     if compatible(p, c.parts)}
             uniq = {c.parts.key: c for c in pool.values()}
             if len(uniq) == 1:

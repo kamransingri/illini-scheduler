@@ -78,3 +78,23 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D2.5 RHET 105 has no GPA data in the window.** Its sections hold at most 20 students, and FERPA exclusions drop
   those from the dataset after 2013. The UI says "No grade data" and doesn't borrow numbers from other courses.
 - **D2.6 Instructor identity** for GPA rows is `names.instructor_key` ("last|first"); see Phase 3.
+
+## Phase 3 — Instructor matching and Rate My Professors
+
+- **D3.1 instructor_key** = `last|first` (letters only, accents stripped, suffixes dropped) when a first name is
+  known, else `last|initial`. GPA-dataset identities always have first names, so Course Explorer names
+  (`Last, F`) link to them through `InstructorMatcher`; unlinked names get a `last|initial` key of their own.
+- **D3.2 Truncation.** The GPA dataset cuts last names at 15 characters ("Fagen-Ulmschnei", "de la Garza Val").
+  A 15-character raw last name may prefix-match a longer one (letters only, at least 8 letters).
+- **D3.3 Matching order.** (1) `data/name_overrides.csv`; (2) same subject, last name + compatible first
+  name/initial; ties go to whoever taught that exact course most recently; still tied -> logged, not linked;
+  (3) no candidate in the subject -> accept a *unique* global match (cross-listed courses are often recorded
+  under one subject only, e.g. STAT/CS 107); several -> logged. Everything not linked goes to `data/unmatched.csv`.
+- **D3.4 Match-rate denominator.** The GPA dataset only names the *primary* instructor of record, so TAs leading
+  discussions/labs can never match. The report shows both "all names" and "names on primary (lecture) sections".
+- **D3.5 RMP.** Implemented per spec (school id from RMP's own search, exact last name + compatible first name +
+  plausible department, two-person initial collisions are not guessed, 2 concurrent / 0.5 s delay, 7-day cache,
+  3 snippets ≤ 200 chars). The host is blocked here, so `meta.rmp_status = unavailable` and the UI links to RMP's
+  search page. Tests use HANDMADE fixtures with invented placeholder values.
+- **D3.6 Teachers Ranked as Excellent.** Instructor-role rows since Fall 2020 are joined on (last name, course
+  number, compatible initial) among instructors who taught that number; only unique matches get a badge.
