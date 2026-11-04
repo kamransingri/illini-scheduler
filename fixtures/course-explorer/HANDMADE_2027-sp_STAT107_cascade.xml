@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- HANDMADE FIXTURE: layout follows the Course Explorer REST schema; values copied from the real
+     wadefagen/datasets course-catalog CSV (2027-sp). Not fetched from courses.illinois.edu. -->
+<ns2:course xmlns:ns2="http://rest.cis.illinois.edu" id="STAT 107" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107.xml">
+  <parents>
+    <calendarYear id="2027" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027.xml">2027</calendarYear>
+    <term id="120271" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring.xml">Spring 2027</term>
+    <subject id="STAT" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT.xml">STAT</subject>
+  </parents>
+  <label>Data Science Discovery</label>
+  <description>Data Science Discovery is the intersection of statistics, computation, and real-world relevance. As a project-driven course, students perform hands-on-analysis of real-world datasets to analyze and discover the impact of the data. Throughout each experience, students reflect on the social issues surrounding data analysis such as privacy and design. Proficiency exams will be offered at the beginning of each Spring and Fall semester. Same as CS 107 and IS 107.</description>
+  <creditHours>4 hours.</creditHours>
+  <courseSectionInformation>Proficiency exams will be offered at the beginning of each Spring and Fall semester. Same as CS 107 and IS 107.</courseSectionInformation>
+  <sectionDegreeAttributes>Quantitative Reasoning I course.</sectionDegreeAttributes>
+  <detailedSections>
+    <detailedSection id="70317" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/70317.xml">
+      <sectionNumber>L1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LEC">Lecture</type>
+          <start>10:00 AM</start>
+          <end>10:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>THEAT</roomNumber>
+          <buildingName>Lincoln Hall</buildingName>
+          <instructors>
+            <instructor lastName="Findley" firstName="K">Findley, K</instructor>
+            <instructor lastName="McPherson" firstName="L">McPherson, L</instructor>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="75730" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/75730.xml">
+      <sectionNumber>L2</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LEC">Lecture</type>
+          <start>11:00 AM</start>
+          <end>11:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>THEAT</roomNumber>
+          <buildingName>Lincoln Hall</buildingName>
+          <instructors>
+            <instructor lastName="Findley" firstName="K">Findley, K</instructor>
+            <instructor lastName="McPherson" firstName="L">McPherson, L</instructor>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="70318" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/70318.xml">
+      <sectionNumber>Y01</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>11:00 AM</start>
+          <end>12:20 PM</end>
+          <daysOfTheWeek>R</daysOfTheWeek>
+          <roomNumber>2018</roomNumber>
+          <buildingName>Campus Instructional Facility</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="70322" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/70322.xml">
+      <sectionNumber>Y02</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>12:30 PM</start>
+          <end>01:50 PM</end>
+          <daysOfTheWeek>R</daysOfTheWeek>
+          <roomNumber>2018</roomNumber>
+          <buildingName>Campus Instructional Facility</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="70326" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/70326.xml">
+      <sectionNumber>Y03</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>02:00 PM</start>
+          <end>03:20 PM</end>
+          <daysOfTheWeek>W</daysOfTheWeek>
+          <roomNumber>2036</roomNumber>
+          <buildingName>Campus Instructional Facility</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="70327" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/70327.xml">
+      <sectionNumber>Y04</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>03:30 PM</start>
+          <end>04:50 PM</end>
+          <daysOfTheWeek>W</daysOfTheWeek>
+          <roomNumber>2018</roomNumber>
+          <buildingName>Campus Instructional Facility</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="70329" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/70329.xml">
+      <sectionNumber>Y05</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>11:00 AM</start>
+          <end>12:20 PM</end>
+          <daysOfTheWeek>R</daysOfTheWeek>
+          <roomNumber>1047</roomNumber>
+          <buildingName>Sidney Lu Mech Engr Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="70330" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/70330.xml">
+      <sectionNumber>Y06</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>12:30 PM</start>
+          <end>01:50 PM</end>
+          <daysOfTheWeek>R</daysOfTheWeek>
+          <roomNumber>3018</roomNumber>
+          <buildingName>Campus Instructional Facility</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="70331" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/70331.xml">
+      <sectionNumber>Y07</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>02:00 PM</start>
+          <end>03:20 PM</end>
+          <daysOfTheWeek>W</daysOfTheWeek>
+          <roomNumber>2018</roomNumber>
+          <buildingName>Campus Instructional Facility</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="70332" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/70332.xml">
+      <sectionNumber>Y08</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>03:30 PM</start>
+          <end>04:50 PM</end>
+          <daysOfTheWeek>W</daysOfTheWeek>
+          <roomNumber>3018</roomNumber>
+          <buildingName>Campus Instructional Facility</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="70334" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/70334.xml">
+      <sectionNumber>Y09</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>09:30 AM</start>
+          <end>10:50 AM</end>
+          <daysOfTheWeek>R</daysOfTheWeek>
+          <roomNumber>1047</roomNumber>
+          <buildingName>Sidney Lu Mech Engr Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="70320" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/70320.xml">
+      <sectionNumber>Y10</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>11:00 AM</start>
+          <end>12:20 PM</end>
+          <daysOfTheWeek>R</daysOfTheWeek>
+          <roomNumber>106B6</roomNumber>
+          <buildingName>Engineering Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="70321" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/70321.xml">
+      <sectionNumber>Y11</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>12:30 PM</start>
+          <end>01:50 PM</end>
+          <daysOfTheWeek>R</daysOfTheWeek>
+          <roomNumber>2036</roomNumber>
+          <buildingName>Campus Instructional Facility</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="70333" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/70333.xml">
+      <sectionNumber>Y12</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>02:00 PM</start>
+          <end>03:20 PM</end>
+          <daysOfTheWeek>R</daysOfTheWeek>
+          <roomNumber>2036</roomNumber>
+          <buildingName>Campus Instructional Facility</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="74092" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/74092.xml">
+      <sectionNumber>Y13</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>11:00 AM</start>
+          <end>12:20 PM</end>
+          <daysOfTheWeek>R</daysOfTheWeek>
+          <roomNumber>164</roomNumber>
+          <buildingName>Noyes Laboratory</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="74093" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/74093.xml">
+      <sectionNumber>Y14</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>12:30 PM</start>
+          <end>01:50 PM</end>
+          <daysOfTheWeek>R</daysOfTheWeek>
+          <roomNumber>69</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="74094" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/74094.xml">
+      <sectionNumber>Y15</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>11:00 AM</start>
+          <end>12:20 PM</end>
+          <daysOfTheWeek>R</daysOfTheWeek>
+          <roomNumber>11</roomNumber>
+          <buildingName>Psychology Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="74095" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/74095.xml">
+      <sectionNumber>Y16</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>12:30 PM</start>
+          <end>01:50 PM</end>
+          <daysOfTheWeek>R</daysOfTheWeek>
+          <roomNumber>11</roomNumber>
+          <buildingName>Psychology Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="74096" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/74096.xml">
+      <sectionNumber>Y17</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>02:00 PM</start>
+          <end>03:20 PM</end>
+          <daysOfTheWeek>W</daysOfTheWeek>
+          <roomNumber>304</roomNumber>
+          <buildingName>Noyes Laboratory</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="74097" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/74097.xml">
+      <sectionNumber>Y18</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>03:30 PM</start>
+          <end>04:50 PM</end>
+          <daysOfTheWeek>W</daysOfTheWeek>
+          <roomNumber>301</roomNumber>
+          <buildingName>Noyes Laboratory</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="74098" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/74098.xml">
+      <sectionNumber>Y19</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>09:30 AM</start>
+          <end>10:50 AM</end>
+          <daysOfTheWeek>R</daysOfTheWeek>
+          <roomNumber>300</roomNumber>
+          <buildingName>Noyes Laboratory</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="74099" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/74099.xml">
+      <sectionNumber>Y20</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>11:00 AM</start>
+          <end>12:20 PM</end>
+          <daysOfTheWeek>R</daysOfTheWeek>
+          <roomNumber>1035</roomNumber>
+          <buildingName>Campus Instructional Facility</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="76949" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/76949.xml">
+      <sectionNumber>Y21</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>02:00 PM</start>
+          <end>03:20 PM</end>
+          <daysOfTheWeek>W</daysOfTheWeek>
+          <roomNumber>11</roomNumber>
+          <buildingName>Psychology Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="76952" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/76952.xml">
+      <sectionNumber>Y22</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>08:00 AM</start>
+          <end>09:20 AM</end>
+          <daysOfTheWeek>R</daysOfTheWeek>
+          <roomNumber>2078</roomNumber>
+          <buildingName>Natural History Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="76955" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/76955.xml">
+      <sectionNumber>Y23</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>03:30 PM</start>
+          <end>04:50 PM</end>
+          <daysOfTheWeek>F</daysOfTheWeek>
+          <roomNumber>G32</roomNumber>
+          <buildingName>Literatures, Cultures, &amp; Ling</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="76958" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/76958.xml">
+      <sectionNumber>Y24</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>08:00 AM</start>
+          <end>09:20 AM</end>
+          <daysOfTheWeek>R</daysOfTheWeek>
+          <roomNumber>69</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="76961" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/76961.xml">
+      <sectionNumber>Y25</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>08:00 AM</start>
+          <end>09:20 AM</end>
+          <daysOfTheWeek>R</daysOfTheWeek>
+          <roomNumber>2036</roomNumber>
+          <buildingName>Campus Instructional Facility</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="76964" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/76964.xml">
+      <sectionNumber>Y26</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>02:00 PM</start>
+          <end>03:20 PM</end>
+          <daysOfTheWeek>F</daysOfTheWeek>
+          <roomNumber>18</roomNumber>
+          <buildingName>Campus Instructional Facility</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="76967" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT/107/76967.xml">
+      <sectionNumber>Y27</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LBD">Laboratory-Discussion</type>
+          <start>03:30 PM</start>
+          <end>04:50 PM</end>
+          <daysOfTheWeek>F</daysOfTheWeek>
+          <roomNumber>G36</roomNumber>
+          <buildingName>Literatures, Cultures, &amp; Ling</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+  </detailedSections>
+</ns2:course>

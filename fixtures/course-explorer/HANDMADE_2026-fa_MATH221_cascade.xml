@@ -1,0 +1,702 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- HANDMADE FIXTURE: layout follows the Course Explorer REST schema; values copied from the real
+     wadefagen/datasets course-catalog CSV (2026-fa). Not fetched from courses.illinois.edu. -->
+<ns2:course xmlns:ns2="http://rest.cis.illinois.edu" id="MATH 221" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221.xml">
+  <parents>
+    <calendarYear id="2026" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026.xml">2026</calendarYear>
+    <term id="120268" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall.xml">Fall 2026</term>
+    <subject id="MATH" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH.xml">MATH</subject>
+  </parents>
+  <label>Calculus I</label>
+  <description>First course in calculus and analytic geometry for students with some calculus background; basic techniques of differentiation and integration with applications including curve sketching; antidifferentation, the Riemann integral, fundamental theorem, exponential and trigonometric functions. Credit is not given for both MATH 221 and either MATH 220 or MATH 234. Prerequisite: An adequate ALEKS placement score as described at http://math.illinois.edu/ALEKS/ and either one year of high school calculus or a minimum score of 2 on the AB Calculus AP exam.</description>
+  <creditHours>4 hours.</creditHours>
+  <courseSectionInformation>Credit is not given for both MATH 221 and either MATH 220 or MATH 234. Prerequisite: An adequate ALEKS placement score as described at http://math.illinois.edu/ALEKS/ and either one year of high school calculus or a minimum score of 2 on the AB Calculus AP exam.</courseSectionInformation>
+  <sectionDegreeAttributes>Quantitative Reasoning I course.</sectionDegreeAttributes>
+  <classScheduleInformation>Students must register for one discussion and one lecture section beginning with the same letter. Engineering students must obtain a dean's approval to drop this course after the second week of instruction.</classScheduleInformation>
+  <detailedSections>
+    <detailedSection id="46995" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/46995.xml">
+      <sectionNumber>ADA</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>08:00  AM</start>
+          <end>08:50  AM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>136</roomNumber>
+          <buildingName>Davenport Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="46996" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/46996.xml">
+      <sectionNumber>ADB</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>09:00  AM</start>
+          <end>09:50  AM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>169</roomNumber>
+          <buildingName>Davenport Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47004" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47004.xml">
+      <sectionNumber>ADC</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>09:00  AM</start>
+          <end>09:50  AM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>1027</roomNumber>
+          <buildingName>Lincoln Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="46997" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/46997.xml">
+      <sectionNumber>ADD</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>10:00  AM</start>
+          <end>10:50  AM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>169</roomNumber>
+          <buildingName>Davenport Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="48295" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/48295.xml">
+      <sectionNumber>ADE</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>10:00  AM</start>
+          <end>10:50  AM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>111</roomNumber>
+          <buildingName>Gregory Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="46998" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/46998.xml">
+      <sectionNumber>ADF</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>11:00  AM</start>
+          <end>11:50  AM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>215</roomNumber>
+          <buildingName>Gregory Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47028" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47028.xml">
+      <sectionNumber>ADG</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>11:00  AM</start>
+          <end>11:50  AM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>115</roomNumber>
+          <buildingName>David Kinley Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47005" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47005.xml">
+      <sectionNumber>ADH</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>12:00  PM</start>
+          <end>12:50  PM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>169</roomNumber>
+          <buildingName>Davenport Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47007" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47007.xml">
+      <sectionNumber>ADI</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>12:00  PM</start>
+          <end>12:50  PM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>1027</roomNumber>
+          <buildingName>Lincoln Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47000" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47000.xml">
+      <sectionNumber>ADJ</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>01:00  PM</start>
+          <end>01:50  PM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>132</roomNumber>
+          <buildingName>Davenport Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="64938" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/64938.xml">
+      <sectionNumber>ADK</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>01:00  PM</start>
+          <end>01:50  PM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>1027</roomNumber>
+          <buildingName>Lincoln Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47026" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47026.xml">
+      <sectionNumber>ADL</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>02:00  PM</start>
+          <end>02:50  PM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>69</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47014" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47014.xml">
+      <sectionNumber>ADM</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>03:00  PM</start>
+          <end>03:50  PM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>214</roomNumber>
+          <buildingName>Davenport Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47011" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47011.xml">
+      <sectionNumber>ADN</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>03:00  PM</start>
+          <end>03:50  PM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>132</roomNumber>
+          <buildingName>Davenport Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="46992" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/46992.xml">
+      <sectionNumber>AL1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open (Restricted)</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LEC">Lecture</type>
+          <start>04:00  PM</start>
+          <end>04:50  PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>112</roomNumber>
+          <buildingName>Gregory Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47023" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47023.xml">
+      <sectionNumber>AL2</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open (Restricted)</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LEC">Lecture</type>
+          <start>03:00  PM</start>
+          <end>03:50  PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>112</roomNumber>
+          <buildingName>Gregory Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="70571" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/70571.xml">
+      <sectionNumber>AM1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open (Restricted)</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>11:00  AM</start>
+          <end>12:50  PM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>314</roomNumber>
+          <buildingName>Davenport Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="70572" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/70572.xml">
+      <sectionNumber>AM2</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open (Restricted)</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>01:00  PM</start>
+          <end>02:50  PM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>314</roomNumber>
+          <buildingName>Davenport Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47020" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47020.xml">
+      <sectionNumber>EDA</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>08:00  AM</start>
+          <end>08:50  AM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>1136</roomNumber>
+          <buildingName>Literatures, Cultures, &amp; Ling</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47015" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47015.xml">
+      <sectionNumber>EDB</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>09:00  AM</start>
+          <end>09:50  AM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>G30</roomNumber>
+          <buildingName>Literatures, Cultures, &amp; Ling</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47031" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47031.xml">
+      <sectionNumber>EDC</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>09:00  AM</start>
+          <end>09:50  AM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>215</roomNumber>
+          <buildingName>Gregory Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47016" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47016.xml">
+      <sectionNumber>EDD</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>10:00  AM</start>
+          <end>10:50  AM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>G30</roomNumber>
+          <buildingName>Literatures, Cultures, &amp; Ling</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47030" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47030.xml">
+      <sectionNumber>EDE</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>10:00  AM</start>
+          <end>10:50  AM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>1027</roomNumber>
+          <buildingName>Lincoln Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47017" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47017.xml">
+      <sectionNumber>EDF</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>11:00  AM</start>
+          <end>11:50  AM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>1027</roomNumber>
+          <buildingName>Lincoln Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="56975" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/56975.xml">
+      <sectionNumber>EDG</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>11:00  AM</start>
+          <end>11:50  AM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>303</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47019" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47019.xml">
+      <sectionNumber>EDH</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>12:00  PM</start>
+          <end>12:50  PM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>132</roomNumber>
+          <buildingName>Davenport Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47022" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47022.xml">
+      <sectionNumber>EDI</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>01:00  PM</start>
+          <end>01:50  PM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>317</roomNumber>
+          <buildingName>Gregory Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47029" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47029.xml">
+      <sectionNumber>EDJ</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>02:00  PM</start>
+          <end>02:50  PM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>317</roomNumber>
+          <buildingName>Gregory Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47001" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47001.xml">
+      <sectionNumber>EDK</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>02:00  PM</start>
+          <end>02:50  PM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>132</roomNumber>
+          <buildingName>Davenport Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47008" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47008.xml">
+      <sectionNumber>EDL</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>03:00  PM</start>
+          <end>03:50  PM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>303</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="48292" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/48292.xml">
+      <sectionNumber>EDM</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>03:00  PM</start>
+          <end>03:50  PM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>136</roomNumber>
+          <buildingName>Davenport Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="50737" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/50737.xml">
+      <sectionNumber>EDN</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>04:00  PM</start>
+          <end>04:50  PM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>209</roomNumber>
+          <buildingName>David Kinley Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47002" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47002.xml">
+      <sectionNumber>EL1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open (Restricted)</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LEC">Lecture</type>
+          <start>09:00  AM</start>
+          <end>09:50  AM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>114</roomNumber>
+          <buildingName>David Kinley Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="47013" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/47013.xml">
+      <sectionNumber>EL2</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open (Restricted)</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LEC">Lecture</type>
+          <start>02:00  PM</start>
+          <end>02:50  PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>100</roomNumber>
+          <buildingName>Materials Science &amp; Eng Bld</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="48293" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/48293.xml">
+      <sectionNumber>EM1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open (Restricted)</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>09:00  AM</start>
+          <end>10:50  AM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>314</roomNumber>
+          <buildingName>Davenport Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="48296" href="https://courses.illinois.edu/cisapp/explorer/schedule/2026/fall/MATH/221/48296.xml">
+      <sectionNumber>EM2</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus>Open (Restricted)</enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="DIS">Discussion/Recitation</type>
+          <start>01:00  PM</start>
+          <end>02:50  PM</end>
+          <daysOfTheWeek>WF</daysOfTheWeek>
+          <roomNumber>106B6</roomNumber>
+          <buildingName>Engineering Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+  </detailedSections>
+</ns2:course>
