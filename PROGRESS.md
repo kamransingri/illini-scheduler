@@ -144,3 +144,25 @@ Acceptance:
   When the nightly workflow runs with open network, RMP snippets feed the same extractor.
 
 Phase 5 complete.
+
+### Phase 6 — Course search and course page
+
+Built the Next.js app shell (header/nav, footer disclaimer + sources), home search (`lib/search.ts`: codes in any
+spacing, title words incl. "intro", instructors), the course page (`app/course/[subject]/[number]`) with summary,
+sections (copy-CRN, live-seat links, Self-Service link, link-group hint, part-of-term), instructor cards (GPA,
+delta vs course, grade bar, limited-data and Ranked-Excellent badges, RMP or "RMP unavailable" + search link, exam
+profile), past instructors (grade disparity list), grade distribution chart, change timeline, and student notes.
+
+Acceptance:
+- Playwright: "cs124" → Enter lands on /course/CS/124/, page shows sections, ≥ 1 instructor card, the GPA chart,
+  and no console errors: pass.
+- Playwright at 375px: no horizontal scroll on CS 124, MATH 221, STAT 107, RHET 105: pass.
+- Lighthouse (mobile emulation, CS 124): first run performance 85 / accessibility 97. Fixed layout shift (footer
+  jump while details load), the `<dl>` structure and a missing favicon; re-run: **performance 99,
+  accessibility 100, best practices 100**.
+- Screenshots in `screenshots/` (CS 124, MATH 221, STAT 107; desktop + mobile), reviewed: nothing cut off or
+  overlapping, no NaN/undefined. Fixed while reviewing: truncated change quotes now end with "…", and the
+  "no grade data" text now explains why (one primary instructor per section in the GPA dataset).
+- Vitest: 15 unit tests (search, format, cart encoding): pass.
+
+Phase 6 complete.

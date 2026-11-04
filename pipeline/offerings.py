@@ -136,9 +136,9 @@ def word_diff(old: str, new: str, max_words: int = 12) -> tuple[list[str], list[
     added, removed = [], []
     for op, i1, i2, j1, j2 in sm.get_opcodes():
         if op in ("replace", "insert") and any(bn[j1:j2]):
-            added.append(" ".join(b[j1:j2][:max_words]))
+            added.append(" ".join(b[j1:j2][:max_words]) + ("…" if j2 - j1 > max_words else ""))
         if op in ("replace", "delete") and any(an[i1:i2]):
-            removed.append(" ".join(a[i1:i2][:max_words]))
+            removed.append(" ".join(a[i1:i2][:max_words]) + ("…" if i2 - i1 > max_words else ""))
     return added, removed
 
 
