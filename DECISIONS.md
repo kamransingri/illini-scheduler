@@ -137,3 +137,23 @@ Every judgment call made during the autonomous build, newest phase last.
   `*` key too, so the course page can show it when no instructor-specific evidence exists.
 - **D5.5 Clipped names.** The GPA dataset cuts "Primary Instructor" at 25 characters ("Driggs-Campbell, Katherin").
   When a lone first name might be clipped, the display uses the initial.
+
+## Phase 6 — Course search and course page
+
+- **D6.1 Hybrid rendering.** 7,026 course pages are pre-rendered (`generateStaticParams`) with the header and the
+  "Before you register" summary in the HTML. Sections, instructor cards, chart, changes and notes render
+  client-side from `data/course/{SUBJ}/{NUM}.json`. Server-rendering everything would roughly double each page
+  (HTML + RSC payload) for 7,000 pages. Full build: 34 s, 294 MB including 45 MB of JSON.
+- **D6.2 Default term** on a course page = next term (Spring 2027) when the course has sections then, else the
+  latest term it has (e.g. MATH 221 opens on Fall 2026 with "Not offered in Spring 2027").
+- **D6.3 Seat status.** The Spring 2027 snapshot predates registration, so status reads "Not published" with the
+  snapshot date and a "Check live seats" link per section (Course Explorer `?sectionId=CRN`). "% sections open"
+  appears only when status is known; otherwise the summary shows the number of lecture sections listed.
+- **D6.4 Mobile layout.** Sections render as a responsive grid that becomes stacked cards below 768px, so there is no
+  horizontal scrolling at 375px (no wide `<table>`).
+- **D6.5 Source on hover.** `<Metric>` shows source + term range + sample size in a tooltip on hover and keyboard
+  focus (and as `title`).
+- **D6.6 RMP link-out** uses RMP's generic search (`/search/professors?q=<name> University of Illinois`), so no
+  school id is guessed or hard-coded.
+- **D6.7 "Suggest a note"** opens a prefilled issue at `https://github.com/kamransingri/illini-scheduler/issues/new`
+  (label `student-note`). It works once the repo exists (Needs a human #1).
