@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("one category + next term + sorted by GPA: rows sorted and all in that category", async ({ page }) => {
-  await page.goto("/geneds/");
+  await page.goto("./geneds/");
   await expect(page.getByText(/\d+ courses/)).toBeVisible();
   await page.getByText("Humanities: Hist & Phil", { exact: true }).first().click();
   await page.getByLabel(/in Spring 2027/).check();
