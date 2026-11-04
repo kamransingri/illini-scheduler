@@ -163,7 +163,7 @@ def test_api_crawler_retries_caches_and_404(tmp_path):
         async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
             import pipeline.course_explorer as ce
             orig = ce.asyncio.sleep
-            ce.asyncio.sleep = lambda *_: orig(0)  # no real backoff in tests
+            ce.asyncio.sleep = lambda *_: orig(0)  # type: ignore[assignment]  # no real backoff in tests
             try:
                 a = await crawler.get(client, "schedule/2027/spring/CS/124.xml?mode=cascade")
                 b = await crawler.get(client, "schedule/2027/spring/CS/124.xml?mode=cascade")

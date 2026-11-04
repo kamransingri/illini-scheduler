@@ -30,11 +30,14 @@ export default function SearchBox({
   autoFocus = false,
   withCart = true,
   placeholder = 'Try "cs124", "CS 124", "intro to computer science" or an instructor',
+  onPick,
 }: {
   nextTerm: string;
   autoFocus?: boolean;
   withCart?: boolean;
   placeholder?: string;
+  /** If set, Enter on a course adds it here instead of opening the course page. */
+  onPick?: (subject: string, number: string) => void;
 }) {
   const [q, setQ] = useState("");
   const [index, setIndex] = useState<SearchIndex | null>(null);
@@ -74,12 +77,19 @@ export default function SearchBox({
             setActive((a) => Math.max(a - 1, 0));
           } else if (e.key === "Enter" && hits[active]) {
             e.preventDefault();
-            router.push(hitHref(hits[active]));
+            const h = hits[active];
+            if (onPick && h.kind === "course") {
+              onPick(h.course.s, h.course.n);
+              setQ("");
+            } else router.push(hitHref(h));
           }
         }}
         placeholder={placeholder}
         className="w-full rounded-lg border border-line bg-white px-4 py-3 text-base shadow-sm focus:border-brand focus:outline-none"
-        aria-controls="search-results"
+        aria-controls={hits.length ? "search-results" : undefined}
+        aria-expanded={hits.length > 0}
+        role="combobox"
+        aria-autocomplete="list"
       />
       {error && (
         <p className="mt-2 text-sm text-bad" role="alert">
@@ -87,7 +97,7 @@ export default function SearchBox({
         </p>
       )}
       {!index && !error && q && <p className="mt-2 text-sm text-muted">Loading course list…</p>}
-      {index && q && !hits.length && <p className="mt-2 text-sm text-muted">No courses or instructors match “{q}”.</p>}
+      {index && q.trim() && !hits.length && <p className="mt-2 text-sm text-muted">No courses or instructors match “{q}”.</p>}
       {hits.length > 0 && (
         <ul
           id="search-results"

@@ -79,9 +79,14 @@ export default function WeekCalendar({
                   style={{ top: (m.s! - lo) * PX, height: Math.max(18, (m.e! - m.s!) * PX) }}
                   title={`${b.course} ${s.code} (${s.type}) ${fmtTime(m.s)}–${fmtTime(m.e)} ${m.r} ${m.b}${s.part !== "1" ? ` · part of term ${s.part}` : ""}`}
                 >
-                  <div className="truncate font-semibold">{b.course}</div>
+                  <div className="truncate font-semibold">
+                    <span className="sm:hidden">{b.course.split(" ")[0]}</span>
+                    <span className="hidden sm:inline">{b.course}</span>
+                  </div>
                   <div className="truncate">
-                    {s.code} {s.type}
+                    <span className="font-semibold sm:hidden">{b.course.split(" ")[1]} </span>
+                    {s.code}
+                    <span className="hidden sm:inline"> {s.type}</span>
                   </div>
                 </div>
               ))}

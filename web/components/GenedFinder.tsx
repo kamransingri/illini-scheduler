@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { applyFilters, DEFAULT_FILTERS, GENED_GROUPS, openCount, type Filters, type SortKey } from "@/lib/geneds";
+import { applyFilters, DEFAULT_FILTERS, filtersFromQuery, filtersToQuery, GENED_GROUPS, openCount, type Filters, type SortKey } from "@/lib/geneds";
 import { courseHref, dataUrl, fmtGpa, fmtInt, fmtPct, GENED_NAMES, termLabel } from "@/lib/format";
 import type { GenedRow } from "@/lib/types";
 import AddToCart from "./AddToCart";
@@ -15,6 +15,21 @@ export default function GenedFinder({ nextTerm, rmpAvailable }: { nextTerm: stri
   const [f, setF] = useState<Filters>(DEFAULT_FILTERS);
   const [sort, setSort] = useState<SortKey>("gpa");
   const [limit, setLimit] = useState(PAGE);
+  const [restored, setRestored] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
+
+  // Filters live in the URL so Back, reload and shared links keep them.
+  useEffect(() => {
+    const { f: f0, sort: s0 } = filtersFromQuery(window.location.search);
+    setF(f0);
+    setSort(s0);
+    setRestored(true);
+  }, []);
+  useEffect(() => {
+    if (!restored) return;
+    const q = filtersToQuery(f, sort);
+    window.history.replaceState(null, "", `${window.location.pathname}${q ? `?${q}` : ""}`);
+  }, [f, sort, restored]);
 
   useEffect(() => {
     fetch(dataUrl("geneds.json"))
@@ -36,7 +51,21 @@ export default function GenedFinder({ nextTerm, rmpAvailable }: { nextTerm: stri
 
   return (
     <div className="grid gap-6 md:grid-cols-[16rem_1fr]">
-      <form className="space-y-4 text-sm" onSubmit={(e) => e.preventDefault()} aria-label="Filters">
+      <button
+        type="button"
+        className="rounded border border-line px-3 py-1.5 text-sm md:hidden"
+        aria-expanded={showFilters}
+        aria-controls="gened-filters"
+        onClick={() => setShowFilters((v) => !v)}
+      >
+        {showFilters ? "Hide filters" : `Filters${f.codes.length ? ` (${f.codes.length} categor${f.codes.length > 1 ? "ies" : "y"})` : ""}`}
+      </button>
+      <form
+        id="gened-filters"
+        className={`${showFilters ? "block" : "hidden"} space-y-4 text-sm md:block`}
+        onSubmit={(e) => e.preventDefault()}
+        aria-label="Filters"
+      >
         <fieldset>
           <legend className="font-semibold">Category</legend>
           <div className="mt-1 space-y-2">
@@ -67,7 +96,7 @@ export default function GenedFinder({ nextTerm, rmpAvailable }: { nextTerm: stri
           </label>
           <label className="flex items-center gap-2">
             <input type="checkbox" checked={f.minStudents === 200} onChange={(e) => set("minStudents", e.target.checked ? 200 : 0)} />
-            GPA from 200+ students
+            Only GPA from 200+ students
           </label>
           <label className="flex items-center gap-2">
             <input type="checkbox" checked={f.earliest === 540} onChange={(e) => set("earliest", e.target.checked ? 540 : null)} />
@@ -162,7 +191,11 @@ export default function GenedFinder({ nextTerm, rmpAvailable }: { nextTerm: stri
                 ) : (
                   <span className="text-muted">No data</span>
                 )}
-                {r.gpa !== null && <div className="text-xs text-muted">n={fmtInt(r.gpaN)}</div>}
+                {r.gpa !== null && (
+                  <div className="text-xs text-muted">
+                    n={fmtInt(r.gpaN)} · {fmtPct(r.pctA)} A
+                  </div>
+                )}
               </div>
               <div className="w-40 text-sm">
                 <div className="text-xs text-muted">Best instructor next term</div>

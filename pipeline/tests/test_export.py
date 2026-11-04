@@ -46,3 +46,15 @@ def test_export_end_to_end(tmp_path):
     assert meta["next_term"] == "2027-sp" and meta["rmp_status"].startswith("unavailable")
     search = json.loads((tmp_path / "out" / "search.json").read_text())
     assert {"s": "CS", "n": "124"}.items() <= next(c for c in search["courses"] if c["n"] == "124").items()
+
+
+def test_flag_special():
+    from pipeline.export import flag_special
+
+    def s(code, comp, group, text=""):
+        return {"code": code, "component": comp, "group": group, "text": text, "special": ""}
+
+    secs = [s("AL1", "primary", "A"), s("AD1", "DIS", "A"), s("WWC", "primary", "W"), s("AD@", "primary", "A"),
+            s("", "primary", "A")]
+    flag_special(secs)
+    assert [bool(x["special"]) for x in secs] == [False, False, True, True, False]

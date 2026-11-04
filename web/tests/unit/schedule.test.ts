@@ -5,6 +5,8 @@ import { describe, expect, it } from "vitest";
 import { buildIcs, fold } from "@/lib/ics";
 import {
   backToBack,
+  clashingPairs,
+  explainEmpty,
   buildBundles,
   DEFAULT_PREFS,
   generate,
@@ -53,7 +55,7 @@ function sec(code: string, component: string, group: string, online = false): Se
   const len = pick([50, 80, 110]);
   return {
     crn: String(crn++), code, type: component === "primary" ? "LEC" : component, type_name: "", component, group, part: pick(["1", "1", "1", "A", "B"]),
-    status: "", status_code: "A", credits: "", title: "", text: "", instructors: [], instructors_raw: [],
+    status: "", status_code: "A", credits: "", title: "", text: "", instructors: [], instructors_raw: [], special: "",
     meetings: [online ? { d: 0, s: null, e: null, b: "", r: "" } : { d: pick(DAYS), s, e: s + len, b: "Lincoln Hall", r: "1" }],
   };
 }
@@ -178,5 +180,39 @@ describe("ics folding", () => {
     const long = "DESCRIPTION:" + "x".repeat(200);
     expect(fold(long).split("\r\n ").every((l) => l.length <= 75)).toBe(true);
     expect(fold(long).replace(/\r\n /g, "")).toBe(long);
+  });
+});
+
+describe("explanations", () => {
+  const mk = (n: string, secs: Section[]): CourseInput => {
+    const c = randomCourse(0);
+    c.number = n;
+    c.terms["2027-sp"].sections = secs;
+    return { key: `X ${n}`, course: c, credits: 3, locked: [] };
+  };
+  const fixed = (code: string, comp: string, group: string, d: number, s: number, e: number, special = ""): Section => ({
+    ...sec(code, comp, group),
+    part: "1",
+    special,
+    meetings: [{ d, s, e, b: "", r: "" }],
+  });
+  it("names two courses that always overlap", () => {
+    const a = mk("261", [fixed("A", "primary", "*", T | R, 660, 740)]);
+    const b = mk("200", [fixed("L1", "primary", "*", T | R, 660, 740)]);
+    expect(clashingPairs([a, b], "2027-sp", DEFAULT_PREFS)[0]).toMatch(/X 261 .* always overlaps X 200/);
+  });
+  it("explains invalid locked combinations", () => {
+    const c = mk("231", [fixed("AL1", "primary", "A", M, 600, 650), fixed("AD1", "DIS", "A", T, 600, 650), fixed("CL1", "primary", "C", M, 700, 750), fixed("CD1", "DIS", "C", T, 700, 750)]);
+    const [al1, , , cd1] = c.course.terms["2027-sp"].sections;
+    c.locked = [al1.crn, cd1.crn];
+    expect(explainEmpty(c, "2027-sp", DEFAULT_PREFS)).toMatch(/AL1 \+ CD1 can't be taken together/);
+  });
+  it("skips special sections unless allowed or locked", () => {
+    const c = mk("124", [fixed("WWC", "primary", "W", M, 600, 650, "special")]);
+    expect(generate([c], "2027-sp", DEFAULT_PREFS).emptyCourses).toEqual(["X 124"]);
+    expect(explainEmpty(c, "2027-sp", DEFAULT_PREFS)).toMatch(/special/);
+    expect(generate([c], "2027-sp", { ...DEFAULT_PREFS, includeSpecial: true }).schedules.length).toBe(1);
+    c.locked = [c.course.terms["2027-sp"].sections[0].crn];
+    expect(generate([c], "2027-sp", DEFAULT_PREFS).schedules.length).toBe(1);
   });
 });

@@ -228,3 +228,39 @@ Acceptance:
   and the search placeholder was cut off in the narrow column.
 
 Phase 8 complete.
+
+### Final QA
+
+**Data audit** (10 random Spring 2027 courses, seed 2027). Each was recomputed independently from the raw upstream
+files with pandas and compared with the JSON the site serves. Course Explorer itself was blocked, so "raw" =
+the upstream course-catalog CSV for Spring 2027; GPA = Fall 2015+ rows of the GPA dataset:
+
+| Course | Sections raw / site | CRN checked | Instructor raw / site | GPA raw / site (Fall 2015+) | Match |
+| --- | --- | --- | --- | --- | --- |
+| CEE 452 | 3 / 3 | 70861 | Schmidt, A / Schmidt, A | 3.51 / 3.51 | ✓ |
+| PSYC 443 | 2 / 2 | 35232 | Huibregtse, M / Huibregtse, M | None / None | ✓ |
+| BADM 310 | 2 / 2 | 57199 | Charles, D / Charles, D | 3.71 / 3.71 | ✓ |
+| ACE 306 | 1 / 1 | 71848 | Endres, B / Endres, B | 3.25 / 3.25 | ✓ |
+| IS 471 | 3 / 3 | 74988 | Hensley, M / Hensley, M | 3.86 / 3.86 | ✓ |
+| MUS 569 | 1 / 1 | 53074 | MacLeod, R / MacLeod, R | None / None | ✓ |
+| ECE 422 | 6 / 6 | 72180 | Bates, A / Bates, A | None / None | ✓ |
+| MUS 240 | 1 / 1 | 35542 | Shungu, P / Shungu, P | 3.68 / 3.68 | ✓ |
+| ECE 310 | 3 / 3 | 65517 | Moon, T / Moon, T | 3.0 / 3.0 | ✓ |
+| LCTL 302 | 1 / 1 | 77387 | Blazek, K / Blazek, K | None / None | ✓ |
+
+0 mismatches. ("None" GPA = no GPA rows since Fall 2015, typically small graduate or music sections.)
+
+**Failure drills**
+- RMP disabled/blocked: pipeline finishes with `rmp_status = unavailable`; instructor cards say "RMP unavailable in
+  this build" with a search link; the gen-ed RMP filter is disabled with a note (Playwright + pytest).
+- Course Explorer unreachable: `--source auto` falls back to the CSV mirror (that's how this build ran). A fully
+  offline drill, `python -m pipeline.run --fixtures` with the proxy pointed at a dead port, builds the four
+  reference courses from `fixtures/`; every page renders without NaN/undefined.
+- Data files unreachable in the browser (course JSON, search index, gen-ed list): clear inline messages, the course
+  summary stays visible (Playwright `failure.spec.ts`).
+- Empty cart: guidance text, not a blank page. Unknown course URL: 404 page.
+
+**Test suite**: pytest 146, Vitest 39, Playwright 17 (also passing under the `/illini-scheduler/` base path used by
+GitHub Pages), ruff + mypy + ESLint + tsc clean. Lighthouse (mobile): course page 99/100/100
+(perf/a11y/best practices), home 99/93→fixed, gen-eds 92/100/100, schedule 99/94→fixed (an `aria-controls` that
+pointed at a not-yet-rendered list).

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
+import CartCount from "@/components/CartCount";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,18 +19,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <header className="border-b border-line bg-navy text-white">
-          <nav className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-5 gap-y-1 px-4 py-3" aria-label="Main">
+          <nav className="mx-auto flex max-w-5xl items-center gap-x-3 px-4 py-3 sm:gap-x-5" aria-label="Main">
             <Link href="/" className="mr-auto text-lg font-bold tracking-tight no-underline">
               Illini <span className="text-orange-300">Scheduler</span>
             </Link>
-            <Link href="/" className="text-sm hover:underline">
+            <Link href="/" className="hidden text-sm hover:underline sm:inline">
               Search
             </Link>
-            <Link href="/geneds/" className="text-sm hover:underline">
-              Gen-ed finder
+            <Link href="/geneds/" className="text-sm whitespace-nowrap hover:underline">
+              Gen-eds<span className="hidden sm:inline"> finder</span>
             </Link>
-            <Link href="/schedule/" className="text-sm hover:underline">
-              Schedule builder
+            <Link href="/schedule/" className="text-sm whitespace-nowrap hover:underline">
+              Schedule<span className="hidden sm:inline"> builder</span>
+              <CartCount />
             </Link>
           </nav>
         </header>

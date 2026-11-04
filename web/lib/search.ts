@@ -4,7 +4,7 @@ export type SearchHit =
   | { kind: "course"; course: SearchCourse; score: number }
   | { kind: "instructor"; instructor: SearchInstructor; score: number };
 
-const CODE_RE = /^\s*([a-z]{2,4})\s*(\d{1,3})\s*$/i;
+const CODE_RE = /^\s*([a-z]{2,5})[\s\-_.]*(\d{1,3})\s*$/i;
 
 /** Normalise "cs124", "CS 124", " cs  124 " to {subject: "CS", number: "124"}. */
 export function parseCode(q: string): { subject: string; number: string } | null {

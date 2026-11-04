@@ -113,7 +113,7 @@ export function buildIcs(schedule: Schedule, term: string, termLabel: string, no
           ...(exdates.length ? [`EXDATE;TZID=America/Chicago:${exdates.join(",")}`] : []),
           `SUMMARY:${esc(`${b.course} ${s.code} (${s.type})`)}`,
           ...(m.b ? [`LOCATION:${esc(`${m.r} ${m.b}`.trim())}`] : []),
-          `DESCRIPTION:${esc(`CRN ${s.crn}. ${s.instructors_raw.join("; ")}. Dates are estimated from the usual academic calendar.`)}`,
+          `DESCRIPTION:${esc(`CRN ${s.crn}. ${s.instructors_raw.length ? `Instructor: ${s.instructors_raw.join("; ")}. ` : ""}Dates are estimated from the usual academic calendar.`)}`,
           "END:VEVENT",
         );
       });
