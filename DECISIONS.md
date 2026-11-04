@@ -225,3 +225,13 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D9.8 Not changed:** typo-tolerant search ("calclus") and "calc 2" synonyms, and collapsing near-duplicate
   schedules that differ only by a same-time discussion (they're listed under "Same-time alternatives").
   Known issues.
+
+## Deploy
+
+- **D10.1 Partial Course Explorer failures.** The first GitHub run died on one course page (TAM 416) that kept
+  failing. The crawler now tolerates up to 10% failed course pages, fills just those courses from the CSV mirror,
+  and falls back to the mirror for the whole term beyond that.
+- **D10.2 RMP time budget.** About 3,400 instructors teach next term; at 2 concurrent / 0.5 s that's longer than a
+  CI job should run. Each run looks up instructors with the most lecture sections first for up to
+  `RMP_BUDGET_SECONDS` (20 min), then uses cached answers only; the 7-day cache (restored by actions/cache) lets
+  coverage grow nightly. Coverage is recorded in `meta.rmp_coverage`.

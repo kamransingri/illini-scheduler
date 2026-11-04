@@ -18,7 +18,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -35,6 +35,8 @@ jobs:
           restore-keys: rmp-
       - name: Refresh data (Course Explorer API when reachable, Wade's datasets, RMP)
         run: make data
+        env:
+          RMP_BUDGET_SECONDS: "1200" # new RMP lookups per run; the 7-day cache carries the rest forward
       - name: Lint + type check + unit tests
         run: make lint && make test
       - name: Build static site

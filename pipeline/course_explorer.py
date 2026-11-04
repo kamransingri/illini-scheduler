@@ -399,6 +399,7 @@ class ApiCrawler:
         self.cache_dir = cache_dir
         self.sem = asyncio.Semaphore(concurrency)
         self.refresh = refresh
+        self.failed: list[tuple[str, str]] = []  # courses whose page couldn't be fetched in the last crawl
 
     async def get(self, client, path: str) -> bytes:  # type: ignore[no-untyped-def]
         import httpx
@@ -407,6 +408,7 @@ class ApiCrawler:
         if cache.exists() and not self.refresh:
             return cache.read_bytes()
         delay = 1.0
+        last = ""
         for attempt in range(5):
             async with self.sem:
                 try:
@@ -417,6 +419,7 @@ class ApiCrawler:
                         return bytes(r.content)
                     if r.status_code == 404:
                         raise FileNotFoundError(path)
+                    last = f"HTTP {r.status_code}"
                 except FileNotFoundError:
                     raise
                 except (httpx.TransportError, OSError, TimeoutError):  # network errors: back off and retry
@@ -424,7 +427,7 @@ class ApiCrawler:
                         raise
             await asyncio.sleep(delay)
             delay *= 2
-        raise RuntimeError(f"giving up on {path}")
+        raise RuntimeError(f"giving up on {path} ({last})")
 
     async def crawl_term(
         self, term: str, subjects: set[str] | None
@@ -444,10 +447,19 @@ class ApiCrawler:
                 subj = root.get("id", "")
                 course_ids += [(subj, e.get("id", "")) for e in root.iter() if etree.QName(e).localname == "course"]
             results = await asyncio.gather(
-                *(self.get(client, f"schedule/{year}/{season}/{s}/{n}.xml?mode=cascade") for s, n in course_ids)
+                *(self.get(client, f"schedule/{year}/{season}/{s}/{n}.xml?mode=cascade") for s, n in course_ids),
+                return_exceptions=True,
             )
+        failed = [(cid, r) for cid, r in zip(course_ids, results, strict=True) if isinstance(r, BaseException)]
+        self.failed = [cid for cid, _ in failed]
+        if len(failed) > max(10, 0.1 * len(course_ids)):
+            raise RuntimeError(f"{len(failed)} of {len(course_ids)} course pages failed, e.g. {failed[0][1]}")
+        for cid, err in failed[:10]:
+            print(f"warn: {cid[0]} {cid[1]} ({term}) not fetched: {err}", file=sys.stderr)
         courses, sections = [], []
         for data in results:
+            if isinstance(data, BaseException):
+                continue
             c, secs = parse_course_xml(data)
             c.subject_name = names.get(c.subject, "")
             courses.append(c)
@@ -535,11 +547,25 @@ def load_term(
 ) -> tuple[int, str]:
     """Load one term from the chosen source. Returns (n_sections, source_used)."""
     if source in ("api", "auto") and (source == "api" or api_reachable()):
-        courses, sections, names = asyncio.run(ApiCrawler().crawl_term(term, subjects))
-        from datetime import UTC, datetime
+        crawler = ApiCrawler()
+        try:
+            courses, sections, names = asyncio.run(crawler.crawl_term(term, subjects))
+        except Exception as e:  # noqa: BLE001 - any crawl failure falls back to the mirror in auto mode
+            if source == "api":
+                raise
+            print(f"warn: Course Explorer crawl of {term} failed ({type(e).__name__}: {e}); using the CSV mirror",
+                  file=sys.stderr)
+        else:
+            if crawler.failed and catalog_csv is not None and catalog_csv.exists():
+                # a few course pages failed: take just those courses from the CSV mirror
+                want = set(crawler.failed)
+                c2, s2 = parse_catalog_csv(catalog_csv, {sj for sj, _ in want})
+                courses += [c for c in c2 if (c.subject, c.number) in want]
+                sections += [x for x in s2 if (x.subject, x.number) in want]
+            from datetime import UTC, datetime
 
-        n = store(conn, term, courses, sections, "cis-api", datetime.now(UTC).isoformat(timespec="seconds"), names)
-        return n, "cis-api"
+            n = store(conn, term, courses, sections, "cis-api", datetime.now(UTC).isoformat(timespec="seconds"), names)
+            return n, "cis-api"
     if catalog_csv is None or not catalog_csv.exists():
         raise FileNotFoundError(f"no CSV mirror for {term}: {catalog_csv}")
     courses, sections = parse_catalog_csv(catalog_csv, subjects)

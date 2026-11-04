@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import json
+import os
 import sqlite3
+import time
 from collections import defaultdict
 from datetime import UTC, datetime
 from pathlib import Path
@@ -54,6 +56,7 @@ def run(conn: sqlite3.Connection, gpa_df: pd.DataFrame, rmp_enabled: bool, tre_p
     next_names: set[tuple[str, str]] = set()
     next_primary: set[tuple[str, str]] = set()                  # names on lecture/primary sections
     teaching_next: dict[str, set[str]] = defaultdict(set)       # key -> subjects taught next term
+    teach_count: dict[str, int] = defaultdict(int)              # key -> primary sections next term
     taught_numbers: dict[str, set[str]] = defaultdict(set)      # key -> course numbers (for TRE)
     for r in rows:
         for raw in split_raw(r["instructors_raw"]):
@@ -70,6 +73,8 @@ def run(conn: sqlite3.Connection, gpa_df: pd.DataFrame, rmp_enabled: bool, tre_p
             taught_numbers[key].add(r["number"])
             if r["term"] == NEXT_TERM:
                 teaching_next[key].add(r["subject"])
+                if r["component"] == "primary":
+                    teach_count[key] += 1
                 next_names.add((raw, r["subject"]))
                 if r["component"] == "primary":
                     next_primary.add((raw, r["subject"]))
@@ -120,11 +125,24 @@ def run(conn: sqlite3.Connection, gpa_df: pd.DataFrame, rmp_enabled: bool, tre_p
             client.find_school()
         except RmpUnavailable:
             rmp_ok = False
+    # Time budget per run (RMP_BUDGET_SECONDS, default 20 min): instructors with the most primary sections next term
+    # go first; after the budget only cached answers are used, so coverage grows run by run via the 7-day cache.
+    budget = float(os.environ.get("RMP_BUDGET_SECONDS", "1200"))
+    t_start = time.monotonic()
+    looked_up = 0
+    budget_hit = False
     if rmp_ok:
-        for key, subjects in sorted(teaching_next.items()):
+        order = sorted(teaching_next.items(), key=lambda kv: (-teach_count.get(kv[0], 0), kv[0]))
+        for key, subjects in order:
+            if not budget_hit and time.monotonic() - t_start > budget:
+                budget_hit = True
+                client.enabled = False  # cache-only from here on
             try:
                 t = client.lookup(people[key]["raw"], sorted(subjects)[0])
+                looked_up += 1
             except RmpUnavailable:
+                if budget_hit:
+                    continue  # not cached yet; a later run will fetch it
                 rmp_ok = False
                 break
             if t is None:
@@ -138,6 +156,9 @@ def run(conn: sqlite3.Connection, gpa_df: pd.DataFrame, rmp_enabled: bool, tre_p
                  t.would_take_again_pct, t.num_ratings, json.dumps(t.top_tags), json.dumps(t.reviews),
                  datetime.now(UTC).isoformat(timespec="seconds")),
             )
+    conn.execute("INSERT OR REPLACE INTO meta VALUES ('rmp_coverage', ?)",
+                 (json.dumps({"looked_up": looked_up, "teaching_next": len(teaching_next), "matched": len(rmp_rows),
+                              "budget_hit": budget_hit}),))
     conn.execute("INSERT OR REPLACE INTO meta VALUES ('rmp_status', ?)",
                  ("ok" if rmp_ok else f"unavailable: {client.error or 'disabled'}",))
 
