@@ -132,6 +132,7 @@ function statusBadge(status: string) {
   const s = status.toLowerCase();
   if (!s) return <span className="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-700">Not published</span>;
   const restricted = s.includes("restricted");
+  if (s.includes("pending")) return <span className="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-700">Pending</span>;
   if (s.includes("closed")) return <span className="rounded bg-red-100 px-1.5 py-0.5 text-xs font-medium text-red-800">Closed</span>;
   if (s.includes("open"))
     return (
@@ -166,7 +167,8 @@ function SectionsTable({ course, term, block }: { course: Course; term: string; 
     <div className="mt-2">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted">
         <span>
-          Seat status from the Course Explorer snapshot of <strong>{fmtDate(block.checked_at)}</strong>.
+          Open/Closed status from Course Explorer, checked <strong>{fmtDate(block.checked_at)}</strong>. Exact seats left and
+          waitlists are only in Self-Service.
         </span>
         <a className="font-medium text-brand-dark underline" href={SELF_SERVICE_URL} rel="noopener">
           Register in Self-Service ↗

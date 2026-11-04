@@ -124,7 +124,7 @@ export default async function CoursePage({ params }: Props) {
                 <span>Not offered</span>
               ) : next.status_known && next.n_open !== null ? (
                 <Metric source={`Course Explorer snapshot, ${fmtDate(next.checked_at)}`}>
-                  {fmtPct(next.n_primary ? next.n_open / next.n_primary : 0)} open ({next.n_open}/{next.n_primary})
+                  {next.n_open} of {next.n_primary} lecture section{next.n_primary === 1 ? "" : "s"} open
                 </Metric>
               ) : (
                 <Metric source={`Course Explorer snapshot, ${fmtDate(next.checked_at)}, taken before seat status was published`}>
