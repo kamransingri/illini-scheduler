@@ -126,3 +126,14 @@ def test_store_roundtrip(tmp_path):
     assert conn.execute("SELECT COUNT(*) FROM sections WHERE start_time > end_time").fetchone()[0] == 0
     row = conn.execute("SELECT * FROM courses WHERE subject='CS' AND number='124'").fetchone()
     assert row["gened_codes"] == "QR1" and "MATH 112" in row["prereq_text"]
+
+
+def test_html_entities_decoded():
+    import io
+    header = ("Year,Term,YearTerm,Subject,Number,Name,Description,Credit Hours,Section Info,Degree Attributes,"
+              "Schedule Information,CRN,Section,Status Code,Part of Term,Section Title,Section Credit Hours,"
+              "Section Status,Enrollment Status,Type,Type Code,Start Time,End Time,Days of Week,Room,Building,Instructors")
+    row = ('2027,spring,2027-sp,REL,208,Cultures &amp; Literatures,A &amp; B,3 hours.,,,,1,A,A,1,,,A,,Lecture,LEC,'
+           '09:00AM,09:50AM,MWF,1,Hall,"X, Y"')
+    courses, _ = parse_catalog_csv(io.StringIO(header + "\n" + row + "\n"))
+    assert courses[0].title == "Cultures & Literatures" and courses[0].description == "A & B"

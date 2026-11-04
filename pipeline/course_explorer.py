@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import csv
+import html
 import io
 import re
 import sqlite3
@@ -258,8 +259,8 @@ def parse_catalog_csv(
             key = (subj, num)
             if key not in courses:
                 courses[key] = Course(
-                    term=term, subject=subj, number=num, title=row["Name"].strip(),
-                    credit_hours=row["Credit Hours"].strip(), description=row["Description"].strip(),
+                    term=term, subject=subj, number=num, title=html.unescape(row["Name"].strip()),
+                    credit_hours=row["Credit Hours"].strip(), description=html.unescape(row["Description"].strip()),
                     gened_text=row["Degree Attributes"].strip(), section_info_text=row["Section Info"].strip(),
                     schedule_info_text=row["Schedule Information"].strip(),
                 )
@@ -358,8 +359,8 @@ def parse_course_xml(data: bytes) -> tuple[Course, list[Section]]:
     term = _term_from_parents(root)
     subj_el = root.xpath("./*[local-name()='parents']/*[local-name()='subject']")
     course = Course(
-        term=term, subject=subject, number=number, title=_text(root, "label"),
-        credit_hours=_text(root, "creditHours"), description=_text(root, "description"),
+        term=term, subject=subject, number=number, title=html.unescape(_text(root, "label")),
+        credit_hours=_text(root, "creditHours"), description=html.unescape(_text(root, "description")),
         gened_text=_text(root, "sectionDegreeAttributes"),
         section_info_text=_text(root, "courseSectionInformation"),
         schedule_info_text=_text(root, "classScheduleInformation"),

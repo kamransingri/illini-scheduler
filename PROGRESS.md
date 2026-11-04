@@ -166,3 +166,36 @@ Acceptance:
 - Vitest: 15 unit tests (search, format, cart encoding): pass.
 
 Phase 6 complete.
+
+### Phase 7 — Gen-ed finder
+
+Built `/geneds/` (`components/GenedFinder.tsx`, `lib/geneds.ts`): code multi-select, double-dips, credit hours,
+no 8am / no Friday / online only, next-term sections, 200+ student floor, min RMP (disabled with a note while RMP is
+unavailable); sort by recent GPA, % A, RMP or sections; rows show categories, recent GPA with n, best instructor
+next term by GPA (≥ 60 students), section count, and Add to schedule.
+
+Acceptance:
+- Vitest: 12 filter/sort tests: pass.
+- Playwright: Humanities: Hist & Phil + "Has sections in Spring 2027", sort by GPA: every row has HP and GPAs are
+  non-increasing: pass.
+- Top 10 Humanities: Hist & Phil (HP) by recent GPA, offered Spring 2027:
+
+| Course | Title | Recent GPA | Students |
+| --- | --- | --- | --- |
+| SPED 117 | The Culture of Disability | 3.86 | 3665 |
+| HK 208 | Introduction to Medical Ethics | 3.85 | 3411 |
+| CLCV 231 | Development of Ancient Cities | 3.84 | 1782 |
+| ARTJ 302 | Intro to Japanese Animation | 3.82 | 106 |
+| LAW 303 | Living the Law | 3.81 | 677 |
+| ANSC 255 | Animal Ethics | 3.81 | 390 |
+| EDUC 202 | Social Justice, School and Society | 3.77 | 722 |
+| REL 110 | World Religions | 3.76 | 3211 |
+| HIST 172 | US History Since 1877 | 3.75 | 23 |
+| ECE 316 | Ethics and Engineering | 3.73 | 281 |
+
+  Comparison with "Every Gen Ed at UIUC, by GPA" was not possible (`waf.cs.illinois.edu` blocked; Needs a human #4).
+  Expected differences: that view averages over all terms in the dataset, while ours uses the last 8 fall/spring
+  terms and lists only courses that have a page (offered Fall 2026/Spring 2027 or with recent GPA data).
+- Screenshot reviewed (`screenshots/geneds-desktop.png`); fixed `&amp;` in titles found there.
+
+Phase 7 complete.
