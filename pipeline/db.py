@@ -44,6 +44,12 @@ CREATE TABLE IF NOT EXISTS meetings (
 );
 CREATE INDEX IF NOT EXISTS sections_course ON sections(subject, number, term);
 
+-- Seat availability (Open / Closed / ...) per section, from the Course Explorer web pages
+CREATE TABLE IF NOT EXISTS availability (
+    term TEXT, crn TEXT, status TEXT, checked_at TEXT,
+    PRIMARY KEY (term, crn)
+);
+
 -- Phase 2: GPA
 CREATE TABLE IF NOT EXISTS gpa_course (
     subject TEXT, number TEXT, title TEXT, avg_gpa REAL, recent_avg_gpa REAL, students INTEGER,

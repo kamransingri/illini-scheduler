@@ -235,7 +235,7 @@ function SectionsTable({ course, term, block }: { course: Course; term: string; 
               {s.instructors_raw.length ? s.instructors_raw.join("; ") : <span className="text-muted">TBA</span>}
             </span>
             <span className="col-span-2 flex flex-wrap items-center gap-2 md:col-span-1 md:flex-col md:items-start md:gap-1">
-              {statusBadge(s.status, block.status_known)}
+              {<span title={s.status_at ? `Checked ${fmtDate(s.status_at)}` : undefined}>{statusBadge(s.status, block.status_known)}</span>}
               <a className="text-xs text-brand-dark underline" href={cisUrl(term, course.subject, course.number, s.crn)} rel="noopener">
                 Check live seats ↗
               </a>

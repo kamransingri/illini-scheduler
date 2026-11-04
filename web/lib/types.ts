@@ -21,6 +21,7 @@ export type Section = {
   instructors: string[];
   instructors_raw: string[];
   special: string; // non-empty = looks restricted / special-program (reason)
+  status_at?: string; // when this section's status was read
 };
 
 export type TermBlock = {

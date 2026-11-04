@@ -178,12 +178,14 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
     for r in conn.execute(f"SELECT * FROM meetings WHERE term IN ({qmarks})", live_terms):
         meet[(r["term"], r["crn"])].append(
             {"d": r["days"], "s": r["start_time"], "e": r["end_time"], "b": r["building"] or "", "r": r["room"] or ""})
+    status_at = {(r[0], r[1]): r[2] for r in conn.execute("SELECT term, crn, checked_at FROM availability")}
     for r in conn.execute(f"SELECT * FROM sections WHERE term IN ({qmarks}) ORDER BY section_code", live_terms):
         raws = [p.strip() for p in (r["instructors_raw"] or "").split(";") if p.strip()]
         sections[(r["subject"], r["number"])][r["term"]].append({
             "crn": r["crn"], "code": r["section_code"], "type": r["type"], "type_name": r["type_name"],
             "component": r["component"], "group": r["link_group"], "part": r["part_of_term"] or "1",
             "status": r["enrollment_status"] or "", "status_code": r["status_code"],
+            "status_at": status_at.get((r["term"], r["crn"]), ""),
             "credits": r["section_credit_hours"] or "", "title": r["section_title"] or "",
             "text": " ".join(filter(None, (r["section_text"], r["section_notes"]))),
             "meetings": meet.get((r["term"], r["crn"]), []),

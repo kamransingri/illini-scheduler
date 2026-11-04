@@ -32,6 +32,7 @@ def test_run_updates_sections_and_checked_time(tmp_path, monkeypatch):
     real = httpx.AsyncClient
     monkeypatch.setattr(httpx, "AsyncClient", lambda **kw: real(transport=httpx.MockTransport(handler), **kw))
     monkeypatch.setattr(availability, "RAW", tmp_path)
+    monkeypatch.setenv("AVAILABILITY_MODE", "crawl")
     msg = availability.run(conn, ["2026-fa"])
     assert "17 sections" in msg
     assert conn.execute("SELECT enrollment_status FROM sections WHERE crn='76898'").fetchone()[0] == "Closed"
@@ -48,4 +49,5 @@ def test_run_never_raises(tmp_path, monkeypatch):
         raise RuntimeError("network down")
 
     monkeypatch.setattr(availability, "_fetch_all", boom)
+    monkeypatch.setenv("AVAILABILITY_MODE", "crawl")
     assert "unavailable" in availability.run(conn, ["2026-fa"])

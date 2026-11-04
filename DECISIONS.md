@@ -269,3 +269,11 @@ Every judgment call made during the autonomous build, newest phase last.
   ready; availability uses 2 concurrent requests, pauses all workers on 429/503 (honouring Retry-After), retries
   failures once after a 60 s cool-down, and logs the failure reasons. A section without a status in a term that has
   statuses shows "Unknown" (not "Not published").
+- **D11.3 Separate, slow availability job.** Even with backoff, the nightly build got HTTP 202 for most Course
+  Explorer pages (26,644 refusals for Fall, 34,412 for Spring) while the same pages loaded fine from elsewhere. So:
+  `.github/workflows/availability.yml` runs daily at 04:17 UTC for up to 4.5 h, reading about one page per second,
+  next term first, oldest-checked courses first. It cools down 15 s after a refusal and 5 min after 10 in a row,
+  saves progress every 100 pages, and commits `data/availability/<term>.json` (CRN → status + time checked). The
+  nightly site build reads those files (`AVAILABILITY_MODE=file`) and no longer calls the Course Explorer XML feed
+  (`SOURCE=csv`): sections come from the mirror. Each section's badge shows when it was checked (on hover). The
+  first files were seeded from the build session, which Course Explorer doesn't throttle.
