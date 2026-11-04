@@ -24,6 +24,12 @@ runs retry. RMP works: about 20 minutes of lookups per run, coverage growing thr
 exam/grading profiles (up from 66). On GitHub the pipeline ran CI 147 pytest + 47 Vitest, 25 Playwright tests against the build,
 and 8 smoke tests against the live URL: all passed.
 
+**Seat availability (added after launch):** every section shows Open / Open (Restricted) / Closed / Pending with
+the time it was checked. Run 41797446996: Fall 2026 11,951 of 12,683 sections, Spring 2027 11,599 of 11,690. A
+separate daily job (`availability.yml`, 04:17 UTC) re-reads the public Course Explorer pages slowly (≈1/s) and
+commits `data/availability/*.json`; the 09:00 build uses them. Exact seats left / capacity / waitlist exist only in
+Self-Service (NetID) and are linked, never scraped.
+
 **Known issues:**
 - RMP covers the instructors looked up so far (lecture instructors first). The rest show a search link and fill in
   over the next nightly runs.
