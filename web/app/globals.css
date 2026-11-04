@@ -13,19 +13,21 @@
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-html {
-  -webkit-text-size-adjust: 100%;
-}
-body {
-  background: #ffffff;
-  color: var(--color-ink);
-}
-a {
-  color: inherit;
-}
-:focus-visible {
-  outline: 2px solid var(--color-brand);
-  outline-offset: 2px;
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: #ffffff;
+    color: var(--color-ink);
+  }
+  a {
+    color: inherit;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
 }
 
 /* Metric with its source on hover / focus */

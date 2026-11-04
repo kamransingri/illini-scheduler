@@ -199,3 +199,32 @@ Acceptance:
 - Screenshot reviewed (`screenshots/geneds-desktop.png`); fixed `&amp;` in titles found there.
 
 Phase 7 complete.
+
+### Phase 8 — Schedule builder
+
+Built `/schedule/` (`components/ScheduleBuilder.tsx`, `components/WeekCalendar.tsx`, `lib/schedule.ts`,
+`lib/ics.ts`, `lib/campus.ts`, `lib/terms.ts`): cart (search-to-add, from course pages and the gen-ed finder,
+localStorage + URL), term switch, locked CRNs, blocked times, hard rules, weight sliders, top 50 schedules with
+‹ › navigation, summary line ("Expected GPA 3.46, earliest 10:00am"), weekly calendar, section list with CRNs,
+warnings (not offered, Closed/Restricted, > 18 credit hours), Copy all CRNs, Download .ics, Copy share link,
+Self-Service link.
+
+Acceptance:
+- Unit tests: overlap on shared days conflicts; same times on different days don't; MWF vs TR never;
+  10:00-10:50 + 10:50-11:40 is back-to-back, not a conflict; A/B half-terms; online: pass.
+- Property test: 1,000 random carts (grouped, any-with-any and standalone courses, half-terms, online): every
+  generated schedule is conflict-free and every bundle is a valid lecture + linked-section combination; plus 200
+  carts checking no-8am / no-Friday / blocked times / locked CRN: pass.
+- Performance: 6-course heavy cart ≈ 0.5 s in Node (exact) and < 2 s end to end in Chromium (Playwright): pass.
+- .ics: parsed by ical.js in tests; every event recurs weekly in America/Chicago, 6-59 occurrences, lines folded to
+  ≤ 75 octets: pass. (Google Calendar itself can't be driven from here; the file follows RFC 5545 with a VTIMEZONE,
+  which Google accepts.)
+- Playwright: add CS 124, RHET 105, STAT 107 through search, MATH 221 through the share link (not offered in
+  Spring 2027, so search has no Add button and the builder warns), set "no 8am", generate, step through all 50
+  schedules: no section starts before 9:00; .ics downloads: pass. Cart survives reload, URL is shareable, empty
+  cart shows guidance: pass.
+- Screenshots reviewed (`screenshots/schedule-*.png`). Fixed while reviewing: the Self-Service button text was
+  invisible (unlayered `a {color: inherit}` overrode Tailwind utilities, so base styles now live in `@layer base`),
+  and the search placeholder was cut off in the narrow column.
+
+Phase 8 complete.

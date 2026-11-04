@@ -132,7 +132,8 @@ def test_html_entities_decoded():
     import io
     header = ("Year,Term,YearTerm,Subject,Number,Name,Description,Credit Hours,Section Info,Degree Attributes,"
               "Schedule Information,CRN,Section,Status Code,Part of Term,Section Title,Section Credit Hours,"
-              "Section Status,Enrollment Status,Type,Type Code,Start Time,End Time,Days of Week,Room,Building,Instructors")
+              "Section Status,Enrollment Status,Type,Type Code,Start Time,End Time,Days of Week,Room,Building,"
+              "Instructors")
     row = ('2027,spring,2027-sp,REL,208,Cultures &amp; Literatures,A &amp; B,3 hours.,,,,1,A,A,1,,,A,,Lecture,LEC,'
            '09:00AM,09:50AM,MWF,1,Hall,"X, Y"')
     courses, _ = parse_catalog_csv(io.StringIO(header + "\n" + row + "\n"))

@@ -29,10 +29,12 @@ export default function SearchBox({
   nextTerm,
   autoFocus = false,
   withCart = true,
+  placeholder = 'Try "cs124", "CS 124", "intro to computer science" or an instructor',
 }: {
   nextTerm: string;
   autoFocus?: boolean;
   withCart?: boolean;
+  placeholder?: string;
 }) {
   const [q, setQ] = useState("");
   const [index, setIndex] = useState<SearchIndex | null>(null);
@@ -75,7 +77,7 @@ export default function SearchBox({
             router.push(hitHref(hits[active]));
           }
         }}
-        placeholder='Try "cs124", "CS 124", "intro to computer science" or an instructor'
+        placeholder={placeholder}
         className="w-full rounded-lg border border-line bg-white px-4 py-3 text-base shadow-sm focus:border-brand focus:outline-none"
         aria-controls="search-results"
       />
