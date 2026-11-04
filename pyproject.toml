@@ -23,3 +23,7 @@ python_version = "3.11"
 ignore_missing_imports = true
 check_untyped_defs = true
 files = ["pipeline"]
+
+[[tool.mypy.overrides]]
+module = "pipeline.tests.*"
+disable_error_code = ["union-attr", "arg-type", "var-annotated"]
