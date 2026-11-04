@@ -263,7 +263,11 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                     {block && block.sections.length > 0 && (
                       <div className="mt-1 space-y-1">
                         {comps.map((comp) => {
-                          const opts = block.sections.filter((s) => s.component === comp);
+                          // once a lecture is locked, only offer sections from its link group
+                          const lockedPrimary = block.sections.find((s) => s.component === "primary" && c.locked.includes(s.crn));
+                          const opts = block.sections.filter(
+                            (s) => s.component === comp && (comp === "primary" || !lockedPrimary || lockedPrimary.group === "*" || s.group === lockedPrimary.group),
+                          );
                           const current = opts.find((s) => c.locked.includes(s.crn))?.crn ?? "";
                           const label = `${COMPONENT_NAMES[comp] ?? comp} for ${key}`;
                           return (
@@ -444,7 +448,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                   ›
                 </button>
                 <span className="text-xs text-muted">
-                  {result.schedules.length === 50 ? "top 50 shown, " : ""}ranked from {result.total.toLocaleString()} distinct time patterns
+                  {result.schedules.length === 50 ? "top 50 shown, " : ""}ranked from {result.total.toLocaleString()} conflict-free combinations
                   {result.truncated ? " (search stopped early to stay fast)" : ""}
                 </span>
               </div>

@@ -12,11 +12,16 @@ test("an impossible lock is explained and the schedule is marked incomplete", as
   await expect(page.getByTestId("cart").locator("li")).toHaveCount(2);
   const lec = page.getByLabel("Lock Lecture for MATH 231");
   const dis = page.getByLabel("Lock Discussion for MATH 231");
-  await lec.selectOption({ label: (await lec.locator("option").nth(1).textContent())! });
-  const lecCode = ((await lec.locator("option:checked").textContent()) ?? "").replace("🔒", "").trim().split(" ")[0];
-  const disOptions = await dis.locator("option").allTextContents();
-  const other = disOptions.find((o) => o.includes("CRN") && !o.replace("🔒", "").trim().startsWith(lecCode[0]))!;
-  await dis.selectOption({ label: other });
+  // lock a discussion first, then a lecture from a different group (the lecture list isn't filtered)
+  const disFirst = (await dis.locator("option").allTextContents()).find((o) => o.includes("CRN"))!;
+  await dis.selectOption({ label: disFirst });
+  const disGroup = disFirst.replace("🔒", "").trim()[0];
+  const lecOther = (await lec.locator("option").allTextContents()).find((o) => o.includes("CRN") && !o.replace("🔒", "").trim().startsWith(disGroup))!;
+  await lec.selectOption({ label: lecOther });
+  // with a lecture locked, the discussion list only offers that lecture's group
+  const lecGroup = lecOther.replace("🔒", "").trim()[0];
+  for (const o of (await dis.locator("option").allTextContents()).filter((x) => x.includes("CRN") && !x.includes(disFirst.slice(3, 12))))
+    expect(o.replace("🔒", "").trim()[0]).toBe(lecGroup);
   await page.getByRole("button", { name: "Generate schedules" }).click();
   await expect(page.getByTestId("missing")).toContainText("MATH 231 can't be scheduled");
   await expect(page.getByTestId("missing")).toContainText("can't be taken together");

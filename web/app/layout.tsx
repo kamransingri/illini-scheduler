@@ -27,7 +27,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               Search
             </Link>
             <Link href="/geneds/" className="text-sm whitespace-nowrap hover:underline">
-              Gen-eds<span className="hidden sm:inline"> finder</span>
+              <span className="sm:hidden">Gen-eds</span>
+              <span className="hidden sm:inline">Gen-ed finder</span>
             </Link>
             <Link href="/schedule/" className="text-sm whitespace-nowrap hover:underline">
               Schedule<span className="hidden sm:inline"> builder</span>
