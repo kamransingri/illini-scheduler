@@ -448,10 +448,21 @@ class ApiCrawler:
                 root = etree.fromstring(subj_xml)
                 subj = root.get("id", "")
                 course_ids += [(subj, e.get("id", "")) for e in root.iter() if etree.QName(e).localname == "course"]
-            results = await asyncio.gather(
-                *(self.get(client, f"schedule/{year}/{season}/{s}/{n}.xml?mode=cascade") for s, n in course_ids),
+            # Probe first: if Course Explorer is still generating most pages (HTTP 202), stop early and use the
+            # mirror instead of hammering it with thousands of retries (that got GitHub's runner throttled).
+            probe = course_ids[:60]
+            first = await asyncio.gather(
+                *(self.get(client, f"schedule/{year}/{season}/{s}/{n}.xml?mode=cascade") for s, n in probe),
                 return_exceptions=True,
             )
+            bad = sum(1 for r in first if isinstance(r, BaseException) and not isinstance(r, FileNotFoundError))
+            if len(probe) >= 20 and bad > 0.3 * len(probe):
+                raise RuntimeError(f"{bad} of the first {len(probe)} course pages not ready; skipping the API crawl")
+            rest = await asyncio.gather(
+                *(self.get(client, f"schedule/{year}/{season}/{s}/{n}.xml?mode=cascade") for s, n in course_ids[60:]),
+                return_exceptions=True,
+            )
+            results = list(first) + list(rest)
             # second pass for pages that weren't ready (HTTP 202) or failed transiently
             retry = [i for i, r in enumerate(results)
                      if isinstance(r, BaseException) and not isinstance(r, FileNotFoundError)]

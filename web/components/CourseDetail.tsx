@@ -128,9 +128,14 @@ export default function CourseDetail({ subject, number, meta }: { subject: strin
 
 // ---------------------------------------------------------------------------------------------------------
 
-function statusBadge(status: string) {
+function statusBadge(status: string, termKnown: boolean) {
   const s = status.toLowerCase();
-  if (!s) return <span className="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-700">Not published</span>;
+  if (!s)
+    return (
+      <span className="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-700" title={termKnown ? "This section's status couldn't be read; check live seats" : undefined}>
+        {termKnown ? "Unknown" : "Not published"}
+      </span>
+    );
   const restricted = s.includes("restricted");
   if (s.includes("pending")) return <span className="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-700">Pending</span>;
   if (s.includes("closed")) return <span className="rounded bg-red-100 px-1.5 py-0.5 text-xs font-medium text-red-800">Closed</span>;
@@ -230,7 +235,7 @@ function SectionsTable({ course, term, block }: { course: Course; term: string; 
               {s.instructors_raw.length ? s.instructors_raw.join("; ") : <span className="text-muted">TBA</span>}
             </span>
             <span className="col-span-2 flex flex-wrap items-center gap-2 md:col-span-1 md:flex-col md:items-start md:gap-1">
-              {statusBadge(s.status)}
+              {statusBadge(s.status, block.status_known)}
               <a className="text-xs text-brand-dark underline" href={cisUrl(term, course.subject, course.number, s.crn)} rel="noopener">
                 Check live seats ↗
               </a>

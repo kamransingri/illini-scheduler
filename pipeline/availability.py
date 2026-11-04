@@ -16,6 +16,7 @@ import re
 import sqlite3
 import sys
 import time
+from collections import Counter
 from datetime import UTC, datetime
 
 from lxml import html as lhtml
@@ -52,43 +53,60 @@ def parse_availability(page: str | bytes) -> dict[str, str]:
 
 
 async def _fetch_all(courses: list[tuple[str, str]], year: int, season: str, budget: float,
-                     concurrency: int = 4) -> tuple[dict[str, str], int, bool]:
+                     concurrency: int = 2) -> tuple[dict[str, str], int, bool, Counter[str]]:
+    """Fetch every course page. Throttling (429/503, or repeated errors) pauses *all* workers, honouring
+    Retry-After; failures get one more pass after a cool-down. Returns statuses, failures, timeout, reasons."""
     import httpx
 
     sem = asyncio.Semaphore(concurrency)
     t0 = time.monotonic()
     statuses: dict[str, str] = {}
-    failed = 0
+    reasons: Counter[str] = Counter()
     timed_out = False
+    pause_until = 0.0
     cache_dir = RAW / "cis-web" / f"{year}-{season}"
     cache_dir.mkdir(parents=True, exist_ok=True)
 
-    async def one(client: httpx.AsyncClient, subj: str, num: str) -> None:
-        nonlocal failed, timed_out
-        if time.monotonic() - t0 > budget:
-            timed_out = True
-            return
+    async def one(client: httpx.AsyncClient, subj: str, num: str) -> bool:
+        nonlocal timed_out, pause_until
         delay = 2.0
-        for attempt in range(4):
+        for _attempt in range(4):
+            if time.monotonic() - t0 > budget:
+                timed_out = True
+                return False
+            wait = pause_until - time.monotonic()
+            if wait > 0:
+                await asyncio.sleep(wait)
             async with sem:
                 try:
                     r = await client.get(f"{WEB_BASE}/{year}/{season}/{subj}/{num}")
                     if r.status_code == 200:
                         (cache_dir / f"{subj}{num}.html").write_bytes(r.content)
                         statuses.update(parse_availability(r.content))
-                        return
+                        return True
                     if r.status_code == 404:
-                        return
-                except httpx.TransportError:
-                    pass
-            if attempt < 3:
-                await asyncio.sleep(delay)
-                delay *= 2
-        failed += 1
+                        return True
+                    reasons[f"HTTP {r.status_code}"] += 1
+                    if r.status_code in (429, 503):
+                        ra = r.headers.get("Retry-After", "")
+                        pause = min(float(ra), 120.0) if ra.isdigit() else 30.0
+                        pause_until = max(pause_until, time.monotonic() + pause)
+                except httpx.TransportError as e:
+                    reasons[type(e).__name__] += 1
+            await asyncio.sleep(delay)
+            delay *= 2
+        return False
 
     async with httpx.AsyncClient(headers={"User-Agent": USER_AGENT}, timeout=30, follow_redirects=True) as client:
-        await asyncio.gather(*(one(client, s, n) for s, n in courses))
-    return statuses, failed, timed_out
+        ok = await asyncio.gather(*(one(client, s, n) for s, n in courses))
+        retry = [c for c, good in zip(courses, ok, strict=True) if not good]
+        if retry and not timed_out:
+            await asyncio.sleep(60)  # cool down, then one more pass
+            ok2 = await asyncio.gather(*(one(client, s, n) for s, n in retry))
+            failed = sum(1 for g in ok2 if not g)
+        else:
+            failed = len(retry)
+    return statuses, failed, timed_out, reasons
 
 
 def run(conn: sqlite3.Connection, terms: list[str], subjects: set[str] | None = None) -> str:
@@ -103,7 +121,7 @@ def run(conn: sqlite3.Connection, terms: list[str], subjects: set[str] | None = 
             continue
         started = datetime.now(UTC).isoformat(timespec="seconds")
         try:
-            statuses, failed, timed_out = asyncio.run(_fetch_all(courses, year, season, budget))
+            statuses, failed, timed_out, reasons = asyncio.run(_fetch_all(courses, year, season, budget))
         except Exception as e:  # noqa: BLE001 - availability is optional; never fail the pipeline for it
             print(f"warn: availability for {term} failed: {type(e).__name__}: {e}", file=sys.stderr)
             reports.append(f"{term}: unavailable")
@@ -116,6 +134,7 @@ def run(conn: sqlite3.Connection, terms: list[str], subjects: set[str] | None = 
             conn.execute("UPDATE terms SET checked_at=?, source=source || ' + web availability' "
                          "WHERE term=? AND source NOT LIKE '%web availability%'", (started, term))
             conn.execute("UPDATE terms SET checked_at=? WHERE term=?", (started, term))
-        reports.append(f"{term}: {n} sections from {len(courses)} course pages"
-                       f"{f', {failed} failed' if failed else ''}{', stopped at time budget' if timed_out else ''}")
+        detail = f", {failed} failed ({dict(reasons.most_common(3))})" if failed else ""
+        budget_note = ", stopped at time budget" if timed_out else ""
+        reports.append(f"{term}: {n} sections from {len(courses)} course pages{detail}{budget_note}")
     return "; ".join(reports)

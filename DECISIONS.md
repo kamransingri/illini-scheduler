@@ -262,3 +262,10 @@ Every judgment call made during the autonomous build, newest phase last.
   and next term: one page per course, ≤ 4 concurrent requests, retries, a 15-minute budget, about 3 minutes for both
   terms. It never fails the pipeline. "Checked at" is the time of that fetch. **Seat counts (capacity, seats left,
   waitlist) are only in Self-Service behind a NetID login and are never scraped**; the site links there.
+- **D11.2 Throttling on GitHub.** The first deploy with availability read Fall 2026 for only 4,735 sections and
+  Spring 2027 for none. Pages failed right after the Course Explorer API crawl had made thousands of
+  "still generating" (HTTP 202) retries. The same requests work from elsewhere, so the runner was most likely
+  throttled. Changes: the API crawl probes 60 pages first and skips straight to the mirror if more than 30% aren't
+  ready; availability uses 2 concurrent requests, pauses all workers on 429/503 (honouring Retry-After), retries
+  failures once after a 60 s cool-down, and logs the failure reasons. A section without a status in a term that has
+  statuses shows "Unknown" (not "Not published").

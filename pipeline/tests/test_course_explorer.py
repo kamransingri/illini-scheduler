@@ -213,3 +213,34 @@ def test_crawl_tolerates_a_few_failed_course_pages(tmp_path, monkeypatch):
     courses, secs, names = asyncio.run(crawler.crawl_term("2027-sp", {"CS", "STAT"}))
     assert [c.number for c in courses] == ["124"] and secs
     assert sorted(crawler.failed) == [("CS", "999"), ("STAT", "999")]
+
+
+def test_crawl_stops_early_when_most_pages_are_still_generating(tmp_path, monkeypatch):
+    import asyncio
+
+    import httpx
+
+    import pipeline.course_explorer as ce
+
+    term_xml = (XML / "HANDMADE_schedule_2027_spring.xml").read_bytes()
+    courses = b"".join(b'<course id="%d">x</course>' % (100 + i) for i in range(40))
+    head = b'<ns2:subject xmlns:ns2="http://rest.cis.illinois.edu" id="CS"><courses>'
+    subj = head + courses + b"</courses></ns2:subject>"
+    calls = {"course": 0}
+
+    def handler(request):
+        p = request.url.path
+        if p.endswith("/2027/spring.xml"):
+            return httpx.Response(200, content=term_xml)
+        if p.endswith("/spring/CS.xml") or p.endswith("/spring/STAT.xml"):
+            return httpx.Response(200, content=subj)
+        calls["course"] += 1
+        return httpx.Response(202)
+
+    real_client = httpx.AsyncClient
+    monkeypatch.setattr(httpx, "AsyncClient", lambda **kw: real_client(transport=httpx.MockTransport(handler), **kw))
+    orig_sleep = ce.asyncio.sleep
+    monkeypatch.setattr(ce.asyncio, "sleep", lambda *_: orig_sleep(0))
+    with pytest.raises(RuntimeError, match="not ready"):
+        asyncio.run(ce.ApiCrawler(cache_dir=tmp_path).crawl_term("2027-sp", {"CS"}))
+    assert calls["course"] <= 60 * 8  # only the probe was attempted, not all 40+ pages x retries beyond it
