@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- HANDMADE FIXTURE: layout follows the Course Explorer REST schema; values copied from the real
+     wadefagen/datasets course-catalog CSV (2027-sp). Not fetched from courses.illinois.edu. -->
+<ns2:term xmlns:ns2="http://rest.cis.illinois.edu" id="120271">
+  <label>Spring 2027</label>
+  <subjects>
+    <subject id="CS" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/CS.xml">Computer Science</subject>
+    <subject id="STAT" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/STAT.xml">Statistics</subject>
+  </subjects>
+</ns2:term>

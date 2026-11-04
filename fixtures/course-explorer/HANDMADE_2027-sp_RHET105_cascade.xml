@@ -1,0 +1,2022 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- HANDMADE FIXTURE: layout follows the Course Explorer REST schema; values copied from the real
+     wadefagen/datasets course-catalog CSV (2027-sp). Not fetched from courses.illinois.edu. -->
+<ns2:course xmlns:ns2="http://rest.cis.illinois.edu" id="RHET 105" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105.xml">
+  <parents>
+    <calendarYear id="2027" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027.xml">2027</calendarYear>
+    <term id="120271" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring.xml">Spring 2027</term>
+    <subject id="RHET" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET.xml">RHET</subject>
+  </parents>
+  <label>Writing and Research</label>
+  <description>[IAI Code: C1901R] Introduction in research-based writing and the construction of academic, argumentative essays that use primary and secondary sources as evidence. This course fulfills the Campus Composition I general education requirement. Credit is not given toward graduation for: Credit is not given for both RHET 105 and any of these other Comp I courses: RHET 101, RHET 102, CMN 111 or CMN 112.</description>
+  <creditHours>4 hours.</creditHours>
+  <courseSectionInformation>Credit is not given toward graduation for: Credit is not given for both RHET 105 and any of these other Comp I courses: RHET 101, RHET 102, CMN 111 or CMN 112.</courseSectionInformation>
+  <sectionDegreeAttributes>Composition I course.</sectionDegreeAttributes>
+  <classScheduleInformation>Students whose second language is English should take an English placement test through the Division of English as an International Language, before signing up for rhetoric. Engineering students must obtain a dean's approval to drop this course after the second week of instruction.</classScheduleInformation>
+  <detailedSections>
+    <detailedSection id="32913" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/32913.xml">
+      <sectionNumber>A1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>08:00 AM</start>
+          <end>08:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>142</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="58798" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/58798.xml">
+      <sectionNumber>A3</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="ONL">Online</type>
+          <start>08:00 AM</start>
+          <end>08:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="32923" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/32923.xml">
+      <sectionNumber>B1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>09:00 AM</start>
+          <end>09:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>142</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33423" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33423.xml">
+      <sectionNumber>B10</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="ONL">Online</type>
+          <start>09:00 AM</start>
+          <end>09:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="43466" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/43466.xml">
+      <sectionNumber>B2</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>09:00 AM</start>
+          <end>09:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>148</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="39340" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/39340.xml">
+      <sectionNumber>B3</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>09:00 AM</start>
+          <end>09:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>152</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="32918" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/32918.xml">
+      <sectionNumber>B4</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>09:00 AM</start>
+          <end>09:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>154</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="43441" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/43441.xml">
+      <sectionNumber>B5</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>09:00 AM</start>
+          <end>09:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>29</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33386" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33386.xml">
+      <sectionNumber>B6</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>09:00 AM</start>
+          <end>09:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>1026</roomNumber>
+          <buildingName>Lincoln Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="51853" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/51853.xml">
+      <sectionNumber>B7</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>09:00 AM</start>
+          <end>09:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>127</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33383" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33383.xml">
+      <sectionNumber>B8</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>09:00 AM</start>
+          <end>09:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>115</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="71975" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/71975.xml">
+      <sectionNumber>B9</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>09:00 AM</start>
+          <end>09:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>156</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="32932" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/32932.xml">
+      <sectionNumber>C1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>10:00 AM</start>
+          <end>10:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>142</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="70958" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/70958.xml">
+      <sectionNumber>C10</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="ONL">Online</type>
+          <start>10:00 AM</start>
+          <end>10:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="58799" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/58799.xml">
+      <sectionNumber>C11</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>10:00 AM</start>
+          <end>10:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>205</roomNumber>
+          <buildingName>Gregory Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="32948" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/32948.xml">
+      <sectionNumber>C2</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>10:00 AM</start>
+          <end>10:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>148</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="32951" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/32951.xml">
+      <sectionNumber>C3</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>10:00 AM</start>
+          <end>10:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>152</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="39345" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/39345.xml">
+      <sectionNumber>C4</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>10:00 AM</start>
+          <end>10:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>154</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33416" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33416.xml">
+      <sectionNumber>C5</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>10:00 AM</start>
+          <end>10:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>29</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="51855" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/51855.xml">
+      <sectionNumber>C6</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>10:00 AM</start>
+          <end>10:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>156</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="51854" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/51854.xml">
+      <sectionNumber>C7</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>10:00 AM</start>
+          <end>10:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>127</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="70956" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/70956.xml">
+      <sectionNumber>C8</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>10:00 AM</start>
+          <end>10:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>115</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33379" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33379.xml">
+      <sectionNumber>C9</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>10:00 AM</start>
+          <end>10:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>149</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33266" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33266.xml">
+      <sectionNumber>D1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>11:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>142</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="70957" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/70957.xml">
+      <sectionNumber>D10</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="ONL">Online</type>
+          <start>11:00 AM</start>
+          <end>11:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="78393" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/78393.xml">
+      <sectionNumber>D11</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>11:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>309</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33268" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33268.xml">
+      <sectionNumber>D2</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>11:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>148</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33269" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33269.xml">
+      <sectionNumber>D3</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>11:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>152</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33271" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33271.xml">
+      <sectionNumber>D4</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>11:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>154</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33272" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33272.xml">
+      <sectionNumber>D5</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>11:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>115</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33436" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33436.xml">
+      <sectionNumber>D6</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>11:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>69</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="39342" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/39342.xml">
+      <sectionNumber>D7</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>11:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>127</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="32920" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/32920.xml">
+      <sectionNumber>D8</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>11:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>149</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="51856" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/51856.xml">
+      <sectionNumber>D9</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>11:50 AM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>44</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33287" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33287.xml">
+      <sectionNumber>E1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>01:00 PM</start>
+          <end>01:50 PM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>142</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33291" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33291.xml">
+      <sectionNumber>E2</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>01:00 PM</start>
+          <end>01:50 PM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>148</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33297" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33297.xml">
+      <sectionNumber>E3</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>01:00 PM</start>
+          <end>01:50 PM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>152</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33438" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33438.xml">
+      <sectionNumber>E4</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>01:00 PM</start>
+          <end>01:50 PM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>154</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="43461" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/43461.xml">
+      <sectionNumber>E5</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>01:00 PM</start>
+          <end>01:50 PM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>119</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33425" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33425.xml">
+      <sectionNumber>E6</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>01:00 PM</start>
+          <end>01:50 PM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>156</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="58796" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/58796.xml">
+      <sectionNumber>E7</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>01:00 PM</start>
+          <end>01:50 PM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>127</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="78394" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/78394.xml">
+      <sectionNumber>E8</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>01:00 PM</start>
+          <end>01:50 PM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>G32</roomNumber>
+          <buildingName>Literatures, Cultures, &amp; Ling</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33337" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33337.xml">
+      <sectionNumber>F1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>02:00 PM</start>
+          <end>03:15 PM</end>
+          <daysOfTheWeek>MW</daysOfTheWeek>
+          <roomNumber>142</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33335" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33335.xml">
+      <sectionNumber>F2</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>02:00 PM</start>
+          <end>03:15 PM</end>
+          <daysOfTheWeek>MW</daysOfTheWeek>
+          <roomNumber>148</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33338" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33338.xml">
+      <sectionNumber>F3</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>02:00 PM</start>
+          <end>03:15 PM</end>
+          <daysOfTheWeek>MW</daysOfTheWeek>
+          <roomNumber>152</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33374" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33374.xml">
+      <sectionNumber>F4</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>02:00 PM</start>
+          <end>03:15 PM</end>
+          <daysOfTheWeek>MW</daysOfTheWeek>
+          <roomNumber>154</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="39344" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/39344.xml">
+      <sectionNumber>F5</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>02:00 PM</start>
+          <end>03:15 PM</end>
+          <daysOfTheWeek>MW</daysOfTheWeek>
+          <roomNumber>127</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="71976" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/71976.xml">
+      <sectionNumber>F6</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>02:00 PM</start>
+          <end>03:15 PM</end>
+          <daysOfTheWeek>MW</daysOfTheWeek>
+          <roomNumber>1062</roomNumber>
+          <buildingName>Lincoln Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33375" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33375.xml">
+      <sectionNumber>G1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>03:30 PM</start>
+          <end>04:45 PM</end>
+          <daysOfTheWeek>MW</daysOfTheWeek>
+          <roomNumber>142</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33376" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33376.xml">
+      <sectionNumber>G2</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>03:30 PM</start>
+          <end>04:45 PM</end>
+          <daysOfTheWeek>MW</daysOfTheWeek>
+          <roomNumber>152</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="39346" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/39346.xml">
+      <sectionNumber>G3</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>03:30 PM</start>
+          <end>04:45 PM</end>
+          <daysOfTheWeek>MW</daysOfTheWeek>
+          <roomNumber>154</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33414" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33414.xml">
+      <sectionNumber>G4</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>03:30 PM</start>
+          <end>04:45 PM</end>
+          <daysOfTheWeek>MW</daysOfTheWeek>
+          <roomNumber>127</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="53930" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/53930.xml">
+      <sectionNumber>G5</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>03:30 PM</start>
+          <end>04:45 PM</end>
+          <daysOfTheWeek>MW</daysOfTheWeek>
+          <roomNumber>156</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33280" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33280.xml">
+      <sectionNumber>GC</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>09:30 AM</start>
+          <end>10:45 AM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>111A</roomNumber>
+          <buildingName>Pennsylvania Lounge Bld - PAR</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33300" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33300.xml">
+      <sectionNumber>H1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>05:00 PM</start>
+          <end>06:15 PM</end>
+          <daysOfTheWeek>MW</daysOfTheWeek>
+          <roomNumber>127</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="32928" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/32928.xml">
+      <sectionNumber>L1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>08:00 AM</start>
+          <end>09:15 AM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>142</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="43482" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/43482.xml">
+      <sectionNumber>L2</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>08:00 AM</start>
+          <end>09:15 AM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>148</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33384" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33384.xml">
+      <sectionNumber>M1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>09:30 AM</start>
+          <end>10:45 AM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>142</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33434" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33434.xml">
+      <sectionNumber>M2</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>09:30 AM</start>
+          <end>10:45 AM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>148</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33387" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33387.xml">
+      <sectionNumber>M3</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>09:30 AM</start>
+          <end>10:45 AM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>152</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="46079" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/46079.xml">
+      <sectionNumber>M4</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>09:30 AM</start>
+          <end>10:45 AM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>154</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="32921" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/32921.xml">
+      <sectionNumber>M5</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>09:30 AM</start>
+          <end>10:45 AM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>29</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33385" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33385.xml">
+      <sectionNumber>M6</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>09:30 AM</start>
+          <end>10:50 AM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>156</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="32926" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/32926.xml">
+      <sectionNumber>M7</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>09:30 AM</start>
+          <end>10:45 AM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>127</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="73684" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/73684.xml">
+      <sectionNumber>M8</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>09:30 AM</start>
+          <end>10:45 AM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>115</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33390" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33390.xml">
+      <sectionNumber>P1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>12:15 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>142</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="78323" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/78323.xml">
+      <sectionNumber>P10</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>12:15 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <buildingName>Location Pending</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33392" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33392.xml">
+      <sectionNumber>P2</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>12:15 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>148</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33393" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33393.xml">
+      <sectionNumber>P3</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>12:15 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>152</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33398" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33398.xml">
+      <sectionNumber>P4</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>12:15 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>154</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33395" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33395.xml">
+      <sectionNumber>P5</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>12:15 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>29</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33429" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33429.xml">
+      <sectionNumber>P6</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>12:15 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>69</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="32930" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/32930.xml">
+      <sectionNumber>P7</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>12:15 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>127</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="43000" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/43000.xml">
+      <sectionNumber>P8</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>12:15 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>104</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="77967" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/77967.xml">
+      <sectionNumber>P9</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>12:15 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>309</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33400" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33400.xml">
+      <sectionNumber>Q1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>12:30 PM</start>
+          <end>01:45 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>142</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33402" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33402.xml">
+      <sectionNumber>Q2</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>12:30 PM</start>
+          <end>01:45 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>148</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33404" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33404.xml">
+      <sectionNumber>Q3</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>12:30 PM</start>
+          <end>01:45 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>152</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="39348" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/39348.xml">
+      <sectionNumber>Q4</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>12:30 PM</start>
+          <end>01:45 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>154</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="39349" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/39349.xml">
+      <sectionNumber>Q5</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>12:30 PM</start>
+          <end>01:45 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>29</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33433" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33433.xml">
+      <sectionNumber>Q6</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>12:30 PM</start>
+          <end>01:45 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>309</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="43465" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/43465.xml">
+      <sectionNumber>Q7</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>12:30 PM</start>
+          <end>01:45 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>127</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="77968" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/77968.xml">
+      <sectionNumber>Q8</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>12:30 PM</start>
+          <end>01:45 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>1026</roomNumber>
+          <buildingName>Lincoln Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33382" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33382.xml">
+      <sectionNumber>Q9</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>12:30 PM</start>
+          <end>01:45 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <buildingName>Location Pending</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33406" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33406.xml">
+      <sectionNumber>S1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>02:00 PM</start>
+          <end>03:15 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>142</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33408" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33408.xml">
+      <sectionNumber>S2</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>02:00 PM</start>
+          <end>03:15 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>148</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33411" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33411.xml">
+      <sectionNumber>S3</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>02:00 PM</start>
+          <end>03:15 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>152</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33413" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33413.xml">
+      <sectionNumber>S4</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>02:00 PM</start>
+          <end>03:15 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>154</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="46080" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/46080.xml">
+      <sectionNumber>S5</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>02:00 PM</start>
+          <end>03:15 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>29</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="32916" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/32916.xml">
+      <sectionNumber>S6</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>02:00 PM</start>
+          <end>03:15 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>1062</roomNumber>
+          <buildingName>Lincoln Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="73474" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/73474.xml">
+      <sectionNumber>S7</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>02:00 PM</start>
+          <end>03:15 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>309</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33427" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33427.xml">
+      <sectionNumber>T1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>03:30 PM</start>
+          <end>04:45 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>142</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="43439" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/43439.xml">
+      <sectionNumber>T2</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>03:30 PM</start>
+          <end>04:45 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>148</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="39343" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/39343.xml">
+      <sectionNumber>T3</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>03:30 PM</start>
+          <end>04:45 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>152</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="51983" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/51983.xml">
+      <sectionNumber>T4</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>03:30 PM</start>
+          <end>04:45 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>154</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33419" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33419.xml">
+      <sectionNumber>T5</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>03:30 PM</start>
+          <end>04:45 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>309</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33381" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33381.xml">
+      <sectionNumber>T6</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>03:30 PM</start>
+          <end>04:45 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>127</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33431" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33431.xml">
+      <sectionNumber>U1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>11:00 AM</start>
+          <end>12:15 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>151</roomNumber>
+          <buildingName>Allen Residence Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="39347" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/39347.xml">
+      <sectionNumber>V1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>05:00 PM</start>
+          <end>06:15 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>127</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="58797" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/58797.xml">
+      <sectionNumber>V2</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>05:00 PM</start>
+          <end>06:15 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>119</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33378" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33378.xml">
+      <sectionNumber>WE1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>12:30 PM</start>
+          <end>01:45 PM</end>
+          <daysOfTheWeek>TR</daysOfTheWeek>
+          <roomNumber>5</roomNumber>
+          <buildingName>Weston Hall</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33274" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33274.xml">
+      <sectionNumber>X1</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>12:00 PM</start>
+          <end>12:50 PM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>142</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33279" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33279.xml">
+      <sectionNumber>X3</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>12:00 PM</start>
+          <end>12:50 PM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>152</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33284" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33284.xml">
+      <sectionNumber>X4</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>12:00 PM</start>
+          <end>12:50 PM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>154</roomNumber>
+          <buildingName>Henry Administration Bldg</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="33380" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/33380.xml">
+      <sectionNumber>X5</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>12:00 PM</start>
+          <end>12:50 PM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>115</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+    <detailedSection id="32924" href="https://courses.illinois.edu/cisapp/explorer/schedule/2027/spring/RHET/105/32924.xml">
+      <sectionNumber>X7</sectionNumber>
+      <statusCode>A</statusCode>
+      <partOfTerm>1</partOfTerm>
+      <sectionStatusCode>A</sectionStatusCode>
+      <enrollmentStatus></enrollmentStatus>
+      <meetings>
+        <meeting id="0">
+          <type code="LCD">Lecture-Discussion</type>
+          <start>12:00 PM</start>
+          <end>12:50 PM</end>
+          <daysOfTheWeek>MWF</daysOfTheWeek>
+          <roomNumber>127</roomNumber>
+          <buildingName>English Building</buildingName>
+          <instructors>
+          </instructors>
+        </meeting>
+      </meetings>
+    </detailedSection>
+  </detailedSections>
+</ns2:course>

@@ -29,3 +29,34 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D0.6 Generated data is not committed.** `data/raw/`, `data/illini.db` and `web/public/data/` are
   rebuilt by `make data` (local and in the nightly workflow), keeping the repo small. Small, real samples for
   the four reference courses are committed under `fixtures/` so tests run offline.
+
+## Phase 1 — Course Explorer ingestion
+
+- **D1.1 Terms.** Current term = Fall 2026 (`2026-fa`); next published term = Spring 2027 (`2027-sp`). The pipeline
+  loads 14 terms (Fall 2022 to Spring 2027, including summers) so Phase 4 has offering history.
+- **D1.2 Fields stored** (from the Course Explorer schema, as exposed by the XML `mode=cascade` course document and
+  by the CSV mirror's columns): term, CRN, subject, number, section number, status code, part of term, section
+  status, enrollment status, section title, section credit hours, section text, section notes; per meeting: type
+  code + name, start, end, days, room, building, instructors. Course level: label, description, credit hours,
+  courseSectionInformation, sectionDegreeAttributes (gen-ed), classScheduleInformation. The XSD on the docs page
+  could not be read (host blocked); the list comes from the CSV mirror's columns, which the mirror's scraper takes
+  1:1 from that XML. `section_text` / `section_notes` are only present in API mode; the CSV mirror leaves them blank.
+- **D1.3 Linked-section rule.** A section is `primary` unless all its meetings are secondary types
+  (DIS, OD, LAB, LBD, OLB, Q, PR). If every section code starts with two letters and some first-letter group holds
+  two or more components (e.g. `AL1` + `AD1..ADn`, `EL1` + `EDA..EDN`), sections link only within that group.
+  Otherwise any primary pairs with any secondary of each needed type (`*`, e.g. STAT 107 `L1/L2` + `Y01..`).
+  Courses with only one component (RHET 105: every LCD/ONL section is standalone) have one-section bundles. A CRN
+  with several meetings (e.g. lecture + lab in one CRN) is one section with a `meetings` list.
+- **D1.4 Extra `meetings` table.** The spec's `sections` row holds one time/place; multi-meeting CRNs (692 rows in
+  Spring 2027) need all of them for conflict checks, so `sections` keeps the primary meeting and `meetings` has all.
+- **D1.5 Type codes.** Course Explorer uses numbered variants (`S1`, `L2`, `E3`, `BD1`...). Types are normalised by
+  their *name* (Lecture-Discussion -> LCD, Online -> ONL, ...).
+- **D1.6 "At least one LEC" for CS 124** is read as "a lecture-type section": in both loaded terms CS 124's lectures
+  are `OLC` (Online Lecture), so the test accepts LEC/LCD/OLC/OLD.
+- **D1.7 Enrollment status freshness.** The CSV mirror's snapshot date is the upstream commit date of that term's
+  file (Spring 2027: 2026-10-30, before registration opened, so status is blank; Fall 2026: 2026-03-25). The UI
+  shows that date as "checked at" and always links to live seats.
+- **D1.8 Mixed encodings.** The GPA and gen-ed CSVs mix UTF-8 lines with Windows-1252 lines; `pipeline/textio.py`
+  decodes line by line.
+- **D1.9 Handmade XML fixtures.** `fixtures/course-explorer/HANDMADE_*.xml` are generated from the real CSV slice
+  in the documented XML layout so the XML parser is tested offline; a test asserts the XML and CSV parsers agree.
