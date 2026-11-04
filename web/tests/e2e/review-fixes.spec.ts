@@ -12,6 +12,9 @@ test("an impossible lock is explained and the schedule is marked incomplete", as
   await expect(page.getByTestId("cart").locator("li")).toHaveCount(2);
   const lec = page.getByLabel("Lock Lecture for MATH 231");
   const dis = page.getByLabel("Lock Discussion for MATH 231");
+  // wait until course data has loaded and the selects list sections
+  await expect(dis.locator("option")).not.toHaveCount(1);
+  await expect(lec.locator("option")).not.toHaveCount(1);
   // lock a discussion first, then a lecture from a different group (the lecture list isn't filtered)
   const disFirst = (await dis.locator("option").allTextContents()).find((o) => o.includes("CRN"))!;
   await dis.selectOption({ label: disFirst });
