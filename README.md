@@ -1,6 +1,6 @@
 # Illini Scheduler
 
-**Live site:** `https://<owner>.github.io/illini-scheduler/` once the public repo is pushed and Pages is enabled (see PROGRESS.md "Needs a human").
+**Live site:** https://kamransingri.github.io/illini-scheduler/ (rebuilt nightly at 09:00 UTC).
 **Run it locally:**
 
 ```bash

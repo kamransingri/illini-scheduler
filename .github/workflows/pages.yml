@@ -2,6 +2,7 @@ name: Refresh data and deploy to GitHub Pages
 on:
   push:
     branches: [main]
+    paths-ignore: ["**.md", "screenshots/**"]
   schedule:
     - cron: "0 9 * * *" # nightly, 09:00 UTC
   workflow_dispatch:
