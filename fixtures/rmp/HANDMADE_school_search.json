@@ -1,0 +1,5 @@
+{"_comment": "HANDMADE FIXTURE: shape of RMP GraphQL newSearch.schools; ratemyprofessors.com was blocked in the build session. Values are invented placeholders.",
+ "data": {"newSearch": {"schools": {"edges": [
+   {"node": {"id": "U2Nob29sLTk5OTk=", "legacyId": 9999, "name": "University of Illinois Springfield", "city": "Springfield", "state": "IL"}},
+   {"node": {"id": "U2Nob29sLTEyMzQ=", "legacyId": 1234, "name": "University of Illinois at Urbana-Champaign", "city": "Champaign", "state": "IL"}}
+ ]}}}}

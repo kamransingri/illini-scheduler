@@ -12,6 +12,9 @@
    spot check (Phase 1) compared the DB to the raw upstream CSV instead of the live web page.
 4. **Compare against Wade's visualizations.** `waf.web.engr.illinois.edu` / `waf.cs.illinois.edu` were blocked,
    so the Phase 2 (grade disparity) and Phase 7 (gen-ed by GPA) comparisons with those pages are still to do.
+5. **RMP verification.** `www.ratemyprofessors.com` was blocked, so no RMP data was fetched and the 5 manual match
+   checks were not possible. Once the nightly workflow runs on GitHub, open 5 random instructors' RMP links and
+   confirm they are the right person.
 
 ## Phase log
 
@@ -76,3 +79,29 @@ Acceptance:
 - RHET 105 has no rows in the window (FERPA small-section exclusion), so the UI shows "No grade data".
 
 Phase 2 complete.
+
+### Phase 3 — Instructor matching and RMP
+
+Built `pipeline/names.py` (parser, keys, truncation-aware compatibility, matcher with tie-breaks and logging),
+`pipeline/rmp.py` (GraphQL client: school search, teacher search, cache, rate limit, graceful failure),
+`pipeline/instructors.py` (aliases, TRE badges, RMP join, match report), `data/name_overrides.csv`.
+
+Acceptance:
+- 31 unit tests for names.py (hyphenated, accents, truncated, two same-last-name instructors in one department,
+  initials only, ambiguous logging, overrides, cross-listed): pass. 8 RMP client tests + 1 integration test
+  (blocked RMP -> pipeline finishes, status "unavailable"): pass.
+- Match rate, Spring 2027 instructors (next term):
+
+| Subject | GPA match (all names) | GPA match (lecture/primary sections) | RMP |
+| --- | --- | --- | --- |
+| CS | 132/174 (75.9%) | 132/159 (83.0%) | unavailable (blocked) |
+| MATH | 62/77 (80.5%) | 60/70 (85.7%) | unavailable (blocked) |
+| STAT | 30/38 (78.9%) | 30/38 (78.9%) | unavailable (blocked) |
+
+  The ≥ 80% target holds for CS and MATH on lecture instructors; STAT is at 78.9% (30/38). The 8 STAT misses are
+  instructors with no GPA history (new) or real ambiguity ("Wang, S" = Shiyu or Shulei, neither taught STAT 578),
+  which the rules say to log rather than guess. Known issue, see data/unmatched.csv (2,137 names, mostly TAs).
+- RMP manual check of 5 matches: not possible (host blocked). Needs a human #5.
+- TRE: 2,521 instructors with an "Excellent/Outstanding" badge since Fall 2020.
+
+Phase 3 complete.
