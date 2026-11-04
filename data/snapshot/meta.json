@@ -1,0 +1,1916 @@
+{
+ "built_at": "2026-11-04T04:44:05+00:00",
+ "current_term": "2026-fa",
+ "next_term": "2027-sp",
+ "terms": {
+  "2026-fa": {
+   "label": "Fall 2026",
+   "source": "cis-api",
+   "checked_at": "2026-11-04T04:44:28+00:00"
+  },
+  "2027-sp": {
+   "label": "Spring 2027",
+   "source": "wade-course-catalog",
+   "checked_at": "2026-10-30T01:57:23-05:00"
+  }
+ },
+ "gpa": {
+  "window": [
+   "2015-fa",
+   "2026-su"
+  ],
+  "recent": [
+   "2022-fa",
+   "2023-sp",
+   "2023-fa",
+   "2024-sp",
+   "2024-fa",
+   "2025-sp",
+   "2025-fa",
+   "2026-sp"
+  ],
+  "snapshot": "2026-10-29T16:14:44-05:00"
+ },
+ "geneds_snapshot": "2026-10-30T01:54:53-05:00",
+ "rmp_status": "ok",
+ "match_report": {
+  "AAS": {
+   "gpa_matched": 16,
+   "names": 21,
+   "gpa_pct": 76.2,
+   "primary_matched": 11,
+   "primary_names": 16,
+   "primary_gpa_pct": 68.8,
+   "rmp_matched": 9,
+   "rmp_pct": 42.9
+  },
+  "ABE": {
+   "gpa_matched": 13,
+   "names": 19,
+   "gpa_pct": 68.4,
+   "primary_matched": 13,
+   "primary_names": 18,
+   "primary_gpa_pct": 72.2,
+   "rmp_matched": 6,
+   "rmp_pct": 31.6
+  },
+  "ACCY": {
+   "gpa_matched": 20,
+   "names": 21,
+   "gpa_pct": 95.2,
+   "primary_matched": 20,
+   "primary_names": 21,
+   "primary_gpa_pct": 95.2,
+   "rmp_matched": 8,
+   "rmp_pct": 38.1
+  },
+  "ACE": {
+   "gpa_matched": 35,
+   "names": 43,
+   "gpa_pct": 81.4,
+   "primary_matched": 34,
+   "primary_names": 42,
+   "primary_gpa_pct": 81.0,
+   "rmp_matched": 16,
+   "rmp_pct": 37.2
+  },
+  "ACES": {
+   "gpa_matched": 3,
+   "names": 6,
+   "gpa_pct": 50.0,
+   "primary_matched": 3,
+   "primary_names": 6,
+   "primary_gpa_pct": 50.0,
+   "rmp_matched": 0,
+   "rmp_pct": 0.0
+  },
+  "ADV": {
+   "gpa_matched": 21,
+   "names": 22,
+   "gpa_pct": 95.5,
+   "primary_matched": 21,
+   "primary_names": 22,
+   "primary_gpa_pct": 95.5,
+   "rmp_matched": 15,
+   "rmp_pct": 68.2
+  },
+  "AE": {
+   "gpa_matched": 31,
+   "names": 39,
+   "gpa_pct": 79.5,
+   "primary_matched": 31,
+   "primary_names": 38,
+   "primary_gpa_pct": 81.6,
+   "rmp_matched": 17,
+   "rmp_pct": 43.6
+  },
+  "AFAS": {
+   "gpa_matched": 2,
+   "names": 5,
+   "gpa_pct": 40.0,
+   "primary_matched": 2,
+   "primary_names": 5,
+   "primary_gpa_pct": 40.0,
+   "rmp_matched": 0,
+   "rmp_pct": 0.0
+  },
+  "AFRO": {
+   "gpa_matched": 16,
+   "names": 26,
+   "gpa_pct": 61.5,
+   "primary_matched": 16,
+   "primary_names": 25,
+   "primary_gpa_pct": 64.0,
+   "rmp_matched": 9,
+   "rmp_pct": 34.6
+  },
+  "AFST": {
+   "gpa_matched": 5,
+   "names": 9,
+   "gpa_pct": 55.6,
+   "primary_matched": 5,
+   "primary_names": 9,
+   "primary_gpa_pct": 55.6,
+   "rmp_matched": 6,
+   "rmp_pct": 66.7
+  },
+  "AGCM": {
+   "gpa_matched": 3,
+   "names": 4,
+   "gpa_pct": 75.0,
+   "primary_matched": 3,
+   "primary_names": 4,
+   "primary_gpa_pct": 75.0,
+   "rmp_matched": 1,
+   "rmp_pct": 25.0
+  },
+  "AGED": {
+   "gpa_matched": 2,
+   "names": 3,
+   "gpa_pct": 66.7,
+   "primary_matched": 2,
+   "primary_names": 3,
+   "primary_gpa_pct": 66.7,
+   "rmp_matched": 2,
+   "rmp_pct": 66.7
+  },
+  "AHS": {
+   "gpa_matched": 1,
+   "names": 4,
+   "gpa_pct": 25.0,
+   "primary_matched": 1,
+   "primary_names": 4,
+   "primary_gpa_pct": 25.0,
+   "rmp_matched": 0,
+   "rmp_pct": 0.0
+  },
+  "AIS": {
+   "gpa_matched": 4,
+   "names": 8,
+   "gpa_pct": 50.0,
+   "primary_matched": 4,
+   "primary_names": 8,
+   "primary_gpa_pct": 50.0,
+   "rmp_matched": 3,
+   "rmp_pct": 37.5
+  },
+  "ALEC": {
+   "gpa_matched": 3,
+   "names": 4,
+   "gpa_pct": 75.0,
+   "primary_matched": 3,
+   "primary_names": 4,
+   "primary_gpa_pct": 75.0,
+   "rmp_matched": 2,
+   "rmp_pct": 50.0
+  },
+  "ANSC": {
+   "gpa_matched": 37,
+   "names": 63,
+   "gpa_pct": 58.7,
+   "primary_matched": 37,
+   "primary_names": 61,
+   "primary_gpa_pct": 60.7,
+   "rmp_matched": 25,
+   "rmp_pct": 39.7
+  },
+  "ANTH": {
+   "gpa_matched": 30,
+   "names": 46,
+   "gpa_pct": 65.2,
+   "primary_matched": 30,
+   "primary_names": 45,
+   "primary_gpa_pct": 66.7,
+   "rmp_matched": 24,
+   "rmp_pct": 52.2
+  },
+  "ARAB": {
+   "gpa_matched": 1,
+   "names": 3,
+   "gpa_pct": 33.3,
+   "primary_matched": 1,
+   "primary_names": 3,
+   "primary_gpa_pct": 33.3,
+   "rmp_matched": 1,
+   "rmp_pct": 33.3
+  },
+  "ARCH": {
+   "gpa_matched": 24,
+   "names": 37,
+   "gpa_pct": 64.9,
+   "primary_matched": 24,
+   "primary_names": 37,
+   "primary_gpa_pct": 64.9,
+   "rmp_matched": 13,
+   "rmp_pct": 35.1
+  },
+  "ART": {
+   "gpa_matched": 0,
+   "names": 3,
+   "gpa_pct": 0.0,
+   "primary_matched": 0,
+   "primary_names": 3,
+   "primary_gpa_pct": 0.0,
+   "rmp_matched": 1,
+   "rmp_pct": 33.3
+  },
+  "ARTD": {
+   "gpa_matched": 17,
+   "names": 21,
+   "gpa_pct": 81.0,
+   "primary_matched": 17,
+   "primary_names": 21,
+   "primary_gpa_pct": 81.0,
+   "rmp_matched": 15,
+   "rmp_pct": 71.4
+  },
+  "ARTE": {
+   "gpa_matched": 3,
+   "names": 5,
+   "gpa_pct": 60.0,
+   "primary_matched": 3,
+   "primary_names": 5,
+   "primary_gpa_pct": 60.0,
+   "rmp_matched": 3,
+   "rmp_pct": 60.0
+  },
+  "ARTF": {
+   "gpa_matched": 3,
+   "names": 10,
+   "gpa_pct": 30.0,
+   "primary_matched": 3,
+   "primary_names": 10,
+   "primary_gpa_pct": 30.0,
+   "rmp_matched": 3,
+   "rmp_pct": 30.0
+  },
+  "ARTH": {
+   "gpa_matched": 7,
+   "names": 11,
+   "gpa_pct": 63.6,
+   "primary_matched": 7,
+   "primary_names": 11,
+   "primary_gpa_pct": 63.6,
+   "rmp_matched": 7,
+   "rmp_pct": 63.6
+  },
+  "ARTJ": {
+   "gpa_matched": 5,
+   "names": 5,
+   "gpa_pct": 100.0,
+   "primary_matched": 5,
+   "primary_names": 5,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 2,
+   "rmp_pct": 40.0
+  },
+  "ARTS": {
+   "gpa_matched": 11,
+   "names": 20,
+   "gpa_pct": 55.0,
+   "primary_matched": 11,
+   "primary_names": 20,
+   "primary_gpa_pct": 55.0,
+   "rmp_matched": 14,
+   "rmp_pct": 70.0
+  },
+  "ASRM": {
+   "gpa_matched": 6,
+   "names": 8,
+   "gpa_pct": 75.0,
+   "primary_matched": 6,
+   "primary_names": 8,
+   "primary_gpa_pct": 75.0,
+   "rmp_matched": 2,
+   "rmp_pct": 25.0
+  },
+  "ASST": {
+   "gpa_matched": 0,
+   "names": 1,
+   "gpa_pct": 0.0,
+   "primary_matched": 0,
+   "primary_names": 1,
+   "primary_gpa_pct": 0.0,
+   "rmp_matched": 0,
+   "rmp_pct": 0.0
+  },
+  "ASTR": {
+   "gpa_matched": 12,
+   "names": 12,
+   "gpa_pct": 100.0,
+   "primary_matched": 12,
+   "primary_names": 12,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 10,
+   "rmp_pct": 83.3
+  },
+  "ATMS": {
+   "gpa_matched": 14,
+   "names": 18,
+   "gpa_pct": 77.8,
+   "primary_matched": 14,
+   "primary_names": 18,
+   "primary_gpa_pct": 77.8,
+   "rmp_matched": 8,
+   "rmp_pct": 44.4
+  },
+  "BADM": {
+   "gpa_matched": 71,
+   "names": 83,
+   "gpa_pct": 85.5,
+   "primary_matched": 71,
+   "primary_names": 83,
+   "primary_gpa_pct": 85.5,
+   "rmp_matched": 51,
+   "rmp_pct": 61.4
+  },
+  "BASQ": {
+   "gpa_matched": 0,
+   "names": 1,
+   "gpa_pct": 0.0,
+   "primary_matched": 0,
+   "primary_names": 1,
+   "primary_gpa_pct": 0.0,
+   "rmp_matched": 0,
+   "rmp_pct": 0.0
+  },
+  "BCOG": {
+   "gpa_matched": 2,
+   "names": 2,
+   "gpa_pct": 100.0,
+   "primary_matched": 2,
+   "primary_names": 2,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 0,
+   "rmp_pct": 0.0
+  },
+  "BCS": {
+   "gpa_matched": 2,
+   "names": 3,
+   "gpa_pct": 66.7,
+   "primary_matched": 2,
+   "primary_names": 3,
+   "primary_gpa_pct": 66.7,
+   "rmp_matched": 1,
+   "rmp_pct": 33.3
+  },
+  "BDI": {
+   "gpa_matched": 1,
+   "names": 1,
+   "gpa_pct": 100.0,
+   "primary_matched": 1,
+   "primary_names": 1,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 1,
+   "rmp_pct": 100.0
+  },
+  "BIOC": {
+   "gpa_matched": 20,
+   "names": 27,
+   "gpa_pct": 74.1,
+   "primary_matched": 20,
+   "primary_names": 27,
+   "primary_gpa_pct": 74.1,
+   "rmp_matched": 13,
+   "rmp_pct": 48.1
+  },
+  "BIOE": {
+   "gpa_matched": 23,
+   "names": 28,
+   "gpa_pct": 82.1,
+   "primary_matched": 23,
+   "primary_names": 28,
+   "primary_gpa_pct": 82.1,
+   "rmp_matched": 17,
+   "rmp_pct": 60.7
+  },
+  "BIOP": {
+   "gpa_matched": 27,
+   "names": 37,
+   "gpa_pct": 73.0,
+   "primary_matched": 27,
+   "primary_names": 37,
+   "primary_gpa_pct": 73.0,
+   "rmp_matched": 20,
+   "rmp_pct": 54.1
+  },
+  "BSE": {
+   "gpa_matched": 14,
+   "names": 28,
+   "gpa_pct": 50.0,
+   "primary_matched": 14,
+   "primary_names": 28,
+   "primary_gpa_pct": 50.0,
+   "rmp_matched": 9,
+   "rmp_pct": 32.1
+  },
+  "BTW": {
+   "gpa_matched": 5,
+   "names": 5,
+   "gpa_pct": 100.0,
+   "primary_matched": 5,
+   "primary_names": 5,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 5,
+   "rmp_pct": 100.0
+  },
+  "BULG": {
+   "gpa_matched": 0,
+   "names": 1,
+   "gpa_pct": 0.0,
+   "primary_matched": 0,
+   "primary_names": 1,
+   "primary_gpa_pct": 0.0,
+   "rmp_matched": 0,
+   "rmp_pct": 0.0
+  },
+  "BUS": {
+   "gpa_matched": 14,
+   "names": 22,
+   "gpa_pct": 63.6,
+   "primary_matched": 14,
+   "primary_names": 22,
+   "primary_gpa_pct": 63.6,
+   "rmp_matched": 11,
+   "rmp_pct": 50.0
+  },
+  "CB": {
+   "gpa_matched": 0,
+   "names": 5,
+   "gpa_pct": 0.0,
+   "primary_matched": 0,
+   "primary_names": 5,
+   "primary_gpa_pct": 0.0,
+   "rmp_matched": 1,
+   "rmp_pct": 20.0
+  },
+  "CDB": {
+   "gpa_matched": 16,
+   "names": 26,
+   "gpa_pct": 61.5,
+   "primary_matched": 16,
+   "primary_names": 26,
+   "primary_gpa_pct": 61.5,
+   "rmp_matched": 12,
+   "rmp_pct": 46.2
+  },
+  "CEE": {
+   "gpa_matched": 45,
+   "names": 50,
+   "gpa_pct": 90.0,
+   "primary_matched": 45,
+   "primary_names": 50,
+   "primary_gpa_pct": 90.0,
+   "rmp_matched": 30,
+   "rmp_pct": 60.0
+  },
+  "CGGE": {
+   "gpa_matched": 1,
+   "names": 1,
+   "gpa_pct": 100.0,
+   "primary_matched": 1,
+   "primary_names": 1,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 1,
+   "rmp_pct": 100.0
+  },
+  "CHBE": {
+   "gpa_matched": 20,
+   "names": 21,
+   "gpa_pct": 95.2,
+   "primary_matched": 20,
+   "primary_names": 21,
+   "primary_gpa_pct": 95.2,
+   "rmp_matched": 12,
+   "rmp_pct": 57.1
+  },
+  "CHEM": {
+   "gpa_matched": 54,
+   "names": 69,
+   "gpa_pct": 78.3,
+   "primary_matched": 54,
+   "primary_names": 67,
+   "primary_gpa_pct": 80.6,
+   "rmp_matched": 33,
+   "rmp_pct": 47.8
+  },
+  "CHIN": {
+   "gpa_matched": 3,
+   "names": 8,
+   "gpa_pct": 37.5,
+   "primary_matched": 3,
+   "primary_names": 8,
+   "primary_gpa_pct": 37.5,
+   "rmp_matched": 1,
+   "rmp_pct": 12.5
+  },
+  "CHP": {
+   "gpa_matched": 2,
+   "names": 2,
+   "gpa_pct": 100.0,
+   "primary_matched": 2,
+   "primary_names": 2,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 2,
+   "rmp_pct": 100.0
+  },
+  "CI": {
+   "gpa_matched": 23,
+   "names": 28,
+   "gpa_pct": 82.1,
+   "primary_matched": 22,
+   "primary_names": 27,
+   "primary_gpa_pct": 81.5,
+   "rmp_matched": 8,
+   "rmp_pct": 28.6
+  },
+  "CIC": {
+   "gpa_matched": 0,
+   "names": 1,
+   "gpa_pct": 0.0,
+   "primary_matched": 0,
+   "primary_names": 1,
+   "primary_gpa_pct": 0.0,
+   "rmp_matched": 1,
+   "rmp_pct": 100.0
+  },
+  "CLCV": {
+   "gpa_matched": 12,
+   "names": 15,
+   "gpa_pct": 80.0,
+   "primary_matched": 12,
+   "primary_names": 15,
+   "primary_gpa_pct": 80.0,
+   "rmp_matched": 12,
+   "rmp_pct": 80.0
+  },
+  "CLE": {
+   "gpa_matched": 7,
+   "names": 56,
+   "gpa_pct": 12.5,
+   "primary_matched": 7,
+   "primary_names": 56,
+   "primary_gpa_pct": 12.5,
+   "rmp_matched": 5,
+   "rmp_pct": 8.9
+  },
+  "CMN": {
+   "gpa_matched": 24,
+   "names": 28,
+   "gpa_pct": 85.7,
+   "primary_matched": 24,
+   "primary_names": 28,
+   "primary_gpa_pct": 85.7,
+   "rmp_matched": 16,
+   "rmp_pct": 57.1
+  },
+  "CPSC": {
+   "gpa_matched": 22,
+   "names": 32,
+   "gpa_pct": 68.8,
+   "primary_matched": 22,
+   "primary_names": 31,
+   "primary_gpa_pct": 71.0,
+   "rmp_matched": 15,
+   "rmp_pct": 46.9
+  },
+  "CS": {
+   "gpa_matched": 132,
+   "names": 174,
+   "gpa_pct": 75.9,
+   "primary_matched": 132,
+   "primary_names": 159,
+   "primary_gpa_pct": 83.0,
+   "rmp_matched": 83,
+   "rmp_pct": 47.7
+  },
+  "CSE": {
+   "gpa_matched": 16,
+   "names": 20,
+   "gpa_pct": 80.0,
+   "primary_matched": 16,
+   "primary_names": 20,
+   "primary_gpa_pct": 80.0,
+   "rmp_matched": 8,
+   "rmp_pct": 40.0
+  },
+  "CW": {
+   "gpa_matched": 5,
+   "names": 7,
+   "gpa_pct": 71.4,
+   "primary_matched": 5,
+   "primary_names": 7,
+   "primary_gpa_pct": 71.4,
+   "rmp_matched": 5,
+   "rmp_pct": 71.4
+  },
+  "CWL": {
+   "gpa_matched": 24,
+   "names": 38,
+   "gpa_pct": 63.2,
+   "primary_matched": 20,
+   "primary_names": 30,
+   "primary_gpa_pct": 66.7,
+   "rmp_matched": 23,
+   "rmp_pct": 60.5
+  },
+  "DANC": {
+   "gpa_matched": 29,
+   "names": 39,
+   "gpa_pct": 74.4,
+   "primary_matched": 29,
+   "primary_names": 39,
+   "primary_gpa_pct": 74.4,
+   "rmp_matched": 3,
+   "rmp_pct": 7.7
+  },
+  "DTX": {
+   "gpa_matched": 3,
+   "names": 6,
+   "gpa_pct": 50.0,
+   "primary_matched": 3,
+   "primary_names": 6,
+   "primary_gpa_pct": 50.0,
+   "rmp_matched": 0,
+   "rmp_pct": 0.0
+  },
+  "EALC": {
+   "gpa_matched": 17,
+   "names": 24,
+   "gpa_pct": 70.8,
+   "primary_matched": 12,
+   "primary_names": 17,
+   "primary_gpa_pct": 70.6,
+   "rmp_matched": 13,
+   "rmp_pct": 54.2
+  },
+  "ECE": {
+   "gpa_matched": 96,
+   "names": 113,
+   "gpa_pct": 85.0,
+   "primary_matched": 96,
+   "primary_names": 104,
+   "primary_gpa_pct": 92.3,
+   "rmp_matched": 60,
+   "rmp_pct": 53.1
+  },
+  "ECON": {
+   "gpa_matched": 34,
+   "names": 40,
+   "gpa_pct": 85.0,
+   "primary_matched": 34,
+   "primary_names": 40,
+   "primary_gpa_pct": 85.0,
+   "rmp_matched": 15,
+   "rmp_pct": 37.5
+  },
+  "EDPR": {
+   "gpa_matched": 8,
+   "names": 12,
+   "gpa_pct": 66.7,
+   "primary_matched": 8,
+   "primary_names": 12,
+   "primary_gpa_pct": 66.7,
+   "rmp_matched": 2,
+   "rmp_pct": 16.7
+  },
+  "EDUC": {
+   "gpa_matched": 9,
+   "names": 15,
+   "gpa_pct": 60.0,
+   "primary_matched": 3,
+   "primary_names": 9,
+   "primary_gpa_pct": 33.3,
+   "rmp_matched": 2,
+   "rmp_pct": 13.3
+  },
+  "EIL": {
+   "gpa_matched": 5,
+   "names": 6,
+   "gpa_pct": 83.3,
+   "primary_matched": 5,
+   "primary_names": 6,
+   "primary_gpa_pct": 83.3,
+   "rmp_matched": 3,
+   "rmp_pct": 50.0
+  },
+  "ENG": {
+   "gpa_matched": 33,
+   "names": 44,
+   "gpa_pct": 75.0,
+   "primary_matched": 31,
+   "primary_names": 40,
+   "primary_gpa_pct": 77.5,
+   "rmp_matched": 19,
+   "rmp_pct": 43.2
+  },
+  "ENGL": {
+   "gpa_matched": 37,
+   "names": 45,
+   "gpa_pct": 82.2,
+   "primary_matched": 36,
+   "primary_names": 43,
+   "primary_gpa_pct": 83.7,
+   "rmp_matched": 29,
+   "rmp_pct": 64.4
+  },
+  "ENSU": {
+   "gpa_matched": 3,
+   "names": 3,
+   "gpa_pct": 100.0,
+   "primary_matched": 3,
+   "primary_names": 3,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 1,
+   "rmp_pct": 33.3
+  },
+  "ENT": {
+   "gpa_matched": 2,
+   "names": 2,
+   "gpa_pct": 100.0,
+   "primary_matched": 2,
+   "primary_names": 2,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 2,
+   "rmp_pct": 100.0
+  },
+  "ENVS": {
+   "gpa_matched": 4,
+   "names": 13,
+   "gpa_pct": 30.8,
+   "primary_matched": 4,
+   "primary_names": 12,
+   "primary_gpa_pct": 33.3,
+   "rmp_matched": 2,
+   "rmp_pct": 15.4
+  },
+  "EPOL": {
+   "gpa_matched": 29,
+   "names": 37,
+   "gpa_pct": 78.4,
+   "primary_matched": 29,
+   "primary_names": 37,
+   "primary_gpa_pct": 78.4,
+   "rmp_matched": 13,
+   "rmp_pct": 35.1
+  },
+  "EPSY": {
+   "gpa_matched": 21,
+   "names": 30,
+   "gpa_pct": 70.0,
+   "primary_matched": 19,
+   "primary_names": 28,
+   "primary_gpa_pct": 67.9,
+   "rmp_matched": 10,
+   "rmp_pct": 33.3
+  },
+  "ERAM": {
+   "gpa_matched": 7,
+   "names": 8,
+   "gpa_pct": 87.5,
+   "primary_matched": 7,
+   "primary_names": 8,
+   "primary_gpa_pct": 87.5,
+   "rmp_matched": 3,
+   "rmp_pct": 37.5
+  },
+  "ES": {
+   "gpa_matched": 2,
+   "names": 3,
+   "gpa_pct": 66.7,
+   "primary_matched": 2,
+   "primary_names": 3,
+   "primary_gpa_pct": 66.7,
+   "rmp_matched": 2,
+   "rmp_pct": 66.7
+  },
+  "ESE": {
+   "gpa_matched": 21,
+   "names": 30,
+   "gpa_pct": 70.0,
+   "primary_matched": 21,
+   "primary_names": 26,
+   "primary_gpa_pct": 80.8,
+   "rmp_matched": 15,
+   "rmp_pct": 50.0
+  },
+  "ESL": {
+   "gpa_matched": 1,
+   "names": 2,
+   "gpa_pct": 50.0,
+   "primary_matched": 1,
+   "primary_names": 2,
+   "primary_gpa_pct": 50.0,
+   "rmp_matched": 1,
+   "rmp_pct": 50.0
+  },
+  "ETMA": {
+   "gpa_matched": 12,
+   "names": 19,
+   "gpa_pct": 63.2,
+   "primary_matched": 12,
+   "primary_names": 19,
+   "primary_gpa_pct": 63.2,
+   "rmp_matched": 8,
+   "rmp_pct": 42.1
+  },
+  "EURO": {
+   "gpa_matched": 1,
+   "names": 3,
+   "gpa_pct": 33.3,
+   "primary_matched": 1,
+   "primary_names": 3,
+   "primary_gpa_pct": 33.3,
+   "rmp_matched": 1,
+   "rmp_pct": 33.3
+  },
+  "EXP": {
+   "gpa_matched": 5,
+   "names": 5,
+   "gpa_pct": 100.0,
+   "primary_matched": 5,
+   "primary_names": 5,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 0,
+   "rmp_pct": 0.0
+  },
+  "FAA": {
+   "gpa_matched": 12,
+   "names": 25,
+   "gpa_pct": 48.0,
+   "primary_matched": 12,
+   "primary_names": 25,
+   "primary_gpa_pct": 48.0,
+   "rmp_matched": 8,
+   "rmp_pct": 32.0
+  },
+  "FIN": {
+   "gpa_matched": 39,
+   "names": 48,
+   "gpa_pct": 81.2,
+   "primary_matched": 39,
+   "primary_names": 48,
+   "primary_gpa_pct": 81.2,
+   "rmp_matched": 25,
+   "rmp_pct": 52.1
+  },
+  "FR": {
+   "gpa_matched": 13,
+   "names": 16,
+   "gpa_pct": 81.2,
+   "primary_matched": 13,
+   "primary_names": 16,
+   "primary_gpa_pct": 81.2,
+   "rmp_matched": 13,
+   "rmp_pct": 81.2
+  },
+  "FSHN": {
+   "gpa_matched": 31,
+   "names": 39,
+   "gpa_pct": 79.5,
+   "primary_matched": 31,
+   "primary_names": 39,
+   "primary_gpa_pct": 79.5,
+   "rmp_matched": 10,
+   "rmp_pct": 25.6
+  },
+  "GC": {
+   "gpa_matched": 2,
+   "names": 4,
+   "gpa_pct": 50.0,
+   "primary_matched": 2,
+   "primary_names": 4,
+   "primary_gpa_pct": 50.0,
+   "rmp_matched": 2,
+   "rmp_pct": 50.0
+  },
+  "GEOL": {
+   "gpa_matched": 16,
+   "names": 28,
+   "gpa_pct": 57.1,
+   "primary_matched": 13,
+   "primary_names": 24,
+   "primary_gpa_pct": 54.2,
+   "rmp_matched": 9,
+   "rmp_pct": 32.1
+  },
+  "GER": {
+   "gpa_matched": 10,
+   "names": 23,
+   "gpa_pct": 43.5,
+   "primary_matched": 9,
+   "primary_names": 21,
+   "primary_gpa_pct": 42.9,
+   "rmp_matched": 8,
+   "rmp_pct": 34.8
+  },
+  "GGIS": {
+   "gpa_matched": 21,
+   "names": 29,
+   "gpa_pct": 72.4,
+   "primary_matched": 21,
+   "primary_names": 26,
+   "primary_gpa_pct": 80.8,
+   "rmp_matched": 17,
+   "rmp_pct": 58.6
+  },
+  "GLBL": {
+   "gpa_matched": 15,
+   "names": 24,
+   "gpa_pct": 62.5,
+   "primary_matched": 15,
+   "primary_names": 24,
+   "primary_gpa_pct": 62.5,
+   "rmp_matched": 12,
+   "rmp_pct": 50.0
+  },
+  "GRK": {
+   "gpa_matched": 5,
+   "names": 5,
+   "gpa_pct": 100.0,
+   "primary_matched": 5,
+   "primary_names": 5,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 3,
+   "rmp_pct": 60.0
+  },
+  "GRKM": {
+   "gpa_matched": 3,
+   "names": 3,
+   "gpa_pct": 100.0,
+   "primary_matched": 3,
+   "primary_names": 3,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 1,
+   "rmp_pct": 33.3
+  },
+  "GSD": {
+   "gpa_matched": 13,
+   "names": 24,
+   "gpa_pct": 54.2,
+   "primary_matched": 10,
+   "primary_names": 16,
+   "primary_gpa_pct": 62.5,
+   "rmp_matched": 5,
+   "rmp_pct": 20.8
+  },
+  "GWS": {
+   "gpa_matched": 22,
+   "names": 34,
+   "gpa_pct": 64.7,
+   "primary_matched": 22,
+   "primary_names": 32,
+   "primary_gpa_pct": 68.8,
+   "rmp_matched": 16,
+   "rmp_pct": 47.1
+  },
+  "HBSE": {
+   "gpa_matched": 3,
+   "names": 4,
+   "gpa_pct": 75.0,
+   "primary_matched": 3,
+   "primary_names": 4,
+   "primary_gpa_pct": 75.0,
+   "rmp_matched": 1,
+   "rmp_pct": 25.0
+  },
+  "HDFS": {
+   "gpa_matched": 26,
+   "names": 38,
+   "gpa_pct": 68.4,
+   "primary_matched": 26,
+   "primary_names": 38,
+   "primary_gpa_pct": 68.4,
+   "rmp_matched": 13,
+   "rmp_pct": 34.2
+  },
+  "HEBR": {
+   "gpa_matched": 0,
+   "names": 1,
+   "gpa_pct": 0.0,
+   "primary_matched": 0,
+   "primary_names": 1,
+   "primary_gpa_pct": 0.0,
+   "rmp_matched": 1,
+   "rmp_pct": 100.0
+  },
+  "HIST": {
+   "gpa_matched": 43,
+   "names": 55,
+   "gpa_pct": 78.2,
+   "primary_matched": 34,
+   "primary_names": 40,
+   "primary_gpa_pct": 85.0,
+   "rmp_matched": 23,
+   "rmp_pct": 41.8
+  },
+  "HK": {
+   "gpa_matched": 87,
+   "names": 153,
+   "gpa_pct": 56.9,
+   "primary_matched": 80,
+   "primary_names": 116,
+   "primary_gpa_pct": 69.0,
+   "rmp_matched": 34,
+   "rmp_pct": 22.2
+  },
+  "HNDI": {
+   "gpa_matched": 1,
+   "names": 2,
+   "gpa_pct": 50.0,
+   "primary_matched": 1,
+   "primary_names": 2,
+   "primary_gpa_pct": 50.0,
+   "rmp_matched": 1,
+   "rmp_pct": 50.0
+  },
+  "HORT": {
+   "gpa_matched": 5,
+   "names": 7,
+   "gpa_pct": 71.4,
+   "primary_matched": 5,
+   "primary_names": 7,
+   "primary_gpa_pct": 71.4,
+   "rmp_matched": 4,
+   "rmp_pct": 57.1
+  },
+  "HT": {
+   "gpa_matched": 3,
+   "names": 3,
+   "gpa_pct": 100.0,
+   "primary_matched": 3,
+   "primary_names": 3,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 2,
+   "rmp_pct": 66.7
+  },
+  "HUM": {
+   "gpa_matched": 3,
+   "names": 3,
+   "gpa_pct": 100.0,
+   "primary_matched": 3,
+   "primary_names": 3,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 2,
+   "rmp_pct": 66.7
+  },
+  "IB": {
+   "gpa_matched": 27,
+   "names": 54,
+   "gpa_pct": 50.0,
+   "primary_matched": 24,
+   "primary_names": 44,
+   "primary_gpa_pct": 54.5,
+   "rmp_matched": 15,
+   "rmp_pct": 27.8
+  },
+  "IE": {
+   "gpa_matched": 24,
+   "names": 25,
+   "gpa_pct": 96.0,
+   "primary_matched": 24,
+   "primary_names": 25,
+   "primary_gpa_pct": 96.0,
+   "rmp_matched": 12,
+   "rmp_pct": 48.0
+  },
+  "INFO": {
+   "gpa_matched": 17,
+   "names": 29,
+   "gpa_pct": 58.6,
+   "primary_matched": 17,
+   "primary_names": 25,
+   "primary_gpa_pct": 68.0,
+   "rmp_matched": 7,
+   "rmp_pct": 24.1
+  },
+  "IS": {
+   "gpa_matched": 117,
+   "names": 177,
+   "gpa_pct": 66.1,
+   "primary_matched": 115,
+   "primary_names": 156,
+   "primary_gpa_pct": 73.7,
+   "rmp_matched": 56,
+   "rmp_pct": 31.6
+  },
+  "ITAL": {
+   "gpa_matched": 9,
+   "names": 10,
+   "gpa_pct": 90.0,
+   "primary_matched": 9,
+   "primary_names": 10,
+   "primary_gpa_pct": 90.0,
+   "rmp_matched": 7,
+   "rmp_pct": 70.0
+  },
+  "JAPN": {
+   "gpa_matched": 4,
+   "names": 7,
+   "gpa_pct": 57.1,
+   "primary_matched": 4,
+   "primary_names": 7,
+   "primary_gpa_pct": 57.1,
+   "rmp_matched": 5,
+   "rmp_pct": 71.4
+  },
+  "JOUR": {
+   "gpa_matched": 13,
+   "names": 15,
+   "gpa_pct": 86.7,
+   "primary_matched": 13,
+   "primary_names": 15,
+   "primary_gpa_pct": 86.7,
+   "rmp_matched": 8,
+   "rmp_pct": 53.3
+  },
+  "JS": {
+   "gpa_matched": 4,
+   "names": 7,
+   "gpa_pct": 57.1,
+   "primary_matched": 4,
+   "primary_names": 6,
+   "primary_gpa_pct": 66.7,
+   "rmp_matched": 3,
+   "rmp_pct": 42.9
+  },
+  "KOR": {
+   "gpa_matched": 2,
+   "names": 5,
+   "gpa_pct": 40.0,
+   "primary_matched": 2,
+   "primary_names": 5,
+   "primary_gpa_pct": 40.0,
+   "rmp_matched": 0,
+   "rmp_pct": 0.0
+  },
+  "LA": {
+   "gpa_matched": 10,
+   "names": 17,
+   "gpa_pct": 58.8,
+   "primary_matched": 10,
+   "primary_names": 17,
+   "primary_gpa_pct": 58.8,
+   "rmp_matched": 6,
+   "rmp_pct": 35.3
+  },
+  "LAS": {
+   "gpa_matched": 13,
+   "names": 20,
+   "gpa_pct": 65.0,
+   "primary_matched": 7,
+   "primary_names": 12,
+   "primary_gpa_pct": 58.3,
+   "rmp_matched": 4,
+   "rmp_pct": 20.0
+  },
+  "LAST": {
+   "gpa_matched": 3,
+   "names": 8,
+   "gpa_pct": 37.5,
+   "primary_matched": 3,
+   "primary_names": 8,
+   "primary_gpa_pct": 37.5,
+   "rmp_matched": 2,
+   "rmp_pct": 25.0
+  },
+  "LAT": {
+   "gpa_matched": 4,
+   "names": 6,
+   "gpa_pct": 66.7,
+   "primary_matched": 4,
+   "primary_names": 6,
+   "primary_gpa_pct": 66.7,
+   "rmp_matched": 3,
+   "rmp_pct": 50.0
+  },
+  "LAW": {
+   "gpa_matched": 31,
+   "names": 45,
+   "gpa_pct": 68.9,
+   "primary_matched": 31,
+   "primary_names": 45,
+   "primary_gpa_pct": 68.9,
+   "rmp_matched": 6,
+   "rmp_pct": 13.3
+  },
+  "LCTL": {
+   "gpa_matched": 0,
+   "names": 3,
+   "gpa_pct": 0.0,
+   "primary_matched": 0,
+   "primary_names": 3,
+   "primary_gpa_pct": 0.0,
+   "rmp_matched": 2,
+   "rmp_pct": 66.7
+  },
+  "LEAD": {
+   "gpa_matched": 6,
+   "names": 6,
+   "gpa_pct": 100.0,
+   "primary_matched": 6,
+   "primary_names": 6,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 5,
+   "rmp_pct": 83.3
+  },
+  "LER": {
+   "gpa_matched": 24,
+   "names": 29,
+   "gpa_pct": 82.8,
+   "primary_matched": 24,
+   "primary_names": 29,
+   "primary_gpa_pct": 82.8,
+   "rmp_matched": 6,
+   "rmp_pct": 20.7
+  },
+  "LING": {
+   "gpa_matched": 22,
+   "names": 29,
+   "gpa_pct": 75.9,
+   "primary_matched": 22,
+   "primary_names": 29,
+   "primary_gpa_pct": 75.9,
+   "rmp_matched": 14,
+   "rmp_pct": 48.3
+  },
+  "LLS": {
+   "gpa_matched": 16,
+   "names": 29,
+   "gpa_pct": 55.2,
+   "primary_matched": 14,
+   "primary_names": 25,
+   "primary_gpa_pct": 56.0,
+   "rmp_matched": 10,
+   "rmp_pct": 34.5
+  },
+  "MACS": {
+   "gpa_matched": 19,
+   "names": 26,
+   "gpa_pct": 73.1,
+   "primary_matched": 19,
+   "primary_names": 26,
+   "primary_gpa_pct": 73.1,
+   "rmp_matched": 10,
+   "rmp_pct": 38.5
+  },
+  "MATH": {
+   "gpa_matched": 62,
+   "names": 77,
+   "gpa_pct": 80.5,
+   "primary_matched": 60,
+   "primary_names": 70,
+   "primary_gpa_pct": 85.7,
+   "rmp_matched": 53,
+   "rmp_pct": 68.8
+  },
+  "MBA": {
+   "gpa_matched": 16,
+   "names": 21,
+   "gpa_pct": 76.2,
+   "primary_matched": 16,
+   "primary_names": 21,
+   "primary_gpa_pct": 76.2,
+   "rmp_matched": 13,
+   "rmp_pct": 61.9
+  },
+  "MCB": {
+   "gpa_matched": 45,
+   "names": 68,
+   "gpa_pct": 66.2,
+   "primary_matched": 45,
+   "primary_names": 67,
+   "primary_gpa_pct": 67.2,
+   "rmp_matched": 25,
+   "rmp_pct": 36.8
+  },
+  "MDIA": {
+   "gpa_matched": 3,
+   "names": 5,
+   "gpa_pct": 60.0,
+   "primary_matched": 3,
+   "primary_names": 5,
+   "primary_gpa_pct": 60.0,
+   "rmp_matched": 2,
+   "rmp_pct": 40.0
+  },
+  "MDVL": {
+   "gpa_matched": 2,
+   "names": 2,
+   "gpa_pct": 100.0,
+   "primary_matched": 2,
+   "primary_names": 2,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 1,
+   "rmp_pct": 50.0
+  },
+  "ME": {
+   "gpa_matched": 36,
+   "names": 43,
+   "gpa_pct": 83.7,
+   "primary_matched": 36,
+   "primary_names": 42,
+   "primary_gpa_pct": 85.7,
+   "rmp_matched": 25,
+   "rmp_pct": 58.1
+  },
+  "MICR": {
+   "gpa_matched": 18,
+   "names": 20,
+   "gpa_pct": 90.0,
+   "primary_matched": 18,
+   "primary_names": 20,
+   "primary_gpa_pct": 90.0,
+   "rmp_matched": 10,
+   "rmp_pct": 50.0
+  },
+  "MILS": {
+   "gpa_matched": 4,
+   "names": 9,
+   "gpa_pct": 44.4,
+   "primary_matched": 4,
+   "primary_names": 9,
+   "primary_gpa_pct": 44.4,
+   "rmp_matched": 1,
+   "rmp_pct": 11.1
+  },
+  "MIP": {
+   "gpa_matched": 18,
+   "names": 28,
+   "gpa_pct": 64.3,
+   "primary_matched": 18,
+   "primary_names": 28,
+   "primary_gpa_pct": 64.3,
+   "rmp_matched": 12,
+   "rmp_pct": 42.9
+  },
+  "MSE": {
+   "gpa_matched": 26,
+   "names": 28,
+   "gpa_pct": 92.9,
+   "primary_matched": 26,
+   "primary_names": 28,
+   "primary_gpa_pct": 92.9,
+   "rmp_matched": 13,
+   "rmp_pct": 46.4
+  },
+  "MUS": {
+   "gpa_matched": 55,
+   "names": 128,
+   "gpa_pct": 43.0,
+   "primary_matched": 44,
+   "primary_names": 95,
+   "primary_gpa_pct": 46.3,
+   "rmp_matched": 27,
+   "rmp_pct": 21.1
+  },
+  "MUSC": {
+   "gpa_matched": 29,
+   "names": 83,
+   "gpa_pct": 34.9,
+   "primary_matched": 28,
+   "primary_names": 77,
+   "primary_gpa_pct": 36.4,
+   "rmp_matched": 18,
+   "rmp_pct": 21.7
+  },
+  "MUSE": {
+   "gpa_matched": 1,
+   "names": 1,
+   "gpa_pct": 100.0,
+   "primary_matched": 1,
+   "primary_names": 1,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 1,
+   "rmp_pct": 100.0
+  },
+  "NE": {
+   "gpa_matched": 3,
+   "names": 4,
+   "gpa_pct": 75.0,
+   "primary_matched": 3,
+   "primary_names": 4,
+   "primary_gpa_pct": 75.0,
+   "rmp_matched": 1,
+   "rmp_pct": 25.0
+  },
+  "NEUR": {
+   "gpa_matched": 19,
+   "names": 29,
+   "gpa_pct": 65.5,
+   "primary_matched": 19,
+   "primary_names": 27,
+   "primary_gpa_pct": 70.4,
+   "rmp_matched": 15,
+   "rmp_pct": 51.7
+  },
+  "NPRE": {
+   "gpa_matched": 18,
+   "names": 20,
+   "gpa_pct": 90.0,
+   "primary_matched": 18,
+   "primary_names": 20,
+   "primary_gpa_pct": 90.0,
+   "rmp_matched": 11,
+   "rmp_pct": 55.0
+  },
+  "NRES": {
+   "gpa_matched": 31,
+   "names": 61,
+   "gpa_pct": 50.8,
+   "primary_matched": 27,
+   "primary_names": 44,
+   "primary_gpa_pct": 61.4,
+   "rmp_matched": 15,
+   "rmp_pct": 24.6
+  },
+  "NS": {
+   "gpa_matched": 0,
+   "names": 6,
+   "gpa_pct": 0.0,
+   "primary_matched": 0,
+   "primary_names": 6,
+   "primary_gpa_pct": 0.0,
+   "rmp_matched": 1,
+   "rmp_pct": 16.7
+  },
+  "NUTR": {
+   "gpa_matched": 16,
+   "names": 26,
+   "gpa_pct": 61.5,
+   "primary_matched": 16,
+   "primary_names": 26,
+   "primary_gpa_pct": 61.5,
+   "rmp_matched": 8,
+   "rmp_pct": 30.8
+  },
+  "PATH": {
+   "gpa_matched": 10,
+   "names": 42,
+   "gpa_pct": 23.8,
+   "primary_matched": 10,
+   "primary_names": 42,
+   "primary_gpa_pct": 23.8,
+   "rmp_matched": 4,
+   "rmp_pct": 9.5
+  },
+  "PERS": {
+   "gpa_matched": 2,
+   "names": 2,
+   "gpa_pct": 100.0,
+   "primary_matched": 2,
+   "primary_names": 2,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 2,
+   "rmp_pct": 100.0
+  },
+  "PHIL": {
+   "gpa_matched": 23,
+   "names": 34,
+   "gpa_pct": 67.6,
+   "primary_matched": 20,
+   "primary_names": 30,
+   "primary_gpa_pct": 66.7,
+   "rmp_matched": 13,
+   "rmp_pct": 38.2
+  },
+  "PHYS": {
+   "gpa_matched": 18,
+   "names": 30,
+   "gpa_pct": 60.0,
+   "primary_matched": 18,
+   "primary_names": 29,
+   "primary_gpa_pct": 62.1,
+   "rmp_matched": 13,
+   "rmp_pct": 43.3
+  },
+  "PLPA": {
+   "gpa_matched": 3,
+   "names": 3,
+   "gpa_pct": 100.0,
+   "primary_matched": 3,
+   "primary_names": 3,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 2,
+   "rmp_pct": 66.7
+  },
+  "POL": {
+   "gpa_matched": 0,
+   "names": 1,
+   "gpa_pct": 0.0,
+   "primary_matched": 0,
+   "primary_names": 1,
+   "primary_gpa_pct": 0.0,
+   "rmp_matched": 0,
+   "rmp_pct": 0.0
+  },
+  "PORT": {
+   "gpa_matched": 4,
+   "names": 7,
+   "gpa_pct": 57.1,
+   "primary_matched": 4,
+   "primary_names": 7,
+   "primary_gpa_pct": 57.1,
+   "rmp_matched": 4,
+   "rmp_pct": 57.1
+  },
+  "PS": {
+   "gpa_matched": 30,
+   "names": 35,
+   "gpa_pct": 85.7,
+   "primary_matched": 30,
+   "primary_names": 32,
+   "primary_gpa_pct": 93.8,
+   "rmp_matched": 22,
+   "rmp_pct": 62.9
+  },
+  "PSM": {
+   "gpa_matched": 1,
+   "names": 1,
+   "gpa_pct": 100.0,
+   "primary_matched": 1,
+   "primary_names": 1,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 0,
+   "rmp_pct": 0.0
+  },
+  "PSYC": {
+   "gpa_matched": 66,
+   "names": 80,
+   "gpa_pct": 82.5,
+   "primary_matched": 65,
+   "primary_names": 77,
+   "primary_gpa_pct": 84.4,
+   "rmp_matched": 39,
+   "rmp_pct": 48.8
+  },
+  "QUEC": {
+   "gpa_matched": 1,
+   "names": 1,
+   "gpa_pct": 100.0,
+   "primary_matched": 1,
+   "primary_names": 1,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 0,
+   "rmp_pct": 0.0
+  },
+  "REES": {
+   "gpa_matched": 1,
+   "names": 4,
+   "gpa_pct": 25.0,
+   "primary_matched": 1,
+   "primary_names": 4,
+   "primary_gpa_pct": 25.0,
+   "rmp_matched": 2,
+   "rmp_pct": 50.0
+  },
+  "REL": {
+   "gpa_matched": 14,
+   "names": 16,
+   "gpa_pct": 87.5,
+   "primary_matched": 14,
+   "primary_names": 16,
+   "primary_gpa_pct": 87.5,
+   "rmp_matched": 11,
+   "rmp_pct": 68.8
+  },
+  "RMLG": {
+   "gpa_matched": 1,
+   "names": 1,
+   "gpa_pct": 100.0,
+   "primary_matched": 1,
+   "primary_names": 1,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 1,
+   "rmp_pct": 100.0
+  },
+  "RST": {
+   "gpa_matched": 26,
+   "names": 37,
+   "gpa_pct": 70.3,
+   "primary_matched": 26,
+   "primary_names": 37,
+   "primary_gpa_pct": 70.3,
+   "rmp_matched": 14,
+   "rmp_pct": 37.8
+  },
+  "RUSS": {
+   "gpa_matched": 4,
+   "names": 7,
+   "gpa_pct": 57.1,
+   "primary_matched": 4,
+   "primary_names": 7,
+   "primary_gpa_pct": 57.1,
+   "rmp_matched": 2,
+   "rmp_pct": 28.6
+  },
+  "SAME": {
+   "gpa_matched": 2,
+   "names": 7,
+   "gpa_pct": 28.6,
+   "primary_matched": 2,
+   "primary_names": 7,
+   "primary_gpa_pct": 28.6,
+   "rmp_matched": 2,
+   "rmp_pct": 28.6
+  },
+  "SBC": {
+   "gpa_matched": 3,
+   "names": 4,
+   "gpa_pct": 75.0,
+   "primary_matched": 3,
+   "primary_names": 4,
+   "primary_gpa_pct": 75.0,
+   "rmp_matched": 1,
+   "rmp_pct": 25.0
+  },
+  "SCAN": {
+   "gpa_matched": 1,
+   "names": 1,
+   "gpa_pct": 100.0,
+   "primary_matched": 1,
+   "primary_names": 1,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 1,
+   "rmp_pct": 100.0
+  },
+  "SE": {
+   "gpa_matched": 16,
+   "names": 18,
+   "gpa_pct": 88.9,
+   "primary_matched": 15,
+   "primary_names": 17,
+   "primary_gpa_pct": 88.2,
+   "rmp_matched": 12,
+   "rmp_pct": 66.7
+  },
+  "SHS": {
+   "gpa_matched": 21,
+   "names": 29,
+   "gpa_pct": 72.4,
+   "primary_matched": 21,
+   "primary_names": 29,
+   "primary_gpa_pct": 72.4,
+   "rmp_matched": 6,
+   "rmp_pct": 20.7
+  },
+  "SLAV": {
+   "gpa_matched": 5,
+   "names": 6,
+   "gpa_pct": 83.3,
+   "primary_matched": 5,
+   "primary_names": 6,
+   "primary_gpa_pct": 83.3,
+   "rmp_matched": 5,
+   "rmp_pct": 83.3
+  },
+  "SLCL": {
+   "gpa_matched": 1,
+   "names": 1,
+   "gpa_pct": 100.0,
+   "primary_matched": 1,
+   "primary_names": 1,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 1,
+   "rmp_pct": 100.0
+  },
+  "SOC": {
+   "gpa_matched": 19,
+   "names": 25,
+   "gpa_pct": 76.0,
+   "primary_matched": 19,
+   "primary_names": 25,
+   "primary_gpa_pct": 76.0,
+   "rmp_matched": 12,
+   "rmp_pct": 48.0
+  },
+  "SOCW": {
+   "gpa_matched": 48,
+   "names": 59,
+   "gpa_pct": 81.4,
+   "primary_matched": 48,
+   "primary_names": 59,
+   "primary_gpa_pct": 81.4,
+   "rmp_matched": 22,
+   "rmp_pct": 37.3
+  },
+  "SPAN": {
+   "gpa_matched": 23,
+   "names": 31,
+   "gpa_pct": 74.2,
+   "primary_matched": 23,
+   "primary_names": 31,
+   "primary_gpa_pct": 74.2,
+   "rmp_matched": 16,
+   "rmp_pct": 51.6
+  },
+  "SPED": {
+   "gpa_matched": 10,
+   "names": 12,
+   "gpa_pct": 83.3,
+   "primary_matched": 10,
+   "primary_names": 12,
+   "primary_gpa_pct": 83.3,
+   "rmp_matched": 4,
+   "rmp_pct": 33.3
+  },
+  "STAT": {
+   "gpa_matched": 30,
+   "names": 38,
+   "gpa_pct": 78.9,
+   "primary_matched": 30,
+   "primary_names": 38,
+   "primary_gpa_pct": 78.9,
+   "rmp_matched": 23,
+   "rmp_pct": 60.5
+  },
+  "SWAH": {
+   "gpa_matched": 1,
+   "names": 2,
+   "gpa_pct": 50.0,
+   "primary_matched": 1,
+   "primary_names": 2,
+   "primary_gpa_pct": 50.0,
+   "rmp_matched": 2,
+   "rmp_pct": 100.0
+  },
+  "TAM": {
+   "gpa_matched": 16,
+   "names": 20,
+   "gpa_pct": 80.0,
+   "primary_matched": 16,
+   "primary_names": 20,
+   "primary_gpa_pct": 80.0,
+   "rmp_matched": 14,
+   "rmp_pct": 70.0
+  },
+  "TE": {
+   "gpa_matched": 12,
+   "names": 14,
+   "gpa_pct": 85.7,
+   "primary_matched": 12,
+   "primary_names": 14,
+   "primary_gpa_pct": 85.7,
+   "rmp_matched": 6,
+   "rmp_pct": 42.9
+  },
+  "THEA": {
+   "gpa_matched": 20,
+   "names": 69,
+   "gpa_pct": 29.0,
+   "primary_matched": 19,
+   "primary_names": 67,
+   "primary_gpa_pct": 28.4,
+   "rmp_matched": 11,
+   "rmp_pct": 15.9
+  },
+  "TMGT": {
+   "gpa_matched": 1,
+   "names": 3,
+   "gpa_pct": 33.3,
+   "primary_matched": 1,
+   "primary_names": 3,
+   "primary_gpa_pct": 33.3,
+   "rmp_matched": 2,
+   "rmp_pct": 66.7
+  },
+  "TRST": {
+   "gpa_matched": 2,
+   "names": 5,
+   "gpa_pct": 40.0,
+   "primary_matched": 2,
+   "primary_names": 5,
+   "primary_gpa_pct": 40.0,
+   "rmp_matched": 1,
+   "rmp_pct": 20.0
+  },
+  "TURK": {
+   "gpa_matched": 1,
+   "names": 1,
+   "gpa_pct": 100.0,
+   "primary_matched": 1,
+   "primary_names": 1,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 1,
+   "rmp_pct": 100.0
+  },
+  "UKR": {
+   "gpa_matched": 1,
+   "names": 4,
+   "gpa_pct": 25.0,
+   "primary_matched": 1,
+   "primary_names": 4,
+   "primary_gpa_pct": 25.0,
+   "rmp_matched": 1,
+   "rmp_pct": 25.0
+  },
+  "UP": {
+   "gpa_matched": 15,
+   "names": 18,
+   "gpa_pct": 83.3,
+   "primary_matched": 15,
+   "primary_names": 18,
+   "primary_gpa_pct": 83.3,
+   "rmp_matched": 7,
+   "rmp_pct": 38.9
+  },
+  "VCM": {
+   "gpa_matched": 11,
+   "names": 42,
+   "gpa_pct": 26.2,
+   "primary_matched": 11,
+   "primary_names": 42,
+   "primary_gpa_pct": 26.2,
+   "rmp_matched": 1,
+   "rmp_pct": 2.4
+  },
+  "VM": {
+   "gpa_matched": 31,
+   "names": 131,
+   "gpa_pct": 23.7,
+   "primary_matched": 31,
+   "primary_names": 131,
+   "primary_gpa_pct": 23.7,
+   "rmp_matched": 10,
+   "rmp_pct": 7.6
+  },
+  "WLOF": {
+   "gpa_matched": 2,
+   "names": 2,
+   "gpa_pct": 100.0,
+   "primary_matched": 2,
+   "primary_names": 2,
+   "primary_gpa_pct": 100.0,
+   "rmp_matched": 1,
+   "rmp_pct": 50.0
+  },
+  "WLTE": {
+   "gpa_matched": 1,
+   "names": 2,
+   "gpa_pct": 50.0,
+   "primary_matched": 1,
+   "primary_names": 2,
+   "primary_gpa_pct": 50.0,
+   "rmp_matched": 0,
+   "rmp_pct": 0.0
+  },
+  "WRIT": {
+   "gpa_matched": 4,
+   "names": 5,
+   "gpa_pct": 80.0,
+   "primary_matched": 4,
+   "primary_names": 5,
+   "primary_gpa_pct": 80.0,
+   "rmp_matched": 2,
+   "rmp_pct": 40.0
+  },
+  "YDSH": {
+   "gpa_matched": 0,
+   "names": 1,
+   "gpa_pct": 0.0,
+   "primary_matched": 0,
+   "primary_names": 1,
+   "primary_gpa_pct": 0.0,
+   "rmp_matched": 1,
+   "rmp_pct": 100.0
+  }
+ },
+ "repo_url": "https://github.com/kamransingri/illini-scheduler",
+ "n_courses": 7016,
+ "history_terms": [
+  "2022-fa",
+  "2023-sp",
+  "2023-su",
+  "2023-fa",
+  "2024-sp",
+  "2024-su",
+  "2024-fa",
+  "2025-sp",
+  "2025-su",
+  "2025-fa",
+  "2026-sp",
+  "2026-su",
+  "2026-fa",
+  "2027-sp"
+ ]
+}
