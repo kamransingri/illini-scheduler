@@ -2,9 +2,9 @@
 
 ## Final summary
 
-**Live URL:** none yet; the public repo still needs to be created and pushed (Needs a human #1, below). Once Pages is on it will be `https://<owner>.github.io/illini-scheduler/`. **Run locally:**
-`pip install -r requirements.txt && (cd web && npm ci) && make data && make build && make serve`, then open
-http://localhost:4173.
+**Live URL:** https://kamransingri.github.io/illini-scheduler/ (deployed by run 41774876513 on 2026-11-04; nightly
+refresh at 09:00 UTC). **Run locally:** `pip install -r requirements.txt && (cd web && npm ci) && make data && make build
+&& make serve`, then open http://localhost:4173.
 
 **What works** (all phases 0-8, Final QA and the deploy workflow are done):
 - Data pipeline (`make data`, ~25 s): 14 terms of Course Explorer sections (Fall 2022 to Spring 2027), GPA by course
@@ -18,12 +18,17 @@ http://localhost:4173.
   matching raw sources, failure drills, and an independent reviewer that finished the student task with 0 blockers
   (round 2: 0 majors).
 
+**Live data (first GitHub run):** Fall 2026 sections come live from the Course Explorer API (12,835 sections). Spring
+2027 uses the 2026-10-30 mirror because Course Explorer was still generating most Spring pages (HTTP 202); later
+runs retry. RMP works: about 20 minutes of lookups per run, coverage growing through the 7-day cache, and 530
+exam/grading profiles (up from 66). On GitHub the pipeline ran CI 147 pytest + 47 Vitest, 25 Playwright tests against the build,
+and 8 smoke tests against the live URL: all passed.
+
 **Known issues:**
-- RMP data is not included: the host was blocked here. The client is built and tested, and the site says
-  "RMP unavailable" with search links. It fills in once the nightly workflow runs on GitHub.
+- RMP covers the instructors looked up so far (lecture instructors first). The rest show a search link and fill in
+  over the next nightly runs.
 - Spring 2027 seat status isn't published in the snapshot (taken before registration opened), so the site says
   "Not published" and links to live seats. Fall 2026 status is from 2026-03-25.
-- Exam/grading profiles are thin (66), because section notes, RMP reviews and student notes were unavailable.
 - .ics instruction dates are estimates (`web/lib/terms.ts`).
 - STAT instructor-to-GPA match rate is 78.9% on lecture sections (target 80%): new instructors and real ambiguity.
 - Search has no typo tolerance; near-duplicate schedules that differ only by a same-time section still appear
@@ -31,22 +36,19 @@ http://localhost:4173.
 
 ## Needs a human
 
-1. **Create the public GitHub repo and push.** This session can't create repositories (its GitHub access is
-   limited to repos attached when the session started). From the project root:
-   `gh repo create illini-scheduler --public --source . --push`
-   Then enable Pages with the Actions source: `gh api -X POST repos/<owner>/illini-scheduler/pages -f build_type=workflow`
-   (or Settings → Pages → Source: GitHub Actions), and run `gh workflow run pages.yml`. The site will be at
-   `https://<owner>.github.io/illini-scheduler/`.
-2. **Network access for live sources (optional).** This session's network blocked `courses.illinois.edu`
-   and `www.ratemyprofessors.com`. Once pushed, GitHub Actions has open internet and the nightly workflow
-   fetches both.
-3. **Spot-check against the live Course Explorer page.** `courses.illinois.edu` was blocked here, so the MATH 221
-   spot check (Phase 1) compared the DB to the raw upstream CSV instead of the live web page.
-4. **Compare against Wade's visualizations.** `waf.web.engr.illinois.edu` / `waf.cs.illinois.edu` were blocked,
-   so the Phase 2 (grade disparity) and Phase 7 (gen-ed by GPA) comparisons with those pages are still to do.
-5. **RMP verification.** `www.ratemyprofessors.com` was blocked, so no RMP data was fetched and the 5 manual match
-   checks were not possible. Once the nightly workflow runs on GitHub, open 5 random instructors' RMP links and
-   confirm they are the right person.
+Done: the repo is public and pushed, Pages is on (Source: GitHub Actions), and the site is deployed.
+These checks remain. This build session's network blocks `*.github.io`, `courses.illinois.edu`,
+`ratemyprofessors.com` and Wade's visualization site:
+
+1. **RMP matches.** Open 5 instructor cards that show RMP numbers on the live site, follow "Rate My Professors
+   page", and confirm each is the right person (UIUC, right department).
+2. **Course Explorer spot check.** Compare 3 MATH 221 Fall 2026 sections (CRN, time, room) on
+   https://kamransingri.github.io/illini-scheduler/course/MATH/221/ with
+   https://courses.illinois.edu/schedule/2026/fall/MATH/221
+3. **Wade's visualizations.** Compare the CS 124 / MATH 221 instructor order with
+   https://waf.web.engr.illinois.edu/discovery/grade_disparity_between_sections_at_uiuc/ and the top 10 Hist & Phil
+   gen-eds with http://waf.cs.illinois.edu/discovery/every_gen_ed_at_uiuc_by_gpa/ (expected differences:
+   PROGRESS.md Phases 2 and 7).
 
 ## Phase log
 
@@ -325,3 +327,16 @@ QA complete.
   (D0.2). So `gh api -X POST repos/{owner}/{repo}/pages -f build_type=workflow`, `gh workflow run pages.yml` and
   the live smoke tests couldn't run. Instead the Playwright suite ran against `make build` served locally, both at
   `/` and under `/illini-scheduler/` (the path Pages will use): 25/25 pass.
+
+### Deploy (completed)
+
+- Repo created by the owner (public, so Pages works on a free plan) and pushed from this session.
+- Pages source set to GitHub Actions by the owner (this session's token can't change Pages settings).
+- Three runs failed before the first deploy, each fixed and covered by a test: (1) one Course Explorer page that kept
+  failing aborted the crawl → tolerate partial failures and fill from the mirror; (2) HTTP 202 "still generating"
+  pages + a `KeyError` in the RMP loop for instructors outside the GPA window → capped backoff with a second pass,
+  identity from the Course Explorer name; (3) two e2e tests (a race while course data loaded, and no root 404.html
+  in the base-path test server). The RMP cache is also saved even when later steps fail.
+- Run 41774876513: refresh ✓, lint/unit ✓, build ✓, 25/25 Playwright ✓, data summaries committed ✓, deploy ✓,
+  **8/8 smoke tests against https://kamransingri.github.io/illini-scheduler/ ✓**.
+- Docs-only commits (`*.md`, `screenshots/`) no longer trigger the 30-minute refresh.
