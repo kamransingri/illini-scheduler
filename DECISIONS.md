@@ -240,3 +240,8 @@ Every judgment call made during the autonomous build, newest phase last.
   second pass over failed pages after 30 s before falling back to the mirror.
 - **D10.4 RMP loop crash** (`KeyError`) for instructors matched to GPA rows older than the stats window: they now
   get an identity from their Course Explorer name. Regression test added. This only appeared with real RMP access.
+- **D10.5 First successful refresh on GitHub** (run 41771969328): Fall 2026 came live from the Course Explorer API
+  (12,835 sections). For Spring 2027, 3,054 of 4,516 cascade pages were still "being generated" (HTTP 202) even
+  after the second pass, so that term fell back to the mirror (snapshot 2026-10-30), as designed. RMP worked: 20 min
+  of lookups, exam profiles went from 66 to 530. The RMP cache is now saved even when later steps fail (separate
+  restore/save steps), so lookups are never thrown away.

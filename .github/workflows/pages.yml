@@ -28,7 +28,7 @@ jobs:
       - run: pip install -r requirements.txt
       - run: cd web && npm ci
       - name: Restore RMP cache (7-day responses)
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: data/raw/rmp
           key: rmp-${{ github.run_id }}
@@ -37,6 +37,12 @@ jobs:
         run: make data
         env:
           RMP_BUDGET_SECONDS: "1200" # new RMP lookups per run; the 7-day cache carries the rest forward
+      - name: Save RMP cache (even if later steps fail)
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: data/raw/rmp
+          key: rmp-${{ github.run_id }}
       - name: Lint + type check + unit tests
         run: make lint && make test
       - name: Build static site
@@ -49,6 +55,7 @@ jobs:
           npx playwright install --with-deps chromium
           mkdir -p ../site/${{ github.event.repository.name }}
           cp -r out/. ../site/${{ github.event.repository.name }}/
+          cp out/404.html ../site/404.html  # GitHub Pages serves the project's 404.html for unknown paths
           (npx serve ../site -l 4173 --no-clipboard &) && sleep 3
           E2E_BASE_URL=http://127.0.0.1:4173/${{ github.event.repository.name }}/ npx playwright test
       - name: Commit refreshed data summaries (only after tests pass)
