@@ -407,9 +407,10 @@ class ApiCrawler:
         cache = self.cache_dir / path.replace("?", "_")
         if cache.exists() and not self.refresh:
             return cache.read_bytes()
-        delay = 1.0
+        delay = 2.0
         last = ""
-        for attempt in range(5):
+        attempts = 8
+        for attempt in range(attempts):
             async with self.sem:
                 try:
                     r = await client.get(f"{CIS_BASE}/{path}")
@@ -423,10 +424,11 @@ class ApiCrawler:
                 except FileNotFoundError:
                     raise
                 except (httpx.TransportError, OSError, TimeoutError):  # network errors: back off and retry
-                    if attempt == 4:
+                    if attempt == attempts - 1:
                         raise
+            # HTTP 202 = Course Explorer is still generating the page; come back shortly (capped backoff)
             await asyncio.sleep(delay)
-            delay *= 2
+            delay = min(delay * 2, 15.0)
         raise RuntimeError(f"giving up on {path} ({last})")
 
     async def crawl_term(
@@ -450,7 +452,20 @@ class ApiCrawler:
                 *(self.get(client, f"schedule/{year}/{season}/{s}/{n}.xml?mode=cascade") for s, n in course_ids),
                 return_exceptions=True,
             )
-        failed = [(cid, r) for cid, r in zip(course_ids, results, strict=True) if isinstance(r, BaseException)]
+            # second pass for pages that weren't ready (HTTP 202) or failed transiently
+            retry = [i for i, r in enumerate(results)
+                     if isinstance(r, BaseException) and not isinstance(r, FileNotFoundError)]
+            if retry:
+                await asyncio.sleep(30)
+                again = await asyncio.gather(
+                    *(self.get(client, "schedule/{}/{}/{}/{}.xml?mode=cascade".format(year, season, *course_ids[i]))
+                      for i in retry),
+                    return_exceptions=True,
+                )
+                for i, r in zip(retry, again, strict=True):
+                    results[i] = r
+        failed = [(cid, r) for cid, r in zip(course_ids, results, strict=True)
+                  if isinstance(r, BaseException) and not isinstance(r, FileNotFoundError)]
         self.failed = [cid for cid, _ in failed]
         if len(failed) > max(10, 0.1 * len(course_ids)):
             raise RuntimeError(f"{len(failed)} of {len(course_ids)} course pages failed, e.g. {failed[0][1]}")
@@ -458,7 +473,7 @@ class ApiCrawler:
             print(f"warn: {cid[0]} {cid[1]} ({term}) not fetched: {err}", file=sys.stderr)
         courses, sections = [], []
         for data in results:
-            if isinstance(data, BaseException):
+            if isinstance(data, BaseException):  # failed (filled from the mirror) or 404 (listed but no page)
                 continue
             c, secs = parse_course_xml(data)
             c.subject_name = names.get(c.subject, "")

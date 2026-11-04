@@ -69,6 +69,10 @@ def run(conn: sqlite3.Connection, gpa_df: pd.DataFrame, rmp_enabled: bool, tre_p
                     key = f"{p.last}|{p.first_initial}"
                     people.setdefault(key, {"p": p, "_t": 0, "raw": raw})
                 alias_method[(raw, r["subject"])] = (key, method)
+                if key not in people:  # matched someone whose GPA rows are all older than the stats window
+                    p = parse_name(raw)
+                    if p is not None:
+                        people[key] = {"p": p, "_t": 0, "raw": raw}
             key = alias_method[(raw, r["subject"])][0]
             taught_numbers[key].add(r["number"])
             if r["term"] == NEXT_TERM:
@@ -137,6 +141,8 @@ def run(conn: sqlite3.Connection, gpa_df: pd.DataFrame, rmp_enabled: bool, tre_p
             if not budget_hit and time.monotonic() - t_start > budget:
                 budget_hit = True
                 client.enabled = False  # cache-only from here on
+            if key not in people:
+                continue
             try:
                 t = client.lookup(people[key]["raw"], sorted(subjects)[0])
                 looked_up += 1

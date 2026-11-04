@@ -235,3 +235,8 @@ Every judgment call made during the autonomous build, newest phase last.
   CI job should run. Each run looks up instructors with the most lecture sections first for up to
   `RMP_BUDGET_SECONDS` (20 min), then uses cached answers only; the 7-day cache (restored by actions/cache) lets
   coverage grow nightly. Coverage is recorded in `meta.rmp_coverage`.
+- **D10.3 HTTP 202 from Course Explorer** means "page still being generated": the second GitHub run got it for
+  1,180 of 4,450 Fall 2026 cascade pages. The crawler now waits with a capped backoff (up to 8 tries) and makes a
+  second pass over failed pages after 30 s before falling back to the mirror.
+- **D10.4 RMP loop crash** (`KeyError`) for instructors matched to GPA rows older than the stats window: they now
+  get an identity from their Course Explorer name. Regression test added. This only appeared with real RMP access.
