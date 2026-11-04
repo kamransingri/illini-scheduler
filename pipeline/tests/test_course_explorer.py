@@ -138,3 +138,43 @@ def test_html_entities_decoded():
            '09:00AM,09:50AM,MWF,1,Hall,"X, Y"')
     courses, _ = parse_catalog_csv(io.StringIO(header + "\n" + row + "\n"))
     assert courses[0].title == "Cultures & Literatures" and courses[0].description == "A & B"
+
+
+def test_api_crawler_retries_caches_and_404(tmp_path):
+    import asyncio
+
+    import httpx
+
+    from pipeline.course_explorer import ApiCrawler
+
+    calls = {"n": 0}
+    body = (XML / "HANDMADE_2027-sp_CS124_cascade.xml").read_bytes()
+
+    def handler(request):
+        calls["n"] += 1
+        if "MATH/221" in request.url.path:
+            return httpx.Response(404)
+        if calls["n"] == 1:
+            raise httpx.ConnectError("flaky")
+        return httpx.Response(200, content=body)
+
+    async def go():
+        crawler = ApiCrawler(cache_dir=tmp_path)
+        async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
+            import pipeline.course_explorer as ce
+            orig = ce.asyncio.sleep
+            ce.asyncio.sleep = lambda *_: orig(0)  # no real backoff in tests
+            try:
+                a = await crawler.get(client, "schedule/2027/spring/CS/124.xml?mode=cascade")
+                b = await crawler.get(client, "schedule/2027/spring/CS/124.xml?mode=cascade")
+                with pytest.raises(FileNotFoundError):
+                    await crawler.get(client, "schedule/2027/spring/MATH/221.xml?mode=cascade")
+            finally:
+                ce.asyncio.sleep = orig
+            return a, b
+
+    a, b = asyncio.run(go())
+    assert a == b == body
+    assert calls["n"] == 3  # 1 failure + 1 success, then cached; plus the 404
+    course, secs = parse_course_xml(a)
+    assert course.number == "124" and secs
