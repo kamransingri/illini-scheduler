@@ -172,3 +172,28 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D7.5 Small samples.** A "GPA from 200+ students" filter keeps tiny courses (n=23) from topping the GPA sort;
   every row shows n.
 - **D7.6 HTML entities.** Upstream titles contain `&amp;` etc.; the pipeline now decodes them (`html.unescape`).
+
+## Phase 8 — Schedule builder
+
+- **D8.1 Bundles** reuse the Phase 1 link rule (one section per component inside a link group). Sections with
+  status code `P` (pending) are skipped. Bundles with identical meeting times, parts of term and campus areas are
+  merged (the best by GPA/RMP is shown, with "+N same-time options"), which shrinks the search a lot (RHET 105:
+  106 sections become 24 bundles).
+- **D8.2 Conflicts.** Overlap on a shared day = conflict; online/arranged never conflict; first-half (A) and
+  second-half (B) sections never conflict with each other. Back-to-back = gap ≤ 10 minutes (UIUC's passing
+  period); it counts as a "rushed walk" only when the two buildings are in different coarse campus areas
+  (`lib/campus.ts`: Engineering, Main Quad, South, East; unknown buildings never count).
+- **D8.3 Search.** Exact branch-and-bound: courses with the fewest bundles first, best bundles first, and a
+  pairwise conflict/walk table precomputed once. Bounds: days used, early days and rushed walks only grow;
+  GPA/RMP take each remaining course's best bundle; compactness counts as perfect. A heavy 6-course cart (PHYS 211,
+  RHET 105, CHEM 102, MATH 231, CS 124, ECON 102: 3.1 M combinations) is solved exactly in about 0.5 s. A 1.5 s
+  budget is the safety net (the UI says when it stopped early).
+- **D8.4 Rules vs preferences.** "No classes before", "No Friday" and blocked times are hard filters (the
+  acceptance test needs *no* 8am at all); the six weights (GPA, RMP, before-10am days, days off, gaps, walks) are
+  0-3 sliders. Expected GPA = credit-weighted instructor GPA for that course (limited-data instructors skipped),
+  falling back to the course GPA.
+- **D8.5 .ics** uses America/Chicago with a VTIMEZONE, weekly RRULE with UNTIL in UTC, half-term sections clipped
+  to their half, and the break week removed with EXDATE. Instruction dates are **estimates**
+  (`web/lib/terms.ts`; the academic calendar page was blocked) and the UI says so.
+- **D8.6 Cart** lives in localStorage and in the URL (`?c=CS124,MATH231!12345&t=2027-sp`; `!CRN` = locked).
+  A URL with `c` replaces the stored cart so shared links open exactly.
