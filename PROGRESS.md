@@ -122,3 +122,25 @@ Acceptance:
   and is labelled "Fall only" (High for Fall 2027).
 
 Phase 4 complete.
+
+### Phase 5 — Exam and grading format
+
+Built `pipeline/exam_format.py` (fixed schema, deterministic rules with negations, majority merge with agreement
+counts and evidence) and `pipeline/notes.py` (YAML student notes loader; `data/notes/README.md` documents the format).
+
+Acceptance:
+- 35 crafted-text tests including negations ("no final", "final is optional", "not curved", "doesn't curve",
+  "attendance is not mandatory", "no group projects", "don't need the textbook") and real-text false
+  positives ("curve fitting", "take-home devices", "ALEKS placement score"): pass.
+- Three real instructors' profiles with evidence (every non-unknown field is backed by a quote):
+- **MILS 301** (`kuhn|j`):
+  - n_midterms = 1 (1/1) — Course description: “…ngs, case studies, practical exercises, a mid-term exam, and a final exam.…”
+  - has_final = yes (1/1) — Course description: “…actical exercises, a mid-term exam, and a final exam.…”
+- **ECE 484** (`driggscampbell|katherin`):
+  - textbook_required = no (1/1) — Course description: “thus, there is no required textbook.”
+- **ARTS 392** (`bakker|conrad`):
+  - attendance_required = yes (1/1) — Course description: “Attendance is required at visiting artists' and scholars' lectures and field trips.”
+- Coverage is thin (66 profiles) because RMP, section notes and student notes were unavailable here (D5.3).
+  When the nightly workflow runs with open network, RMP snippets feed the same extractor.
+
+Phase 5 complete.

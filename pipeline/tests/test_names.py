@@ -36,6 +36,7 @@ def test_blank(raw):
 def test_display():
     assert parse_name("Erickson, Jeff G").display == "Jeff Erickson"
     assert parse_name("Erickson, J").display == "J. Erickson"
+    assert parse_name("Driggs-Campbell, Katherin").display == "K. Driggs-Campbell"  # clipped at 25 chars
 
 
 def test_initial_vs_full_compatible():

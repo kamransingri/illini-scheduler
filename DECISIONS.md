@@ -119,3 +119,21 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D4.5 Prerequisite summaries** say "now lists CS 413", not "now requires", because most UIUC prerequisite
   lists are alternatives ("One of CS 173, CS 413, ...").
 - **D4.6 Renumbering** isn't detected; there's no structured link between old and new numbers in the data. Known gap.
+
+## Phase 5 — Exam and grading format
+
+- **D5.1 Schema.** n_midterms, has_final (yes / no / optional), exam_mode (in-person / CBTF / online / take-home),
+  curve (yes / no), attendance_required, homework_platform (list), group_projects, textbook_required. Each field
+  stores value, agree, total and up to 4 evidence items (source, quote ≤ 120 chars).
+- **D5.2 Rules.** Negative patterns ("no final", "not curved", "attendance is not mandatory") are checked
+  before positive ones within a sentence. Rules are written to avoid domain false positives found in real
+  descriptions: "curve fitting", "normal curve", "take-home devices", "computer-based testing" (as a topic) and
+  "ALEKS placement score" don't count.
+- **D5.3 Sources available in this build.** Course descriptions and section info (real). Section text/notes need
+  the XML API, and RMP reviews need ratemyprofessors.com; both were blocked. No student notes have been
+  submitted, so `data/notes/` ships with only a README (no invented notes). Result: 66 course/instructor profiles
+  with at least one supported field. Everything else is "unknown", which the UI says plainly.
+- **D5.4 Course-level evidence** (description) applies to every instructor of that course and is stored under the
+  `*` key too, so the course page can show it when no instructor-specific evidence exists.
+- **D5.5 Clipped names.** The GPA dataset cuts "Primary Instructor" at 25 characters ("Driggs-Campbell, Katherin").
+  When a lone first name might be clipped, the display uses the initial.

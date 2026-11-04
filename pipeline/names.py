@@ -72,7 +72,9 @@ def parse_name(raw: str) -> NameParts | None:
     first_name = first_tok if len(first_tok) > 1 else None
     initial = first_tok[:1]
     pretty_last = raw.split(",")[0].strip() if "," in raw else raw.split()[-1]
-    if first_name:
+    # The GPA dataset cuts the whole "Last, First M" field at 25 chars: a lone first name may be clipped.
+    first_clipped = len(raw) == 25 and len(given) == 1
+    if first_name and not first_clipped:
         first_disp = (given[0].strip("'-")).title()
         display = f"{first_disp} {pretty_last}"
     elif initial:
