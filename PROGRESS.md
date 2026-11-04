@@ -40,6 +40,33 @@ Self-Service (NetID) and are linked, never scraped.
 - Search has no typo tolerance; near-duplicate schedules that differ only by a same-time section still appear
   separately; renumbered courses aren't linked.
 
+## Next steps (backlog for the next session)
+
+Start a new session with `kamransingri/illini-scheduler` selected, then read README.md, DECISIONS.md and this file.
+Ranked by value for effort:
+
+1. **Use the course web pages as the section source for both terms.** The daily availability job already
+   downloads every course page, and those pages carry CRN, type, times, room and instructor. Parsing them
+   would replace the mirror for current/next term (Spring 2027 currently comes from the 2026-10-30 mirror, so sections
+   added since then are missing) and retire the 202-prone XML crawler.
+2. **Seat-change history and alerts.** Keep yesterday's status per CRN and show "opened 2 days ago" / "closed today";
+   publish a per-course RSS/JSON feed so students can watch a Closed section.
+3. **CI hygiene.** Bump actions to their Node 24 majors (Node 20 deprecation warnings), pin `ubuntu-24.04`
+   (ubuntu-latest moves to 26), migrate `next lint` to the ESLint CLI before Next 16, add Lighthouse CI to the
+   build.
+4. **Real fixtures.** Course Explorer and RMP are reachable now: replace the HANDMADE XML/RMP fixtures with real
+   saved responses (`python -m pipeline.fetch_fixtures`) and drop `fetch-data.yml` if unneeded.
+5. **Search.** Typo tolerance ("calclus") and common aliases ("calc 2" → MATH 231, "intro cs" → CS 124).
+6. **Instructor matching.** Curate `data/name_overrides.csv` for the largest courses from `data/unmatched.csv`
+   (STAT lecture match rate is 78.9%).
+7. **Official term dates** for the .ics export (`web/lib/terms.ts` holds estimates).
+8. **Student notes intake.** Add a GitHub issue form for the `student-note` label, plus a script that turns
+   approved issues into `data/notes/*.yaml`.
+9. **Bigger features:** prerequisite graph / "what can I take next", degree-requirement checklist (CS + Stats),
+   save several named schedules, side-by-side course comparison, final-exam conflict check.
+10. **Repo growth.** `data/availability/*.json` (~1.6 MB) is committed daily; git deltas keep growth small, but
+    if `.git` passes ~200 MB move these files to a separate `data` branch.
+
 ## Needs a human
 
 Done: the repo is public and pushed, Pages is on (Source: GitHub Actions), and the site is deployed.
