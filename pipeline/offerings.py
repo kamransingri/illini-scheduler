@@ -261,9 +261,9 @@ def run(conn: sqlite3.Connection, next_term: str) -> str:
     course_rows: dict[tuple[str, str], dict[str, dict]] = defaultdict(dict)
     for r in conn.execute("SELECT * FROM courses"):
         rec = dict(r)
-        a = agg.get((r["subject"], r["number"], r["term"]))
-        if a and a["primary"]:
-            rec["online_share"] = a["online"] / a["primary"]
+        ag = agg.get((r["subject"], r["number"], r["term"]))
+        if ag and ag["primary"]:
+            rec["online_share"] = ag["online"] / ag["primary"]
         course_rows[(r["subject"], r["number"])][r["term"]] = rec
     n_changes = 0
     for (subj, num), recs in course_rows.items():
