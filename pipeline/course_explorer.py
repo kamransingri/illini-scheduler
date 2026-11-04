@@ -492,8 +492,8 @@ def store(
         "INSERT OR REPLACE INTO terms VALUES (?,?,?,?,?,?)",
         (term, year, season, term_label(term), source, checked_at),
     )
-    for s, name in (subject_names or {}).items():
-        conn.execute("INSERT OR REPLACE INTO subjects VALUES (?, ?)", (s, name))
+    for subj, name in (subject_names or {}).items():
+        conn.execute("INSERT OR REPLACE INTO subjects VALUES (?, ?)", (subj, name))
     conn.executemany(
         "INSERT OR REPLACE INTO courses VALUES (?,?,?,?,?,?,?,?,?,?,?)",
         [
