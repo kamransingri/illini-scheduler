@@ -19,9 +19,12 @@ test("gen-ed list unreachable: clear message", async ({ page }) => {
   await expect(page.getByText(/Couldn't load the gen-ed list/)).toBeVisible();
 });
 
-test("RMP unavailable is stated on instructor cards", async ({ page }) => {
+test("every instructor card has RMP data, an 'unavailable' note, or a search link", async ({ page }) => {
   await page.goto("./course/CS/124/");
-  await expect(page.getByText(/RMP unavailable in this build/).first()).toBeVisible();
+  const cards = page.locator("#inst-h ~ ul > li");
+  await expect(cards.first()).toBeVisible();
+  for (const card of await cards.all())
+    await expect(card).toContainText(/Rate My Professors page|RMP unavailable in this build|Search Rate My Professors/);
 });
 
 test("unknown course is a 404, not a blank page", async ({ page }) => {

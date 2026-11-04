@@ -178,3 +178,38 @@ def test_api_crawler_retries_caches_and_404(tmp_path):
     assert calls["n"] == 3  # 1 failure + 1 success, then cached; plus the 404
     course, secs = parse_course_xml(a)
     assert course.number == "124" and secs
+
+
+def test_crawl_tolerates_a_few_failed_course_pages(tmp_path, monkeypatch):
+    import asyncio
+
+    import httpx
+
+    import pipeline.course_explorer as ce
+
+    cs124 = (XML / "HANDMADE_2027-sp_CS124_cascade.xml").read_bytes()
+    term_xml = (XML / "HANDMADE_schedule_2027_spring.xml").read_bytes()
+    subj = (b'<ns2:subject xmlns:ns2="http://rest.cis.illinois.edu" id="CS"><courses>'
+            b'<course id="124">x</course><course id="999">y</course></courses></ns2:subject>')
+
+    def handler(request):
+        p = request.url.path
+        if p.endswith("/2027/spring.xml"):
+            return httpx.Response(200, content=term_xml)
+        if p.endswith("/spring/CS.xml"):
+            return httpx.Response(200, content=subj)
+        if p.endswith("/STAT.xml"):
+            stat = subj.replace(b'id="CS"', b'id="STAT"').replace(b'<course id="124">x</course>', b"")
+            return httpx.Response(200, content=stat)
+        if "CS/124" in p:
+            return httpx.Response(200, content=cs124)
+        return httpx.Response(500)
+
+    real_client = httpx.AsyncClient
+    monkeypatch.setattr(httpx, "AsyncClient", lambda **kw: real_client(transport=httpx.MockTransport(handler), **kw))
+    orig_sleep = ce.asyncio.sleep
+    monkeypatch.setattr(ce.asyncio, "sleep", lambda *_: orig_sleep(0))
+    crawler = ce.ApiCrawler(cache_dir=tmp_path)
+    courses, secs, names = asyncio.run(crawler.crawl_term("2027-sp", {"CS", "STAT"}))
+    assert [c.number for c in courses] == ["124"] and secs
+    assert sorted(crawler.failed) == [("CS", "999"), ("STAT", "999")]
