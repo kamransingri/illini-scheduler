@@ -2,6 +2,7 @@
 PY ?= python3
 SUBJECTS ?= all
 TERMS ?=
+SOURCE ?= auto
 
 .PHONY: help data data-quick fetch pipeline export test test-py test-web lint typecheck dev build e2e serve clean
 
@@ -15,7 +16,7 @@ help:
 	@echo "make e2e         - Playwright tests against the static build"
 
 data:
-	$(PY) -m pipeline.run --subjects $(SUBJECTS) $(if $(TERMS),--terms $(TERMS),)
+	$(PY) -m pipeline.run --subjects $(SUBJECTS) --source $(SOURCE) $(if $(TERMS),--terms $(TERMS),)
 
 data-quick:
 	$(PY) -m pipeline.run --subjects CS,MATH,STAT,RHET

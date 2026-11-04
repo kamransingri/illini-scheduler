@@ -11,6 +11,7 @@ Polite: at most 4 concurrent requests, retries with backoff, a User-Agent naming
 from __future__ import annotations
 
 import asyncio
+import json
 import os
 import re
 import sqlite3
@@ -18,13 +19,15 @@ import sys
 import time
 from collections import Counter
 from datetime import UTC, datetime
+from typing import Any
 
 from lxml import html as lhtml
 
-from .config import RAW, USER_AGENT
+from .config import DATA, RAW, USER_AGENT
 from .course_explorer import term_parts
 
 WEB_BASE = "https://courses.illinois.edu/schedule"
+AVAIL_DIR = DATA / "availability"
 CRN_RE = re.compile(r"^\d{5}$")
 
 
@@ -109,8 +112,138 @@ async def _fetch_all(courses: list[tuple[str, str]], year: int, season: str, bud
     return statuses, failed, timed_out, reasons
 
 
+# ---------------------------------------------------------------------------------------------------------
+# Slow, resumable job (GitHub Actions: .github/workflows/availability.yml). Course Explorer answers bursts from
+# datacenter IPs with HTTP 202, so this fetches ~1 page/second, oldest-checked courses first, saving as it goes.
+# ---------------------------------------------------------------------------------------------------------
+
+def load_file(term: str) -> dict:
+    p = AVAIL_DIR / f"{term}.json"
+    if p.exists():
+        d = json.loads(p.read_text())
+        d.setdefault("sections", {})
+        d.setdefault("courses", {})
+        return d
+    return {"term": term, "sections": {}, "courses": {}}
+
+
+def save_file(term: str, d: dict) -> None:
+    AVAIL_DIR.mkdir(parents=True, exist_ok=True)
+    tmp = AVAIL_DIR / f"{term}.json.part"
+    tmp.write_text(json.dumps(d, sort_keys=True, separators=(",", ":")))
+    tmp.replace(AVAIL_DIR / f"{term}.json")
+
+
+def crawl_slow(term: str, courses: list[tuple[str, str]], deadline: float, interval: float = 1.0,
+               client: Any = None, sleep: Any = time.sleep) -> dict:
+    """Fetch course pages one at a time until `deadline` (time.monotonic()). Returns the updated term file."""
+    import httpx
+
+    year, season = term_parts(term)
+    d = load_file(term)
+    order = sorted(courses, key=lambda c: d["courses"].get(f"{c[0]} {c[1]}", ""))  # never-checked first
+    own = client is None
+    http = client or httpx.Client(headers={"User-Agent": USER_AGENT}, timeout=30, follow_redirects=True)
+    reasons: Counter[str] = Counter()
+    ok = streak = 0
+    try:
+        for i, (subj, num) in enumerate(order):
+            if time.monotonic() > deadline:
+                break
+            try:
+                r = http.get(f"{WEB_BASE}/{year}/{season}/{subj}/{num}")
+                code = r.status_code
+            except httpx.TransportError as e:
+                code, r = 0, None
+                reasons[type(e).__name__] += 1
+            now = datetime.now(UTC).isoformat(timespec="seconds")
+            if code == 200 and r is not None:
+                for crn, status in parse_availability(r.content).items():
+                    d["sections"][crn] = [status, now]
+                d["courses"][f"{subj} {num}"] = now
+                ok += 1
+                streak = 0
+            elif code == 404:
+                d["courses"][f"{subj} {num}"] = now
+            else:
+                if code:
+                    reasons[f"HTTP {code}"] += 1
+                streak += 1
+                if streak >= 10:  # being pushed back: cool down hard, then carry on
+                    sleep(300)
+                    streak = 0
+                else:
+                    sleep(15)
+            if i % 100 == 99:
+                save_file(term, d)
+            sleep(interval)
+    finally:
+        if own:
+            http.close()
+        save_file(term, d)
+    d["_report"] = f"{term}: {ok} course pages read, {len(d['sections'])} sections known, failures {dict(reasons)}"
+    return d
+
+
+def courses_from_catalog(term: str) -> list[tuple[str, str]]:
+    import csv
+
+    from .fetch import catalog_path
+
+    with open(catalog_path(term), newline="", encoding="utf-8") as fh:
+        return sorted({(r["Subject"].strip(), r["Number"].strip()) for r in csv.DictReader(fh)})
+
+
+def main(argv: list[str] | None = None) -> int:
+    import argparse
+
+    from .fetch import CURRENT_TERM, NEXT_TERM, fetch_wade
+
+    ap = argparse.ArgumentParser(description="Slow, resumable seat-availability crawl")
+    ap.add_argument("--terms", default=f"{NEXT_TERM},{CURRENT_TERM}", help="first term gets the time first")
+    ap.add_argument("--minutes", type=float, default=270)
+    ap.add_argument("--interval", type=float, default=1.0, help="seconds between requests")
+    args = ap.parse_args(argv)
+    terms = [t.strip() for t in args.terms.split(",") if t.strip()]
+    fetch_wade(terms)
+    end = time.monotonic() + args.minutes * 60
+    for k, term in enumerate(terms):
+        # give each remaining term an equal share of the time that's left
+        share = (end - time.monotonic()) / (len(terms) - k)
+        d = crawl_slow(term, courses_from_catalog(term), time.monotonic() + share, args.interval)
+        print(d["_report"], flush=True)
+    return 0
+
+
+def apply_files(conn: sqlite3.Connection, terms: list[str]) -> str:
+    """Load data/availability/{term}.json into the DB (used by the nightly site build)."""
+    reports = []
+    for term in terms:
+        d = load_file(term)
+        if not d["sections"]:
+            reports.append(f"{term}: no availability file")
+            continue
+        conn.execute("DELETE FROM availability WHERE term=?", (term,))
+        conn.executemany("INSERT INTO availability VALUES (?,?,?,?)",
+                         [(term, crn, st, at) for crn, (st, at) in d["sections"].items()])
+        n = conn.execute(
+            "UPDATE sections SET enrollment_status = (SELECT status FROM availability a "
+            "WHERE a.term = sections.term AND a.crn = sections.crn) "
+            "WHERE term=? AND crn IN (SELECT crn FROM availability WHERE term=?)", (term, term)).rowcount
+        total = conn.execute("SELECT COUNT(*) FROM sections WHERE term=?", (term,)).fetchone()[0]
+        latest = max(at for _st, at in d["sections"].values())
+        conn.execute("UPDATE terms SET checked_at=?, source=CASE WHEN source LIKE '%web availability%' THEN source "
+                     "ELSE source || ' + web availability' END WHERE term=?", (latest, term))
+        reports.append(f"{term}: {n} of {total} sections have a status")
+    return "; ".join(reports)
+
+
 def run(conn: sqlite3.Connection, terms: list[str], subjects: set[str] | None = None) -> str:
-    """Fill sections.enrollment_status for `terms` from the web pages; record when it was checked."""
+    """Fill sections.enrollment_status for `terms`. AVAILABILITY_MODE=file (the nightly build) reads the files the
+    slow job maintains; `crawl` (default when no files exist) fetches the pages now, which is fine at small scale."""
+    mode = os.environ.get("AVAILABILITY_MODE", "auto")
+    if mode == "file" or (mode == "auto" and any(load_file(t)["sections"] for t in terms)):
+        return apply_files(conn, terms)
     budget = float(os.environ.get("AVAILABILITY_BUDGET_SECONDS", "900"))
     reports = []
     for term in terms:
@@ -138,3 +271,7 @@ def run(conn: sqlite3.Connection, terms: list[str], subjects: set[str] | None = 
         budget_note = ", stopped at time budget" if timed_out else ""
         reports.append(f"{term}: {n} sections from {len(courses)} course pages{detail}{budget_note}")
     return "; ".join(reports)
+
+
+if __name__ == "__main__":
+    sys.exit(main())

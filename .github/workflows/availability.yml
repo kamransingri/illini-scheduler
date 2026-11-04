@@ -1,0 +1,41 @@
+# Slow, resumable seat-availability crawl (Open / Closed / Restricted per section) from the public Course Explorer
+# pages. ~1 request per second, oldest-checked courses first; results are committed to data/availability/ and picked up
+# by the nightly site build. Seat counts are only in Self-Service (NetID) and are never scraped.
+name: Seat availability
+on:
+  schedule:
+    - cron: "17 4 * * *" # daily, before the 09:00 UTC site build
+  workflow_dispatch:
+    inputs:
+      minutes:
+        description: "Crawl time budget in minutes"
+        default: "270"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: availability
+  cancel-in-progress: false
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11", cache: pip }
+      - run: pip install -r requirements.txt
+      - name: Crawl (next term first)
+        run: python -m pipeline.availability --minutes "${{ inputs.minutes || '270' }}"
+      - name: Commit availability files
+        if: always()
+        run: |
+          git config user.name "illini-scheduler-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/availability/*.json
+          git diff --cached --quiet && exit 0
+          git commit -m "data: seat availability $(date -u +%FT%H:%MZ)"
+          for i in 1 2 3; do git pull --rebase -q origin main && git push && exit 0; sleep 5; done
+          exit 1

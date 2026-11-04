@@ -34,9 +34,12 @@ jobs:
           path: data/raw/rmp
           key: rmp-${{ github.run_id }}
           restore-keys: rmp-
-      - name: Refresh data (Course Explorer API when reachable, Wade's datasets, RMP)
-        run: make data
+      - name: Refresh data (Wade's datasets + Course Explorer mirror, seat availability files, RMP)
+        # SOURCE=csv: the live Course Explorer feed answers bursts from GitHub with HTTP 202 (DECISIONS.md D11.3);
+        # seat status comes from data/availability/*.json, kept fresh by availability.yml.
+        run: make data SOURCE=csv
         env:
+          AVAILABILITY_MODE: file
           RMP_BUDGET_SECONDS: "1200" # new RMP lookups per run; the 7-day cache carries the rest forward
       - name: Save RMP cache (even if later steps fail)
         if: always()
