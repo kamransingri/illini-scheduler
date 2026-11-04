@@ -4,9 +4,8 @@ Every judgment call made during the autonomous build, newest phase last.
 
 ## Phase 0
 
-- **D0.1 Private repo, not public.** The build doc says `gh repo create --public`, but the owner asked for a
-  *private* repository. Private wins. Note: GitHub Pages on a private repo needs a paid plan (Pro/Team);
-  see PROGRESS.md "Needs a human".
+- **D0.1 Public repo.** The doc says `gh repo create --public`. The owner first asked for a private repo, then
+  switched to public so GitHub Pages works on a free plan (Pages on a private repo needs GitHub Pro/Team).
 - **D0.2 No GitHub remote from this session.** The cloud session's GitHub token is scoped to repositories
   attached at session start; `POST /user/repos` is refused (403, "sessions are bound to their configured
   repositories") and attaching another repo was refused by the session's permission policy. Work happens in a

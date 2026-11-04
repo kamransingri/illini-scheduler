@@ -1,6 +1,6 @@
 # Illini Scheduler
 
-**Live site:** not deployed yet (the repository still has to be pushed to GitHub; see PROGRESS.md "Needs a human").
+**Live site:** `https://<owner>.github.io/illini-scheduler/` once the public repo is pushed and Pages is enabled (see PROGRESS.md "Needs a human").
 **Run it locally:**
 
 ```bash
