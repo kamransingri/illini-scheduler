@@ -66,9 +66,32 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  smoke:
+    # Load the live site after every deploy and run the core browser tests against it.
+    needs: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22", cache: npm, cache-dependency-path: web/package-lock.json }
+      - run: cd web && npm ci && npx playwright install --with-deps chromium
+      - name: Wait for the live site
+        run: |
+          url="${{ needs.deploy.outputs.page_url }}"
+          for i in $(seq 1 30); do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "${url}course/CS/124/") && [ "$code" = "200" ] && exit 0
+            echo "attempt $i: HTTP $code"; sleep 10
+          done
+          exit 1
+      - name: Smoke tests against the live URL
+        run: cd web && E2E_BASE_URL="${{ needs.deploy.outputs.page_url }}" npx playwright test course.spec.ts geneds.spec.ts
