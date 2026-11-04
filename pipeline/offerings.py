@@ -285,7 +285,8 @@ def run(conn: sqlite3.Connection, next_term: str) -> str:
                 for nm in names:
                     conn.execute("INSERT INTO course_changes VALUES (?,?,?,?,?,?,?)",
                                  (subj, num, latest, "instructor", "", nm,
-                                  f"New instructor: {nm} (hasn't taught it since at least {term_label(ts[0])})"))
+                                  f"New instructor: {nm} (no record of teaching it "
+                                  f"{term_label(ts[0])} to {term_label(ts[-2])})"))
                     n_changes += 1
             elif len(names) > 3:
                 conn.execute("INSERT INTO course_changes VALUES (?,?,?,?,?,?,?)",

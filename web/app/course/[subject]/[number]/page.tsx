@@ -35,6 +35,7 @@ export default async function CoursePage({ params }: Props) {
   const meta = getMeta();
   if (!course || !meta) notFound();
   const next = course.terms[meta.next_term];
+  const regularWindow = meta.history_terms.filter((t) => /-(sp|fa)$/.test(t)).slice(-8);
   const g = course.gpa;
   const cisTerm = next ? meta.next_term : (course.latest_term ?? meta.current_term);
   const recentLabel = g?.recent_terms?.length ? termRange(g.recent_terms[0], g.recent_terms[1]) : "";
@@ -47,7 +48,7 @@ export default async function CoursePage({ params }: Props) {
         </p>
         <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">{course.title}</h1>
         <div className="flex flex-wrap items-center gap-2 text-sm">
-          {course.credits && <span className="rounded bg-panel px-2 py-0.5">{course.credits.replace(" hours.", "")} credit hours</span>}
+          {course.credits && <span className="rounded bg-panel px-2 py-0.5">{course.credits.replace(" hours.", "")} credit {course.credits.startsWith("1 hours") ? "hour" : "hours"}</span>}
           {course.geneds.codes.map((code) => (
             <span key={code} className="rounded bg-orange-50 px-2 py-0.5 font-medium text-brand-dark" title={GENED_NAMES[code] ?? code}>
               {GENED_NAMES[code] ?? code}
@@ -98,7 +99,7 @@ export default async function CoursePage({ params }: Props) {
             <dd className="font-semibold">
               {course.pattern ? (
                 <Metric
-                  source={`Course Explorer schedules, ${termRange(meta.history_terms[0], meta.history_terms[meta.history_terms.length - 1])}`}
+                  source={`Course Explorer schedules: the last 8 fall/spring terms (${termRange(regularWindow[0], regularWindow[regularWindow.length - 1])}) plus summers`}
                 >
                   {course.pattern.label}
                 </Metric>
@@ -107,7 +108,7 @@ export default async function CoursePage({ params }: Props) {
               )}
               {course.pattern && (
                 <span className="mt-1 block text-xs font-normal">
-                  {termLabel(course.pattern.target)}:{" "}
+                  Outlook for {termLabel(course.pattern.target)} (not scheduled yet):{" "}
                   <span className={`rounded px-1.5 py-0.5 font-medium ${LIKELIHOOD_CLS[course.pattern.likelihood] ?? ""}`}>
                     {course.pattern.likelihood}
                   </span>{" "}
@@ -143,7 +144,7 @@ export default async function CoursePage({ params }: Props) {
                   {course.biggest_change.summary}
                 </Metric>
               ) : (
-                "No changes found"
+                "No changes this term or last"
               )}
             </dd>
           </div>

@@ -23,6 +23,7 @@ export type Prefs = {
   earliest: number | null; // hard: no meeting may start before this (minutes); 540 = "no 8am"
   noFriday: boolean; // hard
   blocked: { d: number; s: number; e: number }[]; // hard: work, practice
+  includeSpecial: boolean; // allow sections flagged as restricted / special-program
   weights: { gpa: number; rmp: number; early: number; daysOff: number; compact: number; walking: number };
 };
 
@@ -30,6 +31,7 @@ export const DEFAULT_PREFS: Prefs = {
   earliest: null,
   noFriday: false,
   blocked: [],
+  includeSpecial: false,
   weights: { gpa: 2, rmp: 1, early: 1, daysOff: 1, compact: 1, walking: 1 },
 };
 
@@ -85,8 +87,8 @@ function product<T>(lists: T[][]): T[][] {
 }
 
 /** Valid bundles for one course in one term: one section per component within a link group. */
-export function buildBundles(sections: Section[], courseKey: string): Section[][] {
-  const usable = sections.filter((s) => s.status_code !== "P");
+export function buildBundles(sections: Section[], courseKey: string, includeSpecial = true, locked: string[] = []): Section[][] {
+  const usable = sections.filter((s) => s.status_code !== "P" && (includeSpecial || !s.special || locked.includes(s.crn)));
   const groups = new Map<string, Section[]>();
   for (const s of usable) groups.set(s.group, [...(groups.get(s.group) ?? []), s]);
   const out: Section[][] = [];
@@ -135,7 +137,7 @@ function instructorStats(course: Course, secs: Section[]): { gpa: number | null;
 export function prepareBundles(input: CourseInput, term: string, prefs: Prefs): Bundle[] {
   const block = input.course.terms[term];
   if (!block) return [];
-  const raw = buildBundles(block.sections, input.key).filter((b) => input.locked.every((crn) => !block.sections.some((s) => s.crn === crn) || b.some((s) => s.crn === crn)));
+  const raw = buildBundles(block.sections, input.key, prefs.includeSpecial, input.locked).filter((b) => input.locked.every((crn) => !block.sections.some((s) => s.crn === crn) || b.some((s) => s.crn === crn)));
   const byKey = new Map<string, Bundle>();
   for (const secs of raw) {
     const meetings = secs.flatMap((s) => sectionMeetings(s, input.key));
@@ -399,6 +401,57 @@ export function generate(inputs: CourseInput[], term: string, prefs: Prefs, limi
   const order = new Map(inputs.map((x, i) => [x.key, i]));
   for (const s of best) s.bundles.sort((a, b) => (order.get(a.course) ?? 0) - (order.get(b.course) ?? 0));
   return { schedules: best, total, truncated, emptyCourses, ms: Date.now() - t0 };
+}
+
+/** Why a course has no usable bundle, in words a student can act on. */
+export function explainEmpty(input: CourseInput, term: string, prefs: Prefs): string {
+  const block = input.course.terms[term];
+  if (!block || !block.sections.length) return "it isn't offered this term";
+  const all = buildBundles(block.sections, input.key, true, input.locked);
+  const locked = input.locked.filter((c) => block.sections.some((s) => s.crn === c));
+  const withLocks = all.filter((b) => locked.every((c) => b.some((s) => s.crn === c)));
+  if (locked.length && !withLocks.length) {
+    const codes = locked.map((c) => block.sections.find((s) => s.crn === c)!.code).join(" + ");
+    return `the locked sections ${codes} can't be taken together (they belong to different lecture groups or overlap)`;
+  }
+  const visible = prefs.includeSpecial ? withLocks : withLocks.filter((b) => b.every((s) => !s.special || locked.includes(s.crn)));
+  if (!visible.length) return "only special/restricted-looking sections are left (tick “Include special sections” to allow them)";
+  return "every section breaks one of your rules (no classes before, no Friday, or a blocked time)";
+}
+
+/** Pairs of courses that can never be scheduled together under the current rules. */
+export function clashingPairs(inputs: CourseInput[], term: string, prefs: Prefs): string[] {
+  const prepared = inputs.map((inp) => ({ key: inp.key, bundles: prepareBundles(inp, term, prefs) })).filter((p) => p.bundles.length);
+  const out: string[] = [];
+  for (let i = 0; i < prepared.length; i++)
+    for (let j = i + 1; j < prepared.length; j++) {
+      const ok = prepared[i].bundles.some((a) =>
+        prepared[j].bundles.some((b) => !a.meetings.some((m) => b.meetings.some((n) => meetingsConflict(m, n)))),
+      );
+      if (!ok) {
+        const times = (bs: Bundle[]) =>
+          [...new Set(bs.flatMap((b) => b.meetings.filter((m) => m.s !== null).map((m) => `${dayLetters(m.d)} ${hhmm(m.s!)}–${hhmm(m.e!)}`)))].slice(0, 2).join(", ");
+        out.push(`${prepared[i].key} (${times(prepared[i].bundles)}) always overlaps ${prepared[j].key} (${times(prepared[j].bundles)})`);
+      }
+    }
+  return out;
+}
+
+function dayLetters(mask: number): string {
+  return [
+    [1, "M"],
+    [2, "T"],
+    [4, "W"],
+    [8, "R"],
+    [16, "F"],
+  ]
+    .filter(([b]) => mask & (b as number))
+    .map(([, l]) => l)
+    .join("");
+}
+function hhmm(min: number): string {
+  const h = Math.floor(min / 60);
+  return `${h % 12 || 12}:${String(min % 60).padStart(2, "0")}${h < 12 ? "am" : "pm"}`;
 }
 
 export function summaryLine(st: ScheduleStats, fmt: (m: number | null) => string): string {

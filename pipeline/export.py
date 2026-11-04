@@ -111,9 +111,22 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
         p = parse_name(raw)
         return f"{p.last}|{p.first_initial}" if p else raw
 
+    # Full last names as Course Explorer prints them (the GPA dataset clips long names at 25 chars).
+    ce_last: dict[str, str] = {}
+    for (raw, _subj), k in alias.items():
+        last = raw.split(",")[0].strip()
+        if len(last) > len(ce_last.get(k, "")):
+            ce_last[k] = last
+
     def display(key: str, fallback: str = "") -> str:
         if key in people:
-            return str(people[key]["display_name"])
+            disp = str(people[key]["display_name"])
+            full = ce_last.get(key, "")
+            if " " in disp and full:
+                first, gpa_last = disp.split(" ", 1)
+                if full.lower().startswith(gpa_last.lower()) and len(full) > len(gpa_last):
+                    return f"{first} {full}"
+            return disp
         p = parse_name(fallback)
         return p.display if p else fallback or key
 
@@ -174,9 +187,12 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
             "credits": r["section_credit_hours"] or "", "title": r["section_title"] or "",
             "text": " ".join(filter(None, (r["section_text"], r["section_notes"]))),
             "meetings": meet.get((r["term"], r["crn"]), []),
-            "instructors": [ikey(x, r["subject"]) for x in raws], "instructors_raw": raws,
+            "instructors": [ikey(x, r["subject"]) for x in raws], "instructors_raw": raws, "special": "",
         })
     notes = _load_notes()
+    for by_term in sections.values():
+        for secs in by_term.values():
+            flag_special(secs)
 
     keys = {k for k, ts in courses.items() if any(t in ts for t in live_terms)}
     keys |= {k for k, g in gpa_course.items() if g["recent_avg_gpa"] is not None}
@@ -233,8 +249,9 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
             }
         pat = patterns.get(key)
         ch = sorted(changes.get(key, []), key=lambda c: (term_order(c["term"]), c["field"]), reverse=True)
-        biggest = next((c for c in ch if c["field"] in ("prereq_text", "credit_hours", "title", "gened_codes",
-                                                          "delivery")), ch[0] if ch else None)
+        recent_ch = [c for c in ch if c["term"] in live_terms]
+        biggest = next((c for c in recent_ch if c["field"] in ("prereq_text", "credit_hours", "title", "gened_codes",
+                                                                 "delivery")), recent_ch[0] if recent_ch else None)
         gpa_block = None
         if g:
             gpa_block = {
@@ -310,6 +327,25 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
     }
     (out_dir / "meta.json").write_text(json.dumps(meta, indent=1))
     return f"{n_files} course files, {len(gened_rows)} gen-ed rows, {len(inst_index)} instructors -> {out_dir}"
+
+
+def flag_special(secs: list[dict]) -> None:
+    """Mark sections that look restricted / special-purpose (DECISIONS.md D9.3):
+    a code with a symbol ('AD@'), or a lecture whose letter group has none of the discussion/lab components
+    that every other group of the course has (e.g. CS 124 'WWC' alongside 'AL1' + 'AY*')."""
+    comps = {s["component"] for s in secs}
+    groups: dict[str, set[str]] = defaultdict(set)
+    for s in secs:
+        groups[s["group"]].add(s["component"])
+    full = [g for g, c in groups.items() if c == comps]
+    for s in secs:
+        if s["code"] and not re.fullmatch(r"[A-Za-z0-9]+", s["code"]):
+            s["special"] = "Unusual section code: usually a restricted or special-program section"
+        elif len(comps) > 1 and s["group"] != "*" and full and groups[s["group"]] != comps:
+            s["special"] = ("Has no linked discussion/lab unlike the other sections: "
+                            "likely restricted or special-program")
+        elif re.search(r"restricted|reserved|learning community|only for|limited to", s["text"], re.I):
+            s["special"] = "Section notes say it is reserved for a specific group"
 
 
 def teach_next_course(term_block: dict) -> list[str]:

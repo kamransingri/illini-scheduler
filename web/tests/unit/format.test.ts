@@ -31,3 +31,21 @@ describe("format", () => {
     expect(decodeCart("cs124,junk,CS124")).toEqual([{ s: "CS", n: "124", locked: [] }]);
   });
 });
+
+import { hasPrefParams, prefsFromParams, prefsToParams } from "@/lib/prefs";
+import { DEFAULT_PREFS } from "@/lib/schedule";
+
+describe("prefs in the URL", () => {
+  it("round trip", () => {
+    const p = { ...DEFAULT_PREFS, earliest: 540, noFriday: true, includeSpecial: true, blocked: [{ d: 10, s: 900, e: 1080 }], weights: { ...DEFAULT_PREFS.weights, gpa: 3, walking: 0 } };
+    const params = new URLSearchParams();
+    prefsToParams(p, params);
+    expect(hasPrefParams(params)).toBe(true);
+    expect(prefsFromParams(params)).toEqual(p);
+  });
+  it("defaults add nothing", () => {
+    const params = new URLSearchParams();
+    prefsToParams(DEFAULT_PREFS, params);
+    expect(params.toString()).toBe("");
+  });
+});

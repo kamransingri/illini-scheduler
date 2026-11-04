@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { applyFilters, DEFAULT_FILTERS, matches, sortRows } from "@/lib/geneds";
+import { applyFilters, DEFAULT_FILTERS as DF, filtersFromQuery, filtersToQuery, matches, sortRows } from "@/lib/geneds";
+const DEFAULT_FILTERS = { ...DF, minStudents: 0 };
 import type { GenedRow } from "@/lib/types";
 
 const row = (o: Partial<GenedRow>): GenedRow => ({
@@ -68,4 +69,12 @@ describe("gen-ed sorting", () => {
   it("% A", () => expect(sortRows(rows, "pctA")[0].n).toBe("1"));
   it("open sections", () => expect(sortRows(rows, "open")[0].n).toBe("3"));
   it("apply = filter + sort", () => expect(applyFilters(rows, { ...DEFAULT_FILTERS, codes: ["HP"] }, "gpa").length).toBe(3));
+});
+
+describe("gen-ed URL state", () => {
+  it("round trip", () => {
+    const f = { ...DF, codes: ["HP", "LA"], openNext: true, earliest: 540, minStudents: 0 };
+    expect(filtersFromQuery(filtersToQuery(f, "pctA"))).toEqual({ f, sort: "pctA" });
+    expect(filtersToQuery(DF, "gpa")).toBe("");
+  });
 });

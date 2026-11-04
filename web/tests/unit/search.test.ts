@@ -14,7 +14,7 @@ const index: SearchIndex = {
 };
 
 describe("parseCode", () => {
-  it.each(["cs124", "CS 124", " cs  124 ", "Cs124"])("parses %s", (q) => {
+  it.each(["cs124", "CS 124", " cs  124 ", "Cs124", "cs-124", "CS_124"])("parses %s", (q) => {
     expect(parseCode(q)).toEqual({ subject: "CS", number: "124" });
   });
   it("rejects prose", () => expect(parseCode("intro to cs")).toBeNull());

@@ -20,6 +20,7 @@ export type Section = {
   meetings: Meeting[];
   instructors: string[];
   instructors_raw: string[];
+  special: string; // non-empty = looks restricted / special-program (reason)
 };
 
 export type TermBlock = {

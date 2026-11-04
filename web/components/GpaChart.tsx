@@ -5,7 +5,7 @@ import { fmtGpa, fmtInt, fmtPct, termLabel } from "@/lib/format";
 export default function GpaChart({ gpa }: { gpa: GpaBlock }) {
   const rows = gpa.by_term.slice(-16);
   if (!rows.length) return null;
-  const W = 640;
+  const W = rows.length > 8 ? 640 : 420;
   const H = 210;
   const padL = 30;
   const padB = 38;

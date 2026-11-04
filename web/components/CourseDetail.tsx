@@ -166,7 +166,7 @@ function SectionsTable({ course, term, block }: { course: Course; term: string; 
     <div className="mt-2">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted">
         <span>
-          Status as of <strong>{fmtDate(block.checked_at)}</strong> (nightly snapshot of Course Explorer).
+          Seat status from the Course Explorer snapshot of <strong>{fmtDate(block.checked_at)}</strong>.
         </span>
         <a className="font-medium text-brand-dark underline" href={SELF_SERVICE_URL} rel="noopener">
           Register in Self-Service ↗
@@ -198,6 +198,11 @@ function SectionsTable({ course, term, block }: { course: Course; term: string; 
               {s.part !== "1" && (
                 <span className="ml-1 rounded bg-panel px-1 text-[11px]" title="Part of term">
                   {s.part === "A" ? "1st half" : s.part === "B" ? "2nd half" : s.part}
+                </span>
+              )}
+              {s.special && (
+                <span className="ml-1 rounded bg-amber-100 px-1 text-[11px] text-amber-900" title={s.special}>
+                  special
                 </span>
               )}
             </span>
@@ -308,17 +313,17 @@ function InstructorCard({ course, ins, rmpStatus }: { course: Course; ins: Instr
             <span>
               GPA{" "}
               <Metric source={gpaSource} className="text-lg font-bold">
-                {fmtGpa(g.recent ?? g.avg)}
+                {fmtGpa(g.avg)}
               </Metric>
               {g.recent !== null && g.avg !== null && Math.abs((g.recent ?? 0) - (g.avg ?? 0)) >= 0.01 && (
-                <span className="ml-1 text-xs text-muted">(all-time {fmtGpa(g.avg)})</span>
+                <span className="ml-1 text-xs text-muted">(recent {fmtGpa(g.recent)})</span>
               )}
             </span>
             <span className={deltaCls}>
               <Metric
                 source={`Difference from the ${course.subject} ${course.number} average in the same terms (grade disparity). Source: UIUC GPA dataset.`}
               >
-                {fmtDelta(delta)} vs course
+                {fmtDelta(delta)} vs course, same terms
               </Metric>
             </span>
             <span className="text-xs text-muted">{fmtInt(g.students)} students</span>
@@ -389,13 +394,14 @@ function InstructorsBlock({ course, term, meta }: { course: Course; term: string
       </h2>
       {course.gpa && (
         <p className="mt-1 text-sm text-muted">
-          Course average{" "}
+          All-time course average{" "}
           <Metric
             source={`UIUC GPA dataset, ${termRange(course.gpa.first_term, course.gpa.last_term)}, ${fmtInt(course.gpa.students)} students`}
           >
             {fmtGpa(course.gpa.avg)}
-          </Metric>
-          . Green = grades above the course average in the same terms, red = below.
+          </Metric>{" "}
+          ({termRange(course.gpa.first_term, course.gpa.last_term)}). Each card&apos;s ± compares that instructor with the course in the
+          terms they taught (grading changes over the years, so this is fairer than the all-time average): green = grades higher, red = lower.
         </p>
       )}
       {course.gpa && (

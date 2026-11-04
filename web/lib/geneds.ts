@@ -1,7 +1,7 @@
 import type { GenedRow } from "./types";
 
 export const GENED_GROUPS: { cat: string; label: string; codes: string[] }[] = [
-  { cat: "ACP", label: "Advanced Composition", codes: ["ACP"] },
+  { cat: "COMP", label: "Composition", codes: ["COMP1", "ACP"] },
   { cat: "CS", label: "Cultural Studies", codes: ["US", "WCC", "NW"] },
   { cat: "HUM", label: "Humanities & the Arts", codes: ["HP", "LA"] },
   { cat: "NAT", label: "Natural Sciences & Technology", codes: ["LS", "PS"] },
@@ -32,8 +32,44 @@ export const DEFAULT_FILTERS: Filters = {
   openNext: false,
   minRmp: null,
   doubleDip: false,
-  minStudents: 0,
+  minStudents: 200,
 };
+
+/** Filters + sort <-> URL query, so Back / reload / sharing keep them. */
+export function filtersToQuery(f: Filters, sort: SortKey): string {
+  const p = new URLSearchParams();
+  if (f.codes.length) p.set("codes", f.codes.join(","));
+  if (f.credits !== null) p.set("cr", String(f.credits));
+  if (f.earliest !== null) p.set("e", String(f.earliest));
+  if (f.noFriday) p.set("nf", "1");
+  if (f.onlineOnly) p.set("on", "1");
+  if (f.openNext) p.set("nx", "1");
+  if (f.minRmp !== null) p.set("rmp", String(f.minRmp));
+  if (f.doubleDip) p.set("dd", "1");
+  if (f.minStudents !== DEFAULT_FILTERS.minStudents) p.set("min", String(f.minStudents));
+  if (sort !== "gpa") p.set("sort", sort);
+  return p.toString();
+}
+
+export function filtersFromQuery(q: string): { f: Filters; sort: SortKey } {
+  const p = new URLSearchParams(q);
+  const num = (k: string) => (p.has(k) && !Number.isNaN(Number(p.get(k))) ? Number(p.get(k)) : null);
+  const sort = (["gpa", "pctA", "rmp", "open"] as SortKey[]).find((k) => k === p.get("sort")) ?? "gpa";
+  return {
+    sort,
+    f: {
+      codes: (p.get("codes") ?? "").split(",").filter((c) => /^[A-Z0-9]{2,5}$/.test(c)),
+      credits: num("cr"),
+      earliest: num("e"),
+      noFriday: p.get("nf") === "1",
+      onlineOnly: p.get("on") === "1",
+      openNext: p.get("nx") === "1",
+      minRmp: num("rmp"),
+      doubleDip: p.get("dd") === "1",
+      minStudents: num("min") ?? DEFAULT_FILTERS.minStudents,
+    },
+  };
+}
 
 /** Number of sections that count as "open next term": known-open if status is published, else listed. */
 export function openCount(r: GenedRow): number {
