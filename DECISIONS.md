@@ -157,3 +157,18 @@ Every judgment call made during the autonomous build, newest phase last.
   school id is guessed or hard-coded.
 - **D6.7 "Suggest a note"** opens a prefilled issue at `https://github.com/kamransingri/illini-scheduler/issues/new`
   (label `student-note`). It works once the repo exists (Needs a human #1).
+
+## Phase 7 — Gen-ed finder
+
+- **D7.1 Rows** = every course with a gen-ed code (UIUC gen-ed list for Spring 2027, merged with the codes parsed from
+  Course Explorer "Degree Attributes") that has a page: 841 courses, including ones not offered in Spring 2027
+  (shown "Not offered") so the "next term only" filter has a purpose.
+- **D7.2 Category filter** selects gen-ed *codes* (HP, LA, NW, ...) grouped by category; a course matches if it
+  has any selected code. "Double-dips" = 2+ categories.
+- **D7.3 "Open next term"** uses published seat status when known; Spring 2027 status isn't published yet, so it
+  becomes "Has sections in Spring 2027" and the label says so.
+- **D7.4 Time filters** (no 8am, no Friday, online only) pass if *some* valid section bundle (lecture + linked
+  sections) satisfies them; the bundle summaries are precomputed in the export.
+- **D7.5 Small samples.** A "GPA from 200+ students" filter keeps tiny courses (n=23) from topping the GPA sort;
+  every row shows n.
+- **D7.6 HTML entities.** Upstream titles contain `&amp;` etc.; the pipeline now decodes them (`html.unescape`).

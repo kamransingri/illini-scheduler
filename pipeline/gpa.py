@@ -6,6 +6,7 @@ C 2.0, C- 1.67, D+ 1.33, D 1.0, D- 0.67, F 0). W is excluded from GPA but its ra
 
 from __future__ import annotations
 
+import html
 import sqlite3
 from collections import defaultdict
 from collections.abc import Iterable, Mapping
@@ -116,7 +117,7 @@ def compute(df: pd.DataFrame, window_start: str = WINDOW_START) -> GpaResult:
         if term in recent:
             course_recent[ck].add(counts, term)
         if ck not in titles or term_order(term) >= titles[ck][0]:
-            titles[ck] = (term_order(term), d["Course Title"])
+            titles[ck] = (term_order(term), html.unescape(d["Course Title"]))
         p = parse_name(d["Primary Instructor"])
         if p is not None:
             ik = (subj, num, p.key)

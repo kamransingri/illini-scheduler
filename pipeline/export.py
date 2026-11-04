@@ -272,7 +272,8 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
             "nx": int(bool(nxt and nxt["sections"])),
             "cu": int(bool(term_blocks.get(CURRENT_TERM, {}).get("sections"))),
         })
-        if codes and nxt and nxt["sections"]:
+        if codes and ((nxt and nxt["sections"]) or gen):
+            nxt = nxt or {"sections": [], "n_primary": 0, "n_open": None, "status_known": False}
             secs = [s for s in nxt["sections"] if s["status_code"] != "P"]
             bs = bundles(secs)
             best = None
