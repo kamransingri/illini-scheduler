@@ -60,3 +60,21 @@ Every judgment call made during the autonomous build, newest phase last.
   decodes line by line.
 - **D1.9 Handmade XML fixtures.** `fixtures/course-explorer/HANDMADE_*.xml` are generated from the real CSV slice
   in the documented XML layout so the XML parser is tested offline; a test asserts the XML and CSV parsers agree.
+
+## Phase 2 — GPA and grade disparity
+
+- **D2.1 Real columns** of `gpa/uiuc-gpa-dataset.csv`: Year, Term, YearTerm, Subject, Number, Course Title,
+  Sched Type, A+, A, A-, B+, B, B-, C+, C, C-, D+, D, D-, F, W, Students, Primary Instructor. 110,326 rows,
+  terms 2005-fa to 2026-su (upstream updated 2026-10-29). `Students` = graded students (W not included).
+  Gen-ed file is `geneds/gened-courses.csv` (not `uiuc-geneds-dataset.csv` as the plan said): Year, Term,
+  TermYear, Course, Course Title, ACP, CS, HUM, NAT, QR, SBS; Spring 2027 only, 926 courses.
+- **D2.2 Windows.** `avg_gpa` covers Fall 2015 onward (ten years; older grading would skew the averages).
+  `recent_avg_gpa` covers the last 8 regular terms in the dataset (Fall 2022 to Spring 2026). Both ranges travel
+  with every number to the UI.
+- **D2.3 Grade disparity delta** = the instructor's GPA minus the course GPA *in the same terms*, weighted by the
+  instructor's students. A plain "instructor avg minus all-time course avg" would penalise anyone who taught
+  before grade inflation. Instructors with < 60 students are flagged `limited_data`.
+- **D2.4 Percent buckets** (A/B/C/DF) are shares of graded students; W% is W / (graded + W).
+- **D2.5 RHET 105 has no GPA data in the window.** Its sections hold at most 20 students, and FERPA exclusions drop
+  those from the dataset after 2013. The UI says "No grade data" and doesn't borrow numbers from other courses.
+- **D2.6 Instructor identity** for GPA rows is `names.instructor_key` ("last|first"); see Phase 3.
