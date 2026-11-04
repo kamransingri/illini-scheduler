@@ -401,6 +401,8 @@ class ApiCrawler:
         self.refresh = refresh
 
     async def get(self, client, path: str) -> bytes:  # type: ignore[no-untyped-def]
+        import httpx
+
         cache = self.cache_dir / path.replace("?", "_")
         if cache.exists() and not self.refresh:
             return cache.read_bytes()
@@ -415,8 +417,10 @@ class ApiCrawler:
                         return bytes(r.content)
                     if r.status_code == 404:
                         raise FileNotFoundError(path)
-                except (OSError, TimeoutError) as e:  # network errors
-                    if isinstance(e, FileNotFoundError) or attempt == 4:
+                except FileNotFoundError:
+                    raise
+                except (httpx.TransportError, OSError, TimeoutError):  # network errors: back off and retry
+                    if attempt == 4:
                         raise
             await asyncio.sleep(delay)
             delay *= 2
