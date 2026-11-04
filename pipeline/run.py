@@ -30,7 +30,7 @@ def main(argv: list[str] | None = None) -> int:
     subjects = None if args.subjects == "all" else {s.strip().upper() for s in args.subjects.split(",")}
     terms = [t.strip() for t in args.terms.split(",") if t.strip()]
 
-    from . import course_explorer, exam_format, export, gpa, instructors, offerings
+    from . import availability, course_explorer, exam_format, export, gpa, instructors, offerings
 
     if args.fixtures:
         from .config import FIXTURES
@@ -62,6 +62,11 @@ def main(argv: list[str] | None = None) -> int:
                                             dates.get(f"course-catalog/data/{term}.csv", ""))
         log(f"  {term}: {n} sections ({used})")
     conn.commit()
+
+    if not args.fixtures:
+        log("seat availability (Course Explorer web pages)")
+        log(f"  {availability.run(conn, [t for t in (CURRENT_TERM, NEXT_TERM) if t in terms], subjects)}")
+        conn.commit()
 
     log("phase 2: GPA")
     df = gpa.load_gpa_csv(gpa_path)

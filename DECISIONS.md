@@ -252,3 +252,13 @@ Every judgment call made during the autonomous build, newest phase last.
   uses, so the library wasn't adopted. Two fixes came from verifying real data: a profile with 0 ratings is shown as
   "no ratings yet" (RMP reports it as 0.0, which read as a terrible score), and name searches return 20 results
   instead of 8 so common last names ("Thomas, D") don't push the right person off the list.
+
+## After launch
+
+- **D11.1 Seat availability.** The Course Explorer XML feed stopped carrying `enrollmentStatus`, so once Fall 2026
+  came from the live API every section read "Not published". The public course page
+  (`courses.illinois.edu/schedule/{year}/{season}/{SUBJ}/{NUM}`) still shows "Availability: Open / Closed /
+  Open (Restricted) / CrossListOpen / Pending" per section, so `pipeline/availability.py` reads it for the current
+  and next term: one page per course, ≤ 4 concurrent requests, retries, a 15-minute budget, about 3 minutes for both
+  terms. It never fails the pipeline. "Checked at" is the time of that fetch. **Seat counts (capacity, seats left,
+  waitlist) are only in Self-Service behind a NetID login and are never scraped**; the site links there.
