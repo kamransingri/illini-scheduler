@@ -62,17 +62,21 @@ jobs:
           cp out/404.html ../site/404.html  # GitHub Pages serves the project's 404.html for unknown paths
           (npx serve ../site -l 4173 --no-clipboard &) && sleep 3
           E2E_BASE_URL=http://127.0.0.1:4173/${{ github.event.repository.name }}/ npx playwright test
-      - name: Lighthouse on a course page (perf >= 0.80 to allow CI noise, accessibility >= 0.90)
+      - name: Lighthouse on a course page (median of 3 runs; performance >= 0.80, accessibility >= 0.90)
         run: |
           curl -s -o /dev/null http://127.0.0.1:4173/ || ((cd web && npx serve ../site -l 4173 --no-clipboard &) && sleep 3)
-          npx -y lighthouse@12.8.2 "http://127.0.0.1:4173/${{ github.event.repository.name }}/course/CS/124/" \
-            --chrome-flags="--headless=new --no-sandbox" --only-categories=performance,accessibility,best-practices \
-            --output=json --output-path=lh.json --quiet
+          for i in 1 2 3; do
+            npx -y lighthouse@12.8.2 "http://127.0.0.1:4173/${{ github.event.repository.name }}/course/CS/124/" \
+              --chrome-flags="--headless=new --no-sandbox" --only-categories=performance,accessibility,best-practices \
+              --output=json --output-path=lh-$i.json --quiet
+          done
           python3 - <<'PY'
-          import json, sys
-          s = {k: v["score"] for k, v in json.load(open("lh.json"))["categories"].items()}
-          print("Lighthouse:", s)
-          sys.exit(0 if s["performance"] >= 0.80 and s["accessibility"] >= 0.90 else 1)
+          import json, statistics, sys
+          runs = [{k: v["score"] for k, v in json.load(open(f"lh-{i}.json"))["categories"].items()} for i in (1, 2, 3)]
+          med = {k: statistics.median(r[k] for r in runs) for k in runs[0]}
+          print("Lighthouse runs:", runs)
+          print("Lighthouse median:", med)
+          sys.exit(0 if med["performance"] >= 0.80 and med["accessibility"] >= 0.90 else 1)
           PY
       - name: Commit refreshed data summaries (only after tests pass)
         if: github.event_name != 'pull_request'
