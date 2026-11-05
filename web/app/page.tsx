@@ -37,7 +37,11 @@ export default function Home() {
           </Link>
         ))}
       </section>
-      <section className="grid gap-3 sm:grid-cols-3">
+      <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <Link href="/opened/" className="rounded-lg border border-line p-4 no-underline hover:bg-panel">
+          <div className="font-semibold">Just opened →</div>
+          <p className="mt-1 text-sm text-muted">Sections that went from Closed to Open this week.</p>
+        </Link>
         <Link href="/geneds/" className="rounded-lg border border-line p-4 no-underline hover:bg-panel">
           <div className="font-semibold">Gen-ed finder →</div>
           <p className="mt-1 text-sm text-muted">Filter gen-eds by category and time, sorted by GPA.</p>

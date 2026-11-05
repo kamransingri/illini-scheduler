@@ -46,8 +46,11 @@ CREATE INDEX IF NOT EXISTS sections_course ON sections(subject, number, term);
 
 -- Seat availability (Open / Closed / ...) per section, from the Course Explorer web pages
 CREATE TABLE IF NOT EXISTS availability (
-    term TEXT, crn TEXT, status TEXT, checked_at TEXT,
+    term TEXT, crn TEXT, status TEXT, checked_at TEXT, since TEXT,
     PRIMARY KEY (term, crn)
+);
+CREATE TABLE IF NOT EXISTS seat_events (
+    term TEXT, at TEXT, crn TEXT, subject TEXT, number TEXT, code TEXT, old TEXT, new TEXT
 );
 
 -- Phase 2: GPA
@@ -115,6 +118,9 @@ def connect(path: Path | str = DB_PATH) -> sqlite3.Connection:
     conn = sqlite3.connect(path)
     conn.row_factory = sqlite3.Row
     conn.executescript(SCHEMA)
+    cols = {r[1] for r in conn.execute("PRAGMA table_info(availability)")}
+    if "since" not in cols:  # databases built before seat history existed
+        conn.execute("ALTER TABLE availability ADD COLUMN since TEXT")
     return conn
 
 

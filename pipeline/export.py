@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import itertools
 import json
+import os
 import re
 import shutil
 import sqlite3
@@ -22,6 +23,8 @@ from .fetch import CURRENT_TERM, NEXT_TERM
 from .names import parse_name, term_order
 
 REPO_URL = "https://github.com/kamransingri/illini-scheduler"
+SITE_URL = os.environ.get("SITE_URL", "https://kamransingri.github.io/illini-scheduler")
+RECENT_EVENT_DAYS = 7  # "Just opened" page window
 ONLINE_TYPES = {"ONL", "OLC", "OLD", "OD", "OLB"}
 MAX_BUNDLES = 400
 
@@ -178,14 +181,22 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
     for r in conn.execute(f"SELECT * FROM meetings WHERE term IN ({qmarks})", live_terms):
         meet[(r["term"], r["crn"])].append(
             {"d": r["days"], "s": r["start_time"], "e": r["end_time"], "b": r["building"] or "", "r": r["room"] or ""})
-    status_at = {(r[0], r[1]): r[2] for r in conn.execute("SELECT term, crn, checked_at FROM availability")}
+    status_at = {(r[0], r[1]): (r[2], r[3] or "") for r in
+                 conn.execute("SELECT term, crn, checked_at, since FROM availability")}
+    seat_events: dict[tuple[str, str], list[dict]] = defaultdict(list)
+    all_events: list[dict] = []
+    for r in conn.execute("SELECT term, at, crn, subject, number, code, old, new FROM seat_events ORDER BY at DESC"):
+        ev = {"term": r[0], "at": r[1], "crn": r[2], "s": r[3], "n": r[4], "code": r[5], "old": r[6], "new": r[7]}
+        seat_events[(r[3], r[4])].append(ev)
+        all_events.append(ev)
     for r in conn.execute(f"SELECT * FROM sections WHERE term IN ({qmarks}) ORDER BY section_code", live_terms):
         raws = [p.strip() for p in (r["instructors_raw"] or "").split(";") if p.strip()]
         sections[(r["subject"], r["number"])][r["term"]].append({
             "crn": r["crn"], "code": r["section_code"], "type": r["type"], "type_name": r["type_name"],
             "component": r["component"], "group": r["link_group"], "part": r["part_of_term"] or "1",
             "status": r["enrollment_status"] or "", "status_code": r["status_code"],
-            "status_at": status_at.get((r["term"], r["crn"]), ""),
+            "status_at": status_at.get((r["term"], r["crn"]), ("", ""))[0],
+            "status_since": status_at.get((r["term"], r["crn"]), ("", ""))[1],
             "credits": r["section_credit_hours"] or "", "title": r["section_title"] or "",
             "text": " ".join(filter(None, (r["section_text"], r["section_notes"]))),
             "meetings": meet.get((r["term"], r["crn"]), []),
@@ -278,6 +289,7 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
             "terms": term_blocks, "instructors": inst_out, "changes": ch, "biggest_change": biggest,
             "exam_course": exam.get(key, {}).get("*"),
             "notes": notes.get(key, []),
+            "seat_events": seat_events.get(key, [])[:40],
         }
         d = out_dir / "course" / subj
         d.mkdir(exist_ok=True)
@@ -316,6 +328,8 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
     (out_dir / "search.json").write_text(json.dumps({"courses": search_courses, "instructors": inst_index},
                                                     separators=(",", ":")))
     (out_dir / "geneds.json").write_text(json.dumps(gened_rows, separators=(",", ":")))
+    titles = {(c["s"], c["n"]): c["t"] for c in search_courses}
+    write_seat_feeds(out_dir, all_events, titles)
     meta = {
         "built_at": meta_rows.get("built_at"), "current_term": CURRENT_TERM, "next_term": NEXT_TERM,
         "terms": {t: {k: terms[t][k] for k in ("label", "source", "checked_at")} for t in live_terms},
@@ -329,6 +343,54 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
     }
     (out_dir / "meta.json").write_text(json.dumps(meta, indent=1))
     return f"{n_files} course files, {len(gened_rows)} gen-ed rows, {len(inst_index)} instructors -> {out_dir}"
+
+
+SPECIAL_NOTE = re.compile(r"reserved for|learning community|is for students (?:at|in|of)|only for students", re.I)
+
+
+def is_open(status: str) -> bool:
+    return "open" in (status or "").lower()
+
+
+def write_seat_feeds(out_dir: Path, events: list[dict], titles: dict[tuple[str, str], str]) -> None:
+    """data/seat-events.json (last week, for the "Just opened" page) and an RSS feed per course
+    (data/feeds/{SUBJ}/{NUM}.xml) so students can watch seats in any feed reader."""
+    from datetime import UTC, datetime, timedelta
+    from email.utils import format_datetime
+    from xml.sax.saxutils import escape
+
+    cutoff = (datetime.now(UTC) - timedelta(days=RECENT_EVENT_DAYS)).isoformat(timespec="seconds")
+    recent = [e | {"t": titles.get((e["s"], e["n"]), "")} for e in events if e["at"] >= cutoff]
+    (out_dir / "seat-events.json").write_text(json.dumps(recent[:3000], separators=(",", ":")))
+    by_course: dict[tuple[str, str], list[dict]] = defaultdict(list)
+    for e in events:
+        by_course[(e["s"], e["n"])].append(e)
+    feeds = out_dir / "feeds"
+    now = format_datetime(datetime.now(UTC))
+    for (subj, num), title in titles.items():
+        evs = by_course.get((subj, num), [])[:50]
+        page = f"{SITE_URL}/course/{subj}/{num}/"
+        items = []
+        for e in evs:
+            if is_open(e["new"]) and not is_open(e["old"]):
+                verb = "opened"
+            elif "closed" in e["new"].lower():
+                verb = "closed"
+            else:
+                verb = "changed"
+            label = f"{subj} {num} {e['code']} (CRN {e['crn']}) {verb}: {e['old']} → {e['new']}"
+            guid = e["term"] + e["crn"] + e["at"]
+            when = format_datetime(datetime.fromisoformat(e["at"]))
+            items.append(f"<item><title>{escape(label)}</title><link>{escape(page)}</link>"
+                         f'<guid isPermaLink="false">{escape(guid)}</guid><pubDate>{when}</pubDate></item>')
+        d = feeds / subj
+        d.mkdir(parents=True, exist_ok=True)
+        (d / f"{num}.xml").write_text(
+            '<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel>'
+            f"<title>{escape(subj + ' ' + num + ' seat changes · Illini Scheduler')}</title>"
+            f"<link>{escape(page)}</link><description>"
+            f"{escape(f'Open/Closed changes for {subj} {num}: {title}. Checked about once a day.')}</description>"
+            f"<lastBuildDate>{now}</lastBuildDate>{''.join(items)}</channel></rss>")
 
 
 def flag_special(secs: list[dict]) -> None:
@@ -346,7 +408,7 @@ def flag_special(secs: list[dict]) -> None:
         elif len(comps) > 1 and s["group"] != "*" and full and groups[s["group"]] != comps:
             s["special"] = ("Has no linked discussion/lab unlike the other sections: "
                             "likely restricted or special-program")
-        elif re.search(r"restricted|reserved|learning community|only for|limited to", s["text"], re.I):
+        elif SPECIAL_NOTE.search(s["text"]):
             s["special"] = "Section notes say it is reserved for a specific group"
 
 

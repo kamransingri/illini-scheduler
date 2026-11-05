@@ -49,3 +49,21 @@ describe("prefs in the URL", () => {
     expect(params.toString()).toBe("");
   });
 });
+
+import { fmtAgo, seatVerb } from "@/lib/format";
+
+describe("seat history helpers", () => {
+  const now = new Date("2026-11-05T12:00:00Z");
+  it("fmtAgo", () => {
+    expect(fmtAgo("2026-11-05T01:00:00Z", now)).toBe("today");
+    expect(fmtAgo("2026-11-04T06:00:00Z", now)).toBe("yesterday");
+    expect(fmtAgo("2026-11-02T12:00:00Z", now)).toBe("3 days ago");
+    expect(fmtAgo("", now)).toBe("");
+  });
+  it("seatVerb", () => {
+    expect(seatVerb("Closed", "Open")).toBe("opened");
+    expect(seatVerb("Closed", "CrossListOpen (Restricted)")).toBe("opened");
+    expect(seatVerb("Open", "Closed")).toBe("closed");
+    expect(seatVerb("Open", "Open (Restricted)")).toBe("changed");
+  });
+});

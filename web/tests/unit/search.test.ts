@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseCode, search } from "@/lib/search";
+import { editDistance, parseCode, search } from "@/lib/search";
 import type { SearchIndex } from "@/lib/types";
 
 const index: SearchIndex = {
@@ -8,6 +8,8 @@ const index: SearchIndex = {
     { s: "CS", n: "128", t: "Introduction to Computer Science II", c: "3", g: [], gpa: 3.4, nx: 1, cu: 1 },
     { s: "CS", n: "100", t: "Computer Science Orientation", c: "1", g: [], gpa: 3.9, nx: 0, cu: 1 },
     { s: "MATH", n: "221", t: "Calculus I", c: "4", g: ["QR1"], gpa: 3.1, nx: 0, cu: 1 },
+    { s: "MATH", n: "231", t: "Calculus II", c: "3", g: ["QR2"], gpa: 3.2, nx: 1, cu: 1 },
+    { s: "CS", n: "225", t: "Data Structures", c: "4", g: [], gpa: 3.3, nx: 1, cu: 1 },
     { s: "CS", n: "12", t: "bogus", c: "", g: [], gpa: null, nx: 0, cu: 0 },
   ],
   instructors: [{ name: "Geoffrey Challen", k: "challen|geoffrey", c: ["CS 124"] }],
@@ -38,4 +40,28 @@ describe("search", () => {
     expect(hits.every((h) => h.kind === "course" && h.course.s === "MATH")).toBe(true);
   });
   it("empty query", () => expect(search(index, "  ")).toEqual([]));
+});
+
+describe("typos and aliases", () => {
+  it("edit distance", () => {
+    expect(editDistance("calclus", "calculus", 1)).toBe(1);
+    expect(editDistance("strucutres", "structures", 2)).toBe(1); // swap
+    expect(editDistance("abc", "xyz", 1)).toBe(2);
+  });
+  it("misspelled title words still match", () => {
+    expect(search(index, "calclus")[0]).toMatchObject({ kind: "course", course: { s: "MATH" } });
+    expect(search(index, "data strucutres")[0]).toMatchObject({ kind: "course", course: { n: "225" } });
+  });
+  it("aliases", () => {
+    expect(search(index, "calc 2")[0]).toMatchObject({ kind: "course", course: { s: "MATH", n: "231" } });
+    expect(search(index, "Calc II")[0]).toMatchObject({ course: { n: "231" } });
+    expect(search(index, "intro cs")[0]).toMatchObject({ course: { s: "CS", n: "124" } });
+  });
+  it("misspelled instructor last name", () => {
+    expect(search(index, "chalen")[0]).toMatchObject({ kind: "instructor", instructor: { k: "challen|geoffrey" } });
+  });
+  it("no duplicate hits", () => {
+    const keys = search(index, "calc 2").map((h) => (h.kind === "course" ? h.course.n : h.instructor.k));
+    expect(new Set(keys).size).toBe(keys.length);
+  });
 });

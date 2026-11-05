@@ -9,7 +9,9 @@ import {
   fmtDelta,
   fmtGpa,
   fmtInt,
+  fmtAgo,
   fmtTime,
+  seatVerb,
   SELF_SERVICE_URL,
   termLabel,
   termOrder,
@@ -120,6 +122,8 @@ export default function CourseDetail({ subject, number, meta }: { subject: strin
           Source: Course Explorer catalog records compared between consecutive fall/spring offerings.
         </p>
       </section>
+
+      <SeatChanges course={course} />
 
       <NotesBlock course={course} repoUrl={meta.repo_url} />
     </div>
@@ -235,11 +239,22 @@ function SectionsTable({ course, term, block }: { course: Course; term: string; 
               {s.instructors_raw.length ? s.instructors_raw.join("; ") : <span className="text-muted">TBA</span>}
             </span>
             <span className="col-span-2 flex flex-wrap items-center gap-2 md:col-span-1 md:flex-col md:items-start md:gap-1">
-              {<span title={s.status_at ? `Checked ${fmtDate(s.status_at)}` : undefined}>{statusBadge(s.status, block.status_known)}</span>}
+              {<span title={s.status_at ? `Checked ${fmtDate(s.status_at)}${s.status_since ? `; ${s.status} since ${fmtDate(s.status_since)}` : ""}` : undefined}>
+                {statusBadge(s.status, block.status_known)}
+                {s.status_since && Date.now() - new Date(s.status_since).getTime() < 14 * 86400000 && (
+                  <span className="ml-1 text-[11px] font-medium text-brand-dark">since {fmtAgo(s.status_since)}</span>
+                )}
+              </span>}
               <a className="text-xs text-brand-dark underline" href={cisUrl(term, course.subject, course.number, s.crn)} rel="noopener">
                 Check live seats ↗
               </a>
             </span>
+            {s.text && (
+              <details className="col-span-2 text-xs text-muted md:col-span-6">
+                <summary className="cursor-pointer">{s.text.length > 110 ? `${s.text.slice(0, 110)}…` : s.text}</summary>
+                {s.text.length > 110 && <p className="mt-1">{s.text}</p>}
+              </details>
+            )}
           </li>
         ))}
       </ul>
@@ -494,6 +509,46 @@ function NotesBlock({ course, repoUrl }: { course: Course; repoUrl: string }) {
       <a href={href} className="mt-2 inline-block text-sm text-brand-dark underline" rel="noopener">
         Suggest a note (opens a GitHub issue) ↗
       </a>
+    </section>
+  );
+}
+
+function SeatChanges({ course }: { course: Course }) {
+  const events = course.seat_events ?? [];
+  const feed = dataUrl(`feeds/${course.subject}/${course.number}.xml`);
+  return (
+    <section aria-labelledby="seats-h">
+      <h2 id="seats-h" className="text-xl font-bold">
+        Seat changes
+      </h2>
+      {events.length ? (
+        <ul className="mt-2 space-y-1 text-sm" data-testid="seat-events">
+          {events.slice(0, 15).map((e) => {
+            const verb = seatVerb(e.old, e.new);
+            return (
+              <li key={e.term + e.crn + e.at}>
+                <span className={verb === "opened" ? "font-semibold text-good" : verb === "closed" ? "font-semibold text-bad" : "font-semibold"}>
+                  {e.code} {verb}
+                </span>{" "}
+                <span className="text-muted">
+                  ({e.old} → {e.new}, CRN {e.crn}, {termLabel(e.term)}) · {fmtAgo(e.at)}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <p className="mt-2 text-sm text-muted">No Open/Closed changes recorded in the last three weeks.</p>
+      )}
+      <p className="mt-2 text-sm">
+        <a href={feed} className="text-brand-dark underline">
+          Watch seats for {course.subject} {course.number} (RSS feed)
+        </a>{" "}
+        <span className="text-xs text-muted">
+          Add the link to any feed reader (or Slack/Discord feed bot) to get a note when a section opens or closes. Status is checked about once a day, so
+          always confirm in Self-Service.
+        </span>
+      </p>
     </section>
   );
 }
