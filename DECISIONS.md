@@ -308,3 +308,8 @@ Every judgment call made during the autonomous build, newest phase last.
   (shared-CPU noise). Thresholds are unchanged.
 - **D12.7 The data-summary commit can't block a deploy.** A run failed because main moved while it ran and its push
   was rejected. The step now rebases and retries 3 times and is `continue-on-error`.
+- **D12.8 Co-instructors.** Course Explorer separates co-instructors with `<br/>` inside one cell; the first parser
+  joined them ("Choi, Y Lee, S Malvandi, A", 737 Spring courses affected), which the instructor count on the live
+  site gave away (3,059 instead of ~3,300). The parser now reads text nodes; names already stored are repaired with
+  a "Last, Initial" splitter when the build loads them (no re-crawl needed). Spring 2027 now has 3,307 instructor
+  names from the pages, 3,215 of them also in the mirror.

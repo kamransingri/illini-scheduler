@@ -65,6 +65,24 @@ def _texts(td) -> list[str]:  # type: ignore[no-untyped-def]
     return [t] if t else []
 
 
+def _instructor_cells(td) -> list[list[str]]:  # type: ignore[no-untyped-def]
+    """Instructors per meeting. Co-instructors are separated by <br/> inside one div, so read text nodes."""
+    divs = [d for d in td.iter("div") if "app-meeting" in (d.get("class") or "")]
+    return [[t.strip() for t in d.itertext() if t.strip()] for d in divs]
+
+
+NAME_RE = re.compile(r"[^,;]+?,\s*[^\s,;]+")
+
+
+def split_names(names: list[str]) -> list[str]:
+    """Repair names merged by an older parser: ['Choi, Y Lee, S'] -> ['Choi, Y', 'Lee, S']."""
+    out: list[str] = []
+    for n in names:
+        parts = [p.strip() for p in NAME_RE.findall(n)] if n.count(",") > 1 else [n.strip()]
+        out += [p for p in parts if p and p not in out]
+    return out
+
+
 def _split_place(text: str) -> tuple[str, str]:
     """'4025 Campus Instructional Facility' -> ('4025', 'Campus Instructional Facility'); 'n.a.' -> ('', '')."""
     t = text.strip()
@@ -106,7 +124,8 @@ def parse_course_page(page: str | bytes) -> dict:
         if crn_i is None or len(tds) < crn_i + 8:
             continue
         crn = " ".join(tds[crn_i].text_content().split())
-        types, codes, times, days, places, insts = (_texts(tds[crn_i + k]) for k in range(1, 7))
+        types, codes, times, days, places = (_texts(tds[crn_i + k]) for k in range(1, 6))
+        insts = _instructor_cells(tds[crn_i + 6])
         details: dict[str, str] = {}
         for dt in tds[crn_i + 7].iter("dt"):
             dd = dt.getnext()
@@ -122,11 +141,11 @@ def parse_course_page(page: str | bytes) -> dict:
                 a, _, b = tm.partition("-")
                 start, end = parse_time(a.strip()), parse_time(b.strip())
             room, building = _split_place(places[k] if k < len(places) else "")
-            who = insts[k] if k < len(insts) else (insts[0] if insts else "")
+            who = insts[k] if k < len(insts) else (insts[0] if insts else [])
             meetings.append({"start": start, "end": end, "days": days[k] if k < len(days) else "",
                              "room": room, "building": building,
                              "type_name": types[k] if k < len(types) else (types[0] if types else ""),
-                             "instructors": [x.strip() for x in who.split(";") if x.strip()] if who else []})
+                             "instructors": who})
         notes = " ".join(filter(None, (details.get("Section Info", ""), details.get("Restriction(s)", ""))))
         out["sections"].append({
             "crn": crn, "code": codes[0] if codes else "", "type_name": types[0] if types else "",
@@ -395,7 +414,8 @@ def apply_web_rows(conn: sqlite3.Connection, term: str) -> str:
                 sec.meetings.append(Meeting(type=normalise_type("", m.get("type_name", "")),
                                             type_name=m.get("type_name", ""), start=m.get("start"),
                                             end=m.get("end"), days=days, building=m.get("building", ""),
-                                            room=m.get("room", ""), instructors=m.get("instructors", [])))
+                                            room=m.get("room", ""),
+                                            instructors=split_names(m.get("instructors", []))))
             sections.append(sec)
         assign_links(sections)
         conn.execute("DELETE FROM meetings WHERE term=? AND crn IN (SELECT crn FROM sections WHERE term=? AND "
