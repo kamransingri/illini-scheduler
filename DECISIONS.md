@@ -277,3 +277,29 @@ Every judgment call made during the autonomous build, newest phase last.
   nightly site build reads those files (`AVAILABILITY_MODE=file`) and no longer calls the Course Explorer XML feed
   (`SOURCE=csv`): sections come from the mirror. Each section's badge shows when it was checked (on hover). The
   first files were seeded from the build session, which Course Explorer doesn't throttle.
+
+## Next steps 1–3 (2026-11-05)
+
+- **D12.1 Sections from the course pages.** The slow availability job now parses the whole Course Explorer course
+  page (`parse_course_page`): title, credits, description, gen-eds and every section row with all its meetings
+  (type, code, times, days, room/building, instructors), part of term and section notes / restrictions. The nightly
+  build replaces the mirror's sections for every course the job has read (`apply_web_rows`) and adds courses that
+  aren't in the mirror. The job also discovers courses from Course Explorer's subject index, falling back to the
+  mirror's list if that index can't be read. Example of why it matters: CS 124's WWC section meets W 4:00 and
+  M 5:00 per Course Explorer; the March mirror said M/R 4:30. The XML API crawler stays for local use only.
+- **D12.2 Special sections from notes.** Only special-program wording ("is for students at…", "learning community",
+  "reserved for", "only for students") marks a section special. Ordinary "Restricted to <majors>" doesn't; that
+  shows as the Restricted status instead. Section notes appear under each section row.
+- **D12.3 Seat-change history.** Each section keeps `[status, checked_at, since]`; a status change appends an
+  event (kept 21 days). Course pages show a "Seat changes" timeline and "since <day>" on recently changed badges.
+  Every course gets an RSS feed (`data/feeds/{SUBJ}/{NUM}.xml`) for watching seats in a feed reader or a
+  Slack/Discord feed bot. A **Just opened** page lists the last week's openings, filterable by term and subject.
+  A static site can't send email/push itself; RSS is the no-backend way to alert. Checks are about daily, so every
+  surface says to confirm in Self-Service.
+- **D12.4 Search.** Typo tolerance (edit distance ≤ 1 for 4–7 letters, ≤ 2 for 8+, adjacent swaps count as one)
+  on title words and instructor last names; a small alias table ("calc 2" → MATH 231, "intro cs" → CS 124, ...),
+  each checked against real titles. A code-like query whose "subject" doesn't exist ("calc 2") is not treated as a
+  course code.
+- **D12.5 CI hygiene.** Actions moved to their current majors (checkout/setup-python/setup-node v7, cache v6,
+  upload-pages-artifact/deploy-pages v5), runners pinned to `ubuntu-24.04`, `next lint` replaced by the ESLint CLI,
+  and the build runs Lighthouse on a course page (fails below performance 0.80 or accessibility 0.90).
