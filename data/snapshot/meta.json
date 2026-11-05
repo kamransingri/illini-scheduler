@@ -1,17 +1,17 @@
 {
- "built_at": "2026-11-05T01:36:54+00:00",
+ "built_at": "2026-11-05T17:11:37+00:00",
  "current_term": "2026-fa",
  "next_term": "2027-sp",
  "terms": {
   "2026-fa": {
    "label": "Fall 2026",
    "source": "course-explorer-web + web availability",
-   "checked_at": "2026-11-05T01:26:57+00:00"
+   "checked_at": "2026-11-05T15:03:54+00:00"
   },
   "2027-sp": {
    "label": "Spring 2027",
    "source": "course-explorer-web + web availability",
-   "checked_at": "2026-11-05T01:01:28+00:00"
+   "checked_at": "2026-11-05T13:41:14+00:00"
   }
  },
  "gpa": {
@@ -66,13 +66,13 @@
   },
   "ACE": {
    "gpa_matched": 35,
-   "names": 43,
-   "gpa_pct": 81.4,
+   "names": 44,
+   "gpa_pct": 79.5,
    "primary_matched": 34,
-   "primary_names": 42,
-   "primary_gpa_pct": 81.0,
+   "primary_names": 43,
+   "primary_gpa_pct": 79.1,
    "rmp_matched": 17,
-   "rmp_pct": 39.5
+   "rmp_pct": 38.6
   },
   "ACES": {
    "gpa_matched": 3,
@@ -335,14 +335,14 @@
    "rmp_pct": 44.4
   },
   "BADM": {
-   "gpa_matched": 70,
+   "gpa_matched": 71,
    "names": 83,
-   "gpa_pct": 84.3,
-   "primary_matched": 70,
+   "gpa_pct": 85.5,
+   "primary_matched": 71,
    "primary_names": 83,
-   "primary_gpa_pct": 84.3,
-   "rmp_matched": 51,
-   "rmp_pct": 61.4
+   "primary_gpa_pct": 85.5,
+   "rmp_matched": 50,
+   "rmp_pct": 60.2
   },
   "BASQ": {
    "gpa_matched": 0,
@@ -536,13 +536,13 @@
   },
   "CI": {
    "gpa_matched": 23,
-   "names": 28,
-   "gpa_pct": 82.1,
+   "names": 29,
+   "gpa_pct": 79.3,
    "primary_matched": 22,
-   "primary_names": 27,
-   "primary_gpa_pct": 81.5,
+   "primary_names": 28,
+   "primary_gpa_pct": 78.6,
    "rmp_matched": 8,
-   "rmp_pct": 28.6
+   "rmp_pct": 27.6
   },
   "CIC": {
    "gpa_matched": 0,
@@ -655,24 +655,24 @@
    "rmp_pct": 0.0
   },
   "EALC": {
-   "gpa_matched": 17,
-   "names": 24,
-   "gpa_pct": 70.8,
-   "primary_matched": 12,
-   "primary_names": 17,
-   "primary_gpa_pct": 70.6,
-   "rmp_matched": 14,
-   "rmp_pct": 58.3
+   "gpa_matched": 18,
+   "names": 25,
+   "gpa_pct": 72.0,
+   "primary_matched": 13,
+   "primary_names": 18,
+   "primary_gpa_pct": 72.2,
+   "rmp_matched": 15,
+   "rmp_pct": 60.0
   },
   "ECE": {
-   "gpa_matched": 96,
-   "names": 114,
-   "gpa_pct": 84.2,
-   "primary_matched": 96,
-   "primary_names": 105,
-   "primary_gpa_pct": 91.4,
-   "rmp_matched": 63,
-   "rmp_pct": 55.3
+   "gpa_matched": 98,
+   "names": 116,
+   "gpa_pct": 84.5,
+   "primary_matched": 98,
+   "primary_names": 107,
+   "primary_gpa_pct": 91.6,
+   "rmp_matched": 64,
+   "rmp_pct": 55.2
   },
   "ECON": {
    "gpa_matched": 34,
@@ -725,14 +725,14 @@
    "rmp_pct": 43.2
   },
   "ENGL": {
-   "gpa_matched": 37,
-   "names": 45,
-   "gpa_pct": 82.2,
-   "primary_matched": 36,
-   "primary_names": 43,
-   "primary_gpa_pct": 83.7,
+   "gpa_matched": 38,
+   "names": 47,
+   "gpa_pct": 80.9,
+   "primary_matched": 37,
+   "primary_names": 45,
+   "primary_gpa_pct": 82.2,
    "rmp_matched": 30,
-   "rmp_pct": 66.7
+   "rmp_pct": 63.8
   },
   "ENSU": {
    "gpa_matched": 3,
@@ -875,14 +875,14 @@
    "rmp_pct": 56.2
   },
   "FR": {
-   "gpa_matched": 13,
-   "names": 16,
-   "gpa_pct": 81.2,
-   "primary_matched": 13,
-   "primary_names": 16,
-   "primary_gpa_pct": 81.2,
-   "rmp_matched": 13,
-   "rmp_pct": 81.2
+   "gpa_matched": 14,
+   "names": 17,
+   "gpa_pct": 82.4,
+   "primary_matched": 14,
+   "primary_names": 17,
+   "primary_gpa_pct": 82.4,
+   "rmp_matched": 14,
+   "rmp_pct": 82.4
   },
   "FSHN": {
    "gpa_matched": 31,
@@ -915,14 +915,14 @@
    "rmp_pct": 35.5
   },
   "GER": {
-   "gpa_matched": 10,
-   "names": 23,
-   "gpa_pct": 43.5,
-   "primary_matched": 9,
-   "primary_names": 21,
-   "primary_gpa_pct": 42.9,
-   "rmp_matched": 9,
-   "rmp_pct": 39.1
+   "gpa_matched": 11,
+   "names": 24,
+   "gpa_pct": 45.8,
+   "primary_matched": 10,
+   "primary_names": 22,
+   "primary_gpa_pct": 45.5,
+   "rmp_matched": 10,
+   "rmp_pct": 41.7
   },
   "GGIS": {
    "gpa_matched": 23,
@@ -996,13 +996,13 @@
   },
   "HDFS": {
    "gpa_matched": 26,
-   "names": 38,
-   "gpa_pct": 68.4,
+   "names": 39,
+   "gpa_pct": 66.7,
    "primary_matched": 26,
-   "primary_names": 38,
-   "primary_gpa_pct": 68.4,
+   "primary_names": 39,
+   "primary_gpa_pct": 66.7,
    "rmp_matched": 13,
-   "rmp_pct": 34.2
+   "rmp_pct": 33.3
   },
   "HEBR": {
    "gpa_matched": 0,
@@ -1095,34 +1095,34 @@
    "rmp_pct": 52.0
   },
   "INFO": {
-   "gpa_matched": 18,
-   "names": 30,
-   "gpa_pct": 60.0,
-   "primary_matched": 18,
-   "primary_names": 26,
-   "primary_gpa_pct": 69.2,
+   "gpa_matched": 17,
+   "names": 29,
+   "gpa_pct": 58.6,
+   "primary_matched": 17,
+   "primary_names": 25,
+   "primary_gpa_pct": 68.0,
    "rmp_matched": 7,
-   "rmp_pct": 23.3
+   "rmp_pct": 24.1
   },
   "IS": {
-   "gpa_matched": 118,
-   "names": 179,
-   "gpa_pct": 65.9,
-   "primary_matched": 116,
-   "primary_names": 158,
-   "primary_gpa_pct": 73.4,
+   "gpa_matched": 117,
+   "names": 178,
+   "gpa_pct": 65.7,
+   "primary_matched": 115,
+   "primary_names": 157,
+   "primary_gpa_pct": 73.2,
    "rmp_matched": 59,
-   "rmp_pct": 33.0
+   "rmp_pct": 33.1
   },
   "ITAL": {
-   "gpa_matched": 9,
-   "names": 10,
-   "gpa_pct": 90.0,
-   "primary_matched": 9,
-   "primary_names": 10,
-   "primary_gpa_pct": 90.0,
-   "rmp_matched": 7,
-   "rmp_pct": 70.0
+   "gpa_matched": 10,
+   "names": 11,
+   "gpa_pct": 90.9,
+   "primary_matched": 10,
+   "primary_names": 11,
+   "primary_gpa_pct": 90.9,
+   "rmp_matched": 8,
+   "rmp_pct": 72.7
   },
   "JAPN": {
    "gpa_matched": 4,
@@ -1245,14 +1245,14 @@
    "rmp_pct": 20.7
   },
   "LING": {
-   "gpa_matched": 22,
-   "names": 29,
-   "gpa_pct": 75.9,
-   "primary_matched": 22,
-   "primary_names": 29,
-   "primary_gpa_pct": 75.9,
-   "rmp_matched": 14,
-   "rmp_pct": 48.3
+   "gpa_matched": 23,
+   "names": 30,
+   "gpa_pct": 76.7,
+   "primary_matched": 23,
+   "primary_names": 30,
+   "primary_gpa_pct": 76.7,
+   "rmp_matched": 15,
+   "rmp_pct": 50.0
   },
   "LLS": {
    "gpa_matched": 16,
@@ -1265,14 +1265,14 @@
    "rmp_pct": 34.5
   },
   "MACS": {
-   "gpa_matched": 19,
-   "names": 25,
-   "gpa_pct": 76.0,
-   "primary_matched": 19,
-   "primary_names": 25,
-   "primary_gpa_pct": 76.0,
+   "gpa_matched": 18,
+   "names": 24,
+   "gpa_pct": 75.0,
+   "primary_matched": 18,
+   "primary_names": 24,
+   "primary_gpa_pct": 75.0,
    "rmp_matched": 9,
-   "rmp_pct": 36.0
+   "rmp_pct": 37.5
   },
   "MATH": {
    "gpa_matched": 62,
@@ -1525,14 +1525,14 @@
    "rmp_pct": 0.0
   },
   "PORT": {
-   "gpa_matched": 4,
-   "names": 7,
-   "gpa_pct": 57.1,
-   "primary_matched": 4,
-   "primary_names": 7,
-   "primary_gpa_pct": 57.1,
-   "rmp_matched": 4,
-   "rmp_pct": 57.1
+   "gpa_matched": 5,
+   "names": 8,
+   "gpa_pct": 62.5,
+   "primary_matched": 5,
+   "primary_names": 8,
+   "primary_gpa_pct": 62.5,
+   "rmp_matched": 5,
+   "rmp_pct": 62.5
   },
   "PS": {
    "gpa_matched": 30,
@@ -1705,14 +1705,14 @@
    "rmp_pct": 48.0
   },
   "SOCW": {
-   "gpa_matched": 53,
-   "names": 69,
-   "gpa_pct": 76.8,
-   "primary_matched": 52,
-   "primary_names": 68,
-   "primary_gpa_pct": 76.5,
+   "gpa_matched": 54,
+   "names": 70,
+   "gpa_pct": 77.1,
+   "primary_matched": 53,
+   "primary_names": 69,
+   "primary_gpa_pct": 76.8,
    "rmp_matched": 29,
-   "rmp_pct": 42.0
+   "rmp_pct": 41.4
   },
   "SPAN": {
    "gpa_matched": 23,
@@ -1896,7 +1896,7 @@
   }
  },
  "repo_url": "https://github.com/kamransingri/illini-scheduler",
- "n_courses": 7129,
+ "n_courses": 7131,
  "history_terms": [
   "2022-fa",
   "2023-sp",
