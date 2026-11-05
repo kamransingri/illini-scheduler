@@ -404,7 +404,6 @@ course-explorer,"Fazli Salehi, A",BADM,322,2026-fa,no candidate
 course-explorer,"Shin, B",BADM,323,2026-fa,no candidate
 course-explorer,"Guo, Q",BADM,325,2026-fa,no candidate
 course-explorer,"Kaushik, M",BADM,350,2026-fa,no candidate
-course-explorer,"Sethi, S",BADM,365,2026-fa,"ambiguous: Sethi, Simrun S; Sethi, Suresh"
 course-explorer,"Chung, D",BADM,449,2026-fa,no candidate
 course-explorer,"Shin, G",BADM,449,2027-sp,no candidate
 course-explorer,"Yao, F",BADM,449,2026-fa,no candidate
@@ -1261,6 +1260,9 @@ course-explorer,"Schneirov, B",ECON,202,2026-fa,no candidate
 course-explorer,"Barton, G",ECON,203,2026-fa,no candidate
 course-explorer,"Narayanaswamy, K",ECON,203,2026-fa,no candidate
 course-explorer,"Mo, T",ECON,210,2026-fa,no candidate
+course-explorer,"Benete Reis De Oliveira Neto, S",ECON,302,2026-fa,no candidate
+course-explorer,"Hassani, V",ECON,302,2026-fa,no candidate
+course-explorer,"Shadram, V",ECON,302,2026-fa,no candidate
 course-explorer,"Yuwen, R",ECON,501,2026-fa,no candidate
 course-explorer,"King, H",ECON,530,2026-fa,no candidate
 course-explorer,"Alian, Z",ECON,531,2026-fa,no candidate
@@ -1326,6 +1328,7 @@ course-explorer,"Deshpande, A",ENGL,285,2026-fa,no candidate
 course-explorer,"Velez, E",ENGL,378,2026-fa,no candidate
 course-explorer,"Ruiz, S",ENGL,495,2026-fa,no candidate
 course-explorer,"Smith, B",ENGL,495,2026-fa,4 global candidates
+course-explorer,"Hines, C",ENGL,584,2027-sp,no candidate
 course-explorer,"Elg, D",ENVS,101,2027-sp,no candidate
 course-explorer,"Mo, T",ENVS,210,2026-fa,no candidate
 course-explorer,"Anderson, N",ENVS,420,2027-sp,2 global candidates
@@ -1355,6 +1358,7 @@ course-explorer,"Shui, B",EPOL,483,2026-fa,no candidate
 course-explorer,"Saini, A",EPOL,486,2026-fa,no candidate
 course-explorer,"Verschueren, C",EPOL,490,2027-sp,no candidate
 course-explorer,"Ndumila, B",EPOL,520,2026-fa,no candidate
+course-explorer,"Ng, K",EPOL,522,2026-fa,no candidate
 course-explorer,"Witt, A",EPOL,522,2026-fa,no candidate
 course-explorer,"Baroutian, A",EPOL,523,2026-fa,no candidate
 course-explorer,"Muga, M",EPOL,523,2026-fa,no candidate
@@ -1844,14 +1848,13 @@ course-explorer,"Jehn, J",IB,203,2026-fa,no candidate
 course-explorer,"Lara, M",IB,203,2026-fa,no candidate
 course-explorer,"Wayman, T",IB,203,2026-fa,no candidate
 course-explorer,"Weber, A",IB,203,2026-fa,no candidate
-course-explorer,"Alvey, A",IB,204,2026-fa,no candidate
-course-explorer,"Kaushik, A",IB,204,2026-fa,no candidate
-course-explorer,"Li, J",IB,204,2026-fa,6 global candidates
-course-explorer,"Miller, T",IB,204,2026-fa,3 global candidates
+course-explorer,"Karl, K",IB,204,2026-fa,no candidate
+course-explorer,"Kaur, S",IB,204,2026-fa,no candidate
 course-explorer,"Prayugo, V",IB,204,2026-fa,no candidate
+course-explorer,"Sharma, S",IB,204,2026-fa,no candidate
+course-explorer,"Taylor, E",IB,204,2026-fa,3 global candidates
 course-explorer,"Marks, R",IB,270,2026-fa,no candidate
 course-explorer,"Kwafo, T",IB,299,2026-fa,no candidate
-course-explorer,"Taylor, E",IB,299,2026-fa,3 global candidates
 course-explorer,"Pegan, T",IB,302,2027-sp,no candidate
 course-explorer,"Cedeno Soto, K",IB,303,2026-fa,no candidate
 course-explorer,"Dorman, W",IB,348,2026-fa,no candidate
@@ -1870,7 +1873,6 @@ course-explorer,"Farrar, V",IB,426,2026-fa,no candidate
 course-explorer,"Ludden, C",IB,435,2027-sp,no candidate
 course-explorer,"Rana, S",IB,452,2026-fa,no candidate
 course-explorer,"Gulson, E",IB,461,2027-sp,no candidate
-course-explorer,"Karl, K",IB,464,2027-sp,no candidate
 course-explorer,"Goodman, A",IB,496,2027-sp,no candidate
 course-explorer,"Heads, S",IB,496,2027-sp,no candidate
 course-explorer,"Minnaert-Grote, J",IB,496,2027-sp,no candidate
@@ -2312,10 +2314,10 @@ course-explorer,"Shutenko, E",LING,225,2026-fa,no candidate
 course-explorer,"Lemke, C",LING,250,2026-fa,no candidate
 course-explorer,"Rajabi, M",LING,270,2026-fa,no candidate
 course-explorer,"Huang, K",LING,300,2026-fa,2 global candidates
-course-explorer,"Sand, E",LING,301,2026-fa,no candidate
 course-explorer,"Taram, M",LING,301,2026-fa,no candidate
 course-explorer,"Colon, I",LING,321,2026-fa,no candidate
 course-explorer,"Wirbicki, P",LING,321,2026-fa,no candidate
+course-explorer,"Sand, E",LING,400,2026-fa,no candidate
 course-explorer,"Stephanov, A",LING,401,2026-fa,no candidate
 course-explorer,"Yeung, D",LING,402,2026-fa,no candidate
 course-explorer,"Zhang, S",LING,406,2026-fa,4 global candidates
@@ -2496,6 +2498,7 @@ course-explorer,"Stepanov, A",MATH,464,2026-fa,2 global candidates
 course-explorer,"Viswanathan, M",MATH,475,2026-fa,2 global candidates
 course-explorer,"Basu, A",MATH,482,2026-fa,2 global candidates
 course-explorer,"Balogh, J",MATH,580,2026-fa,no candidate
+course-explorer,"Henyon, H",MBA,553,2026-fa,no candidate
 course-explorer,"Park, Y",MBA,563,2026-fa,6 global candidates
 course-explorer,"Bradley, J",MBA,590,2027-sp,2 global candidates
 course-explorer,"Russ, M",MBA,597,2026-fa,no candidate
@@ -3285,6 +3288,7 @@ course-explorer,"Venegas, J",PSYC,311,2026-fa,no candidate
 course-explorer,"Legare, T",PSYC,329,2027-sp,no candidate
 course-explorer,"Murphy, E",PSYC,332,2026-fa,2 global candidates
 course-explorer,"Teel, S",PSYC,332,2026-fa,no candidate
+course-explorer,"Sankar, H",PSYC,334,2026-fa,no candidate
 course-explorer,"Kunstman, B",PSYC,340,2026-fa,no candidate
 course-explorer,"Rivas, D",PSYC,340,2026-fa,no candidate
 course-explorer,"Blanden, K",PSYC,345,2026-fa,no candidate
