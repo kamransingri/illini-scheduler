@@ -115,3 +115,23 @@ export function cisUrl(term: string, subject: string, number: string, crn?: stri
 }
 
 export const SELF_SERVICE_URL = "https://banner.apps.uillinois.edu/StudentRegistrationSSB/";
+
+/** "today", "yesterday", "3 days ago", or a date. */
+export function fmtAgo(iso: string | null | undefined, now: Date = new Date()): string {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  const days = Math.floor((now.getTime() - d.getTime()) / 86400000);
+  if (days <= 0) return "today";
+  if (days === 1) return "yesterday";
+  if (days < 7) return `${days} days ago`;
+  return fmtDate(iso);
+}
+
+/** Opened / closed / changed, in words. */
+export function seatVerb(oldStatus: string, newStatus: string): "opened" | "closed" | "changed" {
+  const open = (x: string) => x.toLowerCase().includes("open");
+  if (open(newStatus) && !open(oldStatus)) return "opened";
+  if (newStatus.toLowerCase().includes("closed")) return "closed";
+  return "changed";
+}

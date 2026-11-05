@@ -30,6 +30,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <span className="sm:hidden">Gen-eds</span>
               <span className="hidden sm:inline">Gen-ed finder</span>
             </Link>
+            <Link href="/opened/" className="hidden text-sm whitespace-nowrap hover:underline sm:inline">
+              Just opened
+            </Link>
             <Link href="/schedule/" className="text-sm whitespace-nowrap hover:underline">
               Schedule<span className="hidden sm:inline"> builder</span>
               <CartCount />

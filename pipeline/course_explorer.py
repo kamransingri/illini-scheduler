@@ -545,6 +545,10 @@ def store(
             for c in courses
         ],
     )
+    return insert_sections(conn, term, sections)
+
+
+def insert_sections(conn: sqlite3.Connection, term: str, sections: Iterable[Section]) -> int:
     n = 0
     for s in sections:
         m0 = next((m for m in s.meetings if m.type == s.type), s.meetings[0] if s.meetings else None)

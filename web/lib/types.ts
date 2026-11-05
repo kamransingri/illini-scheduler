@@ -22,6 +22,7 @@ export type Section = {
   instructors_raw: string[];
   special: string; // non-empty = looks restricted / special-program (reason)
   status_at?: string; // when this section's status was read
+  status_since?: string; // when it last changed to this status ("" = unknown)
 };
 
 export type TermBlock = {
@@ -91,6 +92,8 @@ export type Instructor = {
 
 export type Change = { term: string; field: string; summary: string };
 
+export type SeatEvent = { term: string; at: string; crn: string; s: string; n: string; code: string; old: string; new: string; t?: string };
+
 export type Course = {
   subject: string;
   number: string;
@@ -113,6 +116,7 @@ export type Course = {
   biggest_change: Change | null;
   exam_course: ExamProfile | null;
   notes: { instructor: string; term: string; text: string; source: string }[];
+  seat_events?: SeatEvent[];
 };
 
 export type SearchCourse = { s: string; n: string; t: string; c: string; g: string[]; gpa: number | null; nx: number; cu: number };
