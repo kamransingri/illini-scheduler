@@ -78,15 +78,19 @@ jobs:
           print("Lighthouse median:", med)
           sys.exit(0 if med["performance"] >= 0.80 and med["accessibility"] >= 0.90 else 1)
           PY
-      - name: Commit refreshed data summaries (only after tests pass)
+      - name: Commit refreshed data summaries (only after tests pass; never blocks the deploy)
         if: github.event_name != 'pull_request'
+        continue-on-error: true
         run: |
           mkdir -p data/snapshot
           cp web/public/data/meta.json data/snapshot/meta.json
           git config user.name "illini-scheduler-bot"
           git config user.email "actions@users.noreply.github.com"
           git add data/unmatched.csv data/snapshot/meta.json
-          git diff --cached --quiet || (git commit -m "data: nightly refresh $(date -u +%F)" && git push)
+          git diff --cached --quiet && exit 0
+          git commit -m "data: nightly refresh $(date -u +%F)"
+          for i in 1 2 3; do git pull --rebase -q origin main && git push && exit 0; sleep 5; done
+          exit 1
       - uses: actions/upload-pages-artifact@v5
         with: { path: web/out }
 
