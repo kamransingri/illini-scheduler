@@ -303,3 +303,6 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D12.5 CI hygiene.** Actions moved to their current majors (checkout/setup-python/setup-node v7, cache v6,
   upload-pages-artifact/deploy-pages v5), runners pinned to `ubuntu-24.04`, `next lint` replaced by the ESLint CLI,
   and the build runs Lighthouse on a course page (fails below performance 0.80 or accessibility 0.90).
+- **D12.6 Lighthouse in CI uses the median of 3 runs.** The first gated build scored performance 0.76 on GitHub's
+  runner; locally the same page scored 0.89 and 0.99 on back-to-back runs, with only total blocking time moving
+  (shared-CPU noise). Thresholds are unchanged.
