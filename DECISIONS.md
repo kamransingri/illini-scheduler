@@ -306,3 +306,5 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D12.6 Lighthouse in CI uses the median of 3 runs.** The first gated build scored performance 0.76 on GitHub's
   runner; locally the same page scored 0.89 and 0.99 on back-to-back runs, with only total blocking time moving
   (shared-CPU noise). Thresholds are unchanged.
+- **D12.7 The data-summary commit can't block a deploy.** A run failed because main moved while it ran and its push
+  was rejected. The step now rebases and retries 3 times and is `continue-on-error`.
