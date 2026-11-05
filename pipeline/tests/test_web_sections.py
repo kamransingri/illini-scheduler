@@ -62,3 +62,18 @@ def test_apply_web_rows_replaces_mirror_sections(tmp_path, monkeypatch):
         "Brand New Course"
     link = conn.execute("SELECT component, link_group FROM sections WHERE crn='74481'").fetchone()
     assert link[0] == "LBD"
+
+
+def test_co_instructors_are_separate_names():
+    page = parse_course_page((FIXTURES / "course-explorer-web" / "2027-sp_ABE228.html").read_bytes())
+    names = {n for sec in page["sections"] for m in sec["meetings"] for n in m["instructors"]}
+    assert {"Choi, Y", "Lee, S", "Malvandi, A"} <= names
+    assert not any(n.count(",") > 1 for n in names)
+
+
+def test_split_names_repairs_merged_strings():
+    assert availability.split_names(["Choi, Y Lee, S Malvandi, A"]) == ["Choi, Y", "Lee, S", "Malvandi, A"]
+    assert availability.split_names(["Augusto Sampaio Franco de Lima, G Evans, M"]) == \
+        ["Augusto Sampaio Franco de Lima, G", "Evans, M"]
+    assert availability.split_names(["Challen, G"]) == ["Challen, G"]
+    assert availability.split_names(["Vishnukumar Sarmini, s"]) == ["Vishnukumar Sarmini, s"]
