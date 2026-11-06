@@ -173,6 +173,7 @@ course-explorer,"Gaskins, R",ANSC,398,2027-sp,no candidate
 course-explorer,"Knox, R",ANSC,398,2027-sp,no candidate
 course-explorer,"Mosley, J",ANSC,398,2026-fa,no candidate
 course-explorer,"McClellan, K",ANSC,403,2027-sp,no candidate
+course-explorer,"Guthrie, K",ANSC,409,2027-sp,no candidate
 course-explorer,"Cardoso, P",ANSC,420,2026-fa,no candidate
 course-explorer,"Winful, T",ANSC,441,2026-fa,no candidate
 course-explorer,"Sunderland, G",ANSC,444,2026-fa,no candidate
@@ -1287,7 +1288,6 @@ course-explorer,"Hadjor, R",EDUC,201,2026-fa,no candidate
 course-explorer,"Iva, I",EDUC,201,2026-fa,no candidate
 course-explorer,"Lee, S",EDUC,201,2026-fa,16 global candidates
 course-explorer,"Smith, D",EDUC,201,2026-fa,6 global candidates
-course-explorer,"Jones, A",EDUC,202,2027-sp,3 global candidates
 course-explorer,"Sultana, N",EDUC,202,2026-fa,no candidate
 course-explorer,"Liu, W",EDUC,499,2026-fa,3 global candidates
 course-explorer,"Witt, A",EDUC,499,2026-fa,no candidate
@@ -1483,7 +1483,6 @@ course-explorer,"Rodriguez, L",ETMA,452,2027-sp,2 global candidates
 course-explorer,"Shajahan, S",ETMA,467,2027-sp,no candidate
 course-explorer,"Jacobson, B",ETMA,499,2026-fa,no candidate
 course-explorer,"Lecher, T",ETMA,499,2026-fa,no candidate
-course-explorer,"Smith, A",EURO,500,2027-sp,5 global candidates
 course-explorer,"Karakas Keles, H",EURO,501,2026-fa,no candidate
 course-explorer,"Liszka, M",EXP,101,2026-fa,no candidate
 course-explorer,"Pritchard, B",EXP,101,2026-fa,no candidate
@@ -1729,7 +1728,6 @@ course-explorer,"Li, Y",HIST,520,2027-sp,11 global candidates
 course-explorer,"Barnhart, M",HK,100,2026-fa,no candidate
 course-explorer,"Bieda, L",HK,100,2027-sp,no candidate
 course-explorer,"Butt, Z",HK,100,2026-fa,no candidate
-course-explorer,"Dabirian, N",HK,100,2027-sp,no candidate
 course-explorer,"Fakhari Najafabadi, M",HK,100,2026-fa,no candidate
 course-explorer,"Hammonds, A",HK,100,2026-fa,no candidate
 course-explorer,"Pauly, S",HK,101,2026-fa,no candidate
@@ -2259,6 +2257,7 @@ course-explorer,"Szajna, R",LAW,692,2026-fa,no candidate
 course-explorer,"Aronson, L",LAW,693,2026-fa,no candidate
 course-explorer,"Curtis, Y",LAW,693,2026-fa,no candidate
 course-explorer,"Frydman, M",LAW,693,2026-fa,no candidate
+course-explorer,"Mendez, F",LAW,693,2027-sp,no candidate
 course-explorer,"Shapiro, L",LAW,693,2026-fa,no candidate
 course-explorer,"Daly, P",LAW,694,2027-sp,no candidate
 course-explorer,"Ghiotto, T",LAW,694,2026-fa,no candidate
@@ -2267,9 +2266,12 @@ course-explorer,"Agallianos, P",LAW,696,2026-fa,no candidate
 course-explorer,"Boley, A",LAW,696,2026-fa,no candidate
 course-explorer,"Bernier, B",LAW,792,2026-fa,no candidate
 course-explorer,"Cox, K",LAW,792,2027-sp,no candidate
+course-explorer,"Drake, H",LAW,792,2027-sp,no candidate
 course-explorer,"Loch, M",LAW,792,2026-fa,no candidate
 course-explorer,"McNamarah, C",LAW,792,2026-fa,no candidate
 course-explorer,"Miarecki, G",LAW,792,2027-sp,no candidate
+course-explorer,"Rosenberg, S",LAW,792,2027-sp,no candidate
+course-explorer,"Safran, D",LAW,792,2027-sp,no candidate
 course-explorer,"Thomas, J",LAW,792,2026-fa,4 global candidates
 course-explorer,"Watson, B",LAW,792,2026-fa,no candidate
 course-explorer,"Hopp, T",LAW,793,2027-sp,no candidate
@@ -3687,7 +3689,6 @@ course-explorer,"Martins, F",VCM,592,2026-fa,no candidate
 course-explorer,"Rosser, M",VCM,592,2026-fa,no candidate
 course-explorer,"Ashkin, M",VCM,593,2027-sp,no candidate
 course-explorer,"French, D",VCM,614,2026-fa,no candidate
-course-explorer,"Hague, D",VCM,628,2027-sp,no candidate
 course-explorer,"Pavlovsky, G",VCM,628,2027-sp,no candidate
 course-explorer,"Fisher-Cronkhite, L",VCM,630,2026-fa,no candidate
 course-explorer,"McCoy, A",VCM,643,2026-fa,no candidate
@@ -3703,6 +3704,8 @@ course-explorer,"Lewis, S",VCM,682,2026-fa,no candidate
 course-explorer,"Marrow, J",VCM,682,2026-fa,no candidate
 course-explorer,"Sosa Higareda, M",VCM,682,2026-fa,no candidate
 course-explorer,"Frederico Canisso, I",VCM,694,2026-fa,no candidate
+course-explorer,"Hague, D",VCM,694,2027-sp,no candidate
+course-explorer,"Peters, R",VCM,694,2027-sp,no candidate
 course-explorer,"Podico, G",VCM,694,2026-fa,no candidate
 course-explorer,"Allison, S",VM,601,2026-fa,no candidate
 course-explorer,"Elston, C",VM,601,2026-fa,no candidate
