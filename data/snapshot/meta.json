@@ -1,17 +1,17 @@
 {
- "built_at": "2026-11-07T15:31:00+00:00",
+ "built_at": "2026-11-08T15:52:09+00:00",
  "current_term": "2026-fa",
  "next_term": "2027-sp",
  "terms": {
   "2026-fa": {
    "label": "Fall 2026",
    "source": "course-explorer-web + web availability",
-   "checked_at": "2026-11-07T13:44:36+00:00"
+   "checked_at": "2026-11-08T14:04:29+00:00"
   },
   "2027-sp": {
    "label": "Spring 2027",
    "source": "course-explorer-web + web availability",
-   "checked_at": "2026-11-07T12:23:21+00:00"
+   "checked_at": "2026-11-08T12:39:41+00:00"
   }
  },
  "gpa": {
