@@ -1,17 +1,17 @@
 {
- "built_at": "2026-11-09T19:36:04+00:00",
+ "built_at": "2026-11-10T16:51:59+00:00",
  "current_term": "2026-fa",
  "next_term": "2027-sp",
  "terms": {
   "2026-fa": {
    "label": "Fall 2026",
    "source": "course-explorer-web + web availability",
-   "checked_at": "2026-11-09T15:35:20+00:00"
+   "checked_at": "2026-11-10T15:27:30+00:00"
   },
   "2027-sp": {
    "label": "Spring 2027",
    "source": "course-explorer-web + web availability",
-   "checked_at": "2026-11-09T14:13:12+00:00"
+   "checked_at": "2026-11-10T14:02:43+00:00"
   }
  },
  "gpa": {
@@ -35,14 +35,14 @@
  "rmp_status": "ok",
  "match_report": {
   "AAS": {
-   "gpa_matched": 16,
-   "names": 21,
-   "gpa_pct": 76.2,
-   "primary_matched": 11,
-   "primary_names": 16,
-   "primary_gpa_pct": 68.8,
+   "gpa_matched": 17,
+   "names": 22,
+   "gpa_pct": 77.3,
+   "primary_matched": 12,
+   "primary_names": 17,
+   "primary_gpa_pct": 70.6,
    "rmp_matched": 9,
-   "rmp_pct": 42.9
+   "rmp_pct": 40.9
   },
   "ABE": {
    "gpa_matched": 13,
@@ -195,14 +195,14 @@
    "rmp_pct": 39.7
   },
   "ANTH": {
-   "gpa_matched": 30,
-   "names": 46,
-   "gpa_pct": 65.2,
-   "primary_matched": 30,
-   "primary_names": 45,
-   "primary_gpa_pct": 66.7,
+   "gpa_matched": 31,
+   "names": 47,
+   "gpa_pct": 66.0,
+   "primary_matched": 31,
+   "primary_names": 46,
+   "primary_gpa_pct": 67.4,
    "rmp_matched": 23,
-   "rmp_pct": 50.0
+   "rmp_pct": 48.9
   },
   "ARAB": {
    "gpa_matched": 1,
@@ -655,14 +655,14 @@
    "rmp_pct": 0.0
   },
   "EALC": {
-   "gpa_matched": 18,
-   "names": 25,
-   "gpa_pct": 72.0,
-   "primary_matched": 13,
-   "primary_names": 18,
-   "primary_gpa_pct": 72.2,
+   "gpa_matched": 19,
+   "names": 26,
+   "gpa_pct": 73.1,
+   "primary_matched": 14,
+   "primary_names": 19,
+   "primary_gpa_pct": 73.7,
    "rmp_matched": 15,
-   "rmp_pct": 60.0
+   "rmp_pct": 57.7
   },
   "ECE": {
    "gpa_matched": 98,
@@ -995,14 +995,14 @@
    "rmp_pct": 25.0
   },
   "HDFS": {
-   "gpa_matched": 26,
-   "names": 39,
-   "gpa_pct": 66.7,
-   "primary_matched": 26,
-   "primary_names": 39,
-   "primary_gpa_pct": 66.7,
+   "gpa_matched": 27,
+   "names": 40,
+   "gpa_pct": 67.5,
+   "primary_matched": 27,
+   "primary_names": 40,
+   "primary_gpa_pct": 67.5,
    "rmp_matched": 13,
-   "rmp_pct": 33.3
+   "rmp_pct": 32.5
   },
   "HEBR": {
    "gpa_matched": 0,
@@ -1206,13 +1206,13 @@
   },
   "LAW": {
    "gpa_matched": 49,
-   "names": 91,
-   "gpa_pct": 53.8,
+   "names": 92,
+   "gpa_pct": 53.3,
    "primary_matched": 49,
-   "primary_names": 91,
-   "primary_gpa_pct": 53.8,
+   "primary_names": 92,
+   "primary_gpa_pct": 53.3,
    "rmp_matched": 10,
-   "rmp_pct": 11.0
+   "rmp_pct": 10.9
   },
   "LCTL": {
    "gpa_matched": 0,
@@ -1735,14 +1735,14 @@
    "rmp_pct": 41.7
   },
   "STAT": {
-   "gpa_matched": 29,
-   "names": 37,
-   "gpa_pct": 78.4,
-   "primary_matched": 29,
-   "primary_names": 37,
-   "primary_gpa_pct": 78.4,
-   "rmp_matched": 23,
-   "rmp_pct": 62.2
+   "gpa_matched": 30,
+   "names": 38,
+   "gpa_pct": 78.9,
+   "primary_matched": 30,
+   "primary_names": 38,
+   "primary_gpa_pct": 78.9,
+   "rmp_matched": 24,
+   "rmp_pct": 63.2
   },
   "SWAH": {
    "gpa_matched": 1,
@@ -1896,7 +1896,7 @@
   }
  },
  "repo_url": "https://github.com/kamransingri/illini-scheduler",
- "n_courses": 7131,
+ "n_courses": 7133,
  "history_terms": [
   "2022-fa",
   "2023-sp",
