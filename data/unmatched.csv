@@ -1086,9 +1086,12 @@ course-explorer,"Giugni, A",CW,100,2026-fa,no candidate
 course-explorer,"Johnson, C",CW,100,2026-fa,3 global candidates
 course-explorer,"Simon, Z",CW,100,2026-fa,no candidate
 course-explorer,"Sturvist, D",CW,104,2026-fa,no candidate
+course-explorer,"Towner, D",CW,104,2027-sp,no candidate
 course-explorer,"O'Sullivan, M",CW,106,2026-fa,no candidate
 course-explorer,"Quintero, J",CW,106,2026-fa,no candidate
+course-explorer,"Vens, J",CW,106,2027-sp,no candidate
 course-explorer,"McVeigh, M",CW,200,2026-fa,no candidate
+course-explorer,"Metz, N",CW,200,2027-sp,no candidate
 course-explorer,"McGilligan, C",CW,204,2026-fa,no candidate
 course-explorer,"Kempf, C",CW,208,2026-fa,no candidate
 course-explorer,"Chan, M",CW,406,2026-fa,no candidate
@@ -1311,15 +1314,19 @@ course-explorer,"Grenda, P",ENG,573,2026-fa,no candidate
 course-explorer,"Lewis, C",ENG,591,2026-fa,2 global candidates
 course-explorer,"Geiger, A",ENG,598,2027-sp,no candidate
 course-explorer,"Rivera Lopez, M",ENGL,104,2026-fa,no candidate
+course-explorer,"Belland, M",ENGL,109,2027-sp,no candidate
 course-explorer,"Paschal, A",ENGL,109,2026-fa,no candidate
 course-explorer,"Patel, V",ENGL,109,2026-fa,no candidate
 course-explorer,"Truong, E",ENGL,109,2026-fa,no candidate
 course-explorer,"Irmisch, E",ENGL,115,2026-fa,no candidate
+course-explorer,"Cloutier, S",ENGL,116,2027-sp,no candidate
 course-explorer,"Mier, L",ENGL,121,2026-fa,no candidate
+course-explorer,"Lee, J",ENGL,122,2027-sp,"ambiguous: Lee, Jean Y; Lee, Jennifer A"
 course-explorer,"Riley, J",ENGL,150,2027-sp,no candidate
 course-explorer,"Loughran, T",ENGL,200,2026-fa,no candidate
 course-explorer,"Kusi, D",ENGL,207,2027-sp,no candidate
 course-explorer,"Mendoza, E",ENGL,209,2026-fa,no candidate
+course-explorer,"Ray, K",ENGL,255,2027-sp,no candidate
 course-explorer,"Streitmatter, O",ENGL,255,2026-fa,no candidate
 course-explorer,"Johnson, L",ENGL,266,2027-sp,2 global candidates
 course-explorer,"Madye, M",ENGL,266,2026-fa,no candidate
@@ -2621,6 +2628,7 @@ course-explorer,"Wang, L",MCB,561,2026-fa,3 global candidates
 course-explorer,"Yoo, D",MCB,561,2026-fa,no candidate
 course-explorer,"Arner, C",MDIA,103,2027-sp,no candidate
 course-explorer,"Su, L",MDIA,571,2026-fa,2 global candidates
+course-explorer,"Lee, J",MDVL,122,2027-sp,17 global candidates
 course-explorer,"Chiarantini, L",MDVL,240,2026-fa,no candidate
 course-explorer,"Craig, K",MDVL,247,2026-fa,2 global candidates
 course-explorer,"Guthrie, M",MDVL,251,2026-fa,no candidate
@@ -3334,9 +3342,12 @@ course-explorer,"Bergmark, S",RHET,105,2026-fa,no candidate
 course-explorer,"Bjork II, J",RHET,105,2026-fa,no candidate
 course-explorer,"Castaneda, C",RHET,105,2026-fa,2 global candidates
 course-explorer,"Cloutier, S",RHET,105,2026-fa,no candidate
+course-explorer,"Deshpande, A",RHET,105,2027-sp,no candidate
 course-explorer,"Downey, S",RHET,105,2026-fa,2 global candidates
+course-explorer,"Flanagan, R",RHET,105,2027-sp,no candidate
 course-explorer,"Freeman, A",RHET,105,2026-fa,no candidate
 course-explorer,"Gaisie, F",RHET,105,2026-fa,no candidate
+course-explorer,"Giugni, A",RHET,105,2027-sp,no candidate
 course-explorer,"Infante, M",RHET,105,2026-fa,no candidate
 course-explorer,"Johnson, A",RHET,105,2026-fa,4 global candidates
 course-explorer,"Johnson, C",RHET,105,2026-fa,3 global candidates
@@ -3344,6 +3355,7 @@ course-explorer,"Khepra, N",RHET,105,2026-fa,no candidate
 course-explorer,"Lamy, M",RHET,105,2026-fa,no candidate
 course-explorer,"Maity, M",RHET,105,2026-fa,no candidate
 course-explorer,"McGilligan, C",RHET,105,2026-fa,no candidate
+course-explorer,"McVeigh, M",RHET,105,2027-sp,no candidate
 course-explorer,"Mier, L",RHET,105,2026-fa,no candidate
 course-explorer,"Miller, A",RHET,105,2026-fa,5 global candidates
 course-explorer,"Navas, R",RHET,105,2026-fa,no candidate
@@ -3443,7 +3455,9 @@ course-explorer,"Ramchal, M",SOCW,296,2026-fa,no candidate
 course-explorer,"Perepa, E",SOCW,402,2027-sp,no candidate
 course-explorer,"Zarate, E",SOCW,410,2026-fa,no candidate
 course-explorer,"Liu, W",SOCW,427,2027-sp,3 global candidates
+course-explorer,"Craft, L",SOCW,470,2027-sp,no candidate
 course-explorer,"Smith, L",SOCW,470,2026-fa,3 global candidates
+course-explorer,"Horton, D",SOCW,500,2027-sp,no candidate
 course-explorer,"Brewer, K",SOCW,503,2027-sp,no candidate
 course-explorer,"Graham, P",SOCW,507,2027-sp,no candidate
 course-explorer,"Roberts, D",SOCW,515,2027-sp,no candidate
