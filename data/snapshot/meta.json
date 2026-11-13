@@ -1,17 +1,17 @@
 {
- "built_at": "2026-11-12T17:26:00+00:00",
+ "built_at": "2026-11-13T17:00:59+00:00",
  "current_term": "2026-fa",
  "next_term": "2027-sp",
  "terms": {
   "2026-fa": {
    "label": "Fall 2026",
    "source": "course-explorer-web + web availability",
-   "checked_at": "2026-11-12T15:25:42+00:00"
+   "checked_at": "2026-11-13T14:54:12+00:00"
   },
   "2027-sp": {
    "label": "Spring 2027",
    "source": "course-explorer-web + web availability",
-   "checked_at": "2026-11-12T14:03:03+00:00"
+   "checked_at": "2026-11-13T13:32:28+00:00"
   }
  },
  "gpa": {
@@ -256,13 +256,13 @@
   },
   "ARTF": {
    "gpa_matched": 3,
-   "names": 9,
-   "gpa_pct": 33.3,
+   "names": 10,
+   "gpa_pct": 30.0,
    "primary_matched": 3,
-   "primary_names": 9,
-   "primary_gpa_pct": 33.3,
+   "primary_names": 10,
+   "primary_gpa_pct": 30.0,
    "rmp_matched": 3,
-   "rmp_pct": 33.3
+   "rmp_pct": 30.0
   },
   "ARTH": {
    "gpa_matched": 7,
@@ -445,14 +445,14 @@
    "rmp_pct": 0.0
   },
   "BUS": {
-   "gpa_matched": 16,
-   "names": 24,
-   "gpa_pct": 66.7,
-   "primary_matched": 16,
-   "primary_names": 24,
-   "primary_gpa_pct": 66.7,
-   "rmp_matched": 11,
-   "rmp_pct": 45.8
+   "gpa_matched": 15,
+   "names": 22,
+   "gpa_pct": 68.2,
+   "primary_matched": 15,
+   "primary_names": 22,
+   "primary_gpa_pct": 68.2,
+   "rmp_matched": 9,
+   "rmp_pct": 40.9
   },
   "CB": {
    "gpa_matched": 0,
@@ -855,14 +855,14 @@
    "rmp_pct": 0.0
   },
   "FAA": {
-   "gpa_matched": 12,
-   "names": 25,
-   "gpa_pct": 48.0,
-   "primary_matched": 12,
-   "primary_names": 25,
-   "primary_gpa_pct": 48.0,
-   "rmp_matched": 9,
-   "rmp_pct": 36.0
+   "gpa_matched": 13,
+   "names": 26,
+   "gpa_pct": 50.0,
+   "primary_matched": 13,
+   "primary_names": 26,
+   "primary_gpa_pct": 50.0,
+   "rmp_matched": 10,
+   "rmp_pct": 38.5
   },
   "FIN": {
    "gpa_matched": 39,
@@ -885,14 +885,14 @@
    "rmp_pct": 82.4
   },
   "FSHN": {
-   "gpa_matched": 31,
-   "names": 39,
-   "gpa_pct": 79.5,
-   "primary_matched": 31,
-   "primary_names": 39,
-   "primary_gpa_pct": 79.5,
+   "gpa_matched": 32,
+   "names": 40,
+   "gpa_pct": 80.0,
+   "primary_matched": 32,
+   "primary_names": 40,
+   "primary_gpa_pct": 80.0,
    "rmp_matched": 11,
-   "rmp_pct": 28.2
+   "rmp_pct": 27.5
   },
   "GC": {
    "gpa_matched": 2,
@@ -1075,14 +1075,14 @@
    "rmp_pct": 66.7
   },
   "IB": {
-   "gpa_matched": 28,
-   "names": 56,
-   "gpa_pct": 50.0,
-   "primary_matched": 25,
-   "primary_names": 46,
-   "primary_gpa_pct": 54.3,
+   "gpa_matched": 29,
+   "names": 57,
+   "gpa_pct": 50.9,
+   "primary_matched": 26,
+   "primary_names": 47,
+   "primary_gpa_pct": 55.3,
    "rmp_matched": 18,
-   "rmp_pct": 32.1
+   "rmp_pct": 31.6
   },
   "IE": {
    "gpa_matched": 24,
@@ -1175,14 +1175,14 @@
    "rmp_pct": 38.9
   },
   "LAS": {
-   "gpa_matched": 11,
-   "names": 18,
-   "gpa_pct": 61.1,
+   "gpa_matched": 12,
+   "names": 19,
+   "gpa_pct": 63.2,
    "primary_matched": 8,
    "primary_names": 13,
    "primary_gpa_pct": 61.5,
    "rmp_matched": 4,
-   "rmp_pct": 22.2
+   "rmp_pct": 21.1
   },
   "LAST": {
    "gpa_matched": 3,
@@ -1346,13 +1346,13 @@
   },
   "MILS": {
    "gpa_matched": 4,
-   "names": 9,
-   "gpa_pct": 44.4,
+   "names": 10,
+   "gpa_pct": 40.0,
    "primary_matched": 4,
-   "primary_names": 9,
-   "primary_gpa_pct": 44.4,
+   "primary_names": 10,
+   "primary_gpa_pct": 40.0,
    "rmp_matched": 1,
-   "rmp_pct": 11.1
+   "rmp_pct": 10.0
   },
   "MIP": {
    "gpa_matched": 18,
@@ -1595,14 +1595,14 @@
    "rmp_pct": 68.8
   },
   "RHET": {
-   "gpa_matched": 35,
-   "names": 69,
+   "gpa_matched": 36,
+   "names": 71,
    "gpa_pct": 50.7,
-   "primary_matched": 35,
-   "primary_names": 69,
+   "primary_matched": 36,
+   "primary_names": 71,
    "primary_gpa_pct": 50.7,
-   "rmp_matched": 25,
-   "rmp_pct": 36.2
+   "rmp_matched": 26,
+   "rmp_pct": 36.6
   },
   "RMLG": {
    "gpa_matched": 1,
@@ -1906,7 +1906,7 @@
   }
  },
  "repo_url": "https://github.com/kamransingri/illini-scheduler",
- "n_courses": 7136,
+ "n_courses": 7138,
  "history_terms": [
   "2022-fa",
   "2023-sp",
