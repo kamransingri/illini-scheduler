@@ -1,17 +1,17 @@
 {
- "built_at": "2026-11-13T17:00:59+00:00",
+ "built_at": "2026-11-14T15:38:57+00:00",
  "current_term": "2026-fa",
  "next_term": "2027-sp",
  "terms": {
   "2026-fa": {
    "label": "Fall 2026",
    "source": "course-explorer-web + web availability",
-   "checked_at": "2026-11-13T14:54:12+00:00"
+   "checked_at": "2026-11-14T14:09:16+00:00"
   },
   "2027-sp": {
    "label": "Spring 2027",
    "source": "course-explorer-web + web availability",
-   "checked_at": "2026-11-13T13:32:28+00:00"
+   "checked_at": "2026-11-14T12:47:30+00:00"
   }
  },
  "gpa": {
@@ -216,13 +216,13 @@
   },
   "ARCH": {
    "gpa_matched": 22,
-   "names": 36,
-   "gpa_pct": 61.1,
+   "names": 37,
+   "gpa_pct": 59.5,
    "primary_matched": 22,
-   "primary_names": 36,
-   "primary_gpa_pct": 61.1,
+   "primary_names": 37,
+   "primary_gpa_pct": 59.5,
    "rmp_matched": 12,
-   "rmp_pct": 33.3
+   "rmp_pct": 32.4
   },
   "ART": {
    "gpa_matched": 0,
@@ -506,13 +506,13 @@
   },
   "CHEM": {
    "gpa_matched": 54,
-   "names": 69,
-   "gpa_pct": 78.3,
+   "names": 68,
+   "gpa_pct": 79.4,
    "primary_matched": 54,
    "primary_names": 67,
    "primary_gpa_pct": 80.6,
    "rmp_matched": 34,
-   "rmp_pct": 49.3
+   "rmp_pct": 50.0
   },
   "CHIN": {
    "gpa_matched": 3,
@@ -596,13 +596,13 @@
   },
   "CS": {
    "gpa_matched": 133,
-   "names": 175,
-   "gpa_pct": 76.0,
+   "names": 173,
+   "gpa_pct": 76.9,
    "primary_matched": 133,
    "primary_names": 160,
    "primary_gpa_pct": 83.1,
    "rmp_matched": 85,
-   "rmp_pct": 48.6
+   "rmp_pct": 49.1
   },
   "CSE": {
    "gpa_matched": 16,
@@ -665,14 +665,14 @@
    "rmp_pct": 57.7
   },
   "ECE": {
-   "gpa_matched": 99,
-   "names": 117,
-   "gpa_pct": 84.6,
-   "primary_matched": 98,
-   "primary_names": 107,
-   "primary_gpa_pct": 91.6,
+   "gpa_matched": 98,
+   "names": 116,
+   "gpa_pct": 84.5,
+   "primary_matched": 97,
+   "primary_names": 106,
+   "primary_gpa_pct": 91.5,
    "rmp_matched": 66,
-   "rmp_pct": 56.4
+   "rmp_pct": 56.9
   },
   "ECON": {
    "gpa_matched": 34,
@@ -715,14 +715,14 @@
    "rmp_pct": 50.0
   },
   "ENG": {
-   "gpa_matched": 33,
-   "names": 44,
-   "gpa_pct": 75.0,
-   "primary_matched": 31,
-   "primary_names": 40,
-   "primary_gpa_pct": 77.5,
-   "rmp_matched": 19,
-   "rmp_pct": 43.2
+   "gpa_matched": 34,
+   "names": 46,
+   "gpa_pct": 73.9,
+   "primary_matched": 32,
+   "primary_names": 42,
+   "primary_gpa_pct": 76.2,
+   "rmp_matched": 20,
+   "rmp_pct": 43.5
   },
   "ENGL": {
    "gpa_matched": 52,
@@ -776,13 +776,13 @@
   },
   "EPSY": {
    "gpa_matched": 21,
-   "names": 30,
-   "gpa_pct": 70.0,
+   "names": 31,
+   "gpa_pct": 67.7,
    "primary_matched": 19,
    "primary_names": 28,
    "primary_gpa_pct": 67.9,
    "rmp_matched": 10,
-   "rmp_pct": 33.3
+   "rmp_pct": 32.3
   },
   "ERAM": {
    "gpa_matched": 7,
@@ -1156,13 +1156,13 @@
   },
   "KOR": {
    "gpa_matched": 2,
-   "names": 5,
-   "gpa_pct": 40.0,
+   "names": 6,
+   "gpa_pct": 33.3,
    "primary_matched": 2,
-   "primary_names": 5,
-   "primary_gpa_pct": 40.0,
+   "primary_names": 6,
+   "primary_gpa_pct": 33.3,
    "rmp_matched": 2,
-   "rmp_pct": 40.0
+   "rmp_pct": 33.3
   },
   "LA": {
    "gpa_matched": 11,
@@ -1175,14 +1175,14 @@
    "rmp_pct": 38.9
   },
   "LAS": {
-   "gpa_matched": 12,
-   "names": 19,
-   "gpa_pct": 63.2,
-   "primary_matched": 8,
-   "primary_names": 13,
-   "primary_gpa_pct": 61.5,
+   "gpa_matched": 11,
+   "names": 18,
+   "gpa_pct": 61.1,
+   "primary_matched": 7,
+   "primary_names": 12,
+   "primary_gpa_pct": 58.3,
    "rmp_matched": 4,
-   "rmp_pct": 21.1
+   "rmp_pct": 22.2
   },
   "LAST": {
    "gpa_matched": 3,
@@ -1205,14 +1205,14 @@
    "rmp_pct": 50.0
   },
   "LAW": {
-   "gpa_matched": 49,
-   "names": 92,
-   "gpa_pct": 53.3,
-   "primary_matched": 49,
-   "primary_names": 92,
-   "primary_gpa_pct": 53.3,
+   "gpa_matched": 50,
+   "names": 93,
+   "gpa_pct": 53.8,
+   "primary_matched": 50,
+   "primary_names": 93,
+   "primary_gpa_pct": 53.8,
    "rmp_matched": 9,
-   "rmp_pct": 9.8
+   "rmp_pct": 9.7
   },
   "LCTL": {
    "gpa_matched": 0,
@@ -1615,14 +1615,14 @@
    "rmp_pct": 100.0
   },
   "RST": {
-   "gpa_matched": 26,
-   "names": 37,
-   "gpa_pct": 70.3,
-   "primary_matched": 26,
-   "primary_names": 37,
-   "primary_gpa_pct": 70.3,
+   "gpa_matched": 27,
+   "names": 39,
+   "gpa_pct": 69.2,
+   "primary_matched": 27,
+   "primary_names": 39,
+   "primary_gpa_pct": 69.2,
    "rmp_matched": 14,
-   "rmp_pct": 37.8
+   "rmp_pct": 35.9
   },
   "RUSS": {
    "gpa_matched": 4,
