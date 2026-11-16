@@ -472,14 +472,10 @@ data science fundamentals 1 of 3 partly done; ECON 102/103 count for both the bu
 URL format), Playwright 38/39 (6 new in `degree.spec.ts`; the one failure is the Windows-only test), Lighthouse
 `/degree/` median of 3: 0.97 / 1.00 / 1.00, CLS 0.
 
-### Phase 6 — best-pick score (in progress; resume here)
+### Phase 6 — best-pick score (done)
 
-Done: `web/lib/score.ts` (shrinkage + missing parts, Vitest), score in the course header, professor sort and degree
-checklist with a breakdown popover; the schedule builder's RMP weight now shrinks few-rating professors toward the UIUC
-mean like the score (GPA weight unchanged: it is the schedule's expected GPA), with a regression test; `rankCourse`
-moved to `web/lib/rank.ts`; gen-ed rows now export each next-term lecturer's score inputs (`profs`).
-Left: (1) gen-ed finder score column + "Best pick" sort (`lib/geneds.ts` SortKey, `GenedFinder.tsx`); (2) a weights
-control (six 0–3 sliders, `lib/weights.ts` already stores them) on the course page, gen-ed finder and degree page;
-(3) write the formula as DECISIONS D13.18 (K = 200 students for course GPA toward the subject mean, 150 for the
-professor difference toward 0, 10 ratings for RMP toward the UIUC mean; parts on 0–1; weighted mean ×100; missing parts
-left out and named). Then Phase 7 (final-exam conflicts, optional) and Finish (after screenshots, README, PR).
+`web/lib/score.ts` (formula in DECISIONS D13.18) used for the course header, the professor sort, the gen-ed finder (new
+score column and default sort) and the degree checklist, each with a breakdown popover; `WeightsControl` lets students
+set the six weights (saved in the browser). The schedule builder's RMP weight shrinks few-rating professors like the
+score (D13.19). Checks: Vitest 82/82 (score shrinkage, missing data, weights, saved weights, gen-ed score sort, schedule
+regression), affected Playwright specs 19/19 on one worker.

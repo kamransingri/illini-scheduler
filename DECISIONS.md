@@ -386,3 +386,24 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D13.17 Smaller fixes found on the way.** Bare dates ("2026-11-16") were shown a day early because they were read as
   UTC midnight and printed in Chicago time (this also shifted RMP review dates); badges wrap instead of overflowing a
   phone screen; the checklist waits for the saved list before drawing, so it doesn't shift (CLS 0).
+- **D13.18 The best-pick score** (`web/lib/score.ts`, one function for every page). Six parts, each put on 0–1:
+  - course GPA *g* (recent, *n* graded students), shrunk toward the subject's student-weighted recent GPA *m*:
+    g' = (n·g + 200·m) / (n + 200); part = (g' − 2) / 2. A 23-student 4.0 in a 3.3 subject becomes 3.37.
+  - the professor's GPA difference from the course in the same terms *d* (*n* students), shrunk toward 0 (the course
+    average): d' = n·d / (n + 150); part = d' + 0.5. A professor with no grade history counts as the course average (0.5)
+    rather than being left out, so a brand-new instructor isn't ranked on RMP alone.
+  - RMP quality *q*, difficulty and would-take-again, each shrunk toward the UIUC mean over every rated instructor with
+    k = 10 ratings: q' = (r·q + 10·mean) / (r + 10); parts = (q' − 1) / 4, (5 − difficulty') / 4, wta' / 100. Three
+    ratings of 5.0 become 3.98 with the current mean (3.67).
+  - open seats: share of the professor's (else the course's) lecture sections that are open.
+  Score = 100 × Σ wᵢ·partᵢ / Σ wᵢ over the parts that have data; a part with no data (no RMP match, no grade data,
+  status not published) is left out and named in the breakdown. Default weights: course GPA 2, professor vs course 2,
+  quality 2, difficulty 1, would take again 1, open seats 1; each 0–3, set by the student ("Adjust the best pick
+  score", saved in the browser). The means come from the data (`meta.score_priors`, D13 export), not constants. A
+  course is scored with its best next-term professor; with no professor listed, with the course alone.
+- **D13.19 Schedule builder.** Its GPA weight stays as it was: it ranks by the schedule's expected GPA, a number students
+  read in the summary, and limited-data instructors are already skipped. Its RMP weight now uses the same shrinkage as
+  the score (few ratings pulled toward the UIUC mean), because a professor with two 5.0 ratings beat one with 200 ratings
+  of 4.6. All existing schedule tests pass unchanged; a regression test covers that case.
+- **D13.20 Gen-ed finder** sorts by the best-pick score by default (`?sort=gpa` and the other sorts still work) and its
+  "Best professor" column is the professor the score chose, as on the degree checklist.
