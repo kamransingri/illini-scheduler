@@ -1,12 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat, Source_Sans_3 } from "next/font/google";
+import { Source_Sans_3 } from "next/font/google";
 import Link from "next/link";
 import CartCount from "@/components/CartCount";
 import "./globals.css";
 
-// Illinois brand faces (brand.illinois.edu/visual-identity/typography), self-hosted by next/font at build time.
+// Source Sans 3, the Illinois brand's workhorse face (brand.illinois.edu/visual-identity/typography: body copy, and
+// headlines in heavier weights), self-hosted by next/font at build time. One family for everything.
 const sourceSans = Source_Sans_3({ subsets: ["latin"], variable: "--font-source-sans", display: "swap" });
-const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat", weight: ["600", "700"], display: "swap" });
 
 export const metadata: Metadata = {
   title: { default: "Illini Scheduler", template: "%s | Illini Scheduler" },
@@ -24,8 +24,8 @@ const NAV: [string, string][] = [
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${sourceSans.variable} ${montserrat.variable}`}>
-      <body className="min-h-screen font-sans antialiased">
+    <html lang="en" className={sourceSans.variable}>
+      <body className="flex min-h-screen flex-col font-sans antialiased">
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:bg-white focus:p-2">
           Skip to content
         </a>
@@ -45,30 +45,40 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Link>
           </nav>
         </header>
-        <main id="main" className="mx-auto max-w-6xl px-4 py-8">
+        <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
           {children}
         </main>
-        <footer className="border-t border-line bg-panel">
-          <div className="mx-auto max-w-6xl space-y-2 px-4 py-6 text-sm text-muted">
-            <p>
-              <strong className="text-ink">Unofficial.</strong> Not affiliated with the University of Illinois. Data comes from public sources and can
-              be out of date: confirm sections, seats and restrictions in Self-Service before registering.
-            </p>
-            <p>
-              Sources: Course Explorer, the{" "}
-              <a className="underline" href="https://github.com/wadefagen/datasets/tree/main/gpa">
-                UIUC GPA dataset
-              </a>
-              ,{" "}
-              <a className="underline" href="https://github.com/wadefagen/datasets/tree/main/course-catalog">
-                course catalog
-              </a>{" "}
-              and{" "}
-              <a className="underline" href="https://github.com/wadefagen/datasets/tree/main/teachers-ranked-as-excellent">
-                Teachers Ranked as Excellent
-              </a>{" "}
-              datasets by Wade Fagen-Ulmschneider, the Academic Catalog for degree requirements, and Rate My Professors.
-            </p>
+        <footer className="border-t-4 border-orange bg-navy text-white">
+          <div className="mx-auto grid max-w-6xl gap-x-10 gap-y-4 px-4 py-8 text-sm leading-relaxed sm:grid-cols-[1fr_1.4fr]">
+            <div>
+              <p className="text-base font-bold">Illini Scheduler</p>
+              <p className="mt-1">
+                Unofficial and not affiliated with the University of Illinois. Data comes from public sources and can be out of date: confirm sections,
+                seats and restrictions in Self-Service before registering.
+              </p>
+            </div>
+            <div>
+              <p className="font-semibold">Where the data comes from</p>
+              <p className="mt-1">
+                Course Explorer (sections, seats, final exams), the{" "}
+                <a className="underline hover:text-orange" href="https://github.com/wadefagen/datasets/tree/main/gpa">
+                  UIUC GPA dataset
+                </a>
+                ,{" "}
+                <a className="underline hover:text-orange" href="https://github.com/wadefagen/datasets/tree/main/course-catalog">
+                  course catalog
+                </a>{" "}
+                and{" "}
+                <a className="underline hover:text-orange" href="https://github.com/wadefagen/datasets/tree/main/teachers-ranked-as-excellent">
+                  Teachers Ranked as Excellent
+                </a>{" "}
+                datasets by Wade Fagen-Ulmschneider, the{" "}
+                <a className="underline hover:text-orange" href="https://catalog.illinois.edu/">
+                  Academic Catalog
+                </a>{" "}
+                for degree requirements, and Rate My Professors.
+              </p>
+            </div>
           </div>
         </footer>
       </body>

@@ -37,9 +37,9 @@
   --color-grade-c: #7ba4db;
   --color-grade-df: #b9bbbb;
 
-  /* type: Source Sans 3 for everything, Montserrat for headings and headline numbers */
+  /* type: Source Sans 3 for everything; headings and headline numbers use its heavier weights */
   --font-sans: var(--font-source-sans), "Source Sans Pro", Arial, sans-serif;
-  --font-display: var(--font-montserrat), "Arial Black", Arial, sans-serif;
+  --font-display: var(--font-source-sans), "Source Sans Pro", Arial, sans-serif;
 
   /* five sizes, nothing else */
   --text-*: initial;
