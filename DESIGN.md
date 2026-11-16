@@ -109,6 +109,7 @@ read 2026-11-16). Each colour has one meaning.
 - Rows separated by hairlines and whitespace, not boxed in cards. The only filled surface is `panel`, used for the
   course summary and an expanded professor panel.
 - Content is left aligned. Text blocks are capped at about 70 characters per line.
+- The page is 72rem wide at most, so a list row can show every column next to the gen-ed filters.
 
 ### Hierarchy
 
@@ -137,6 +138,7 @@ can't creep back in. Classes to use:
 | Grades | `bg-grade-a`, `bg-grade-b`, `bg-grade-c`, `bg-grade-df` (only via `<GradeBar>` / `<GpaChart>`) |
 | Type | `text-sm` 14, `text-base` 16, `text-lg` 19, `text-xl` 24, `text-2xl` 32; `font-display` (Montserrat); `tnum` for numbers |
 | Radius | `rounded` (4px), `rounded-full` for dots |
+| Course colours | `course-0` ... `course-5` with `course-swatch` / `course-block`: brand supporting colours that tell courses apart in the schedule calendar and cart, and nothing else |
 
 **Shared components** (`web/components/ui/`):
 
@@ -151,6 +153,7 @@ can't creep back in. Classes to use:
 | `SectionHeader` | h2/h3 with actions on the right and a one-line lead |
 | `DataRow` | Label/value row inside a `<dl>` |
 | `Expandable` | Disclosure button + panel (`aria-expanded`, `aria-controls`) |
+| `CourseRow` | One course in any list (search results, gen-ed finder, degree checklist): code and title, then fixed columns (score, GPA, best professor, RMP, next term, action) in the same place on every list. Uses container queries, so it lays out by the width it gets (a narrow sidebar stacks it) |
 
 Course-page pieces built on them live in `web/components/course/` (`ProfessorLedger`, `SectionsList`, `CompareTable`,
 `BestPick`, `ScoreBreakdown`, `CourseView`).

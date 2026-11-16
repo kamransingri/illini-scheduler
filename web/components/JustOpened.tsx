@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { courseHref, dataUrl, fmtAgo, seatVerb, termLabel } from "@/lib/format";
 import type { SeatEvent } from "@/lib/types";
 import AddToCart from "./AddToCart";
+import { SeatStatus } from "./ui/Badge";
+import Icon from "./ui/Icon";
 
 export default function JustOpened({ nextTerm, currentTerm }: { nextTerm: string; currentTerm: string }) {
   const [events, setEvents] = useState<SeatEvent[] | null>(null);
@@ -29,14 +31,15 @@ export default function JustOpened({ nextTerm, currentTerm }: { nextTerm: string
 
   if (error)
     return (
-      <p className="rounded border border-red-200 bg-red-50 p-2 text-sm text-bad" role="alert">
-        Couldn&apos;t load recent seat changes ({error}).
+      <p className="flex items-start gap-2 rounded border border-line p-3" role="alert">
+        <Icon name="alert" className="mt-1 text-down" />
+        Couldn&apos;t load recent seat changes ({error}). Reload to try again.
       </p>
     );
   return (
-    <div className="space-y-3">
-      <div className="flex flex-wrap items-center gap-3 text-sm">
-        <select className="rounded border border-line p-1" value={term} onChange={(e) => setTerm(e.target.value)} aria-label="Term">
+    <div>
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-3 border-b border-line pb-4">
+        <select className="rounded border border-line bg-white px-2 py-1.5" value={term} onChange={(e) => setTerm(e.target.value)} aria-label="Term">
           {[nextTerm, currentTerm].map((t) => (
             <option key={t} value={t}>
               {termLabel(t)}
@@ -44,35 +47,48 @@ export default function JustOpened({ nextTerm, currentTerm }: { nextTerm: string
           ))}
         </select>
         <input
-          className="w-32 rounded border border-line p-1"
+          className="w-40 rounded border border-line bg-white px-2 py-1.5 placeholder:text-muted"
           placeholder="Subject, e.g. CS"
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
           aria-label="Filter by subject"
         />
-        <label className="flex items-center gap-1">
-          <input type="checkbox" checked={all} onChange={(e) => setAll(e.target.checked)} />
+        <label className="inline-flex items-center gap-2">
+          <input type="checkbox" className="size-4 accent-action" checked={all} onChange={(e) => setAll(e.target.checked)} />
           Show closings and other changes too
         </label>
-        <span className="text-muted" aria-live="polite">
+        <span className="font-semibold text-heading tnum sm:ml-auto" aria-live="polite">
           {events ? `${rows.length} change${rows.length === 1 ? "" : "s"}` : "Loading…"}
         </span>
       </div>
-      {events && !rows.length && <p className="text-sm text-muted">Nothing {all ? "changed" : "opened"} in the last week{subject ? ` in ${subject.toUpperCase()}` : ""}.</p>}
-      <ul className="divide-y divide-line" data-testid="opened-list">
+      {events && !rows.length && (
+        <p className="mt-4 text-muted">
+          Nothing {all ? "changed" : "opened"} in the last week{subject ? ` in ${subject.toUpperCase()}` : ""}.
+        </p>
+      )}
+      <ul data-testid="opened-list">
         {rows.slice(0, 300).map((e) => {
           const verb = seatVerb(e.old, e.new);
           return (
-            <li key={e.term + e.crn + e.at} className="flex flex-wrap items-center gap-x-3 gap-y-1 py-2 text-sm">
-              <Link href={courseHref(e.s, e.n)} className="font-semibold no-underline hover:underline">
-                {e.s} {e.n}
+            <li key={e.term + e.crn + e.at} className="grid gap-x-4 gap-y-1.5 border-b border-line py-3 sm:grid-cols-[minmax(0,1fr)_auto] lg:grid-cols-[minmax(0,1fr)_19rem_8rem_auto] lg:items-center">
+              <Link href={courseHref(e.s, e.n)} className="group min-w-0">
+                <span className="font-semibold text-action group-hover:underline">
+                  {e.s} {e.n}
+                </span>{" "}
+                <span className="group-hover:underline">{e.t}</span>
               </Link>
-              <span className="min-w-0 flex-1 truncate">{e.t}</span>
-              <span className={verb === "opened" ? "text-good" : verb === "closed" ? "text-bad" : ""}>
-                {e.code} {verb} ({e.old} → {e.new})
+              <span className="flex flex-wrap items-center gap-1.5">
+                <span className="font-semibold">
+                  {e.code} {verb}
+                </span>
+                <SeatStatus status={e.old} />
+                <Icon name="chevronRight" className="text-muted" />
+                <SeatStatus status={e.new} />
               </span>
-              <span className="text-xs text-muted">CRN {e.crn} · {fmtAgo(e.at)}</span>
-              {term === nextTerm && <AddToCart subject={e.s} number={e.n} small />}
+              <span className="text-sm text-muted tnum">
+                CRN {e.crn}, {fmtAgo(e.at)}
+              </span>
+              <span>{term === nextTerm && <AddToCart subject={e.s} number={e.n} small />}</span>
             </li>
           );
         })}

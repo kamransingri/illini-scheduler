@@ -66,7 +66,9 @@ export function fmtDate(iso: string | null | undefined): string {
   if (!iso) return "unknown date";
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return iso;
-  return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric", timeZone: "America/Chicago" });
+  // A bare date ("2026-11-16") is a calendar day, not UTC midnight: don't shift it into Chicago's previous evening.
+  const dayOnly = /^\d{4}-\d{2}-\d{2}$/.test(iso.trim());
+  return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric", timeZone: dayOnly ? "UTC" : "America/Chicago" });
 }
 
 export const GENED_NAMES: Record<string, string> = {

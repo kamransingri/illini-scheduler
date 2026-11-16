@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cisUrl, daysStr, fmtDelta, fmtGpa, fmtTime, termLabel, termOrder, treLabel } from "@/lib/format";
+import { cisUrl, daysStr, fmtDate, fmtDelta, fmtGpa, fmtTime, termLabel, termOrder, treLabel } from "@/lib/format";
 import { decodeCart, encodeCart } from "@/lib/cart";
 
 describe("format", () => {
@@ -9,6 +9,8 @@ describe("format", () => {
     expect(treLabel("2024-fa Excellent")).toBe("Fall 2024, Excellent");
     expect(treLabel("2022-sp Outstanding")).toBe("Spring 2022, Outstanding");
     expect(treLabel("something else")).toBe("something else");
+    expect(fmtDate("2026-11-16")).toBe("Nov 16, 2026"); // a calendar day stays that day
+    expect(fmtDate("2026-11-16T03:00:00+00:00")).toBe("Nov 15, 2026"); // a timestamp is shown in Chicago time
   });
   it("times and days", () => {
     expect(fmtTime(540)).toBe("9:00am");

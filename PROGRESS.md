@@ -442,3 +442,44 @@ Review screenshots were shared with the owner of this session for approval (Phas
   likely a different person. Worth an entry in `data/name_overrides.csv` or a stricter department check in `rmp.py`.
 - `CURRENT_TERM` / `NEXT_TERM` / `HISTORY_TERMS` are hard-coded in `pipeline/fetch.py`; they need a by-hand bump when
   Fall 2027 is published (usually around March 2027).
+
+### Phase 3 — other pages (done)
+
+Approved by the session owner on 2026-11-16 and pushed as `v0.2.0-beta.1` (CI on the branch: pass). Home, gen-ed
+finder, search results, schedule builder and Just opened restyled with the tokens; `components/ui/CourseRow.tsx` is the
+shared course row; `Metric` and the legacy colour aliases are gone. Checks: Playwright 32/33 (the Windows-only test),
+Vitest 68/68, lint clean; Lighthouse (single run): home 0.98/1.00/1.00, gen-eds 0.87/1.00/1.00, schedule 0.97/1.00/1.00,
+Just opened 0.88/1.00/1.00 (performance/accessibility/best practices); no sideways scroll at 375px on any of them.
+
+### Phase 4 — degree requirement data (done)
+
+`data/degrees/finance-data-science.yaml` from https://catalog.illinois.edu/undergraduate/bus/finance-data-science-bs/
+(2026-2027, read 2026-11-16) plus the campus gen-ed rules from
+https://catalog.illinois.edu/general-information/degree-general-education-requirements/ and
+https://gened.illinois.edu/requirements/; schema in `data/degrees/README.md`; loader and validator
+`pipeline/degrees.py` (`python -m pipeline.degrees` checks the files); `export.py` writes `degrees/index.json` and
+`degrees/<id>.json` (19 groups, 1,063 courses, 0 unknown codes, 282 KB). pytest 175/175 (9 new: real files valid,
+every schema error reported, double-counting rules, alternatives and sequences, FIN 400-499 with exclusions and caps,
+a course in two groups, unknown codes logged, export, latest-term catalog).
+
+### Phase 5 — My courses and the degree checklist (done)
+
+`/degree/` (`components/DegreeChecklist.tsx`, `lib/mycourses.ts`, `lib/degree.ts`), Degree link in the header. Manual
+check (not committed): Finance + Data Science with STAT 107, CMN 101, ECON 102, ECON 103, BUS 101 completed and AP
+credit for MATH 220/221/234 shows 3 of 19 done (calculus, QR, social and behavioral sciences), business core 4 of 14 and
+data science fundamentals 1 of 3 partly done; ECON 102/103 count for both the business core and social sciences; MATH
+221 and 234 count nowhere else (one calculus is required). Checks: Vitest 80/80 (11 new for the evaluator and the
+URL format), Playwright 38/39 (6 new in `degree.spec.ts`; the one failure is the Windows-only test), Lighthouse
+`/degree/` median of 3: 0.97 / 1.00 / 1.00, CLS 0.
+
+### Phase 6 — best-pick score (in progress; resume here)
+
+Done: `web/lib/score.ts` (shrinkage + missing parts, Vitest), score in the course header, professor sort and degree
+checklist with a breakdown popover; the schedule builder's RMP weight now shrinks few-rating professors toward the UIUC
+mean like the score (GPA weight unchanged: it is the schedule's expected GPA), with a regression test; `rankCourse`
+moved to `web/lib/rank.ts`; gen-ed rows now export each next-term lecturer's score inputs (`profs`).
+Left: (1) gen-ed finder score column + "Best pick" sort (`lib/geneds.ts` SortKey, `GenedFinder.tsx`); (2) a weights
+control (six 0–3 sliders, `lib/weights.ts` already stores them) on the course page, gen-ed finder and degree page;
+(3) write the formula as DECISIONS D13.18 (K = 200 students for course GPA toward the subject mean, 150 for the
+professor difference toward 0, 10 ratings for RMP toward the UIUC mean; parts on 0–1; weighted mean ×100; missing parts
+left out and named). Then Phase 7 (final-exam conflicts, optional) and Finish (after screenshots, README, PR).
