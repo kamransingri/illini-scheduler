@@ -10,7 +10,7 @@ const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat
 
 export const metadata: Metadata = {
   title: { default: "Illini Scheduler", template: "%s | Illini Scheduler" },
-  description: "Unofficial UIUC course planner: professors compared by GPA and ratings, sections, gen-eds and a conflict-free schedule builder.",
+  description: "Unofficial UIUC course planner: professors compared by GPA and ratings, sections, gen-eds, a degree checklist and a conflict-free schedule builder.",
 };
 
 export const viewport: Viewport = { width: "device-width", initialScale: 1 };
@@ -18,6 +18,7 @@ export const viewport: Viewport = { width: "device-width", initialScale: 1 };
 const NAV: [string, string][] = [
   ["/", "Search"],
   ["/geneds/", "Gen-eds"],
+  ["/degree/", "Degree"],
   ["/opened/", "Just opened"],
 ];
 
@@ -66,7 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <a className="underline" href="https://github.com/wadefagen/datasets/tree/main/teachers-ranked-as-excellent">
                 Teachers Ranked as Excellent
               </a>{" "}
-              datasets by Wade Fagen-Ulmschneider, and Rate My Professors.
+              datasets by Wade Fagen-Ulmschneider, the Academic Catalog for degree requirements, and Rate My Professors.
             </p>
           </div>
         </footer>

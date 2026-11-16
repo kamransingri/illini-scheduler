@@ -1,6 +1,7 @@
 // Build-time data access (server components only). Reads the JSON written by `make data`.
 import fs from "node:fs";
 import path from "node:path";
+import type { DegreeIndex } from "./degree";
 import type { Course, Meta, SearchIndex } from "./types";
 
 const DATA_DIR = path.join(process.cwd(), "public", "data");
@@ -31,4 +32,8 @@ export function courseParams(): { subject: string; number: string }[] {
   if (!limit) return all;
   const ref = new Set(["CS 124", "MATH 221", "STAT 107", "RHET 105", "MATH 231", "STAT 200", "CS 225", "CS 128"]);
   return all.filter((c, i) => i < limit || ref.has(`${c.subject} ${c.number}`));
+}
+
+export function getDegreeIndex(): DegreeIndex {
+  return readJson<DegreeIndex>("degrees/index.json") ?? [];
 }
