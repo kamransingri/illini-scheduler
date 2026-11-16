@@ -35,7 +35,7 @@ export default function CompareTable({ rows, onPick }: { rows: Scored[]; onPick:
     return sort.desc ? y - x : x - y;
   });
   return (
-    <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="Professors compared">
+    <div className="relative overflow-x-auto" tabIndex={0} role="region" aria-label="Professors compared">
       <table className="w-full min-w-[56rem] border-collapse text-left">
         <caption className="sr-only">Professors compared side by side. Column headers sort the table.</caption>
         <thead>

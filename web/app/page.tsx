@@ -24,7 +24,7 @@ export default function Home() {
   }
   const next = meta.terms[meta.next_term];
   const tools: [string, string, string][] = [
-    ["/geneds/", "Gen-ed finder", "Filter gen-eds by category, time and seats, sorted by GPA."],
+    ["/geneds/", "Gen-ed finder", "Gen-eds that count for every category you pick, ranked by GPA, professors and open seats."],
     ["/schedule/", "Schedule builder", "Every conflict-free combination of your courses, ranked by what matters to you."],
     ["/opened/", "Just opened", "Sections that went from closed to open in the last week."],
   ];

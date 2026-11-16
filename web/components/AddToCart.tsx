@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { addToCart, inCart, onCartChange, removeFromCart } from "@/lib/cart";
 import Icon from "./ui/Icon";
 
-export default function AddToCart({ subject, number, small = false }: { subject: string; number: string; small?: boolean }) {
+/** `short` (narrow table cells) shows "Add"/"Added"; the accessible name stays the full action. */
+export default function AddToCart({ subject, number, small = false, short = false }: { subject: string; number: string; small?: boolean; short?: boolean }) {
   const [added, setAdded] = useState(false);
   useEffect(() => {
     const sync = () => setAdded(inCart(subject, number));
@@ -18,9 +19,10 @@ export default function AddToCart({ subject, number, small = false }: { subject:
         added ? "border-action bg-action-tint text-heading" : small ? "border-action bg-white text-action hover:bg-action-tint" : "border-action bg-action text-white hover:bg-action-dark"
       }`}
       aria-pressed={added}
+      aria-label={short ? `${added ? "In schedule" : "Add to schedule"}: ${subject} ${number}` : undefined}
     >
       <Icon name={added ? "check" : "plus"} />
-      {added ? "In schedule" : "Add to schedule"}
+      {short ? (added ? "Added" : "Add") : added ? "In schedule" : "Add to schedule"}
     </button>
   );
 }
