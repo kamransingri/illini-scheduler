@@ -394,7 +394,7 @@ Every judgment call made during the autonomous build, newest phase last.
     rather than being left out, so a brand-new instructor isn't ranked on RMP alone.
   - RMP quality *q*, difficulty and would-take-again, each shrunk toward the UIUC mean over every rated instructor with
     k = 10 ratings: q' = (r·q + 10·mean) / (r + 10); parts = (q' − 1) / 4, (5 − difficulty') / 4, wta' / 100. Three
-    ratings of 5.0 become 3.98 with the current mean (3.67).
+    ratings of 5.0 become 3.97 with the current mean (3.67).
   - open seats: share of the professor's (else the course's) lecture sections that are open.
   Score = 100 × Σ wᵢ·partᵢ / Σ wᵢ over the parts that have data; a part with no data (no RMP match, no grade data,
   status not published) is left out and named in the breakdown. Default weights: course GPA 2, professor vs course 2,
