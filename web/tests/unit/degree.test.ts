@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { accepts, alsoCounts, canShare, evaluate, needText, options, prereqNote, rankCourse, type Degree, type DegreeCourse, type DegreeGroup } from "@/lib/degree";
+import { accepts, alsoCounts, canShare, evaluate, hydrate, needText, options, prereqNote, rankCourse, type Degree, type DegreeCourse, type DegreeGroup } from "@/lib/degree";
 import { decodeCourses, encodeCourses, stateFromParams, type MyCourse } from "@/lib/mycourses";
 import { DEFAULT_WEIGHTS } from "@/lib/score";
 
@@ -168,5 +168,16 @@ describe("my courses encoding", () => {
       ticked: ["language"],
     });
     expect(stateFromParams(new URLSearchParams("q=1"))).toBeNull();
+  });
+});
+
+describe("hydrate", () => {
+  it("adds the shared gen-ed courses and fills gen-ed groups' options from them", () => {
+    const slim: Degree = { ...DEG, courses: { "FIN 411": DEG.courses["FIN 411"] }, groups: DEG.groups.map((g) => (g.id === "hum" ? { ...g, eligible: [] } : g)) };
+    const gened = { "HIST 100": DEG.courses["HIST 100"], "PHIL 101": DEG.courses["PHIL 101"], "ECON 102": DEG.courses["ECON 102"] };
+    const full = hydrate(slim, gened);
+    expect(full.groups.find((g) => g.id === "hum")!.eligible).toEqual(["HIST 100", "PHIL 101"]);
+    expect(full.groups.find((g) => g.id === "fin-400")!.eligible).toEqual([]); // range groups keep the exported list
+    expect(Object.keys(full.courses).sort()).toEqual(["ECON 102", "FIN 411", "HIST 100", "PHIL 101"]);
   });
 });
