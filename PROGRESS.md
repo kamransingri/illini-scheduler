@@ -461,3 +461,13 @@ https://gened.illinois.edu/requirements/; schema in `data/degrees/README.md`; lo
 `degrees/<id>.json` (19 groups, 1,063 courses, 0 unknown codes, 282 KB). pytest 175/175 (9 new: real files valid,
 every schema error reported, double-counting rules, alternatives and sequences, FIN 400-499 with exclusions and caps,
 a course in two groups, unknown codes logged, export, latest-term catalog).
+
+### Phase 5 — My courses and the degree checklist (done)
+
+`/degree/` (`components/DegreeChecklist.tsx`, `lib/mycourses.ts`, `lib/degree.ts`), Degree link in the header. Manual
+check (not committed): Finance + Data Science with STAT 107, CMN 101, ECON 102, ECON 103, BUS 101 completed and AP
+credit for MATH 220/221/234 shows 3 of 19 done (calculus, QR, social and behavioral sciences), business core 4 of 14 and
+data science fundamentals 1 of 3 partly done; ECON 102/103 count for both the business core and social sciences; MATH
+221 and 234 count nowhere else (one calculus is required). Checks: Vitest 80/80 (11 new for the evaluator and the
+URL format), Playwright 38/39 (6 new in `degree.spec.ts`; the one failure is the Windows-only test), Lighthouse
+`/degree/` median of 3: 0.97 / 1.00 / 1.00, CLS 0.

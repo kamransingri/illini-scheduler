@@ -369,3 +369,20 @@ Every judgment call made during the autonomous build, newest phase last.
   can't decide it. The checklist lets the student tick it.
 - **D13.13 Test hygiene.** Python 3.13 warns about SQLite connections left open; ten existing tests never closed theirs
   and the warning surfaced once more tests ran. `pipeline/tests/conftest.py` closes every connection a test opens.
+- **D13.14 My courses** (`web/lib/mycourses.ts`) works like the cart: localStorage plus the URL (`?p=<program>&m=STAT107,
+  MATH220~c,CS124~p&x=language`; no suffix = completed, `~c` = AP or transfer credit, `~p` = in progress). A shared
+  link shows a "Use this list / Back to my list" choice instead of overwriting a saved list. Nothing leaves the browser.
+- **D13.15 How the checklist counts** (`web/lib/degree.ts`). Groups are filled in catalog order with completed courses
+  before in-progress ones; AP and transfer credit count as completed. A course already used elsewhere counts again only
+  when the program's rules allow that pair; when they say no or don't say, it isn't counted twice and the group explains
+  why ("the catalog doesn't say whether it can count here too... ask your advisor"). A group met only through
+  in-progress courses is "in progress". Variable-credit courses count at their minimum hours, with a note. Options for
+  an open group are its missing listed courses, or its eligible list limited to courses offered in the loaded terms,
+  ranked by the best-pick score with the course's best next-term professor. Options that would also fill another open
+  requirement say so ("Also counts for ..."), or say the catalog is unclear, or that they count for only one.
+- **D13.16 Prerequisites are never judged.** If a course's prerequisite text names a course that isn't in My courses (or
+  names none), the row shows "Check prerequisites:" with the catalog text; it never says the student is or isn't
+  eligible.
+- **D13.17 Smaller fixes found on the way.** Bare dates ("2026-11-16") were shown a day early because they were read as
+  UTC midnight and printed in Chicago time (this also shifted RMP review dates); badges wrap instead of overflowing a
+  phone screen; the checklist waits for the saved list before drawing, so it doesn't shift (CLS 0).

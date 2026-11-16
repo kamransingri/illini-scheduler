@@ -8,10 +8,10 @@ export function Badge({ children, icon, title, className = "" }: { children: Rea
   return (
     <span
       title={title}
-      className={`inline-flex items-center gap-1 whitespace-nowrap rounded border border-line bg-white px-1.5 text-sm leading-6 text-ink ${className}`}
+      className={`inline-flex max-w-full items-start gap-1 rounded border border-line bg-white px-1.5 text-sm leading-6 text-ink ${className}`}
     >
-      {icon && <Icon name={icon} className="text-muted" />}
-      {children}
+      {icon && <Icon name={icon} className="mt-1 text-muted" />}
+      <span className="min-w-0">{children}</span>
     </span>
   );
 }
