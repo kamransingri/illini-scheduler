@@ -75,3 +75,11 @@ def test_flag_special():
             s("", "primary", "A")]
     flag_special(secs)
     assert [bool(x["special"]) for x in secs] == [False, False, True, True, False]
+
+
+def test_bundles_match_the_shared_parity_cases():
+    """The web app has its own copy of this rule (web/lib/schedule.ts); both check fixtures/bundle-parity.json."""
+    cases = json.loads((FIXTURES / "bundle-parity.json").read_text(encoding="utf-8"))["cases"]
+    for case in cases:
+        got = sorted(sorted(s["crn"] for s in b) for b in bundles(case["sections"]))
+        assert got == sorted(sorted(b) for b in case["bundles"]), case["name"]
