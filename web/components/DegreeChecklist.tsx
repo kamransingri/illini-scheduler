@@ -15,6 +15,7 @@ import CourseRow, { CourseRowHeader, type CourseCols } from "./ui/CourseRow";
 import Expandable from "./ui/Expandable";
 import Icon, { type IconName } from "./ui/Icon";
 import Info from "./ui/Info";
+import WeightsControl from "./WeightsControl";
 
 const COLS: CourseCols = { score: true, gpa: true, best: true, rmp: true, next: true, action: true };
 const SHOW = 5;
@@ -331,6 +332,7 @@ function Checklist({
           <div className="bg-heading/15" style={{ width: `${(100 * counts("partial")) / total}%` }} />
         </div>
         {deg.unknown.length > 0 && <p className="mt-2 text-sm text-muted">Not in this site&apos;s course data, so not shown as options: {deg.unknown.join(", ")}.</p>}
+        {meta.score_priors && <WeightsControl className="mt-4" />}
       </header>
 
       {sections.map((sec) => (
