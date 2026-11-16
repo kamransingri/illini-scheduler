@@ -12,9 +12,10 @@ test("an impossible lock is explained and the schedule is marked incomplete", as
   await expect(page.getByTestId("cart").locator("li")).toHaveCount(2);
   const lec = page.getByLabel("Lock Lecture for MATH 231");
   const dis = page.getByLabel("Lock Discussion for MATH 231");
-  // wait until course data has loaded and the selects list sections
-  await expect(dis.locator("option")).not.toHaveCount(1);
-  await expect(lec.locator("option")).not.toHaveCount(1);
+  // wait until course data has loaded and the selects list sections (a count check alone also passes on 0 options,
+  // before the selects exist, which raced on GitHub's runners)
+  await expect(dis.locator("option", { hasText: "CRN" }).first()).toBeAttached();
+  await expect(lec.locator("option", { hasText: "CRN" }).first()).toBeAttached();
   // lock a discussion first, then a lecture from a different group (the lecture list isn't filtered)
   const disFirst = (await dis.locator("option").allTextContents()).find((o) => o.includes("CRN"))!;
   await dis.selectOption({ label: disFirst });
