@@ -215,4 +215,19 @@ describe("explanations", () => {
     c.locked = [c.course.terms["2027-sp"].sections[0].crn];
     expect(generate([c], "2027-sp", DEFAULT_PREFS).schedules.length).toBe(1);
   });
+  it("RMP ratings from a few students are pulled toward the UIUC average when a prior is given", () => {
+    const c = mk("300", [
+      { ...fixed("A", "primary", "*", M, 600, 650), instructors: ["few"] },
+      { ...fixed("B", "primary", "*", T, 600, 650), instructors: ["many"] },
+    ]);
+    const rmp = (rating: number, n: number) => ({ id: "1", url: "", rating, difficulty: 3, would_take_again: 80, num_ratings: n, tags: [], reviews: [], fetched_at: "" });
+    c.course.instructors = {
+      few: { name: "Few", teaching: ["2027-sp"], gpa: null, rmp: rmp(5, 2), exam: null, tre: [], in_gpa_dataset: false },
+      many: { name: "Many", teaching: ["2027-sp"], gpa: null, rmp: rmp(4.6, 200), exam: null, tre: [], in_gpa_dataset: false },
+    };
+    const prefs = { ...DEFAULT_PREFS, weights: { gpa: 0, rmp: 3, early: 0, daysOff: 0, compact: 0, walking: 0 } };
+    const first = (input: CourseInput) => generate([input], "2027-sp", prefs).schedules[0].bundles[0].sections[0].code;
+    expect(first(c)).toBe("A"); // raw ratings: 2 ratings of 5.0 beat 200 ratings of 4.6
+    expect(first({ ...c, rmpPrior: 3.6 })).toBe("B"); // shrunk: (2*5 + 10*3.6) / 12 = 3.83 < 4.55
+  });
 });

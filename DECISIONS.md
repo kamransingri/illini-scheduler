@@ -344,3 +344,45 @@ Every judgment call made during the autonomous build, newest phase last.
   column chart: the SVG's 9-unit labels rendered at about 5px on a 375px phone.
 - **D13.7 Sources behind (i).** Every number keeps its source, term range and sample size, now in an `Info` popover that
   opens on hover, keyboard focus and tap (the old dotted-underline tooltip needed a mouse).
+- **D13.8 Other pages** (Phase 3) use the same tokens and components with no change in behaviour. Any list of courses
+  is a `CourseRow` (search results, gen-ed finder, later the degree checklist). Errors and warnings use an alert icon
+  and the neutral panel, not red, because red only means "below the course average". The page grew from 64 to 72rem so
+  a course row fits its columns beside the gen-ed filters; rows use container queries, so the same row stacks in the
+  schedule builder's 22rem sidebar.
+- **D13.9 Schedule builder colours.** Courses keep a colour each in the calendar and cart (categorical, from the brand's
+  supporting colours: Industrial, Berry, Arches, Altgeld, Illini Blue, Storm; green and the seat-status hues are left
+  out). The cart cards lost their tinted backgrounds; a coloured edge is enough to match the calendar. The lock menus
+  dropped the padlock emoji.
+- **D13.10 Degree data** lives in `data/degrees/<id>.yaml` (schema in `data/degrees/README.md`): requirement groups
+  with rules `all`, `n_of`, `hours` and `manual`; items can be a code, a sequence that counts as one ("RHET 101 +
+  RHET 102") or a list of alternatives; `from` takes number ranges ("FIN 400-499") and gen-ed codes; `exclude`,
+  `max_hours`, `min_from`, `not_with` and `exclusive` cover the catalog's caveats. The first file is the Finance + Data
+  Science BS, 2026-2027 catalog, read 2026-11-16, with the campus gen-ed groups the page says apply. Schema errors stop
+  `make data`; codes missing from the loaded Course Explorer terms are logged and exported as `unknown`.
+- **D13.11 Double counting is data, with its quote.** Each program file lists the rules it rests on, checked in order:
+  no course for two Cultural Studies categories, and a Cultural Studies course may count elsewhere
+  (gened.illinois.edu/requirements); program courses may count as gen-eds ("Some Gen Ed requirements may be met by
+  courses required and/or electives in the program", the program page). Any other pair (two program groups, or two
+  non-Cultural-Studies gen-ed categories) is shown as "rules unclear" instead of guessed. "Four additional" 400-level
+  Finance courses becomes `not_with: [finance-required]`, so FIN 411 can't count twice.
+- **D13.12 Language requirement** is `manual`: high-school study and proficiency exams satisfy it, so a list of courses
+  can't decide it. The checklist lets the student tick it.
+- **D13.13 Test hygiene.** Python 3.13 warns about SQLite connections left open; ten existing tests never closed theirs
+  and the warning surfaced once more tests ran. `pipeline/tests/conftest.py` closes every connection a test opens.
+- **D13.14 My courses** (`web/lib/mycourses.ts`) works like the cart: localStorage plus the URL (`?p=<program>&m=STAT107,
+  MATH220~c,CS124~p&x=language`; no suffix = completed, `~c` = AP or transfer credit, `~p` = in progress). A shared
+  link shows a "Use this list / Back to my list" choice instead of overwriting a saved list. Nothing leaves the browser.
+- **D13.15 How the checklist counts** (`web/lib/degree.ts`). Groups are filled in catalog order with completed courses
+  before in-progress ones; AP and transfer credit count as completed. A course already used elsewhere counts again only
+  when the program's rules allow that pair; when they say no or don't say, it isn't counted twice and the group explains
+  why ("the catalog doesn't say whether it can count here too... ask your advisor"). A group met only through
+  in-progress courses is "in progress". Variable-credit courses count at their minimum hours, with a note. Options for
+  an open group are its missing listed courses, or its eligible list limited to courses offered in the loaded terms,
+  ranked by the best-pick score with the course's best next-term professor. Options that would also fill another open
+  requirement say so ("Also counts for ..."), or say the catalog is unclear, or that they count for only one.
+- **D13.16 Prerequisites are never judged.** If a course's prerequisite text names a course that isn't in My courses (or
+  names none), the row shows "Check prerequisites:" with the catalog text; it never says the student is or isn't
+  eligible.
+- **D13.17 Smaller fixes found on the way.** Bare dates ("2026-11-16") were shown a day early because they were read as
+  UTC midnight and printed in Chicago time (this also shifted RMP review dates); badges wrap instead of overflowing a
+  phone screen; the checklist waits for the saved list before drawing, so it doesn't shift (CLS 0).

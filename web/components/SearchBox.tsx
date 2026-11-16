@@ -2,10 +2,16 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { courseHref, dataUrl, fmtGpa, termLabel } from "@/lib/format";
+import { courseHref, dataUrl, fmtGpa, GENED_NAMES, termLabel } from "@/lib/format";
 import { search, type SearchHit } from "@/lib/search";
 import type { SearchIndex } from "@/lib/types";
 import AddToCart from "./AddToCart";
+import { Badge } from "./ui/Badge";
+import CourseRow, { type CourseCols } from "./ui/CourseRow";
+import Icon from "./ui/Icon";
+
+const COLS: CourseCols = { gpa: true, next: true, action: true };
+const COLS_NO_CART: CourseCols = { gpa: true, next: true };
 
 let cache: Promise<SearchIndex> | null = null;
 export function loadIndex(): Promise<SearchIndex> {
@@ -85,71 +91,64 @@ export default function SearchBox({
           }
         }}
         placeholder={placeholder}
-        className="w-full rounded-lg border border-line bg-white px-4 py-3 text-base shadow-sm focus:border-brand focus:outline-none"
+        className="w-full rounded border-2 border-heading bg-white px-4 py-3 text-lg placeholder:text-muted focus:border-action focus:outline-none"
         aria-controls={hits.length ? "search-results" : undefined}
         aria-expanded={hits.length > 0}
         role="combobox"
         aria-autocomplete="list"
       />
       {error && (
-        <p className="mt-2 text-sm text-bad" role="alert">
+        <p className="mt-2 flex items-start gap-2" role="alert">
+          <Icon name="alert" className="mt-1 text-down" />
           Search data couldn&apos;t load ({error}). Try reloading the page.
         </p>
       )}
-      {!index && !error && q && <p className="mt-2 text-sm text-muted">Loading course list…</p>}
-      {index && q.trim() && !hits.length && <p className="mt-2 text-sm text-muted">No courses or instructors match “{q}”.</p>}
+      {!index && !error && q && <p className="mt-2 text-muted">Loading course list…</p>}
+      {index && q.trim() && !hits.length && <p className="mt-2 text-muted">No courses or instructors match &ldquo;{q}&rdquo;.</p>}
       {hits.length > 0 && (
-        <ul
-          id="search-results"
-          className="mt-2 divide-y divide-line rounded-lg border border-line bg-white"
-          role="listbox"
-          aria-label="Search results"
-        >
+        <ul id="search-results" className="mt-2 rounded border border-line bg-white px-3" role="listbox" aria-label="Search results">
           {hits.map((h, i) => (
             <li
               key={h.kind === "course" ? `c-${h.course.s}${h.course.n}` : `i-${h.instructor.k}`}
               role="option"
               aria-selected={i === active}
-              className={i === active ? "bg-panel" : ""}
+              className={`-mx-3 px-3 ${i === active ? "bg-action-tint" : ""}`}
             >
               {h.kind === "course" ? (
-                <div className="flex items-center gap-3 px-3 py-2">
-                  <Link href={hitHref(h)} className="min-w-0 flex-1 no-underline">
-                    <div className="flex flex-wrap items-baseline gap-x-2">
-                      <span className="font-semibold">
-                        {h.course.s} {h.course.n}
-                      </span>
-                      <span className="truncate">{h.course.t}</span>
-                    </div>
-                    <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted">
-                      {h.course.c && <span>{h.course.c} cr</span>}
-                      <span>GPA {fmtGpa(h.course.gpa)}</span>
-                      <span className={h.course.nx ? "text-good" : ""}>
-                        {termLabel(nextTerm)}: {h.course.nx ? "offered" : "not offered"}
-                      </span>
+                <CourseRow
+                  as="div"
+                  subject={h.course.s}
+                  number={h.course.n}
+                  title={h.course.t}
+                  cols={withCart ? COLS : COLS_NO_CART}
+                  badges={
+                    <>
+                      {h.course.c && <Badge>{h.course.c} credit hours</Badge>}
                       {h.course.g.map((g) => (
-                        <span key={g} className="rounded bg-orange-50 px-1.5 py-0.5 text-[11px] font-medium text-brand-dark">
-                          {g}
-                        </span>
+                        <Badge key={g}>{GENED_NAMES[g] ?? g}</Badge>
                       ))}
-                    </div>
-                  </Link>
-                  {withCart && h.course.nx ? <AddToCart subject={h.course.s} number={h.course.n} small /> : null}
-                </div>
+                    </>
+                  }
+                  slots={{
+                    gpa: { label: "Recent GPA", value: h.course.gpa !== null ? <span className="tnum font-semibold text-heading">{fmtGpa(h.course.gpa)}</span> : undefined },
+                    next: { label: termLabel(nextTerm), value: h.course.nx ? "Offered" : <span className="text-muted">Not offered</span>, sub: termLabel(nextTerm) },
+                  }}
+                  action={withCart && h.course.nx ? <AddToCart subject={h.course.s} number={h.course.n} small /> : null}
+                />
               ) : (
-                <div className="px-3 py-2">
-                  <div className="font-semibold">{h.instructor.name}</div>
-                  <div className="mt-0.5 flex flex-wrap gap-2 text-xs text-muted">
-                    <span>Teaching {termLabel(nextTerm)}:</span>
+                <div className="border-b border-line py-3">
+                  <p className="font-semibold text-heading">{h.instructor.name}</p>
+                  <p className="mt-0.5 flex flex-wrap gap-x-3 gap-y-1">
+                    <span className="text-muted">Teaching in {termLabel(nextTerm)}:</span>
                     {h.instructor.c.map((c) => {
                       const [s, n] = c.split(" ");
                       return (
-                        <Link key={c} href={courseHref(s, n)} className="text-brand-dark underline">
+                        <Link key={c} href={courseHref(s, n)} className="font-semibold text-action hover:underline">
                           {c}
                         </Link>
                       );
                     })}
-                  </div>
+                  </p>
                 </div>
               )}
             </li>
