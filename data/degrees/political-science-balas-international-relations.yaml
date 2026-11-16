@@ -1,0 +1,77 @@
+# Political Science: International Relations, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/political-science-balas/international-relations/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: political-science-balas-international-relations
+program: 'Political Science: International Relations, BALAS'
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/political-science-balas/international-relations/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+double_counting: []
+groups:
+- name: International Relations Concentration Requirements
+  section: International Relations Concentration Requirements
+  rule: all
+  courses:
+  - PS 100
+  id: international-relations-concentration-re-1
+- name: International Relations Concentration Requirements
+  section: International Relations Concentration Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - PS 280
+  - PS 281
+  - PS 282
+  notes:
+  - 'Select at least one course from the following:'
+  id: international-relations-concentration-re-2
+- name: International Relations Concentration Requirements
+  section: International Relations Concentration Requirements
+  rule: manual
+  notes:
+  - Select any additional 100- or 200-level Political Science courses
+  - Select 300- or 400-level Political Science courses, at least nine hours of which come from the International Relations
+    Concentration list (below). The other six hours may be any 300- or 400-level Political Science course.
+  - Select any additional Political Science courses at any level.
+  - Students will select a second major, or a minor, or a set of courses of at least 12 hours of thematically-related coursework
+    outside political science, developed in conjunction with an academic advisor.
+  id: international-relations-concentration-re-3
+- name: International Relations Course List
+  section: International Relations Concentration Requirements
+  rule: all
+  courses:
+  - PS 180
+  - PS 230
+  - PS 231
+  - PS 280
+  - PS 281
+  - PS 282
+  - PS 283
+  - PS 300
+  - PS 340
+  - PS 379
+  - PS 380
+  - PS 382
+  - PS 384
+  - PS 386
+  - PS 387
+  - PS 390
+  - PS 391
+  - PS 392
+  - PS 393
+  - PS 394
+  - PS 395
+  - PS 396
+  - PS 398
+  - PS 399
+  - PS 457
+  - PS 480
+  - PS 494
+  id: international-relations-course-list-4

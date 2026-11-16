@@ -1,7 +1,8 @@
 # Degree requirements
 
-One YAML file per program, copied from the official Academic Catalog page for one catalog year
-(https://catalog.illinois.edu/). Never fill a file in from memory: if the catalog can't be read, leave `groups: []`
+One YAML file per program, read from the official Academic Catalog page for one catalog year
+(https://catalog.illinois.edu/). Most files are written by `python -m pipeline.catalog_import` (they carry a
+`generated:` date); `finance-data-science.yaml` was checked by hand. Never fill a file in from memory: if the catalog can't be read, leave `groups: []`
 and say so in PROGRESS.md. `make data` validates every file (`pipeline/degrees.py`), checks each course code against
 the Course Explorer data it loads, logs codes it can't find, and exports `web/public/data/degrees/<id>.json` for the
 degree checklist at `/degree/`.
@@ -15,6 +16,7 @@ degree checklist at `/degree/`.
 | `catalog_year` | yes | `2026-2027` |
 | `source` | yes | The catalog page URL |
 | `read_on` | yes | Date the page was read, `YYYY-MM-DD` |
+| `generated` | no | Date `pipeline/catalog_import.py` wrote the file. The importer overwrites only files that have this key; delete it once you've checked a file by hand |
 | `total_hours` | no | Minimum hours for the degree |
 | `notes` | no | Catalog text for rules the schema can't express (copied, not paraphrased) |
 | `double_counting` | no | When one course may count toward two requirements (below) |
@@ -27,7 +29,7 @@ degree checklist at `/degree/`.
 | `id`, `name` | Unique id; the name shown on the checklist |
 | `section` | The catalog heading it sits under (groups with the same section are shown together) |
 | `kind` | `program` (default) or `gened` |
-| `rule` | `all` (every item), `n_of` (`n` items), `hours` (at least `hours` credit hours), `manual` (the student ticks it, e.g. a language requirement that high-school work can satisfy) |
+| `rule` | `all` (every item), `n_of` (`n` items), `hours` (at least `hours` credit hours), `manual` (the student ticks it: a language requirement that high-school work can satisfy, or any rule the catalog states in prose; its `notes` hold the catalog's words and its `courses`, if any, are shown as links and never counted) |
 | `courses` | Items. An item is a code (`MATH 221`), a sequence that counts as one item (`RHET 101 + RHET 102`), or a list of alternatives (`[STAT 107, CS 107, IS 107]`) |
 | `from` | Selectors instead of a list: a number range (`FIN 400-499`) or a gen-ed code (`gened:HP`) |
 | `exclude` | Codes a selector must not match (`[FIN 494, FIN 495]`) |
@@ -56,7 +58,14 @@ double_counting:
     source: https://catalog.illinois.edu/...
 ```
 
-## Adding a program
+## Importing every program
+
+`python -m pipeline.catalog_import` reads https://catalog.illinois.edu/undergraduate/, every program page on it (and
+the concentration pages of programs whose requirements live there), one request per second, cached in
+`data/raw/catalog/`; `--offline` re-parses the cache. What it turns into rules, and what it leaves as `manual`, is in
+DECISIONS.md D13.28. Run it when a new catalog year is published, then `python -m pipeline.degrees` and `make data`.
+
+## Adding or checking a program by hand
 
 1. Open the program's page in the current Academic Catalog and copy each table into a group, in order. Use `notes` for
    anything the schema can't express.

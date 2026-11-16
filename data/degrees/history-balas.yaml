@@ -1,0 +1,33 @@
+# History, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/history-balas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: history-balas
+program: History, BALAS
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/history-balas/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+notes: []
+double_counting: []
+groups:
+- name: 'Minimum required major course work: 36 hours of History courses.'
+  section: 'Minimum required major course work: 36 hours of History courses.'
+  rule: manual
+  notes:
+  - 'Minimum of 36 hours of History courses including:'
+  - Two introductory History courses at the 100 level (preliminary coursework)
+  - African, Asian, Global, Latin American, Middle Eastern History courses at the 200-level or above, at least 3 hours at
+    the 300 level or above
+  - European History courses at the 200-level or above, at least 3 hours at the 300 level or above
+  - U.S. History courses at the 200-level or above, at least 3 hours at the 300 level or above. 3 hours must be in U.S. Minority
+    History.
+  - 'Hours of history electives (at the 200-level or above). NOTE: HIST 200 and HIST 498 are required. HIST 200 and HIST 498
+    may count toward any of the area requirements or the 12 hours of History electives. For those students in the Honors Program,
+    HIST 490 or HIST 493 may count toward any of the area requirements or the 12 hours of History electives. HIST 492 and
+    HIST 499 must be taken as part of the 12 hours of required History electives.'
+  - Of the 36 hours of History courses, students must take 6 hours in a pre-modern period, one defined as before 1600 and
+    one defined as before 1800 (HIST 100 and HIST 142 may not be used to fulfill this requirement).
+  id: minimum-required-major-course-work-36-ho-1

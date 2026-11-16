@@ -1,0 +1,103 @@
+# Information Sciences + Data Science, BS (School of Information Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/ischool/information-sciences-data-science-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: information-sciences-data-science-bs
+program: Information Sciences + Data Science, BS
+college: School of Information Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/ischool/information-sciences-data-science-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+notes: []
+double_counting: []
+groups:
+- name: Mathematical Foundations
+  section: Data Science Core
+  rule: all
+  courses:
+  - - MATH 220
+    - MATH 221
+    - MATH 234
+  - - MATH 227
+    - MATH 257
+  id: mathematical-foundations-1
+- name: Data Science Fundamentals
+  section: Data Science Core
+  rule: all
+  courses:
+  - IS 107
+  - STAT 207
+  - CS 307
+  notes:
+  - 'Catalog total: 12 hours.'
+  id: data-science-fundamentals-2
+- name: Computational Fundamentals
+  section: Data Science Core
+  rule: all
+  courses:
+  - CS 277
+  notes:
+  - 'Catalog total: 4 hours.'
+  id: computational-fundamentals-3
+- name: Social Impact in Data Science
+  section: Data Science Core
+  rule: all
+  courses:
+  - IS 467
+  - IS 477
+  notes:
+  - 'Catalog total: 6 hours.'
+  id: social-impact-in-data-science-4
+- name: Information Sciences Core
+  section: Information Sciences Core
+  rule: all
+  courses:
+  - IS 101
+  - IS 202
+  - IS 204
+  - IS 205
+  - IS 206
+  - - IS 308
+    - IS 309
+    - IS 310
+    - IS 311
+  id: information-sciences-core-5
+- name: Information Sciences Core
+  section: Information Sciences Core
+  rule: manual
+  notes:
+  - School of Information Sciences Electives or approved courses in other departments
+  - Twelve hours of 300/400 level (advanced) courses in Information Sciences (IS) must be taken on this campus.
+  id: information-sciences-core-6
+- name: Meaningful Research or Discovery Experience
+  section: Meaningful Research or Discovery Experience
+  rule: manual
+  notes:
+  - One of the most important skills a student will gain in a IS+DS degree will be the ability to present data in meaningful
+    ways. A research or discovery experience is as much a pillar of this degree program as both the data science core coursework
+    (Part 1) and the coursework in Information Sciences.
+  courses:
+  - IS 189
+  id: meaningful-research-or-discovery-experie-7
+- name: Meaningful Research or Discovery Experience
+  section: Meaningful Research or Discovery Experience
+  rule: manual
+  notes:
+  - 'Examples of possible experiences may include:'
+  - A semester study-abroad with at one or more courses focused on discovery while attending the international institution.
+  - A multi-semester capstone experience within the student’s area of specialization.
+  - A semester co-op experience outside of the Champaign-Urbana area focused within the student’s area of specialization.
+  - A multi-semester undergraduate research experience under the direction of iSchool faculty.
+  - A summer REU program focused within your area of specialization.
+  id: meaningful-research-or-discovery-experie-8
+- name: Summary of Total Hours
+  section: Summary of Total Hours
+  rule: manual
+  notes:
+  - Total General Education Hours
+  - Total Data Science Core Hours
+  - Total Information Science Specialization Hours
+  - Meaningful Research or Discovery Experience
+  id: summary-of-total-hours-9

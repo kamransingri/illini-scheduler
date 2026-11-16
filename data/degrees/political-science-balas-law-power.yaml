@@ -1,0 +1,78 @@
+# Political Science: Law & Power, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/political-science-balas/law-power/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: political-science-balas-law-power
+program: 'Political Science: Law & Power, BALAS'
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/political-science-balas/law-power/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+double_counting: []
+groups:
+- name: Law and Power Concentration Requirements
+  section: Law and Power Concentration Requirements
+  rule: all
+  courses:
+  - PS 100
+  - PS 270
+  id: law-and-power-concentration-requirements-1
+- name: Law and Power Concentration Requirements
+  section: Law and Power Concentration Requirements
+  rule: manual
+  notes:
+  - Select any additional 100- or 200-level Political Science courses
+  - Select 300- or 400-level Political Science courses, at least nine hours of which come from the Law and Power Concentration
+    list (below), which must include at least one course from Law/Judicial Politics and one course from Political Theory.
+    The other six hours may be any 300- or 400-level Political Science course.
+  - Select Political Science courses at any level, at least three hours of which comes from the Law and Power Concentration
+    list maintained by the department. The other three hours may come from any Political Science course at any level.
+  - Students will select a second major, or a minor, or a set of courses of at least 12 hours of thematically-related coursework
+    outside political science, developed in conjunction with an academic advisor.
+  id: law-and-power-concentration-requirements-2
+- name: Law & Power Course List
+  section: Law and Power Concentration Requirements
+  rule: all
+  courses:
+  - PS 170
+  - PS 230
+  - PS 231
+  id: law-power-course-list-3
+- name: Law & Power Course List
+  section: Law and Power Concentration Requirements
+  rule: manual
+  notes:
+  - Law/Judicial Politics
+  courses:
+  - PS 300
+  - PS 301
+  - PS 302
+  - PS 305
+  - PS 306
+  - PS 322
+  - PS 323
+  - PS 386
+  - PS 494
+  id: law-power-course-list-4
+- name: Law & Power Course List
+  section: Law and Power Concentration Requirements
+  rule: manual
+  notes:
+  - Political Theory
+  courses:
+  - PS 370
+  - PS 371
+  - PS 372
+  - PS 373
+  - PS 374
+  - PS 375
+  - PS 376
+  - PS 377
+  - PS 413
+  - PS 494
+  id: law-power-course-list-5

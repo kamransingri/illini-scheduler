@@ -1,0 +1,335 @@
+# Hip Hop Culture and the Arts, BA (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/hip-hop-culture-arts-ba/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: hip-hop-culture-arts-ba
+program: Hip Hop Culture and the Arts, BA
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/hip-hop-culture-arts-ba/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/faa/hip-hop-culture-arts-ba/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+  notes:
+  - fulfilled by AFRO 228 and FAA 201
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+  notes:
+  - fulfilled by AFRO 228 or FAA 201
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Foundational Requirements
+  section: Foundations in Hip Hop Culture & the Arts
+  rule: all
+  courses:
+  - AFRO 228
+  - FAA 101
+  - FAA 180
+  - FAA 201
+  notes:
+  - 'Catalog total: 10 hours.'
+  id: foundational-requirements-11
+- name: Creative Studies
+  section: Foundations in Hip Hop Culture & the Arts
+  rule: all
+  courses:
+  - ARTD 217
+  - ARTS 220
+  - ARTS 221
+  - ARTS 241
+  - ARTS 245
+  - ARTS 264
+  - DANC 116
+  - DANC 216
+  - MUS 127
+  - MUS 128
+  - MUS 129
+  - SOCW 245
+  id: creative-studies-12
+- name: Creative Studies
+  section: Foundations in Hip Hop Culture & the Arts
+  rule: manual
+  notes:
+  - Other courses selected with advisor
+  id: creative-studies-13
+- name: Cultural Studies
+  section: Foundations in Hip Hop Culture & the Arts
+  rule: manual
+  notes:
+  - Other courses selected with advisor
+  courses:
+  - AFRO 132
+  - EALC 230
+  - HIST 104
+  - LLS 240
+  - MUS 132
+  - THEA 263
+  - UP 160
+  id: cultural-studies-14
+- name: Cultural Studies
+  section: Foundations in Hip Hop Culture & the Arts
+  rule: manual
+  notes:
+  - Other courses selected with advisor
+  id: cultural-studies-15
+- name: Digital Media Studies
+  section: Foundations in Hip Hop Culture & the Arts
+  rule: manual
+  notes:
+  - Other courses selected with advisor
+  - Other courses selected with advisor
+  courses:
+  - ART 160
+  - MACS 140
+  - MACS 150
+  - THEA 151
+  id: digital-media-studies-16
+- name: Digital Media Studies
+  section: Foundations in Hip Hop Culture & the Arts
+  rule: manual
+  notes:
+  - Other courses selected with advisor
+  id: digital-media-studies-17
+- name: Advanced Requirements
+  section: Advanced Studies in Hip Hop Culture & the Arts
+  rule: manual
+  notes:
+  - 'Catalog total: 16 hours.'
+  - Students complete each course one time, for a total of 9 hours and complete the remaining 7 required hours by repeating
+    any combination of the Advanced Requirements.
+  courses:
+  - FAA 480
+  - FAA 481
+  - MUS 425
+  - MUSC 457
+  id: advanced-requirements-18
+- name: Advanced Creative Studies
+  section: Advanced Studies in Hip Hop Culture & the Arts
+  rule: manual
+  notes:
+  - Students complete each course one time, for a total of 9 hours and complete the remaining 7 required hours by repeating
+    any combination of the Advanced Requirements.
+  courses:
+  - ARTS 320
+  - ARTS 420
+  - ARTS 446
+  - DANC 330
+  - DANC 340
+  - DANC 424
+  - MUS 327
+  - MUS 328
+  - MUS 329
+  - MUS 446
+  - UP 320
+  id: advanced-creative-studies-19
+- name: Advanced Creative Studies
+  section: Advanced Studies in Hip Hop Culture & the Arts
+  rule: manual
+  notes:
+  - Other courses selected with advisor
+  id: advanced-creative-studies-20
+- name: Advanced Cultural Studies
+  section: Advanced Studies in Hip Hop Culture & the Arts
+  rule: manual
+  notes:
+  - Students complete each course one time, for a total of 9 hours and complete the remaining 7 required hours by repeating
+    any combination of the Advanced Requirements.
+  - Other courses selected with advisor
+  courses:
+  - ARTE 480
+  - EALC 369
+  - GWS 462
+  - MACS 320
+  - MUS 410
+  - MUS 411
+  - MUS 414
+  - MUS 415
+  - MUS 416
+  - MUS 418
+  - MUS 421
+  - UP 330
+  - UP 473
+  id: advanced-cultural-studies-21
+- name: Advanced Cultural Studies
+  section: Advanced Studies in Hip Hop Culture & the Arts
+  rule: manual
+  notes:
+  - Other courses selected with advisor
+  id: advanced-cultural-studies-22
+- name: Education, Engagement, & Entrepreneurship
+  section: Advanced Studies in Hip Hop Culture & the Arts
+  rule: manual
+  notes:
+  - Other courses selected with advisor
+  - Other courses selected with advisor
+  courses:
+  - ARTD 399
+  - ARTS 321
+  - ARTS 399
+  - DANC 350
+  - DANC 405
+  - DANC 425
+  - DANC 455
+  id: education-engagement-entrepreneurship-23
+- name: Education, Engagement, & Entrepreneurship
+  section: Advanced Studies in Hip Hop Culture & the Arts
+  rule: manual
+  notes:
+  - DTX 300-499 (any 300-or 400-level DTX course)
+  courses:
+  - MACS 463
+  - MUS 336
+  - MUS 401
+  - MUS 402
+  - MUS 427
+  - MUS 428
+  - MUS 429
+  - MUS 437
+  - MUS 438
+  - MUS 447
+  - MUS 459
+  - SOCW 321
+  - SOCW 445
+  - UP 327
+  - UP 390
+  - UP 478
+  - UP 479
+  id: education-engagement-entrepreneurship-24
+- name: Education, Engagement, & Entrepreneurship
+  section: Advanced Studies in Hip Hop Culture & the Arts
+  rule: manual
+  notes:
+  - Other courses selected with advisor
+  id: education-engagement-entrepreneurship-25
+- name: Summary of Requirements for the Bachelor of Arts in Hip Hop Culture and the Arts
+  section: Summary of Requirements for the Bachelor of Arts in Hip Hop Culture and the Arts
+  rule: manual
+  notes:
+  - General Education
+  - Foundational Requirements
+  - Foundational Electives
+  - Advanced Requirements
+  - Advanced Electives
+  - Free Electives
+  id: summary-of-requirements-for-the-bachelor-26
+- name: Summary of Requirements for the Bachelor of Arts in Hip Hop Culture and the Arts
+  section: Summary of Requirements for the Bachelor of Arts in Hip Hop Culture and the Arts
+  rule: manual
+  notes:
+  - A minimum of 40 credits at the 300- or 400-level must be completed for this degree
+  - At least 45 semester hours of University of Illinois Urbana-Champaign credit
+  - At least 21 hours must be 300 or 400 level courses of University of Illinois Urbana-Champaign credit
+  id: summary-of-requirements-for-the-bachelor-27

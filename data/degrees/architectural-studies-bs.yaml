@@ -1,0 +1,251 @@
+# Architectural Studies, BS (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/architectural-studies-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: architectural-studies-bs
+program: Architectural Studies, BS
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/architectural-studies-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/faa/architectural-studies-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 220 or MATH 221; and MATH 231 or PHYS 101
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation
+  section: Architecture Curriculum
+  rule: all
+  courses:
+  - FAA 101
+  - ARCH 101
+  notes:
+  - 'Catalog total: 3 hours.'
+  id: orientation-11
+- name: Quantitative Reasoning
+  section: Architecture Curriculum
+  rule: all
+  courses:
+  - - MATH 220
+    - MATH 221
+  - - MATH 231
+    - PHYS 101
+  id: quantitative-reasoning-12
+- name: Design
+  section: Architecture Curriculum
+  rule: all
+  courses:
+  - ARCH 171
+  - ARCH 172
+  - ARCH 273
+  - ARCH 274
+  notes:
+  - 'Catalog total: 14 hours.'
+  id: design-13
+- name: Health & Wellbeing
+  section: Architecture Curriculum
+  rule: all
+  courses:
+  - ARCH 321
+  notes:
+  - 'Catalog total: 3 hours.'
+  id: health-wellbeing-14
+- name: Urbanism (select one)
+  section: Architecture Curriculum
+  rule: all
+  courses:
+  - ARCH 418
+  - ARCH 468
+  - GGIS 204
+  - GGIS 210
+  - GGIS 483
+  - UP 101
+  notes:
+  - 'Catalog total: 3 hours.'
+  id: urbanism-select-one-15
+- name: Architectural History
+  section: Architecture Curriculum
+  rule: all
+  courses:
+  - ARCH 210
+  notes:
+  - 'Catalog total: 9 hours.'
+  id: architectural-history-16
+- name: Architectural History
+  section: Architecture Curriculum
+  rule: manual
+  notes:
+  - Select two courses from upper division offerings in architectural history (ARCH) at the 300- or 400-level. Typical courses
+    include those listed below, but other options may be available each semester. Students are advised to discuss appropriate
+    choices with an advisor.
+  courses:
+  - ARCH 403
+  - ARCH 407
+  - ARCH 409
+  - ARCH 412
+  - ARCH 415
+  - ARCH 416
+  - ARCH 417
+  - ARCH 419
+  id: architectural-history-17
+- name: Architectural History
+  section: Architecture Curriculum
+  rule: manual
+  notes:
+  - Additional Architectural History (ARCH) courses, as approved by advisor
+  id: architectural-history-18
+- name: Performance
+  section: Architecture Curriculum
+  rule: manual
+  notes:
+  - 'Catalog total: 21 hours.'
+  - Select two courses from upper division offerings in architectural history (ARCH) at the 300- or 400-level. Typical courses
+    include those listed below, but other options may be available each semester. Students are advised to discuss appropriate
+    choices with an advisor.
+  - Additional Architectural History (ARCH) courses, as approved by advisor
+  courses:
+  - ARCH 231
+  - ARCH 232
+  - ARCH 433
+  - ARCH 434
+  - ARCH 435
+  id: performance-19
+- name: Studio
+  section: Architecture Curriculum
+  rule: manual
+  notes:
+  - 'Catalog total: 24 hours.'
+  - Select two courses from upper division offerings in architectural history (ARCH) at the 300- or 400-level. Typical courses
+    include those listed below, but other options may be available each semester. Students are advised to discuss appropriate
+    choices with an advisor.
+  - Additional Architectural History (ARCH) courses, as approved by advisor
+  courses:
+  - ARCH 371
+  - ARCH 372
+  - ARCH 473
+  - ARCH 474
+  id: studio-20
+- name: Summary of Credits for the Bachelor of Science in Architectural Studies
+  section: Summary of Credits for the Bachelor of Science in Architectural Studies
+  rule: manual
+  notes:
+  - General Education
+  - Architecture Curriculum
+  - Free Electives
+  id: summary-of-credits-for-the-bachelor-of-s-21

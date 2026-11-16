@@ -1,0 +1,304 @@
+# Environmental Sustainability, BSLAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/environmental-sustainability-bslas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: environmental-sustainability-bslas
+program: Environmental Sustainability, BSLAS
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/environmental-sustainability-bslas/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/environmental-sustainability-bslas/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: Orientation and Professional Development
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-and-professional-development-11
+- name: ESE Coursework
+  section: Major Requirements
+  rule: all
+  courses:
+  - ESE 200
+  - ENSU 300
+  - ESE 379
+  notes:
+  - 'Catalog total: 10 hours.'
+  id: ese-coursework-12
+- name: Advanced Courses
+  section: Major Requirements
+  rule: manual
+  notes:
+  - A minimum of six 300- and 400-level courses (from the lists below), totaling at least 18 credit hours, and in an academically
+    coherent program approved by the advisor, are required. At least three of these six advanced courses must be listed or
+    cross-listed as an ESE or ENSU course.
+  id: advanced-courses-13
+- name: Capstone and Experiential
+  section: Major Requirements
+  rule: manual
+  notes:
+  - A minimum of six 300- and 400-level courses (from the lists below), totaling at least 18 credit hours, and in an academically
+    coherent program approved by the advisor, are required. At least three of these six advanced courses must be listed or
+    cross-listed as an ESE or ENSU course.
+  courses:
+  - ESE 389
+  - ESE 401
+  - ESE 497
+  id: capstone-and-experiential-14
+- name: Earth's Biosphere & Ecology
+  section: Major Requirements
+  rule: manual
+  notes:
+  - A minimum of six 300- and 400-level courses (from the lists below), totaling at least 18 credit hours, and in an academically
+    coherent program approved by the advisor, are required. At least three of these six advanced courses must be listed or
+    cross-listed as an ESE or ENSU course.
+  courses:
+  - ESE 439
+  - HORT 430
+  - IB 362
+  - IB 411
+  - IB 440
+  - IB 444
+  - IB 451
+  - IB 452
+  - IB 453
+  - IB 461
+  - NRES 348
+  - NRES 419
+  - NRES 420
+  id: earth-s-biosphere-ecology-15
+- name: Earth's Physical Systems, Resources, & Hazards
+  section: Major Requirements
+  rule: manual
+  notes:
+  - A minimum of six 300- and 400-level courses (from the lists below), totaling at least 18 credit hours, and in an academically
+    coherent program approved by the advisor, are required. At least three of these six advanced courses must be listed or
+    cross-listed as an ESE or ENSU course.
+  courses:
+  - ABE 436
+  - ATMS 420
+  - CEE 330
+  - CHEM 360
+  - ENSU 302
+  - ESE 320
+  - ESE 333
+  - ESE 411
+  - ESE 445
+  - ESE 470
+  - ESE 486
+  - GEOL 380
+  - GEOL 450
+  - GEOL 451
+  - GEOL 460
+  - GGIS 401
+  - GGIS 406
+  - GGIS 408
+  - MSE 489
+  - NRES 351
+  id: earth-s-physical-systems-resources-hazar-16
+- name: Environment & the Human Response
+  section: Major Requirements
+  rule: manual
+  notes:
+  - A minimum of six 300- and 400-level courses (from the lists below), totaling at least 18 credit hours, and in an academically
+    coherent program approved by the advisor, are required. At least three of these six advanced courses must be listed or
+    cross-listed as an ESE or ENSU course.
+  courses:
+  - AGCM 330
+  - HK 408
+  - ENGL 476
+  - ENSU 301
+  - ESE 311
+  - ESE 360
+  - ESE 467
+  - ESE 477
+  - ESE 498
+  - GGIS 350
+  - GGIS 384
+  - GGIS 495
+  - GGIS 496
+  - LA 430
+  - LA 450
+  - NRES 340
+  - NRES 472
+  - SOC 447
+  id: environment-the-human-response-17
+- name: Sustainability, Policy, and Global Change
+  section: Major Requirements
+  rule: manual
+  notes:
+  - A minimum of six 300- and 400-level courses (from the lists below), totaling at least 18 credit hours, and in an academically
+    coherent program approved by the advisor, are required. At least three of these six advanced courses must be listed or
+    cross-listed as an ESE or ENSU course.
+  courses:
+  - ACE 310
+  - ACE 406
+  - ACE 411
+  - ATMS 307
+  - ATMS 447
+  - ATMS 449
+  - CPSC 336
+  - CPSC 415
+  - CPSC 431
+  - ENSU 303
+  - ENSU 310
+  - ENSU 410
+  - ESE 410
+  - ESE 465
+  - ESE 466
+  - ESE 482
+  - ETMA 311
+  - NPRE 480
+  - NRES 325
+  - NRES 439
+  - UP 446
+  - UP 456
+  - UP 480
+  id: sustainability-policy-and-global-change-18
+- name: Visualizing the Earth System
+  section: Major Requirements
+  rule: manual
+  notes:
+  - A minimum of six 300- and 400-level courses (from the lists below), totaling at least 18 credit hours, and in an academically
+    coherent program approved by the advisor, are required. At least three of these six advanced courses must be listed or
+    cross-listed as an ESE or ENSU course.
+  courses:
+  - ATMS 305
+  - ESE 380
+  - ESE 421
+  - GGIS 371
+  - GGIS 407
+  - GGIS 412
+  - GGIS 460
+  - GGIS 476
+  - GGIS 477
+  - GGIS 479
+  - NRES 427
+  - NRES 454
+  id: visualizing-the-earth-system-19
+- name: Required Concentration. Choose one below
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Science of the Earth System
+  - Society and the Environment
+  id: required-concentration-choose-one-below-20

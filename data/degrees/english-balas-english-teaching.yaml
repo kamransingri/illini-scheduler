@@ -1,0 +1,203 @@
+# English: English Teaching, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/english-balas/english-teaching/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: english-balas-english-teaching
+program: 'English: English Teaching, BALAS'
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/english-balas/english-teaching/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/english-balas/english-teaching/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by ENGL 350 and EDUC 202
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+  notes:
+  - fulfilled by ENGL 200, ENGL 209, ENGL 255, and EDUC 202
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by EPSY 201 and any other course approved as Social & Behavioral Sciences
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+  notes:
+  - fulfilled by EDUC 201
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+  notes:
+  - fulfilled by ENGL 209 and ENGL 255
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English, or completion
+    of the third semester in two different languages other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Core Courses
+  section: Major Requirements
+  rule: all
+  courses:
+  - ENGL 200
+  - ENGL 301
+  - ENGL 350
+  notes:
+  - 'Catalog total: 9 hours.'
+  id: core-courses-11
+- name: Historical Surveys
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 6 hours.'
+  - Students are encouraged to take these required survery courses as early as possible after completing ENGL 200
+  courses:
+  - ENGL 209
+  - ENGL 255
+  id: historical-surveys-12
+- name: Period Courses (American, British, Anglophone, etc.)
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 15 hours.'
+  - '3 hours: At least one course in one of the following categories:'
+  - Medieval Literature & Culture (before 1550)
+  - Early Modern Literature & Culture (1550-1660, other then Shakespeare)
+  - Eighteenth-Century Literature & Culture (1660-1800)
+  - '3 hours: Shakespeare'
+  - '3 hours: At least one course in Nineteenth-Century Literature & Culture'
+  - '3 hours: At least one course in Twentieth-Century Literature & Culture'
+  - '3 hours: At least one course in Contemporary Literature & Culture'
+  id: period-courses-american-british-anglopho-13
+- name: Language, Composition, & Pedagogy Courses
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 9 hours.'
+  - '3 hours: At least one course in Twentieth-Century Literature & Culture'
+  - '3 hours: At least one course in Contemporary Literature & Culture'
+  courses:
+  - ENGL 402
+  - ENGL 481
+  id: language-composition-pedagogy-courses-14
+- name: Language, Composition, & Pedagogy Courses
+  section: Major Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - ENGL 311
+  - ENGL 380
+  - ENGL 482
+  - BTW 490
+  notes:
+  - 'Select at least one of the following (3 hours):'
+  id: language-composition-pedagogy-courses-15
+- name: Language, Composition, & Pedagogy Courses
+  section: Major Requirements
+  rule: manual
+  notes:
+  - One course in Difference & Diaspora. This requirement can be fulfilled by taking an appropriately focused course from
+    among ENGL 350, the historical surveys, or the period courses.
+  id: language-composition-pedagogy-courses-16

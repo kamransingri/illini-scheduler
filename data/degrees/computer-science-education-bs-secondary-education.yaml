@@ -1,0 +1,217 @@
+# Computer Science + Education: Secondary Education, BS (College of Education), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/education/computer-science-education-bs/secondary-education/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: computer-science-education-bs-secondary-education
+program: 'Computer Science + Education: Secondary Education, BS'
+college: College of Education
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/education/computer-science-education-bs/secondary-education/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/education/computer-science-education-bs/secondary-education/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by EDUC 202
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+  notes:
+  - fulfilled by EDUC 202 and any other course approved as Humanities & the Arts
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by EPSY 201 and any other course approved as Social & Behavioral Science
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+  notes:
+  - fulfilled by EDUC 201
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, one course must be a Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  notes:
+  - fulfilled by CS 124, CS 128, CS 225, MATH 220 or MATH 221, MATH 231
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: College of Education Requirement
+  section: Major Requirements
+  rule: all
+  courses:
+  - EDUC 101
+  id: college-of-education-requirement-11
+- name: Education Core Requirement
+  section: Major Requirements
+  rule: all
+  courses:
+  - EPSY 201
+  id: education-core-requirement-12
+- name: Computer Science Core Requirements
+  section: Major Requirements
+  rule: all
+  courses:
+  - CS 124
+  - CS 128
+  - CS 173
+  - CS 222
+  - CS 225
+  - CS 374
+  id: computer-science-core-requirements-13
+- name: Computer Science Core Requirements
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Choose 1 from:'
+  courses:
+  - - CS 233 + CS 341
+    - CS 340
+  id: computer-science-core-requirements-14
+- name: Computer Science Core Requirements
+  section: Major Requirements
+  rule: manual
+  notes:
+  - '& two CS courses at the 400-level above CS 403, excluding CS 491. These two courses must be distinct from all other courses
+    used to fulfill program requirements or options.'
+  - 'Choose 1 from:'
+  courses:
+  - CS 357
+  - CS 421
+  id: computer-science-core-requirements-15
+- name: Mathematical Foundations
+  section: Major Requirements
+  rule: manual
+  notes:
+  - '& two CS courses at the 400-level above CS 403, excluding CS 491. These two courses must be distinct from all other courses
+    used to fulfill program requirements or options.'
+  - 'Choose 1 from:'
+  courses:
+  - CS 361
+  - - MATH 220
+    - MATH 221
+  - MATH 231
+  id: mathematical-foundations-16
+- name: Mathematical Foundations
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Choose 1 from:'
+  courses:
+  - MATH 225
+  - MATH 227
+  - MATH 257
+  id: mathematical-foundations-17
+- name: Secondary Education Concentration Requirements
+  section: Major Requirements
+  rule: all
+  courses:
+  - CI 401
+  - CI 403
+  - CI 404
+  - CI 473
+  - EDPR 442
+  - EDUC 201
+  - EDUC 202
+  - EPSY 485
+  - SPED 405
+  id: secondary-education-concentration-requir-18

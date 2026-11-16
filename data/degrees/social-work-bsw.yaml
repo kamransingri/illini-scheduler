@@ -1,0 +1,127 @@
+# Social Work, BSW (School of Social Work), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/socw/social-work-bsw/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: social-work-bsw
+program: Social Work, BSW
+college: School of Social Work
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/socw/social-work-bsw/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+notes: []
+double_counting: []
+groups:
+- name: Communication Skills and Composition
+  section: Communication Skills and Composition
+  rule: all
+  courses:
+  - - CMN 101 + RHET 105
+    - CMN 111 + CMN 112
+  id: communication-skills-and-composition-1
+- name: Communication Skills and Composition
+  section: Communication Skills and Composition
+  rule: manual
+  notes:
+  - Advanced Composition - SOCW 300 will meet the Advanced Composition Requirement
+  id: communication-skills-and-composition-2
+- name: Language other than English
+  section: Language other than English
+  rule: manual
+  notes:
+  - Complete of the third level or equivalent is required for graduation. American Sign Language is also acceptable.
+  id: language-other-than-english-3
+- name: Humanities and the Arts
+  section: Humanities and the Arts
+  rule: manual
+  notes:
+  - Literature and the Arts
+  - Historical and Philosophical Perspective
+  id: humanities-and-the-arts-4
+- name: Social and Behavioral Science
+  section: Social and Behavioral Science
+  rule: manual
+  notes:
+  - Any course that has been approved as a Social and Behavioral Science course from the General Education course list.
+  id: social-and-behavioral-science-5
+- name: Cultural Studies
+  section: Cultural Studies
+  rule: manual
+  notes:
+  - U.S. Minority cultures
+  - Western cultures
+  - Non-Western cultures
+  id: cultural-studies-6
+- name: Natural Sciences and Technology
+  section: Natural Sciences and Technology
+  rule: manual
+  notes:
+  - Life Science
+  - Physical Science
+  id: natural-sciences-and-technology-7
+- name: Quantitative Reasoning
+  section: Quantitative Reasoning
+  rule: manual
+  notes:
+  - Life Science
+  - Physical Science
+  courses:
+  - SOCW 225
+  - STAT 100
+  - ECON 202
+  - EPSY 280
+  - SOC 280
+  - PSYC 235
+  id: quantitative-reasoning-8
+- name: Quantitative Reasoning
+  section: Quantitative Reasoning
+  rule: manual
+  notes:
+  - From the approved campus list
+  id: quantitative-reasoning-9
+- name: BSW Requirements
+  section: BSW Requirements
+  rule: all
+  courses:
+  - SOCW 200
+  - SOCW 300
+  - SOCW 401
+  - SOCW 402
+  - SOCW 403
+  - SOCW 410
+  - SOCW 427
+  - SOCW 451
+  - SOCW 461
+  - SOCW 470
+  id: bsw-requirements-10
+- name: BSW Requirements
+  section: BSW Requirements
+  rule: manual
+  notes:
+  - 'Social Work electives:'
+  courses:
+  - SOCW 310
+  - SOCW 321
+  - SOCW 325
+  - SOCW 330
+  - SOCW 360
+  - SOCW 370
+  - SOCW 380
+  - SOCW 404
+  - SOCW 412
+  - SOCW 416
+  - SOCW 417
+  - SOCW 418
+  - SOCW 420
+  - SOCW 436
+  - SOCW 455
+  - SOCW 475
+  - SOCW 480
+  id: bsw-requirements-11
+- name: BSW Requirements
+  section: BSW Requirements
+  rule: manual
+  notes:
+  - Total SOCW hours
+  id: bsw-requirements-12

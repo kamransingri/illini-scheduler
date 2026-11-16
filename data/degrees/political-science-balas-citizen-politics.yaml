@@ -1,0 +1,78 @@
+# Political Science: Citizen Politics, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/political-science-balas/citizen-politics/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: political-science-balas-citizen-politics
+program: 'Political Science: Citizen Politics, BALAS'
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/political-science-balas/citizen-politics/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+double_counting: []
+groups:
+- name: Citizen Politics Concentration Requirements
+  section: Citizen Politics Concentration Requirements
+  rule: all
+  courses:
+  - PS 100
+  id: citizen-politics-concentration-requireme-1
+- name: Citizen Politics Concentration Requirements
+  section: Citizen Politics Concentration Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - PS 101
+  - PS 240
+  - PS 241
+  notes:
+  - 'Select at least one course from the following:'
+  id: citizen-politics-concentration-requireme-2
+- name: Citizen Politics Concentration Requirements
+  section: Citizen Politics Concentration Requirements
+  rule: manual
+  notes:
+  - Select any additional 100- or 200-level Political Science Courses
+  - Select 300- or 400-level Political Science courses, at least nine hours of which comes from the Citizen Politics Concentration
+    list (below). The other six hours may be any 300- or 400-level Political Science course.
+  - Select Political Science courses at any level, at least three hours of which comes from the Citizen Politics Concentration
+    list. The other three hours may be any Political Science course.
+  - Students will select a second major, or a minor, or a set of courses of at least 12 hours of thematically-related coursework
+    outside political science, developed in conjunction with an academic advisor.
+  id: citizen-politics-concentration-requireme-3
+- name: Citizen Politics Course List
+  section: Citizen Politics Concentration Requirements
+  rule: all
+  courses:
+  - PS 101
+  - PS 201
+  - PS 202
+  - PS 230
+  - PS 231
+  - PS 240
+  - PS 241
+  - PS 300
+  - PS 311
+  - PS 312
+  - PS 314
+  - PS 315
+  - PS 316
+  - PS 317
+  - PS 318
+  - PS 319
+  - PS 320
+  - PS 323
+  - PS 328
+  - PS 329
+  - PS 330
+  - PS 331
+  - PS 357
+  - PS 358
+  - PS 411
+  - PS 456
+  - PS 494
+  id: citizen-politics-course-list-4

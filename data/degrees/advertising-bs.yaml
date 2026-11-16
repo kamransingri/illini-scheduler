@@ -1,0 +1,224 @@
+# Advertising, BS (College of Media), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/media/advertising-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: advertising-bs
+program: Advertising, BS
+college: College of Media
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/media/advertising-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 124
+notes:
+- 'Minimum hours required for graduation: 124 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/media/advertising-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by ADV 150; and ECON 102 or ECON 103; and ANTH 103 or PSYC 100 or SOC 100
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by ADV 200 or STAT 100 or ECON 202 or PSYC 235 or SOC 280 or SOCW 225 and any other course approved as Quantitative
+    Reasonin I or II
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Required Major Courses
+  section: General Education Requirements
+  rule: all
+  courses:
+  - ADV 150
+  - ADV 250
+  - ADV 280
+  - ADV 281
+  - ADV 284
+  - ADV 360
+  - ADV 390
+  notes:
+  - 'Catalog total: 24 hours.'
+  id: required-major-courses-11
+- name: Required Major Courses
+  section: General Education Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - ADV 492
+  - ADV 498
+  notes:
+  - 'Choose one of the following:'
+  id: required-major-courses-12
+- name: Advertising Electives
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 18 hours.'
+  - Any Advertising (ADV) course not already required above
+  id: advertising-electives-13
+- name: College of Media Electives
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 9 hours.'
+  - Courses offered by or cross-listed with Advertising (ADV), Journalism (JOUR), Media and Cinema Studies (MACS), or Media
+    (MDIA)
+  id: college-of-media-electives-14
+- name: Other Required Supporting Coursework
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Any Advertising (ADV) course not already required above
+  - Courses offered by or cross-listed with Advertising (ADV), Journalism (JOUR), Media and Cinema Studies (MACS), or Media
+    (MDIA)
+  courses:
+  - BADM 320
+  id: other-required-supporting-coursework-15
+- name: Other Required Supporting Coursework
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Fulfills advanced hours outside of the College requirement
+  - 'Choose one of the following:'
+  courses:
+  - ECON 102
+  - ECON 103
+  id: other-required-supporting-coursework-16
+- name: Other Required Supporting Coursework
+  section: General Education Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - ADV 200
+  - STAT 100
+  notes:
+  - 'Choose one of the following:'
+  id: other-required-supporting-coursework-17
+- name: Other Required Supporting Coursework
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Or another approved basic course or course sequence in statistical methods, which currently includes ECON 202, PSYC 235,
+    SOC 280, SOCW 225.
+  - 'Choose one of the following:'
+  courses:
+  - ANTH 103
+  - PSYC 100
+  - SOC 100
+  id: other-required-supporting-coursework-18
+- name: Advanced Hours Requirement
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - At least 20 hours in courses numbered 200 or above. These courses must be outside and not cross-listed with the College
+    of Media. At least 9 of the 20 hours must be in courses numbered 300 or above.
+  - 'Please note: Courses used to fulfill University General Education requirements or to fulfill requirements for a minor
+    may count toward these requirements.'
+  id: advanced-hours-requirement-19

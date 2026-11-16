@@ -1,0 +1,95 @@
+# Community Health: Health Planning & Administration, BS (College of Applied Health Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/ahs/community-health-bs/health-planning-administration/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: community-health-bs-health-planning-administration
+program: 'Community Health: Health Planning & Administration, BS'
+college: College of Applied Health Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/ahs/community-health-bs/health-planning-administration/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+notes: []
+double_counting: []
+groups:
+- name: Communication Arts
+  section: General Education
+  rule: manual
+  notes:
+  - Composition I and an approved speech performance course; or CMN 111 and CMN 112
+  - Advanced Composition (CHLH 304 fulfills requirement)
+  id: communication-arts-1
+- name: Quantitative Reasoning I & II
+  section: General Education
+  rule: manual
+  notes:
+  - From approved campus list (must include a course in statistics from approved campus list) (CHLH 244 and CHLH 421 fulfills
+    requirement)
+  id: quantitative-reasoning-i-ii-2
+- name: Humanities and the Arts
+  section: General Education
+  rule: manual
+  notes:
+  - From approved campus list (CHLH 260 fulfills 3 hours of requirement)
+  id: humanities-and-the-arts-3
+- name: Social and Behavioral Sciences
+  section: General Education
+  rule: manual
+  notes:
+  - From approved campus list
+  id: social-and-behavioral-sciences-4
+- name: Natural Sciences and Technology
+  section: General Education
+  rule: manual
+  notes:
+  - From approved campus list
+  id: natural-sciences-and-technology-5
+- name: Cultural Studies
+  section: General Education
+  rule: manual
+  notes:
+  - One course from Non-Western Cultures approved campus list.
+  - One course from U.S. Minority Cultures approved campus list
+  - One course from Western Cultures approved campus list
+  - 'Foreign Language: Completion through the third level of the same language in high school or college'
+  id: cultural-studies-6
+- name: Community Health Program Core Requirements
+  section: General Education
+  rule: all
+  courses:
+  - CHLH 100
+  - CHLH 125
+  - CHLH 201
+  - CHLH 210
+  - CHLH 250
+  - CHLH 274
+  - CHLH 304
+  - CHLH 410
+  - CHLH 421
+  id: community-health-program-core-requiremen-7
+- name: Kinesiology and Community Health Department Core Requirements
+  section: General Education
+  rule: all
+  courses:
+  - CHLH 101
+  - KIN 122
+  id: kinesiology-and-community-health-departm-8
+- name: Correlate Areas (see Correlates List Tab)
+  section: General Education
+  rule: manual
+  notes:
+  - 'Catalog total: 18 hours.'
+  - Each student completes correlates that are planned with the assigned advisor. These courses are designed to enhance and
+    support career goals.
+  id: correlate-areas-see-correlates-list-tab-9
+- name: Concentration Requirements
+  section: Concentration Requirements
+  rule: all
+  courses:
+  - CHLH 455
+  - CHLH 457
+  - CHLH 458
+  - CHLH 380
+  - CHLH 485
+  id: concentration-requirements-10

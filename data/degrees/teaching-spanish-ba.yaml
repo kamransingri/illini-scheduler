@@ -1,0 +1,172 @@
+# Teaching of Spanish, BA (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/teaching-spanish-ba/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: teaching-spanish-ba
+program: Teaching of Spanish, BA
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/teaching-spanish-ba/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/teaching-spanish-ba/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by EPSY 201 and any other course approved as Social & Behavioral Sciences
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English, or completion of
+    the third semester in two different languages other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Core Spanish Courses
+  section: Major Requirements
+  rule: all
+  courses:
+  - SPAN 228
+  - SPAN 477
+  id: core-spanish-courses-11
+- name: Core Spanish Courses
+  section: Major Requirements
+  rule: manual
+  notes:
+  - '27-30 additional hours of coursework in SPAN at the 200, 300, and/or 400 level, including at least two literature and
+    culture courses and at least two linguisitics courses, chosen from among the following: SPAN 250, 252, 254, 303, 305,
+    307, 308, 309, 310, 312, 318, 320, 324, 326, 395, related SPAN 299 or SPAN 399 study abroad courses, or related SPAN 400-level
+    courses with advisor approval.'
+  id: core-spanish-courses-12
+- name: Core Professional Education Courses
+  section: Major Requirements
+  rule: manual
+  notes:
+  - '27-30 additional hours of coursework in SPAN at the 200, 300, and/or 400 level, including at least two literature and
+    culture courses and at least two linguisitics courses, chosen from among the following: SPAN 250, 252, 254, 303, 305,
+    307, 308, 309, 310, 312, 318, 320, 324, 326, 395, related SPAN 299 or SPAN 399 study abroad courses, or related SPAN 400-level
+    courses with advisor approval.'
+  courses:
+  - WLTE 471
+  - WLTE 475
+  - WLTE 478
+  id: core-professional-education-courses-13
+- name: Core Professional Education Courses
+  section: Major Requirements
+  rule: manual
+  notes:
+  - (In the fall semester, students enroll in WLTE 478 for 3 hours with instruction occurring in the first 10 weeks. In the
+    spring semester, students enroll in WLTE 478 for 1 hour with instruction occurring in the first 4 weeks.)
+  courses:
+  - EPOL 201
+  - EPSY 201
+  - SPED 405
+  - EDPR 442
+  id: core-professional-education-courses-14

@@ -1,0 +1,249 @@
+# Sustainable Design, BS (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/sustainable-design-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: sustainable-design-bs
+program: Sustainable Design, BS
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/sustainable-design-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/faa/sustainable-design-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Foundation
+  section: Sustainable Design Requirements
+  rule: all
+  courses:
+  - FAA 101
+  - FAA 230
+  - FAA 231
+  - LA 101
+  - ARCH 171
+  - ARCH 172
+  - ARTH 211
+  notes:
+  - 'Catalog total: 18 hours.'
+  id: foundation-11
+- name: Urban Scale Sustainability (select one course)
+  section: Sustainable Design Requirements
+  rule: all
+  courses:
+  - UP 136
+  - UP 205
+  - ARCH 237
+  notes:
+  - 'Catalog total: 3 hours.'
+  id: urban-scale-sustainability-select-one-co-12
+- name: Drawing (select one course)
+  section: Sustainable Design Requirements
+  rule: all
+  courses:
+  - ARTD 225
+  - ARTF 102
+  - LA 280
+  notes:
+  - 'Catalog total: 3 hours.'
+  id: drawing-select-one-course-13
+- name: Core
+  section: Sustainable Design Requirements
+  rule: all
+  courses:
+  - FAA 330
+  - ARTD 326
+  - ARCH 321
+  - ARTD 451
+  - FAA 310
+  notes:
+  - 'Catalog total: 17 hours.'
+  id: core-14
+- name: Senior Capstone
+  section: Sustainable Design Requirements
+  rule: all
+  courses:
+  - FAA 430
+  - FAA 431
+  notes:
+  - 'Catalog total: 8 hours.'
+  id: senior-capstone-15
+- name: Sustainable Design Major Electives
+  section: Sustainable Design Major Electives
+  rule: manual
+  notes:
+  - Select 16 credit hours, with at least 10 hours at the 300 or 400-level, and with approval of advisor.
+  courses:
+  - ARTD 217
+  - ARTD 230
+  - ARTD 270
+  - ART 205
+  - ART 208
+  - ART 310
+  - ARTJ 398
+  - ARTD 426
+  - ARTS 321
+  - UP 203
+  - UP 204
+  - UP 205
+  - UP 340
+  - UP 406
+  - UP 418
+  - UP 420
+  - UP 426
+  - UP 430
+  - UP 434
+  - UP 437
+  - UP 438
+  - UP 456
+  - UP 479
+  - UP 486
+  - UP 494
+  - ARCH 210
+  - ARCH 231
+  - ARCH 237
+  - ARCH 273
+  - ARCH 416
+  - ARCH 417
+  - LA 214
+  - LA 222
+  - LA 242
+  - LA 250
+  - LA 370
+  - LA 387
+  - LA 430
+  - LA 446
+  - LA 466
+  - LA 480
+  - FAA 491
+  id: sustainable-design-major-electives-16
+- name: Sustainable Design Major Electives
+  section: Sustainable Design Major Electives
+  rule: manual
+  notes:
+  - Other courses approved by advisor
+  id: sustainable-design-major-electives-17
+- name: Summary of Credits for Bachelor of Science in Sustainable Design
+  section: Summary of Credits for Bachelor of Science in Sustainable Design
+  rule: manual
+  notes:
+  - General Education requirements
+  - Sustainable Design Major
+  - Major Electives
+  - Free Electives
+  - A minimum of 40 credits at the 300 or 400 course level are required
+  id: summary-of-credits-for-bachelor-of-scien-18

@@ -1,0 +1,204 @@
+# Mathematics, BSLAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/mathematics-bslas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: mathematics-bslas
+program: Mathematics, BSLAS
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/mathematics-bslas/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/mathematics-bslas/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by CS 101 or CS 124; MATH 220 or MATH 221; MATH 231, MATH 241
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: General Education Requirements
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-and-professional-development-11
+- name: Major Core Requirements
+  section: General Education Requirements
+  rule: all
+  courses:
+  - - MATH 220
+    - MATH 221
+  - MATH 231
+  - MATH 241
+  - - MATH 347
+    - MATH 314
+  - MATH 416
+  - - MATH 417
+    - MATH 427
+  - - MATH 461
+    - STAT 400
+  - - CS 101
+    - CS 124
+  id: major-core-requirements-12
+- name: Major Core Requirements
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Approved supporting coursework outside Mathematics (Supporting coursework may be completed with 12 advisor-approved hours
+    of a single math-related area outside of MATH/ASRM not used for a major requirement and must include at least one advanced
+    course; ANY minor which is fulfilled with at least 12 hours of courses, including one advanced course, not used for the
+    major nor cross-listed with MATH/ASRM; or any double major or dual degree.)
+  id: major-core-requirements-13
+- name: Major Core Requirements
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Note: An optional concentration may be elected, please talk to an advisor. Students who do not elect an optional concentration
+    are required to take the math major coursework below.'
+  id: major-core-requirements-14
+- name: Mathematics Major Coursework
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Analysis Requirement
+  courses:
+  - - MATH 444
+    - MATH 447
+    - MATH 424
+  id: mathematics-major-coursework-15
+- name: Mathematics Major Coursework
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Breadth Requirement. Select a total of two courses from the following list of eight courses:'
+  courses:
+  - MATH 402
+  - MATH 403
+  - MATH 423
+  - MATH 441
+  - MATH 446
+  - MATH 448
+  - MATH 453
+  - MATH 481
+  id: mathematics-major-coursework-16
+- name: Mathematics Major Coursework
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Two additional 400-level or approved 500-level MATH courses that are not graded as S/U.
+  id: mathematics-major-coursework-17
