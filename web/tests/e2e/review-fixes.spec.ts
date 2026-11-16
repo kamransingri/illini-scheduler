@@ -23,7 +23,8 @@ test("an impossible lock is explained and the schedule is marked incomplete", as
   await lec.selectOption({ label: lecOther });
   // with a lecture locked, the discussion list only offers that lecture's group
   const lecGroup = lecOther.replace("🔒", "").trim()[0];
-  for (const o of (await dis.locator("option").allTextContents()).filter((x) => x.includes("CRN") && !x.includes(disFirst.slice(3, 12))))
+  const disCrn = /CRN (\d{5})/.exec(disFirst)![1];
+  for (const o of (await dis.locator("option").allTextContents()).filter((x) => x.includes("CRN") && !x.includes(disCrn)))
     expect(o.replace("🔒", "").trim()[0]).toBe(lecGroup);
   await page.getByRole("button", { name: "Generate schedules" }).click();
   await expect(page.getByTestId("missing")).toContainText("MATH 231 can't be scheduled");

@@ -344,3 +344,12 @@ Every judgment call made during the autonomous build, newest phase last.
   column chart: the SVG's 9-unit labels rendered at about 5px on a 375px phone.
 - **D13.7 Sources behind (i).** Every number keeps its source, term range and sample size, now in an `Info` popover that
   opens on hover, keyboard focus and tap (the old dotted-underline tooltip needed a mouse).
+- **D13.8 Other pages** (Phase 3) use the same tokens and components with no change in behaviour. Any list of courses
+  is a `CourseRow` (search results, gen-ed finder, later the degree checklist). Errors and warnings use an alert icon
+  and the neutral panel, not red, because red only means "below the course average". The page grew from 64 to 72rem so
+  a course row fits its columns beside the gen-ed filters; rows use container queries, so the same row stacks in the
+  schedule builder's 22rem sidebar.
+- **D13.9 Schedule builder colours.** Courses keep a colour each in the calendar and cart (categorical, from the brand's
+  supporting colours: Industrial, Berry, Arches, Altgeld, Illini Blue, Storm; green and the seat-status hues are left
+  out). The cart cards lost their tinted backgrounds; a coloured edge is enough to match the calendar. The lock menus
+  dropped the padlock emoji.

@@ -442,3 +442,11 @@ Review screenshots were shared with the owner of this session for approval (Phas
   likely a different person. Worth an entry in `data/name_overrides.csv` or a stricter department check in `rmp.py`.
 - `CURRENT_TERM` / `NEXT_TERM` / `HISTORY_TERMS` are hard-coded in `pipeline/fetch.py`; they need a by-hand bump when
   Fall 2027 is published (usually around March 2027).
+
+### Phase 3 — other pages (done)
+
+Approved by the session owner on 2026-11-16 and pushed as `v0.2.0-beta.1` (CI on the branch: pass). Home, gen-ed
+finder, search results, schedule builder and Just opened restyled with the tokens; `components/ui/CourseRow.tsx` is the
+shared course row; `Metric` and the legacy colour aliases are gone. Checks: Playwright 32/33 (the Windows-only test),
+Vitest 68/68, lint clean; Lighthouse (single run): home 0.98/1.00/1.00, gen-eds 0.87/1.00/1.00, schedule 0.97/1.00/1.00,
+Just opened 0.88/1.00/1.00 (performance/accessibility/best practices); no sideways scroll at 375px on any of them.

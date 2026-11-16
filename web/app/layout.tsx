@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <header className="border-b-4 border-orange bg-navy text-white">
-          <nav className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-5 gap-y-1 px-4 py-3" aria-label="Main">
+          <nav className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-5 gap-y-1 px-4 py-3" aria-label="Main">
             <Link href="/" className="mr-auto font-display text-lg font-bold no-underline">
               Illini Scheduler
             </Link>
@@ -44,11 +44,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Link>
           </nav>
         </header>
-        <main id="main" className="mx-auto max-w-5xl px-4 py-8">
+        <main id="main" className="mx-auto max-w-6xl px-4 py-8">
           {children}
         </main>
         <footer className="border-t border-line bg-panel">
-          <div className="mx-auto max-w-5xl space-y-2 px-4 py-6 text-sm text-muted">
+          <div className="mx-auto max-w-6xl space-y-2 px-4 py-6 text-sm text-muted">
             <p>
               <strong className="text-ink">Unofficial.</strong> Not affiliated with the University of Illinois. Data comes from public sources and can
               be out of date: confirm sections, seats and restrictions in Self-Service before registering.

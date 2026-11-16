@@ -57,12 +57,6 @@
   /* one radius */
   --radius-*: initial;
   --radius: 4px;
-
-  /* legacy names, kept only until every page uses the tokens above (Phase 3 of the redesign removes them) */
-  --color-brand: #1d58a7;
-  --color-brand-dark: #13294b;
-  --color-good: #006230;
-  --color-bad: #b42318;
 }
 
 @layer base {
@@ -88,32 +82,12 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Metric with its source on hover / focus */
-.metric {
-  position: relative;
-  border-bottom: 1px dotted currentColor;
-  cursor: help;
-}
-.metric .tip {
-  display: none;
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 6px);
-  transform: translateX(-50%);
-  width: max-content;
-  max-width: min(260px, 80vw);
-  white-space: normal;
-  background: var(--color-ink);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.35;
-  padding: 6px 8px;
-  border-radius: 6px;
-  z-index: 30;
-  pointer-events: none;
-}
-.metric:hover .tip,
-.metric:focus .tip {
-  display: block;
-}
+/* Course colours in the schedule builder: categorical, only for telling courses apart in the calendar and cart */
+.course-0 { --course: #1d58a7; } /* il-industrial */
+.course-1 { --course: #5c0e41; } /* il-berry */
+.course-2 { --course: #009fd4; } /* il-arches */
+.course-3 { --course: #c84113; } /* il-altgeld */
+.course-4 { --course: #13294b; } /* il-blue */
+.course-5 { --course: #707372; } /* il-storm */
+.course-swatch { border-left-color: var(--course); }
+.course-block { border-left-color: var(--course); background: color-mix(in srgb, var(--course) 13%, white); color: var(--color-ink); }
