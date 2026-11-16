@@ -70,9 +70,9 @@ element; everything around it stays quiet.
 
 ### Typography
 
-- **Faces** (brand.illinois.edu/visual-identity/typography): Source Sans 3 for everything (the brand's "workhorse",
-  free, variable), Montserrat for page and section headings and the one headline number in a block (the brand's face
-  for "headings, subheadings, large stand-out numbers"). Both are self-hosted at build time by `next/font`.
+- **Face** (brand.illinois.edu/visual-identity/typography): Source Sans 3 for everything, the brand's "workhorse" and
+  its face for headlines in heavier weights. One family, self-hosted at build time by `next/font`. (Montserrat was
+  dropped after review: its geometric headings read as a template look.)
 - **Five sizes, no others:** 14px (labels, captions, meta), 16px (body), 19px (row titles, h3), 24px (section headings,
   headline numbers), 32px (page title). Body text is 16px; nothing is smaller than 14px.
 - **Tabular numbers** (`tnum`) on every GPA, rating, percentage, count and time, so columns line up.
@@ -113,7 +113,7 @@ read 2026-11-16). Each colour has one meaning.
 
 ### Hierarchy
 
-- Each block has one main number (Montserrat, 24px, `heading`); everything else is 14–16px.
+- Each block has one main number (24px, semibold, `heading`); everything else is 14–16px.
 - Where a number comes from (source, term range, sample size) sits behind an (i) button next to it: hover, focus or
   tap opens it. Nothing is dropped, it just stops pushing the data down the page.
 - One disclaimer, in the footer.
@@ -136,7 +136,7 @@ can't creep back in. Classes to use:
 | Surfaces | `bg-white`, `bg-panel`, `bg-navy` (site header), `bg-action-tint` (selected / hover) |
 | Seat status | `bg-open-bg text-open`, `bg-restricted-bg text-restricted`, `bg-closed-bg text-closed` (only via `<SeatStatus>`) |
 | Grades | `bg-grade-a`, `bg-grade-b`, `bg-grade-c`, `bg-grade-df` (only via `<GradeBar>` / `<GpaChart>`) |
-| Type | `text-sm` 14, `text-base` 16, `text-lg` 19, `text-xl` 24, `text-2xl` 32; `font-display` (Montserrat); `tnum` for numbers |
+| Type | `text-sm` 14, `text-base` 16, `text-lg` 19, `text-xl` 24, `text-2xl` 32; `font-display` (Source Sans 3, used bold for headings); `tnum` for numbers |
 | Radius | `rounded` (4px), `rounded-full` for dots |
 | Course colours | `course-0` ... `course-5` with `course-swatch` / `course-block`: brand supporting colours that tell courses apart in the schedule calendar and cart, and nothing else |
 
@@ -153,7 +153,7 @@ can't creep back in. Classes to use:
 | `SectionHeader` | h2/h3 with actions on the right and a one-line lead |
 | `DataRow` | Label/value row inside a `<dl>` |
 | `Expandable` | Disclosure button + panel (`aria-expanded`, `aria-controls`) |
-| `CourseRow` | One course in any list (search results, gen-ed finder, degree checklist): code and title, then fixed columns (score, GPA, best professor, RMP, next term, action) in the same place on every list. Uses container queries, so it lays out by the width it gets (a narrow sidebar stacks it) |
+| `CourseRow` | One course in a list (search results, degree checklist; the gen-ed finder uses a ruled table instead, D13.24): code and title, then fixed columns (score, GPA, best professor, RMP, next term, action) in the same place on every list. Uses container queries, so it lays out by the width it gets (a narrow sidebar stacks it) |
 
 `web/components/WeightsControl.tsx` is the one place students set the best-pick weights (course page, gen-ed finder,
 degree checklist). Course-page pieces built on them live in `web/components/course/` (`ProfessorLedger`, `SectionsList`, `CompareTable`,

@@ -35,11 +35,13 @@ students check before registering, on one page:
   term by term.
 - **Exam and grading format** per instructor (midterms, final, CBTF, curve, attendance, homework platform,
   projects, textbook), only where a source quote supports it.
-- **Gen-ed finder** (`/geneds/`): filter by category, time and seats, ranked by the best pick score or by GPA.
+- **Gen-ed finder** (`/geneds/`): pick one or more gen-ed categories (a course must count for all of them), filter by
+  time and seats, and compare courses in a table ranked by the best pick score or by GPA.
 - **Degree checklist** (`/degree/`): enter finished courses, AP or transfer credit and courses in progress (kept in
   your browser and the link, never on a server); see each requirement of a program as done, in progress, partly done
   or open, and the best options for each open one. Double counting follows the catalog's own rules, quoted; where the
-  catalog doesn't say, the page says so. First program: Finance + Data Science, BS (2026-2027 catalog).
+  catalog doesn't say, the page says so. Every undergraduate program in the 2026-2027 catalog (171, concentrations
+  included) is imported from its catalog page; Finance + Data Science, BS was also checked by hand.
 - **Schedule builder** (`/schedule/`): cart, every conflict-free combination (lecture + linked discussion/lab),
   ranked by your preferences, weekly calendar, CRN export, `.ics` download, share links, and a warning when two
   final exams overlap.
@@ -58,7 +60,7 @@ students check before registering, on one page:
 | [Grade disparity view](https://waf.web.engr.illinois.edu/discovery/grade_disparity_between_sections_at_uiuc/) | Design reference for the instructor comparison | — (recomputed from the GPA dataset) |
 | Rate My Professors (unofficial GraphQL) | Ratings, tags, snippets | Optional; cached 7 days; the site works without it |
 | Student notes (`data/notes/*.yaml`) | Exam/grading notes | Curated from "Suggest a note" GitHub issues |
-| [Academic Catalog](https://catalog.illinois.edu/) | Degree requirements (`data/degrees/*.yaml`) | Finance + Data Science, BS, 2026-2027, read 2026-11-16 |
+| [Academic Catalog](https://catalog.illinois.edu/) | Degree requirements (`data/degrees/*.yaml`) | All 171 undergraduate programs, 2026-2027, read 2026-11-16 (`python -m pipeline.catalog_import`) |
 | Course Explorer final-exam schedule | Final-exam times per section | Read weekly by the availability job once a term's finals are published |
 
 Self-Service (Banner) needs a NetID and is never scraped: the app only links to it and copies CRNs.
@@ -88,6 +90,7 @@ Rate My Prof.  ──┘    (pipeline/)          (SQLite)          (pipeline/exp
 | `make data` | Full pipeline (all subjects, 14 terms) |
 | `make data-quick` | Only CS, MATH, STAT, RHET |
 | `python -m pipeline.degrees` | Validate `data/degrees/*.yaml` and list course codes the loaded data doesn't know |
+| `python -m pipeline.catalog_import` | Import every undergraduate program's requirements from the Academic Catalog |
 | `make test` | pytest (pipeline) + Vitest (web logic) |
 | `make lint` | ruff, mypy, ESLint, tsc |
 | `make dev` | Next.js dev server on :3000 |
@@ -114,9 +117,12 @@ counts as one (`RHET 101 + RHET 102`); `exclude`, `max_hours`, `min_from`, `not_
 catalog's caveats, and `double_counting` lists the quoted rules for when a course may count twice. The full schema is
 in `data/degrees/README.md`.
 
-To add a program: copy its catalog tables into a new `data/degrees/<id>.yaml` (never from memory), add the gen-ed groups
-and double-counting rules the page says apply, run `python -m pipeline.degrees` to validate it, then `make data`. It
-appears in the program menu on `/degree/`.
+Every program is imported with `python -m pipeline.catalog_import` (about 4 minutes the first time, one request per
+second; `--offline` re-parses the cached pages). It reads course lists, alternatives and "Select N" rules from the
+catalog's tables and keeps anything written in prose as a `manual` requirement in the catalog's own words; see
+DECISIONS.md D13.28. Re-run it when a new catalog year is published. To check a program by hand, edit its file and
+delete its `generated:` line: the importer never overwrites a file without one. Run `python -m pipeline.degrees` to
+validate the files, then `make data`.
 
 See `DECISIONS.md` for every judgment call (D13 for the redesign and degree planner), `DESIGN.md` for the design, and
 `PROGRESS.md` for what was verified and how.
