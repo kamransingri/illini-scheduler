@@ -1,21 +1,22 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { applyFilters, DEFAULT_FILTERS, DEFAULT_SORT, filtersFromQuery, filtersToQuery, GENED_GROUPS, openCount, type Filters, type SortKey } from "@/lib/geneds";
-import { dataUrl, fmtGpa, fmtInt, fmtPct, GENED_NAMES, termLabel } from "@/lib/format";
+import { courseHref, dataUrl, fmtGpa, fmtInt, fmtPct, GENED_NAMES, termLabel } from "@/lib/format";
 import { rankCourse } from "@/lib/rank";
 import type { ScorePriors } from "@/lib/score";
 import type { GenedRow } from "@/lib/types";
 import { useWeights } from "@/lib/weights";
 import ScoreBreakdown from "./course/ScoreBreakdown";
 import AddToCart from "./AddToCart";
-import { Badge } from "./ui/Badge";
-import CourseRow, { CourseRowHeader, type CourseCols } from "./ui/CourseRow";
 import Icon from "./ui/Icon";
 import Info from "./ui/Info";
 import WeightsControl from "./WeightsControl";
 
 const PAGE = 50;
-const COLS: CourseCols = { score: true, gpa: true, best: true, rmp: true, next: true, action: true };
+// Table cells: hairline row and column dividers (the first column has no left rule).
+const TH = "border-l border-line px-3 py-2 font-semibold first:border-l-0";
+const TD = "border-l border-line px-3 py-2.5 first:border-l-0";
 
 export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTerm: string; rmpAvailable: boolean; priors: ScorePriors | null }) {
   const [rows, setRows] = useState<GenedRow[] | null>(null);
@@ -67,7 +68,7 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
   );
 
   return (
-    <div className="grid gap-8 md:grid-cols-[15rem_minmax(0,1fr)]">
+    <div className="grid grid-cols-1 gap-8 md:grid-cols-[15rem_minmax(0,1fr)]">
       <button
         type="button"
         className="inline-flex items-center justify-center gap-2 rounded border border-action px-3 py-2 font-semibold text-action md:hidden"
@@ -175,102 +176,144 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
             Couldn&apos;t load the gen-ed list ({error}). Reload to try again.
           </p>
         )}
-        <CourseRowHeader
-          cols={COLS}
-          labels={{
-            score: (
-              <span className="inline-flex items-center justify-end">
-                Score
-                <Info label="About the score">
-                  Best pick score of the course with its best {termLabel(nextTerm)} professor: course GPA, that professor&apos;s GPA difference, RMP and open seats,
-                  with small samples pulled toward an average. Open a score&apos;s (i) for its parts.
-                </Info>
-              </span>
-            ),
-            gpa: (
-              <span className="inline-flex items-center justify-end">
-                Recent GPA
-                <Info label="About recent GPA">UIUC GPA dataset, the last 8 fall and spring terms. Each row shows how many graded students that average is from.</Info>
-              </span>
-            ),
-            best: `Best professor, ${termLabel(nextTerm)}`,
-            rmp: "RMP",
-            next: statusKnown ? "Open lectures" : "Lectures",
-          }}
-        />
-        <ul data-testid="gened-results">
-          {result.slice(0, limit).map((r) => (
-            <CourseRow
-              key={r.s + r.n}
-              subject={r.s}
-              number={r.n}
-              title={r.t}
-              cols={COLS}
-              data-gpa={r.gpa ?? ""}
-              data-codes={r.codes.join(" ")}
-              badges={r.codes.map((c) => (
-                <Badge key={c}>{GENED_NAMES[c] ?? c}</Badge>
-              ))}
-              slots={{
-                score: (() => {
-                  const sc = ranked.get(`${r.s} ${r.n}`)?.score;
-                  return {
-                    label: "Score",
-                    value:
-                      sc && sc.score !== null ? (
-                        <span className="inline-flex items-center">
-                          <span className="tnum text-lg font-semibold text-heading">{sc.score}</span>
-                          <Info label={`How ${r.s} ${r.n}'s score is worked out`}>
-                            <ScoreBreakdown result={sc} />
-                          </Info>
-                        </span>
-                      ) : undefined,
-                  };
-                })(),
-                gpa: {
-                  label: "Recent GPA",
-                  value: r.gpa !== null ? <span className="tnum text-lg font-semibold text-heading">{fmtGpa(r.gpa)}</span> : <span className="text-muted">No data</span>,
-                  sub:
-                    r.gpa !== null ? (
-                      <>
-                        {fmtInt(r.gpaN)} students
-                        <br />
-                        {fmtPct(r.pctA)} A
-                      </>
-                    ) : undefined,
-                },
-                best: (() => {
-                  // the professor the score picked (same as the degree checklist); without priors, the best by GPA
-                  const bp = ranked.get(`${r.s} ${r.n}`)?.best;
-                  if (bp)
-                    return {
-                      label: `Best professor, ${termLabel(nextTerm)}`,
-                      value: <span className="font-semibold">{bp.name}</span>,
-                      sub: bp.d !== null ? `${bp.d >= 0 ? "+" : "−"}${Math.abs(bp.d).toFixed(2)} vs course, ${fmtInt(bp.dn)} students` : "No grade history",
-                    };
-                  return {
-                    label: `Best professor, ${termLabel(nextTerm)}`,
-                    value: r.best ? <span className="font-semibold">{r.best.name}</span> : undefined,
-                    sub: r.best ? `GPA ${fmtGpa(r.best.gpa)}, ${fmtInt(r.best.students)} students` : undefined,
-                  };
-                })(),
-                rmp: { label: "RMP", value: r.rmp !== null ? <span className="tnum">{r.rmp.toFixed(1)}</span> : undefined },
-                next: {
-                  label: statusKnown ? "Open lectures" : "Lectures",
-                  value: r.nSec ? <span className="tnum">{r.statusKnown ? `${openCount(r)} of ${r.nSec}` : r.nSec}</span> : <span className="text-muted">Not offered</span>,
-                  sub: r.nSec ? termLabel(nextTerm) : undefined,
-                },
-              }}
-              action={r.nSec > 0 ? <AddToCart subject={r.s} number={r.n} small /> : null}
-            />
-          ))}
-        </ul>
+        {rows && result.length > 0 && (
+          <div className="relative overflow-x-auto rounded border border-line" role="region" aria-label="Gen-ed courses" tabIndex={0}>
+            <table className="w-full min-w-[52rem] border-collapse text-left">
+              <caption className="sr-only">
+                Gen-ed courses{f.codes.length ? ` that count for ${f.codes.map((c) => GENED_NAMES[c] ?? c).join(" and ")}` : ""}, one per row.
+              </caption>
+              <thead className="bg-panel">
+                <tr className="text-sm text-heading">
+                  <th scope="col" className={TH}>
+                    Course
+                  </th>
+                  <th scope="col" className={TH}>
+                    Counts for
+                  </th>
+                  <th scope="col" className={`${TH} text-right`}>
+                    <span className="inline-flex items-center">
+                      Score
+                      <Info label="About the score">
+                        Best pick score of the course with its best {termLabel(nextTerm)} professor: course GPA, that professor&apos;s GPA difference, RMP and
+                        open seats, with small samples pulled toward an average. Open a score&apos;s (i) for its parts.
+                      </Info>
+                    </span>
+                  </th>
+                  <th scope="col" className={`${TH} text-right`}>
+                    <span className="inline-flex items-center">
+                      Recent GPA
+                      <Info label="About recent GPA">UIUC GPA dataset, the last 8 fall and spring terms, with how many graded students it comes from.</Info>
+                    </span>
+                  </th>
+                  <th scope="col" className={TH}>
+                    Best professor, {termLabel(nextTerm)}
+                  </th>
+                  <th scope="col" className={`${TH} text-right`}>
+                    RMP
+                  </th>
+                  <th scope="col" className={`${TH} text-right`}>
+                    {statusKnown ? "Open lectures" : "Lectures"}
+                  </th>
+                  <th scope="col" className={TH}>
+                    <span className="sr-only">Schedule</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody data-testid="gened-results">
+                {result.slice(0, limit).map((r) => {
+                  const rk = ranked.get(`${r.s} ${r.n}`);
+                  const sc = rk?.score;
+                  const bp = rk?.best;
+                  return (
+                    <tr key={r.s + r.n} className="border-t border-line align-top even:bg-panel/50" data-gpa={r.gpa ?? ""} data-codes={r.codes.join(" ")}>
+                      <th scope="row" className={`${TD} min-w-[10rem] font-normal`}>
+                        <Link href={courseHref(r.s, r.n)} className="group">
+                          <span className="font-semibold text-action group-hover:underline">
+                            {r.s} {r.n}
+                          </span>{" "}
+                          <span className="group-hover:underline">{r.t}</span>
+                        </Link>
+                      </th>
+                      <td className={`${TD} min-w-[9rem]`}>
+                        <ul className="space-y-0.5 text-sm">
+                          {r.codes.map((c) => {
+                            const picked = f.codes.includes(c);
+                            return (
+                              <li key={c} className={`flex items-start gap-1 ${picked ? "font-semibold text-heading" : ""}`}>
+                                {picked ? <Icon name="check" className="mt-0.5 text-action" /> : <span aria-hidden className="inline-block w-4" />}
+                                {GENED_NAMES[c] ?? c}
+                                {picked && <span className="sr-only"> (selected)</span>}
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </td>
+                      <td className={`${TD} text-right`}>
+                        {sc && sc.score !== null ? (
+                          <span className="inline-flex items-center">
+                            <span className="tnum text-lg font-semibold text-heading">{sc.score}</span>
+                            <Info label={`How ${r.s} ${r.n}'s score is worked out`}>
+                              <ScoreBreakdown result={sc} />
+                            </Info>
+                          </span>
+                        ) : (
+                          <span className="text-muted">–</span>
+                        )}
+                      </td>
+                      <td className={`${TD} text-right`}>
+                        {r.gpa !== null ? (
+                          <>
+                            <span className="tnum font-semibold text-heading">{fmtGpa(r.gpa)}</span>
+                            <span className="block text-sm text-muted tnum">{fmtInt(r.gpaN)} students</span>
+                            <span className="block text-sm text-muted tnum">{fmtPct(r.pctA)} A</span>
+                          </>
+                        ) : (
+                          <span className="text-muted">No data</span>
+                        )}
+                      </td>
+                      <td className={`${TD} min-w-[8.5rem]`}>
+                        {bp ? (
+                          <>
+                            <span className="font-semibold">{bp.name}</span>
+                            <span className="block text-sm text-muted tnum">
+                              {bp.d !== null ? `${bp.d >= 0 ? "+" : "−"}${Math.abs(bp.d).toFixed(2)} vs course, ${fmtInt(bp.dn)} students` : "No grade history"}
+                            </span>
+                          </>
+                        ) : r.best ? (
+                          <>
+                            <span className="font-semibold">{r.best.name}</span>
+                            <span className="block text-sm text-muted tnum">
+                              GPA {fmtGpa(r.best.gpa)}, {fmtInt(r.best.students)} students
+                            </span>
+                          </>
+                        ) : (
+                          <span className="text-muted">–</span>
+                        )}
+                      </td>
+                      <td className={`${TD} text-right tnum`}>{r.rmp !== null ? r.rmp.toFixed(1) : <span className="text-muted">–</span>}</td>
+                      <td className={`${TD} text-right tnum`}>
+                        {r.nSec ? (r.statusKnown ? `${openCount(r)} of ${r.nSec}` : r.nSec) : <span className="text-muted">Not offered</span>}
+                      </td>
+                      <td className={TD}>{r.nSec > 0 && <AddToCart subject={r.s} number={r.n} small short />}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
         {result.length > limit && (
           <button className="mt-4 rounded border border-action px-3 py-1.5 font-semibold text-action hover:bg-action-tint" onClick={() => setLimit((l) => l + PAGE)}>
             Show {Math.min(PAGE, result.length - limit)} more ({result.length - limit} left)
           </button>
         )}
-        {rows && !result.length && <p className="mt-3 text-muted">No gen-eds match these filters. Try removing one.</p>}
+        {rows && !result.length && (
+          <p className="mt-3" role="status">
+            {f.codes.length > 1
+              ? `No course counts for all of ${f.codes.map((c) => GENED_NAMES[c] ?? c).join(", ")} with the current filters. Remove a category or a filter to see more.`
+              : "No gen-eds match these filters. Try removing one."}
+          </p>
+        )}
       </section>
     </div>
   );

@@ -13,7 +13,7 @@ export type SortKey = "score" | "gpa" | "pctA" | "rmp" | "open";
 export const DEFAULT_SORT: SortKey = "score";
 
 export type Filters = {
-  codes: string[]; // any of these gen-ed codes
+  codes: string[]; // the course must carry every one of these gen-ed codes
   credits: number | null; // course must be able to award this many hours
   earliest: number | null; // minutes; some section bundle must start at or after this (e.g. 540 = no 8am)
   noFriday: boolean;
@@ -88,7 +88,8 @@ function timeOk(r: GenedRow, f: Filters): boolean {
 }
 
 export function matches(r: GenedRow, f: Filters): boolean {
-  if (f.codes.length && !r.codes.some((c) => f.codes.includes(c))) return false;
+  // every selected gen-ed code: picking Humanities and Non-Western shows only courses that count for both
+  if (f.codes.length && !f.codes.every((c) => r.codes.includes(c))) return false;
   if (f.doubleDip && r.cats.length < 2) return false;
   if (f.minStudents && r.gpaN < f.minStudents) return false;
   if (f.credits !== null && !(r.cr[0] <= f.credits && f.credits <= r.cr[1])) return false;
