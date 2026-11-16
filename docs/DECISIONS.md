@@ -353,7 +353,7 @@ Every judgment call made during the autonomous build, newest phase last.
   supporting colours: Industrial, Berry, Arches, Altgeld, Illini Blue, Storm; green and the seat-status hues are left
   out). The cart cards lost their tinted backgrounds; a coloured edge is enough to match the calendar. The lock menus
   dropped the padlock emoji.
-- **D13.10 Degree data** lives in `data/degrees/<id>.yaml` (schema in `data/degrees/README.md`): requirement groups
+- **D13.10 Degree data** lives in `data/degrees/<id>.yaml` (schema in `docs/DEGREE-DATA.md`): requirement groups
   with rules `all`, `n_of`, `hours` and `manual`; items can be a code, a sequence that counts as one ("RHET 101 +
   RHET 102") or a list of alternatives; `from` takes number ranges ("FIN 400-499") and gen-ed codes; `exclude`,
   `max_hours`, `min_from`, `not_with` and `exclusive` cover the catalog's caveats. The first file is the Finance + Data

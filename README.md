@@ -20,7 +20,7 @@ students check before registering, on one page:
   exam notes. "Compare" shows them as a sortable table.
 - **Best pick score**: one score per professor and course from course GPA, the professor's GPA difference, RMP and
   open seats, with small samples pulled toward an average and a breakdown behind every score. Students set the
-  weights. Formula: DECISIONS.md D13.18.
+  weights. Formula: docs/DECISIONS.md D13.18.
 - **Sections**: grouped by what you register for together; CRN (click to copy), type, days/times, location, the
   professor (opens their row), seat status with the time it was checked, final-exam time, a "Check live seats" link
   and a "Register in Self-Service" link.
@@ -79,7 +79,7 @@ Rate My Prof.  ──┘    (pipeline/)          (SQLite)          (pipeline/exp
   Course Explorer pages), `degrees.py` (degree requirements), `export.py`. `python -m pipeline.run --help` lists the options
   (`--subjects CS,STAT`, `--source api|csv|auto`, `--no-rmp`, `--fixtures` for a fully offline build).
 - `web/` (Next.js 15 App Router, TypeScript, Tailwind 4): every course page is pre-rendered; details load from the
-  per-course JSON. Design tokens and shared components are described in `DESIGN.md` (`web/components/ui/`). The schedule generator (`web/lib/schedule.ts`) is an exact branch-and-bound search that runs in
+  per-course JSON. Design tokens and shared components are described in `docs/DESIGN.md` (`web/components/ui/`). The schedule generator (`web/lib/schedule.ts`) is an exact branch-and-bound search that runs in
   the browser.
 - Unmatched instructor names are logged to `data/unmatched.csv`; fix the worst ones in `data/name_overrides.csv`.
 
@@ -115,14 +115,22 @@ program's source URL and the date it was read, then requirement groups in catalo
 (`gened:HP`), or `manual` (ticked by the student). Items can be alternatives (`[STAT 107, CS 107]`) or a sequence that
 counts as one (`RHET 101 + RHET 102`); `exclude`, `max_hours`, `min_from`, `not_with` and `exclusive` cover the
 catalog's caveats, and `double_counting` lists the quoted rules for when a course may count twice. The full schema is
-in `data/degrees/README.md`.
+in `docs/DEGREE-DATA.md`.
 
 Every program is imported with `python -m pipeline.catalog_import` (about 4 minutes the first time, one request per
 second; `--offline` re-parses the cached pages). It reads course lists, alternatives and "Select N" rules from the
 catalog's tables and keeps anything written in prose as a `manual` requirement in the catalog's own words; see
-DECISIONS.md D13.28. Re-run it when a new catalog year is published. To check a program by hand, edit its file and
+docs/DECISIONS.md D13.28. Re-run it when a new catalog year is published. To check a program by hand, edit its file and
 delete its `generated:` line: the importer never overwrites a file without one. Run `python -m pipeline.degrees` to
 validate the files, then `make data`.
 
-See `DECISIONS.md` for every judgment call (D13 for the redesign and degree planner), `DESIGN.md` for the design, and
-`PROGRESS.md` for what was verified and how.
+More in [`docs/`](docs/):
+
+- [LIMITATIONS.md](docs/LIMITATIONS.md): what the site can't do yet, and why
+- [IDEAS.md](docs/IDEAS.md): what we'd like to build next (student reviews and rankings, seat alerts, better degree
+  planning)
+- [DECISIONS.md](docs/DECISIONS.md): every judgment call (D13 for the redesign and degree planner)
+- [DESIGN.md](docs/DESIGN.md): design tokens and shared components
+- [DEGREE-DATA.md](docs/DEGREE-DATA.md): the degree requirement file format and the catalog importer
+- [PROGRESS.md](docs/PROGRESS.md): what was built and verified, phase by phase
+- [screenshots/](docs/screenshots/): the site before and after the redesign

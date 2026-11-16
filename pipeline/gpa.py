@@ -24,7 +24,7 @@ POINTS: dict[str, float] = {
 }
 LETTERS = list(POINTS)
 BUCKETS = {"A": ["A+", "A", "A-"], "B": ["B+", "B", "B-"], "C": ["C+", "C", "C-"], "DF": ["D+", "D", "D-", "F"]}
-WINDOW_START = "2015-fa"     # avg_gpa covers this term onward (DECISIONS.md D2.2)
+WINDOW_START = "2015-fa"     # avg_gpa covers this term onward (docs/DECISIONS.md D2.2)
 RECENT_TERMS = 8             # recent_avg_gpa = last 8 regular (fall/spring) terms in the dataset
 LOW_SAMPLE = 60              # instructors with fewer students get a "limited data" flag
 

@@ -1,6 +1,6 @@
 # Degree requirements
 
-One YAML file per program, read from the official Academic Catalog page for one catalog year
+One YAML file per program in `data/degrees/`, read from the official Academic Catalog page for one catalog year
 (https://catalog.illinois.edu/). Most files are written by `python -m pipeline.catalog_import` (they carry a
 `generated:` date); `finance-data-science.yaml` was checked by hand. Never fill a file in from memory: if the catalog can't be read, leave `groups: []`
 and say so in PROGRESS.md. `make data` validates every file (`pipeline/degrees.py`), checks each course code against

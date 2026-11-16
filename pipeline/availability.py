@@ -2,7 +2,7 @@
 
 The Course Explorer XML feed no longer includes enrollment status, but each course's public page
 (https://courses.illinois.edu/schedule/{year}/{season}/{SUBJ}/{NUM}) lists "Availability:" per section.
-Seat *counts* are only in Self-Service (NetID login) and are never scraped (DECISIONS.md D11.1).
+Seat *counts* are only in Self-Service (NetID login) and are never scraped (docs/DECISIONS.md D11.1).
 
 Polite: at most 4 concurrent requests, retries with backoff, a User-Agent naming the project, and a time budget
 (AVAILABILITY_BUDGET_SECONDS, default 15 min) after which the run keeps whatever it has.

@@ -386,9 +386,9 @@ def course_summary(g: dict | None, nxt: dict | None, rec: dict, gi: dict[str, di
 
 
 def score_priors(gpa_rows: Any, rmp_rows: Any) -> dict:
-    """Averages the web app's "best pick" score shrinks small samples toward (DECISIONS.md D13): the student-weighted
-    recent GPA of each subject and of campus, and the mean RMP quality / difficulty / would-take-again over every
-    UIUC instructor with at least one rating (each instructor counts once)."""
+    """Averages the web app's "best pick" score shrinks small samples toward (docs/DECISIONS.md D13): the
+    student-weighted recent GPA of each subject and of campus, and the mean RMP quality / difficulty /
+    would-take-again over every UIUC instructor with at least one rating (each instructor counts once)."""
     by_subj: dict[str, list[float]] = defaultdict(lambda: [0.0, 0.0])
     for g in gpa_rows:
         if g["recent_avg_gpa"] is not None and g["recent_students"]:
@@ -460,7 +460,7 @@ def write_seat_feeds(out_dir: Path, events: list[dict], titles: dict[tuple[str, 
 
 
 def flag_special(secs: list[dict]) -> None:
-    """Mark sections that look restricted / special-purpose (DECISIONS.md D9.3):
+    """Mark sections that look restricted / special-purpose (docs/DECISIONS.md D9.3):
     a code with a symbol ('AD@'), or a lecture whose letter group has none of the discussion/lab components
     that every other group of the course has (e.g. CS 124 'WWC' alongside 'AL1' + 'AY*')."""
     comps = {s["component"] for s in secs}
