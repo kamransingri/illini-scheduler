@@ -52,6 +52,10 @@ CREATE TABLE IF NOT EXISTS availability (
 CREATE TABLE IF NOT EXISTS seat_events (
     term TEXT, at TEXT, crn TEXT, subject TEXT, number TEXT, code TEXT, old TEXT, new TEXT
 );
+-- Final-exam times per section ("Conflict" = the official make-up slot), from the same web pages
+CREATE TABLE IF NOT EXISTS final_exams (
+    term TEXT, crn TEXT, date TEXT, start_time INTEGER, end_time INTEGER, room TEXT, type TEXT
+);
 
 -- Phase 2: GPA
 CREATE TABLE IF NOT EXISTS gpa_course (

@@ -407,3 +407,12 @@ Every judgment call made during the autonomous build, newest phase last.
   of 4.6. All existing schedule tests pass unchanged; a regression test covers that case.
 - **D13.20 Gen-ed finder** sorts by the best-pick score by default (`?sort=gpa` and the other sorts still work) and its
   "Best professor" column is the professor the score chose, as on the degree checklist.
+- **D13.21 Final exams** (Phase 7). Course Explorer course pages load their final-exam table with htmx from
+  `/ajax/finalexam/{year}/{season}/{SUBJ}/{NUM}`; without the `HX-Request: true` header the server redirects. The slow
+  availability job reads it right after a course page that lists sections, with the same pacing and backoff as pages,
+  and at most once a week per course (`FINALS_DAYS`), so the job's load barely grows. Rows go into the term file
+  (`finals`), the `final_exams` table and each exported section (`fx`: date, start, end, type). "Conflict" rows are the
+  official make-up slot, not the exam, so they never trigger a warning. The schedule builder warns when two courses'
+  main finals overlap on the same day and points to the conflict exam; course pages show each section's final. Spring
+  2027 finals aren't published yet, so for now only Fall 2026 has them. Fixtures are real saved responses
+  (`fixtures/course-explorer-web/finalexam_2026-fa_*.html`).
