@@ -469,7 +469,7 @@ Just opened 0.88/1.00/1.00 (performance/accessibility/best practices); no sidewa
 `data/degrees/finance-data-science.yaml` from https://catalog.illinois.edu/undergraduate/bus/finance-data-science-bs/
 (2026-2027, read 2026-11-16) plus the campus gen-ed rules from
 https://catalog.illinois.edu/general-information/degree-general-education-requirements/ and
-https://gened.illinois.edu/requirements/; schema in `data/degrees/README.md`; loader and validator
+https://gened.illinois.edu/requirements/; schema in `docs/DEGREE-DATA.md`; loader and validator
 `pipeline/degrees.py` (`python -m pipeline.degrees` checks the files); `export.py` writes `degrees/index.json` and
 `degrees/<id>.json` (19 groups, 1,063 courses, 0 unknown codes, 282 KB). pytest 175/175 (9 new: real files valid,
 every schema error reported, double-counting rules, alternatives and sequences, FIN 400-499 with exclusions and caps,
@@ -535,3 +535,14 @@ DB + export), Vitest 84/84 (overlap, different days, back-to-back, make-up slots
   Playwright on the full build, one worker: 41 passed, 2 failed (the Windows-only lower-case URL test, and a new
   degree test that counted options before they loaded, since fixed). After the last changes the affected specs
   (gen-ed, degree, schedule, professors: 21 tests) were rerun on a light build and all pass.
+
+## Repo cleanup (2026-11-16)
+
+- Docs moved into `docs/` (DECISIONS, DESIGN, PROGRESS, the degree data format as DEGREE-DATA.md, and the new
+  LIMITATIONS and IDEAS), with an index in `docs/README.md` and links from the main README. References in code
+  comments point at the new paths.
+- Removed the early `screenshots/` folder (2026-11-04 pages, superseded by `docs/screenshots/before/`).
+- Screenshots: `after/` retaken for v0.3.0 (one typeface, new footer, gen-ed table) and `degree` added to the
+  script's default pages. The script now caps a shot at 4,000 px tall on desktop and 8,000 px on a phone, and every
+  PNG is reduced to 256 colours: tracked screenshots went from about 27 MB to 4.4 MB. Git history still holds the old
+  images; rewriting history to drop them would need a force push to main, so it wasn't done.

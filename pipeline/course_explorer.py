@@ -6,7 +6,7 @@ Two interchangeable sources produce the same records:
              Crawled politely (max 4 concurrent requests, retry with backoff, raw XML cached under
              data/raw/cis/ so reruns are fast).
 * ``csv``  - Wade Fagen-Ulmschneider's ``course-catalog`` mirror of the same API (one CSV per term).
-             Used when the API host is unreachable (see DECISIONS.md D0.3).
+             Used when the API host is unreachable (see docs/DECISIONS.md D0.3).
 
 ``auto`` tries the API first and falls back to the CSV mirror.
 
@@ -65,7 +65,7 @@ TYPE_BY_NAME = {
     "Internship": "INT", "Research": "RES", "Studio": "ST", "Study Abroad": "STA", "Travel": "TRV",
     "Packaged Section": "PKG",
 }
-# Components that are taken *in addition to* a lecture (see DECISIONS.md D1.3).
+# Components that are taken *in addition to* a lecture (see docs/DECISIONS.md D1.3).
 SECONDARY_TYPES = {"DIS", "OD", "LAB", "LBD", "OLB", "Q", "PR"}
 
 
@@ -199,7 +199,7 @@ def _group_key(code: str) -> str | None:
 def assign_links(sections: list[Section]) -> None:
     """Infer which lectures pair with which discussions/labs for one course in one term.
 
-    Rule (DECISIONS.md D1.3):
+    Rule (docs/DECISIONS.md D1.3):
       1. A section's component is 'primary' unless every meeting is a secondary type (DIS, LAB, ...),
          in which case the component is that type. If a course has no primary sections at all, every
          section is primary (each is a standalone choice).

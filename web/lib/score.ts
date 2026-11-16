@@ -1,6 +1,6 @@
 // One "best pick" score for a professor in a course (and, through the best professor, for a course).
 // Every part is put on a 0–1 scale, small samples are shrunk toward an average first, and parts with no data are left
-// out (and named) instead of guessed. The formula is written down in DECISIONS.md (D13).
+// out (and named) instead of guessed. The formula is written down in docs/DECISIONS.md (D13).
 
 export type ScoreWeights = { courseGpa: number; profGpa: number; quality: number; difficulty: number; wouldTakeAgain: number; seats: number };
 
