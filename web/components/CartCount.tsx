@@ -11,7 +11,7 @@ export default function CartCount() {
   }, []);
   if (!n) return null;
   return (
-    <span className="ml-1 rounded-full bg-orange-300 px-1.5 text-xs font-bold text-navy" aria-label={`${n} courses in your schedule`}>
+    <span className="ml-1.5 inline-block min-w-5 rounded-full bg-white px-1.5 text-center text-sm font-bold leading-5 text-navy tnum" aria-label={`${n} courses in your schedule`}>
       {n}
     </span>
   );

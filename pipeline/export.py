@@ -340,9 +340,36 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
         "match_report": json.loads(meta_rows.get("match_report", "{}")),
         "repo_url": REPO_URL, "n_courses": n_files,
         "history_terms": sorted(terms, key=term_order),
+        "score_priors": score_priors(gpa_course.values(), rmp.values()),
     }
     (out_dir / "meta.json").write_text(json.dumps(meta, indent=1))
     return f"{n_files} course files, {len(gened_rows)} gen-ed rows, {len(inst_index)} instructors -> {out_dir}"
+
+
+def score_priors(gpa_rows: Any, rmp_rows: Any) -> dict:
+    """Averages the web app's "best pick" score shrinks small samples toward (DECISIONS.md D13): the student-weighted
+    recent GPA of each subject and of campus, and the mean RMP quality / difficulty / would-take-again over every
+    UIUC instructor with at least one rating (each instructor counts once)."""
+    by_subj: dict[str, list[float]] = defaultdict(lambda: [0.0, 0.0])
+    for g in gpa_rows:
+        if g["recent_avg_gpa"] is not None and g["recent_students"]:
+            acc = by_subj[g["subject"]]
+            acc[0] += g["recent_avg_gpa"] * g["recent_students"]
+            acc[1] += g["recent_students"]
+    tot = [sum(a[0] for a in by_subj.values()), sum(a[1] for a in by_subj.values())]
+    rated = [t for t in rmp_rows if (t["num_ratings"] or 0) > 0 and t["avg_rating"] is not None]
+    wta = [w for t in rated if (w := t["would_take_again_pct"]) is not None and w >= 0]
+    diff = [t["avg_difficulty"] for t in rated if t["avg_difficulty"] is not None]
+
+    def mean(xs: list[float]) -> float | None:
+        return round(sum(xs) / len(xs), 3) if xs else None
+
+    return {
+        "subject_gpa": {s: round(a[0] / a[1], 3) for s, a in sorted(by_subj.items()) if a[1]},
+        "campus_gpa": round(tot[0] / tot[1], 3) if tot[1] else None,
+        "rmp": {"quality": mean([t["avg_rating"] for t in rated]), "difficulty": mean(diff),
+                "would_take_again": mean(wta), "n_instructors": len(rated)},
+    }
 
 
 SPECIAL_NOTE = re.compile(r"reserved for|learning community|is for students (?:at|in|of)|only for students", re.I)
@@ -390,7 +417,7 @@ def write_seat_feeds(out_dir: Path, events: list[dict], titles: dict[tuple[str, 
             f"<title>{escape(subj + ' ' + num + ' seat changes · Illini Scheduler')}</title>"
             f"<link>{escape(page)}</link><description>"
             f"{escape(f'Open/Closed changes for {subj} {num}: {title}. Checked about once a day.')}</description>"
-            f"<lastBuildDate>{now}</lastBuildDate>{''.join(items)}</channel></rss>")
+            f"<lastBuildDate>{now}</lastBuildDate>{''.join(items)}</channel></rss>", encoding="utf-8")
 
 
 def flag_special(secs: list[dict]) -> None:

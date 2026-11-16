@@ -89,3 +89,18 @@ def test_zero_ratings_is_no_data_not_a_bad_score():
                            "avgRating": 0, "avgDifficulty": 0, "wouldTakeAgainPercent": -1, "numRatings": 0})
     assert t.avg_rating is None and t.avg_difficulty is None and t.would_take_again_pct is None
     assert t.num_ratings == 0
+
+
+def test_partial_graphql_error_is_skipped_and_not_cached(tmp_path):
+    # Seen live: RMP's search backend refused one query; the answer had errors and `teachers: null`.
+    bad = {"data": {"newSearch": {"teachers": None}}, "errors": [{"message": "connection refused"}]}
+    calls = []
+
+    def handler(request):
+        body = json.loads(request.content)
+        calls.append(body)
+        return httpx.Response(200, json=SCHOOL if "schools" in body["query"] else bad)
+    c = rmp.RmpClient(tmp_path, transport=httpx.MockTransport(handler), delay=0)
+    assert c.lookup("Cheslow, A", "CS") is None and c.error is None  # the run carries on
+    assert c.lookup("Cheslow, A", "CS") is None
+    assert sum("teachers" in b["query"] for b in calls) == 2  # retried, not served from cache

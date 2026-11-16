@@ -313,3 +313,34 @@ Every judgment call made during the autonomous build, newest phase last.
   site gave away (3,059 instead of ~3,300). The parser now reads text nodes; names already stored are repaired with
   a "Last, Initial" splitter when the build loads them (no re-crawl needed). Spring 2027 now has 3,307 instructor
   names from the pages, 3,215 of them also in the mirror.
+
+## Redesign and degree planner (2026-11-16)
+
+- **D13.1 RMP partial failures.** RMP answered one teacher search ("Cheslow") with an error from its own search backend
+  and `teachers: null`. The client only treated a response with *no* data as a failure, so it cached this one for 7
+  days and `search_teachers` crashed, which stopped `make data` (and would have stopped every run for a week). Now a
+  response with `errors` is never cached and a null result is "no match this run"; the next run retries it. This is
+  the only change to `pipeline/rmp.py`.
+- **D13.2 Windows.** The RSS feeds are written as UTF-8 explicitly (the default locale encoding on Windows, cp1252,
+  can't encode "→"). Everything else the pipeline writes is ASCII JSON.
+- **D13.3 Visual direction** (DESIGN.md). Illinois brand web palette and fonts (Source Sans 3 + Montserrat, self-hosted
+  through `next/font` at build time, so builds need network access the way `make data` already does). Each colour has
+  one meaning: Industrial blue for every link and action, green/red only for above/below the course average, three
+  seat colours. Tailwind's type and radius scales are reset so only five sizes and one radius exist.
+- **D13.4 Course page around professors.** One row per professor teaching the selected term, on a column grid shared by
+  every row: GPA in this course, difference from the course in the same terms, grade bar, RMP quality / difficulty /
+  would-take-again with the number of ratings, the Teachers Ranked as Excellent badge, and lectures taught with how
+  many are open. The row expands to that professor's sections, grades, tags, reviews, exam notes and RMP link. Only
+  instructors of a lecture (primary) section are "professors"; people who only lead discussions or labs are listed
+  behind "Discussion and lab instructors (n)" with the same row design (MATH 221 Fall 2026 had 2 lecturers and 17
+  discussion instructors as 19 identical cards). Section rows name their professor as a button that opens and scrolls
+  to that row. "Compare" shows the same professors as a sortable table.
+- **D13.5 Reviews.** Each review shows the course it was written for and its date; reviews for this course come first,
+  others are labelled "Written for CS 105" and listed after. Two show by default. The pipeline keeps the 3 most recent
+  snippets per professor across all courses (D3.5), so often none are for this course; keeping more would mean
+  changing the RMP client, which this work leaves alone (the cached responses already hold 20 ratings, so it would cost
+  no extra requests). Listed under Next steps.
+- **D13.6 Grades over time** is a table with one horizontal stacked bar per term (newest first) instead of an SVG
+  column chart: the SVG's 9-unit labels rendered at about 5px on a 375px phone.
+- **D13.7 Sources behind (i).** Every number keeps its source, term range and sample size, now in an `Info` popover that
+  opens on hover, keyboard focus and tap (the old dotted-underline tooltip needed a mouse).

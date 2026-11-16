@@ -48,6 +48,23 @@ def test_export_end_to_end(tmp_path):
     assert {"s": "CS", "n": "124"}.items() <= next(c for c in search["courses"] if c["n"] == "124").items()
 
 
+def test_score_priors():
+    from pipeline.export import score_priors
+
+    gpa_rows = [{"subject": "CS", "recent_avg_gpa": 3.0, "recent_students": 100},
+                {"subject": "CS", "recent_avg_gpa": 4.0, "recent_students": 300},
+                {"subject": "MATH", "recent_avg_gpa": 2.5, "recent_students": 100},
+                {"subject": "ART", "recent_avg_gpa": None, "recent_students": 0}]
+    rmp_rows = [{"num_ratings": 10, "avg_rating": 4.0, "avg_difficulty": 3.0, "would_take_again_pct": 80.0},
+                {"num_ratings": 2, "avg_rating": 2.0, "avg_difficulty": 4.0, "would_take_again_pct": -1.0},
+                {"num_ratings": 0, "avg_rating": 0.0, "avg_difficulty": 0.0, "would_take_again_pct": -1.0}]
+    p = score_priors(gpa_rows, rmp_rows)
+    assert p["subject_gpa"] == {"CS": 3.75, "MATH": 2.5}  # student-weighted; subjects without data left out
+    assert p["campus_gpa"] == round((300 + 1200 + 250) / 500, 3)
+    # profiles with no ratings don't count; RMP's -1 "no answer" for would-take-again is skipped
+    assert p["rmp"] == {"quality": 3.0, "difficulty": 3.5, "would_take_again": 80.0, "n_instructors": 2}
+
+
 def test_flag_special():
     from pipeline.export import flag_special
 

@@ -1,16 +1,68 @@
 @import "tailwindcss";
 
+/*
+ * Design tokens (DESIGN.md). Colours are the Illinois brand web palette (brand.illinois.edu/visual-identity/color and
+ * /web/web-color); each one has a single meaning. Five type sizes only. One radius. One spacing scale (Tailwind's 4px).
+ */
 @theme {
-  --color-ink: #16202f;
-  --color-muted: #566173;
-  --color-line: #dfe3ea;
-  --color-panel: #f6f7f9;
-  --color-brand: #c2410c;
-  --color-brand-dark: #9a3412;
-  --color-navy: #1e2f4d;
-  --color-good: #15803d;
-  --color-bad: #b91c1c;
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* text + surfaces */
+  --color-ink: #252525; /* il-storm-10: body text */
+  --color-heading: #13294b; /* il-blue: headings and the main number of a block */
+  --color-muted: #5e6162; /* Storm shade: secondary text (6.3:1 on white, 5.7:1 on panel) */
+  --color-line: #d9dada; /* hairlines between rows */
+  --color-panel: #f4f4f4; /* il-storm-95: quiet surface */
+  --color-navy: #13294b; /* il-blue: site header */
+  --color-orange: #ff5f05; /* il-orange: brand mark only, never small text */
+
+  /* the one action colour: links, buttons, focus */
+  --color-action: #1d58a7; /* il-industrial */
+  --color-action-dark: #13294b; /* il-blue: hover / pressed */
+  --color-action-tint: #e8eef7;
+
+  /* above / below the course average: the only use of green and red */
+  --color-up: #006230; /* il-prairie */
+  --color-down: #b42318; /* data red (the brand palette has no red; brand allows extra colours for data) */
+
+  /* seat status: its own three colours, always with a text label */
+  --color-open: #00606c; /* il-patina shade */
+  --color-open-bg: #e0f2f4;
+  --color-restricted: #7d3e13; /* il-earth */
+  --color-restricted-bg: #fef0d0; /* il-harvest tint */
+  --color-closed: #4a4c4b; /* il-storm shade */
+  --color-closed-bg: #eeeeee;
+
+  /* grade distribution ramp (A darkest -> D/F lightest): blues + storm, no green/red */
+  --color-grade-a: #13294b;
+  --color-grade-b: #1d58a7;
+  --color-grade-c: #7ba4db;
+  --color-grade-df: #b9bbbb;
+
+  /* type: Source Sans 3 for everything, Montserrat for headings and headline numbers */
+  --font-sans: var(--font-source-sans), "Source Sans Pro", Arial, sans-serif;
+  --font-display: var(--font-montserrat), "Arial Black", Arial, sans-serif;
+
+  /* five sizes, nothing else */
+  --text-*: initial;
+  --text-sm: 0.875rem; /* 14px: labels, captions, meta */
+  --text-sm--line-height: 1.35;
+  --text-base: 1rem; /* 16px: body */
+  --text-base--line-height: 1.5;
+  --text-lg: 1.1875rem; /* 19px: row titles, h3 */
+  --text-lg--line-height: 1.35;
+  --text-xl: 1.5rem; /* 24px: section headings, headline numbers */
+  --text-xl--line-height: 1.25;
+  --text-2xl: 2rem; /* 32px: page title */
+  --text-2xl--line-height: 1.15;
+
+  /* one radius */
+  --radius-*: initial;
+  --radius: 4px;
+
+  /* legacy names, kept only until every page uses the tokens above (Phase 3 of the redesign removes them) */
+  --color-brand: #1d58a7;
+  --color-brand-dark: #13294b;
+  --color-good: #006230;
+  --color-bad: #b42318;
 }
 
 @layer base {
@@ -20,14 +72,20 @@
   body {
     background: #ffffff;
     color: var(--color-ink);
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
   }
   a {
     color: inherit;
   }
   :focus-visible {
-    outline: 2px solid var(--color-brand);
+    outline: 2px solid var(--color-action);
     outline-offset: 2px;
   }
+}
+
+@utility tnum {
+  font-variant-numeric: tabular-nums;
 }
 
 /* Metric with its source on hover / focus */

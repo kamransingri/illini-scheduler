@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { addToCart, inCart, onCartChange, removeFromCart } from "@/lib/cart";
+import Icon from "./ui/Icon";
 
 export default function AddToCart({ subject, number, small = false }: { subject: string; number: string; small?: boolean }) {
   const [added, setAdded] = useState(false);
@@ -13,12 +14,13 @@ export default function AddToCart({ subject, number, small = false }: { subject:
     <button
       type="button"
       onClick={() => (added ? removeFromCart(subject, number) : addToCart(subject, number))}
-      className={`rounded font-medium whitespace-nowrap ${small ? "px-2 py-1 text-xs" : "px-3 py-1.5 text-sm"} ${
-        added ? "border border-brand text-brand-dark bg-white" : "bg-brand text-white hover:bg-brand-dark"
+      className={`inline-flex items-center gap-1.5 rounded border font-semibold whitespace-nowrap ${small ? "px-2 text-sm leading-7" : "px-3 leading-9"} ${
+        added ? "border-action bg-action-tint text-heading" : small ? "border-action bg-white text-action hover:bg-action-tint" : "border-action bg-action text-white hover:bg-action-dark"
       }`}
       aria-pressed={added}
     >
-      {added ? "✓ In schedule" : "Add to schedule"}
+      <Icon name={added ? "check" : "plus"} />
+      {added ? "In schedule" : "Add to schedule"}
     </button>
   );
 }
