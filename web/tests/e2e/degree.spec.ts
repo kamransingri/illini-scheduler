@@ -66,3 +66,11 @@ test("375px: the checklist doesn't scroll sideways", async ({ page }) => {
   const [sw, iw] = await page.evaluate(() => [document.documentElement.scrollWidth, window.innerWidth]);
   expect(sw).toBeLessThanOrEqual(iw);
 });
+
+test("keyboard: type a course code and press Enter to add it", async ({ page }) => {
+  await page.goto("./degree/?p=finance-data-science");
+  await page.getByLabel("Course code").fill("CMN 101");
+  await page.keyboard.press("Enter");
+  await expect(page.getByTestId("my-courses")).toContainText("CMN 101");
+  await expect(req(page, "business-core")).toHaveAttribute("data-status", "partial");
+});

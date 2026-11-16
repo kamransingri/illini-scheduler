@@ -9,7 +9,8 @@ export const GENED_GROUPS: { cat: string; label: string; codes: string[] }[] = [
   { cat: "SBS", label: "Social & Behavioral Sciences", codes: ["SS", "BSC"] },
 ];
 
-export type SortKey = "gpa" | "pctA" | "rmp" | "open";
+export type SortKey = "score" | "gpa" | "pctA" | "rmp" | "open";
+export const DEFAULT_SORT: SortKey = "score";
 
 export type Filters = {
   codes: string[]; // any of these gen-ed codes
@@ -47,14 +48,14 @@ export function filtersToQuery(f: Filters, sort: SortKey): string {
   if (f.minRmp !== null) p.set("rmp", String(f.minRmp));
   if (f.doubleDip) p.set("dd", "1");
   if (f.minStudents !== DEFAULT_FILTERS.minStudents) p.set("min", String(f.minStudents));
-  if (sort !== "gpa") p.set("sort", sort);
+  if (sort !== DEFAULT_SORT) p.set("sort", sort);
   return p.toString();
 }
 
 export function filtersFromQuery(q: string): { f: Filters; sort: SortKey } {
   const p = new URLSearchParams(q);
   const num = (k: string) => (p.has(k) && !Number.isNaN(Number(p.get(k))) ? Number(p.get(k)) : null);
-  const sort = (["gpa", "pctA", "rmp", "open"] as SortKey[]).find((k) => k === p.get("sort")) ?? "gpa";
+  const sort = (["score", "gpa", "pctA", "rmp", "open"] as SortKey[]).find((k) => k === p.get("sort")) ?? DEFAULT_SORT;
   return {
     sort,
     f: {
@@ -99,11 +100,13 @@ export function matches(r: GenedRow, f: Filters): boolean {
 
 const nullsLast = (a: number | null, b: number | null) => (b ?? -Infinity) - (a ?? -Infinity);
 
-export function sortRows(rows: GenedRow[], key: SortKey): GenedRow[] {
+/** Sort rows; "score" needs `scoreOf` (the best-pick score with the student's weights, lib/rank.ts). */
+export function sortRows(rows: GenedRow[], key: SortKey, scoreOf?: (r: GenedRow) => number | null): GenedRow[] {
   const out = [...rows];
   out.sort((a, b) => {
     let d = 0;
-    if (key === "gpa") d = nullsLast(a.gpa, b.gpa);
+    if (key === "score") d = scoreOf ? nullsLast(scoreOf(a), scoreOf(b)) : 0;
+    else if (key === "gpa") d = nullsLast(a.gpa, b.gpa);
     else if (key === "pctA") d = nullsLast(a.pctA, b.pctA);
     else if (key === "rmp") d = nullsLast(a.rmp, b.rmp);
     else d = openCount(b) - openCount(a);
@@ -112,9 +115,10 @@ export function sortRows(rows: GenedRow[], key: SortKey): GenedRow[] {
   return out;
 }
 
-export function applyFilters(rows: GenedRow[], f: Filters, key: SortKey): GenedRow[] {
+export function applyFilters(rows: GenedRow[], f: Filters, key: SortKey, scoreOf?: (r: GenedRow) => number | null): GenedRow[] {
   return sortRows(
     rows.filter((r) => matches(r, f)),
     key,
+    scoreOf,
   );
 }

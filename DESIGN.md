@@ -155,5 +155,6 @@ can't creep back in. Classes to use:
 | `Expandable` | Disclosure button + panel (`aria-expanded`, `aria-controls`) |
 | `CourseRow` | One course in any list (search results, gen-ed finder, degree checklist): code and title, then fixed columns (score, GPA, best professor, RMP, next term, action) in the same place on every list. Uses container queries, so it lays out by the width it gets (a narrow sidebar stacks it) |
 
-Course-page pieces built on them live in `web/components/course/` (`ProfessorLedger`, `SectionsList`, `CompareTable`,
+`web/components/WeightsControl.tsx` is the one place students set the best-pick weights (course page, gen-ed finder,
+degree checklist). Course-page pieces built on them live in `web/components/course/` (`ProfessorLedger`, `SectionsList`, `CompareTable`,
 `BestPick`, `ScoreBreakdown`, `CourseView`).

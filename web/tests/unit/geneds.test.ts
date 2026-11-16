@@ -68,6 +68,10 @@ describe("gen-ed sorting", () => {
   it("GPA desc, nulls last", () => expect(sortRows(rows, "gpa").map((r) => r.n)).toEqual(["3", "1", "2"]));
   it("% A", () => expect(sortRows(rows, "pctA")[0].n).toBe("1"));
   it("open sections", () => expect(sortRows(rows, "open")[0].n).toBe("3"));
+  it("best-pick score, nulls last", () => {
+    const score: Record<string, number | null> = { "1": 40, "2": null, "3": 70 };
+    expect(sortRows(rows, "score", (r) => score[r.n]).map((r) => r.n)).toEqual(["3", "1", "2"]);
+  });
   it("apply = filter + sort", () => expect(applyFilters(rows, { ...DEFAULT_FILTERS, codes: ["HP"] }, "gpa").length).toBe(3));
 });
 
@@ -75,6 +79,8 @@ describe("gen-ed URL state", () => {
   it("round trip", () => {
     const f = { ...DF, codes: ["HP", "LA"], openNext: true, earliest: 540, minStudents: 0 };
     expect(filtersFromQuery(filtersToQuery(f, "pctA"))).toEqual({ f, sort: "pctA" });
-    expect(filtersToQuery(DF, "gpa")).toBe("");
+    expect(filtersToQuery(DF, "score")).toBe(""); // the best-pick score is the default sort
+    expect(filtersToQuery(DF, "gpa")).toBe("sort=gpa");
+    expect(filtersFromQuery("").sort).toBe("score");
   });
 });

@@ -14,6 +14,7 @@ import Info from "../ui/Info";
 import SectionHeader from "../ui/SectionHeader";
 import CompareTable from "./CompareTable";
 import { ExamList, ProfessorHeader, ProfessorRow } from "./ProfessorLedger";
+import WeightsControl from "../WeightsControl";
 import SectionsList from "./SectionsList";
 
 export type CourseMeta = { next_term: string; current_term: string; rmp_status: string; repo_url: string; score_priors?: ScorePriors | null };
@@ -212,6 +213,7 @@ export default function CourseView({ subject, number, meta }: { subject: string;
               <GradeBar pct={g.pct} source={`UIUC GPA dataset, ${termRange(g.first_term, g.last_term)}, ${fmtInt(g.students)} students`} />
             </div>
           )}
+          {meta.score_priors && scored.profs.length > 1 && <WeightsControl className="mb-4" />}
           {!scored.profs.length ? (
             <p className="text-muted">No professors listed{term ? ` for ${termLabel(term)}` : ""} yet.</p>
           ) : view === "compare" ? (
