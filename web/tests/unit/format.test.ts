@@ -1,11 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { cisUrl, daysStr, fmtDelta, fmtGpa, fmtTime, termLabel, termOrder } from "@/lib/format";
+import { cisUrl, daysStr, fmtDelta, fmtGpa, fmtTime, termLabel, termOrder, treLabel } from "@/lib/format";
 import { decodeCart, encodeCart } from "@/lib/cart";
 
 describe("format", () => {
   it("terms", () => {
     expect(termLabel("2027-sp")).toBe("Spring 2027");
     expect(termOrder("2026-fa")).toBeGreaterThan(termOrder("2026-sp"));
+    expect(treLabel("2024-fa Excellent")).toBe("Fall 2024, Excellent");
+    expect(treLabel("2022-sp Outstanding")).toBe("Spring 2022, Outstanding");
+    expect(treLabel("something else")).toBe("something else");
   });
   it("times and days", () => {
     expect(fmtTime(540)).toBe("9:00am");

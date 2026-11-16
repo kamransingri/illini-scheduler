@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("search cs124 lands on CS 124 with sections, an instructor card and a GPA chart, no console errors", async ({ page }) => {
+test("search cs124 lands on CS 124 with sections, a professor row and grades over time, no console errors", async ({ page }) => {
   const errors: string[] = [];
   page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
   page.on("pageerror", (e) => errors.push(String(e)));
@@ -12,8 +12,8 @@ test("search cs124 lands on CS 124 with sections, an instructor card and a GPA c
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Introduction to Computer Science I");
   await expect(page.getByRole("heading", { name: "Sections" })).toBeVisible();
   await expect(page.getByRole("button", { name: /Copy 71571/ })).toBeVisible();
-  await expect(page.locator("#inst-h ~ ul > li").first()).toBeVisible();
-  await expect(page.getByRole("img", { name: /Grade distribution and average GPA by term/ })).toBeVisible();
+  await expect(page.getByTestId("prof-row").first()).toBeVisible();
+  await expect(page.getByRole("table", { name: /Grade distribution and average GPA by term/ })).toBeVisible();
   await expect(page.locator("body")).not.toContainText(/NaN|undefined/);
   expect(errors).toEqual([]);
 });

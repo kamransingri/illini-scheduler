@@ -135,3 +135,9 @@ export function seatVerb(oldStatus: string, newStatus: string): "opened" | "clos
   if (newStatus.toLowerCase().includes("closed")) return "closed";
   return "changed";
 }
+
+/** Teachers Ranked as Excellent label: "2024-fa Excellent" -> "Fall 2024, Excellent". */
+export function treLabel(s: string): string {
+  const m = /^(\d{4}-(?:sp|su|fa|wi))\s+(.+)$/.exec(s.trim());
+  return m ? `${termLabel(m[1])}, ${m[2]}` : s;
+}
