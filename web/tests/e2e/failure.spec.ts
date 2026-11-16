@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test("course details unreachable: clear message, summary still shown", async ({ page }) => {
   await page.route("**/data/course/**", (r) => r.abort());
   await page.goto("./course/CS/124/");
-  await expect(page.getByText(/Couldn't load section and instructor details/)).toBeVisible();
+  await expect(page.getByText(/Couldn't load section and professor details/)).toBeVisible();
   await expect(page.getByText("Before you register")).toBeVisible();
 });
 
@@ -19,12 +19,15 @@ test("gen-ed list unreachable: clear message", async ({ page }) => {
   await expect(page.getByText(/Couldn't load the gen-ed list/)).toBeVisible();
 });
 
-test("every instructor card has RMP data, an 'unavailable' note, or a search link", async ({ page }) => {
-  await page.goto("./course/CS/124/");
-  const cards = page.locator("#inst-h ~ ul > li");
-  await expect(cards.first()).toBeVisible();
-  for (const card of await cards.all())
-    await expect(card).toContainText(/Rate My Professors page|RMP unavailable in this build|Search Rate My Professors/);
+test("every professor row has RMP data or says why not, and its panel links to RMP", async ({ page }) => {
+  await page.goto("./course/MATH/221/");
+  const rows = page.getByTestId("prof-row");
+  await expect(rows.first()).toBeVisible();
+  for (const row of await rows.all()) {
+    await expect(row).toContainText(/\d ratings|No RMP match|RMP unavailable in this build|no ratings yet/);
+    await row.getByRole("button", { expanded: false }).first().click();
+    await expect(row).toContainText(/Rate My Professors page|RMP unavailable in this build|Search Rate My Professors/);
+  }
 });
 
 test("unknown course is a 404, not a blank page", async ({ page }) => {

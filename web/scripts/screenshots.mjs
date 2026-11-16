@@ -6,7 +6,9 @@ import { chromium } from "@playwright/test";
 
 const base = process.env.SHOT_BASE_URL ?? "http://127.0.0.1:4173/";
 const outDir = path.resolve(process.argv[2] ?? "screenshots");
-const pages = [
+const extra = process.argv.slice(3).map((p) => [p.replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "") || "page", p]);
+// SHOT_ONLY=1 captures just the extra paths (quick checks while iterating)
+const pages = process.env.SHOT_ONLY ? extra : [
   ["home", "./"],
   ["cs-124", "./course/CS/124/"],
   ["math-221", "./course/MATH/221/"],
@@ -14,7 +16,7 @@ const pages = [
   ["geneds", "./geneds/"],
   ["schedule", "./schedule/?c=CS124,STAT107,RHET105&t=2027-sp"],
   ["opened", "./opened/"],
-  ...process.argv.slice(3).map((p) => [p.replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "") || "page", p]),
+  ...extra,
 ];
 const widths = [
   ["desktop", 1280, 900],

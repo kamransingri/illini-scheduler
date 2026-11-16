@@ -153,4 +153,6 @@ export type Meta = {
   repo_url: string;
   n_courses: number;
   history_terms: string[];
+  /** averages the "best pick" score shrinks small samples toward (pipeline/export.py score_priors) */
+  score_priors?: import("./score").ScorePriors | null;
 };
