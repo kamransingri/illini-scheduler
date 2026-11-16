@@ -42,7 +42,7 @@ export const K_RMP_RATINGS = 10;
 
 const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
 // With no prior (no data to average), the measured value is used as is.
-const shrink = (x: number, n: number, prior: number | null, k: number) => (prior === null ? x : (n * x + k * prior) / (n + k));
+export const shrink = (x: number, n: number, prior: number | null, k: number) => (prior === null ? x : (n * x + k * prior) / (n + k));
 
 export function scoreOf(input: ScoreInput, priors: ScorePriors, w: ScoreWeights = DEFAULT_WEIGHTS): ScoreResult {
   const parts: ScorePart[] = [];
