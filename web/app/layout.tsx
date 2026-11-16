@@ -1,67 +1,74 @@
 import type { Metadata, Viewport } from "next";
+import { Montserrat, Source_Sans_3 } from "next/font/google";
 import Link from "next/link";
 import CartCount from "@/components/CartCount";
 import "./globals.css";
 
+// Illinois brand faces (brand.illinois.edu/visual-identity/typography), self-hosted by next/font at build time.
+const sourceSans = Source_Sans_3({ subsets: ["latin"], variable: "--font-source-sans", display: "swap" });
+const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat", weight: ["600", "700"], display: "swap" });
+
 export const metadata: Metadata = {
-  title: { default: "Illini Scheduler", template: "%s · Illini Scheduler" },
-  description:
-    "Unofficial UIUC course planner: sections, GPA by instructor, offering history, gen-ed finder and a conflict-free schedule builder.",
+  title: { default: "Illini Scheduler", template: "%s | Illini Scheduler" },
+  description: "Unofficial UIUC course planner: professors compared by GPA and ratings, sections, gen-eds and a conflict-free schedule builder.",
 };
 
 export const viewport: Viewport = { width: "device-width", initialScale: 1 };
 
+const NAV: [string, string][] = [
+  ["/", "Search"],
+  ["/geneds/", "Gen-eds"],
+  ["/opened/", "Just opened"],
+];
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${sourceSans.variable} ${montserrat.variable}`}>
       <body className="min-h-screen font-sans antialiased">
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:bg-white focus:p-2">
           Skip to content
         </a>
-        <header className="border-b border-line bg-navy text-white">
-          <nav className="mx-auto flex max-w-5xl items-center gap-x-3 px-4 py-3 sm:gap-x-5" aria-label="Main">
-            <Link href="/" className="mr-auto text-lg font-bold tracking-tight no-underline">
-              Illini <span className="text-orange-300">Scheduler</span>
+        <header className="border-b-4 border-orange bg-navy text-white">
+          <nav className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-5 gap-y-1 px-4 py-3" aria-label="Main">
+            <Link href="/" className="mr-auto font-display text-lg font-bold no-underline">
+              Illini Scheduler
             </Link>
-            <Link href="/" className="hidden text-sm hover:underline sm:inline">
-              Search
-            </Link>
-            <Link href="/geneds/" className="text-sm whitespace-nowrap hover:underline">
-              <span className="sm:hidden">Gen-eds</span>
-              <span className="hidden sm:inline">Gen-ed finder</span>
-            </Link>
-            <Link href="/opened/" className="hidden text-sm whitespace-nowrap hover:underline sm:inline">
-              Just opened
-            </Link>
-            <Link href="/schedule/" className="text-sm whitespace-nowrap hover:underline">
-              Schedule<span className="hidden sm:inline"> builder</span>
+            {NAV.map(([href, label]) => (
+              <Link key={href} href={href} className={`whitespace-nowrap hover:underline ${href === "/" || href === "/opened/" ? "hidden sm:inline" : ""}`}>
+                {label}
+              </Link>
+            ))}
+            <Link href="/schedule/" className="whitespace-nowrap hover:underline">
+              Schedule
               <CartCount />
             </Link>
           </nav>
         </header>
-        <main id="main" className="mx-auto max-w-5xl px-4 py-6">
+        <main id="main" className="mx-auto max-w-5xl px-4 py-8">
           {children}
         </main>
-        <footer className="mx-auto max-w-5xl border-t border-line px-4 py-6 text-xs leading-relaxed text-muted">
-          <p>
-            <strong>Unofficial.</strong> Not affiliated with the University of Illinois. Data comes from public sources and may be out of
-            date: always confirm sections, seats and restrictions in Self-Service before registering.
-          </p>
-          <p className="mt-1">
-            Sources: Course Explorer schedule (via{" "}
-            <a className="underline" href="https://github.com/wadefagen/datasets/tree/main/course-catalog">
-              wadefagen/datasets course-catalog
-            </a>
-            ), the{" "}
-            <a className="underline" href="https://github.com/wadefagen/datasets/tree/main/gpa">
-              UIUC GPA dataset
-            </a>{" "}
-            and{" "}
-            <a className="underline" href="https://github.com/wadefagen/datasets/tree/main/teachers-ranked-as-excellent">
-              Teachers Ranked as Excellent
-            </a>{" "}
-            by Wade Fagen-Ulmschneider, and Rate My Professors (linked, when available).
-          </p>
+        <footer className="border-t border-line bg-panel">
+          <div className="mx-auto max-w-5xl space-y-2 px-4 py-6 text-sm text-muted">
+            <p>
+              <strong className="text-ink">Unofficial.</strong> Not affiliated with the University of Illinois. Data comes from public sources and can
+              be out of date: confirm sections, seats and restrictions in Self-Service before registering.
+            </p>
+            <p>
+              Sources: Course Explorer, the{" "}
+              <a className="underline" href="https://github.com/wadefagen/datasets/tree/main/gpa">
+                UIUC GPA dataset
+              </a>
+              ,{" "}
+              <a className="underline" href="https://github.com/wadefagen/datasets/tree/main/course-catalog">
+                course catalog
+              </a>{" "}
+              and{" "}
+              <a className="underline" href="https://github.com/wadefagen/datasets/tree/main/teachers-ranked-as-excellent">
+                Teachers Ranked as Excellent
+              </a>{" "}
+              datasets by Wade Fagen-Ulmschneider, and Rate My Professors.
+            </p>
+          </div>
         </footer>
       </body>
     </html>
