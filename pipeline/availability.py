@@ -28,6 +28,8 @@ from .course_explorer import term_parts
 from .timeparse import parse_time
 
 WEB_BASE = "https://courses.illinois.edu/schedule"
+FINALS_BASE = "https://courses.illinois.edu/ajax/finalexam"  # the fragment a course page loads with htmx
+FINALS_DAYS = 7  # final-exam times change rarely: re-read a course's at most weekly
 AVAIL_DIR = DATA / "availability"
 CRN_RE = re.compile(r"^\d{5}$")
 
@@ -54,6 +56,34 @@ def parse_availability(page: str | bytes) -> dict[str, str]:
                         out[crn] = status
                 break
     return out
+
+
+def parse_final_exams(page: str | bytes) -> list[dict]:
+    """The final-exam fragment Course Explorer course pages load (`/ajax/finalexam/{year}/{season}/{SUBJ}/{NUM}`):
+    one row per section and exam, [{"crn", "code", "date" (YYYY-MM-DD), "start", "end" (minutes), "room", "type"}].
+    "Conflict" rows are the official make-up slot for students with a conflict; the others are the exam itself."""
+    doc = lhtml.fromstring(page)
+    out: list[dict] = []
+    for row in doc.xpath("//table[@id='finalexam-course-table']//tbody/tr"):
+        tds = row.findall("td")
+        if len(tds) < 8:
+            continue
+        cell = [" ".join(td.text_content().split()) for td in tds]
+        m = re.fullmatch(r"(\d{1,2})/(\d{1,2})/(\d{4})", cell[2])
+        if not CRN_RE.match(cell[1]) or not m:
+            continue
+        rooms = [t.strip() for t in tds[6].itertext() if t.strip()]
+        date = f"{m.group(3)}-{int(m.group(1)):02d}-{int(m.group(2)):02d}"
+        out.append({"crn": cell[1], "code": cell[0], "date": date, "start": parse_time(cell[4]),
+                    "end": parse_time(cell[5]), "room": "; ".join(rooms), "type": cell[7]})
+    return out
+
+
+def finals_due(d: dict, course: str, now: str) -> bool:
+    last = d.get("finals", {}).get(course, {}).get("checked", "")
+    if not last:
+        return True
+    return datetime.fromisoformat(now) - datetime.fromisoformat(last) >= timedelta(days=FINALS_DAYS)
 
 
 def _texts(td) -> list[str]:  # type: ignore[no-untyped-def]
@@ -225,7 +255,7 @@ def load_file(term: str) -> dict:
     rows {"CS 124": parsed page without statuses}, events [[at, crn, course, code, old, new], ...]."""
     p = AVAIL_DIR / f"{term}.json"
     d = json.loads(p.read_text()) if p.exists() else {"term": term}
-    for k, default in (("sections", {}), ("courses", {}), ("rows", {}), ("events", [])):
+    for k, default in (("sections", {}), ("courses", {}), ("rows", {}), ("events", []), ("finals", {})):
         d.setdefault(k, default)
     return d
 
@@ -269,7 +299,7 @@ def crawl_slow(term: str, courses: list[tuple[str, str]], deadline: float, inter
     own = client is None
     http = client or httpx.Client(headers={"User-Agent": USER_AGENT}, timeout=30, follow_redirects=True)
     reasons: Counter[str] = Counter()
-    ok = streak = 0
+    ok = streak = finals = 0
     try:
         for i, (subj, num) in enumerate(order):
             if time.monotonic() > deadline:
@@ -282,10 +312,27 @@ def crawl_slow(term: str, courses: list[tuple[str, str]], deadline: float, inter
                 reasons[type(e).__name__] += 1
             now = datetime.now(UTC).isoformat(timespec="seconds")
             if code == 200 and r is not None:
-                record_page(d, f"{subj} {num}", parse_course_page(r.content), now)
+                page = parse_course_page(r.content)
+                record_page(d, f"{subj} {num}", page, now)
                 d["courses"][f"{subj} {num}"] = now
                 ok += 1
                 streak = 0
+                # Final-exam times (the course page loads them separately), at most weekly, same pacing as pages.
+                if page["sections"] and finals_due(d, f"{subj} {num}", now):
+                    sleep(interval)
+                    try:
+                        referer = f"{WEB_BASE}/{year}/{season}/{subj}/{num}"
+                        fr = http.get(f"{FINALS_BASE}/{year}/{season}/{subj}/{num}",
+                                      headers={"HX-Request": "true", "Referer": referer})
+                        if fr.status_code == 200:
+                            d["finals"][f"{subj} {num}"] = {"checked": now, "rows": parse_final_exams(fr.content)}
+                            finals += 1
+                        else:
+                            reasons[f"finals HTTP {fr.status_code}"] += 1
+                            if fr.status_code in (202, 429, 503):
+                                sleep(15)
+                    except httpx.TransportError as e:
+                        reasons[f"finals {type(e).__name__}"] += 1
             elif code == 404:
                 d["courses"][f"{subj} {num}"] = now
             else:
@@ -304,7 +351,8 @@ def crawl_slow(term: str, courses: list[tuple[str, str]], deadline: float, inter
         if own:
             http.close()
         save_file(term, d)
-    d["_report"] = f"{term}: {ok} course pages read, {len(d['sections'])} sections known, failures {dict(reasons)}"
+    d["_report"] = (f"{term}: {ok} course pages read, {finals} final-exam lists, {len(d['sections'])} sections known, "
+                    f"failures {dict(reasons)}")
     return d
 
 
@@ -450,6 +498,10 @@ def apply_files(conn: sqlite3.Connection, terms: list[str]) -> str:
         latest = max(v[1] for v in d["sections"].values())
         conn.execute("UPDATE terms SET checked_at=?, source=CASE WHEN source LIKE '%web availability%' THEN source "
                      "ELSE source || ' + web availability' END WHERE term=?", (latest, term))
+        conn.execute("DELETE FROM final_exams WHERE term=?", (term,))
+        conn.executemany("INSERT INTO final_exams VALUES (?,?,?,?,?,?,?)",
+                         [(term, x["crn"], x["date"], x["start"], x["end"], x["room"], x["type"])
+                          for f in d["finals"].values() for x in f.get("rows", [])])
         reports.append(f"{term}: {n} of {total} sections have a status")
     return "; ".join(reports)
 

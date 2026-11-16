@@ -23,6 +23,8 @@ export type Section = {
   special: string; // non-empty = looks restricted / special-program (reason)
   status_at?: string; // when this section's status was read
   status_since?: string; // when it last changed to this status ("" = unknown)
+  /** final exams: [date YYYY-MM-DD, start, end (minutes), type]; type "Conflict" = the official make-up slot */
+  fx?: [string, number | null, number | null, string][];
 };
 
 export type TermBlock = {

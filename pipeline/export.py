@@ -183,6 +183,11 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
             {"d": r["days"], "s": r["start_time"], "e": r["end_time"], "b": r["building"] or "", "r": r["room"] or ""})
     status_at = {(r[0], r[1]): (r[2], r[3] or "") for r in
                  conn.execute("SELECT term, crn, checked_at, since FROM availability")}
+    # final exams per section: [date, start, end, type]; "Conflict" rows are the make-up slot (availability.py)
+    finals: dict[tuple[str, str], list[list]] = defaultdict(list)
+    fx_sql = "SELECT term, crn, date, start_time, end_time, type FROM final_exams"
+    for r in conn.execute(f"{fx_sql} WHERE term IN ({qmarks}) ORDER BY date, start_time", live_terms):
+        finals[(r[0], r[1])].append([r[2], r[3], r[4], r[5]])
     seat_events: dict[tuple[str, str], list[dict]] = defaultdict(list)
     all_events: list[dict] = []
     for r in conn.execute("SELECT term, at, crn, subject, number, code, old, new FROM seat_events ORDER BY at DESC"):
@@ -201,6 +206,7 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
             "text": " ".join(filter(None, (r["section_text"], r["section_notes"]))),
             "meetings": meet.get((r["term"], r["crn"]), []),
             "instructors": [ikey(x, r["subject"]) for x in raws], "instructors_raw": raws, "special": "",
+            **({"fx": finals[(r["term"], r["crn"])]} if (r["term"], r["crn"]) in finals else {}),
         })
     notes = _load_notes()
     for by_term in sections.values():

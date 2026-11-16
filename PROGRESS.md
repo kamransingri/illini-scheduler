@@ -479,3 +479,11 @@ score column and default sort) and the degree checklist, each with a breakdown p
 set the six weights (saved in the browser). The schedule builder's RMP weight shrinks few-rating professors like the
 score (D13.19). Checks: Vitest 82/82 (score shrinkage, missing data, weights, saved weights, gen-ed score sort, schedule
 regression), affected Playwright specs 19/19 on one worker.
+
+### Phase 7 — final-exam conflicts (done)
+
+`pipeline/availability.py` (`parse_final_exams`, weekly fetch in `crawl_slow`, load in `apply_files`), `final_exams`
+table, `fx` on exported sections, `finalClashes` in `web/lib/schedule.ts` (shown with the builder's other warnings),
+final times on course-page section rows. The next run of the daily availability workflow starts filling the files; no
+workflow change was needed. Checks: pytest 178/178 (parser on two real responses, weekly fetch with the htmx header,
+DB + export), Vitest 84/84 (overlap, different days, back-to-back, make-up slots).

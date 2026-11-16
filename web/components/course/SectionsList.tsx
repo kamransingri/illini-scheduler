@@ -78,6 +78,14 @@ export default function SectionsList({ course, term, block, onPickProf }: { cour
                       ) : (
                         <span className="text-muted">No meeting listed</span>
                       )}
+                      {(s.fx ?? [])
+                        .filter(([, st, , type]) => st !== null && !/conflict/i.test(type))
+                        .map(([date, st, en]) => (
+                          <span key={date + st} className="block text-sm text-muted">
+                            Final {new Date(`${date}T12:00:00Z`).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" })},{" "}
+                            {fmtTime(st)}–{fmtTime(en)}
+                          </span>
+                        ))}
                     </span>
                     <span className="col-span-2 text-muted md:col-span-1 md:text-ink">
                       {s.meetings.map((m, i) => (
