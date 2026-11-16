@@ -410,3 +410,35 @@ Network check (2026-11-16, from this machine):
 
 Baseline screenshots: `docs/screenshots/before/` (`node web/scripts/screenshots.mjs <dir>` with the build served on
 :4173).
+
+### Phase 1 — design audit and direction (done)
+
+DESIGN.md: audit of every baseline page, the direction (brand palette from brand.illinois.edu, read 2026-11-16;
+Source Sans 3 + Montserrat; five sizes; one radius; one meaning per colour) and the token/component reference.
+Tokens in `web/app/globals.css` (`@theme`, Tailwind's type and radius scales reset); shared components in
+`web/components/ui/` (Icon, Info, Stat, Badge, SeatStatus, Delta, SectionHeader, DataRow, Expandable). Legacy colour
+names (`brand`, `good`, `bad`) are aliased in `globals.css` until Phase 3 restyles the remaining pages.
+
+### Phase 2 — course page around professors (done, waiting for approval before Phase 3)
+
+`web/components/course/` (ProfessorLedger, SectionsList, CompareTable, BestPick, ScoreBreakdown, CourseView),
+`web/lib/sections.ts`, `rank.ts`, `score.ts`, `weights.ts`; `components/CourseDetail.tsx` removed; Grades over time is a
+table. `pipeline/export.py` adds `meta.score_priors` (subject/campus GPA, RMP means) for the score.
+
+Checks on the full build (7,146 pages): Vitest 68/68 (new: score shrinkage and missing-data cases, section groups,
+TRE labels), pytest 166/166, ruff/mypy/ESLint/tsc clean, Playwright 32/33 (new `professors.spec.ts`: expanding a row,
+clicking a section's professor, review labels, compare sort, 375px with a panel open; the one failure is the
+Windows-only lower-case URL test from Phase 0). Lighthouse on `/course/CS/124/`, median of 3: performance 0.98,
+accessibility 1.00, best practices 1.00. No horizontal scroll at 375px on CS 124, MATH 221, STAT 107.
+
+Review screenshots were shared with the owner of this session for approval (Phase 3 step 1).
+
+### Next steps added by this work
+
+- RMP keeps only the 3 most recent snippets per professor across all courses, so a course page often has no review for
+  that course. The cached RMP responses already hold 20 ratings: keeping up to ~8, this course's first, costs no extra
+  requests but changes the RMP client (left alone in this work, D13.5).
+- MATH 221 "Anderson, J" is matched to an RMP profile whose reviews are for AFRO 310 and EPS 310 (2011–2018): very
+  likely a different person. Worth an entry in `data/name_overrides.csv` or a stricter department check in `rmp.py`.
+- `CURRENT_TERM` / `NEXT_TERM` / `HISTORY_TERMS` are hard-coded in `pipeline/fetch.py`; they need a by-hand bump when
+  Fall 2027 is published (usually around March 2027).
