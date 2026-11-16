@@ -1,0 +1,38 @@
+# Innovation, Leadership & Engineering Entrepreneurship (ILEE), BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/innovation-leadership-engineering-entrepreneurship-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: innovation-leadership-engineering-entrepreneurship-bs
+program: Innovation, Leadership & Engineering Entrepreneurship (ILEE), BS
+college: The Grainger College of Engineering
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/engineering/innovation-leadership-engineering-entrepreneurship-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+notes: []
+double_counting: []
+groups:
+- name: Innovation, Leadership and Engineering Entrepreneurship Orientation
+  section: Innovation, Leadership and Engineering Entrepreneurship Orientation
+  rule: all
+  courses:
+  - - TE 100
+    - TE 200
+  id: innovation-leadership-and-engineering-en-1
+- name: Innovation, Leadership and Engineering Entrepreneurship Technical Core
+  section: Innovation, Leadership and Engineering Entrepreneurship Technical Core
+  rule: all
+  courses:
+  - TE 230
+  - TE 250
+  - TE 333
+  - TE 360
+  - SE 361
+  - TE 390
+  - TE 401
+  - TE 450
+  - TE 461
+  - TE 462
+  - TE 466
+  id: innovation-leadership-and-engineering-en-2

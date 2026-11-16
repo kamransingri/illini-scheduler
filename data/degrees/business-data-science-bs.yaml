@@ -1,0 +1,238 @@
+# Business + Data Science, BS (Gies College of Business), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/bus/business-data-science-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: business-data-science-bs
+program: Business + Data Science, BS
+college: Gies College of Business
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/bus/business-data-science-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 124
+notes:
+- 'Minimum hours required for graduation: 124 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/bus/business-data-science-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by ECON 102 and ECON 103
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: U.S. Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by STAT 107, STAT 207; and MATH 220, MATH 221, or MATH 234
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Business Core
+  section: General Education Requirements
+  rule: all
+  courses:
+  - ACCY 201
+  - ACCY 202
+  - BADM 275
+  - BADM 300
+  - BADM 310
+  - BADM 320
+  - BADM 449
+  - BUS 101
+  - BUS 201
+  - BUS 401
+  - CMN 101
+  - ECON 102
+  - ECON 103
+  - FIN 221
+  notes:
+  - 'Catalog total: 42 hours.'
+  id: business-core-11
+- name: Data Science Core
+  section: General Education Requirements
+  rule: all
+  courses:
+  - IS 107
+  - STAT 207
+  - CS 307
+  - CS 277
+  - IS 467
+  - IS 477
+  id: data-science-core-12
+- name: Data Science Core
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Choose one Calculus:'
+  courses:
+  - MATH 220
+  - MATH 221
+  - MATH 234
+  id: data-science-core-13
+- name: Data Science Core
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Choose one Linear Algebra:'
+  courses:
+  - MATH 227
+  - MATH 257
+  id: data-science-core-14
+- name: Data Science Core
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Business Administration Specialization (choose one of the four specializations below)
+  - 'Information Systems Specialization:'
+  courses:
+  - BADM 350
+  - BADM 351
+  - BADM 352
+  - BADM 353
+  id: data-science-core-15
+- name: Data Science Core
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'International Business Specialization:'
+  courses:
+  - BADM 380
+  - BADM 381
+  - BADM 382
+  - BADM 383
+  id: data-science-core-16
+- name: Data Science Core
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Management Specialization:'
+  courses:
+  - BADM 311
+  - BADM 312
+  - BADM 313
+  - BADM 314
+  id: data-science-core-17
+- name: Data Science Core
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Operations Management Specialization:'
+  courses:
+  - BADM 374
+  - BADM 375
+  - BADM 377
+  - BADM 379
+  id: data-science-core-18
+- name: Meaningful Research or Discovery Experience
+  section: Meaningful Research or Discovery Experience
+  rule: manual
+  notes:
+  - One of the most important skills a student will gain in a BUS+ DS degree will be the ability to present data in meaningful
+    ways. A meaningful research and experience is as much a pillar of this degree program as both the core coursework and
+    the area of specialization. This capstone experience can be fulfilled through BUS 301. This course is an active learning,
+    real-client experience that will allow students to join their data science skills with their business skills.
+  id: meaningful-research-or-discovery-experie-19

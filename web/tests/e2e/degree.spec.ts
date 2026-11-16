@@ -4,7 +4,9 @@ const req = (page: import("@playwright/test").Page, id: string) => page.locator(
 
 test("adding a finished course updates the checklist and the URL", async ({ page }) => {
   await page.goto("./degree/");
-  await expect(page.getByLabel("Program", { exact: true })).toHaveValue("finance-data-science"); // the only program is picked for you
+  const program = page.getByLabel("Program", { exact: true });
+  await expect(program.locator("option")).not.toHaveCount(1); // every catalog program, grouped by college
+  await program.selectOption("finance-data-science");
   await expect(page.getByTestId("degree-progress")).toContainText("0 of 19");
   await page.getByLabel("Course code").fill("stat 107");
   await page.getByRole("button", { name: "Add", exact: true }).click();
@@ -69,8 +71,20 @@ test("375px: the checklist doesn't scroll sideways", async ({ page }) => {
 
 test("keyboard: type a course code and press Enter to add it", async ({ page }) => {
   await page.goto("./degree/?p=finance-data-science");
+  await expect(page.getByTestId("degree-progress")).toBeVisible(); // course data loaded
   await page.getByLabel("Course code").fill("CMN 101");
   await page.keyboard.press("Enter");
   await expect(page.getByTestId("my-courses")).toContainText("CMN 101");
   await expect(req(page, "business-core")).toHaveAttribute("data-status", "partial");
+});
+
+test("programs imported from the catalog say so and show prose rules in the catalog's words", async ({ page }) => {
+  await page.goto("./degree/?p=computer-science-bs");
+  await expect(page.getByTestId("generated-note")).toContainText("Read automatically from the catalog page");
+  expect(await page.getByLabel("Program", { exact: true }).locator("option").count()).toBeGreaterThan(150);
+  const focus = page.locator('[data-group^="software-foundations"]');
+  await expect(focus).toHaveAttribute("data-status", "open");
+  await expect(focus.getByTestId("catalog-words")).toContainText("single focus area");
+  await expect(focus.getByTestId("catalog-words").getByRole("link", { name: "CS 422" })).toBeVisible(); // a listed course links to its page
+  await expect(page.locator('[data-group^="computer-science-technical-core"]')).toContainText(/more courses/);
 });

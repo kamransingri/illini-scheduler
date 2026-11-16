@@ -1,0 +1,217 @@
+# Voice, BMUS (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/voice-bmus/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: voice-bmus
+program: Voice, BMUS
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/voice-bmus/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 130
+notes:
+- 'Minimum hours required for graduation: 130 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/faa/voice-bmus/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities and the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+  notes:
+  - fulfilled by MUS 313 and MUS 314
+- id: nat
+  name: Natural Sciences and Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social and Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation Requirements
+  section: Orientation Requirements
+  rule: all
+  courses:
+  - MUS 100
+  - FAA 101
+  id: orientation-requirements-11
+- name: Music Theory and Musicianship
+  section: Music Core
+  rule: all
+  courses:
+  - MUS 101
+  - MUS 102
+  - MUS 201
+  - MUS 202
+  - MUS 107
+  - MUS 108
+  - MUS 207
+  - MUS 208
+  id: music-theory-and-musicianship-12
+- name: Musicology
+  section: Music Core
+  rule: all
+  courses:
+  - MUS 110
+  - MUS 313
+  - MUS 314
+  id: musicology-13
+- name: Keyboard
+  section: Music Core
+  rule: manual
+  notes:
+  - All students must demonstrate keyboard competency when they audition, by proficiency examination when they matriculate,
+    or by enrolling in MUS 172 and/or MUS 173.
+  courses:
+  - MUS 172
+  - MUS 173
+  id: keyboard-14
+- name: Voice Studies
+  section: Voice Studies
+  rule: all
+  courses:
+  - MUSC 105
+  - MUSC 405
+  id: voice-studies-15
+- name: Choral Ensemble
+  section: Voice Studies
+  rule: manual
+  notes:
+  - 'Catalog total: 8 hours.'
+  - Voice students must be in a choral ensemble each semester of residence. A maximum of 10 hours of ensemble may be applied
+    to the BMUS degree.
+  - 'Students choose from:'
+  - MUSC 460, MUSC 461, MUSC 462, MUSC 463, MUSC 464, MUSC 465, MUSC 467, MUSC 469
+  courses:
+  - MUS 120
+  - MUS 121
+  - MUS 122
+  - MUS 123
+  - MUS 242
+  - MUS 430
+  - MUS 474
+  - MUS 475
+  - ITAL 101
+  - ITAL 102
+  - GER 101
+  - GER 102
+  - FR 101
+  - FR 102
+  - MUSC 300
+  - MUSC 400
+  id: choral-ensemble-16
+- name: Summary of Credit for the Bachelor of Music in Voice
+  section: Summary of Credit for the Bachelor of Music in Voice
+  rule: manual
+  notes:
+  - General Education
+  - Orientation
+  - Music Core
+  - Voice
+  - Free electives to bring the total hours earned to 130
+  - A minimum of 40 credits at the 300- or 400-level must be completed for this degree
+  - 8 of these hours are fulfilled by MUS 201, MUS 202, MUS 207, and MUS 208, each of which has at least 2 prerequisites and
+    may count as advanced
+  - A maximum of 8 hours of upper level coursework may be earned through ensembles, MUSC 447 through MUSC 498
+  id: summary-of-credit-for-the-bachelor-of-mu-17

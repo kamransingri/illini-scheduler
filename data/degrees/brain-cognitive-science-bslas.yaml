@@ -1,0 +1,270 @@
+# Brain & Cognitive Science, BSLAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/brain-cognitive-science-bslas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: brain-cognitive-science-bslas
+program: Brain & Cognitive Science, BSLAS
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/brain-cognitive-science-bslas/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/brain-cognitive-science-bslas/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by PSYC 235 and any other approved as Quantitative Reasoning
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English, or completion
+    of the third semester in two different languages other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: Orientation and Professional Development
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-and-professional-development-11
+- name: Major Requirements
+  section: Major Requirements
+  rule: all
+  courses:
+  - BCOG 100
+  - BCOG 200
+  id: major-requirements-12
+- name: Major Requirements
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Statistics Course
+  courses:
+  - PSYC 235
+  id: major-requirements-13
+- name: Multi-disciplinary Breadth Courses
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Statistics Course
+  courses:
+  - - ANTH 101
+    - ANTH 102
+    - ANTH 104
+    - ANTH 143
+  - - INFO 102
+    - CS 125
+  - LING 100
+  - MCB 170
+  - - PHIL 100
+    - PHIL 101
+  - - PHIL 102
+    - PHIL 103
+  - PSYC 100
+  id: multi-disciplinary-breadth-courses-14
+- name: Intermediate Required Courses
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 3 hours.'
+  - Statistics Course
+  courses:
+  - PSYC 220
+  - PSYC 204
+  - PSYC 210
+  id: intermediate-required-courses-15
+- name: Intermediate Elective Courses
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 3 hours.'
+  - Statistics Course
+  courses:
+  - ANTH 240
+  - ANTH 243
+  - ANTH 270
+  - - CS 173
+    - MATH 213
+  - CS 225
+  - PSYC 216
+  - PSYC 224
+  - PSYC 230
+  - PSYC 248
+  - LING 225
+  - LING 270
+  - PHIL 202
+  - PHIL 250
+  - PHIL 270
+  - BCOG 458
+  id: intermediate-elective-courses-16
+- name: Required Lab
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 4 hours.'
+  - Statistics Course
+  courses:
+  - PSYC 311
+  - PSYC 331
+  - PSYC 334
+  - PSYC 363
+  - PSYC 445
+  - PSYC 489
+  id: required-lab-17
+- name: Advanced Electives
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 12 hours.'
+  - Statistics Course
+  courses:
+  - ANTH 372
+  - BCOG 492
+  - CS 361
+  - CS 440
+  - IB 329
+  - IB 432
+  - IE 340
+  - LING 301
+  - LING 302
+  - LING 304
+  - LING 307
+  - LING 425
+  - MCB 462
+  - PHIL 351
+  - PHIL 407
+  - PHIL 425
+  - PHIL 430
+  - PHIL 443
+  - PHIL 453
+  - PHIL 454
+  - PHIL 471
+  - PHIL 477
+  - PSYC 302
+  - PSYC 361
+  - PSYC 402
+  - PSYC 403
+  - PSYC 404
+  - PSYC 408
+  - PSYC 413
+  - PSYC 414
+  - PSYC 421
+  - PSYC 423
+  - PSYC 433
+  - PSYC 450
+  - PSYC 451
+  - PSYC 453
+  - SHS 301
+  - SHS 427
+  id: advanced-electives-18

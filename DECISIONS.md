@@ -420,3 +420,32 @@ Every judgment call made during the autonomous build, newest phase last.
   time filters, `export.bundles`) and TypeScript (the schedule builder, `buildBundles`). Rather than generate one from
   the other, `fixtures/bundle-parity.json` holds shared cases (letter groups, any-with-any, standalone) that both test
   suites check, so a change to one copy fails the other's tests until both agree.
+
+## After v0.2.0 (2026-11-16, owner's review of the live site)
+
+- **D13.23 Gen-ed categories combine with AND.** Picking several gen-ed categories now shows only courses that count
+  for every one of them (before: any of them), and an empty list with "No course counts for all of ..." when none does.
+- **D13.24 Gen-ed results are a table** with row and column rules (course, every category it counts for with the
+  picked ones ticked, score, recent GPA, best professor, RMP, open lectures, add). On a phone the table scrolls
+  sideways inside its own box; the page doesn't.
+- **D13.25 One typeface.** Montserrat (the geometric headline face) is gone; everything is Source Sans 3, the Illinois
+  brand's main face, with heavier weights for headings. One font download instead of two.
+- **D13.26 Footer** sits at the bottom of short pages (the body is a full-height column) and uses the header's Illini
+  Blue band with the orange rule.
+- **D13.27 RMP compound surnames.** CS 173's "Gonzalez, Daniel" is "Daniel Gonzalez Cedre" on RMP; the matcher wanted
+  equal surnames, so he had no ratings. An RMP surname of several words now matches when its first word is ours (first
+  name and department must still agree); the GPA dataset's 15-letter truncated surnames still match their full form.
+- **D13.28 Every undergraduate program.** `pipeline/catalog_import.py` reads the catalog's undergraduate index and each
+  program page (and the concentration pages of programs whose requirements live there), 1 request per second, cached
+  in `data/raw/catalog`, and writes `data/degrees/<id>.yaml`: 171 programs. It turns only what the tables state into
+  rules: required lists ("all"), "or" alternatives, "&" pairs, "Select N of the following", "N hours from". Comment
+  rows split a table, so required courses stay required and only the courses after "Select one of the following" are
+  a choice. Anything the catalog writes as prose (technical electives, focus areas, concentrations, free electives),
+  and any list that follows such prose, becomes a `manual` group showing the catalog's own words and the courses it
+  lists, with a checkbox: never a guessed rule. The campus gen-ed table on every page maps to the same gen-ed groups as
+  the hand-checked file; the program-and-gen-ed double-counting rule is added only when the page carries that sentence.
+  Generated files are marked `generated:` and the page says so; hand-checked files (no `generated:`) are never
+  overwritten, and a program a hand-checked file covers is skipped. Course codes outside the loaded terms are logged.
+- **D13.29 Degree data size.** Every course with a gen-ed code goes once into `degrees/gened-courses.json` (234 KB);
+  each program file keeps only its own listed courses (10–145 KB), and the page fills gen-ed groups' options from the
+  shared file. 173 files, 3 MB in all, instead of ~280 KB per program.

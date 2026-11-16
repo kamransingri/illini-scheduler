@@ -1,0 +1,290 @@
+# Communication, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/communication-balas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: communication-balas
+program: Communication, BALAS
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/communication-balas/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/communication-balas/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by CMN 102 any other course approved as Social & Behavioral Sciences
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English, or completion
+    of the third semester in two different languages other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Major Requirements
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Introduction to Public Speaking (choose one):'
+  courses:
+  - - CMN 101
+    - CMN 112
+  - CMN 102
+  id: major-requirements-11
+- name: Major Requirements
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Communication Courses: Students will select an option (A or B) and a specialization (if Option B is chosen) in consultation
+    with an undergraduate advisor in Communication.'
+  - 'OPTION A: Students who wish a general course of study will take at least one course from five of the following six areas
+    and the remaining hours will be selected in consultation with an advisor.'
+  - 'OPTION B: Students who choose to concentrate within an area must take four courses from one of the six areas listed below
+    and the remaining hours will be selected in consultation with an advisor. Students may complete more than one specialization
+    by completing four courses in each area desired; however, individual courses may not be counted toward more than one specialization.'
+  id: major-requirements-12
+- name: Communication & Culture Area
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'OPTION A: Students who wish a general course of study will take at least one course from five of the following six areas
+    and the remaining hours will be selected in consultation with an advisor.'
+  - 'OPTION B: Students who choose to concentrate within an area must take four courses from one of the six areas listed below
+    and the remaining hours will be selected in consultation with an advisor. Students may complete more than one specialization
+    by completing four courses in each area desired; however, individual courses may not be counted toward more than one specialization.'
+  courses:
+  - CMN 232
+  - CMN 250
+  - CMN 280
+  - CMN 326
+  - CMN 357
+  - CMN 361
+  - CMN 375
+  - CMN 429
+  - CMN 432
+  - CMN 450
+  id: communication-culture-area-13
+- name: Communication & Health Area
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'OPTION A: Students who wish a general course of study will take at least one course from five of the following six areas
+    and the remaining hours will be selected in consultation with an advisor.'
+  - 'OPTION B: Students who choose to concentrate within an area must take four courses from one of the six areas listed below
+    and the remaining hours will be selected in consultation with an advisor. Students may complete more than one specialization
+    by completing four courses in each area desired; however, individual courses may not be counted toward more than one specialization.'
+  courses:
+  - CMN 220
+  - CMN 230
+  - CMN 260
+  - CMN 321
+  - CMN 323
+  - CMN 368
+  - CMN 421
+  - CMN 467
+  - CMN 435
+  - CMN 462
+  - CMN 464
+  - CMN 465
+  id: communication-health-area-14
+- name: Communication & Organizations Area
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'OPTION A: Students who wish a general course of study will take at least one course from five of the following six areas
+    and the remaining hours will be selected in consultation with an advisor.'
+  - 'OPTION B: Students who choose to concentrate within an area must take four courses from one of the six areas listed below
+    and the remaining hours will be selected in consultation with an advisor. Students may complete more than one specialization
+    by completing four courses in each area desired; however, individual courses may not be counted toward more than one specialization.'
+  courses:
+  - CMN 211
+  - CMN 212
+  - CMN 213
+  - CMN 215
+  - CMN 232
+  - CMN 280
+  - CMN 312
+  - CMN 323
+  - CMN 410
+  - CMN 411
+  - CMN 464
+  id: communication-organizations-area-15
+- name: Interpersonal Communication Area
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'OPTION A: Students who wish a general course of study will take at least one course from five of the following six areas
+    and the remaining hours will be selected in consultation with an advisor.'
+  - 'OPTION B: Students who choose to concentrate within an area must take four courses from one of the six areas listed below
+    and the remaining hours will be selected in consultation with an advisor. Students may complete more than one specialization
+    by completing four courses in each area desired; however, individual courses may not be counted toward more than one specialization.'
+  courses:
+  - CMN 213
+  - CMN 230
+  - CMN 232
+  - CMN 260
+  - CMN 321
+  - CMN 323
+  - CMN 336
+  - CMN 338
+  - CMN 357
+  - CMN 368
+  - CMN 421
+  - CMN 432
+  - CMN 435
+  - CMN 462
+  id: interpersonal-communication-area-16
+- name: Mediated Communication & Techonology Area
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'OPTION A: Students who wish a general course of study will take at least one course from five of the following six areas
+    and the remaining hours will be selected in consultation with an advisor.'
+  - 'OPTION B: Students who choose to concentrate within an area must take four courses from one of the six areas listed below
+    and the remaining hours will be selected in consultation with an advisor. Students may complete more than one specialization
+    by completing four courses in each area desired; however, individual courses may not be counted toward more than one specialization.'
+  courses:
+  - CMN 277
+  - CMN 280
+  - CMN 312
+  - CMN 325
+  - CMN 326
+  - CMN 338
+  - CMN 340
+  - CMN 345
+  - CMN 375
+  - CMN 410
+  - CMN 429
+  id: mediated-communication-techonology-area-17
+- name: Rhetoric & Public Discourse Area
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'OPTION A: Students who wish a general course of study will take at least one course from five of the following six areas
+    and the remaining hours will be selected in consultation with an advisor.'
+  - 'OPTION B: Students who choose to concentrate within an area must take four courses from one of the six areas listed below
+    and the remaining hours will be selected in consultation with an advisor. Students may complete more than one specialization
+    by completing four courses in each area desired; however, individual courses may not be counted toward more than one specialization.'
+  courses:
+  - CMN 210
+  - CMN 220
+  - CMN 250
+  - CMN 321
+  - CMN 323
+  - CMN 325
+  - CMN 326
+  - CMN 340
+  - CMN 345
+  - CMN 421
+  - CMN 423
+  - CMN 450
+  - CMN 464
+  id: rhetoric-public-discourse-area-18

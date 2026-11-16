@@ -1,0 +1,340 @@
+# African American Studies, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/african-american-studies-balas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: african-american-studies-balas
+program: African American Studies, BALAS
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/african-american-studies-balas/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/african-american-studies-balas/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by AFRO 100 and one additional Social & Behavioral Science course
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+  notes:
+  - fulfilled by AFRO 100
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: General Education Requirements
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-and-professional-development-11
+- name: Major Core Requirements and Electives
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - When a course is listed under two or more categories, the student may decide which of the requirements the course should
+    fulfill. It may not be used to fulfill more than one of those requirements
+  id: major-core-requirements-and-electives-12
+- name: I. Core Course Requirements
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 12 hours.'
+  - When a course is listed under two or more categories, the student may decide which of the requirements the course should
+    fulfill. It may not be used to fulfill more than one of those requirements
+  courses:
+  - AFRO 100
+  - AFRO 220
+  - AFRO 490
+  - AFRO 495
+  id: i-core-course-requirements-13
+- name: II. Theory and Methods Requirement
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 6 hours.'
+  - At least one Theory and one Methods course beyond the core.
+  id: ii-theory-and-methods-requirement-14
+- name: Theory
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - When a course is listed under two or more categories, the student may decide which of the requirements the course should
+    fulfill. It may not be used to fulfill more than one of those requirements
+  - At least one Theory and one Methods course beyond the core.
+  courses:
+  - AFRO 224
+  - AFRO 411
+  - AFRO 415
+  - AFRO 474
+  id: theory-15
+- name: Methods
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - When a course is listed under two or more categories, the student may decide which of the requirements the course should
+    fulfill. It may not be used to fulfill more than one of those requirements
+  - At least one Theory and one Methods course beyond the core.
+  courses:
+  - AFRO 201
+  - AFRO 411
+  - AFRO 460
+  id: methods-16
+- name: III. Thematic Areas
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 21 hours.'
+  - Students must take 21 hours of Thematic Area coursework. At least one course must be taken from each of the following
+    five areas, and the remaining 6 hours must be taken from only one of any of the five areas.
+  id: iii-thematic-areas-17
+- name: A. Comparative Race, Racialized Communities and Identities
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - At least one Theory and one Methods course beyond the core.
+  - Students must take 21 hours of Thematic Area coursework. At least one course must be taken from each of the following
+    five areas, and the remaining 6 hours must be taken from only one of any of the five areas.
+  courses:
+  - AFRO 101
+  - AFRO 103
+  - AFRO 199
+  - AFRO 215
+  - AFRO 234
+  - AFRO 275
+  - AFRO 276
+  - AFRO 281
+  - AFRO 287
+  - AFRO 298
+  - AFRO 310
+  - AFRO 312
+  - AFRO 378
+  - AFRO 383
+  - AFRO 398
+  - AFRO 407
+  - AFRO 411
+  - AFRO 415
+  - AFRO 435
+  - AFRO 460
+  - AFRO 465
+  - AFRO 474
+  - AFRO 498
+  id: a-comparative-race-racialized-communitie-18
+- name: B. Cultural Production and Cultural Movements
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - At least one Theory and one Methods course beyond the core.
+  - Students must take 21 hours of Thematic Area coursework. At least one course must be taken from each of the following
+    five areas, and the remaining 6 hours must be taken from only one of any of the five areas.
+  courses:
+  - AFRO 101
+  - AFRO 103
+  - AFRO 105
+  - AFRO 132
+  - AFRO 211
+  - AFRO 212
+  - AFRO 224
+  - AFRO 226
+  - AFRO 227
+  - AFRO 231
+  - AFRO 259
+  - AFRO 260
+  - AFRO 261
+  - AFRO 298
+  - AFRO 340
+  - AFRO 342
+  - AFRO 345
+  - AFRO 373
+  - AFRO 381
+  - AFRO 398
+  - AFRO 400
+  - AFRO 415
+  - AFRO 435
+  - AFRO 465
+  - AFRO 482
+  - AFRO 498
+  id: b-cultural-production-and-cultural-movem-19
+- name: C. Political Economy, Public Policy and Contemporary Issues
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - At least one Theory and one Methods course beyond the core.
+  - Students must take 21 hours of Thematic Area coursework. At least one course must be taken from each of the following
+    five areas, and the remaining 6 hours must be taken from only one of any of the five areas.
+  courses:
+  - AFRO 101
+  - AFRO 103
+  - AFRO 199
+  - AFRO 201
+  - AFRO 221
+  - AFRO 226
+  - AFRO 243
+  - AFRO 275
+  - AFRO 276
+  - AFRO 298
+  - AFRO 310
+  - AFRO 315
+  - AFRO 342
+  - AFRO 345
+  - AFRO 380
+  - AFRO 398
+  - AFRO 415
+  - AFRO 421
+  - AFRO 460
+  - AFRO 465
+  - AFRO 498
+  id: c-political-economy-public-policy-and-co-20
+- name: C. Political Economy, Public Policy and Contemporary Issues
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'D. Global Interconnections: Black Transnationalism and the African Diaspora'
+  courses:
+  - AFRO 103
+  - AFRO 106
+  - AFRO 215
+  - AFRO 243
+  - AFRO 261
+  - AFRO 378
+  - AFRO 400
+  id: c-political-economy-public-policy-and-co-21
+- name: E. Black Women, Gender and Sexuality Studies
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Students must take 21 hours of Thematic Area coursework. At least one course must be taken from each of the following
+    five areas, and the remaining 6 hours must be taken from only one of any of the five areas.
+  - 'D. Global Interconnections: Black Transnationalism and the African Diaspora'
+  courses:
+  - AFRO 103
+  - AFRO 226
+  - AFRO 287
+  - AFRO 342
+  - AFRO 380
+  - AFRO 381
+  - AFRO 383
+  - AFRO 415
+  - AFRO 421
+  - AFRO 435
+  - AFRO 465
+  id: e-black-women-gender-and-sexuality-studi-22
+- name: IV. Cognate or Supporting Coursework
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 9 hours.'
+  - Students must complete 9 hours of supporting coursework. Supporting coursework courses consists of a set of courses which
+    are logically grouped, and which reflect or support a student's interests outside of the African American Studies major.
+    Supporting coursework courses must be approved by the Department's undergraduate advisor.
+  id: iv-cognate-or-supporting-coursework-23

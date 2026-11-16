@@ -1,0 +1,298 @@
+# Sustainability in Food & Environmental Systems, BS (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/sustainability-food-environmental-systems-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: sustainability-food-environmental-systems-bs
+program: Sustainability in Food & Environmental Systems, BS
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/sustainability-food-environmental-systems-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300 and 400 level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/aces/sustainability-food-environmental-systems-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by ANSC 205, ETMA 311, or PLPA 200
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by ACES 102, and FSHN 101 or FSHN 120
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by ACE 100 or ECON 102, ACE 255, and LEAD 260
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+  notes:
+  - fulfilled by ACE 255
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by STAT 100, ACE 262, or CPSC 241 and one other course approved as Quantitative Reasoning
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: College Foundation
+  section: General Education Requirements
+  rule: all
+  courses:
+  - - ACES 123
+    - ACES 200
+  id: college-foundation-11
+- name: College Foundation
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Communication Option:'
+  courses:
+  - CMN 101
+  - ALEC 115
+  - CMN 111 + CMN 112
+  id: college-foundation-12
+- name: Major Core
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Communication Option:'
+  courses:
+  - - ACE 100
+    - ECON 102
+  - ACES 102
+  id: major-core-13
+- name: Major Core
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Statistics Option - Select one of the following:'
+  courses:
+  - STAT 100
+  - ACE 262
+  - CPSC 241
+  - - FSHN 101
+    - FSHN 120
+  - - HORT 100
+    - CPSC 112
+  - - NRES 100
+    - NRES 102
+  - ACE 255
+  - LEAD 260
+  id: major-core-14
+- name: Major Core
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Advanced Composition Option - Select one of the following:'
+  courses:
+  - ANSC 205
+  - ETMA 311
+  - PLPA 200
+  - ACES 199
+  id: major-core-15
+- name: Specializations
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 30 hours.'
+  - Students are encouraged to complete a minimum of 30 hours of coursework within one or more of the specializations. Students
+    are not required to select a specialization; rather, students have the flexibility to customize their experience by choosing
+    courses within or across specializations to best meet their personal interests and career needs.
+  id: specializations-16
+- name: Policy and Law
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 18 hours.'
+  - 'Advanced Composition Option - Select one of the following:'
+  - Students are encouraged to complete a minimum of 30 hours of coursework within one or more of the specializations. Students
+    are not required to select a specialization; rather, students have the flexibility to customize their experience by choosing
+    courses within or across specializations to best meet their personal interests and career needs.
+  courses:
+  - ACE 203
+  - ACE 306
+  - ACE 403
+  - ACE 406
+  - NRES 325
+  - NRES 434
+  id: policy-and-law-17
+- name: Climate Change and Society
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 24 hours.'
+  - 'Advanced Composition Option - Select one of the following:'
+  - Students are encouraged to complete a minimum of 30 hours of coursework within one or more of the specializations. Students
+    are not required to select a specialization; rather, students have the flexibility to customize their experience by choosing
+    courses within or across specializations to best meet their personal interests and career needs.
+  courses:
+  - ABE 232
+  - ACE 210
+  - CPSC 431
+  - HDFS 220
+  - LEAD 340
+  - NRES 105
+  - NRES 224
+  - NRES 287
+  id: climate-change-and-society-18
+- name: Food Production Systems
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 53 hours.'
+  - 'Advanced Composition Option - Select one of the following:'
+  - Students are encouraged to complete a minimum of 30 hours of coursework within one or more of the specializations. Students
+    are not required to select a specialization; rather, students have the flexibility to customize their experience by choosing
+    courses within or across specializations to best meet their personal interests and career needs.
+  courses:
+  - ABE 152
+  - ANSC 100
+  - ANSC 101
+  - ANSC 110
+  - ANSC 205
+  - ANSC 251
+  - ANSC 255
+  - ANSC 305
+  - CPSC 116
+  - CPSC 416
+  - ETMA 430
+  - FSHN 175
+  - FSHN 231
+  - FSHN 232
+  - FSHN 465
+  - HORT 205
+  - HORT 435
+  - PLPA 200
+  id: food-production-systems-19
+- name: Resources and Influence
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 38 hours.'
+  - 'Advanced Composition Option - Select one of the following:'
+  - Students are encouraged to complete a minimum of 30 hours of coursework within one or more of the specializations. Students
+    are not required to select a specialization; rather, students have the flexibility to customize their experience by choosing
+    courses within or across specializations to best meet their personal interests and career needs.
+  courses:
+  - ACE 251
+  - ACE 310
+  - ACE 335
+  - ACE 476
+  - AGCM 330
+  - CPSC 444
+  - ETMA 311
+  - FSHN 193
+  - FSHN 320
+  - FSHN 425
+  - HDFS 330
+  - NRES 472
+  id: resources-and-influence-20
+- name: Additional Specialization Options
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Any 300- or 400-level rubric (e.g., ACE, CPSC, NRES, etc.) within the College of ACES
+  id: additional-specialization-options-21

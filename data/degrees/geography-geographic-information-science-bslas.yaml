@@ -1,0 +1,81 @@
+# Geography & Geographic Information Science, BSLAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/geography-geographic-information-science-bslas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: geography-geographic-information-science-bslas
+program: Geography & Geographic Information Science, BSLAS
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/geography-geographic-information-science-bslas/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300 and 400 level.
+double_counting:
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/geography-geographic-information-science-bslas/
+groups:
+- name: General Education Requirements
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Composition I
+  - Advanced Composition
+  - Humanities & the Arts (6 hours)
+  - Natural Sciences & Technology (6 hours)
+  - Social & Behavioral Sciences (6 hours)
+  - fulfilled by GGIS 101, GGIS 104, GGIS 106, GGIS 210, GGIS 221, or GGIS 254 and any other course approved Social & Behavioral
+    Sciences
+  - 'Cultural Studies: Non-Western Cultures (1 course)'
+  - 'Cultural Studies: US Minority Cultures (1 course)'
+  - 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  - Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English, or completion
+    of the third semester in two different languages other than English is required)
+  id: general-education-requirements-1
+- name: Orientation and Professional Development
+  section: General Education Requirements
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-and-professional-development-2
+- name: Geography & GIS Core Requirements
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Physical Geography Course (Select one):'
+  courses:
+  - GGIS 100
+  - GGIS 103
+  - GGIS 220
+  - GGIS 222
+  id: geography-gis-core-requirements-3
+- name: Geography & GIS Core Requirements
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Human Geography Course (Select one):'
+  courses:
+  - GGIS 101
+  - GGIS 104
+  - GGIS 106
+  - GGIS 210
+  - GGIS 221
+  - GGIS 254
+  id: geography-gis-core-requirements-4
+- name: Students must choose one of the following concentrations
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Geographic Information Science
+  - Physical Geography
+  id: students-must-choose-one-of-the-followin-5

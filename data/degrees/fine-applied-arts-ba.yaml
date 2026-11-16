@@ -1,0 +1,225 @@
+# Fine and Applied Arts, BA (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/fine-applied-arts-ba/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: fine-applied-arts-ba
+program: Fine and Applied Arts, BA
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/fine-applied-arts-ba/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/faa/fine-applied-arts-ba/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Major Requirements
+  section: Major Requirements
+  rule: all
+  courses:
+  - FAA 301
+  - FAA 310
+  - FAA 401
+  id: major-requirements-11
+- name: Major Requirements
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Upper-level (300-499) courses offered in the College of Fine and Applied Arts (ARCH, ART, ARTD, ARTE, ARTH, ARTJ, ARTS,
+    DANC, FAA, LA, MUS, MUSC, THEA, UP), not otherwise counted in Major Requirements
+  - see sample course options below
+  - Additional courses, at any level, offered in the College of Fine and Applied Arts (ARCH, ART, ARTD, ARTE, ARTH, ARTJ,
+    ARTS, DANC, FAA, LA, MUS, MUSC, THEA, UP), not otherwise counted in Major Requirements
+  - see sample course options below
+  id: major-requirements-12
+- name: Performing Arts online course options
+  section: Sample Online Course Options
+  rule: all
+  courses:
+  - THEA 101
+  - THEA 110
+  - DANC 100
+  - DANC 200
+  - DANC 340
+  - MUS 130
+  - MUS 132
+  - MUS 133
+  - MUS 446
+  - MUS 459
+  id: performing-arts-online-course-options-13
+- name: Fine Arts online course options
+  section: Sample Online Course Options
+  rule: all
+  courses:
+  - ART 100
+  - ART 140
+  - ART 499
+  - ARTJ 209
+  - ARTJ 299
+  - ARTJ 302
+  - ARTJ 397
+  - ARTJ 398
+  - ARTS 220
+  - ARTS 399
+  - ARTD 217
+  - ARTD 399
+  id: fine-arts-online-course-options-14
+- name: Interdisciplinary Arts online course options
+  section: Sample Online Course Options
+  rule: all
+  courses:
+  - FAA 180
+  - FAA 201
+  - FAA 399
+  - FAA 493
+  - FAA 494
+  - FAA 496
+  - FAA 497
+  - FAA 498
+  - FAA 499
+  id: interdisciplinary-arts-online-course-opt-15
+- name: Environmental Arts online course options
+  section: Sample Online Course Options
+  rule: all
+  courses:
+  - ARCH 211
+  - LA 222
+  - LA 314
+  - LA 387
+  - LA 480
+  - UP 136
+  - UP 160
+  - UP 390
+  - UP 423
+  - UP 494
+  id: environmental-arts-online-course-options-16
+- name: Summary of Requirements for the Bachelor of Arts in Fine and Applied Arts
+  section: Summary of Requirements for the Bachelor of Arts in Fine and Applied Arts
+  rule: manual
+  notes:
+  - General Education
+  - Major Requirements
+  - Free Electives
+  id: summary-of-requirements-for-the-bachelor-17
+- name: Summary of Requirements for the Bachelor of Arts in Fine and Applied Arts
+  section: Summary of Requirements for the Bachelor of Arts in Fine and Applied Arts
+  rule: manual
+  notes:
+  - A minimum of 40 credits at the 300- or 400-level must be completed for this degree
+  - At least 45 semester hours of University of Illinois Urbana-Champaign credit
+  - At least 21 hours must be 300 or 400 level courses of University of Illinois Urbana-Champaign credit
+  id: summary-of-requirements-for-the-bachelor-18

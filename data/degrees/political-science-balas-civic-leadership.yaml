@@ -1,0 +1,76 @@
+# Political Science: Civic Leadership, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/political-science-balas/civic-leadership/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: political-science-balas-civic-leadership
+program: 'Political Science: Civic Leadership, BALAS'
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/political-science-balas/civic-leadership/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+double_counting: []
+groups:
+- name: Civic Leadership Concentration Requirements
+  section: Civic Leadership Concentration Requirements
+  rule: all
+  courses:
+  - PS 100
+  - PS 101
+  id: civic-leadership-concentration-requireme-1
+- name: Civic Leadership Concentration Requirements
+  section: Civic Leadership Concentration Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - PS 125
+  - PS 191
+  notes:
+  - 'Select one course from the following:'
+  id: civic-leadership-concentration-requireme-2
+- name: Civic Leadership Concentration Requirements
+  section: Civic Leadership Concentration Requirements
+  rule: manual
+  notes:
+  - Select any additional 100- or 200-level Political Science courses
+  - 'Select one course from the following:'
+  courses:
+  - PS 291
+  - PS 491
+  id: civic-leadership-concentration-requireme-3
+- name: Civic Leadership Concentration Requirements
+  section: Civic Leadership Concentration Requirements
+  rule: manual
+  notes:
+  - Select 300- or 400-level Political Science courses, at least nine hours of which come from the Civic Leadership Concentration
+    list (below). The other six hours may be any 300- or 400-level Political Science course.
+  - To reach 33 hours of Political Science coursework, select up to two additional hours of any Political Science course at
+    any level.
+  - Students will select a second major, or a minor, or a set of courses of at least 12 hours of thematically-related coursework
+    outside political science, developed in conjunction with an academic advisor.
+  id: civic-leadership-concentration-requireme-4
+- name: Civic Leadership Course List
+  section: Civic Leadership Concentration Requirements
+  rule: all
+  courses:
+  - PS 201
+  - PS 202
+  - PS 220
+  - PS 270
+  - PS 300
+  - PS 315
+  - PS 316
+  - PS 317
+  - PS 321
+  - PS 322
+  - PS 371
+  - PS 372
+  - PS 373
+  - PS 374
+  - PS 376
+  - PS 494
+  id: civic-leadership-course-list-5

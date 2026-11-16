@@ -104,3 +104,19 @@ def test_partial_graphql_error_is_skipped_and_not_cached(tmp_path):
     assert c.lookup("Cheslow, A", "CS") is None and c.error is None  # the run carries on
     assert c.lookup("Cheslow, A", "CS") is None
     assert sum("teachers" in b["query"] for b in calls) == 2  # retried, not served from cache
+
+
+def test_compound_surname_on_rmp_matches():
+    # Seen live: CS 173's "Gonzalez, Daniel" is "Daniel Gonzalez Cedre" (Computer Science) on RMP.
+    daniel = rmp.RmpTeacher("1", "Daniel", "Gonzalez Cedre", "Computer Science", 4.1, 3.0, 80, 18)
+    joseph = rmp.RmpTeacher("2", "Joseph", "Gonzalez", "Engineering", 4, 3, 50, 2)
+    spanish = rmp.RmpTeacher("3", "Daniel", "Gonzalez Ruiz", "Spanish", 4, 3, 50, 9)
+    assert rmp.choose_match(parse_name("Gonzalez, Daniel"), "CS", [joseph, daniel, spanish]).rmp_id == "1"
+    assert rmp.same_surname("gonzalez", "Gonzalez-Cedre") and rmp.same_surname("gonzalezcedre", "Gonzalez Cedre")
+    assert not rmp.same_surname("cedre", "Gonzalez Cedre")  # only the first part of a compound surname
+    assert not rmp.same_surname("gonz", "Gonzalez")
+
+
+def test_truncated_gpa_surname_still_matches_the_full_rmp_name():
+    wade = rmp.RmpTeacher("9", "Wade", "Fagen-Ulmschneider", "Computer Science", 4.5, 3, 90, 50)
+    assert rmp.choose_match(parse_name("Fagen-Ulmschnei, Wade"), "CS", [wade]).rmp_id == "9"

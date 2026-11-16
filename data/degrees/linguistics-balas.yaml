@@ -1,0 +1,184 @@
+# Linguistics, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/linguistics-balas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: linguistics-balas
+program: Linguistics, BALAS
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/linguistics-balas/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/linguistics-balas/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by LING 301
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by LING 100 and LING 225 or LING 250
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English, or completion
+    of the third semester in two different languages other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: Orientation and Professional Development
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-and-professional-development-11
+- name: Major Requirements
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Major core courses:'
+  courses:
+  - LING 100
+  - LING 210
+  - LING 301
+  - LING 302
+  - LING 307
+  - LING 401
+  id: major-requirements-12
+- name: Major Requirements
+  section: Major Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - LING 225
+  - LING 250
+  notes:
+  - 'Select one of the following:'
+  id: major-requirements-13
+- name: Major Requirements
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Major electives: 15 hours of Linguistics courses at the 200- to 400-level, chosen in consultation with the student''s
+    advisor'
+  - 'Students must fulfill the LAS foreign language requirement, and in addition, complete at least 8 hours in a second foreign
+    language. One of these languages must be a non-Western language chosen from the following list or approved in consultation
+    with the student''s advisor: American Sign Language, Arabic, Bamana, Basque, Chinese, Hebrew, Hindi/Urdu, Japanese, Korean,
+    Lingala, Persian, Quechua, Sanskrit, Swahili, Turkish, Wolof, Zulu. Courses used to complete this requirement may also
+    be used to meet the requirement of "Courses in linguistically relevant areas," below.'
+  - 'Courses in linguistically relevant areas chosen in consultation with the student''s advisor. There are two ways of meeting
+    this requirement:'
+  - 'A. The courses may come from any of the following disciplines: any foreign language, anthropology, classics, computer
+    science, English, English as an international language, philosophy, psychology, speech and hearing science, communication.'
+  - B. Students desiring to specialize in the linguistics of a particular language should complete at least four semesters
+    of instruction in that language beyond the elementary level, and a linguistics course or independent study focusing on
+    the selected language or its language family.
+  id: major-requirements-14

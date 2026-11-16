@@ -1,0 +1,233 @@
+# Chemistry, BS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/chemistry-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: chemistry-bs
+program: Chemistry, BS
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/chemistry-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/chemistry-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by CHEM 202 & CHEM 204 or CHEM 102 & CHEM 104; PHYS 211, PHYS 212
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 220 or MATH 221, MATH 231, MATH 241; PHYS 211, PHYS 212
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: General Education Requirements
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-and-professional-development-11
+- name: Core Chemistry
+  section: General Education Requirements
+  rule: all
+  courses:
+  - CHEM 150
+  - CHEM 202
+  - CHEM 203
+  - CHEM 204
+  - CHEM 205
+  notes:
+  - 'Catalog total: 37 hours.'
+  id: core-chemistry-12
+- name: Core Chemistry
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - If necessary, CHEM 102, CHEM 103, CHEM 104, CHEM 105, CHEM 222, and CHEM 223 may be substituted for CHEM 202, CHEM 203,
+    CHEM 204, and CHEM 205.
+  courses:
+  - CHEM 236
+  - CHEM 237
+  - CHEM 312
+  - CHEM 315
+  - CHEM 420
+  - CHEM 436
+  - CHEM 442
+  - CHEM 444
+  - CHEM 445
+  id: core-chemistry-13
+- name: Advanced Chemistry
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 11 hours.'
+  - 'CHEM or BIOC courses numbered 300 or higher, which must include three laboratory courses from the following:'
+  courses:
+  - CHEM 317
+  - CHEM 437
+  - CHEM 447
+  - CHEM 483
+  - BIOC 455
+  id: advanced-chemistry-14
+- name: Advanced Chemistry
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - A student who has earned at least 6 credit hours in any combination of CHEM 397, CHEM 497, or CHEM 499 must complete only
+    two laboratory courses from the list, one of which must be CHEM 317, CHEM 437, or CHEM 447.
+  id: advanced-chemistry-15
+- name: Mathematics
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'CHEM or BIOC courses numbered 300 or higher, which must include three laboratory courses from the following:'
+  - A student who has earned at least 6 credit hours in any combination of CHEM 397, CHEM 497, or CHEM 499 must complete only
+    two laboratory courses from the list, one of which must be CHEM 317, CHEM 437, or CHEM 447.
+  courses:
+  - - MATH 220
+    - MATH 221
+  - - MATH 225
+    - MATH 227
+    - MATH 257
+    - MATH 415
+  - MATH 231
+  - MATH 241
+  - MATH 285
+  id: mathematics-16
+- name: Physics
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 10 hours.'
+  - 'CHEM or BIOC courses numbered 300 or higher, which must include three laboratory courses from the following:'
+  - A student who has earned at least 6 credit hours in any combination of CHEM 397, CHEM 497, or CHEM 499 must complete only
+    two laboratory courses from the list, one of which must be CHEM 317, CHEM 437, or CHEM 447.
+  courses:
+  - PHYS 211
+  - PHYS 212
+  - PHYS 214
+  id: physics-17
+- name: Technical Electives
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - CHEM (300 or higher), BIOC, CHBE (200 or higher)
+  - Courses in life sciences (all courses at 200 or higher)
+  - Mathematics or computer science above the basic level
+  - Other courses in the physical and biological sciences and engineering including CHEM 199 (Three hours maximum credit in
+    CHEM 199. Additional courses in sciences and engineering can be taken, upon consultation with the SCS advisor and approval
+    from the chemistry department. Approved courses must generally have a strong technical prerequisite, such as one year
+    of college-level math or science.)
+  id: technical-electives-18

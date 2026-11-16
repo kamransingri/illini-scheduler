@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import threading
 import time
 from dataclasses import dataclass, field
@@ -20,7 +21,7 @@ from typing import Any
 import httpx
 
 from .config import USER_AGENT
-from .names import NameParts, compatible, parse_name
+from .names import NameParts, first_compatible, last_compatible, parse_name, strip_accents
 
 GRAPHQL = "https://www.ratemyprofessors.com/graphql"
 # The site's own public client header (base64 "test:test"); not a secret.
@@ -114,15 +115,22 @@ def parse_teacher(node: dict[str, Any]) -> RmpTeacher:
     )
 
 
+def same_surname(key: str, rmp_last: str) -> bool:
+    """Our surname key against RMP's last name: equal, or RMP's is a compound surname that starts with ours
+    (Course Explorer "Gonzalez, D" is RMP's "Daniel Gonzalez Cedre"). Words are split on spaces and hyphens."""
+    words = [w for w in (re.sub(r"[^a-z]", "", x) for x in re.split(r"[\s\-]+", strip_accents(rmp_last).lower())) if w]
+    return bool(words) and (key == "".join(words) or (len(words) > 1 and key == words[0]))
+
+
 def choose_match(name: NameParts, subject: str, teachers: list[RmpTeacher]) -> RmpTeacher | None:
     """Accept only exact last-name matches with a compatible first name/initial and a plausible department.
     If several qualify, take the one with most ratings only when it is clearly the same person (same name)."""
     ok = []
     for t in teachers:
         tp = parse_name(f"{t.last_name}, {t.first_name}")
-        if tp is None or tp.last != name.last:
-            continue
-        if not compatible(name, tp):
+        if tp is None or not (same_surname(name.last, t.last_name) or last_compatible(name, tp)):
+            continue  # last_compatible keeps the GPA dataset's 15-character truncated surnames matching
+        if not first_compatible(name, tp):  # surnames were checked above (compound ones included)
             continue
         if not dept_plausible(subject, t.department):
             continue
