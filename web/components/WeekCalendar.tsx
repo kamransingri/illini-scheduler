@@ -1,16 +1,9 @@
 import type { Schedule } from "@/lib/schedule";
 import { fmtTime } from "@/lib/format";
 
-export const COURSE_COLORS = [
-  "bg-sky-100 border-sky-500 text-sky-950",
-  "bg-amber-100 border-amber-500 text-amber-950",
-  "bg-emerald-100 border-emerald-500 text-emerald-950",
-  "bg-rose-100 border-rose-500 text-rose-950",
-  "bg-violet-100 border-violet-500 text-violet-950",
-  "bg-lime-100 border-lime-600 text-lime-950",
-  "bg-orange-100 border-orange-500 text-orange-950",
-  "bg-cyan-100 border-cyan-600 text-cyan-950",
-];
+// Categorical colours that tell courses apart in the calendar and the cart (their only meaning). Illinois brand
+// supporting colours, leaving out green and the seat-status hues (globals.css: .course-0 ... .course-5).
+export const COURSE_COLORS = ["course-0", "course-1", "course-2", "course-3", "course-4", "course-5"];
 
 const DAYS: [number, string][] = [
   [1, "Mon"],
@@ -40,16 +33,16 @@ export default function WeekCalendar({
   for (let h = lo; h <= hi; h += 60) hours.push(h);
   return (
     <div>
-      <div className="grid grid-cols-[2.25rem_repeat(5,minmax(0,1fr))] text-[11px]" role="img" aria-label="Weekly calendar of this schedule">
+      <div className="grid grid-cols-[2.75rem_repeat(5,minmax(0,1fr))] text-sm leading-tight" role="img" aria-label="Weekly calendar of this schedule">
         <div />
         {DAYS.map(([, n]) => (
-          <div key={n} className="border-b border-line pb-1 text-center font-semibold">
+          <div key={n} className="border-b border-line pb-1 text-center font-semibold text-heading">
             {n}
           </div>
         ))}
         <div className="relative" style={{ height: (hi - lo) * PX }}>
           {hours.map((h) => (
-            <div key={h} className="absolute right-1 -translate-y-1/2 text-muted" style={{ top: (h - lo) * PX }}>
+            <div key={h} className="absolute right-1.5 -translate-y-1/2 text-muted tnum" style={{ top: (h - lo) * PX }}>
               {fmtTime(h).replace(":00", "")}
             </div>
           ))}
@@ -57,14 +50,14 @@ export default function WeekCalendar({
         {DAYS.map(([bit, n]) => (
           <div key={n} className="relative border-l border-line" style={{ height: (hi - lo) * PX }}>
             {hours.map((h) => (
-              <div key={h} className="absolute inset-x-0 border-t border-dashed border-gray-200" style={{ top: (h - lo) * PX }} />
+              <div key={h} className="absolute inset-x-0 border-t border-dashed border-line" style={{ top: (h - lo) * PX }} />
             ))}
             {blocked
               .filter((x) => x.d & bit)
               .map((x, i) => (
                 <div
                   key={`bl${i}`}
-                  className="absolute inset-x-0.5 rounded bg-[repeating-linear-gradient(45deg,#e5e7eb,#e5e7eb_4px,#f9fafb_4px,#f9fafb_8px)] p-0.5 text-[10px] text-muted"
+                  className="absolute inset-x-0.5 rounded border border-dashed border-muted bg-panel p-0.5 text-muted"
                   style={{ top: (x.s - lo) * PX, height: (x.e - x.s) * PX }}
                 >
                   Blocked
@@ -75,7 +68,7 @@ export default function WeekCalendar({
               .map(({ b, s, m }, i) => (
                 <div
                   key={`${s.crn}-${i}`}
-                  className={`absolute inset-x-0.5 overflow-hidden rounded border-l-4 px-1 py-0.5 leading-tight ${colorOf(b.course)}`}
+                  className={`course-block absolute inset-x-0.5 overflow-hidden rounded border-l-4 px-1 py-0.5 ${colorOf(b.course)}`}
                   style={{ top: (m.s! - lo) * PX, height: Math.max(18, (m.e! - m.s!) * PX) }}
                   title={`${b.course} ${s.code} (${s.type}) ${fmtTime(m.s)}–${fmtTime(m.e)} ${m.r} ${m.b}${s.part !== "1" ? ` · part of term ${s.part}` : ""}`}
                 >
@@ -94,7 +87,7 @@ export default function WeekCalendar({
         ))}
       </div>
       {untimed.length > 0 && (
-        <p className="mt-2 text-xs text-muted">
+        <p className="mt-2 text-sm text-muted">
           No set time (online / arranged): {untimed.map(({ b, s }) => `${b.course} ${s.code}`).join(", ")}
         </p>
       )}
