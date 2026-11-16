@@ -59,7 +59,20 @@ CI hygiene (see DECISIONS.md D12). Remaining, ranked:
 
 ## Needs a human
 
-Done: the repo is public and pushed, Pages is on (Source: GitHub Actions), and the site is deployed.
+From the redesign and degree planner (2026-11-16):
+
+1. **Degree rules an advisor should confirm.** The checklist counts a course twice only where a quoted rule allows it
+   (DECISIONS D13.11); pairs the catalog is silent on (two program groups, two non-Cultural-Studies gen-eds) are shown
+   as "rules unclear". A Gies advisor could say which of those are allowed, and the rules would go into
+   `data/degrees/finance-data-science.yaml` with their source.
+2. **RMP match for "Anderson, J" (MATH 221)** shows AFRO 310 / EPS 310 reviews from 2011–2018: probably the wrong person
+   (`data/name_overrides.csv` or a stricter department check in `pipeline/rmp.py`).
+3. **Repo "About" website link.** Setting it needs admin on the repo: gear icon next to About, tick "Use your GitHub
+   Pages website".
+4. **First final-exam run.** The next daily availability job is the first to read final exams; its log line should say
+   "N final-exam lists". Spring 2027 finals appear once the registrar publishes them.
+
+Earlier: done: the repo is public and pushed, Pages is on (Source: GitHub Actions), and the site is deployed.
 These checks remain. This build session's network blocks `*.github.io`, `courses.illinois.edu` and Wade's
 visualization site:
 
@@ -468,18 +481,37 @@ a course in two groups, unknown codes logged, export, latest-term catalog).
 check (not committed): Finance + Data Science with STAT 107, CMN 101, ECON 102, ECON 103, BUS 101 completed and AP
 credit for MATH 220/221/234 shows 3 of 19 done (calculus, QR, social and behavioral sciences), business core 4 of 14 and
 data science fundamentals 1 of 3 partly done; ECON 102/103 count for both the business core and social sciences; MATH
-221 and 234 count nowhere else (one calculus is required). Checks: Vitest 80/80 (11 new for the evaluator and the
+221 and 234 count nowhere else (one calculus is required). Checks: Vitest 79/79 (11 new for the evaluator and the
 URL format), Playwright 38/39 (6 new in `degree.spec.ts`; the one failure is the Windows-only test), Lighthouse
 `/degree/` median of 3: 0.97 / 1.00 / 1.00, CLS 0.
 
-### Phase 6 — best-pick score (in progress; resume here)
+### Phase 6 — best-pick score (done)
 
-Done: `web/lib/score.ts` (shrinkage + missing parts, Vitest), score in the course header, professor sort and degree
-checklist with a breakdown popover; the schedule builder's RMP weight now shrinks few-rating professors toward the UIUC
-mean like the score (GPA weight unchanged: it is the schedule's expected GPA), with a regression test; `rankCourse`
-moved to `web/lib/rank.ts`; gen-ed rows now export each next-term lecturer's score inputs (`profs`).
-Left: (1) gen-ed finder score column + "Best pick" sort (`lib/geneds.ts` SortKey, `GenedFinder.tsx`); (2) a weights
-control (six 0–3 sliders, `lib/weights.ts` already stores them) on the course page, gen-ed finder and degree page;
-(3) write the formula as DECISIONS D13.18 (K = 200 students for course GPA toward the subject mean, 150 for the
-professor difference toward 0, 10 ratings for RMP toward the UIUC mean; parts on 0–1; weighted mean ×100; missing parts
-left out and named). Then Phase 7 (final-exam conflicts, optional) and Finish (after screenshots, README, PR).
+`web/lib/score.ts` (formula in DECISIONS D13.18) used for the course header, the professor sort, the gen-ed finder (new
+score column and default sort) and the degree checklist, each with a breakdown popover; `WeightsControl` lets students
+set the six weights (saved in the browser). The schedule builder's RMP weight shrinks few-rating professors like the
+score (D13.19). Checks: Vitest 82/82 (score shrinkage, missing data, weights, saved weights, gen-ed score sort, schedule
+regression), affected Playwright specs 19/19 on one worker.
+
+### Phase 7 — final-exam conflicts (done)
+
+`pipeline/availability.py` (`parse_final_exams`, weekly fetch in `crawl_slow`, load in `apply_files`), `final_exams`
+table, `fx` on exported sections, `finalClashes` in `web/lib/schedule.ts` (shown with the builder's other warnings),
+final times on course-page section rows. The next run of the daily availability workflow starts filling the files; no
+workflow change was needed. Checks: pytest 178/178 (parser on two real responses, weekly fetch with the htmx header,
+DB + export), Vitest 84/84 (overlap, different days, back-to-back, make-up slots).
+
+### Finish (2026-11-16)
+
+- Issue from the first look at the repo: the section-bundle rule exists in Python (`export.bundles`) and TypeScript
+  (`buildBundles`); `fixtures/bundle-parity.json` is now checked by both test suites (DECISIONS D13.22).
+- Keyboard: Playwright opens and closes a professor row with Enter, opens a source popover on focus and closes it with
+  Escape, and adds a course on `/degree/` with Enter.
+- Final checks on the full build (7,147 pages): pytest 179/179, Vitest 85/85, ruff/mypy/ESLint/tsc clean, Playwright
+  40/41 on one worker (the failure is the Windows-only lower-case URL test, which passes on GitHub's Linux runners).
+  Lighthouse, one run each: `/course/CS/124/` 0.98 / 1.00 / 1.00, `/degree/` 0.97 / 1.00 / 1.00 (colour contrast pass,
+  CLS 0.001 and 0). Every page is exactly 375px wide at 375px (no sideways scroll).
+- After screenshots: `docs/screenshots/after/` (the Phase 0 pages plus `/degree/` with an example course list).
+- To keep a laptop quiet while working on this repo: iterate with `PAGES_LIMIT=5 npm run build`, run Playwright with
+  `--workers=1`, and stop `serve` when done. A full build writes ~28,600 files; if the repo sits in a synced folder
+  (OneDrive, Dropbox), pause syncing while building.

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { DEFAULT_WEIGHTS, K_COURSE_STUDENTS, K_PROF_STUDENTS, K_RMP_RATINGS, scoreOf, type ScoreInput, type ScorePriors } from "@/lib/score";
 
 const priors: ScorePriors = { rmp: { quality: 3.5, difficulty: 3.0, would_take_again: 65 }, subject_gpa: { CS: 3.3 }, campus_gpa: 3.4 };
@@ -84,5 +84,19 @@ describe("best pick score", () => {
     expect(Number(r.parts[0].adjusted)).toBeCloseTo((10 * 4 + K_COURSE_STUDENTS * 3.4) / (10 + K_COURSE_STUDENTS), 2);
     const none = scoreOf({ ...base, courseGpa: 4, courseN: 10 }, { rmp: { quality: null, difficulty: null, would_take_again: null }, subject_gpa: {}, campus_gpa: null });
     expect(none.parts[0].adjusted).toBe("4.00");
+  });
+});
+
+describe("saved weights", () => {
+  it("are read back clamped to 0–3, with defaults for anything missing or broken", async () => {
+    const store = new Map<string, string>();
+    vi.stubGlobal("localStorage", { getItem: (k: string) => store.get(k) ?? null, setItem: (k: string, v: string) => void store.set(k, v) });
+    const { readWeights } = await import("@/lib/weights");
+    expect(readWeights()).toEqual(DEFAULT_WEIGHTS);
+    store.set("illini-score-weights", JSON.stringify({ quality: 9, seats: -2, courseGpa: "x", difficulty: 1.6 }));
+    expect(readWeights()).toEqual({ ...DEFAULT_WEIGHTS, quality: 3, seats: 0, difficulty: 2 });
+    store.set("illini-score-weights", "{not json");
+    expect(readWeights()).toEqual(DEFAULT_WEIGHTS);
+    vi.unstubAllGlobals();
   });
 });

@@ -1,0 +1,33 @@
+{
+  "_about": "Shared cases for the two copies of the section-bundle rule (pipeline/export.py bundles() and web/lib/schedule.ts buildBundles()). Both test suites check these, so the copies can't drift apart unnoticed. No case has internal time conflicts or special sections, which only the web copy filters.",
+  "cases": [
+    {
+      "name": "letter groups: lecture + discussion within a group only",
+      "sections": [
+        {"crn": "1", "code": "AL1", "component": "primary", "group": "A", "meetings": [{"d": 10, "s": 600, "e": 650}]},
+        {"crn": "2", "code": "AD1", "component": "DIS", "group": "A", "meetings": [{"d": 4, "s": 540, "e": 590}]},
+        {"crn": "3", "code": "AD2", "component": "DIS", "group": "A", "meetings": [{"d": 16, "s": 540, "e": 590}]},
+        {"crn": "4", "code": "BL1", "component": "primary", "group": "B", "meetings": [{"d": 10, "s": 700, "e": 750}]},
+        {"crn": "5", "code": "BD1", "component": "DIS", "group": "B", "meetings": [{"d": 16, "s": 480, "e": 530}]}
+      ],
+      "bundles": [["1", "2"], ["1", "3"], ["4", "5"]]
+    },
+    {
+      "name": "any lecture with any lab-discussion",
+      "sections": [
+        {"crn": "10", "code": "L1", "component": "primary", "group": "*", "meetings": [{"d": 21, "s": 600, "e": 650}]},
+        {"crn": "11", "code": "L2", "component": "primary", "group": "*", "meetings": [{"d": 21, "s": 660, "e": 710}]},
+        {"crn": "12", "code": "Y01", "component": "LBD", "group": "*", "meetings": [{"d": 8, "s": 660, "e": 740}]}
+      ],
+      "bundles": [["10", "12"], ["11", "12"]]
+    },
+    {
+      "name": "standalone sections",
+      "sections": [
+        {"crn": "20", "code": "C1", "component": "primary", "group": "C1", "meetings": [{"d": 10, "s": 600, "e": 650}]},
+        {"crn": "21", "code": "C2", "component": "primary", "group": "C2", "meetings": [{"d": 0, "s": null, "e": null}]}
+      ],
+      "bundles": [["20"], ["21"]]
+    }
+  ]
+}

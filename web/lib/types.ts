@@ -23,6 +23,8 @@ export type Section = {
   special: string; // non-empty = looks restricted / special-program (reason)
   status_at?: string; // when this section's status was read
   status_since?: string; // when it last changed to this status ("" = unknown)
+  /** final exams: [date YYYY-MM-DD, start, end (minutes), type]; type "Conflict" = the official make-up slot */
+  fx?: [string, number | null, number | null, string][];
 };
 
 export type TermBlock = {
@@ -139,6 +141,7 @@ export type GenedRow = {
   best: { key: string; name: string; gpa: number; students: number } | null;
   rmp: number | null;
   opts: [number, number, number][]; // [earliest start, day mask, all-online]
+  profs?: import("./rank").DegreeProf[]; // next-term lecturers' best-pick score inputs
 };
 
 export type Meta = {
