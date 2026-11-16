@@ -390,7 +390,7 @@ def write_seat_feeds(out_dir: Path, events: list[dict], titles: dict[tuple[str, 
             f"<title>{escape(subj + ' ' + num + ' seat changes · Illini Scheduler')}</title>"
             f"<link>{escape(page)}</link><description>"
             f"{escape(f'Open/Closed changes for {subj} {num}: {title}. Checked about once a day.')}</description>"
-            f"<lastBuildDate>{now}</lastBuildDate>{''.join(items)}</channel></rss>")
+            f"<lastBuildDate>{now}</lastBuildDate>{''.join(items)}</channel></rss>", encoding="utf-8")
 
 
 def flag_special(secs: list[dict]) -> None:
