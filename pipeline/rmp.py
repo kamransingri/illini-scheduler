@@ -157,8 +157,9 @@ class RmpClient:
         cache = self._cache_path(query, variables)
         if cache.exists():
             age = datetime.now(UTC) - datetime.fromtimestamp(cache.stat().st_mtime, UTC)
-            if age < timedelta(days=CACHE_DAYS):
-                return dict(json.loads(cache.read_text()))
+            cached = dict(json.loads(cache.read_text()))
+            if age < timedelta(days=CACHE_DAYS) and not cached.get("errors"):
+                return cached
         if not self.enabled or self.error:
             raise RmpUnavailable(self.error or "disabled")
         with self._sem:
@@ -177,8 +178,9 @@ class RmpClient:
         if "errors" in data and not data.get("data"):
             self.error = f"GraphQL error: {str(data['errors'])[:150]}"
             raise RmpUnavailable(self.error)
-        cache.parent.mkdir(parents=True, exist_ok=True)
-        cache.write_text(json.dumps(data))
+        if not data.get("errors"):  # a partial failure is retried next run, not cached for a week
+            cache.parent.mkdir(parents=True, exist_ok=True)
+            cache.write_text(json.dumps(data))
         return dict(data)
 
     def find_school(self, name: str = SCHOOL_NAME) -> str:
@@ -196,7 +198,10 @@ class RmpClient:
         if self.school_id is None:
             self.find_school()
         data = self._post(TEACHER_QUERY, {"query": {"text": text, "schoolID": self.school_id}})
-        return [parse_teacher(e["node"]) for e in data["data"]["newSearch"]["teachers"]["edges"]]
+        # RMP sometimes answers one query with an error and `teachers: null` (its search backend refused it):
+        # that is "no result this run" for this name, not a reason to stop the whole pipeline.
+        teachers = ((data.get("data") or {}).get("newSearch") or {}).get("teachers") or {}
+        return [parse_teacher(e["node"]) for e in teachers.get("edges") or []]
 
     def lookup(self, raw_name: str, subject: str) -> RmpTeacher | None:
         p = parse_name(raw_name)
