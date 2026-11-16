@@ -378,3 +378,35 @@ confirmed to be the same person at UIUC (school id 1112):
 5/5 correct. Leckband's zero-rating profile exposed a display bug (0.0 shown as a score), fixed in D10.6. Also
 checked by hand: Challen (CS), Lewis (CS), Erickson (CS), Whittlesey (MATH), Findley (STAT) all match the right UIUC
 profiles.
+
+## Redesign and degree planner (branch `feature/redesign-degree-planner`, started 2026-11-16)
+
+Running log so a later session can resume. Decisions are in DECISIONS.md D13, the design audit and direction in
+DESIGN.md.
+
+### Phase 0 — baseline (2026-11-16, Windows 11 laptop, Python 3.13.4, Node 25.2.1)
+
+`make` isn't installed on this machine, so each Makefile target was run as its underlying command.
+
+| Check | Result |
+| --- | --- |
+| `pip install -r requirements.txt`, `npm ci` | ok |
+| `make data-quick` | **failed on main**: RMP answered one name ("Cheslow") with a GraphQL error and `teachers: null`; the client cached it and `search_teachers` crashed (TypeError), stopping the pipeline. Fixed (D13.1). With `AVAILABILITY_MODE` on its default, `--subjects` doesn't limit the live terms (the availability files load every subject), so "quick" still looks up ~3,400 instructors on RMP |
+| `make data` (as CI: `SOURCE=csv`, `AVAILABILITY_MODE=file`, `RMP_BUDGET_SECONDS=300`) | ok after the fix: 7,138 course files, 848 gen-ed rows, RMP ok |
+| `make test` | pytest 163/164 on main: `test_export_seat_history_and_feeds` failed on Windows only (RSS feeds written in the locale encoding, cp1252 can't encode "→"). Fixed: feeds are written as UTF-8. Vitest 52 passed, 2 skipped |
+| `make lint` | ruff, mypy, ESLint, tsc clean |
+| `make e2e` (against the baseline build) | 27/28. "lower-case course URL redirects" fails only on Windows: its case-insensitive file system serves `/course/cs/124/` as the real page, so the 404 redirect never runs. GitHub Pages and the Linux runner are case-sensitive |
+
+Network check (2026-11-16, from this machine):
+
+| URL | Result |
+| --- | --- |
+| https://catalog.illinois.edu/ | 200 |
+| https://courses.illinois.edu/cisapp/explorer/schedule.xml | 200 |
+| https://courses.illinois.edu/schedule/2027/spring/CS/124 | 200 |
+| https://www.ratemyprofessors.com/ | 200 |
+| https://raw.githubusercontent.com/wadefagen/datasets/main/README.md | 200 |
+| https://brand.illinois.edu/ | 200 |
+
+Baseline screenshots: `docs/screenshots/before/` (`node web/scripts/screenshots.mjs <dir>` with the build served on
+:4173).
