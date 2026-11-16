@@ -24,7 +24,10 @@ const row = (o: Partial<GenedRow>): GenedRow => ({
 
 describe("gen-ed filters", () => {
   it("category / code", () => {
-    expect(matches(row({}), { ...DEFAULT_FILTERS, codes: ["HP", "LA"] })).toBe(true);
+    // a course must cover every selected category (it has HP only)
+    expect(matches(row({}), { ...DEFAULT_FILTERS, codes: ["HP"] })).toBe(true);
+    expect(matches(row({}), { ...DEFAULT_FILTERS, codes: ["HP", "LA"] })).toBe(false);
+    expect(matches(row({ codes: ["HP", "NW"] }), { ...DEFAULT_FILTERS, codes: ["HP", "NW"] })).toBe(true);
     expect(matches(row({}), { ...DEFAULT_FILTERS, codes: ["QR1"] })).toBe(false);
   });
   it("double dips need 2+ categories", () => {

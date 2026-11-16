@@ -1,0 +1,207 @@
+# Journalism, BS (College of Media), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/media/journalism-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: journalism-bs
+program: Journalism, BS
+college: College of Media
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/media/journalism-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 124
+notes:
+- 'Minimum hours required for graduation: 124 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/media/journalism-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by JOUR 200
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by STAT 100 or STAT 107 and any other course approved as Quantitative Reasoning
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: College Orientation
+  section: General Education Requirements
+  rule: all
+  courses:
+  - MDIA 100
+  id: college-orientation-11
+- name: Required Major Courses
+  section: General Education Requirements
+  rule: all
+  courses:
+  - JOUR 200
+  - JOUR 210
+  - JOUR 215
+  id: required-major-courses-12
+- name: Skills Courses
+  section: General Education Requirements
+  rule: n_of
+  n: 4
+  courses:
+  - JOUR 313
+  - JOUR 315
+  - JOUR 335
+  - JOUR 340
+  - JOUR 400
+  - JOUR 410
+  - JOUR 425
+  - JOUR 430
+  - JOUR 440
+  - JOUR 445
+  - JOUR 471
+  - JOUR 472
+  - JOUR 473
+  - JOUR 480
+  - JOUR 483
+  notes:
+  - 'Select four of the following:'
+  id: skills-courses-13
+- name: Context Courses
+  section: General Education Requirements
+  rule: n_of
+  n: 3
+  courses:
+  - JOUR 205
+  - JOUR 250
+  - - JOUR 310
+    - JOUR 311
+  - JOUR 450
+  - JOUR 451
+  notes:
+  - 'Select three of the following:'
+  id: context-courses-14
+- name: Journalism Electives
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 6 hours.'
+  - Any Journalism course. Courses from the list above not used to complete requirements may be taken as electives.
+  id: journalism-electives-15
+- name: Statistical Methods Course (Choose 1)
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Any Journalism course. Courses from the list above not used to complete requirements may be taken as electives.
+  courses:
+  - STAT 100
+  id: statistical-methods-course-choose-1-16
+- name: Statistical Methods Course (Choose 1)
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - or other approved basic statistical methods course, which currently includes ECON 202, PSYC 235, SOC 280, and SOCW 225
+  courses:
+  - STAT 107
+  id: statistical-methods-course-choose-1-17

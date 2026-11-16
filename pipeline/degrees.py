@@ -31,7 +31,7 @@ GENED_CODES = {"ACP", "COMP1", "HP", "LA", "LS", "PS", "QR1", "QR2", "SS", "BSC"
 RULES = {"all", "n_of", "hours", "manual"}
 KINDS = {"program", "gened"}
 TOP_KEYS = {"id", "program", "college", "catalog_year", "source", "read_on", "total_hours", "notes", "double_counting",
-            "groups"}
+            "groups", "generated"}
 GROUP_KEYS = {"id", "name", "section", "kind", "rule", "n", "hours", "courses", "from", "exclude", "max_hours",
               "min_from", "not_with", "exclusive", "source", "notes"}
 
@@ -73,6 +73,7 @@ class Degree:
     double_counting: list[dict[str, Any]]
     groups: list[Group]
     unknown: list[str] = field(default_factory=list)
+    generated: str = ""  # date, for files written by pipeline/catalog_import.py
 
     def codes(self) -> set[str]:
         """Every course code named in a list, an exclusion or a cap."""
@@ -244,6 +245,7 @@ def validate(doc: Any, name: str = "?") -> Degree:
         source=doc["source"], read_on=str(read_on), total_hours=doc.get("total_hours"),
         notes=list(doc.get("notes") or []),
         double_counting=[dict(r) for r in dc], groups=groups,
+        generated=str(doc.get("generated") or ""),
     )
 
 
@@ -306,12 +308,15 @@ def resolve(d: Degree, catalog: dict[str, CatalogCourse]) -> dict[str, list[str]
 
 
 def to_json(d: Degree, eligible: dict[str, list[str]], courses: dict[str, dict]) -> dict:
+    """Gen-ed-only groups export no eligible list: the page fills it from the shared degrees/gened-courses.json."""
     return {
         "id": d.id, "program": d.program, "college": d.college, "catalog_year": d.catalog_year, "source": d.source,
-        "read_on": d.read_on, "total_hours": d.total_hours, "notes": d.notes, "double_counting": d.double_counting,
+        "read_on": d.read_on, "generated": d.generated, "total_hours": d.total_hours, "notes": d.notes,
+        "double_counting": d.double_counting,
         "groups": [{
             "id": g.id, "name": g.name, "section": g.section, "kind": g.kind, "rule": g.rule, "n": g.n,
-            "hours": g.hours, "items": g.items, "from": g.selectors, "eligible": eligible.get(g.id, []),
+            "hours": g.hours, "items": g.items, "from": g.selectors,
+            "eligible": [] if g.selectors and all(GENED_RE.match(x) for x in g.selectors) else eligible.get(g.id, []),
             "exclude": g.exclude, "max_hours": g.max_hours, "min_from": g.min_from, "not_with": g.not_with,
             "exclusive": g.exclusive, "source": g.source, "notes": g.notes,
         } for g in d.groups],
@@ -320,33 +325,38 @@ def to_json(d: Degree, eligible: dict[str, list[str]], courses: dict[str, dict])
 
 
 def export(conn: sqlite3.Connection, out_dir: Path, summaries: dict[str, dict], directory: Path = DEGREES_DIR) -> str:
-    """Write degrees/index.json and degrees/<id>.json. `summaries` are the course facts the site already exports
-    (GPA, next-term sections, professors), keyed by code, for courses that have a page."""
+    """Write degrees/index.json, degrees/gened-courses.json (every course with a gen-ed code, shared by all
+    programs) and degrees/<id>.json (the program's groups and its own listed courses). `summaries` are the course
+    facts the site already exports (GPA, next-term sections, professors), keyed by code, for courses with a page."""
     degrees = load_all(directory)
     catalog = catalog_from_db(conn)
     dest = out_dir / "degrees"
     dest.mkdir(parents=True, exist_ok=True)
+
+    def info(code: str) -> dict:
+        c = catalog[code]
+        base = {"t": c.title, "cr": c.credits, "g": c.geneds, "page": code in summaries}
+        return {**base, **summaries[code]} if code in summaries else base
+
+    gened = {code: info(code) for code in sorted(catalog) if catalog[code].geneds}
+    (dest / "gened-courses.json").write_text(json.dumps(gened, separators=(",", ":")))
     index, notes = [], []
-    gened_index = {code: c for code, c in catalog.items() if c.geneds}
     for d in degrees:
         eligible = resolve(d, catalog)
         if d.unknown:
-            print(f"warn: {d.id}: course codes not in the loaded Course Explorer terms: {', '.join(d.unknown)}",
-                  file=sys.stderr)
             notes.append(f"{d.id}: {len(d.unknown)} unknown")
-        listed = d.codes() | {c for codes in eligible.values() for c in codes}
-        courses: dict[str, dict] = {}
-        for code in sorted(listed | set(gened_index)):
-            c = catalog.get(code)
-            if c is None:
-                continue
-            base = {"t": c.title, "cr": c.credits, "g": c.geneds, "page": code in summaries}
-            courses[code] = {**base, **summaries[code]} if code in summaries and code in listed else base
+        listed = d.codes() | {c for g in d.groups if not all(GENED_RE.match(x) for x in g.selectors)
+                              for c in eligible.get(g.id, [])}
+        courses = {code: info(code) for code in sorted(listed) if code in catalog and code not in gened}
         (dest / f"{d.id}.json").write_text(json.dumps(to_json(d, eligible, courses), separators=(",", ":")))
         index.append({"id": d.id, "program": d.program, "college": d.college, "catalog_year": d.catalog_year,
-                      "groups": len(d.groups)})
-    (dest / "index.json").write_text(json.dumps(index, separators=(",", ":")))
-    return f"{len(degrees)} degree file(s)" + (f" ({'; '.join(notes)})" if notes else "")
+                      "groups": len(d.groups), "generated": d.generated})
+    (dest / "index.json").write_text(json.dumps(sorted(index, key=lambda x: (x["college"], x["program"])),
+                                                separators=(",", ":")))
+    if notes:
+        print(f"warn: course codes not in the loaded Course Explorer terms in {len(notes)} programs "
+              f"(python -m pipeline.degrees lists them)", file=sys.stderr)
+    return f"{len(degrees)} degree file(s), {len(notes)} with unknown codes"
 
 
 def main() -> int:

@@ -1,0 +1,210 @@
+# Urban Studies & Planning, BA (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/urban-studies-planning-ba/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: urban-studies-planning-ba
+program: Urban Studies & Planning, BA
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/urban-studies-planning-ba/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/faa/urban-studies-planning-ba/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by UP 312
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by ECON 102 or ACE 100; and AAS 100 or AFRO 100 or GGIS 101 or GGIS 104 or LLS 100 or SOC 100
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by UP 116 or STAT 100; and UP 316
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Foundation Courses
+  section: Foundation Courses
+  rule: all
+  courses:
+  - FAA 101
+  - - ECON 102
+    - ACE 100
+  - - UP 116
+    - STAT 100
+  id: foundation-courses-11
+- name: Foundation Courses
+  section: Foundation Courses
+  rule: manual
+  notes:
+  - '3-4 hours selected from:'
+  courses:
+  - AAS 100
+  - AFRO 100
+  - GGIS 101
+  - GGIS 104
+  - LLS 100
+  - SOC 100
+  id: foundation-courses-12
+- name: Urban Studies & Planning Core
+  section: Urban Studies & Planning Core
+  rule: all
+  courses:
+  - UP 101
+  - UP 201
+  - - UP 203
+    - UP 204
+  - UP 211
+  - UP 312
+  - UP 316
+  - UP 347
+  id: urban-studies-planning-core-13
+- name: Urban Studies & Planning Core
+  section: Urban Studies & Planning Core
+  rule: manual
+  notes:
+  - 'Select one workshop from:'
+  courses:
+  - UP 447
+  - UP 455
+  - UP 456
+  - UP 457
+  - UP 478
+  - UP 401
+  id: urban-studies-planning-core-14
+- name: Urban Studies & Planning Core
+  section: Urban Studies & Planning Core
+  rule: manual
+  notes:
+  - Plus 15 hours of UP electives in addition to Foundation, Core, & Concentration
+  id: urban-studies-planning-core-15
+- name: 'Required Concentration. Choose one below:'
+  section: 'Required Concentration. Choose one below:'
+  rule: manual
+  notes:
+  - Sustainability
+  - Global Cities
+  - Policy & Planning
+  - Social Justice
+  id: required-concentration-choose-one-below-16
+- name: Summary of Credits for the Bachelor of Arts in Urban Studies and Planning
+  section: Summary of Credits for the Bachelor of Arts in Urban Studies and Planning
+  rule: manual
+  notes:
+  - General Education
+  - Foundation Courses
+  - Urban Studies & Planning Core
+  - Concentration
+  - Free Electives
+  - A minimum of 40 credits at the 300 or 400 course level are required
+  id: summary-of-credits-for-the-bachelor-of-a-17

@@ -1,0 +1,348 @@
+# Media & Cinema Studies, BS (College of Media), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/media/media-cinema-studies-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: media-cinema-studies-bs
+program: Media & Cinema Studies, BS
+college: College of Media
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/media/media-cinema-studies-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 124
+notes:
+- 'Minimum hours required for graduation: 124 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/media/media-cinema-studies-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by MACS 101
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Foundation Course
+  section: Major Requirements
+  rule: all
+  courses:
+  - MACS 101
+  notes:
+  - 'Catalog total: 3 hours.'
+  id: foundation-course-11
+- name: 'Core Requirements: Theory, History, Methods, and Production'
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Students must choose a track for core requirements and are encouraged to select one of the specific tracks. Each track
+    requires students to complete at least one course each in Theory, History, Methods, and Production appropriate to their
+    track.
+  id: core-requirements-theory-history-methods-12
+- name: Cinema Studies Track
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Theory
+  courses:
+  - MACS 361
+  id: cinema-studies-track-13
+- name: Cinema Studies Track
+  section: Major Requirements
+  rule: manual
+  notes:
+  - History
+  - 'Choose 1:'
+  courses:
+  - MACS 261
+  - MACS 262
+  id: cinema-studies-track-14
+- name: Cinema Studies Track
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Methods
+  courses:
+  - MACS 350
+  id: cinema-studies-track-15
+- name: Cinema Studies Track
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Production
+  - 'Choose 1:'
+  courses:
+  - MACS 150
+  - MACS 205
+  - MACS 260
+  id: cinema-studies-track-16
+- name: Critical Media Production Track
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Theory
+  - 'Choose 1:'
+  courses:
+  - MACS 320
+  - MACS 326
+  - MACS 356
+  - MACS 361
+  id: critical-media-production-track-17
+- name: Critical Media Production Track
+  section: Major Requirements
+  rule: manual
+  notes:
+  - History
+  - 'Choose 1:'
+  courses:
+  - MACS 205
+  - MACS 261
+  - MACS 262
+  - MACS 284
+  - MACS 317
+  id: critical-media-production-track-18
+- name: Critical Media Production Track
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Methods
+  - 'Choose 1:'
+  courses:
+  - MACS 350
+  - MACS 351
+  id: critical-media-production-track-19
+- name: Critical Media Production Track
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Production
+  courses:
+  - MACS 260
+  id: critical-media-production-track-20
+- name: Media Studies Track
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Theory
+  - 'Choose 1:'
+  courses:
+  - MACS 320
+  - MACS 326
+  - MACS 356
+  id: media-studies-track-21
+- name: Media Studies Track
+  section: Major Requirements
+  rule: manual
+  notes:
+  - History
+  courses:
+  - MACS 317
+  id: media-studies-track-22
+- name: Media Studies Track
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Methods
+  courses:
+  - MACS 351
+  id: media-studies-track-23
+- name: Media Studies Track
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Production
+  - 'Choose 1:'
+  courses:
+  - MACS 140
+  - MACS 150
+  - MACS 205
+  - MACS 260
+  - MACS 264
+  id: media-studies-track-24
+- name: General Track
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'While a specific track is strongly preferred, students may fulfill the following core requirements for the general track:'
+  - Theory
+  - 'Choose 1:'
+  courses:
+  - MACS 320
+  - MACS 326
+  - MACS 356
+  - MACS 361
+  id: general-track-25
+- name: General Track
+  section: Major Requirements
+  rule: manual
+  notes:
+  - History
+  - 'Choose 1:'
+  courses:
+  - MACS 205
+  - MACS 261
+  - MACS 262
+  - MACS 284
+  - MACS 317
+  id: general-track-26
+- name: General Track
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Methods
+  - 'Choose 1:'
+  courses:
+  - MACS 350
+  - MACS 351
+  id: general-track-27
+- name: General Track
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Production
+  - 'Choose 1:'
+  courses:
+  - MACS 140
+  - MACS 150
+  - MACS 205
+  - MACS 260
+  - MACS 264
+  id: general-track-28
+- name: Capstone Course
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 3 hours.'
+  - 'Students should complete at least 3 hours of MACS coursework at the 400-level from the following list:'
+  courses:
+  - MACS 408
+  - MACS 410
+  - MACS 466
+  - MACS 480
+  - MACS 481
+  - MACS 484
+  - MACS 485
+  - MACS 496
+  id: capstone-course-29
+- name: Media and Cinema Studies Electives
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 12 hours.'
+  - Students must complete at least 12 hours of MACS coursework that is in addition to the requirements above. At least 3
+    hours must be at the 300-level or above.
+  id: media-and-cinema-studies-electives-30
+- name: College of Media Electives
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 6 hours.'
+  - Students should complete at least 6 hours of coursework from courses in the College of Media, in addition to the requirements
+    above. These can be Media and Cinema Studies (MACS), Journalism (JOUR), Advertising (ADV), or Media (MDIA).
+  id: college-of-media-electives-31

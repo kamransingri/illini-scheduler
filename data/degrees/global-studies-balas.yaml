@@ -1,0 +1,211 @@
+# Global Studies, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/global-studies-balas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: global-studies-balas
+program: Global Studies, BALAS
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/global-studies-balas/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/global-studies-balas/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by GLBL 100 and any other course approved as Social & Behavioral Sciences
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+  notes:
+  - fulfilled by GLBL 100
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English, or completion
+    of the third semester in two different languages other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: Major Requirements
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-and-professional-development-11
+- name: Interdisciplinary Foundations Requirements
+  section: Major Requirements
+  rule: all
+  courses:
+  - GLBL 100
+  id: interdisciplinary-foundations-requiremen-12
+- name: Interdisciplinary Foundations Requirements
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Global Studies Seminars. Select three sections from GLBL 296 OR one GLBL 298 section and one GLBL 296 section
+  - Social Science Core Courses (select one course from four disciplines)
+  - 'Anthropology: ANTH 230, ANTH 268, ANTH 270'
+  - 'Economics: ECON 202, ECON 420, ECON 450'
+  - 'Geography: GGIS 204, GGIS 210, GGIS 221'
+  - 'Global Studies: GLBL 200'
+  - 'History: HIST 258, HIST 259, HIST 274'
+  - 'Linguistics: LING 222'
+  - 'Political Science: PS 241, PS 280/PS 281, PS 282'
+  - 'Sociology: SOC 226, SOC 270, SOC 350, SOC 364'
+  id: interdisciplinary-foundations-requiremen-13
+- name: Language, Culture Studies and Study Abroad Requirements
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Advanced Language Coursework (select two). Select courses in a language other than your primary language(s).
+  - 'Arabic: ARAB 405, ARAB 406'
+  - 'Chinese: CHIN 305, CHIN 306'
+  - 'French: FR 205, FR 207, FR 211, FR 212, FR 313, FR 314, FR 413'
+  - 'German: GER 211, GER 212, GER 320'
+  - 'Hebrew: HEBR 405, HEBR 406'
+  - 'Hindi: HNDI 405, HNDI 406'
+  - 'Italian: ITAL 200, ITAL 210, ITAL 220, ITAL 310, ITAL 380'
+  - 'Japanese: JAPN 305, JAPN 306'
+  - 'Korean: KOR 305, KOR 306'
+  - 'Persian: PERS 453, PERS 454'
+  - 'Portuguese: PORT 402, PORT 403'
+  - 'Quechua: LAST 445'
+  - 'Russian: RUSS 301, RUSS 302'
+  - 'Spanish: SPAN 200, SPAN 204, SPAN 208, SPAN 228'
+  - 'Swahili: SWAH 405, SWAH 406'
+  - 'Turkish: TURK 405, TURK 406'
+  - 'Wolof: WLOF 405, WLOF 406'
+  - Regional Area Studies. 200- to 400-level courses which complement the language requirement must include work in at least
+    two disciplinary departments. Area Studies and Language must be geographically related and correspond to language and
+    study abroad location.
+  - One Semester (Fall or Spring) Study Abroad. Students study a variety of subjects in an approved study abroad program that
+    furthers their language and cultural knowledge or their cultural and thematic area knowledge. Students must be enrolled
+    full-time to receive credit toward this requirement.
+  id: language-culture-studies-and-study-abroa-14
+- name: Thematic Area Requirements
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Students choose an approved thematic area and, in consultation with a Global Studies advisor, construct an appropriate
+    customized curriculum of a minimum of 18 hours. Students cannot include more than 3 hours of 100-level work and must complete
+    a minimum of 9 hours of 300- and 400-level coursework. Courses must be taken from more than one department. Approved thematic
+    areas are:'
+  - A. Cultures in Contact
+  - B. Wealth and Poverty in a Globalized World
+  - C. Human Rights
+  - D. Governance, Conflict and Resolution
+  - E. Knowledge, Communication and Information Systems
+  - F. Environment, Sustainability, and Social Responsibility
+  - G. Global Health
+  - Optional Senior Capstone. Students do an individual research project (GLBL 200, GLBL 494, LAS 494, and, optionally, GLBL
+    495) based on their Thematic Area.
+  - Minimum Major Hours
+  id: thematic-area-requirements-15

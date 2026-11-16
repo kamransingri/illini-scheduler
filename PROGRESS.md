@@ -515,3 +515,23 @@ DB + export), Vitest 84/84 (overlap, different days, back-to-back, make-up slots
 - To keep a laptop quiet while working on this repo: iterate with `PAGES_LIMIT=5 npm run build`, run Playwright with
   `--workers=1`, and stop `serve` when done. A full build writes ~28,600 files; if the repo sits in a synced folder
   (OneDrive, Dropbox), pause syncing while building.
+
+## After v0.2.0: the owner's review of the live site (2026-11-16)
+
+- Deploy failure after PR #3: the `/degree/` keyboard test typed a course before the course list had loaded. The Add
+  button is now disabled until it has, and the test waits for the checklist.
+- Gen-ed finder: several categories now mean "counts for all of them" (D13.23), results are a ruled table with every
+  column visible at desktop width and sideways scrolling inside its own box on a phone (D13.24). Found on the way: the
+  table's screen-reader caption made the whole page 768px wide at 375px; the scroll boxes (gen-ed table and professor
+  comparison) are now positioned so hidden text stays inside them.
+- RMP: CS 173's Daniel Gonzalez is "Gonzalez Cedre" on RMP (2.9, 18 ratings); the matcher now accepts compound RMP
+  surnames (D13.27). Checked with a live lookup; the deploy's RMP step picks him up on the next run.
+- Fonts and footer: Source Sans 3 only (D13.25); Illini Blue footer pinned to the bottom (D13.26).
+- Degree planner: all 171 undergraduate programs imported from the catalog (D13.28), grouped by college in the program
+  menu, with a notice on imported programs and prose rules shown in the catalog's words with their course lists.
+  Shared gen-ed course file keeps degree data at 3 MB (D13.29). 288 course codes in 71 programs aren't in the terms the
+  site loads (old or rarely offered courses); `python -m pipeline.degrees` lists them.
+- Checks: pytest 186/186 (5 importer tests on two saved catalog pages), Vitest 86/86, ruff/mypy/ESLint/tsc clean.
+  Playwright on the full build, one worker: 41 passed, 2 failed (the Windows-only lower-case URL test, and a new
+  degree test that counted options before they loaded, since fixed). After the last changes the affected specs
+  (gen-ed, degree, schedule, professors: 21 tests) were rerun on a light build and all pass.

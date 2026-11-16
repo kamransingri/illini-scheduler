@@ -1,0 +1,248 @@
+# Landscape Architecture, BLA (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/landscape-architecture-bla/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: landscape-architecture-bla
+program: Landscape Architecture, BLA
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/landscape-architecture-bla/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 124
+notes:
+- 'Minimum hours required for graduation: 124 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by LA 214
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+  notes:
+  - fulfilled by LA 214 and any other course approved as Humanities & the Arts
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by LA 250 and any Life Science
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+  notes:
+  - fulfilled by LA 214
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by STAT 100 or MATH 115 or MATH 220 or MATH 221 or MATH 234; and any other course approved as Quantitative Reasoning
+    I or II
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: College Orientation
+  section: Landscape Architecture Curriculum
+  rule: all
+  courses:
+  - FAA 101
+  notes:
+  - 'Catalog total: 1 hours.'
+  id: college-orientation-11
+- name: Math, pick one from the following list
+  section: Landscape Architecture Curriculum
+  rule: all
+  courses:
+  - STAT 100
+  - MATH 115
+  - MATH 220
+  - MATH 221
+  - MATH 234
+  id: math-pick-one-from-the-following-list-12
+- name: Math, pick one from the following list
+  section: Landscape Architecture Curriculum
+  rule: manual
+  notes:
+  - or any other QR1 with approval of advisor
+  id: math-pick-one-from-the-following-list-13
+- name: Physical Science
+  section: Landscape Architecture Curriculum
+  rule: manual
+  notes:
+  - 'Catalog total: 3 hours.'
+  - 'Any Natural Science & Technology: Physical Sciences general education course'
+  id: physical-science-14
+- name: Life Science
+  section: Landscape Architecture Curriculum
+  rule: manual
+  notes:
+  - 'Catalog total: 3 hours.'
+  - 'Any Natural Science & Technology: Life Sciences general education course'
+  id: life-science-15
+- name: Life Science
+  section: Landscape Architecture Curriculum
+  rule: manual
+  notes:
+  - Construction, Plant Materials & Design, History, & Design Communications
+  courses:
+  - LA 101
+  - LA 214
+  - LA 241
+  - LA 250
+  - LA 280
+  - LA 281
+  - LA 342
+  - LA 343
+  - LA 452
+  id: life-science-16
+- name: Design Studio Courses
+  section: Landscape Architecture Curriculum
+  rule: manual
+  notes:
+  - 'Catalog total: 30 hours.'
+  - 'Any Natural Science & Technology: Life Sciences general education course'
+  - Construction, Plant Materials & Design, History, & Design Communications
+  courses:
+  - LA 233
+  - LA 234
+  - LA 335
+  - LA 336
+  - LA 437
+  - LA 438
+  id: design-studio-courses-17
+- name: Professional Preparation
+  section: Landscape Architecture Curriculum
+  rule: manual
+  notes:
+  - 'Catalog total: 2 hours.'
+  - 'Any Natural Science & Technology: Life Sciences general education course'
+  - Construction, Plant Materials & Design, History, & Design Communications
+  courses:
+  - LA 346
+  id: professional-preparation-18
+- name: Urban & Regional Planning
+  section: Landscape Architecture Curriculum
+  rule: manual
+  notes:
+  - 'Catalog total: 3 hours.'
+  - Any UP course
+  id: urban-regional-planning-19
+- name: Horticulture
+  section: Landscape Architecture Curriculum
+  rule: manual
+  notes:
+  - 'Catalog total: 4 hours.'
+  - Construction, Plant Materials & Design, History, & Design Communications
+  - Any UP course
+  courses:
+  - LA 352
+  id: horticulture-20
+- name: Focused Electives
+  section: Landscape Architecture Curriculum
+  rule: manual
+  notes:
+  - 'Catalog total: 18 hours.'
+  - Focused electives are required of all BLA students to graduate and must be approved by the BLA Advisor during an advising
+    appointment.
+  id: focused-electives-21
+- name: Summary of Credits for the Bachelor of Landscape Architecture in Landscape Architecture
+  section: Summary of Credits for the Bachelor of Landscape Architecture in Landscape Architecture
+  rule: manual
+  notes:
+  - General Education
+  - Landscape Architecture Curriculum
+  - Focused Electives
+  - Free Electives
+  - Total Credit Hours Required
+  id: summary-of-credits-for-the-bachelor-of-l-22

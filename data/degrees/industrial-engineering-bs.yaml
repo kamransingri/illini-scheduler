@@ -1,0 +1,434 @@
+# Industrial Engineering, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/industrial-engineering-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: industrial-engineering-bs
+program: Industrial Engineering, BS
+college: The Grainger College of Engineering
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/engineering/industrial-engineering-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 128
+notes:
+- 'Minimum hours required for graduation: 128 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/engineering/industrial-engineering-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - Fulfilled by SE 494
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by CHEM 102, PHYS 211, PHYS 212
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by ECON 102 or ECON 103 and any other course approved as Social & Behavioral Sciences
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 220 or MATH 221; and MATH 231, MATH 241, PHYS 211, PHYS 212; and CS 101 or CS 124
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: Orientation and Professional Development
+  rule: all
+  courses:
+  - ENG 100
+  - SE 100
+  - SE 290
+  id: orientation-and-professional-development-11
+- name: Introductory Economics Elective
+  section: Introductory Economics Elective
+  rule: all
+  courses:
+  - - ECON 102
+    - ECON 103
+  id: introductory-economics-elective-12
+- name: Foundational Mathematics and Science
+  section: Foundational Mathematics and Science
+  rule: all
+  courses:
+  - CHEM 102
+  - CHEM 103
+  - MATH 221
+  - MATH 231
+  - MATH 241
+  - MATH 257
+  - MATH 285
+  - PHYS 211
+  - PHYS 212
+  - PHYS 213
+  id: foundational-mathematics-and-science-13
+- name: Industrial Engineering Technical Core
+  section: Industrial Engineering Technical Core
+  rule: all
+  courses:
+  - CS 101
+  - ECE 110
+  - IE 300
+  - IE 310
+  - IE 360
+  - IE 361
+  - IE 370
+  - IE 371
+  - IE 400
+  - ME 330
+  - SE 101
+  - SE 261
+  - SE 494
+  - SE 495
+  - TAM 211
+  - TAM 212
+  - TAM 251
+  id: industrial-engineering-technical-core-14
+- name: Track Option Electives
+  section: Track Option Electives
+  rule: manual
+  notes:
+  - Track options include courses selected from departmentally approved lists. Courses on these elective lists may only be
+    used to fulfill one curricular requirement.
+  id: track-option-electives-15
+- name: Computational Methods in IE
+  section: Track Option Electives
+  rule: manual
+  notes:
+  - 'Track Core requirement - complete 2 courses:'
+  courses:
+  - CS 173
+  - CS 225
+  id: computational-methods-in-ie-16
+- name: Computational Methods in IE
+  section: Track Option Electives
+  rule: manual
+  notes:
+  - 'Track Electives - select remaining courses from this list:'
+  - All 200-, 300-, and 400-level CS courses excluding CS 210, CS 211, CS 397, CS 398, and CS seminar and senior project courses.
+  courses:
+  - SE 400
+  id: computational-methods-in-ie-17
+- name: Economics and Finance (E&F)
+  section: Track Option Electives
+  rule: manual
+  notes:
+  - 'Track Core - complete 2 courses from this list:'
+  courses:
+  - ACE 427
+  - IE 420
+  - SE 450
+  id: economics-and-finance-e-f-18
+- name: Economics and Finance (E&F)
+  section: Track Option Electives
+  rule: manual
+  notes:
+  - 'Track Electives - select remaining courses from this list of courses. Of these courses, only 1 selected may be at the
+    100 or 200 level:'
+  courses:
+  - ACE 410
+  - ACE 427
+  - ACE 428
+  - ACCY 200
+  - ECON 302
+  - ECON 303
+  - ECON 420
+  - FIN 221
+  - FIN 300
+  - FIN 411
+  - FIN 412
+  - FIN 415
+  - FIN 461
+  - SE 400
+  id: economics-and-finance-e-f-19
+- name: Human Factors
+  section: Track Option Electives
+  rule: manual
+  notes:
+  - 'Catalog total: 12 hours.'
+  - 'Track Core - complete the following course:'
+  courses:
+  - IE 340
+  id: human-factors-20
+- name: Human Factors
+  section: Track Option Electives
+  rule: manual
+  notes:
+  - 'Track Electives - complete at least 3 of the following courses:'
+  - Physical Ergonomics Focus
+  courses:
+  - - BIOE 461
+    - TAM 461
+  - ETMA 421
+  - ETMA 422
+  - ETMA 425
+  - HK 353
+  - HK 466
+  - ME 481
+  - ME 482
+  id: human-factors-21
+- name: Human Factors
+  section: Track Option Electives
+  rule: manual
+  notes:
+  - Cognitive Ergonomics Focus
+  courses:
+  - SE 400
+  - SE 450
+  - IE 445
+  id: human-factors-22
+- name: Human Factors
+  section: Track Option Electives
+  rule: manual
+  notes:
+  - Organizational Ergonomics Focus
+  courses:
+  - ANTH 411
+  - BADM 310
+  - BADM 312
+  - BADM 357
+  - PSYC 245
+  id: human-factors-23
+- name: Human Factors
+  section: Track Option Electives
+  rule: manual
+  notes:
+  - Optional Health Focus
+  courses:
+  - HK 403
+  id: human-factors-24
+- name: Industrial Engineering Fundamentals (IEF)
+  section: Track Option Electives
+  rule: manual
+  notes:
+  - 'Track Core - complete the following 4 courses:'
+  courses:
+  - IE 330
+  - IE 411
+  - IE 412
+  - IE 340
+  - SE 400
+  id: industrial-engineering-fundamentals-ief-25
+- name: Operations Research (OR)
+  section: Track Option Electives
+  rule: manual
+  notes:
+  - 'Track Core - complete the following 2 courses:'
+  courses:
+  - IE 410
+  - IE 411
+  id: operations-research-or-26
+- name: Operations Research (OR)
+  section: Track Option Electives
+  rule: manual
+  notes:
+  - 'Track Electives - complete 2 courses from this list:'
+  courses:
+  - ECE 490
+  - IE 420
+  - - MATH 444
+    - MATH 447
+  - MATH 484
+  - SE 400
+  - SE 411
+  - - STAT 410
+    - MATH 464
+  - STAT 420
+  - STAT 424
+  - STAT 425
+  id: operations-research-or-27
+- name: Quality Engineering (QE)
+  section: Track Option Electives
+  rule: manual
+  notes:
+  - 'Track Core - complete the following course:'
+  courses:
+  - IE 330
+  id: quality-engineering-qe-28
+- name: Quality Engineering (QE)
+  section: Track Option Electives
+  rule: manual
+  notes:
+  - 'Track Core Elective - complete at least 1 of the following courses:'
+  courses:
+  - IE 431
+  - SE 400
+  - SE 411
+  id: quality-engineering-qe-29
+- name: Quality Engineering (QE)
+  section: Track Option Electives
+  rule: manual
+  notes:
+  - 'Track Elective- complete remaining courses from this list:'
+  courses:
+  - STAT 410 + MATH 464
+  - STAT 420
+  - STAT 424
+  - STAT 426
+  id: quality-engineering-qe-30
+- name: Supply Chain, Manufacturing and Logistics (SC&L)
+  section: Track Option Electives
+  rule: manual
+  notes:
+  - 'Track Core - complete the following course:'
+  courses:
+  - IE 412
+  id: supply-chain-manufacturing-and-logistics-31
+- name: Supply Chain, Manufacturing and Logistics (SC&L)
+  section: Track Option Electives
+  rule: manual
+  notes:
+  - 'Track Electives - complete 3 of the following courses:'
+  courses:
+  - ECE 470
+  - IE 330
+  - ME 270
+  - ME 451
+  - ME 452
+  - SE 400
+  id: supply-chain-manufacturing-and-logistics-32
+- name: Technical Electives
+  section: Technical Electives
+  rule: manual
+  notes:
+  - Courses on these elective lists may only be used to fulfill one curricular requirement.
+  id: technical-electives-33
+- name: Technical Electives
+  section: Technical Electives
+  rule: manual
+  notes:
+  - 'Computer science elective selected from the departmentally approved list of Computer Science Electives below:'
+  courses:
+  - CS 225
+  - CS 357
+  - CS 411
+  - CS 450
+  - IE 405
+  id: technical-electives-34
+- name: Technical Electives
+  section: Technical Electives
+  rule: manual
+  notes:
+  - 'IE technical electives selected from the departmentally approved list of IE Technical Electives below:'
+  courses:
+  - IE 330
+  - IE 340
+  - IE 411
+  - IE 412
+  - IE 420
+  - IE 431
+  - IE 445
+  - SE 310
+  - SE 320
+  - SE 424
+  id: technical-electives-35
+- name: Free Electives
+  section: Free Electives
+  rule: manual
+  notes:
+  - Additional course work, subject to the Grainger College of Engineering restrictions to Free Electives, so that there are
+    at least 128 credit hours earned toward the degree.
+  id: free-electives-36

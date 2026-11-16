@@ -1,7 +1,8 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { alsoCounts, evaluate, needText, options, prereqNote, rankCourse, type Degree, type DegreeCourse, type DegreeIndex, type GroupResult, type GroupStatus, type Ranked } from "@/lib/degree";
-import { dataUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, termLabel } from "@/lib/format";
+import { alsoCounts, evaluate, hydrate, needText, options, prereqNote, rankCourse, type Degree, type DegreeCourse, type DegreeIndex, type GroupResult, type GroupStatus, type Ranked } from "@/lib/degree";
+import { courseHref, dataUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, termLabel } from "@/lib/format";
 import { EMPTY, onMineChange, readMine, sameState, STATUS_LABEL, stateFromParams, stateToParams, writeMine, type CourseStatus, type MyState } from "@/lib/mycourses";
 import type { ScorePriors } from "@/lib/score";
 import type { SearchIndex } from "@/lib/types";
@@ -37,11 +38,21 @@ function StatusBadge({ status }: { status: GroupStatus }) {
   );
 }
 
-const loadDegree = (id: string): Promise<Degree> =>
-  fetch(dataUrl(`degrees/${id}.json`)).then((r) => {
+const getJson = <T,>(path: string): Promise<T> =>
+  fetch(dataUrl(path)).then((r) => {
     if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    return r.json() as Promise<Degree>;
+    return r.json() as Promise<T>;
   });
+
+// Gen-ed courses are the same for every program: one shared file, loaded once.
+let genedCache: Promise<Record<string, DegreeCourse>> | null = null;
+const loadDegree = (id: string): Promise<Degree> => {
+  if (!genedCache) {
+    genedCache = getJson<Record<string, DegreeCourse>>("degrees/gened-courses.json");
+    genedCache.catch(() => (genedCache = null));
+  }
+  return Promise.all([getJson<Degree>(`degrees/${id}.json`), genedCache]).then(([deg, gened]) => hydrate(deg, gened));
+};
 
 export default function DegreeChecklist({ programs, meta }: { programs: DegreeIndex; meta: { next_term: string; score_priors: ScorePriors | null } }) {
   const [st, setSt] = useState<MyState>(EMPTY);
@@ -91,6 +102,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
   }, [st.program]);
 
   const ev = useMemo(() => (deg ? evaluate(deg, st.courses, st.ticked) : null), [deg, st.courses, st.ticked]);
+  const generatedOn = programs.find((p) => p.id === st.program)?.generated;
   const taken = useMemo(() => new Set(st.courses.map((c) => `${c.s} ${c.n}`)), [st.courses]);
 
   // Until the saved list (or the link's) has been read, hold the space instead of flashing an empty checklist.
@@ -137,11 +149,17 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
               value={st.program}
               onChange={(e) => update({ ...st, program: e.target.value })}
             >
-              <option value="">Choose a program</option>
-              {programs.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.program} ({p.catalog_year})
-                </option>
+              <option value="">Choose your major ({programs.length} programs)</option>
+              {[...new Set(programs.map((p) => p.college))].map((college) => (
+                <optgroup key={college} label={college}>
+                  {programs
+                    .filter((p) => p.college === college)
+                    .map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.program}
+                      </option>
+                    ))}
+                </optgroup>
               ))}
             </select>
           </div>
@@ -156,6 +174,17 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
             <p className="flex items-start gap-2" role="alert">
               <Icon name="alert" className="mt-1" />
               Couldn&apos;t load the requirements ({error}). Reload to try again.
+            </p>
+          )}
+          {generatedOn && (
+            // From the program index embedded in the page, so it shows before the program's own file has loaded.
+            <p className="mb-6 flex max-w-3xl items-start gap-2 rounded bg-panel p-3" data-testid="generated-note">
+              <Icon name="info" className="mt-1 shrink-0 text-heading" />
+              <span>
+                Read automatically from the catalog page on {fmtDate(generatedOn)}. Course lists, alternatives and &ldquo;select N&rdquo; rules come
+                straight from its tables; rules the catalog writes out in words (electives, concentrations) are shown in its own words for you to tick
+                when you&apos;ve met them. Check the catalog page before you rely on it.
+              </span>
             </p>
           )}
           {st.program && !deg && !error && <p className="min-h-screen text-muted">Loading requirements…</p>}
@@ -212,7 +241,12 @@ function AddCourse({ st, update, deg, index }: MineProps) {
             </option>
           ))}
         </select>
-        <button type="submit" className="inline-flex items-center gap-1.5 rounded bg-action px-3 font-semibold text-white hover:bg-action-dark">
+        <button
+          type="submit"
+          disabled={!deg && !index}
+          title={!deg && !index ? "Loading the course list…" : undefined}
+          className="inline-flex items-center gap-1.5 rounded bg-action px-3 font-semibold text-white hover:bg-action-dark disabled:opacity-50"
+        >
           <Icon name="plus" />
           Add
         </button>
@@ -406,6 +440,14 @@ function Requirement({
         </Expandable>
       ) : null}
       {head}
+      {g.rule === "manual" && !finished && (
+        <div className="mt-2 max-w-3xl space-y-1" data-testid="catalog-words">
+          {g.notes.map((n, i) => (
+            <p key={i}>{n}</p>
+          ))}
+          {g.items.length > 0 && <ListedCourses items={g.items} deg={deg} taken={taken} />}
+        </div>
+      )}
       {g.rule === "manual" ? (
         <label className="mt-2 flex items-start gap-2">
           <input
@@ -580,5 +622,41 @@ function OptionRow({
       }}
       action={c.nx ? <AddToCart subject={s} number={n} small /> : null}
     />
+  );
+}
+
+/** The courses the catalog lists under a requirement it states in words (shown as links; nothing is counted). */
+function ListedCourses({ items, deg, taken }: { items: string[][][]; deg: Degree; taken: Set<string> }) {
+  const [all, setAll] = useState(false);
+  const codes = [...new Set(items.flat(2))];
+  const shown = all ? codes : codes.slice(0, 24);
+  return (
+    <div>
+      <p className="text-sm text-muted">Courses the catalog lists here ({codes.length}):</p>
+      <ul className="mt-1 flex flex-wrap gap-1.5">
+        {shown.map((c) => {
+          const [s, n] = c.split(" ");
+          const page = deg.courses[c]?.page;
+          return (
+            <li key={c}>
+              {page ? (
+                <Link href={courseHref(s, n)} className={`inline-flex rounded border px-1.5 text-sm leading-6 ${taken.has(c) ? "border-heading bg-heading text-white" : "border-line bg-white text-action hover:underline"}`} title={deg.courses[c]?.t}>
+                  {c}
+                </Link>
+              ) : (
+                <span className="inline-flex rounded border border-line px-1.5 text-sm leading-6 text-muted" title="Not offered in the terms this site loads">
+                  {c}
+                </span>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+      {codes.length > 24 && (
+        <button type="button" className="mt-1 text-sm font-semibold text-action hover:underline" onClick={() => setAll((v) => !v)} aria-expanded={all}>
+          {all ? "Show fewer" : `Show all ${codes.length}`}
+        </button>
+      )}
+    </div>
   );
 }

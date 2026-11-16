@@ -1,0 +1,119 @@
+# Secondary Education, BS (College of Education), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/education/secondary-education-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: secondary-education-bs
+program: Secondary Education, BS
+college: College of Education
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/education/secondary-education-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+notes: []
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+groups:
+- name: Degree Requirements
+  section: Degree Requirements
+  rule: all
+  courses:
+  - EDUC 101
+  id: degree-requirements-1
+- id: gened-1
+  name: 'Select one of the following groups:'
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - 'Select one of the following groups:'
+- id: gened-2
+  name: Life science
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Life science
+- id: gened-3
+  name: Physical science
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Physical science
+- id: cs-wcc
+  name: Western/Comparative
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: cs-nw
+  name: Non-Western
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: US Minority
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+- id: qr-2
+  name: Quantitative Reasoning II (QRI or QRII)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+- id: gened-9
+  name: Three years of one language other than English in high school or completion of t
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Three years of one language other than English in high school or completion of the third semester of college level language.
+- id: gened-10
+  name: Elective Courses (if needed to complete the 120 hour graduation requirement)
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Elective Courses (if needed to complete the 120 hour graduation requirement)
+- id: gened-11
+  name: 'Six hours of ROTC upper level courses (300 level or above) can count toward the '
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Six hours of ROTC upper level courses (300 level or above) can count toward the degree as free electives.

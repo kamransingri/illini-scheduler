@@ -1,0 +1,644 @@
+# Systems Engineering and Design, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/systems-engineering-design-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: systems-engineering-design-bs
+program: Systems Engineering and Design, BS
+college: The Grainger College of Engineering
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/engineering/systems-engineering-design-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 128
+notes:
+- 'Minimum hours required for graduation: 128 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/engineering/systems-engineering-design-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by SE 494
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by CHEM 102, PHYS 211, PHYS 212
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by ECON 102 or ECON 103 and any other course approved as Social & Behavioral Sciences
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 220 or MATH 221; and MATH 231, MATH 241, PHYS 211, PHYS 212; and CS 101 or CS 124
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Major Requirements
+  section: Major Requirements
+  rule: all
+  courses:
+  - ENG 100
+  - SE 100
+  - SE 290
+  id: major-requirements-11
+- name: Introductory Economics Elective
+  section: Introductory Economics Elective
+  rule: all
+  courses:
+  - - ECON 102
+    - ECON 103
+  id: introductory-economics-elective-12
+- name: Foundational Mathematics and Science
+  section: Foundational Mathematics and Science
+  rule: all
+  courses:
+  - CHEM 102
+  - CHEM 103
+  - MATH 221
+  - MATH 231
+  - MATH 241
+  - MATH 257
+  - MATH 285
+  - PHYS 211
+  - PHYS 212
+  - PHYS 213
+  id: foundational-mathematics-and-science-13
+- name: Systems Engineering and Design Technical Core
+  section: Systems Engineering and Design Technical Core
+  rule: all
+  courses:
+  - CS 101
+  - ECE 110
+  - ECE 211
+  - IE 300
+  - IE 310
+  - SE 101
+  - SE 261
+  - SE 310
+  - SE 311
+  - SE 312
+  - SE 320
+  - SE 424
+  - SE 494
+  - SE 495
+  - TAM 211
+  - TAM 212
+  - TAM 251
+  - TAM 335
+  id: systems-engineering-and-design-technical-14
+- name: Secondary Field Option Electives
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - Students must select one Secondary Field Option from the list below or they may petition to create their own Secondary
+    Field Option (SFO). Courses from these lists may only be used to fulfill one curricular requirement.
+  id: secondary-field-option-electives-15
+- name: Automotive Engineering
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Dynamics/Controls Focus - complete at least 1 course from this list:'
+  courses:
+  - ECE 470
+  - ECE 486
+  - ME 460
+  - TAM 412
+  - TAM 416
+  id: automotive-engineering-16
+- name: Automotive Engineering
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Automotive Power Systems Focus - complete at least 1 course from this list:'
+  courses:
+  - ECE 431
+  - ECE 464
+  - ME 400
+  - ME 403
+  id: automotive-engineering-17
+- name: Automotive Engineering
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Other Elective Options - complete remaining courses from this list:'
+  courses:
+  - CS 173
+  - CS 440
+  - CS 446
+  - ME 320
+  - ME 360
+  - ME 461
+  - SE 400
+  - SE 422
+  - SE 497
+  id: automotive-engineering-18
+- name: Autonomous Systems and Robotics
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Automotive Power Systems Focus - complete at least 1 course from this list:'
+  - 'Other Elective Options - complete remaining courses from this list:'
+  courses:
+  - CS 173
+  - CS 225
+  - CS 440
+  - CS 446
+  - ECE 470
+  - ECE 486
+  - ECE 490
+  - ME 270
+  - ME 461
+  - SE 400
+  - SE 411
+  - SE 420
+  - SE 422
+  - SE 423
+  id: autonomous-systems-and-robotics-19
+- name: Bioengineering
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Automotive Power Systems Focus - complete at least 1 course from this list:'
+  - 'Other Elective Options - complete remaining courses from this list:'
+  courses:
+  - BIOE 120
+  - BIOE 414
+  - BIOE 415
+  - BIOE 498
+  - BIOP 401
+  - CHEM 232
+  - CHEM 233
+  - HK 353
+  - IE 340
+  - MCB 150
+  - MCB 250
+  - MCB 251
+  - MCB 401
+  - MCB 402
+  - MCB 450
+  - SE 400
+  id: bioengineering-20
+- name: Business Systems Integration & Consulting
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Core Requirement:'
+  courses:
+  - SE 400
+  id: business-systems-integration-consulting-21
+- name: Business Systems Integration & Consulting
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Group I Requirement - complete at least 1 course from this list:'
+  courses:
+  - BADM 352
+  - BADM 353
+  - IE 405
+  id: business-systems-integration-consulting-22
+- name: Business Systems Integration & Consulting
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - Group II - select remaining courses from this list. Of these courses, only 1 selected may be at the 100 or 200 level.
+  courses:
+  - ACCY 200
+  - ACCY 201
+  - ACCY 202
+  - ADV 150
+  - BADM 310
+  - BADM 311
+  - BADM 312
+  - BADM 320
+  - BADM 445
+  - BADM 446
+  - BTW 250
+  - BTW 261
+  - FIN 221
+  - FIN 300
+  - IE 420
+  id: business-systems-integration-consulting-23
+- name: Civil Engineering Structures
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Group I Requirement - complete at least 1 course from this list:'
+  - Group II - select remaining courses from this list. Of these courses, only 1 selected may be at the 100 or 200 level.
+  courses:
+  - CEE 380
+  - CEE 460
+  - CEE 461
+  - CEE 462
+  - CEE 463
+  - CEE 465
+  - SE 400
+  id: civil-engineering-structures-24
+- name: Computer Science
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Core Courses:'
+  courses:
+  - CS 173
+  - CS 225
+  id: computer-science-25
+- name: Computer Science
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Elective Options - complete 2 of the following courses:'
+  courses:
+  - CS 410
+  - CS 411
+  - CS 425
+  - CS 438
+  id: computer-science-26
+- name: Computer Science
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - All 200-, 300-, and 400-level CS courses excluding CS 210, CS 211, CS 397, CS 398, and CS seminar and senior project courses.
+  courses:
+  - SE 400
+  id: computer-science-27
+- name: Construction
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Elective Options - complete 2 of the following courses:'
+  - All 200-, 300-, and 400-level CS courses excluding CS 210, CS 211, CS 397, CS 398, and CS seminar and senior project courses.
+  courses:
+  - CEE 300
+  - CEE 310
+  - CEE 320
+  - CEE 380
+  - CEE 420
+  - CEE 421
+  - CEE 422
+  - CEE 460
+  - CEE 461
+  - CEE 465
+  - ME 330
+  - SE 400
+  id: construction-28
+- name: Control Systems
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Elective Options - complete 2 of the following courses:'
+  - All 200-, 300-, and 400-level CS courses excluding CS 210, CS 211, CS 397, CS 398, and CS seminar and senior project courses.
+  courses:
+  - CS 173
+  - ECE 470
+  - ECE 486
+  - ECE 490
+  - IE 410
+  - MATH 444
+  - MATH 461
+  - MATH 464
+  - ME 360
+  - ME 460
+  - ME 461
+  - SE 400
+  - SE 420
+  - SE 422
+  - SE 423
+  id: control-systems-29
+- name: Digital Prototyping
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Elective Options - complete 2 of the following courses:'
+  - All 200-, 300-, and 400-level CS courses excluding CS 210, CS 211, CS 397, CS 398, and CS seminar and senior project courses.
+  courses:
+  - ME 270
+  - ME 451
+  - ME 452
+  - ME 471
+  - SE 400
+  - SE 402
+  - SE 410
+  - SE 413
+  - SE 423
+  - TAM 470
+  id: digital-prototyping-30
+- name: Engineering Administration
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Core Requirement:'
+  courses:
+  - SE 400
+  id: engineering-administration-31
+- name: Engineering Administration
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - Elective Options - select remaining courses from this list. Of these courses, only 1 selected may be at the 100 or 200
+    level.
+  courses:
+  - ACCY 200
+  - ACCY 201
+  - ACCY 202
+  - ADV 150
+  - BADM 310
+  - BADM 311
+  - BADM 312
+  - BADM 313
+  - BADM 375
+  - BADM 380
+  - BADM 381
+  - BTW 250
+  - BTW 261
+  - ECON 302
+  - FIN 221
+  - IE 330
+  - IE 340
+  - IE 361
+  - IE 420
+  - IE 445
+  - PS 321
+  - SE 411
+  id: engineering-administration-32
+- name: Engineering Marketing
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Core Requirement:'
+  courses:
+  - SE 400
+  id: engineering-marketing-33
+- name: Engineering Marketing
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - Elective Options - select remaining courses from this list. Of these courses, only 1 selected may be at the 100 or 200
+    level.
+  courses:
+  - ACCY 200
+  - ACCY 201
+  - ACCY 202
+  - ADV 150
+  - BADM 310
+  - BADM 320
+  - BADM 322
+  - BADM 323
+  - BADM 325
+  - BADM 327
+  - BADM 380
+  - BADM 382
+  - BADM 420
+  - BTW 250
+  - BTW 261
+  - PSYC 245
+  id: engineering-marketing-34
+- name: Environmental Quality
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Core Requirement:'
+  - Elective Options - select remaining courses from this list. Of these courses, only 1 selected may be at the 100 or 200
+    level.
+  courses:
+  - ACE 310
+  - CEE 330
+  - CEE 437
+  - CEE 440
+  - CEE 442
+  - CEE 443
+  - CEE 444
+  - ENVS 336
+  - NRES 419
+  - NRES 472
+  - SE 400
+  id: environmental-quality-35
+- name: Manufacturing Engineering
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Core Requirement:'
+  - Elective Options - select remaining courses from this list. Of these courses, only 1 selected may be at the 100 or 200
+    level.
+  courses:
+  - IE 370
+  - ME 330
+  - SE 400
+  - SE 402
+  - SE 420
+  - SE 422
+  - SE 423
+  id: manufacturing-engineering-36
+- name: Manufacturing Engineering
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - Any courses from Digital Prototyping and Control Systems Secondary Field Option.
+  id: manufacturing-engineering-37
+- name: Nondestructive Testing and Evaluation
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Core Requirement:'
+  courses:
+  - SE 412
+  id: nondestructive-testing-and-evaluation-38
+- name: Nondestructive Testing and Evaluation
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Elective Options - complete remaining courses from this list:'
+  courses:
+  - CEE 300
+  - CS 173
+  - CS 225
+  - CS 440
+  - CS 446
+  - ECE 470
+  - ECE 473
+  - ME 270
+  - ME 471
+  - SE 400
+  - TAM 412
+  - TAM 456
+  id: nondestructive-testing-and-evaluation-39
+- name: Operations Research
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Core Requirement:'
+  - 'Elective Options - complete remaining courses from this list:'
+  courses:
+  - IE 360
+  - IE 361
+  - IE 370
+  - IE 400
+  - IE 410
+  - IE 411
+  - MATH 461
+  - MATH 464
+  - ME 451
+  - SE 400
+  - SE 411
+  id: operations-research-40
+- name: Rehabilitation Engineering
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Core Requirement:'
+  - 'Elective Options - complete remaining courses from this list:'
+  courses:
+  - CHEM 232
+  - ECE 414
+  - ECE 415
+  - MCB 150
+  - MCB 250
+  - MCB 251
+  - SE 400
+  id: rehabilitation-engineering-41
+- name: Theoretical and Applied Mechanics
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - 'Core Requirement:'
+  - 'Elective Options - complete remaining courses from this list:'
+  courses:
+  - CEE 300
+  - ME 471
+  - SE 400
+  - TAM 412
+  - TAM 424
+  - TAM 428
+  - TAM 435
+  - TAM 445
+  - TAM 451
+  - TAM 456
+  id: theoretical-and-applied-mechanics-42
+- name: Technical Electives
+  section: Technical Electives
+  rule: manual
+  notes:
+  - 'Design elective selected from the departmentally approved list of Design Electives below:'
+  courses:
+  - SE 410
+  - SE 420
+  - SE 423
+  - SE 413
+  id: technical-electives-43
+- name: Technical Electives
+  section: Technical Electives
+  rule: manual
+  notes:
+  - 'Engineering science elective selected from the departmentally approved list of Engineering Science Electives below:'
+  courses:
+  - ME 200
+  - MSE 280
+  id: technical-electives-44
+- name: Free Electives
+  section: Free Electives
+  rule: manual
+  notes:
+  - Additional course work, subject to the Grainger College of Engineering restrictions to Free Electives, so that there are
+    at least 128 credit hours earned toward the degree.
+  id: free-electives-45

@@ -1,0 +1,77 @@
+# Political Science: World Politics, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/political-science-balas/world-politics/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: political-science-balas-world-politics
+program: 'Political Science: World Politics, BALAS'
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/political-science-balas/world-politics/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+double_counting: []
+groups:
+- name: World Politics Concentration Coursework Requirements
+  section: World Politics Concentration Coursework Requirements
+  rule: all
+  courses:
+  - PS 100
+  id: world-politics-concentration-coursework-1
+- name: World Politics Concentration Coursework Requirements
+  section: World Politics Concentration Coursework Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - PS 240
+  - PS 241
+  notes:
+  - 'Select at least one course from the following:'
+  id: world-politics-concentration-coursework-2
+- name: World Politics Concentration Coursework Requirements
+  section: World Politics Concentration Coursework Requirements
+  rule: manual
+  notes:
+  - Select any additional 100- or 200-level Political Science courses
+  - Select 300- or 400-level Political Science courses, at least nine hours of which come from the World Politics Concentration
+    list maintained by the department. The other six hours may be any 300- or 400-level Political Science course.
+  - Select any additional Political Science courses at any level
+  - Students will select a second major, or a minor, or a set of courses of at least 12 hours of thematically-related coursework
+    outside political science, developed in conjunction with an academic advisor.
+  id: world-politics-concentration-coursework-3
+- name: World Politics Course List
+  section: World Politics Concentration Coursework Requirements
+  rule: all
+  courses:
+  - PS 152
+  - PS 180
+  - PS 230
+  - PS 231
+  - PS 242
+  - PS 282
+  - PS 300
+  - PS 340
+  - PS 341
+  - PS 343
+  - PS 344
+  - PS 345
+  - PS 346
+  - PS 347
+  - PS 348
+  - PS 351
+  - PS 352
+  - PS 353
+  - PS 355
+  - PS 356
+  - PS 357
+  - PS 358
+  - PS 379
+  - PS 385
+  - PS 397
+  - PS 456
+  - PS 457
+  - PS 494
+  id: world-politics-course-list-4

@@ -1,0 +1,317 @@
+# Aerospace Engineering, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/aerospace-engineering-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: aerospace-engineering-bs
+program: Aerospace Engineering, BS
+college: The Grainger College of Engineering
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/engineering/aerospace-engineering-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 128
+notes:
+- 'Minimum hours required for graduation: 128 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/engineering/aerospace-engineering-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by AE 443
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by CHEM 102, PHYS 211, PHYS 212
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 220 or MATH 221; and MATH 231, MATH 241, PHYS 211, PHYS 212; and CS 101 or CS 124
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: Orientation and Professional Development
+  rule: all
+  courses:
+  - AE 100
+  - ENG 100
+  id: orientation-and-professional-development-11
+- name: Foundational Mathematics and Science
+  section: Foundational Mathematics and Science
+  rule: all
+  courses:
+  - CHEM 102
+  - CHEM 103
+  - MATH 221
+  - MATH 231
+  - MATH 241
+  - MATH 257
+  - MATH 285
+  - PHYS 211
+  - PHYS 212
+  id: foundational-mathematics-and-science-12
+- name: Aerospace Engineering Technical Core
+  section: Aerospace Engineering Technical Core
+  rule: all
+  courses:
+  - AE 140
+  - AE 202
+  - AE 311
+  - AE 312
+  - AE 321
+  - AE 323
+  - AE 352
+  - AE 353
+  - AE 370
+  - - AE 433
+    - AE 434
+  - AE 442
+  - AE 443
+  - AE 460
+  - AE 461
+  - AE 483
+  - CS 101
+  - ECE 205
+  - ME 200
+  - MSE 280
+  - TAM 210
+  - TAM 212
+  id: aerospace-engineering-technical-core-13
+- name: Technical Electives
+  section: Technical Electives
+  rule: manual
+  notes:
+  - Select from the departmentally approved list of Technical Electives. Student will choose 6 hours of AE Technical Electives
+    and 6 hours of either additional AE Technical Electives or Non-AE Technical Electives.
+  id: technical-electives-14
+- name: AE Technical Electives listed below
+  section: Technical Electives
+  rule: manual
+  notes:
+  - Select from the departmentally approved list of Technical Electives. Student will choose 6 hours of AE Technical Electives
+    and 6 hours of either additional AE Technical Electives or Non-AE Technical Electives.
+  courses:
+  - AE 402
+  - AE 403
+  - AE 410
+  - AE 412
+  - AE 416
+  - AE 419
+  - AE 420
+  - AE 428
+  - AE 435
+  - AE 451
+  - AE 454
+  - AE 456
+  - AE 468
+  - AE 482
+  - AE 484
+  - AE 485
+  - AE 497
+  - AE 498
+  - ENG 491
+  id: ae-technical-electives-listed-below-15
+- name: Non-AE Technical Electives below
+  section: Technical Electives
+  rule: manual
+  notes:
+  - Select from the departmentally approved list of Technical Electives. Student will choose 6 hours of AE Technical Electives
+    and 6 hours of either additional AE Technical Electives or Non-AE Technical Electives.
+  courses:
+  - ASTR 404
+  - ASTR 405
+  - ASTR 406
+  - ASTR 414
+  - ATMS 301
+  - ATMS 302
+  - ATMS 303
+  - ATMS 304
+  - ATMS 305
+  - ATMS 306
+  - ATMS 313
+  - ATMS 406
+  - ATMS 410
+  - CEE 310
+  - CEE 330
+  - CEE 360
+  - CEE 380
+  - CEE 407
+  - CEE 412
+  - CEE 451
+  - CEE 471
+  - CHEM 232
+  - CHEM 233
+  - CHEM 236
+  - CS 225
+  - CS 420
+  - CS 461
+  - CS 465
+  - CSE 412
+  - ECE 210
+  - ECE 220
+  - ECE 310
+  - ECE 311
+  - ECE 329
+  - ECE 330
+  - ECE 342
+  - ECE 343
+  - ECE 385
+  - ECE 473
+  - ECE 486
+  - ENG 491
+  - ES 470
+  - ES 475
+  - MSE 401
+  - MSE 440
+  - MSE 443
+  - MSE 498
+  - SE 310
+  - SE 420
+  - SE 423
+  - IE 310
+  - MATH 402
+  - MATH 413
+  - MATH 416
+  - MATH 442
+  - MATH 446
+  - MATH 461
+  - MATH 482
+  - MATH 484
+  - MATH 489
+  - ME 320
+  - ME 360
+  - ME 370
+  - ME 400
+  - ME 401
+  - ME 498
+  - MSE 450
+  - MSE 453
+  - MSE 457
+  - NPRE 201
+  - NPRE 402
+  - NPRE 498
+  - PHYS 325
+  - PHYS 326
+  - PHYS 435
+  - PHYS 485
+  - PHYS 486
+  - STAT 428
+  - STAT 448
+  - TAM 324
+  - TAM 451
+  - TAM 456
+  - TAM 470
+  - TE 401
+  - TMGT 461
+  id: non-ae-technical-electives-below-16
+- name: Free Electives
+  section: Free Electives
+  rule: manual
+  notes:
+  - Additional course work,subject to the Grainger College of Engineering restrictions to Free Electives,so that there are
+    at least 128 credit hours earned toward the degree.
+  id: free-electives-17

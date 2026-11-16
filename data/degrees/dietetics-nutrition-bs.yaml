@@ -1,0 +1,229 @@
+# Dietetics and Nutrition, BS (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/dietetics-nutrition-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: dietetics-nutrition-bs
+program: Dietetics and Nutrition, BS
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/dietetics-nutrition-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 126
+notes:
+- 'Minimum hours required for graduation: 126 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300 and 400 level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/aces/dietetics-nutrition-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by CHEM 102, CHEM 104, MCB 100, and FSHN 101
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by HDFS 105 and ANTH 101 ANTH 102, ANTH 103, ANTH 209, HDFS 220, PSYC 100, or SOC 100
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by ACE 262, CPSC 241, ECON 202, PSYC 235, or STAT 100 and one other course approved as Quantitative Reasoning
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Department Foundation
+  section: General Education Requirements
+  rule: all
+  courses:
+  - FSHN 123
+  id: department-foundation-11
+- name: Department Foundation
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Communication Option:'
+  courses:
+  - CMN 101
+  - ALEC 115
+  - CMN 111 + CMN 112
+  id: department-foundation-12
+- name: Department Foundation
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Statistics Option - Select one of the following:'
+  courses:
+  - ACE 262
+  - CPSC 241
+  - ECON 202
+  - PSYC 235
+  - STAT 100
+  - CHEM 102 + CHEM 103
+  - CHEM 104 + CHEM 105
+  - MCB 100
+  - MCB 101
+  - CHEM 232
+  - CHEM 233
+  - - FSHN 250
+    - MCB 244
+  - - FSHN 251
+    - MCB 246
+  - HDFS 105
+  id: department-foundation-13
+- name: Department Foundation
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Social & Behavioral Sciences Option - Select one of the following:'
+  courses:
+  - ANTH 101
+  - ANTH 102
+  - ANTH 103
+  - ANTH 209
+  - HDFS 220
+  - PSYC 100
+  - SOC 100
+  id: department-foundation-14
+- name: Major Core
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 51 hours.'
+  - 'Statistics Option - Select one of the following:'
+  - 'Social & Behavioral Sciences Option - Select one of the following:'
+  courses:
+  - FSHN 150
+  - FSHN 101
+  - HK 206
+  - FSHN 220
+  - FSHN 232
+  - FSHN 249
+  - FSHN 322
+  - FSHN 329
+  - FSHN 340
+  - FSHN 345
+  - FSHN 420
+  - FSHN 422
+  - FSHN 426
+  - FSHN 427
+  - FSHN 428
+  - FSHN 429
+  - FSHN 450
+  - FSHN 459
+  id: major-core-15
+- name: Major Electives
+  section: General Education Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - BIOC 455
+  - FSHN 300
+  - HDFS 300
+  - HK 300
+  - ETMA 311
+  notes:
+  - 'Catalog total: 3 hours.'
+  - 'Select one of the following:'
+  id: major-electives-16

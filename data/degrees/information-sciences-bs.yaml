@@ -1,0 +1,72 @@
+# Information Sciences, BS (School of Information Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/ischool/information-sciences-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: information-sciences-bs
+program: Information Sciences, BS
+college: School of Information Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/ischool/information-sciences-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+notes: []
+double_counting: []
+groups:
+- name: Hours Required in Core Curriculum
+  section: Core Curriculum
+  rule: all
+  courses:
+  - IS 101
+  notes:
+  - 'Catalog total: 51 hours.'
+  id: hours-required-in-core-curriculum-1
+- name: Hours Required in Core Curriculum
+  section: Core Curriculum
+  rule: manual
+  notes:
+  - IS 101 Introduction to Information Sciences
+  courses:
+  - IS 202
+  - IS 203
+  id: hours-required-in-core-curriculum-2
+- name: Hours Required in Core Curriculum
+  section: Core Curriculum
+  rule: manual
+  notes:
+  - IS 203 Analytical Foundations for Information Problems
+  courses:
+  - IS 204
+  id: hours-required-in-core-curriculum-3
+- name: Hours Required in Core Curriculum
+  section: Core Curriculum
+  rule: manual
+  notes:
+  - IS 204 Research Design in Information Sciences
+  courses:
+  - IS 205
+  id: hours-required-in-core-curriculum-4
+- name: Hours Required in Core Curriculum
+  section: Core Curriculum
+  rule: manual
+  notes:
+  - IS 205
+  courses:
+  - IS 206
+  id: hours-required-in-core-curriculum-5
+- name: Hours Required in Core Curriculum
+  section: Core Curriculum
+  rule: manual
+  notes:
+  - IS 206
+  courses:
+  - - IS 307
+    - IS 308 + IS 309
+  id: hours-required-in-core-curriculum-6
+- name: Hours Required in Core Curriculum
+  section: Core Curriculum
+  rule: manual
+  notes:
+  - School of Information Sciences Electives or approved courses in other departments
+  - Additional electives outside of the school and General Education Requirements
+  id: hours-required-in-core-curriculum-7

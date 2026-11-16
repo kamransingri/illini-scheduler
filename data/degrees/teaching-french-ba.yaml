@@ -1,0 +1,68 @@
+# Teaching of French, BA (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/teaching-french-ba/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: teaching-french-ba
+program: Teaching of French, BA
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/teaching-french-ba/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+double_counting: []
+groups:
+- name: 'Minimum hours required for graduation: 120 hours.'
+  section: 'Minimum hours required for graduation: 120 hours.'
+  rule: all
+  courses:
+  - FR 207
+  - FR 211
+  - FR 212
+  id: minimum-hours-required-for-graduation-12-1
+- name: Language Courses
+  section: 'Minimum hours required for graduation: 120 hours.'
+  rule: all
+  courses:
+  - FR 205
+  - FR 213
+  - FR 314
+  id: language-courses-2
+- name: Culture Courses
+  section: 'Minimum hours required for graduation: 120 hours.'
+  rule: n_of
+  n: 2
+  courses:
+  - FR 335
+  - FR 336
+  - FR 337
+  notes:
+  - 'Choose two of the following:'
+  id: culture-courses-3
+- name: Literature Courses
+  section: 'Minimum hours required for graduation: 120 hours.'
+  rule: manual
+  notes:
+  - Two courses at the 300- or 400-level in French and/or Francophone literature
+  id: literature-courses-4
+- name: Medieval and Early Modern Period course
+  section: 'Minimum hours required for graduation: 120 hours.'
+  rule: manual
+  notes:
+  - Students must take one course focused on the medieval/early modern period. This course can be used to fulfill the Culture
+    or Literature Courses requirement.
+  courses:
+  - - FR 301
+    - FR 335
+  id: medieval-and-early-modern-period-course-5
+- name: Electives
+  section: 'Minimum hours required for graduation: 120 hours.'
+  rule: manual
+  notes:
+  - 'Three French courses at the 300- or 400-level in any of the following areas: Language and translation, business, cinema,
+    culture, linguistics, literature, media.'
+  - Professional education courses. (See Foreign Languages- Curricula Preparatory to Teaching Foreign Languages.)
+  id: electives-6

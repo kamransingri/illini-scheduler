@@ -1,0 +1,62 @@
+# Geology, BSLAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/geology-bslas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: geology-bslas
+program: Geology, BSLAS
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/geology-bslas/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+double_counting: []
+groups:
+- name: 'Minimum hours required for graduation: 120 hours.'
+  section: 'Minimum hours required for graduation: 120 hours.'
+  rule: manual
+  notes:
+  - 'Core requirements:'
+  courses:
+  - GEOL 107
+  - GEOL 208
+  - CHEM 102
+  - CHEM 103
+  id: minimum-hours-required-for-graduation-12-1
+- name: 'Minimum hours required for graduation: 120 hours.'
+  section: 'Minimum hours required for graduation: 120 hours.'
+  rule: n_of
+  n: 1
+  courses:
+  - - MATH 220
+    - MATH 221
+  - MATH 234
+  notes:
+  - 'Select one of the following MATH courses: (An introductory Statistics course, e.g., STAT 100, SOC 280, ECON 202, or a
+    second semester of Calculus is recommended)'
+  id: minimum-hours-required-for-graduation-12-2
+- name: 'Minimum hours required for graduation: 120 hours.'
+  section: 'Minimum hours required for graduation: 120 hours.'
+  rule: manual
+  notes:
+  - 'Additional requirements beyond the core requirements:'
+  courses:
+  - CHEM 104
+  - CHEM 105
+  - - PHYS 101
+    - PHYS 211
+  - GEOL 411
+  - GEOL 417
+  - GEOL 432
+  - GEOL 436
+  - GEOL 440
+  id: minimum-hours-required-for-graduation-12-3
+- name: 'Minimum hours required for graduation: 120 hours.'
+  section: 'Minimum hours required for graduation: 120 hours.'
+  rule: manual
+  notes:
+  - Three to four hours of advanced Geology or cognate science elective
+  id: minimum-hours-required-for-graduation-12-4

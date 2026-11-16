@@ -1,0 +1,291 @@
+# Integrative Biology, BSLAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/integrative-biology-bslas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: integrative-biology-bslas
+program: Integrative Biology, BSLAS
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/integrative-biology-bslas/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/integrative-biology-bslas/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by IB 203
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by CHEM 102 and CHEM 104, or CHEM 202 and CHEM 204; PHYS 101 and PHYS 102, or PHYS 211 and PHYS 212; IB 150,
+    MCB 150
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 220 or MATH 221; STAT 212; PHYS 101 and PHYS 102, or PHYS 211 and PHYS 212
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: General Education Requirements
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-and-professional-development-11
+- name: Major Core Requirements and Electives
+  section: General Education Requirements
+  rule: all
+  courses:
+  - IB 150
+  - MCB 150
+  - - MATH 220
+    - MATH 221
+  id: major-core-requirements-and-electives-12
+- name: Major Core Requirements and Electives
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Select one group of courses:'
+  courses:
+  - CHEM 102
+  - CHEM 103
+  - CHEM 104
+  - - CHEM 105
+    - CHEM 202
+  - CHEM 203
+  - CHEM 204
+  - CHEM 205
+  id: major-core-requirements-and-electives-13
+- name: Major Core Requirements and Electives
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Select one group of courses:'
+  courses:
+  - CHEM 232 + CHEM 233
+  - CHEM 236 + CHEM 237
+  id: major-core-requirements-and-electives-14
+- name: Major Core Requirements and Electives
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Select one group of courses:'
+  courses:
+  - PHYS 101 + PHYS 102
+  - PHYS 211 + PHYS 212
+  id: major-core-requirements-and-electives-15
+- name: Major Core Requirements and Electives
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Note: An optional IB Honors concentration may be elected, please talk to an advisor. Students who do not elect an optional
+    concentration are required to take the IB major coursework below.'
+  courses:
+  - STAT 212
+  - IB 202
+  - IB 203
+  - IB 204
+  - IB 302
+  id: major-core-requirements-and-electives-16
+- name: Major Core Requirements and Electives
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Advanced Free Elective (300- or 400-level course from IB or any other unit on campus)
+  - Integrative Biology Advanced Area Courses
+  id: major-core-requirements-and-electives-17
+- name: Major Core Requirements and Electives
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - At least two courses from the following areas. At least one course must be a lab and the courses must be in different
+    areas.
+  - 'Area I: Organismal and Evolutionary Biology'
+  courses:
+  - IB 360
+  - IB 362
+  - IB 368
+  - IB 401
+  - IB 407
+  - IB 461
+  - IB 462
+  - IB 463
+  - IB 464
+  - IB 467
+  - IB 468
+  - IB 471
+  id: major-core-requirements-and-electives-18
+- name: Major Core Requirements and Electives
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Area II: Behavior, Ecology, and the Environment'
+  courses:
+  - IB 329
+  - IB 361
+  - IB 405
+  - IB 430
+  - IB 431
+  - IB 432
+  - IB 439
+  - IB 440
+  - IB 444
+  - IB 451
+  - IB 452
+  - IB 453
+  - IB 455
+  - IB 481
+  - IB 482
+  - IB 494
+  id: major-core-requirements-and-electives-19
+- name: Major Core Requirements and Electives
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Area III: Integrative Anatomy, Physiology, and Molecular Biology'
+  courses:
+  - IB 303
+  - IB 364
+  - IB 411
+  - IB 420
+  - IB 421
+  - IB 426
+  - IB 433
+  - IB 435
+  - IB 438
+  - IB 465
+  id: major-core-requirements-and-electives-20
+- name: Major Core Requirements and Electives
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Remaining courses to total 15 hours minimum may be selected from any of the area courses listed above or from the following
+    list:'
+  courses:
+  - IB 348
+  - IB 392
+  - IB 416
+  - IB 436
+  - IB 442
+  - IB 454
+  - IB 476
+  - IB 478
+  - IB 479
+  - IB 484
+  - IB 490
+  - IB 496
+  - IB 497
+  - MCB 300
+  - MCB 314
+  - MCB 450
+  id: major-core-requirements-and-electives-21

@@ -1,0 +1,70 @@
+# Political Science: Public Policy and Democratic Institutions, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/political-science-balas/public-policy-democratic-institutions/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: political-science-balas-public-policy-democratic-institutions
+program: 'Political Science: Public Policy and Democratic Institutions, BALAS'
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/political-science-balas/public-policy-democratic-institutions/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+double_counting: []
+groups:
+- name: Public Policy and Democratic Institutions Concentration Requirements
+  section: Public Policy and Democratic Institutions Concentration Requirements
+  rule: all
+  courses:
+  - PS 100
+  - PS 101
+  id: public-policy-and-democratic-institution-1
+- name: Public Policy and Democratic Institutions Concentration Requirements
+  section: Public Policy and Democratic Institutions Concentration Requirements
+  rule: manual
+  notes:
+  - Select any additional 100- or 200-level Political Science courses
+  - Select 300- or 400-level Political Science courses, at least nine hours of which come from the Public Policy and Democratic
+    Institutions Concentration list maintained by the department. The other six hours may be any 300- or 400-level Political
+    Science course.
+  - Select any Political Science courses at any level
+  - Students will select a second major, or a minor, or a set of courses of at least 12 hours of thematically-related coursework
+    outside political science, developed in conjunction with an academic advisor.
+  id: public-policy-and-democratic-institution-2
+- name: Public Policy and Democratic Institutions Concentration Requirements
+  section: Public Policy and Democratic Institutions Concentration Requirements
+  rule: manual
+  notes:
+  - Public Policy Course List
+  courses:
+  - PS 220
+  - PS 224
+  - PS 225
+  - PS 230
+  - PS 231
+  - PS 282
+  - PS 300
+  - PS 301
+  - PS 302
+  - PS 303
+  - PS 304
+  - PS 305
+  - PS 306
+  - PS 307
+  - PS 309
+  - PS 310
+  - PS 311
+  - PS 321
+  - PS 322
+  - PS 323
+  - PS 355
+  - PS 356
+  - PS 379
+  - PS 385
+  - PS 395
+  - PS 457
+  - PS 494
+  id: public-policy-and-democratic-institution-3

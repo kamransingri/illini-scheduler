@@ -1,0 +1,183 @@
+# Dance, BFA (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/dance-bfa/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: dance-bfa
+program: Dance, BFA
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/dance-bfa/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 130
+notes:
+- 'Minimum hours required for graduation: 130 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/faa/dance-bfa/
+groups:
+- name: General Education Requirements
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Composition I
+  - Advanced Composition
+  - fulfilled by DANC 441
+  - Humanities & the Arts (6 hours)
+  - Natural Sciences & Technology (6 hours)
+  - fulfilled by DANC 246 and any other course approved as Natural Sciences & Technology
+  - Social & Behavioral Sciences (6 hours)
+  - 'Cultural Studies: Non-Western Cultures (1 course)'
+  - 'Cultural Studies: U.S. Minority Cultures (1 course)'
+  - 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  - Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  id: general-education-requirements-1
+- name: Foundation Courses
+  section: General Education Requirements
+  rule: all
+  courses:
+  - FAA 101
+  - DANC 150
+  notes:
+  - 'Catalog total: 4 hours.'
+  id: foundation-courses-2
+- name: Physical Practice
+  section: General Education Requirements
+  rule: all
+  courses:
+  - DANC 160
+  - DANC 256
+  - DANC 260
+  - DANC 270
+  - DANC 360
+  - DANC 460
+  notes:
+  - 'Catalog total: 23 hours.'
+  id: physical-practice-3
+- name: Physical Practice
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Pick from the following Physical Practice electives:'
+  courses:
+  - DANC 209
+  - DANC 212
+  - DANC 316
+  - DANC 456
+  - DANC 468
+  - DANC 470
+  id: physical-practice-4
+- name: Mindful Movement
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 2 hours.'
+  - 'Choose from the following:'
+  courses:
+  - DANC 245
+  - DANC 301
+  - DANC 401
+  - DANC 402
+  id: mindful-movement-5
+- name: Creative Practice
+  section: General Education Requirements
+  rule: all
+  courses:
+  - DANC 259
+  - DANC 262
+  - DANC 362
+  notes:
+  - 'Catalog total: 8 hours.'
+  id: creative-practice-6
+- name: Creative Practice
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Choose from the following Creative Practice electives:'
+  courses:
+  - DANC 362
+  - DANC 465
+  id: creative-practice-7
+- name: Performance
+  section: General Education Requirements
+  rule: all
+  courses:
+  - DANC 220
+  - DANC 232
+  notes:
+  - 'Catalog total: 8 hours.'
+  id: performance-8
+- name: Production
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 3 hours.'
+  - 'Choose from the following:'
+  courses:
+  - DANC 131
+  - DANC 231
+  - DANC 330
+  - DANC 331
+  - DANC 431
+  id: production-9
+- name: Context
+  section: General Education Requirements
+  rule: all
+  courses:
+  - DANC 162
+  - DANC 240
+  - DANC 246
+  - DANC 350
+  - DANC 370
+  - DANC 441
+  - DANC 495
+  notes:
+  - 'Catalog total: 19 hours.'
+  id: context-10
+- name: Context
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Course in School of Art + Design, School of Music, or Theatre Department
+  id: context-11
+- name: Synthesis
+  section: General Education Requirements
+  rule: all
+  courses:
+  - DANC 375
+  - DANC 498
+  - DANC 499
+  notes:
+  - 'Catalog total: 5 hours.'
+  id: synthesis-12
+- name: Focused Electives
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Focused electives, chosen in consultation with an advisor. Additional courses in dance such as technique, mindful movement,
+    performance, study abroad credit, collaborative performance, or coursework in performance/performance studies in the departments
+    of Theater or Media & Cinema Studies or the Schools of Music or Art and Design.
+  id: focused-electives-13
+- name: Summary of Credits for the Bachelor of Fine Arts in Dance
+  section: Summary of Credits for the Bachelor of Fine Arts in Dance
+  rule: manual
+  notes:
+  - General Education
+  - Foundation
+  - Physical Practice
+  - Mindful Movement
+  - Creative Practice
+  - Performance
+  - Production
+  - Context
+  - Synthesis
+  - Focused Electives
+  - A minimum of 40 credits at the 300 or 400 course level are required
+  id: summary-of-credits-for-the-bachelor-of-f-14

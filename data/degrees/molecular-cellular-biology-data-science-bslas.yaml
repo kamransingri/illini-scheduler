@@ -1,0 +1,274 @@
+# Molecular and Cellular Biology + Data Science, BSLAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/molecular-cellular-biology-data-science-bslas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: molecular-cellular-biology-data-science-bslas
+program: Molecular and Cellular Biology + Data Science, BSLAS
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/molecular-cellular-biology-data-science-bslas/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/molecular-cellular-biology-data-science-bslas/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by MCB 150, CHEM 102, CHEM 104
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 220 or MATH 221; STAT 107, STAT 207
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: General Education Requirements
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-and-professional-development-11
+- name: MCB Core
+  section: General Education Requirements
+  rule: all
+  courses:
+  - MCB 150
+  - MCB 250
+  - MCB 251
+  - MCB 252
+  - MCB 253
+  - MCB 354
+  notes:
+  - 'Catalog total: 17 hours.'
+  id: mcb-core-12
+- name: Mathematical Foundations
+  section: General Education Requirements
+  rule: all
+  courses:
+  - - MATH 220
+    - MATH 221
+  - - MATH 227
+    - MATH 257
+  id: mathematical-foundations-13
+- name: Data Science Fundamentals
+  section: General Education Requirements
+  rule: all
+  courses:
+  - STAT 107
+  - STAT 207
+  - CS 307
+  id: data-science-fundamentals-14
+- name: Computational Fundamentals
+  section: General Education Requirements
+  rule: all
+  courses:
+  - CS 277
+  id: computational-fundamentals-15
+- name: Social Impact in Data Science
+  section: General Education Requirements
+  rule: all
+  courses:
+  - IS 467
+  - IS 477
+  id: social-impact-in-data-science-16
+- name: Chemistry
+  section: General Education Requirements
+  rule: all
+  courses:
+  - CHEM 102
+  - CHEM 104
+  - CHEM 232
+  notes:
+  - 'Catalog total: 10 hours.'
+  id: chemistry-17
+- name: Advanced MCB Lab Courses
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - At least one course from this list is required.
+  courses:
+  - MCB 301
+  - MCB 364
+  - MCB 428
+  - MCB 460
+  - BIOC 455
+  id: advanced-mcb-lab-courses-18
+- name: Advanced Courses Group A
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 9 hours.'
+  - At least 3 courses, a minimum of 9 credit hours, is required from this list.
+  courses:
+  - MCB 317
+  - MCB 421
+  - MCB 432
+  - MCB 435
+  - BIOC 446
+  - BIOP 401
+  id: advanced-courses-group-a-19
+- name: Advanced Courses Group B
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 9 hours.'
+  - At least 3 courses, a minimum of 9 credit hours, is required from this list.
+  courses:
+  - MCB 300
+  - MCB 314
+  - MCB 316
+  - MCB 320
+  - MCB 400
+  - MCB 401
+  - MCB 402
+  - MCB 406
+  - MCB 408
+  - MCB 410
+  - MCB 413
+  - MCB 424
+  - MCB 426
+  - MCB 430
+  id: advanced-courses-group-b-20
+- name: Research or Discovery Experience
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 6 hours.'
+  - One of the most important skills a student will gain in the MCB + DS degree will be the ability to work with data in context.
+    A minimum of 6 credit hours of research or discovery experience is required. This can be achieved through one or more
+    of the options listed below.
+  - Option 1
+  courses:
+  - MCB 290
+  id: research-or-discovery-experience-21
+- name: Research or Discovery Experience
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Completed in School of MCB research labs, designated MCB data science-focused labs is encouraged. Optional: MCB 492:
+    Senior Thesis in MCB 290 research lab.'
+  - Option 2
+  courses:
+  - MCB 292
+  id: research-or-discovery-experience-22
+- name: Research or Discovery Experience
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Option 3
+  - School of MCB-developed Study Abroad Program where advanced courses in MCB and Data Science are the focus (minimum of
+    the equivalent to 6 UIUC credit hours transferred back to Illinois). Some programs offer course-based research experiences
+    in MCB research laboratories with an emphasis on Data Science. Students choose from MCB-developed residential study abroad
+    programs. All courses are selected under the supervision of an MCB Study Abroad Academic Advisor and will be pre-articulated.
+  id: research-or-discovery-experience-23

@@ -1,0 +1,217 @@
+# Latina/Latino Studies, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/latina-latino-studies-balas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: latina-latino-studies-balas
+program: Latina/Latino Studies, BALAS
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/latina-latino-studies-balas/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/latina-latino-studies-balas/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - Fulfilled by LLS 385
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - Fulfilled by LLS 100 and any other course approved as Social & Behavioral Sciences
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+  notes:
+  - Fulfilled by LLS 100
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English, or completion
+    of the third semester in two different languages other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: General Education Requirements
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-and-professional-development-11
+- name: Major Requirements
+  section: Major Requirements
+  rule: all
+  courses:
+  - LLS 100
+  - LLS 385
+  id: major-requirements-12
+- name: Thematic Areas
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Students must take two courses in each of the following three areas:'
+  - A. Literature, Media and Culture
+  courses:
+  - LLS 240
+  - LLS 242
+  - LLS 250
+  - LLS 259
+  - LLS 357
+  - LLS 360
+  - LLS 365
+  - LLS 375
+  - LLS 435
+  - LLS 458
+  - LLS 472
+  id: thematic-areas-13
+- name: Thematic Areas
+  section: Major Requirements
+  rule: manual
+  notes:
+  - B. Race, Gender, and Sexuality
+  courses:
+  - LLS 230
+  - LLS 235
+  - LLS 320
+  - LLS 355
+  - LLS 387
+  - LLS 392
+  - LLS 442
+  - LLS 465
+  - LLS 479
+  id: thematic-areas-14
+- name: Thematic Areas
+  section: Major Requirements
+  rule: manual
+  notes:
+  - C. History, Politics, and Society
+  courses:
+  - LLS 220
+  - LLS 238
+  - LLS 278
+  - LLS 279
+  - LLS 280
+  - LLS 343
+  - LLS 368
+  - LLS 370
+  - LLS 379
+  - LLS 382
+  - LLS 468
+  - LLS 473
+  - - LLS 490
+    - LLS 495
+  id: thematic-areas-15
+- name: Thematic Areas
+  section: Major Requirements
+  rule: manual
+  notes:
+  - LLS Electives selected from the list of all LLS and cross-listed LLS classes
+  - Remaining courses to total 6 hours minimum may be selected from any of the area courses listed above (not used to fulfill
+    the Thematic Areas requirement) or chosen in consultation with an academic advisor
+  - Supporting coursework (six hours must be at the 300-/400- level) chosen in consultation with an advisor; may be a campus
+    approved minor
+  id: thematic-areas-16

@@ -1,0 +1,229 @@
+# Interdisciplinary Studies: Medieval Studies, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/interdisciplinary-studies-balas/medieval-studies/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: interdisciplinary-studies-balas-medieval-studies
+program: 'Interdisciplinary Studies: Medieval Studies, BALAS'
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/interdisciplinary-studies-balas/medieval-studies/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/interdisciplinary-studies-balas/medieval-studies/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+  notes:
+  - fulfilled by ENGL 202/MDVL 201/CWL 253 and any other course approved as a Humanities & the Arts course
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+  notes:
+  - fulfilled by ENGL 202/MDVL 201/CWL 253
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: General Education Requirements
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-and-professional-development-11
+- name: Introduction to Medieval Studies
+  section: General Education Requirements
+  rule: all
+  courses:
+  - ENGL 202 + MDVL 201 + CWL 253
+  notes:
+  - 'Catalog total: 3 hours.'
+  id: introduction-to-medieval-studies-12
+- name: Geographical Distribution Coursework
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - (A student may substitute up to 6 hours in geographical distribution coursework with courses on the medieval civilizations
+    of Oceania or the Americas, including ANTH 278. However, at least one course must still be taken from each of the three
+    regional areas.)
+  - 'Select two of the following (Medieval Europe):'
+  courses:
+  - ARTH 111 + MDVL 222
+  - MDVL 222
+  - MDVL 231
+  - HIST 141
+  - MDVL 245
+  - MDVL 247
+  - MDVL 255
+  - MDVL 345
+  - HIST 445 + MDVL 444
+  - CWL 240
+  - CWL 251
+  - CWL 252
+  - ARCH 412
+  id: geographical-distribution-coursework-13
+- name: Geographical Distribution Coursework
+  section: General Education Requirements
+  rule: n_of
+  n: 2
+  courses:
+  - EALC 240
+  - CWL 275
+  - EALC 305 + CWL 311
+  - ARTH 320
+  - EALC 220
+  - HIST 425 + EALC 476 + CWL 478
+  - EALC 287
+  notes:
+  - 'Select two of the following (Classical and Medieval East Asia):'
+  id: geographical-distribution-coursework-14
+- name: Geographical Distribution Coursework
+  section: General Education Requirements
+  rule: n_of
+  n: 2
+  courses:
+  - SAME 208
+  - AFST 111
+  - ANTH 130
+  - HIST 135
+  - HIST 432 + REL 442 + JS 442
+  - HIST 443 + REL 434
+  - LA 222 + ARTH 219
+  - REL 106
+  - SAME 214
+  - CWL 223
+  - SAME 260
+  - CWL 283
+  - MDVL 344
+  notes:
+  - 'Select two of the following (Medieval Central Asia, South Asia, the Mediterranean region, or Africa):'
+  id: geographical-distribution-coursework-15
+- name: Additional Medieval Studies Coursework
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Medieval-related coursework from participating departments selected in consultation with the concentration advisor. At
+    least 12 hours must be at the 300- or 400-level. Up to 12 hours of appropriate language study can be applied to meet this
+    requirement with approval of a Medieval Studies faculty advisor.
+  id: additional-medieval-studies-coursework-16
+- name: Capstone Experience
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - A capstone experience (normally in the student’s senior year) involving intensive interdisciplinary research and writing
+    on a medieval topic. Any 400-level MDVL course (or medieval-related course not cross-listed with MDVL, with the approval
+    of a Medieval Studies faculty advisor) can be designated as a capstone experience with approval of the instructor. For
+    the course to qualify as a capstone experience, the student must undertake a substantial research project that supplements
+    the standard course requirements, in the form either of an additional project or of a longer and more research-intensive
+    version of an existing course project. The project must involve both primary and secondary research using advanced disciplinary
+    methodologies and resources.
+  - (A student may also petition to satisfy the capstone experience by enrolling in MDVL 500, Seminar in Medieval Studies)
+  id: capstone-experience-17
