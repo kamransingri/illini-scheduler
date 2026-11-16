@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { alsoCounts, evaluate, needText, options, prereqNote, rankCourse, type Degree, type DegreeIndex, type GroupResult, type GroupStatus } from "@/lib/degree";
+import { alsoCounts, evaluate, needText, options, prereqNote, rankCourse, type Degree, type DegreeCourse, type DegreeIndex, type GroupResult, type GroupStatus, type Ranked } from "@/lib/degree";
 import { dataUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, termLabel } from "@/lib/format";
 import { EMPTY, onMineChange, readMine, sameState, STATUS_LABEL, stateFromParams, stateToParams, writeMine, type CourseStatus, type MyState } from "@/lib/mycourses";
 import type { ScorePriors } from "@/lib/score";
@@ -499,7 +499,7 @@ function OptionRow({
   taken,
   nextTerm,
 }: {
-  x: ReturnType<typeof rankCourse>;
+  x: Ranked<DegreeCourse>;
   r: GroupResult;
   results: GroupResult[];
   deg: Degree;

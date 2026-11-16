@@ -1,7 +1,9 @@
 // Degree checklist: which requirement groups a student's courses satisfy, under the catalog's double-counting rules.
 // Pure functions over web/public/data/degrees/<id>.json (pipeline/degrees.py) and "My courses" (lib/mycourses.ts).
 import type { CourseStatus, MyCourse } from "./mycourses";
-import { scoreOf, type ScorePriors, type ScoreResult, type ScoreWeights } from "./score";
+import type { DegreeProf } from "./rank";
+
+export { rankCourse, type DegreeProf, type Ranked } from "./rank";
 
 export type DegreeGroup = {
   id: string;
@@ -24,8 +26,6 @@ export type DegreeGroup = {
 };
 
 export type DcRule = { allow: boolean; within?: string; between?: [string, string]; quote: string; source: string };
-
-export type DegreeProf = { k: string; name: string; d: number | null; dn: number; rmp: [number | null, number | null, number | null, number] | null; open: [number, number] | null };
 
 export type DegreeCourse = {
   t: string;
@@ -244,32 +244,4 @@ export function prereqNote(pre: string | undefined, taken: Set<string>): string 
   const named = [...text.matchAll(CODE_IN_TEXT)].map((m) => `${m[1]} ${m[2]}`);
   if (named.length && named.every((c) => taken.has(c))) return null;
   return text;
-}
-
-export type Ranked = { code: string; course: DegreeCourse; score: ScoreResult | null; best: DegreeProf | null };
-
-/** Score a course by its best next-term professor (or by the course alone when no one is listed yet). */
-export function rankCourse(c: string, course: DegreeCourse, priors: ScorePriors | null | undefined, w: ScoreWeights): Ranked {
-  if (!priors) return { code: c, course, score: null, best: null };
-  const subject = c.split(" ")[0];
-  const courseOpen = course.known && course.nSec ? (course.nOpen ?? 0) / course.nSec : null;
-  const base = { subject, courseGpa: course.gpa ?? null, courseN: course.gn ?? 0 };
-  const profs = course.profs ?? [];
-  if (!profs.length) return { code: c, course, score: scoreOf({ ...base, delta: null, deltaN: 0, rmp: null, openShare: courseOpen }, priors, w), best: null };
-  let best: Ranked | null = null;
-  for (const p of profs) {
-    const s = scoreOf(
-      {
-        ...base,
-        delta: p.d,
-        deltaN: p.dn,
-        rmp: p.rmp ? { quality: p.rmp[0], difficulty: p.rmp[1], wouldTakeAgain: p.rmp[2], n: p.rmp[3] } : null,
-        openShare: p.open && p.open[1] ? p.open[0] / p.open[1] : courseOpen,
-      },
-      priors,
-      w,
-    );
-    if (!best || (s.score ?? -1) > (best.score?.score ?? -1)) best = { code: c, course, score: s, best: p };
-  }
-  return best!;
 }

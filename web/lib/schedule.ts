@@ -1,6 +1,7 @@
 // Schedule builder engine: section bundles, conflicts, backtracking generator, ranking. Pure functions.
 import type { Course, Section } from "./types";
 import { areaOf } from "./campus";
+import { K_RMP_RATINGS, shrink } from "./score";
 
 export type Mtg = { d: number; s: number | null; e: number | null; part: string; b: string; crn: string; course: string };
 
@@ -17,7 +18,14 @@ export type Bundle = {
   alternatives: Section[][];
 };
 
-export type CourseInput = { key: string; course: Course; credits: number; locked: string[] };
+export type CourseInput = {
+  key: string;
+  course: Course;
+  credits: number;
+  locked: string[];
+  /** UIUC-wide mean RMP quality; when set, ratings from few students are pulled toward it, as in the best-pick score */
+  rmpPrior?: number | null;
+};
 
 export type Prefs = {
   earliest: number | null; // hard: no meeting may start before this (minutes); 540 = "no 8am"
@@ -116,7 +124,7 @@ export function isValidBundle(bundle: Section[], sections: Section[]): boolean {
   return needed.size === comps.size;
 }
 
-function instructorStats(course: Course, secs: Section[]): { gpa: number | null; rmp: number | null } {
+function instructorStats(course: Course, secs: Section[], rmpPrior: number | null = null): { gpa: number | null; rmp: number | null } {
   let gpa: number | null = null;
   let rmp: number | null = null;
   for (const s of secs) {
@@ -125,7 +133,8 @@ function instructorStats(course: Course, secs: Section[]): { gpa: number | null;
       const ins = course.instructors[k];
       const g = ins?.gpa && !ins.gpa.limited ? (ins.gpa.recent ?? ins.gpa.avg) : null;
       if (g !== null && (gpa === null || g > gpa)) gpa = g;
-      const r = ins?.rmp?.rating ?? null;
+      const rm = ins?.rmp;
+      const r = rm && rm.num_ratings > 0 && rm.rating !== null ? shrink(rm.rating, rm.num_ratings, rmpPrior, K_RMP_RATINGS) : null;
       if (r !== null && (rmp === null || r > rmp)) rmp = r;
     }
   }
@@ -142,7 +151,7 @@ export function prepareBundles(input: CourseInput, term: string, prefs: Prefs): 
   for (const secs of raw) {
     const meetings = secs.flatMap((s) => sectionMeetings(s, input.key));
     if (!hardOk(meetings, prefs)) continue;
-    const { gpa, rmp } = instructorStats(input.course, secs);
+    const { gpa, rmp } = instructorStats(input.course, secs, input.rmpPrior ?? null);
     const sig = meetings
       .map((m) => `${m.d}:${m.s}:${m.e}:${m.part}:${m.s === null ? "" : areaOf(m.b)}`)
       .sort()

@@ -323,6 +323,7 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
                 "pctA": r3(g["pct_A"]) if g else None,
                 "nSec": nxt["n_primary"], "nOpen": nxt["n_open"], "statusKnown": nxt["status_known"],
                 "best": best, "rmp": rmp_best, "opts": bundle_opts(bs),
+                "profs": summaries[f"{subj} {num}"]["profs"],  # best-pick score inputs (web/lib/rank.ts)
             })
 
     inst_index = sorted(

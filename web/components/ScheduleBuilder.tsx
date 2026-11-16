@@ -25,7 +25,7 @@ import Info from "./ui/Info";
 import SearchBox from "./SearchBox";
 import WeekCalendar, { COURSE_COLORS } from "./WeekCalendar";
 
-type MetaLite = { next_term: string; current_term: string; rmpAvailable: boolean };
+type MetaLite = { next_term: string; current_term: string; rmpAvailable: boolean; rmpPrior?: number | null };
 
 const WEIGHT_LABELS: [keyof Prefs["weights"], string][] = [
   ["gpa", "Higher expected GPA"],
@@ -150,9 +150,9 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
         .filter((c) => courses[`${c.s} ${c.n}`])
         .map((c) => {
           const course = courses[`${c.s} ${c.n}`];
-          return { key: `${c.s} ${c.n}`, course, credits: course.credit_range[1] || 3, locked: c.locked };
+          return { key: `${c.s} ${c.n}`, course, credits: course.credit_range[1] || 3, locked: c.locked, rmpPrior: meta.rmpPrior ?? null };
         }),
-    [cart, courses],
+    [cart, courses, meta.rmpPrior],
   );
 
   const run = useCallback(
