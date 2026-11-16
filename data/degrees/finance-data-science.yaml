@@ -1,0 +1,196 @@
+# Finance + Data Science, BS (Gies College of Business), 2026-2027 Academic Catalog.
+# Course lists and notes are copied from the official catalog page below; nothing is filled in from memory.
+# Schema: data/degrees/README.md.
+id: finance-data-science
+program: Finance + Data Science, BS
+college: Gies College of Business
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/bus/finance-data-science-bs/
+read_on: 2026-11-16
+total_hours: 124
+notes:
+  - "Minimum hours required for graduation: 124 hours."
+  - >-
+    Minimum of 40 hours of upper-division coursework, generally at the 300- or 400- level. These hours can be drawn
+    from all elements of the degree. Students should consult their academic advisor for additional guidance in
+    fulfilling this requirement.
+
+# How one course may count toward more than one requirement. Rules are checked in order; the first that matches a pair
+# of requirements decides. A pair no rule covers is shown as "unclear" on the checklist.
+double_counting:
+  - allow: false
+    within: cultural-studies
+    quote: >-
+      These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural
+      Studies categories.
+    source: https://gened.illinois.edu/requirements/
+  - allow: true
+    between: [cultural-studies, gened]
+    quote: These courses may fulfill other curricular requirements
+    source: https://gened.illinois.edu/requirements/
+  - allow: true
+    between: [program, gened]
+    quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+    source: https://catalog.illinois.edu/undergraduate/bus/finance-data-science-bs/
+
+groups:
+  # ---- Business Core Requirements (catalog: "Minimum Total Hours 42") ----
+  - id: business-core
+    name: Business core
+    section: Business Core Requirements
+    rule: all
+    courses: [ACCY 201, ACCY 202, BADM 275, BADM 300, BADM 310, BADM 320, BADM 449, BUS 101, BUS 201, BUS 401,
+              CMN 101, ECON 102, ECON 103, FIN 221]
+
+  # ---- Finance Requirements (catalog: "Total Hours 21") ----
+  - id: finance-required
+    name: Finance required courses
+    section: Finance Requirements
+    rule: all
+    courses: [FIN 300, FIN 321, FIN 411]
+  - id: finance-400
+    name: Four additional 400-level Finance courses
+    section: Finance Requirements
+    rule: hours
+    hours: 12
+    from: [FIN 400-499]
+    exclude: [FIN 494, FIN 495]
+    max_hours: {FIN 490: 3}
+    not_with: [finance-required]
+    notes:
+      - >-
+        Four additional full-semester, 3 hour 400 level-Finance courses except FIN 494 or FIN 495 (Senior Research).
+        A maximum of 3 credit hours of FIN 490 (Special Topics) can count toward this requirement.
+
+  # ---- Data Science Core (catalog: "Total Hours 29") ----
+  - id: calculus
+    name: Calculus (choose one)
+    section: Data Science Core
+    rule: n_of
+    n: 1
+    courses: [MATH 220, MATH 221, MATH 234]
+  - id: linear-algebra
+    name: Linear algebra (choose one)
+    section: Data Science Core
+    rule: n_of
+    n: 1
+    courses: [MATH 227, MATH 257]
+  - id: ds-fundamentals
+    name: Data science fundamentals
+    section: Data Science Core
+    rule: all
+    courses: [[STAT 107, CS 107, IS 107], STAT 207, CS 307]
+    notes:
+      - "The catalog lists STAT/CS/IS 107 (Data Science Discovery): any one of the cross-listed numbers."
+  - id: computational
+    name: Computational fundamentals
+    section: Data Science Core
+    rule: all
+    courses: [CS 277]
+  - id: social-impact
+    name: Social impact in data science
+    section: Data Science Core
+    rule: all
+    courses: [IS 467, IS 477]
+
+  # ---- Meaningful Research or Discovery Experience (catalog: "Total Hours 3") ----
+  - id: capstone
+    name: Research or discovery experience
+    section: Meaningful Research or Discovery Experience
+    rule: all
+    courses: [BUS 301]
+    notes:
+      - "This capstone experience can be fulfilled through BUS 301."
+
+  # ---- General Education: "Follows the campus General Education (Gen Ed) requirements." ----
+  - id: comp1
+    name: Composition I
+    section: General Education
+    kind: gened
+    rule: n_of
+    n: 1
+    courses: [RHET 105, RHET 101 + RHET 102, CMN 111 + CMN 112, ESL 115, ESL 111 + ESL 112]
+    source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+    notes:
+      - >-
+        Written Communication: the one-semester, four-hour course Rhetoric 105 (Writing and Research); the
+        two-semester, eight-hour sequence of Rhetoric 101 (Principles of Writing) and 102 (Principles of Research); or
+        the two-semester, six-hour sequence Communication 111 and 112. Students placed into ESL take ESL 111 and 112 or
+        ESL 115. A sufficiently high ACT, SAT, AP or IB score earns credit that fulfills Composition I.
+  - id: acp
+    name: Advanced Composition
+    section: General Education
+    kind: gened
+    rule: hours
+    hours: 3
+    from: [gened:ACP]
+  - id: hum
+    name: Humanities & the Arts (6 hours)
+    section: General Education
+    kind: gened
+    rule: hours
+    hours: 6
+    from: [gened:HP, gened:LA]
+  - id: nat
+    name: Natural Sciences & Technology (6 hours)
+    section: General Education
+    kind: gened
+    rule: hours
+    hours: 6
+    from: [gened:LS, gened:PS]
+  - id: sbs
+    name: Social & Behavioral Sciences (6 hours)
+    section: General Education
+    kind: gened
+    rule: hours
+    hours: 6
+    from: [gened:SS, gened:BSC]
+    notes: ["fulfilled by ECON 102 and ECON 103"]
+  - id: cs-nw
+    name: "Cultural Studies: Non-Western Cultures (1 course)"
+    section: General Education
+    kind: gened
+    rule: n_of
+    n: 1
+    from: [gened:NW]
+    exclusive: cultural-studies
+  - id: cs-us
+    name: "Cultural Studies: US Minority Cultures (1 course)"
+    section: General Education
+    kind: gened
+    rule: n_of
+    n: 1
+    from: [gened:US]
+    exclusive: cultural-studies
+  - id: cs-wcc
+    name: "Cultural Studies: Western/Comparative Cultures (1 course)"
+    section: General Education
+    kind: gened
+    rule: n_of
+    n: 1
+    from: [gened:WCC]
+    exclusive: cultural-studies
+  - id: qr
+    name: Quantitative Reasoning (2 courses, at least one QR1)
+    section: General Education
+    kind: gened
+    rule: n_of
+    n: 2
+    from: [gened:QR1, gened:QR2]
+    min_from: {gened:QR1: 1}
+    notes:
+      - "Quantitative Reasoning (2 courses, at least one course must be Quantiative Reasoning 1)"
+      - "fulfilled by STAT 107, STAT 207; and MATH 220 or MATH 221 or MATH 234"
+  - id: language
+    name: Language other than English
+    section: General Education
+    kind: gened
+    rule: manual
+    source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+    notes:
+      - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+      - >-
+        This requirement may be satisfied by: Successfully completing a third-semester college-level course in a
+        language other than English; Successful completion, in high school, of the third year of a language other than
+        English; or Demonstrating proficiency at the third semester level in a language proficiency examination approved
+        by the College of Liberal Arts and Sciences and the appropriate department.

@@ -353,3 +353,19 @@ Every judgment call made during the autonomous build, newest phase last.
   supporting colours: Industrial, Berry, Arches, Altgeld, Illini Blue, Storm; green and the seat-status hues are left
   out). The cart cards lost their tinted backgrounds; a coloured edge is enough to match the calendar. The lock menus
   dropped the padlock emoji.
+- **D13.10 Degree data** lives in `data/degrees/<id>.yaml` (schema in `data/degrees/README.md`): requirement groups
+  with rules `all`, `n_of`, `hours` and `manual`; items can be a code, a sequence that counts as one ("RHET 101 +
+  RHET 102") or a list of alternatives; `from` takes number ranges ("FIN 400-499") and gen-ed codes; `exclude`,
+  `max_hours`, `min_from`, `not_with` and `exclusive` cover the catalog's caveats. The first file is the Finance + Data
+  Science BS, 2026-2027 catalog, read 2026-11-16, with the campus gen-ed groups the page says apply. Schema errors stop
+  `make data`; codes missing from the loaded Course Explorer terms are logged and exported as `unknown`.
+- **D13.11 Double counting is data, with its quote.** Each program file lists the rules it rests on, checked in order:
+  no course for two Cultural Studies categories, and a Cultural Studies course may count elsewhere
+  (gened.illinois.edu/requirements); program courses may count as gen-eds ("Some Gen Ed requirements may be met by
+  courses required and/or electives in the program", the program page). Any other pair (two program groups, or two
+  non-Cultural-Studies gen-ed categories) is shown as "rules unclear" instead of guessed. "Four additional" 400-level
+  Finance courses becomes `not_with: [finance-required]`, so FIN 411 can't count twice.
+- **D13.12 Language requirement** is `manual`: high-school study and proficiency exams satisfy it, so a list of courses
+  can't decide it. The checklist lets the student tick it.
+- **D13.13 Test hygiene.** Python 3.13 warns about SQLite connections left open; ten existing tests never closed theirs
+  and the warning surfaced once more tests ran. `pipeline/tests/conftest.py` closes every connection a test opens.

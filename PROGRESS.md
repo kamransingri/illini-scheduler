@@ -450,3 +450,14 @@ finder, search results, schedule builder and Just opened restyled with the token
 shared course row; `Metric` and the legacy colour aliases are gone. Checks: Playwright 32/33 (the Windows-only test),
 Vitest 68/68, lint clean; Lighthouse (single run): home 0.98/1.00/1.00, gen-eds 0.87/1.00/1.00, schedule 0.97/1.00/1.00,
 Just opened 0.88/1.00/1.00 (performance/accessibility/best practices); no sideways scroll at 375px on any of them.
+
+### Phase 4 — degree requirement data (done)
+
+`data/degrees/finance-data-science.yaml` from https://catalog.illinois.edu/undergraduate/bus/finance-data-science-bs/
+(2026-2027, read 2026-11-16) plus the campus gen-ed rules from
+https://catalog.illinois.edu/general-information/degree-general-education-requirements/ and
+https://gened.illinois.edu/requirements/; schema in `data/degrees/README.md`; loader and validator
+`pipeline/degrees.py` (`python -m pipeline.degrees` checks the files); `export.py` writes `degrees/index.json` and
+`degrees/<id>.json` (19 groups, 1,063 courses, 0 unknown codes, 282 KB). pytest 175/175 (9 new: real files valid,
+every schema error reported, double-counting rules, alternatives and sequences, FIN 400-499 with exclusions and caps,
+a course in two groups, unknown codes logged, export, latest-term catalog).

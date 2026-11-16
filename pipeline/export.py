@@ -210,6 +210,7 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
     keys = {k for k, ts in courses.items() if any(t in ts for t in live_terms)}
     keys |= {k for k, g in gpa_course.items() if g["recent_avg_gpa"] is not None}
     search_courses, gened_rows = [], []
+    summaries: dict[str, dict] = {}  # per-course facts for the degree checklist (degrees.export)
     teach_next: dict[str, set[str]] = defaultdict(set)
     n_files = 0
     recent_terms = meta_rows.get("gpa_recent", "").split(",")
@@ -296,6 +297,7 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
         (d / f"{num}.json").write_text(json.dumps(doc, separators=(",", ":")))
         n_files += 1
         nxt = term_blocks.get(NEXT_TERM)
+        summaries[f"{subj} {num}"] = course_summary(g, nxt, rec, gpa_inst.get(key, {}), display, rmp_block, raw_for)
         search_courses.append({
             "s": subj, "n": num, "t": title, "c": rec.get("credit_hours", "").replace(" hours.", ""),
             "g": codes, "gpa": r3(g["recent_avg_gpa"] if g and g["recent_avg_gpa"] is not None else
@@ -343,7 +345,37 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
         "score_priors": score_priors(gpa_course.values(), rmp.values()),
     }
     (out_dir / "meta.json").write_text(json.dumps(meta, indent=1))
-    return f"{n_files} course files, {len(gened_rows)} gen-ed rows, {len(inst_index)} instructors -> {out_dir}"
+    from .degrees import export as export_degrees
+
+    deg = export_degrees(conn, out_dir, summaries)
+    return f"{n_files} course files, {len(gened_rows)} gen-ed rows, {len(inst_index)} instructors, {deg} -> {out_dir}"
+
+
+def course_summary(g: dict | None, nxt: dict | None, rec: dict, gi: dict[str, dict], display: Any, rmp_block: Any,
+                   raw_for: dict[str, str]) -> dict:
+    """What a list of courses (the degree checklist) needs about one course: recent GPA with its sample size,
+    next-term lecture counts, the prerequisite text, and each next-term lecturer's score inputs."""
+    profs = []
+    for k in teach_next_course(nxt) if nxt else []:
+        mine = [s for s in nxt["sections"] if s["component"] == "primary" and k in s["instructors"]]  # type: ignore[index]
+        known = any(s["status"] for s in mine)
+        ig = gi.get(k)
+        rb = rmp_block(k)
+        profs.append({
+            "k": k, "name": display(k, raw_for.get(k, "")),
+            "d": ig["delta"] if ig else None, "dn": ig["students"] if ig else 0,
+            "rmp": [rb["rating"], rb["difficulty"], rb["would_take_again"], rb["num_ratings"]]
+            if rb and rb["num_ratings"] else None,
+            "open": [sum(1 for s in mine if status_open(s["status"])), len(mine)] if known else None,
+        })
+    recent = g is not None and g["recent_avg_gpa"] is not None
+    return {
+        "gpa": r3(g["recent_avg_gpa"] if recent else g["avg_gpa"]) if g else None,  # type: ignore[index]
+        "gn": (g["recent_students"] if recent else g["students"]) if g else 0,  # type: ignore[index]
+        "nx": int(bool(nxt and nxt["sections"])),
+        "nSec": nxt["n_primary"] if nxt else 0, "nOpen": nxt["n_open"] if nxt else None,
+        "known": bool(nxt and nxt["status_known"]), "pre": rec.get("prereq_text", ""), "profs": profs[:6],
+    }
 
 
 def score_priors(gpa_rows: Any, rmp_rows: Any) -> dict:
