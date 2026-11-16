@@ -5,7 +5,7 @@ const req = (page: import("@playwright/test").Page, id: string) => page.locator(
 test("adding a finished course updates the checklist and the URL", async ({ page }) => {
   await page.goto("./degree/");
   const program = page.getByLabel("Program", { exact: true });
-  await expect(program.locator("option")).not.toHaveCount(1); // every catalog program, grouped by college
+  await expect(program.locator('option[value="finance-data-science"]')).toBeAttached(); // every program, grouped by college
   await program.selectOption("finance-data-science");
   await expect(page.getByTestId("degree-progress")).toContainText("0 of 19");
   await page.getByLabel("Course code").fill("stat 107");
