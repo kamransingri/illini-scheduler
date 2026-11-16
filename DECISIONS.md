@@ -313,3 +313,17 @@ Every judgment call made during the autonomous build, newest phase last.
   site gave away (3,059 instead of ~3,300). The parser now reads text nodes; names already stored are repaired with
   a "Last, Initial" splitter when the build loads them (no re-crawl needed). Spring 2027 now has 3,307 instructor
   names from the pages, 3,215 of them also in the mirror.
+
+## Redesign and degree planner (2026-11-16)
+
+- **D13.1 RMP partial failures.** RMP answered one teacher search ("Cheslow") with an error from its own search backend
+  and `teachers: null`. The client only treated a response with *no* data as a failure, so it cached this one for 7
+  days and `search_teachers` crashed, which stopped `make data` (and would have stopped every run for a week). Now a
+  response with `errors` is never cached and a null result is "no match this run"; the next run retries it. This is
+  the only change to `pipeline/rmp.py`.
+- **D13.2 Windows.** The RSS feeds are written as UTF-8 explicitly (the default locale encoding on Windows, cp1252,
+  can't encode "→"). Everything else the pipeline writes is ASCII JSON.
+- **D13.3 Visual direction** (DESIGN.md). Illinois brand web palette and fonts (Source Sans 3 + Montserrat, self-hosted
+  through `next/font` at build time, so builds need network access the way `make data` already does). Each colour has
+  one meaning: Industrial blue for every link and action, green/red only for above/below the course average, three
+  seat colours. Tailwind's type and radius scales are reset so only five sizes and one radius exist.
