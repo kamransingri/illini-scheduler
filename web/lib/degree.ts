@@ -55,9 +55,28 @@ export type Degree = {
   groups: DegreeGroup[];
   courses: Record<string, DegreeCourse>;
   unknown: string[];
+  generated?: string; // date, when the file was imported automatically from the catalog (pipeline/catalog_import.py)
 };
 
-export type DegreeIndex = { id: string; program: string; college: string; catalog_year: string; groups: number }[];
+export type DegreeIndex = { id: string; program: string; college: string; catalog_year: string; groups: number; generated?: string }[];
+
+/**
+ * Add the shared gen-ed courses (degrees/gened-courses.json, the same for every program) to a program's own courses,
+ * and fill each gen-ed-only group's eligible list from them (the export leaves those lists out to stay small).
+ */
+export function hydrate(deg: Degree, gened: Record<string, DegreeCourse>): Degree {
+  const courses = { ...gened, ...deg.courses };
+  const byCode = (a: string, b: string) => a.localeCompare(b, "en", { numeric: true });
+  return {
+    ...deg,
+    courses,
+    groups: deg.groups.map((g) =>
+      g.from.length && !g.eligible.length && g.from.every((x) => x.startsWith("gened:"))
+        ? { ...g, eligible: Object.keys(courses).filter((c) => !g.exclude.includes(c) && g.from.some((x) => selectorMatches(x, c, courses[c]))).sort(byCode) }
+        : g,
+    ),
+  };
+}
 
 export type Verdict = { allow: boolean | "unclear"; rule: DcRule | null; why: string };
 
