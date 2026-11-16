@@ -416,3 +416,7 @@ Every judgment call made during the autonomous build, newest phase last.
   main finals overlap on the same day and points to the conflict exam; course pages show each section's final. Spring
   2027 finals aren't published yet, so for now only Fall 2026 has them. Fixtures are real saved responses
   (`fixtures/course-explorer-web/finalexam_2026-fa_*.html`).
+- **D13.22 One rule, two copies, one fixture.** The lecture + linked-section bundle rule is implemented in Python (gen-ed
+  time filters, `export.bundles`) and TypeScript (the schedule builder, `buildBundles`). Rather than generate one from
+  the other, `fixtures/bundle-parity.json` holds shared cases (letter groups, any-with-any, standalone) that both test
+  suites check, so a change to one copy fails the other's tests until both agree.

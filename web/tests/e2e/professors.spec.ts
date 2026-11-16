@@ -57,3 +57,20 @@ test("375px: an open professor panel doesn't scroll the page sideways", async ({
   const [sw, iw] = await page.evaluate(() => [document.documentElement.scrollWidth, window.innerWidth]);
   expect(sw).toBeLessThanOrEqual(iw);
 });
+
+test("keyboard: a professor row opens and closes with Enter, and a source popover opens on focus", async ({ page }) => {
+  await page.goto("./course/MATH/221/");
+  const row = page.getByTestId("prof-row").first();
+  const name = row.getByRole("button", { expanded: false }).first();
+  await name.focus();
+  await page.keyboard.press("Enter");
+  await expect(row.locator('[id$="-panel"]')).toBeVisible();
+  await page.keyboard.press("Enter");
+  await expect(row.locator('[id$="-panel"]')).toBeHidden();
+  const info = page.getByRole("button", { name: /Source for recent course GPA/i });
+  await info.focus();
+  await expect(info).toHaveAttribute("aria-expanded", "true");
+  await expect(page.locator(`[id="${await info.getAttribute("aria-describedby")}"]`)).toContainText("UIUC GPA dataset");
+  await page.keyboard.press("Escape");
+  await expect(info).toHaveAttribute("aria-expanded", "false");
+});

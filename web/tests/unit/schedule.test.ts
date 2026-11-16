@@ -254,3 +254,16 @@ describe("final exams", () => {
     expect(finalsOf(sched(withFinals("A 1", undefined)))).toEqual([]);
   });
 });
+
+describe("bundle parity with the pipeline", () => {
+  it("matches fixtures/bundle-parity.json, which pipeline/tests/test_export.py also checks", () => {
+    const { cases } = JSON.parse(fs.readFileSync(path.join(__dirname, "../../../fixtures/bundle-parity.json"), "utf8")) as {
+      cases: { name: string; sections: { crn: string; code: string; component: string; group: string; meetings: { d: number; s: number | null; e: number | null }[] }[]; bundles: string[][] }[];
+    };
+    for (const c of cases) {
+      const secs: Section[] = c.sections.map((s) => ({ ...sec(s.code, s.component, s.group), crn: s.crn, part: "1", special: "", meetings: s.meetings.map((m) => ({ ...m, b: "", r: "" })) }));
+      const got = buildBundles(secs, "X 1").map((b) => b.map((s) => s.crn).sort()).sort();
+      expect(got, c.name).toEqual(c.bundles.map((b) => [...b].sort()).sort());
+    }
+  });
+});
