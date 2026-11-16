@@ -1,0 +1,112 @@
+# Geology, BS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/geology-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: geology-bs
+program: Geology, BS
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/geology-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 126
+notes:
+- 'Minimum hours required for graduation: 126 hours.'
+double_counting: []
+groups:
+- name: 'Chemistry: Select one group of courses'
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: manual
+  notes:
+  - 'The catalog lists these courses under Chemistry: Select one group of courses; see the catalog page for the rule.'
+  courses:
+  - CHEM 102
+  - CHEM 103
+  - CHEM 104
+  - - CHEM 105
+    - CHEM 202
+  - CHEM 203
+  - CHEM 204
+  - CHEM 205
+  id: chemistry-select-one-group-of-courses-1
+- name: 'Chemistry: Select one group of courses'
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: manual
+  notes:
+  - '(45 hours of Geology Courses: Students transferring into the geology concentration from another science or engineering
+    program may substitute up to 8 hours of 300-or 400-level science or engineering credits for 8 hours of 300-or 400-level
+    geology courses with departmental approval.)'
+  courses:
+  - GEOL 107
+  - GEOL 208
+  - GEOL 143
+  - GEOL 411
+  - GEOL 417
+  - GEOL 432
+  - GEOL 436
+  - GEOL 440
+  id: chemistry-select-one-group-of-courses-2
+- name: 'Chemistry: Select one group of courses'
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: n_of
+  n: 1
+  courses:
+  - - GEOL 450
+    - GEOL 452
+  - GEOL 460
+  notes:
+  - 'Select one of the following:'
+  id: chemistry-select-one-group-of-courses-3
+- name: 'Chemistry: Select one group of courses'
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: manual
+  notes:
+  - 6 additional hours 300- or 400-level geology
+  id: chemistry-select-one-group-of-courses-4
+- name: Mathematics
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: manual
+  notes:
+  - '(45 hours of Geology Courses: Students transferring into the geology concentration from another science or engineering
+    program may substitute up to 8 hours of 300-or 400-level science or engineering credits for 8 hours of 300-or 400-level
+    geology courses with departmental approval.)'
+  - 6 additional hours 300- or 400-level geology
+  courses:
+  - - MATH 220
+    - MATH 221
+  - MATH 231
+  - - MATH 225
+    - MATH 415
+  - MATH 241
+  id: mathematics-5
+- name: Physics. Select one group of courses
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: manual
+  notes:
+  - '(45 hours of Geology Courses: Students transferring into the geology concentration from another science or engineering
+    program may substitute up to 8 hours of 300-or 400-level science or engineering credits for 8 hours of 300-or 400-level
+    geology courses with departmental approval.)'
+  - 6 additional hours 300- or 400-level geology
+  courses:
+  - - PHYS 211 + PHYS 212
+    - PHYS 101 + PHYS 102
+  id: physics-select-one-group-of-courses-6
+- name: Additional Technical Requirements
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: hours
+  hours: 3
+  courses:
+  - IB 103
+  - IB 104
+  - CS 101
+  - CS 125
+  - CPSC 440
+  - STAT 400
+  - MATH 285
+  - MATH 441
+  - PHYS 213
+  - PHYS 214
+  notes:
+  - 'Select at least 3 hours from the following:'
+  id: additional-technical-requirements-7

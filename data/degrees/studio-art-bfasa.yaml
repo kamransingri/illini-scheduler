@@ -1,0 +1,185 @@
+# Studio Art, BFASA (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/studio-art-bfasa/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: studio-art-bfasa
+program: Studio Art, BFASA
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/studio-art-bfasa/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 122
+notes:
+- 'Minimum hours required for graduation: 122 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+  notes:
+  - fulfilled by ARTH 110 and any other course approved as Humanities & the Arts
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+  notes:
+  - fulfilled by ARTH 110
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: First-Year Curriculum
+  section: First-Year Curriculum
+  rule: all
+  courses:
+  - FAA 101
+  - ARTF 101
+  - ARTE 101
+  - ARTH 110
+  - ARTF 103
+  - ARTF 105
+  id: first-year-curriculum-11
+- name: First-Year Curriculum
+  section: First-Year Curriculum
+  rule: manual
+  notes:
+  - 'Select one Drawing course:'
+  courses:
+  - ARTF 102
+  - ARTF 104
+  - ARTF 106
+  id: first-year-curriculum-12
+- name: Art History Requirements
+  section: Art History Requirements
+  rule: manual
+  notes:
+  - 200 level and above ARTH courses
+  id: art-history-requirements-13
+- name: Concentration Requirements
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - Interdisciplinary Practice
+  - Fashion
+  - Illustration
+  - New Media
+  - Painting
+  - Photography
+  - Printmaking
+  - Sculpture
+  id: concentration-requirements-14
+- name: Capstone Requirements
+  section: Capstone Requirements
+  rule: all
+  courses:
+  - ARTS 392
+  - ARTS 451
+  id: capstone-requirements-15
+- name: Summary of credits for Bachelor of Fine Arts in Studio Arts
+  section: Summary of credits for Bachelor of Fine Arts in Studio Arts
+  rule: manual
+  notes:
+  - General Education
+  - First-Year Curriculum
+  - Art History
+  - Concentration
+  - Capstone
+  - Free electives to bring the total hours earned to 122, including a minimum of 40 credits at the 300- or 400-level.
+  id: summary-of-credits-for-bachelor-of-fine-16

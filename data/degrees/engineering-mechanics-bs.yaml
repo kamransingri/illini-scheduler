@@ -1,0 +1,358 @@
+# Engineering Mechanics, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/engineering-mechanics-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: engineering-mechanics-bs
+program: Engineering Mechanics, BS
+college: The Grainger College of Engineering
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/engineering/engineering-mechanics-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 128
+notes:
+- 'Minimum hours required for graduation: 128 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/engineering/engineering-mechanics-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by TAM 324, ME 470
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by CHEM 102, CHEM 104, PHYS 211, PHYS 212
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 220 or MATH 221; and MATH 231, MATH 241, PHYS 211, PHYS 212
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: Orientation and Professional Development
+  rule: all
+  courses:
+  - ENG 100
+  - TAM 195
+  - ME 290
+  id: orientation-and-professional-development-11
+- name: Foundational Mathematics and Science
+  section: Foundational Mathematics and Science
+  rule: all
+  courses:
+  - CHEM 102
+  - CHEM 103
+  - CHEM 104
+  - CHEM 105
+  - MATH 221
+  - MATH 231
+  - MATH 241
+  - MATH 257
+  - MATH 441
+  - MATH 442
+  - PHYS 211
+  - PHYS 212
+  - PHYS 213
+  - PHYS 214
+  id: foundational-mathematics-and-science-12
+- name: Engineering Mechanics Technical Core
+  section: Engineering Mechanics Technical Core
+  rule: all
+  courses:
+  - CS 101
+  - ECE 205
+  - ME 170
+  - ME 200
+  - ME 470
+  - TAM 211
+  - TAM 212
+  - TAM 251
+  - TAM 252
+  - TAM 270
+  - TAM 324
+  - TAM 335
+  - TAM 412
+  - TAM 445
+  - TAM 470
+  id: engineering-mechanics-technical-core-13
+- name: Secondary Field Option Electives
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - Secondary field electives selected from departmentally approved courses for Secondary Field Options. Each secondary field
+    generally specifies two required courses and two additional courses from a list of approved elective courses. For each
+    of the secondary fields, the required and approved elective courses specified for each are listed below. To add flexibility
+    to the program and to accommodate particular interests, the student may fashion an individualized secondary field option.
+    The only requirements are that the courses be related to mechanics, form a coherent and cohesive group, include at least
+    two engineering courses, and total at least 12 hours of advanced-level coursework that are distinct from required courses
+    in the Engineering Mechanics curriculum. This can include 500-level courses, if the student has the adequate preparation,
+    for any of the secondary field elective courses. Each student must formally declare their choice of secondary field with
+    a Mechanical Science and Engineering Undergraduate Programs Office advisor using a Secondary Field Options form.
+  id: secondary-field-option-electives-14
+- name: Biomechanics
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - Required Courses
+  courses:
+  - MCB 150
+  - MCB 151
+  - TAM 461
+  id: biomechanics-15
+- name: Biomechanics
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - Approved Courses
+  courses:
+  - ECE 473
+  - ECE 380
+  - ME 481
+  - ME 482
+  - ME 483
+  - BIOP 401
+  - TAM 497
+  id: biomechanics-16
+- name: Computational Mechanics
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - Required Courses
+  courses:
+  - CS 357
+  - ME 471
+  id: computational-mechanics-17
+- name: Computational Mechanics
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - Approved Courses
+  courses:
+  - CS 450
+  - ME 412
+  - TAM 497
+  id: computational-mechanics-18
+- name: Engineering Science and Applied Mathematics
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - Required Courses
+  courses:
+  - - MATH 446
+    - MATH 448
+  id: engineering-science-and-applied-mathemat-19
+- name: Engineering Science and Applied Mathematics
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - Any 400 level MATH course, excluding MATH 415, MATH 441, and MATH 442
+  - Approved Courses
+  courses:
+  - AE 353
+  - AE 402
+  - CEE 491
+  - ECE 329
+  - ECE 330
+  - ECE 473
+  - PHYS 402
+  - TAM 497
+  id: engineering-science-and-applied-mathemat-20
+- name: Experimental Mechanics
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - Required Courses
+  courses:
+  - TAM 456
+  - ECE 206
+  id: experimental-mechanics-21
+- name: Experimental Mechanics
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - Approved Courses
+  courses:
+  - CS 357
+  - ECE 473
+  - ME 360
+  - PHYS 402
+  - TAM 497
+  id: experimental-mechanics-22
+- name: Fluid Mechanics
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - Required Courses
+  courses:
+  - TAM 435
+  - ME 410
+  id: fluid-mechanics-23
+- name: Fluid Mechanics
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - Approved Courses
+  courses:
+  - AE 412
+  - CEE 451
+  - CEE 453
+  - ECE 473
+  - ME 412
+  - TAM 497
+  id: fluid-mechanics-24
+- name: Mechanics of Materials
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - Required Courses
+  courses:
+  - TAM 424
+  - TAM 428
+  id: mechanics-of-materials-25
+- name: Mechanics of Materials
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - Approved Courses
+  courses:
+  - CEE 310
+  - MSE 401
+  - MSE 455
+  - MSE 489
+  - NPRE 330
+  - TAM 497
+  id: mechanics-of-materials-26
+- name: Solid Mechanics
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - Required Courses
+  courses:
+  - TAM 424
+  - TAM 451
+  id: solid-mechanics-27
+- name: Solid Mechanics
+  section: Secondary Field Option Electives
+  rule: manual
+  notes:
+  - Approved Courses
+  courses:
+  - CEE 360
+  - CEE 460
+  - CEE 461
+  - CS 357
+  - ECE 473
+  - TAM 497
+  id: solid-mechanics-28
+- name: Free Electives
+  section: Free Electives
+  rule: manual
+  notes:
+  - Additional course work, subject to the Grainger College of Engineering restrictions to Free Electives, so that there are
+    at least 128 credit hours earned toward the degree.
+  id: free-electives-29

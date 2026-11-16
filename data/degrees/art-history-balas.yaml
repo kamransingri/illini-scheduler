@@ -1,0 +1,392 @@
+# Art History, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/art-history-balas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: art-history-balas
+program: Art History, BALAS
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/art-history-balas/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/art-history-balas/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+  notes:
+  - fulfilled by ARTH 110 and any other course approved as Humanities & the Arts
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+  notes:
+  - fulfilled by ARTH 110
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: General Education Requirements
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-and-professional-development-11
+- name: Major Core Requirements and Electives
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 1 course in studio art (ARTS), graphic design (ARTD) or industrial design (ARTD)
+  id: major-core-requirements-and-electives-12
+- name: 1 foundational gateway course at the 100-level
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 3 hours.'
+  - 1 course in studio art (ARTS), graphic design (ARTD) or industrial design (ARTD)
+  courses:
+  - ARTH 110
+  id: 1-foundational-gateway-course-at-the-100-13
+- name: Three (3) Supporting Courses in the Humanities offered by LAS
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 9 hours.'
+  - These courses must be approved by the Art History advisor and be outside the field of art history with the goal of enhancing
+    the student’s understanding of the cultural context within which works of art and architecture have been created.
+  - 'Please note: this is not a complete list of approved courses as individual student interests may guide supplemental courses
+    in any number of directions. To ensure students take appropriate courses, all supplemental Humanities hours must be approved
+    by the BALAS advisor.'
+  courses:
+  - AFRO 212
+  - AFRO 227
+  - AFRO 228
+  - AFRO 243
+  - - AFRO 259
+    - AFRO 260
+  - AFRO 400
+  - AFST 222
+  - ANTH 250
+  - ANTH 364
+  - ANTH 462
+  - AAS 200
+  - AAS 211
+  - AAS 246
+  - AAS 275
+  - AAS 300
+  - AAS 315
+  - CLCV 206
+  - CLCV 240
+  - ENGL 202
+  - ENGL 204
+  - ENGL 206
+  - ENGL 207
+  - ENGL 208
+  - ENGL 209
+  - ENGL 211
+  - ENGL 213
+  - ENGL 224
+  - ENGL 253
+  - ENGL 255
+  - ENGL 273
+  - ENGL 285
+  - HIST 200
+  - HIST 202
+  - HIST 203
+  - HIST 205
+  - HIST 211
+  - HIST 212
+  - HIST 220
+  - HIST 221
+  - HIST 227
+  - HIST 258
+  - HIST 259
+  - HIST 260
+  - HIST 270
+  - HIST 271
+  - HIST 272
+  - HIST 274
+  - HIST 279
+  - HIST 281
+  - HIST 285
+  - HIST 287
+  - HIST 310
+  - HIST 312
+  - HIST 345
+  - HIST 347
+  - HIST 349
+  - HIST 350
+  - HIST 352
+  - HIST 354
+  - HIST 357
+  - HIST 370
+  - HIST 373
+  - HIST 374
+  - HIST 379
+  - HIST 380
+  - HIST 420
+  - HIST 425
+  - HIST 459
+  - HIST 462
+  - HIST 476
+  - ITAL 406
+  - LLS 259
+  - LLS 458
+  - LLS 460
+  - LLS 465
+  - LLS 473
+  - PHIL 411
+  - PHIL 412
+  - PHIL 414
+  id: three-3-supporting-courses-in-the-humani-14
+- name: Three (3) Supporting Courses in the Humanities offered by LAS
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Six (6) 200-400 level courses in Art History, offered in the School of Art & Design
+  - (Though students must take a total of 6 courses, some may count toward the fulfillment of more than one area and period
+    requirement. For instance, a course in 20th century African art could count as a class covering both Africa and the Middle
+    East and material after 1700.)
+  - 'Students must take at least one course in three of the following areas: 1) Africa and the Middle East; 2) Asia; 3) the
+    Americas; 4) Europe'
+  - At least one course must cover material before 1700
+  - At least one course must cover material after 1700
+  - Other courses may be approved in consultation with the advisor.
+  id: three-3-supporting-courses-in-the-humani-15
+- name: 1. Africa and the Middle East
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - At least one course must cover material after 1700
+  - Other courses may be approved in consultation with the advisor.
+  courses:
+  - ARTH 219
+  - ARTH 220
+  - ARTH 310
+  - ARTH 312
+  - ARTH 313
+  - ARTH 410
+  - ARTH 413
+  id: 1-africa-and-the-middle-east-16
+- name: 2. Asia
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - At least one course must cover material after 1700
+  - Other courses may be approved in consultation with the advisor.
+  courses:
+  - ARTH 212
+  - ARTH 214
+  - ARTH 320
+  - ARTH 402
+  - ARTH 403
+  - ARTH 404
+  id: 2-asia-17
+- name: 3. The Americas
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - At least one course must cover material after 1700
+  - Other courses may be approved in consultation with the advisor.
+  courses:
+  - ARTH 242
+  - ARTH 250
+  - ARTH 260
+  - ARTH 342
+  - ARTH 343
+  id: 3-the-americas-18
+- name: 4. Europe
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - At least one course must cover material after 1700
+  - Other courses may be approved in consultation with the advisor.
+  courses:
+  - ARTH 215
+  - ARTH 218
+  - ARTH 222
+  - ARTH 230
+  - ARTH 231
+  - ARTH 235
+  - ARTH 241
+  - ARTH 242
+  - ARTH 344
+  - ARTH 415
+  - ARTH 416
+  - ARTH 423
+  - ARTH 424
+  - ARTH 430
+  - ARTH 431
+  - ARTH 432
+  - ARTH 433
+  - ARTH 435
+  - ARTH 436
+  - ARTH 440
+  - ARTH 443
+  - ARTH 445
+  - ARTH 447
+  id: 4-europe-19
+- name: At least one course must cover material before 1700
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - At least one course must cover material after 1700
+  - Other courses may be approved in consultation with the advisor.
+  courses:
+  - ARTH 215
+  - ARTH 218
+  - ARTH 222
+  - ARTH 230
+  - ARTH 231
+  - ARTH 235
+  - ARTH 342
+  - ARTH 360
+  - ARTH 415
+  - ARTH 416
+  - ARTH 423
+  - ARTH 424
+  - ARTH 430
+  - ARTH 431
+  - ARTH 432
+  - ARTH 433
+  - ARTH 435
+  - ARTH 436
+  - ARCH 412
+  id: at-least-one-course-must-cover-material-20
+- name: At least one course must cover material after 1700
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - At least one course must cover material after 1700
+  - Other courses may be approved in consultation with the advisor.
+  courses:
+  - ARTH 211
+  - ARTH 240
+  - ARTH 241
+  - ARTH 242
+  - ARTH 257
+  - ARTH 260
+  - ARTH 300
+  - ARTH 343
+  - ARTH 344
+  - ARTH 345
+  - ARTH 350
+  - ARTH 351
+  - ARTH 361
+  - ARTH 440
+  - ARTH 443
+  - ARTH 445
+  - ARTH 447
+  - ARTH 450
+  - ARCH 415
+  - ARCH 416
+  - ARCH 417
+  - ARTH 495
+  id: at-least-one-course-must-cover-material-21

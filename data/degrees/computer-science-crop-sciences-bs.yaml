@@ -1,0 +1,220 @@
+# Computer Science + Crop Sciences, BS (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/computer-science-crop-sciences-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: computer-science-crop-sciences-bs
+program: Computer Science + Crop Sciences, BS
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/computer-science-crop-sciences-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 126
+notes:
+- 'Minimum hours required for graduation: 126 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300 and 400 level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/aces/computer-science-crop-sciences-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by CPSC 112 and any other course approved as Natural Sciences & Technology
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by CS 124, CS 128, CS 225; and MATH 220 or MATH 221; and MATH 231
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Department Foundation
+  section: Department Foundation
+  rule: manual
+  notes:
+  - 'Communication Option:'
+  courses:
+  - CMN 101
+  - ALEC 115
+  - CMN 111 + CMN 112
+  - ACES 101
+  id: department-foundation-11
+- name: Crop Sciences Core
+  section: Crop Sciences Core
+  rule: manual
+  notes:
+  - 'Communication Option:'
+  courses:
+  - CPSC 102
+  - CPSC 112
+  - CPSC 212
+  - - CPSC 393
+    - CPSC 395
+  - CPSC 498
+  id: crop-sciences-core-12
+- name: Computer Science Core
+  section: Computer Science Core
+  rule: manual
+  notes:
+  - 'Communication Option:'
+  courses:
+  - CS 100
+  - CS 124
+  - CS 128
+  - CS 173
+  - CS 222
+  - CS 225
+  - CS 374
+  - CS 421
+  id: computer-science-core-13
+- name: Computer Science Technical Track
+  section: Computer Science Technical Track
+  rule: manual
+  notes:
+  - 'Choose from the following options:'
+  courses:
+  - - CS 233 + CS 341
+    - CS 340
+  id: computer-science-technical-track-14
+- name: Computer Science Technical Track
+  section: Computer Science Technical Track
+  rule: manual
+  notes:
+  - '& Any two (2) 400-level CS courses except CS 491'
+  id: computer-science-technical-track-15
+- name: Mathematical Foundations
+  section: Mathematical Foundations
+  rule: manual
+  notes:
+  - 'Choose from the following options:'
+  - '& Any two (2) 400-level CS courses except CS 491'
+  courses:
+  - - MATH 220
+    - MATH 221
+  - - MATH 225
+    - MATH 257
+    - MATH 415
+    - MATH 416
+  - MATH 231
+  - CS 361
+  id: mathematical-foundations-16
+- name: Foundational Data Analytics
+  section: Foundational Data Analytics
+  rule: manual
+  notes:
+  - 'Choose from the following options:'
+  - '& Any two (2) 400-level CS courses except CS 491'
+  courses:
+  - CPSC 440
+  - CPSC 444
+  id: foundational-data-analytics-17
+- name: Crop Sciences Electives
+  section: Crop Sciences Electives
+  rule: manual
+  notes:
+  - At least one 3-hour 400-level CPSC/HORT/PLPA course
+  - Any CPSC/HORT/PLPA course except CPSC 241
+  id: crop-sciences-electives-18

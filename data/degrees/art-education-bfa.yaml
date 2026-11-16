@@ -1,0 +1,222 @@
+# Art Education, BFA (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/art-education-bfa/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: art-education-bfa
+program: Art Education, BFA
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/art-education-bfa/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 130
+notes:
+- 'Minimum hours required for graduation: 130 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+  notes:
+  - fulfilled by ARTH 110 and any other course approved as Humanities & the Arts
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by EPSY 201 and any other course approved as Social & Behavioral Sciences
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+  notes:
+  - fulfilled by ARTH 110
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: First Year Curriculum
+  section: First Year Curriculum
+  rule: all
+  courses:
+  - FAA 101
+  - ARTF 101
+  - ARTE 101
+  - ARTH 110
+  - ARTF 103
+  - ARTF 105
+  id: first-year-curriculum-11
+- name: First Year Curriculum
+  section: First Year Curriculum
+  rule: manual
+  notes:
+  - 'Select one Drawing course:'
+  courses:
+  - ARTF 102
+  - ARTF 104
+  - ARTF 106
+  id: first-year-curriculum-12
+- name: Art Education
+  section: Art Education
+  rule: manual
+  notes:
+  - These courses must be completed prior to student teaching
+  courses:
+  - ARTE 202
+  - ARTE 301
+  - ARTE 303
+  - ARTE 304
+  - ARTE 393
+  - ARTE 400
+  id: art-education-13
+- name: Professional Education
+  section: Professional Education
+  rule: all
+  courses:
+  - - EPOL 201
+    - EPOL 202
+  - EPSY 201
+  - SPED 405
+  - CI 473
+  id: professional-education-14
+- name: Student Teaching
+  section: Student Teaching
+  rule: all
+  courses:
+  - ARTE 401
+  - EDPR 438
+  - EDPR 442
+  id: student-teaching-15
+- name: Art and Design
+  section: Art and Design
+  rule: all
+  courses:
+  - ARTS 251
+  - - ARTS 354
+    - ARTS 252
+  id: art-and-design-16
+- name: Art and Design
+  section: Art and Design
+  rule: manual
+  notes:
+  - One Additional 3D Course (200 level or above, chosen in consultation with advisor)
+  - One Additional 4D Course (200 level or above, chosen in consultation with advisor)
+  id: art-and-design-17
+- name: Art History
+  section: Art History
+  rule: manual
+  notes:
+  - Art history courses (200-level or above)
+  id: art-history-18
+- name: Art & Design Electives
+  section: Art & Design Electives
+  rule: manual
+  notes:
+  - Art & Design Electives (ARTS, ARTD, ARTE, ARTH, or ARTJ) courses not otherwise required in major
+  id: art-design-electives-19
+- name: Summary of credits for Bachelor of Fine Arts in Art Education
+  section: Summary of credits for Bachelor of Fine Arts in Art Education
+  rule: manual
+  notes:
+  - General Education
+  - First-Year Curriculum
+  - Art Education
+  - Professional Education
+  - Student Teaching
+  - Art & Design
+  - Art History
+  - Art & Design Electives
+  - Electives to bring the total hours earned to 130, including a minimum of 40 credits at the 300- or 400-level.
+  id: summary-of-credits-for-bachelor-of-fine-20

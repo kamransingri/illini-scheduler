@@ -1,0 +1,423 @@
+# Physics, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/physics-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: physics-bs
+program: Physics, BS
+college: The Grainger College of Engineering
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/engineering/physics-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 128
+notes:
+- 'Minimum hours required for graduation: 128 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/engineering/physics-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by PHYS 211, PHYS 212, CHEM 102
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 221 or MATH 220; MATH 231, MATH 241, PHYS 211, PHYS 212, CS 101 or CS 124
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: Orientation and Professional Development
+  rule: all
+  courses:
+  - ENG 100
+  - PHYS 110
+  id: orientation-and-professional-development-11
+- name: Foundational Mathematics and Science
+  section: Foundational Mathematics and Science
+  rule: all
+  courses:
+  - MATH 221
+  - MATH 231
+  - MATH 241
+  - MATH 257
+  - MATH 285
+  - PHYS 211
+  - PHYS 212
+  - PHYS 213
+  - PHYS 214
+  - CHEM 102
+  - CHEM 103
+  - - CS 101
+    - CS 124
+  id: foundational-mathematics-and-science-12
+- name: Foundational Physics
+  section: Foundational Physics
+  rule: all
+  courses:
+  - PHYS 225
+  - PHYS 325
+  - PHYS 427
+  - PHYS 435
+  - PHYS 486
+  id: foundational-physics-13
+- name: Program Tracks
+  section: Program Tracks
+  rule: manual
+  notes:
+  - Students are required to complete one track. Tracks may be selected from one of the departmentally approved lists below.
+    Students may devise an alternative, custom track with a set of courses approved by the department.
+  id: program-tracks-14
+- name: Astrophysics Track
+  section: Program Tracks
+  rule: manual
+  notes:
+  - 'Catalog total: 21 hours.'
+  - Students are required to complete one track. Tracks may be selected from one of the departmentally approved lists below.
+    Students may devise an alternative, custom track with a set of courses approved by the department.
+  courses:
+  - ASTR 210
+  id: astrophysics-track-15
+- name: Astrophysics Track
+  section: Program Tracks
+  rule: n_of
+  n: 3
+  courses:
+  - - ASTR 350
+    - ASTR 406
+  - ASTR 404
+  - ASTR 405
+  - ASTR 414
+  notes:
+  - 'Choose 3 courses from the following:'
+  id: astrophysics-track-16
+- name: Astrophysics Track
+  section: Program Tracks
+  rule: hours
+  hours: 6
+  courses:
+  - PHYS 246
+  - PHYS 326
+  - PHYS 370
+  - PHYS 436
+  - PHYS 460
+  - PHYS 470
+  - PHYS 487
+  notes:
+  - 'Choose a minimum of 6 hours of courses from the following Physics Electives List:'
+  id: astrophysics-track-17
+- name: Astrophysics Track
+  section: Program Tracks
+  rule: manual
+  notes:
+  - 'Choose one lab from Physics Lab List:'
+  courses:
+  - PHYS 371
+  - PHYS 401
+  - PHYS 402
+  - PHYS 403
+  - PHYS 404
+  - PHYS 407
+  - PHYS 446
+  id: astrophysics-track-18
+- name: Business Track
+  section: Program Tracks
+  rule: manual
+  notes:
+  - 'Catalog total: 21 hours.'
+  - Students are required to complete one track. Tracks may be selected from one of the departmentally approved lists below.
+    Students may devise an alternative, custom track with a set of courses approved by the department.
+  - 'Choose one lab from Physics Lab List:'
+  courses:
+  - TE 100
+  id: business-track-19
+- name: Business Track
+  section: Program Tracks
+  rule: hours
+  hours: 11
+  courses:
+  - ES 471
+  - IE 420
+  - SE 400
+  - TE 360
+  - TE 333
+  - TE 461
+  - TE 450
+  - TE 466
+  notes:
+  - 'Choose 11 hours from the following:'
+  id: business-track-20
+- name: Business Track
+  section: Program Tracks
+  rule: hours
+  hours: 6
+  courses:
+  - PHYS 246
+  - PHYS 326
+  - PHYS 370
+  - PHYS 436
+  - PHYS 460
+  - PHYS 470
+  - PHYS 487
+  notes:
+  - 'Choose a minimum of 6 hours of courses from the following Physics Electives List:'
+  id: business-track-21
+- name: Business Track
+  section: Program Tracks
+  rule: manual
+  notes:
+  - 'Choose one lab from Physics Lab List:'
+  courses:
+  - PHYS 371
+  - PHYS 401
+  - PHYS 402
+  - PHYS 403
+  - PHYS 404
+  - PHYS 407
+  - PHYS 446
+  id: business-track-22
+- name: Computational Physics Track
+  section: Program Tracks
+  rule: manual
+  notes:
+  - 'Catalog total: 24 hours.'
+  - 'Choose one lab from Physics Lab List:'
+  - 'Choose one lab from Physics Lab List:'
+  courses:
+  - - CS 173
+    - MATH 213
+  - CS 225
+  id: computational-physics-track-23
+- name: Computational Physics Track
+  section: Program Tracks
+  rule: manual
+  notes:
+  - 'Choose 3 classes from the following:'
+  courses:
+  - CS 357
+  - CS 418
+  - CS 450
+  - ECE 408
+  - PHYS 246
+  - PHYS 446
+  id: computational-physics-track-24
+- name: Computational Physics Track
+  section: Program Tracks
+  rule: hours
+  hours: 6
+  courses:
+  - PHYS 326
+  - PHYS 370
+  - PHYS 436
+  - PHYS 460
+  - PHYS 470
+  - PHYS 487
+  notes:
+  - 'Choose a minimum of 6 hours of courses from the following Physics Electives List:'
+  id: computational-physics-track-25
+- name: Computational Physics Track
+  section: Program Tracks
+  rule: manual
+  notes:
+  - 'Choose one lab from Physics Lab List:'
+  courses:
+  - PHYS 371
+  - PHYS 401
+  - PHYS 402
+  - PHYS 403
+  - PHYS 404
+  - PHYS 407
+  id: computational-physics-track-26
+- name: Nuclear Physics Track
+  section: Program Tracks
+  rule: manual
+  notes:
+  - 'Catalog total: 22 hours.'
+  - 'Choose 3 classes from the following:'
+  - 'Choose one lab from Physics Lab List:'
+  courses:
+  - NPRE 402
+  - PHYS 470
+  id: nuclear-physics-track-27
+- name: Nuclear Physics Track
+  section: Program Tracks
+  rule: manual
+  notes:
+  - 'Choose 2 classes from the following:'
+  courses:
+  - NPRE 321
+  - NPRE 421
+  - NPRE 429
+  - NPRE 435
+  - NPRE 441
+  - NPRE 445
+  - NPRE 451
+  - NPRE 455
+  id: nuclear-physics-track-28
+- name: Nuclear Physics Track
+  section: Program Tracks
+  rule: hours
+  hours: 6
+  courses:
+  - PHYS 246
+  - PHYS 326
+  - PHYS 370
+  - PHYS 436
+  - PHYS 460
+  - PHYS 487
+  notes:
+  - 'Choose a minimum of 6 hours of courses from the following Physics Electives List:'
+  id: nuclear-physics-track-29
+- name: Nuclear Physics Track
+  section: Program Tracks
+  rule: manual
+  notes:
+  - 'Choose one lab from Physics Lab List:'
+  courses:
+  - PHYS 371
+  - PHYS 401
+  - PHYS 402
+  - PHYS 403
+  - PHYS 404
+  - PHYS 407
+  - PHYS 446
+  id: nuclear-physics-track-30
+- name: Graduate Study Track
+  section: Program Tracks
+  rule: manual
+  notes:
+  - 'Catalog total: 16 hours.'
+  - 'Take the following three courses from the Physics Electives List:'
+  courses:
+  - PHYS 326
+  - PHYS 436
+  - PHYS 487
+  id: graduate-study-track-31
+- name: Graduate Study Track
+  section: Program Tracks
+  rule: manual
+  notes:
+  - 'Choose two labs from Physics Lab List:'
+  courses:
+  - PHYS 371
+  - PHYS 401
+  - PHYS 402
+  - PHYS 403
+  - PHYS 404
+  - PHYS 407
+  - PHYS 446
+  id: graduate-study-track-32
+- name: Free Electives
+  section: Free Electives
+  rule: manual
+  notes:
+  - Additional course work,subject to the Grainger College of Engineering restrictions to Free Electives, so that there are
+    at least 128 credit hours earned toward the degree.
+  - The number of free elective hours varies depending upon the total hours earned in Flexible Physics Electives, Physics
+    Lab Electives, and Program Track.
+  id: free-electives-33

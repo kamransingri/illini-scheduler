@@ -1,0 +1,232 @@
+# Astronomy + Data Science, BSLAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/astronomy-data-science-bslas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: astronomy-data-science-bslas
+program: Astronomy + Data Science, BSLAS
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/astronomy-data-science-bslas/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/astronomy-data-science-bslas/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by PHYS 211 and PHYS 212
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 220 or MATH 221, STAT 107, STAT 207, PHYS 211, MATH 231, MATH 241
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Mathematical Foundations
+  section: Major Requirements
+  rule: all
+  courses:
+  - - MATH 220
+    - MATH 221
+  id: mathematical-foundations-11
+- name: Mathematical Foundations
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Linear Algebra: Select one of the following (MATH 227 or MATH 257 is recommended)'
+  courses:
+  - MATH 227
+  - MATH 257
+  - MATH 225
+  - MATH 415
+  id: mathematical-foundations-12
+- name: Data Science Fundamentals
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Linear Algebra: Select one of the following (MATH 227 or MATH 257 is recommended)'
+  courses:
+  - IS 107
+  - STAT 207
+  - CS 307
+  id: data-science-fundamentals-13
+- name: Computational Fundamentals
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Linear Algebra: Select one of the following (MATH 227 or MATH 257 is recommended)'
+  courses:
+  - CS 277
+  id: computational-fundamentals-14
+- name: Ethics and Responsibility in Data Science
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Linear Algebra: Select one of the following (MATH 227 or MATH 257 is recommended)'
+  courses:
+  - IS 467
+  - IS 477
+  id: ethics-and-responsibility-in-data-scienc-15
+- name: Required Astronomy Coursework
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Linear Algebra: Select one of the following (MATH 227 or MATH 257 is recommended)'
+  courses:
+  - PHYS 211
+  - PHYS 212
+  - PHYS 213
+  - PHYS 214
+  - MATH 231
+  - MATH 241
+  - ASTR 210
+  - ASTR 310
+  id: required-astronomy-coursework-16
+- name: Required Astronomy Coursework
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Advanced Astronomy Courses - Select two courses from the following:'
+  courses:
+  - ASTR 404
+  - ASTR 405
+  - ASTR 406
+  - ASTR 414
+  id: required-astronomy-coursework-17
+- name: Research or Discovery Experience
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 3 hours.'
+  - 'Linear Algebra: Select one of the following (MATH 227 or MATH 257 is recommended)'
+  - 'Advanced Astronomy Courses - Select two courses from the following:'
+  courses:
+  - - ASTR 390
+    - ASTR 490
+  id: research-or-discovery-experience-18
+- name: Research or Discovery Experience
+  section: Major Requirements
+  rule: manual
+  notes:
+  - One of the most important skills a student will gain in an Astronomy & Data Science degree will be the ability to present
+    astronomical data in meaningful ways. A research or discovery experience is as much as pillar of this degree program as
+    both the data science core coursework (Part 1) and the coursework in Astronomy (Part 2).
+  - This experience should be developed with an advisor before the end of a student’s sophomore year and result in the creation
+    of one or more artifacts documenting the experience. A minimum of 3 credit hours must be specifically designated to the
+    preparation and the completion of the experience component.
+  - 'Examples of possible experiences may include:'
+  - ● A semester study-abroad with at one or more courses focused on discovery while attending the international institution.
+  - ● A multi-semester capstone experience within the student’s area of specialization.
+  - ● A semester co-op experience outside Champaign-Urbana focused on a subject within the student’s area of specialization.
+  - ● A multi-semester undergraduate research experience under the direction of Illinois faculty.
+  - ● A summer NSF REU program focused within a student’s area of specialization.
+  id: research-or-discovery-experience-19

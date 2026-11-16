@@ -1,0 +1,227 @@
+# Food Science, BS (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/food-science-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: food-science-bs
+program: Food Science, BS
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/food-science-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 126
+notes:
+- 'Minimum hours required for graduation: 126 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300 and 400 level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/aces/food-science-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by CHEM 102, CHEM 104, MCB 100, PHYS 101, IB 100, and FSHN 101
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by LEAD 260 and one more course approved as Social & Behavioral Sciences
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+  notes:
+  - fulfilled by CPSC 116
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 220 or MATH 221, PHYS 101, and ACE 262, CPSC 241, ECON 202, PSYC 235, or STAT 100
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Department Foundation
+  section: Department Foundation
+  rule: all
+  courses:
+  - FSHN 123
+  id: department-foundation-11
+- name: Department Foundation
+  section: Department Foundation
+  rule: manual
+  notes:
+  - 'Communication Option:'
+  courses:
+  - CMN 101
+  - ALEC 115
+  - CMN 111 + CMN 112
+  - CPSC 116
+  - - MATH 220
+    - MATH 221
+  id: department-foundation-12
+- name: Department Foundation
+  section: Department Foundation
+  rule: manual
+  notes:
+  - 'Statistics Option - Select one of the following:'
+  courses:
+  - ACE 262
+  - CPSC 241
+  - ECON 202
+  - PSYC 235
+  - STAT 100
+  - CHEM 102 + CHEM 103
+  - CHEM 104 + CHEM 105
+  - MCB 100
+  - LEAD 260
+  - CHEM 232
+  - PHYS 101
+  - IB 100
+  id: department-foundation-13
+- name: Major Core
+  section: Major Core
+  rule: manual
+  notes:
+  - 'Communication Option:'
+  - 'Statistics Option - Select one of the following:'
+  courses:
+  - FSHN 101
+  - - FSHN 120
+    - FSHN 220
+  - FSHN 201
+  - FSHN 230
+  - FSHN 232
+  - FSHN 260
+  - FSHN 302
+  - FSHN 414
+  - FSHN 416
+  - FSHN 418
+  - FSHN 419
+  - FSHN 460
+  - FSHN 466
+  - FSHN 471
+  - FSHN 472
+  - FSHN 481
+  - FSHN 482
+  - FSHN 483
+  - FSHN 484
+  - - ANSC 350
+    - MCB 450
+  id: major-core-14
+- name: Major Electives
+  section: Major Electives
+  rule: hours
+  hours: 9
+  courses:
+  - FSHN 175
+  - FSHN 231
+  - FSHN 249
+  - FSHN 293
+  - FSHN 295
+  - FSHN 345
+  - FSHN 417
+  - FSHN 425
+  - FSHN 453
+  - FSHN 464
+  - FSHN 480
+  - ACE 161
+  - ACE 306
+  - CHEM 233
+  notes:
+  - Select 9 hours from the Food Science-related course list below.
+  id: major-electives-15

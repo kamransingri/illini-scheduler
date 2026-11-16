@@ -1,0 +1,250 @@
+# Human Development & Family Studies, BS (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/human-development-family-studies-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: human-development-family-studies-bs
+program: Human Development & Family Studies, BS
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/human-development-family-studies-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 126
+notes:
+- 'Minimum hours required for graduation: 126 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/aces/human-development-family-studies-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by HDFS 290
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by HDFS 105, HDFS 120, PSYC 100, SOC 100
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+  notes:
+  - fulfilled by HDFS 120
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by STAT 100 and any other course approved as Quantitative Reasoning I or II
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Human Development and Family Studies Required
+  section: General Education Requirements
+  rule: all
+  courses:
+  - HDFS 101
+  - HDFS 105
+  - HDFS 120
+  - HDFS 290
+  - ACE 240
+  - - CMN 101
+    - CMN 111 + CMN 112
+  - PSYC 100
+  - SOC 100
+  - STAT 100
+  id: human-development-and-family-studies-req-11
+- name: Human Development and Family Studies Required
+  section: General Education Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - FSHN 120
+  - HK 110
+  - HDFS 445
+  notes:
+  - 'Select one of the following health courses:'
+  id: human-development-and-family-studies-req-12
+- name: Human Development and Family Studies Required
+  section: General Education Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - HDFS 301
+  - HDFS 305
+  - HDFS 405
+  notes:
+  - 'Select one of the following child/adolescent development courses:'
+  id: human-development-and-family-studies-req-13
+- name: Human Development and Family Studies Required
+  section: General Education Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - HDFS 207
+  - HDFS 225
+  - HDFS 425
+  notes:
+  - 'Select one of the following relationships/family courses:'
+  id: human-development-and-family-studies-req-14
+- name: Human Development and Family Studies Required
+  section: General Education Requirements
+  rule: n_of
+  n: 2
+  courses:
+  - HDFS 208
+  - HDFS 220
+  - HDFS 221
+  - HDFS 322
+  - HDFS 340
+  - HDFS 341
+  - HDFS 379
+  - HDFS 420
+  - HDFS 424
+  - HDFS 444
+  - HDFS 460
+  notes:
+  - 'Select two of the following diversity courses:'
+  id: human-development-and-family-studies-req-15
+- name: Human Development and Family Studies Required
+  section: General Education Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - HDFS 294
+  - HDFS 295
+  - HDFS 350
+  - HDFS 396
+  - HDFS 450
+  - HDFS 455
+  - HDFS 494
+  - LEAD 260
+  notes:
+  - 'Select one of the following applied courses:'
+  id: human-development-and-family-studies-req-16
+- name: Individualized Plan
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Choose from a list of HDFS courses based on individual career goals and in consultation with the HDFS Academic Advisor.
+    At least 15 hours at 300 level or above. Courses taken to meet other HDFS requirements can not count toward the Individualized
+    Plan.
+  courses:
+  - HDFS 108
+  - HDFS 207
+  - HDFS 208
+  - HDFS 220
+  - HDFS 225
+  - HDFS 301
+  - HDFS 305
+  - HDFS 310
+  - HDFS 320
+  - HDFS 322
+  - HDFS 330
+  - HDFS 340
+  - HDFS 350
+  - HDFS 401
+  - HDFS 405
+  - HDFS 408
+  - HDFS 420
+  - HDFS 425
+  - HDFS 426
+  - HDFS 444
+  - HDFS 445
+  id: individualized-plan-17

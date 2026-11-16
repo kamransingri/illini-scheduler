@@ -1,0 +1,210 @@
+# Information Systems, BS (Gies College of Business), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/bus/information-systems-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: information-systems-bs
+program: Information Systems, BS
+college: Gies College of Business
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/bus/information-systems-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 124
+notes:
+- 'Minimum hours required for graduation: 124 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/bus/information-systems-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 Hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by ECON 102 and ECON 103
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by CS 105; and MATH 115, MATH 220, MATH 221, MATH 231, MATH 234, or STAT 100
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Business Core Requirements
+  section: Business Core Requirements
+  rule: all
+  courses:
+  - ACCY 201 + ACCY 202
+  - BUS 101
+  - BUS 201
+  - BUS 301
+  - BUS 401
+  - BADM 210 + BADM 211
+  - BADM 275
+  - BADM 300
+  - BADM 310
+  - BADM 320
+  - BADM 449
+  - CMN 101
+  - CS 105
+  - ECON 102 + ECON 103
+  - FIN 221
+  id: business-core-requirements-11
+- name: Business Core Math
+  section: Business Core Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - MATH 115
+  - MATH 220
+  - MATH 221
+  - MATH 231
+  - MATH 234
+  - STAT 100
+  notes:
+  - 'Choose one course from the list below:'
+  id: business-core-math-12
+- name: Information Systems, BS Major Core Requirements and Electives
+  section: Information Systems, BS Major Core Requirements and Electives
+  rule: all
+  courses:
+  - BADM 350
+  - BADM 352
+  - BADM 353
+  id: information-systems-bs-major-core-requir-13
+- name: Information Systems, BS Major Core Requirements and Electives
+  section: Information Systems, BS Major Core Requirements and Electives
+  rule: manual
+  notes:
+  - 'Information Systems Major Electives (choose three courses):'
+  courses:
+  - BADM 351
+  - BADM 356
+  - BADM 357
+  - BADM 453
+  - BADM 458
+  - BADM 358
+  - BADM 370
+  - BADM 371
+  - BADM 372
+  id: information-systems-bs-major-core-requir-14
+- name: Information Systems, BS Major Core Requirements and Electives
+  section: Information Systems, BS Major Core Requirements and Electives
+  rule: manual
+  notes:
+  - 'Information Systems Program electives (choose three courses):'
+  courses:
+  - BADM 323
+  - BADM 324
+  - BADM 326
+  - BADM 329
+  - BADM 374
+  - BADM 375
+  - BADM 377
+  - BADM 379
+  - BADM 382
+  - BADM 358
+  - BADM 370
+  - BADM 372
+  id: information-systems-bs-major-core-requir-15

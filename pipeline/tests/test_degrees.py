@@ -116,14 +116,17 @@ def test_export_writes_index_and_program(tmp_path):
     conn.execute(ins, ("2027-sp", "HIST", "100", "Global History", "3 hours.", "HP NW"))
     msg = degrees.export(conn, tmp_path / "out", {"FIN 221": {"gpa": 3.1, "gn": 900, "nx": 1, "profs": []}},
                          directory=tmp_path / "deg")
-    assert "1 degree file" in msg and "1 unknown" in msg
+    assert "1 degree file" in msg and "1 with unknown codes" in msg
     index = json.loads((tmp_path / "out" / "degrees" / "index.json").read_text())
     assert index == [{"id": "test-bs", "program": "Test, BS", "college": "Test College", "catalog_year": "2026-2027",
-                      "groups": 2}]
+                      "groups": 2, "generated": ""}]
     out = json.loads((tmp_path / "out" / "degrees" / "test-bs.json").read_text())
     assert out["unknown"] == ["ZZZ 999"]
     assert out["courses"]["FIN 221"]["gpa"] == 3.1 and out["courses"]["FIN 221"]["page"] is True
-    assert out["groups"][1]["eligible"] == ["HIST 100"] and out["courses"]["HIST 100"]["g"] == ["HP", "NW"]
+    # gen-ed courses live once, in the shared file; the page fills gen-ed groups' options from it
+    shared = json.loads((tmp_path / "out" / "degrees" / "gened-courses.json").read_text())
+    assert out["groups"][1]["eligible"] == [] and "HIST 100" not in out["courses"]
+    assert shared["HIST 100"]["g"] == ["HP", "NW"]
     conn.close()
 
 

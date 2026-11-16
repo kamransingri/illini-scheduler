@@ -1,0 +1,210 @@
+# Chemistry, BSLAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/chemistry-bslas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: chemistry-bslas
+program: Chemistry, BSLAS
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/chemistry-bslas/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/chemistry-bslas/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by CHEM 102 & CHEM 104 or CHEM 202 & CHEM 204; PHYS 101 & PHYS 102 or PHYS 211 & PHYS 212
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 220 or MATH 221, MATH 231, MATH 241; PHYS 101 & PHYS 102 or PHYS 211 & PHYS 212
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: General Education Requirements
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-and-professional-development-11
+- name: Chemistry and biochemistry courses
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 30 hours.'
+  - Chemistry and biochemistry courses are any courses in CHEM or BIOC.
+  - 'No more than 10 hours of the following courses may count toward the 30 hours: CHEM 197, CHEM 297, CHEM 397, CHEM 497,
+    and CHEM 499. The following courses do not count towards the 30 hours: CHEM 101, CHEM 108, and CHEM 199.'
+  - At least 12 of the 30 hours must be at the 300 or 400 level, including at least one course outside physical chemistry.
+    These 12 hours must include CHEM 440 or CHEM 442 and may include MCB 354 or MCB 450.
+  courses:
+  - CHEM 150
+  id: chemistry-and-biochemistry-courses-12
+- name: General chemistry courses
+  section: General Education Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - CHEM 102 + CHEM 103 + CHEM 104 + CHEM 105
+  - CHEM 202 + CHEM 203 + CHEM 204 + CHEM 205
+  notes:
+  - 'Select one of the following:'
+  id: general-chemistry-courses-13
+- name: Organic chemistry courses
+  section: General Education Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - CHEM 232 + CHEM 233
+  - CHEM 236 + CHEM 237
+  notes:
+  - 'Select one of the following:'
+  id: organic-chemistry-courses-14
+- name: Physical chemistry course
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'No more than 10 hours of the following courses may count toward the 30 hours: CHEM 197, CHEM 297, CHEM 397, CHEM 497,
+    and CHEM 499. The following courses do not count towards the 30 hours: CHEM 101, CHEM 108, and CHEM 199.'
+  - At least 12 of the 30 hours must be at the 300 or 400 level, including at least one course outside physical chemistry.
+    These 12 hours must include CHEM 440 or CHEM 442 and may include MCB 354 or MCB 450.
+  courses:
+  - - CHEM 440
+    - CHEM 442
+  id: physical-chemistry-course-15
+- name: Mathematics courses
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'No more than 10 hours of the following courses may count toward the 30 hours: CHEM 197, CHEM 297, CHEM 397, CHEM 497,
+    and CHEM 499. The following courses do not count towards the 30 hours: CHEM 101, CHEM 108, and CHEM 199.'
+  - At least 12 of the 30 hours must be at the 300 or 400 level, including at least one course outside physical chemistry.
+    These 12 hours must include CHEM 440 or CHEM 442 and may include MCB 354 or MCB 450.
+  courses:
+  - - MATH 220
+    - MATH 221
+  - MATH 231
+  - MATH 241
+  id: mathematics-courses-16
+- name: Physics courses
+  section: General Education Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - PHYS 101 + PHYS 102
+  - PHYS 211 + PHYS 212
+  notes:
+  - 'Select one of the following:'
+  id: physics-courses-17

@@ -1,0 +1,185 @@
+# Creative Writing, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/creative-writing-balas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: creative-writing-balas
+program: Creative Writing, BALAS
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/creative-writing-balas/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/creative-writing-balas/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by CW 243
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+  notes:
+  - fulfilled by CW 100 and any other course approved as Humanities & the Arts
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English, or completion
+    of the third semester in two different languages other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Literature for Creative Writers
+  section: General Education Requirements
+  rule: all
+  courses:
+  - CW 100
+  - CW 200
+  notes:
+  - 'Catalog total: 6 hours.'
+  id: literature-for-creative-writers-11
+- name: Craft
+  section: General Education Requirements
+  rule: all
+  courses:
+  - CW 243
+  notes:
+  - 'Catalog total: 3 hours.'
+  id: craft-12
+- name: Creative Writing Workshops
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 12 hours.'
+  - 12 hours of Creative Writing Workshops, including at least one of the following
+  - '3-course (9-hour) Workshop sequences:'
+  courses:
+  - - CW 106 + CW 206 + CW 406
+    - CW 104 + CW 204 + CW 404
+  id: creative-writing-workshops-13
+- name: Creative Writing Workshops
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - The remaining 3 hours in this category can be satisfied by a fourth CW Workshop outside of the chosen sequence.
+  id: creative-writing-workshops-14
+- name: Writing and Literature
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 3 hours.'
+  - '3 hours of Writing and Literature coursework, either:'
+  - 3 hours of non-Workshop CW coursework (CW 460, or another approved non-Workshop CW course)
+  - 3 hours of ENGL coursework
+  id: writing-and-literature-15
+- name: Additional Literature Coursework
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 12 hours.'
+  - '12 additional hours of approved ENGL coursework, including:'
+  - 9 hours of approved ENGL Literature coursework
+  - 3 hours of an ENGL Difference & Diaspora course
+  id: additional-literature-coursework-16

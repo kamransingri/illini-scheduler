@@ -1,0 +1,151 @@
+# Environmental Engineering, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/environmental-engineering-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: environmental-engineering-bs
+program: Environmental Engineering, BS
+college: The Grainger College of Engineering
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/engineering/environmental-engineering-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 128
+notes:
+- 'Minimum hours required for graduation: 128 hours.'
+double_counting: []
+groups:
+- name: Orientation and Professional Development
+  section: Orientation and Professional Development
+  rule: all
+  courses:
+  - CEE 190
+  - CEE 495
+  - ECE 316
+  - ENG 100
+  id: orientation-and-professional-development-1
+- name: Foundational Mathematics and Science
+  section: Foundational Mathematics and Science
+  rule: all
+  courses:
+  - ATMS 202
+  - CHEM 102
+  - CHEM 103
+  - CHEM 104
+  - CHEM 105
+  - MATH 221
+  - MATH 231
+  - MATH 241
+  - MATH 257
+  - MATH 285
+  - PHYS 211
+  id: foundational-mathematics-and-science-2
+- name: Environmental Engineering Technical Core
+  section: Environmental Engineering Technical Core
+  rule: all
+  courses:
+  - CEE 201
+  - CEE 202
+  - CEE 330
+  - CEE 331
+  - CEE 350
+  - CEE 449
+  - CEE 453
+  - CS 101
+  - SE 101
+  - TAM 211
+  - TAM 212
+  id: environmental-engineering-technical-core-3
+- name: Energy & Environmental Sustainability Primary Field
+  section: Primary Fields (Students choose one of five (5) Primary Fields)
+  rule: all
+  courses:
+  - ABE 436
+  - CEE 340
+  - CEE 433
+  - CEE 493
+  - CHEM 232
+  - CHEM 360
+  - ENSU 301
+  - ME 200
+  - PHYS 212
+  notes:
+  - 'Catalog total: 30 hours.'
+  id: energy-environmental-sustainability-prim-4
+- name: Climate & Environmental Sustainability Primary Field
+  section: Primary Fields (Students choose one of five (5) Primary Fields)
+  rule: all
+  courses:
+  - ACE 310
+  - ATMS 201
+  - CEE 340
+  - CEE 434
+  - CEE 458
+  - CEE 491
+  - CEE 492
+  - - ECON 102
+    - ACE 100
+  - GGIS 379
+  - PHYS 213
+  notes:
+  - 'Catalog total: 31 hours.'
+  id: climate-environmental-sustainability-pri-5
+- name: Water Systems & Sustainability Primary Field
+  section: Primary Fields (Students choose one of five (5) Primary Fields)
+  rule: all
+  courses:
+  - ACE 310
+  - ATMS 201
+  - CEE 433
+  - CEE 434
+  - - CEE 450
+    - CEE 457
+  - CEE 451
+  - CHEM 232
+  - CHEM 360
+  - - ECON 102
+    - ACE 100
+  - ENSU 301
+  - PHYS 213
+  notes:
+  - 'Catalog total: 32 hours.'
+  id: water-systems-sustainability-primary-fie-6
+- name: Public Health Engineering Primary Field
+  section: Primary Fields (Students choose one of five (5) Primary Fields)
+  rule: all
+  courses:
+  - ATMS 305
+  - CEE 435
+  - CEE 437
+  - CEE 438
+  - CEE 441
+  - CHLH 201
+  - CHLH 274
+  - CHLH 469
+  - MCB 300
+  - PHYS 213
+  notes:
+  - 'Catalog total: 30 hours.'
+  id: public-health-engineering-primary-field-7
+- name: One Water Primary Field
+  section: Primary Fields (Students choose one of five (5) Primary Fields)
+  rule: all
+  courses:
+  - CEE 437
+  - - CEE 440
+    - CEE 452
+  - CEE 442
+  - CEE 444
+  - CHBE 221
+  - CHBE 321
+  - CHEM 232
+  - CHEM 360
+  - PHYS 213
+  id: one-water-primary-field-8
+- name: Free Electives
+  section: Free Electives
+  rule: manual
+  notes:
+  - Additional course work, subject to the Grainger College of Engineering restrictions to Free Electives, so that there are
+    at least 128 credit hours earned toward the degree.
+  id: free-electives-9

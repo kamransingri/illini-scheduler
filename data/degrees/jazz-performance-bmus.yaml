@@ -1,0 +1,234 @@
+# Jazz Performance, BMUS (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/jazz-performance-bmus/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: jazz-performance-bmus
+program: Jazz Performance, BMUS
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/jazz-performance-bmus/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/faa/jazz-performance-bmus/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities and the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+  notes:
+  - fulfilled by MUS 313 and MUS 314
+- id: nat
+  name: Natural Sciences and Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social and Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation Requirements
+  section: Orientation Requirements
+  rule: all
+  courses:
+  - MUS 100
+  - FAA 101
+  id: orientation-requirements-11
+- name: Music Theory and Musicianship
+  section: Music Core
+  rule: all
+  courses:
+  - MUS 101
+  - MUS 102
+  - MUS 201
+  - MUS 202
+  - MUS 107
+  - MUS 108
+  - MUS 207
+  - MUS 208
+  id: music-theory-and-musicianship-12
+- name: Musicology
+  section: Music Core
+  rule: all
+  courses:
+  - MUS 110
+  - MUS 313
+  - MUS 314
+  id: musicology-13
+- name: Keyboard Proficiency
+  section: Music Core
+  rule: manual
+  notes:
+  - All students, except keyboard students, must demonstrate keyboard competency when they audition, by proficiency examination
+    when they matriculate, or by enrolling in MUS 172 and/or MUS 173.
+  courses:
+  - MUS 172
+  - MUS 173
+  id: keyboard-proficiency-14
+- name: Music Lessons
+  section: Jazz Performance Studies
+  rule: manual
+  notes:
+  - 'Catalog total: 16 hours.'
+  - Jazz Performance students register for one 2-credit hour lesson each semester for a minimum of eight consecutive semesters.
+  - Of the eight semesters of applied music lessons, two semesters (4 hours) may be in classical applied study.
+  - 'Applied Music Lessons (years 1 & 2). Students choose from:'
+  - MUSC 131, MUSC 132, MUSC 133, MUSC 134, MUSC 135, MUSC 136, MUSC 137, MUSC 138, MUSC 139, MUSC 140, MUSC 141, MUSC 142
+  - 'Applied Music Lessons (years 3 & 4). Students choose from:'
+  - MUSC 431, MUSC 432, MUSC 433, MUSC 434, MUSC 435, MUSC 436, MUSC 437, MUSC 438, MUSC 439, MUSC 440, MUSC 441, MUSC 442
+  id: music-lessons-15
+- name: Jazz Ensemble/Combo
+  section: Jazz Performance Studies
+  rule: manual
+  notes:
+  - 'Catalog total: 8 hours.'
+  - Jazz Performance students must be in a Jazz ensemble and/or Jazz combo each semester of residence; a maximum of 16 hours
+    of ensemble and combo may be applied to the BMUS Jazz Performance degree.
+  - 'Students may choose from:'
+  - MUSC 490, MUSC 491, MUSC 492, MUSC 493, MUSC 494, MUSC 495, MUSC 496, MUSC 497, MUSC 498
+  courses:
+  - MUS 163
+  id: jazz-ensemble-combo-16
+- name: Jazz Ensemble/Combo
+  section: Jazz Performance Studies
+  rule: manual
+  notes:
+  - Jazz piano majors take two (2) credit hours of another jazz course in consultation with advisor.
+  courses:
+  - MUS 164
+  id: jazz-ensemble-combo-17
+- name: Jazz Ensemble/Combo
+  section: Jazz Performance Studies
+  rule: manual
+  notes:
+  - Jazz piano majors take two (2) credit hours of another jazz course in consultation with advisor.
+  courses:
+  - MUS 360
+  - MUS 361
+  - MUS 362
+  - MUS 363
+  - MUS 364
+  - MUS 365
+  - MUS 368
+  - MUS 369
+  - MUS 464
+  - MUS 465
+  - MUSC 300
+  - MUSC 400
+  id: jazz-ensemble-combo-18
+- name: Summary of Credit for the Bachelor of Music in Jazz Performance
+  section: Summary of Credit for the Bachelor of Music in Jazz Performance
+  rule: manual
+  notes:
+  - General Education
+  - Orientation
+  - Music Core
+  - Jazz Performance
+  - Free electives to bring the total hours earned to 120
+  - A minimum of 40 credits at the 300- or 400-level must be completed for this degree
+  - 8 of these hours are fulfilled by MUS 201, MUS 202, MUS 207, and MUS 208, each of which has at least 2 prerequisites and
+    may count as advanced
+  - A maximum of 8 hours of upper level coursework may be earned through ensembles, MUSC 447 through MUSC 498
+  id: summary-of-credit-for-the-bachelor-of-mu-19

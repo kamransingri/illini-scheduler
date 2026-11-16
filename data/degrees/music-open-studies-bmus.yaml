@@ -1,0 +1,239 @@
+# Music-Open Studies, BMUS (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/music-open-studies-bmus/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: music-open-studies-bmus
+program: Music-Open Studies, BMUS
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/music-open-studies-bmus/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/faa/music-open-studies-bmus/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities and the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+  notes:
+  - fulfilled by MUS 313 and MUS 314
+- id: nat
+  name: Natural Sciences and Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social and Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation Requirements
+  section: Orientation Requirements
+  rule: all
+  courses:
+  - MUS 100
+  - FAA 101
+  id: orientation-requirements-11
+- name: Music Theory and Musicianship
+  section: Music Core
+  rule: all
+  courses:
+  - MUS 101
+  - MUS 102
+  - MUS 201
+  - MUS 202
+  - MUS 107
+  - MUS 108
+  - MUS 207
+  - MUS 208
+  id: music-theory-and-musicianship-12
+- name: Musicology
+  section: Music Core
+  rule: all
+  courses:
+  - MUS 110
+  - MUS 313
+  - MUS 314
+  id: musicology-13
+- name: Keyboard Proficiency
+  section: Music Core
+  rule: manual
+  notes:
+  - All students, except keyboard students, must demonstrate keyboard competency when they audition, by proficiency examination
+    when they matriculate, or by enrolling in MUS 172 and/or MUS 173.
+  courses:
+  - MUS 172
+  - MUS 173
+  id: keyboard-proficiency-14
+- name: Plan of Study
+  section: Open Studies
+  rule: manual
+  notes:
+  - Students work with an advisor to submit their own Plan of Study for the Open Studies degree coursework.
+  - 'Important: A minimum of five (5) hours of courses at the 300- and/or 400-level must be chosen from Professional Electives,
+    General Education (not including MUS 313 and MUS 314), or open electives in order to meet the minimum requirement of 40
+    hours of upper-level coursework for this degree.'
+  id: plan-of-study-15
+- name: Applied Music Lessons
+  section: Open Studies
+  rule: manual
+  notes:
+  - 'Catalog total: 12 hours.'
+  - Students must complete four semesters of 100-level applied lessons before they can move to 400-level applied lessons.
+    The minimum number of applied lesson credits for this program is twelve (12).
+  - 'Applied Music Lessons (years 1 & 2). Students choose from:'
+  - MUSC 101, MUSC 102, MUSC 103, MUSC 110, MUSC 111, MUSC 112, MUSC 113, MUSC 114, MUSC 115, MUSC 116, MUSC 117, MUSC 120,
+    MUSC 121, MUSC 122, MUSC 123, MUSC 124, MUSC 125, MUSC 126, MUSC 127, MUSC 128, MUSC 129, MUSC 130, MUSC 131, MUSC 132,
+    MUSC 133, MUSC 134, MUSC 135, MUSC 136, MUSC 137, MUSC 138, MUSC 139, MUSC 140, MUSC 141, MUSC 142
+  - MUSC 401, MUSC 402, MUSC 403, MUSC 410, MUSC 411, MUSC 412, MUSC 413, MUSC 414, MUSC 415, MUSC 416, MUSC 417, MUSC 420,
+    MUSC 421, MUSC 422, MUSC 423, MUSC 424, MUSC 425, MUSC 426, MUSC 427, MUSC 428, MUSC 429, MUSC 430 MUSC 431, MUSC 432,
+    MUSC 433, MUSC 434, MUSC 435, MUSC 436, MUSC 437, MUSC 438, MUSC 439, MUSC 440, MUSC 441, MUSC 442
+  id: applied-music-lessons-16
+- name: Ensemble
+  section: Open Studies
+  rule: manual
+  notes:
+  - 'Catalog total: 8 hours.'
+  - Open Studies majors must be in an approved ensemble each semester of residence. A maximum of 10 hours of ensemble may
+    be applied to the BMUS Open Studies degree.
+  - 'Students choose from:'
+  - MUSC 460, MUSC 461, MUSC 462, MUSC 463, MUSC 464, MUSC 465, MUSC 467, MUSC 469, MUSC 473, MUSC 475, MUSC 476, MUSC 480,
+    MUSC 481, MUSC 482, MUSC 483
+  courses:
+  - MUS 242
+  id: ensemble-17
+- name: Advanced Music Electives in Musicology and Music Theory
+  section: Open Studies
+  rule: manual
+  notes:
+  - 'Catalog total: 12 hours.'
+  - Students select 12 hours from the advanced Musicology and Music Theory courses below.
+  - 'Students must choose at least one musicology course:'
+  - MUS 410, MUS 411, MUS 412, MUS 413, MUS 414, MUS 415, MUS 416, MUS 418, MUS 421
+  - 'and one music theory course:'
+  - MUS 400, MUS 404, MUS 405, MUS 407, MUS 408, MUS 409, MUS 426
+  id: advanced-music-electives-in-musicology-a-18
+- name: Professional Electives
+  section: Open Studies
+  rule: manual
+  notes:
+  - 'Catalog total: 12 hours.'
+  - To be chosen in consultation with advisor according to the Open Studies focus area. The focus area can be inside or outside
+    of music, or an area which combines both.
+  id: professional-electives-19
+- name: Summary of Credit for the Bachelor of Music in Music-Open Studies
+  section: Summary of Credit for the Bachelor of Music in Music-Open Studies
+  rule: manual
+  notes:
+  - General Education
+  - Orientation
+  - Music Core
+  - Open Studies
+  - Free electives to bring the total hours earned to 120
+  - A minimum of 40 credits at the 300- or 400-level must be completed for this degree
+  - 8 of these hours are fulfilled by MUS 201, MUS 202, MUS 207, and MUS 208, each of which has at least 2 prerequisites and
+    may count as advanced
+  - A maximum of 8 hours of upper level coursework may be earned through ensembles, MUSC 447 through MUSC 498
+  id: summary-of-credit-for-the-bachelor-of-mu-20

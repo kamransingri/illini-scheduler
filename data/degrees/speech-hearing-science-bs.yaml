@@ -1,0 +1,247 @@
+# Speech & Hearing Science, BS (College of Applied Health Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/ahs/speech-hearing-science-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: speech-hearing-science-bs
+program: Speech & Hearing Science, BS
+college: College of Applied Health Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/ahs/speech-hearing-science-bs/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300 and 400 level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/ahs/speech-hearing-science-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by CHEM 101, CHEM 102, CHEM 108, CHEM 202, PHYS 101, PHYS 102, PHYS 211, or PHYS 212; and ANTH 143, ANTH 241,
+    ANTH 246, ANTH 249, HK 150, IB 100, IB 104, IB 110, IB 150, MCB 100, MCB 150, or MCB 170
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by LING 100 and SHS 271
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by STAT 100, STAT 107, STAT 200, or STAT 212; and any other course approved as Quantitative Reasoning I or II
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Chemistry/Physics Requirement (Select one)
+  section: Chemistry/Physics Requirement (Select one)
+  rule: all
+  courses:
+  - CHEM 101
+  - CHEM 102 + CHEM 103
+  - CHEM 108
+  - CHEM 202 + CHEM 203
+  - PHYS 101
+  - PHYS 102
+  - PHYS 211
+  - PHYS 212
+  id: chemistry-physics-requirement-select-one-11
+- name: Animal/Human Biology Requirement (Select one)
+  section: Animal/Human Biology Requirement (Select one)
+  rule: all
+  courses:
+  - ANTH 143
+  - ANTH 241
+  - ANTH 246
+  - ANTH 249
+  - HK 150
+  - IB 100
+  - IB 104
+  - IB 110
+  - IB 150
+  - MCB 100
+  - MCB 150
+  - MCB 170
+  id: animal-human-biology-requirement-select-12
+- name: Statistics Requirement (Select one)
+  section: Statistics Requirement (Select one)
+  rule: all
+  courses:
+  - STAT 100
+  - STAT 107
+  - STAT 200
+  - STAT 212
+  id: statistics-requirement-select-one-13
+- name: Linguistics Requirement
+  section: Linguistics Requirement
+  rule: all
+  courses:
+  - LING 100
+  id: linguistics-requirement-14
+- name: Speech and Hearing Science Professional Core
+  section: Speech and Hearing Science Professional Core
+  rule: all
+  courses:
+  - SHS 170
+  - SHS 191
+  - SHS 200
+  - SHS 240
+  - SHS 271
+  - SHS 280
+  - SHS 300
+  - SHS 301
+  - SHS 320
+  - SHS 385
+  - SHS 391
+  - SHS 450
+  - SHS 451
+  - SHS 475
+  id: speech-and-hearing-science-professional-15
+- name: Speech and Hearing Science Professional Core
+  section: Speech and Hearing Science Professional Core
+  rule: manual
+  notes:
+  - Plus 12 hours of SHS electives from the list below.
+  id: speech-and-hearing-science-professional-16
+- name: Speech and Hearing Science Professional Core
+  section: Speech and Hearing Science Professional Core
+  rule: all
+  courses:
+  - SHS 120
+  - SHS 121
+  - SHS 221
+  - SHS 222
+  - SHS 270
+  - SHS 321
+  - SHS 352
+  - SHS 375
+  - SHS 380
+  - SHS 383
+  - SHS 427
+  - SHS 433
+  - SHS 480
+  - SHS 481
+  - SHS 482
+  id: speech-and-hearing-science-professional-17
+- name: Speech and Hearing Science Professional Core
+  section: Speech and Hearing Science Professional Core
+  rule: manual
+  notes:
+  - One of the courses below may be counted toward the 12 credits of SHS electives
+  courses:
+  - CMN 232
+  - EPSY 202
+  - LING 210
+  - LING 450
+  id: speech-and-hearing-science-professional-18
+- name: Speech and Hearing Science Professional Core
+  section: Speech and Hearing Science Professional Core
+  rule: manual
+  notes:
+  - No more than 3 credits total from the courses below may be counted toward the 12 credits of SHS electives
+  courses:
+  - SHS 291
+  - SHS 390
+  - SHS 395
+  id: speech-and-hearing-science-professional-19

@@ -1,0 +1,33 @@
+# Political Science: General Political Science, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/political-science-balas/general-political-science/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: political-science-balas-general-political-science
+program: 'Political Science: General Political Science, BALAS'
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/political-science-balas/general-political-science/
+read_on: '2026-11-16'
+generated: '2026-11-16'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+double_counting: []
+groups:
+- name: General Political Science Concentration Requirements
+  section: General Political Science Concentration Requirements
+  rule: all
+  courses:
+  - PS 100
+  id: general-political-science-concentration-1
+- name: General Political Science Concentration Requirements
+  section: General Political Science Concentration Requirements
+  rule: manual
+  notes:
+  - Select any additional 100- or 200-level Political Science courses
+  - Select any 300- or 400-level Political Science courses
+  - Select Political Science courses at any level
+  - Students will select a second major, or a minor, or a set of courses of at least 12 hours of thematically-related coursework
+    outside political science, developed in conjunction with an academic advisor.
+  id: general-political-science-concentration-2
