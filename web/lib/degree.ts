@@ -95,7 +95,11 @@ export function selectorMatches(sel: string, c: string, course: DegreeCourse | u
   const r = /^([A-Z]{2,5}) (\d{3})-(\d{3})$/.exec(sel);
   if (!r) return false;
   const [subj, num] = c.split(" ");
-  return subj === r[1] && Number(num) >= Number(r[2]) && Number(num) <= Number(r[3]);
+  if (subj !== r[1]) return false;
+  // AP elective credit ("FIN 4--") fills a range only when the range takes every number at that level
+  const level = /^([1-4])--$/.exec(num);
+  if (level) return Number(r[2]) <= Number(level[1]) * 100 && Number(r[3]) >= Number(level[1]) * 100 + 99;
+  return Number(num) >= Number(r[2]) && Number(num) <= Number(r[3]);
 }
 
 /** Does this group take this course at all (ignoring what else it is used for)? */
@@ -120,7 +124,7 @@ export function canShare(a: DegreeGroup, b: DegreeGroup, rules: DcRule[]): Verdi
   return { allow: "unclear", rule: null, why: "The catalog doesn't say whether one course can count for both." };
 }
 
-export type Used = { code: string; status: CourseStatus; hours: number };
+export type Used = { code: string; status: CourseStatus; hours: number; ap?: string };
 export type Blocked = { code: string; other: string; verdict: Verdict };
 export type GroupStatus = "done" | "in_progress" | "partial" | "open";
 export type GroupResult = {
@@ -139,6 +143,9 @@ export type Evaluation = { results: GroupResult[]; usedBy: Map<string, string[]>
 
 export function evaluate(deg: Degree, mine: MyCourse[], ticked: string[] = []): Evaluation {
   const taken = new Map<string, CourseStatus>(mine.map((c) => [code(c), c.status]));
+  const own = new Map(mine.map((c) => [code(c), c]));
+  // AP credit counts at CITL's hours, which can differ from the catalog's (AP French gives FR 205 at 2 hours)
+  const hoursFor = (c: string) => own.get(c)?.hours ?? hoursOf(deg.courses[c]);
   const usedBy = new Map<string, string[]>();
   const byId = new Map(deg.groups.map((g) => [g.id, g]));
   const results: GroupResult[] = [];
@@ -163,7 +170,7 @@ export function evaluate(deg: Degree, mine: MyCourse[], ticked: string[] = []): 
     let hoursCaveat = false;
     const take = (c: string) => {
       commit(g, c);
-      used.push({ code: c, status: taken.get(c)!, hours: hoursOf(deg.courses[c]) });
+      used.push({ code: c, status: taken.get(c)!, hours: hoursFor(c), ...(own.get(c)?.ap ? { ap: own.get(c)!.ap } : {}) });
     };
     let have = 0;
     let need = 0;
@@ -215,8 +222,8 @@ export function evaluate(deg: Degree, mine: MyCourse[], ticked: string[] = []): 
         if (have >= need) break;
         if (!tryUse(g, c, blocked)) continue;
         const course = deg.courses[c];
-        if (course && course.cr[0] !== course.cr[1]) hoursCaveat = true;
-        const h = Math.min(hoursOf(course), g.max_hours[c] ?? Infinity);
+        if (course && course.cr[0] !== course.cr[1] && own.get(c)?.hours === undefined) hoursCaveat = true;
+        const h = Math.min(hoursFor(c), g.max_hours[c] ?? Infinity);
         take(c);
         used[used.length - 1].hours = h;
         have += h;
@@ -229,6 +236,33 @@ export function evaluate(deg: Degree, mine: MyCourse[], ticked: string[] = []): 
     results.push({ group: g, status, used, have: Math.min(have, need), need, unit, missingItems, blocked, hoursCaveat });
   }
   return { results, usedBy };
+}
+
+export type HoursSoFar = { done: number; inProgress: number; unknown: string[]; variable: boolean };
+
+/**
+ * Credit hours in My courses (completed and credit, then in progress), counting AP credit at CITL's hours. `lookup`
+ * gives a course's [min, max] hours from the course data; courses it doesn't know are listed in `unknown`.
+ */
+export function hoursSoFar(mine: MyCourse[], lookup: (code: string) => [number, number] | null): HoursSoFar {
+  const out: HoursSoFar = { done: 0, inProgress: 0, unknown: [], variable: false };
+  for (const c of mine) {
+    const cr = c.hours !== undefined ? ([c.hours, c.hours] as [number, number]) : lookup(code(c));
+    if (!cr) {
+      out.unknown.push(code(c));
+      continue;
+    }
+    if (cr[0] !== cr[1]) out.variable = true;
+    if (c.status === "in_progress") out.inProgress += cr[0];
+    else out.done += cr[0];
+  }
+  return out;
+}
+
+/** "3", "3 OR 4", "1 TO 4" (the search index's hours text) as [min, max]. */
+export function parseHours(text: string | undefined): [number, number] | null {
+  const nums = (text ?? "").match(/\d+(\.\d+)?/g)?.map(Number) ?? [];
+  return nums.length ? [Math.min(...nums), Math.max(...nums)] : null;
 }
 
 export function needText(r: GroupResult): string {
