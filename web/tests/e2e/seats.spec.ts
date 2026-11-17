@@ -20,7 +20,7 @@ test("just-opened page loads and filters", async ({ page }) => {
 
 test("search handles a typo and a nickname", async ({ page }) => {
   await page.goto("./");
-  const box = page.getByLabel("Search courses or instructors");
+  const box = page.getByLabel(/Search courses/);
   await box.fill("calc 2");
   await expect(page.getByRole("listbox").locator("li").first()).toContainText("MATH 231");
   await box.fill("calclus");
