@@ -167,6 +167,9 @@ describe("my courses encoding", () => {
       minor: "",
       courses: [{ s: "STAT", n: "107", status: "done" }],
       ticked: ["language"],
+      ap: [],
+      year: "",
+      declined: [],
     });
     expect(stateFromParams(new URLSearchParams("q=1"))).toBeNull();
   });

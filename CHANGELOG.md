@@ -25,6 +25,18 @@ the first build, phases 0 to 12, recorded in docs/PROGRESS.md.
 - Catalog importer: a "Select two of the following:" header row becomes a "choose 2" rule instead of a tick box, and
   requirement files can say `type: minor`.
 
+## [0.6.0] - 2026-11-17
+
+### Added
+
+- Degree checklist: add your AP exams and scores and the checklist fills in the courses they're expected to give,
+  from CITL's AP credit table for the year you started at Illinois (2024-2025, 2025-2026 or 2026-2027). Calculus BC
+  asks for the AB subscore and Music Theory for the aural subscore when the score depends on it; Calculus uses the
+  Grainger rows for engineering programs. Each exam shows CITL's placement message word for word, and any course can be
+  unticked if you'd rather take it than accept the credit. AP courses count at CITL's hours and carry an "AP credit"
+  tag; the scores (not the courses) are kept in your browser and the share link.
+- Degree checklist: the hours in My courses (with AP credit and in-progress hours) next to the program's minimum.
+
 ## [0.5.0] - 2026-11-17
 
 ### Added
@@ -114,7 +126,8 @@ the first build, phases 0 to 12, recorded in docs/PROGRESS.md.
 - A partial Rate My Professors error no longer stops `make data`.
 - RSS feeds are written as UTF-8.
 
-[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.2.0...v0.3.0

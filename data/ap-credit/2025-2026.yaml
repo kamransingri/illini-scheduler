@@ -1,0 +1,472 @@
+# AP credit for students entering Illinois in Summer 2025, Fall 2025 or Spring 2026.
+# Copied by hand from CITL's 2025 AP credit page. Format and rules: docs/AP-CREDIT.md. Placement messages are word for
+# word; a `fix` says where we corrected the page and quotes it.
+year: 2025-2026
+entering: Summer 2025, Fall 2025 or Spring 2026
+source: https://citl.illinois.edu/advanced-placement-ap-credit-2025
+read_on: 2026-11-17
+notes:
+  - Course numbers listed as 1-- or 2-- are elective credit within the stated subject area. Students can apply
+    elective credit towards their graduation requirements; ask your academic advisor how it can best be used in your
+    program.
+  - The credit policies in effect when you first enrolled at Illinois are the ones that apply to you.
+exams:
+  - id: AFAM
+    name: African American Studies
+    rows:
+      - scores: [3, 4, 5]
+        credit: {AFRO 100: 3}
+
+  - id: RESEARCH
+    name: Research
+    rows:
+      - scores: [3, 4, 5]
+        credit: {LAS 1--: 3}
+
+  - id: SEMINAR
+    name: Seminar
+    rows:
+      - scores: [3, 4, 5]
+        credit: {LAS 1--: 3}
+
+  - id: ARTHIST
+    name: Art History
+    rows:
+      - scores: [3, 4, 5]
+        credit: {ART 1--: 3}
+
+  - id: ART2D
+    name: 2-D Art and Design
+    rows:
+      - scores: [3, 4, 5]
+        credit: {ART 105: 3}
+
+  - id: ART3D
+    name: 3-D Art and Design
+    rows:
+      - scores: [3, 4, 5]
+        credit: {ART 104: 3}
+
+  - id: DRAWING
+    name: Drawing
+    rows:
+      - scores: [3, 4, 5]
+        credit: {ART 102: 3}
+
+  - id: BIO
+    name: Biology
+    rows:
+      - scores: [3, 4]
+        credit: {IB 100: 3}
+      - scores: [5]
+        credit: {IB 150: 4, MCB 150: 4}
+        message: Talk with your advisor to determine which biology course you should enroll in, as it will depend on
+          your major and your educational goals.
+
+  - id: CALCAB
+    name: Calculus AB
+    rows:
+      - scores: [3]
+        college: other
+        credit: {MATH 234: 4}
+        message: Talk with your advisor. If your program requires MATH 220 or MATH 221, you will not receive credit
+          towards graduation for MATH 234.
+      - scores: [4, 5]
+        college: other
+        credit: {MATH 220: 5}
+        message: Placed into MATH 231
+      - scores: [3]
+        college: grainger
+        credit: {MATH 234: 4}
+        message: MATH 234 does not satisfy the Calculus I requirement for Grainger Engineering majors. Discuss taking
+          MATH 220 or MATH 221 during your advising appointment on your New Student Registration Day.
+      - scores: [4]
+        college: grainger
+        credit: {MATH 220: 5}
+        message: Discuss during your advising appointment on your New Student Registration Day. Grainger Engineering
+          recommends taking MATH 221.
+      - scores: [5]
+        college: grainger
+        credit: {MATH 220: 5}
+        message: Placed into MATH 231 (Section EL1 or EL2) with concurrent enrollment in MATH 299.
+
+  - id: CALCBC
+    name: Calculus BC
+    sub: Calculus AB subscore
+    rows:
+      - scores: [3]
+        sub: [0, 1, 2, 3]
+        college: other
+        credit: {MATH 234: 4}
+        message: Talk with your advisor. If your program requires MATH 220 or MATH 221, you will not receive credit
+          towards graduation for MATH 234.
+      - scores: [3]
+        sub: [4, 5]
+        college: other
+        credit: {MATH 220: 5}
+        message: Placed into MATH 231
+      - scores: [4, 5]
+        college: other
+        credit: {MATH 220: 5, MATH 231: 3}
+        message: Placed into MATH 241
+      - scores: [3]
+        sub: [0, 1, 2, 3]
+        college: grainger
+        credit: {MATH 234: 4}
+        message: MATH 234 does not satisfy the Calculus I requirement for Grainger Engineering majors. Discuss taking
+          MATH 220 or MATH 221 during your advising appointment on your New Student Registration Day.
+      - scores: [3]
+        sub: [4]
+        college: grainger
+        credit: {MATH 220: 5}
+        message: Discuss during your advising appointment on your New Student Registration Day. Grainger Engineering
+          recommends you take MATH 220 or MATH 221.
+      - scores: [3]
+        sub: [5]
+        college: grainger
+        credit: {MATH 220: 5}
+        message: Placed into MATH 231 (Section EL1 or EL2) with concurrent enrollment in MATH 299.
+      - scores: [4]
+        college: grainger
+        credit: {MATH 220: 5, MATH 231: 3}
+        message: Discuss during your advising appointment on your New Student Registration Day. Grainger Engineering
+          recommends taking MATH 231 (Section EL1 or EL2) with concurrent enrollment in MATH 299.
+      - scores: [5]
+        college: grainger
+        credit: {MATH 220: 5, MATH 231: 3}
+        message: Placed into MATH 241.
+
+  - id: CHEM
+    name: Chemistry
+    notes:
+      - Lecture credit only. Lab credit (CHEM 103, CHEM 105) is not awarded for AP.
+    rows:
+      - scores: [3]
+        credit: {CHEM 102: 3}
+        message: CHEM 104; Consult with your advisor to determine which Chemistry course you should enroll in
+      - scores: [4, 5]
+        credit: {CHEM 102: 3, CHEM 104: 3}
+        message: Consult with your advisor to determine which Chemistry course you should enroll in
+
+  - id: CHIN
+    name: Chinese Language and Culture
+    rows:
+      - scores: [3]
+        credit: {CHIN 2--: 5}
+        message: CHIN 203
+      - scores: [4]
+        credit: {CHIN 203: 5, CHIN 204: 5}
+        message: CHIN 305
+      - scores: [5]
+        credit: {CHIN 203: 5, CHIN 204: 5, CHIN 305: 5, CHIN 306: 5}
+        message: CHIN 407 or CHIN 440
+
+  - id: CSA
+    name: Computer Science A
+    rows:
+      - scores: [3]
+        credit: {CS 105: 3}
+      - scores: [4, 5]
+        credit: {CS 101: 3}
+
+  - id: CSP
+    name: Computer Science Principles
+    rows:
+      - scores: [3, 4]
+        credit: {CS 102: 4}
+      - scores: [5]
+        credit: {CS 105: 3}
+
+  - id: MACRO
+    name: Macroeconomics
+    rows:
+      - scores: [3, 4]
+        credit: {ECON 1--: 3}
+        message: You may register for the departmental ECON 103 proficiency exam. Consult with your advisor for a
+          course recommendation.
+      - scores: [5]
+        credit: {ECON 103: 3}
+        message: Consult with your advisor.
+
+  - id: MICRO
+    name: Microeconomics
+    rows:
+      - scores: [3, 4]
+        credit: {ECON 1--: 3}
+        message: You may register for the departmental ECON 102 proficiency exam. Consult with your advisor for a
+          course recommendation.
+      - scores: [5]
+        credit: {ECON 102: 3}
+        message: Consult with your advisor.
+
+  - id: ENGLANG
+    name: English Language and Composition
+    rows:
+      - scores: [3]
+        credit: {RHET 1--: 3}
+      - scores: [4, 5]
+        credit: {RHET 105: 4}
+        message: You have fulfilled the 'Composition I' requirement.
+
+  - id: ENGLIT
+    name: English Literature and Composition
+    rows:
+      - scores: [3]
+        credit: {RHET 1--: 3}
+      - scores: [4, 5]
+        with: {ENGLANG: [0, 1, 2, 3]}
+        credit: {RHET 105: 4}
+        message: You have fulfilled the 'Composition I' requirement.
+      - scores: [4, 5]
+        with: {ENGLANG: [4, 5]}
+        credit: {RHET 105: 4, ENGL 1--: 3}
+        message: You have fulfilled the 'Composition I' requirement.
+
+  - id: ENVSCI
+    name: Environmental Science
+    rows:
+      - scores: [3]
+        credit: {NRES 1--: 3}
+      - scores: [4, 5]
+        credit: {NRES 100: 3}
+
+  - id: FR
+    name: French Language and Culture
+    rows:
+      - scores: [3]
+        credit: {FR 103: 4}
+        message: FR 104
+      - scores: [4]
+        credit: {FR 103: 4, FR 104: 4, FR 205: 2}
+        message: FR 207
+      - scores: [5]
+        credit: {FR 103: 4, FR 104: 4, FR 205: 2, FR 207: 3}
+        message: FR 211 or FR 212
+
+  - id: GER
+    name: German Language and Culture
+    rows:
+      - scores: [3]
+        credit: {GER 103: 4, GER 104: 4}
+        message: GER 211
+      - scores: [4, 5]
+        credit: {GER 103: 4, GER 104: 4, GER 211: 3}
+        message: GER 212
+
+  - id: GOVCOMP
+    name: Comparative Government and Politics
+    rows:
+      - scores: [3, 4]
+        credit: {PS 1--: 3}
+        message: Any PS course numbered higher than PS 199
+      - scores: [5]
+        credit: {PS 240: 3}
+        message: Any PS course numbered higher than PS 199 other than PS 240
+
+  - id: GOVUS
+    name: United States Government and Politics
+    rows:
+      - scores: [3]
+        credit: {PS 1--: 3}
+        message: PS 101
+      - scores: [4, 5]
+        credit: {PS 101: 3}
+        message: Any PS course numbered higher than PS 199
+
+  - id: EURHIST
+    name: European History
+    rows:
+      - scores: [3, 4]
+        credit: {HIST 1--: 3}
+      - scores: [5]
+        credit: {HIST 142: 3}
+
+  - id: USHIST
+    name: United States History
+    rows:
+      - scores: [3, 4, 5]
+        credit: {HIST 1--: 3}
+
+  - id: WORLDHIST
+    name: World History
+    rows:
+      - scores: [3, 4]
+        credit: {HIST 1--: 3}
+      - scores: [5]
+        credit: {HIST 100: 3}
+
+  - id: HUMGEO
+    name: Human Geography
+    rows:
+      - scores: [3]
+        credit: {GGIS 1--: 3}
+        message: GGIS 104
+      - scores: [4, 5]
+        credit: {GGIS 104: 4}
+        message: GGIS 204 or GGIS 210
+
+  - id: ITAL
+    name: Italian Language and Culture
+    rows:
+      - scores: [3]
+        credit: {ITAL 102: 4}
+        message: Please meet with Laura Callegari Hill to discuss opportunities for higher placement and possibly
+          additional proficiency credit.
+      - scores: [4]
+        credit: {ITAL 103: 4}
+        message: Please meet with Laura Callegari Hill to discuss opportunities for higher placement and possibly
+          additional proficiency credit.
+      - scores: [5]
+        credit: {ITAL 103: 4, ITAL 104: 4}
+        message: Please meet with Laura Callegari Hill to discuss opportunities for higher placement and possibly
+          additional proficiency credit.
+
+  - id: JAPN
+    name: Japanese Language and Culture
+    rows:
+      - scores: [3]
+        credit: {JAPN 2--: 5}
+        message: Take the UIUC Japanese Placement Test.
+      - scores: [4]
+        credit: {JAPN 203: 5, JAPN 204: 5}
+        message: JAPN 305
+      - scores: [5]
+        credit: {JAPN 203: 5, JAPN 204: 5, JAPN 305: 5, JAPN 306: 5}
+        message: Take the UIUC Japanese Placement Test.
+
+  - id: LAT
+    name: Latin
+    rows:
+      - scores: [3]
+        credit: {LAT 201: 4, LAT 202: 4}
+        message: LAT 401
+      - scores: [4, 5]
+        credit: {LAT 201: 4, LAT 202: 4, LAT 1--: 3}
+        message: LAT 401
+
+  - id: MUSTH
+    name: Music Theory
+    sub: Aural subscore
+    rows:
+      - scores: [3]
+        credit: {MUS 1--: 2}
+        message: You may take the Music Theory or the Musicianship proficiency exam, if you wish.
+      - scores: [4]
+        sub: [1, 2, 3]
+        credit: {MUS 101: 2}
+        message: You may take the Music Theory or the Musicianship proficiency exam, if you wish.
+      - scores: [4]
+        sub: [4]
+        credit: {MUS 101: 2, MUS 102: 2}
+        message: You may take the Musicianship proficiency exam, if you wish.
+      - scores: [4, 5]
+        sub: [5]
+        credit: {MUS 101: 2, MUS 102: 2, MUS 107: 2}
+      - scores: [5]
+        sub: [1, 2, 3, 4]
+        credit: {MUS 101: 2, MUS 102: 2}
+        message: You may take the Musicianship proficiency exam, if you wish.
+
+  - id: PHYS1
+    name: Physics 1
+    rows:
+      - scores: [3]
+        credit: {PHYS 1--: 3}
+        message: Take the UIUC Physics Placement Test prior to enrolling in a Physics course. You may register for the
+          PHYS 101 proficiency exam.
+      - scores: [4]
+        credit: {PHYS 1--: 4}
+        message: Take the UIUC Physics Placement Test prior to enrolling in a Physics course. You may register for the
+          PHYS 101 proficiency exam.
+      - scores: [5]
+        credit: {PHYS 101: 5}
+        message: Consult with your advisor.
+
+  - id: PHYS2
+    name: Physics 2
+    rows:
+      - scores: [3]
+        credit: {PHYS 1--: 3}
+        message: Take the UIUC Physics Placement Test prior to enrolling in a Physics course. You may register for the
+          PHYS 101 proficiency exam.
+      - scores: [4]
+        credit: {PHYS 1--: 4}
+        message: Take the UIUC Physics Placement Test prior to enrolling in a Physics course. You may register for the
+          PHYS 102 proficiency exam.
+        fix: The page says "the PHYS 10 proficiency exam"; Physics 2 corresponds to PHYS 102.
+      - scores: [5]
+        credit: {PHYS 102: 5}
+        message: Consult with your advisor.
+
+  - id: PHYSCEM
+    name: 'Physics C: Electricity and Magnetism'
+    rows:
+      - scores: [3]
+        credit: {PHYS 2--: 3}
+        message: Take the UIUC Physics Placement Test prior to enrolling in a Physics course. You may register for the
+          Physics proficiency exam that corresponds to the requirements of your program.
+      - scores: [4]
+        credit: {PHYS 2--: 4}
+        message: Take the UIUC Physics Placement Test prior to enrolling in a Physics course. You may register for the
+          Physics proficiency exam that corresponds to the requirements of your program.
+      - scores: [5]
+        credit: {PHYS 212: 4}
+        message: Consult with your advisor.
+
+  - id: PHYSCM
+    name: 'Physics C: Mechanics'
+    rows:
+      - scores: [3]
+        credit: {PHYS 2--: 3}
+        message: Take the UIUC Physics Placement Test prior to enrolling in a Physics course. You may register for the
+          Physics proficiency exam that corresponds to the requirements of your program.
+      - scores: [4]
+        credit: {PHYS 2--: 4}
+        message: Take the UIUC Physics Placement Test prior to enrolling in a Physics course. You may register for the
+          Physics proficiency exam that corresponds to the requirements of your program.
+      - scores: [5]
+        credit: {PHYS 211: 4}
+        message: Consult with your advisor.
+
+  - id: PRECALC
+    name: Precalculus
+    rows:
+      - scores: [3, 4, 5]
+        credit: {MATH 1--: 3}
+        message: Follow your ALEKS placement.
+
+  - id: PSYC
+    name: Psychology
+    rows:
+      - scores: [3, 4]
+        credit: {PSYC 1--: 3}
+      - scores: [5]
+        credit: {PSYC 100: 4}
+
+  - id: SPANLANG
+    name: Spanish Language and Culture
+    rows:
+      - scores: [3]
+        credit: {SPAN 141: 4}
+        message: SPAN 200, 202, 204, 208, 228, or 232
+      - scores: [4, 5]
+        credit: {SPAN 141: 4, SPAN 200: 3, SPAN 204: 3}
+        message: SPAN 202, 208, 228, or 232
+
+  - id: SPANLIT
+    name: Spanish Literature and Culture
+    rows:
+      - scores: [3]
+        credit: {SPAN 141: 4}
+        message: SPAN 200, 202, 204, 208, 228, or 232
+      - scores: [4, 5]
+        credit: {SPAN 141: 4, SPAN 200: 3, SPAN 204: 3}
+        message: SPAN 202, 208, 228, or 232
+
+  - id: STAT
+    name: Statistics
+    rows:
+      - scores: [3]
+        credit: {STAT 1--: 3}
+      - scores: [4, 5]
+        credit: {STAT 100: 3}

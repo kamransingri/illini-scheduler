@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { alsoCounts, evaluate, hydrate, needText, options, prereqNote, rankCourse, type Degree, type DegreeCourse, type DegreeIndex, type GroupResult, type GroupStatus, type Ranked } from "@/lib/degree";
+import { apCredit, creditCourses, isElective, isGrainger, pickYear, subOptions, type ApSummary, type ApTable, type ApYear } from "@/lib/apcredit";
+import { alsoCounts, evaluate, hoursSoFar, hydrate, needText, options, parseHours, prereqNote, rankCourse, type Degree, type DegreeCourse, type DegreeIndex, type GroupResult, type GroupStatus, type HoursSoFar, type Ranked } from "@/lib/degree";
 import { courseHref, dataUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, termLabel } from "@/lib/format";
 import { EMPTY, MINOR_TICK, onMineChange, readMine, sameState, STATUS_LABEL, stateFromParams, stateToParams, writeMine, type CourseStatus, type MyState } from "@/lib/mycourses";
 import type { ScorePriors } from "@/lib/score";
@@ -55,6 +56,16 @@ const loadDegree = (id: string): Promise<Degree> => {
   return Promise.all([getJson<Degree>(`degrees/${id}.json`), genedCache]).then(([deg, gened]) => hydrate(deg, gened));
 };
 
+// CITL's AP credit tables (pipeline/ap_credit.py), one small file for every entering year.
+let apCache: Promise<ApTable> | null = null;
+const loadAp = (): Promise<ApTable> => {
+  if (!apCache) {
+    apCache = getJson<ApTable>("ap-credit.json");
+    apCache.catch(() => (apCache = null));
+  }
+  return apCache;
+};
+
 export default function DegreeChecklist({ programs, meta }: { programs: DegreeIndex; meta: { next_term: string; score_priors: ScorePriors | null } }) {
   const [st, setSt] = useState<MyState>(EMPTY);
   const [shared, setShared] = useState<MyState | null>(null); // your own list, kept while a shared link is open
@@ -66,6 +77,8 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
   const majors = useMemo(() => programs.filter((p) => p.type !== "minor"), [programs]);
   const minors = useMemo(() => programs.filter((p) => p.type === "minor"), [programs]);
   const [index, setIndex] = useState<SearchIndex | null>(null);
+  const [apTable, setApTable] = useState<ApTable | null>(null);
+  const [apError, setApError] = useState(false);
   const weights = useWeights();
 
   // Start from the link if it carries a list; never overwrite a saved list without asking.
@@ -73,12 +86,15 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
     const fromUrl = stateFromParams(new URLSearchParams(window.location.search));
     const saved = readMine();
     let start = fromUrl ?? saved;
-    if (fromUrl && saved.courses.length && !sameState(saved, fromUrl)) setShared(saved);
+    if (fromUrl && (saved.courses.length || saved.ap.length) && !sameState(saved, fromUrl)) setShared(saved);
     else if (fromUrl) writeMine(fromUrl);
     if (!start.program && majors.length === 1) start = { ...start, program: majors[0].id };
     setSt(start);
     setReady(true);
     loadIndex().then(setIndex).catch(() => setIndex(null));
+    loadAp()
+      .then(setApTable)
+      .catch(() => setApError(true));
     return onMineChange(() => {
       setShared(null);
       setSt(readMine());
@@ -115,13 +131,25 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
       .catch((e: Error) => setMinorError(e.message));
   }, [st.minor]);
 
+  // AP scores become "credit" courses at CITL's hours; the college picks the Grainger rows for Calculus.
+  const grainger = isGrainger(programs.find((p) => p.id === st.program)?.college);
+  const apYear = apTable ? pickYear(apTable, st.year) : null;
+  const apSum = useMemo(() => (apYear && st.ap.length ? apCredit(apYear, st.ap, grainger) : null), [apYear, st.ap, grainger]);
+  const allCourses = useMemo(() => [...st.courses, ...(apSum ? creditCourses(apSum.credits, st.declined, st.courses) : [])], [st.courses, st.declined, apSum]);
+  const apReady = !st.ap.length || !!apTable || apError;
   const majorTicks = useMemo(() => st.ticked.filter((t) => !t.startsWith(MINOR_TICK)), [st.ticked]);
   const minorTicks = useMemo(() => st.ticked.filter((t) => t.startsWith(MINOR_TICK)).map((t) => t.slice(MINOR_TICK.length)), [st.ticked]);
-  const ev = useMemo(() => (deg ? evaluate(deg, st.courses, majorTicks) : null), [deg, st.courses, majorTicks]);
-  const minorEv = useMemo(() => (minorDeg ? evaluate(minorDeg, st.courses, minorTicks) : null), [minorDeg, st.courses, minorTicks]);
+  const ev = useMemo(() => (deg && apReady ? evaluate(deg, allCourses, majorTicks) : null), [deg, apReady, allCourses, majorTicks]);
+  const minorEv = useMemo(() => (minorDeg && apReady ? evaluate(minorDeg, allCourses, minorTicks) : null), [minorDeg, apReady, allCourses, minorTicks]);
   const generatedOn = majors.find((p) => p.id === st.program)?.generated;
   const minorGeneratedOn = minors.find((p) => p.id === st.minor)?.generated;
-  const taken = useMemo(() => new Set(st.courses.map((c) => `${c.s} ${c.n}`)), [st.courses]);
+  const taken = useMemo(() => new Set(allCourses.map((c) => `${c.s} ${c.n}`)), [allCourses]);
+  const hours = useMemo(() => {
+    if (!deg) return null;
+    const byCode = new Map(index?.courses.map((c) => [`${c.s} ${c.n}`, c.c]) ?? []);
+    return hoursSoFar(allCourses, (code) => deg.courses[code]?.cr ?? parseHours(byCode.get(code)));
+  }, [deg, index, allCourses]);
+  const apHours = allCourses.reduce((t, c) => t + (c.hours ?? 0), 0);
 
   // Until the saved list (or the link's) has been read, hold the space instead of flashing an empty checklist.
   if (!ready) return <div className="min-h-screen" aria-busy="true" />;
@@ -129,7 +157,8 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
     <div className="space-y-8">
       {shared && (
         <div className="rounded bg-panel p-4" role="status">
-          You opened a shared checklist. Your own list ({shared.courses.length} course{shared.courses.length === 1 ? "" : "s"}) is untouched.
+          You opened a shared checklist. Your own list ({shared.courses.length} course{shared.courses.length === 1 ? "" : "s"}
+          {shared.ap.length ? `, ${shared.ap.length} AP exam${shared.ap.length === 1 ? "" : "s"}` : ""}) is untouched.
           <div className="mt-2 flex flex-wrap gap-2">
             <button
               type="button"
@@ -155,7 +184,8 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
         </div>
       )}
 
-      <section className="grid gap-x-8 gap-y-6 rounded bg-panel p-4 sm:p-5 lg:grid-cols-[19rem_minmax(0,1fr)]" aria-label="Your program and courses">
+      {/* grid-cols-1 (minmax(0, 1fr)) so a long <select> option can't widen the column past a phone screen */}
+      <section className="grid grid-cols-1 gap-x-8 gap-y-6 rounded bg-panel p-4 sm:p-5 lg:grid-cols-[19rem_minmax(0,1fr)]" aria-label="Your program and courses">
         <div className="space-y-5">
           <ProgramPicker
             programs={majors}
@@ -184,8 +214,9 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
             />
           )}
           <AddCourse st={st} update={update} deg={deg} index={index} />
+          <ApForm st={st} update={update} table={apTable} error={apError} />
         </div>
-        <MyCourseList st={st} update={update} deg={deg} index={index} />
+        <MyCourseList st={st} update={update} deg={deg} index={index} ap={apYear && apSum ? { year: apYear, sum: apSum } : null} />
       </section>
 
       <section aria-label="Requirements" className="min-w-0">
@@ -196,10 +227,19 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
               Couldn&apos;t load the requirements ({error}). Reload to try again.
             </p>
           )}
-          {/* From the program index embedded in the page, so it shows before the program's own file has loaded. */}
-          {generatedOn && <GeneratedNote on={generatedOn} testId="generated-note" />}
-          {st.program && !deg && !error && <p className="min-h-screen text-muted">Loading requirements…</p>}
-          {deg && ev && <Checklist deg={deg} results={ev.results} st={st} update={update} taken={taken} meta={meta} weights={weights} tickPrefix="" />}
+          {generatedOn && (
+            // From the program index embedded in the page, so it shows before the program's own file has loaded.
+            <p className="mb-6 flex max-w-3xl items-start gap-2 rounded bg-panel p-3" data-testid="generated-note">
+              <Icon name="info" className="mt-1 shrink-0 text-heading" />
+              <span>
+                Read automatically from the catalog page on {fmtDate(generatedOn)}. Course lists, alternatives and &ldquo;select N&rdquo; rules come
+                straight from its tables; rules the catalog writes out in words (electives, concentrations) are shown in its own words for you to tick
+                when you&apos;ve met them. Check the catalog page before you rely on it.
+              </span>
+            </p>
+          )}
+          {st.program && !ev && !error && <p className="min-h-screen text-muted">Loading requirements…</p>}
+          {deg && ev && <Checklist deg={deg} results={ev.results} st={st} update={update} taken={taken} meta={meta} weights={weights} hours={hours} apHours={apHours} tickPrefix="" />}
       </section>
 
       {st.minor && (
@@ -218,26 +258,13 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
               {minorGeneratedOn && <> This minor was read automatically from its catalog page on {fmtDate(minorGeneratedOn)}; check that page before you rely on it.</>}
             </span>
           </p>
-          {!minorDeg && !minorError && <p className="text-muted">Loading the minor&apos;s requirements…</p>}
+          {!minorEv && !minorError && <p className="text-muted">Loading the minor&apos;s requirements…</p>}
           {minorDeg && minorEv && (
-            <Checklist deg={minorDeg} results={minorEv.results} st={st} update={update} taken={taken} meta={meta} weights={weights} tickPrefix={MINOR_TICK} />
+            <Checklist deg={minorDeg} results={minorEv.results} st={st} update={update} taken={taken} meta={meta} weights={weights} hours={null} apHours={0} tickPrefix={MINOR_TICK} />
           )}
         </section>
       )}
     </div>
-  );
-}
-
-function GeneratedNote({ on, testId }: { on: string; testId?: string }) {
-  return (
-    <p className="mb-6 flex max-w-3xl items-start gap-2 rounded bg-panel p-3" data-testid={testId}>
-      <Icon name="info" className="mt-1 shrink-0 text-heading" />
-      <span>
-        Read automatically from the catalog page on {fmtDate(on)}. Course lists, alternatives and &ldquo;select N&rdquo; rules come straight from its
-        tables; rules the catalog writes out in words (electives, concentrations) are shown in its own words for you to tick when you&apos;ve met them.
-        Check the catalog page before you rely on it.
-      </span>
-    </p>
   );
 }
 
@@ -307,14 +334,14 @@ function AddCourse({ st, update, deg, index }: MineProps) {
   );
 }
 
-function MyCourseList({ st, update, deg, index }: MineProps) {
+function MyCourseList({ st, update, deg, index, ap }: MineProps & { ap: { year: ApYear; sum: ApSummary } | null }) {
   return (
     <div aria-labelledby="mine-h" role="group">
       <h2 id="mine-h" className="font-display text-xl font-bold text-heading">
         My courses
       </h2>
-      {!st.courses.length ? (
-        <p className="mt-2 text-muted">None yet. Add what you&apos;ve finished, AP or transfer credit, and what you&apos;re taking now.</p>
+      {!st.courses.length && !st.ap.length ? (
+        <p className="mt-2 text-muted">None yet. Add what you&apos;ve finished, your AP exams, transfer credit, and what you&apos;re taking now.</p>
       ) : (
         <div className="mt-2 space-y-3" data-testid="my-courses">
           {STATUSES.map((s) => {
@@ -344,9 +371,198 @@ function MyCourseList({ st, update, deg, index }: MineProps) {
               </div>
             );
           })}
+          {st.ap.length > 0 && (ap ? <ApCredits st={st} update={update} year={ap.year} sum={ap.sum} /> : <p className="text-muted">Loading the AP credit table…</p>)}
           <ShareLink />
         </div>
       )}
+    </div>
+  );
+}
+
+/** The exams in the chosen year's table, a score, and the subscore when the table tells subscores apart. */
+function ApForm({ st, update, table, error }: { st: MyState; update: (s: MyState) => void; table: ApTable | null; error: boolean }) {
+  const [examId, setExamId] = useState("");
+  const [score, setScore] = useState("");
+  const [sub, setSub] = useState("");
+  const year = table ? pickYear(table, st.year) : null;
+  const exam = year?.exams.find((e) => e.id === examId);
+  const subs = exam && score ? subOptions(exam, Number(score)) : [];
+  const ok = !!exam && !!score && (!subs.length || sub !== "");
+  return (
+    <form
+      className="space-y-2"
+      aria-labelledby="ap-h"
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (!ok) return;
+        const next = { exam: examId, score: Number(score), sub: subs.length ? Number(sub) : null };
+        update({ ...st, ap: [...st.ap.filter((a) => a.exam !== examId), next] });
+        setExamId("");
+        setScore("");
+        setSub("");
+      }}
+    >
+      <h2 id="ap-h" className="inline-flex items-center font-semibold text-heading">
+        Add an AP exam
+        <Info label="About AP credit">
+          Illinois gives course credit for AP scores from a table CITL (the Center for Innovation in Teaching &amp; Learning) publishes for each starting year.
+          Add your exams and scores to see the courses they&apos;re expected to give. It&apos;s an estimate until the credit shows on your DARS report. Your
+          scores stay in this browser and in the share link.
+        </Info>
+      </h2>
+      {error && (
+        <p className="text-sm" role="alert">
+          Couldn&apos;t load the AP credit table. Reload to try again.
+        </p>
+      )}
+      <label className="block text-sm">
+        <span className="text-muted">Starting term at Illinois</span>
+        <select
+          className="mt-0.5 w-full rounded border border-line bg-white px-2 py-1.5 text-base"
+          value={year?.id ?? ""}
+          disabled={!table}
+          onChange={(e) => update({ ...st, year: e.target.value === table?.years[0]?.id ? "" : e.target.value })}
+        >
+          {!table && <option value="">Loading…</option>}
+          {table?.years.map((y) => (
+            <option key={y.id} value={y.id}>
+              {y.entering}
+            </option>
+          ))}
+        </select>
+      </label>
+      <div className="flex gap-2">
+        <select
+          className="min-w-0 flex-1 rounded border border-line bg-white px-2 py-1.5"
+          aria-label="AP exam"
+          value={examId}
+          disabled={!year}
+          onChange={(e) => {
+            setExamId(e.target.value);
+            setSub("");
+          }}
+        >
+          <option value="">AP exam</option>
+          {year?.exams.map((x) => (
+            <option key={x.id} value={x.id}>
+              {x.name}
+            </option>
+          ))}
+        </select>
+        <select
+          className="w-24 rounded border border-line bg-white px-2 py-1.5"
+          aria-label="Score"
+          value={score}
+          disabled={!year}
+          onChange={(e) => {
+            setScore(e.target.value);
+            setSub("");
+          }}
+        >
+          <option value="">Score</option>
+          {[5, 4, 3, 2, 1].map((n) => (
+            <option key={n} value={n}>
+              {n}
+            </option>
+          ))}
+        </select>
+      </div>
+      {exam?.sub && subs.length > 0 && (
+        <select className="w-full rounded border border-line bg-white px-2 py-1.5" aria-label={exam.sub} value={sub} onChange={(e) => setSub(e.target.value)}>
+          <option value="">{exam.sub}</option>
+          {subs.map((v) => (
+            <option key={v} value={v}>
+              {v === 0 ? `No ${exam.sub!.toLowerCase()}` : `${exam.sub} ${v}`}
+            </option>
+          ))}
+        </select>
+      )}
+      <button
+        type="submit"
+        disabled={!ok}
+        className="inline-flex items-center gap-1.5 rounded bg-action px-3 py-1.5 font-semibold text-white hover:bg-action-dark disabled:opacity-50"
+      >
+        <Icon name="plus" />
+        Add exam
+      </button>
+    </form>
+  );
+}
+
+/** What each AP score gives: its courses (each can be switched off), CITL's placement message word for word, and notes. */
+function ApCredits({ st, update, year, sum }: { st: MyState; update: (s: MyState) => void; year: ApYear; sum: ApSummary }) {
+  const own = new Set(st.courses.map((c) => `${c.s} ${c.n}`));
+  const collegeRows = sum.results.some((r) => r.exam?.rows.some((x) => x.college));
+  const toggle = (code: string, on: boolean) => update({ ...st, declined: on ? st.declined.filter((x) => x !== code) : [...st.declined, code] });
+  return (
+    <div data-testid="ap-credit">
+      <h3 className="text-sm text-muted">Expected AP credit</h3>
+      <ul className="mt-1 grid grid-cols-1 items-start gap-2 xl:grid-cols-2">
+        {sum.results.map((r) => (
+          <li key={r.score.exam} className="rounded border border-line bg-white p-3" data-exam={r.score.exam}>
+            <div className="flex items-start justify-between gap-2">
+              <span className="font-semibold">{r.label}</span>
+              <button
+                type="button"
+                className="-mt-1 -mr-1 inline-flex size-8 shrink-0 items-center justify-center rounded text-muted hover:text-action"
+                aria-label={`Remove ${r.label}`}
+                onClick={() => update({ ...st, ap: st.ap.filter((a) => a.exam !== r.score.exam) })}
+              >
+                <Icon name="x" />
+              </button>
+            </div>
+            {!r.exam ? (
+              <p className="text-sm text-muted">Not in the {year.label} table.</p>
+            ) : r.needsSub ? (
+              <p className="text-sm">Remove this exam and add it again with your {r.exam.sub?.toLowerCase()} to see its credit.</p>
+            ) : !r.row?.credit.length ? (
+              <p className="text-sm text-muted">No credit for this score.</p>
+            ) : (
+              <ul className="mt-1 flex flex-wrap gap-x-4 gap-y-1">
+                {r.row.credit.map(([code, h]) => (
+                  <li key={code}>
+                    {own.has(code) ? (
+                      <span className="text-sm">
+                        <span className="font-semibold">{code}</span> <span className="text-muted">is already in your list</span>
+                      </span>
+                    ) : (
+                      <label className="inline-flex items-center gap-1.5">
+                        <input type="checkbox" className="size-4 accent-action" checked={!st.declined.includes(code)} onChange={(e) => toggle(code, e.target.checked)} />
+                        <span className="font-semibold">{code}</span>
+                        <span className="text-sm text-muted">
+                          {h} hour{h === 1 ? "" : "s"}
+                          {isElective(code) ? ", elective" : ""}
+                        </span>
+                      </label>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {r.row?.message && (
+              <p className="mt-1 text-sm">
+                <span className="font-semibold">Placement:</span> {r.row.message}
+              </p>
+            )}
+            {r.exam?.notes.map((n) => (
+              <p key={n} className="mt-1 text-sm text-muted">
+                {n}
+              </p>
+            ))}
+            {r.row?.fix && <p className="mt-1 text-sm text-muted">Where our copy differs from CITL&apos;s page: {r.row.fix}</p>}
+          </li>
+        ))}
+      </ul>
+      <p className="mt-2 text-sm text-muted">
+        From CITL&apos;s{" "}
+        <a href={year.source} className="font-semibold text-action underline" rel="noopener">
+          {year.label} AP credit table
+        </a>{" "}
+        for students starting in {year.entering}, read {fmtDate(year.read_on)}. It&apos;s an estimate until the credit shows on your DARS report. Untick a course
+        if you&apos;d rather take it than accept the credit (ask your advisor first). Elective credit such as MATH 1-- counts toward your hours; ask your advisor
+        where else it can count.
+        {collegeRows && !st.program && " Calculus credit differs for Grainger engineering programs: choose your program to see yours."}
+      </p>
     </div>
   );
 }
@@ -362,7 +578,10 @@ function ShareLink() {
   return (
     <p className="flex flex-wrap items-center gap-1">
       <CopyButton text={href} label="Copy share link" className="!px-3 !leading-9" />
-      <Info label="About sharing">The link carries your program and course list, so an advisor or a friend sees the same checklist. Nothing is saved on a server.</Info>
+      <Info label="About sharing">
+        The link carries your program, your course list and any AP scores you added, so an advisor or a friend sees the same checklist. Nothing is saved on a
+        server.
+      </Info>
     </p>
   );
 }
@@ -375,6 +594,8 @@ function Checklist({
   taken,
   meta,
   weights,
+  hours,
+  apHours,
   tickPrefix,
 }: {
   deg: Degree;
@@ -384,6 +605,8 @@ function Checklist({
   taken: Set<string>;
   meta: { next_term: string; score_priors: ScorePriors | null };
   weights: ReturnType<typeof useWeights>;
+  hours: HoursSoFar | null;
+  apHours: number;
   tickPrefix: string; // "" for the major, MINOR_TICK for the minor
 }) {
   const minor = deg.type === "minor";
@@ -400,8 +623,17 @@ function Checklist({
             <Icon name="external" />
           </a>
           <span className="block text-sm">
-            Read {fmtDate(deg.read_on)}. {minor ? (deg.total_hours ? `At least ${deg.total_hours} hours for the minor.` : "") : `Minimum ${deg.total_hours ?? "–"} hours to graduate.`}
+            Read {fmtDate(deg.read_on)}.{" "}
+            {minor ? (deg.total_hours ? `At least ${deg.total_hours} hours for the minor.` : "") : `Minimum ${deg.total_hours ?? "–"} hours to graduate.`}
           </span>
+          {hours && (hours.done > 0 || hours.inProgress > 0) && (
+            <span className="block text-sm" data-testid="hours-so-far">
+              <span className="font-semibold text-ink tnum">{hours.done}</span> hours in My courses
+              {apHours > 0 && <> ({apHours} from AP credit)</>}
+              {hours.inProgress > 0 && <>, {hours.inProgress} more in progress</>}.{hours.variable && " Variable-credit courses count at their minimum."}
+              {hours.unknown.length > 0 && <> Not counted (hours unknown): {hours.unknown.join(", ")}.</>}
+            </span>
+          )}
         </p>
         <h2 className="mt-2 font-display text-xl font-bold text-heading">
           {minor && <span className="mr-2 align-middle text-sm font-semibold tracking-wide text-muted uppercase">Minor </span>}
@@ -584,9 +816,9 @@ function UsedList({ r }: { r: GroupResult }) {
     <p className="mt-1 flex flex-wrap items-center gap-1.5">
       <span className="text-sm text-muted">Counted:</span>
       {r.used.map((u) => (
-        <Badge key={u.code} icon={u.status === "in_progress" ? "calendar" : "check"} title={STATUS_LABEL[u.status]}>
+        <Badge key={u.code} icon={u.status === "in_progress" ? "calendar" : u.ap ? "award" : "check"} title={u.ap ?? STATUS_LABEL[u.status]}>
           {u.code}
-          {u.status !== "done" ? <span className="text-muted">, {u.status === "credit" ? "credit" : "in progress"}</span> : null}
+          {u.status !== "done" ? <span className="text-muted">, {u.ap ? "AP credit" : u.status === "credit" ? "credit" : "in progress"}</span> : null}
         </Badge>
       ))}
     </p>
