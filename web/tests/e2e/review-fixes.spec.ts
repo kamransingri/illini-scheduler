@@ -13,8 +13,9 @@ test("an impossible lock is explained and the schedule is marked incomplete", as
   const lec = page.getByLabel("Lock Lecture for MATH 231");
   const dis = page.getByLabel("Lock Discussion for MATH 231");
   // wait until course data has loaded and the selects list sections
-  await expect(dis.locator("option")).not.toHaveCount(1);
-  await expect(lec.locator("option")).not.toHaveCount(1);
+  // (count 0 = not rendered yet, 1 = only "any section"); poll until real sections are listed
+  await expect.poll(() => dis.locator("option").count(), { timeout: 15_000 }).toBeGreaterThan(1);
+  await expect.poll(() => lec.locator("option").count(), { timeout: 15_000 }).toBeGreaterThan(1);
   // lock a discussion first, then a lecture from a different group (the lecture list isn't filtered)
   const disFirst = (await dis.locator("option").allTextContents()).find((o) => o.includes("CRN"))!;
   await dis.selectOption({ label: disFirst });
