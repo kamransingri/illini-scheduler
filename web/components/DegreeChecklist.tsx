@@ -10,6 +10,7 @@ import { useWeights } from "@/lib/weights";
 import AddToCart from "./AddToCart";
 import CopyButton from "./CopyButton";
 import ScoreBreakdown from "./course/ScoreBreakdown";
+import ProgramPicker from "./ProgramPicker";
 import { loadIndex } from "./SearchBox";
 import { Badge } from "./ui/Badge";
 import CourseRow, { CourseRowHeader, type CourseCols } from "./ui/CourseRow";
@@ -139,30 +140,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
 
       <section className="grid gap-x-8 gap-y-6 rounded bg-panel p-4 sm:p-5 lg:grid-cols-[19rem_minmax(0,1fr)]" aria-label="Your program and courses">
         <div className="space-y-5">
-          <div>
-            <label htmlFor="program-select" className="font-semibold text-heading">
-              Program
-            </label>
-            <select
-              id="program-select"
-              className="mt-1 block w-full rounded border border-line bg-white px-2 py-1.5"
-              value={st.program}
-              onChange={(e) => update({ ...st, program: e.target.value })}
-            >
-              <option value="">Choose your major ({programs.length} programs)</option>
-              {[...new Set(programs.map((p) => p.college))].map((college) => (
-                <optgroup key={college} label={college}>
-                  {programs
-                    .filter((p) => p.college === college)
-                    .map((p) => (
-                      <option key={p.id} value={p.id}>
-                        {p.program}
-                      </option>
-                    ))}
-                </optgroup>
-              ))}
-            </select>
-          </div>
+          <ProgramPicker programs={programs} value={st.program} onChange={(program) => update({ ...st, program })} />
           <AddCourse st={st} update={update} deg={deg} index={index} />
         </div>
         <MyCourseList st={st} update={update} deg={deg} index={index} />

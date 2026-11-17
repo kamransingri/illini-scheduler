@@ -2,11 +2,13 @@
 
 Newest first at the top: the current state, then the build log in the order it happened.
 
-## Current state (v0.4.0, 2026-11-17)
+## Current state (v0.5.0, 2026-11-17)
 
 - **Site:** 7,147 static pages (7,138 course pages). Course search by code, title, nickname, professor or CRN; course
-  pages built around professors; gen-ed finder; degree checklist for 171 programs; Just opened, near real time;
-  schedule builder with must-haves, priorities and presets.
+  pages built around professors; gen-ed finder; degree checklist for 171 programs, found by typing; Just opened, near
+  real time; schedule builder with must-haves, priorities and presets.
+- **Process:** branches, versions and releases in [CONTRIBUTING.md](../CONTRIBUTING.md); every version in
+  [CHANGELOG.md](../CHANGELOG.md), tagged and released from `main` by `release.yml`.
 - **Data:** nightly build at 09:00 UTC; every course's seats read daily (04:17 UTC); the busiest next-term courses
   re-read about every 10 minutes by `live-seats.yml` (starts once this release is on `main`).
 - **Checks on the full build (Windows laptop, one Playwright worker):** pytest 189/189, Vitest 97/97, ruff, mypy,
@@ -594,3 +596,22 @@ for" column, no schedule filters, open sections shown by default). Decisions: DE
   live and daily states of Just opened, gen-ed defaults and chips, builder must-haves surviving reload).
 - **Fixed on the way:** two e2e tests read the URL once instead of waiting for it to update (a race on slow runs), and
   the hand-checked degree file pointed at an old schema path.
+
+## v0.5.0 (2026-11-17)
+
+The owner asked for proper version control and branch management, and a degree checklist where the program can be
+searched instead of scrolled. Decisions: DECISIONS.md D15.1 to D15.7.
+
+- **Program search** (D15.1): `web/lib/programs.ts` (matching and ranking) and `web/components/ProgramPicker.tsx` (an
+  ARIA combobox). The picked program's college and catalog year show under it. Checked against all 171 programs:
+  "cs" gives the 7 computer science programs with Computer Science, BS first; "mcb", "me", "polisci", "accounting",
+  "gies" and "las" find what they should; "econ" no longer matches Secondary Education.
+- **Versions and releases** (D15.2 to D15.4): `tools/release.py` (`make version`, `make release V=...`), CHANGELOG.md
+  filled in back to 0.2.0-beta.1, `release.yml` (tag on `main`, GitHub release from the changelog, missing releases for
+  older tags), the site footer shows the version.
+- **Branches** (D15.5 to D15.7): CONTRIBUTING.md, a pull request template, a `versions` job in CI (version files,
+  changelog, version only goes up, branch names), `branch-cleanup.yml`, importable rulesets in `.github/rulesets/`.
+- **Tests added:** `tools/test_release.py` (version order and bumps, every file moved together, changelog cut with
+  Windows line endings, checks against a base branch, publish commands), `web/tests/unit/programs.test.ts`, and a
+  picker test in `web/tests/e2e/degree.spec.ts` (browse, acronym, Enter, no match, Escape, college, arrow keys); the
+  other degree tests now pick the program by typing.
