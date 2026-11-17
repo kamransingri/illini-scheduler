@@ -74,3 +74,22 @@ test("keyboard: a professor row opens and closes with Enter, and a source popove
   await page.keyboard.press("Escape");
   await expect(info).toHaveAttribute("aria-expanded", "false");
 });
+
+test("matched professors link to RMP's page for adding a rating", async ({ page }) => {
+  const RATE = /^https:\/\/www\.ratemyprofessors\.com\/add\/professor-rating\/\d+$/;
+  await page.goto("./course/RHET/105/");
+  const rows = page.getByTestId("prof-row");
+  await expect(rows.first()).toBeVisible();
+  // on RMP without ratings yet: the link is right in the row
+  const first = rows.getByTestId("rmp-rate");
+  test.skip((await first.count()) === 0, "no unrated RMP match in this build");
+  await expect(first.first()).toHaveText("Be the first to rate");
+  await expect(first.first()).toHaveAttribute("href", RATE);
+  // rated: next to the profile link in the open panel
+  const rated = rows.filter({ has: page.getByText(/^[\d,]+ ratings$/) }).first();
+  await rated.getByRole("button", { expanded: false }).first().click();
+  const panel = rated.locator('[id$="-panel"]');
+  await expect(panel.getByRole("link", { name: /Rate My Professors page/ })).toBeVisible();
+  await expect(panel.getByTestId("rmp-rate")).toContainText("Took RHET 105 with them? Rate them on RMP");
+  await expect(panel.getByTestId("rmp-rate")).toHaveAttribute("href", RATE);
+});
