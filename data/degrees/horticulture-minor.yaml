@@ -1,0 +1,34 @@
+# Horticulture Minor (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/minors/horticulture/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: horticulture-minor
+type: minor
+program: Horticulture Minor
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/minors/horticulture/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Core Requirements
+  section: Requirements
+  rule: all
+  courses:
+  - HORT 100
+  - HORT 341
+  notes:
+  - 'Catalog total: 7 hours.'
+  id: core-requirements-1
+- name: HORT Electives
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 11 hours.'
+  - At least 2 additional hours of HORT 3XX-4XX.
+  - Select a minimum of 9 hours from any HORT courses (excluding HORT 393 and HORT 395).
+  id: hort-electives-2

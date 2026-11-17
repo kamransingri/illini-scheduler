@@ -1,0 +1,40 @@
+# Human Nutrition Minor (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/minors/nutrition/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: nutrition-minor
+type: minor
+program: Human Nutrition Minor
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/minors/nutrition/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 19
+notes: []
+double_counting: []
+groups:
+- name: Required Courses for Minor in Nutrition
+  section: Requirements
+  rule: all
+  courses:
+  - FSHN 220
+  - FSHN 420
+  - FSHN 426
+  - FSHN 427
+  id: required-courses-for-minor-in-nutrition-1
+- name: Select two of the following
+  section: Requirements
+  rule: n_of
+  n: 2
+  courses:
+  - ANSC 420
+  - FSHN 322
+  - FSHN 421
+  - FSHN 428
+  - FSHN 429
+  notes:
+  - 'Catalog total: 6 hours.'
+  - Select two of the following
+  id: select-two-of-the-following-2

@@ -81,8 +81,10 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
   concentrations) show the catalog's wording and a checkbox you tick yourself.
 - **Missing courses.** 288 course codes in 71 programs aren't offered in the terms the site loads (old or rarely
   taught courses). They show greyed out, without a link.
-- **Scope.** Undergraduate majors and their concentrations in the 2026-2027 catalog only. No minors, certificates,
+- **Scope.** Undergraduate majors (with their concentrations) and minors in the 2026-2027 catalog only. No certificates,
   graduate programs or earlier catalog years.
+- **Major and minor overlap.** A course counts toward both your major and your minor on the checklist. Some minors and
+  colleges limit that overlap; the minor's catalog page says so, and the checklist doesn't check it.
 - **You enter your courses by hand.** There's no transcript or DARS import, because those sit behind a NetID.
 - **AP credit is an estimate.** The courses come from CITL's AP table for the year you started (2024-2025, 2025-2026
   or 2026-2027 only), copied by hand, with a few slips on CITL's pages corrected (docs/AP-CREDIT.md). The real credit

@@ -1,0 +1,231 @@
+# Computational Science & Engineering Minor (The Grainger College of Engineering), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/minors/computational-science-engineering/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: computational-science-engineering-minor
+type: minor
+program: Computational Science & Engineering Minor
+college: The Grainger College of Engineering
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/engineering/minors/computational-science-engineering/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: Programming
+  section: Requirements
+  rule: all
+  courses:
+  - CS 101
+  - CS 125
+  - CS 225
+  - ECE 220
+  - LING 402
+  id: programming-1
+- name: Applied Math
+  section: Requirements
+  rule: all
+  courses:
+  - ECE 493
+  - - MATH 441
+    - MATH 442
+    - MATH 489
+  - MATH 415
+  - - MATH 444
+    - MATH 447
+  - - MATH 446
+    - MATH 448
+  - - MATH 482
+    - MATH 484
+  - - STAT 408
+    - STAT 409
+    - STAT 410
+    - STAT 420
+    - STAT 430
+    - MATH 461
+  id: applied-math-2
+- name: Computational Methods
+  section: Requirements
+  rule: all
+  courses:
+  - CS 411
+  - - CS 450
+    - CSE 401
+  - CS 466
+  - ECE 448
+  - GEOG 489
+  - LING 402
+  - STAT 440
+  - - TAM 470
+    - CSE 450
+  id: computational-methods-3
+- name: Application Coursework/Computing Elective
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 9 hours.'
+  - OPTION 1
+  - 'Three 400-level CSE courses; see list below:'
+  id: application-coursework-computing-electiv-4
+- name: Core Courses
+  section: Requirements
+  rule: manual
+  notes:
+  - OPTION 1
+  - 'Three 400-level CSE courses; see list below:'
+  courses:
+  - CSE 401
+  - CSE 402
+  - CSE 408
+  - CSE 510
+  - CSE 527
+  id: core-courses-5
+- name: Core Courses
+  section: Requirements
+  rule: manual
+  notes:
+  - Computing Electives. Courses below are topically organized and are cross listed with many departments. Double counting
+    from Core courses and application courses is not allowed. Choose Option 1 or Option 2 below.
+  id: core-courses-6
+- name: Option 1
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Biological, Chemical and Atmospheric Sciences:'
+  courses:
+  - CHEM 576
+  - CS 466
+  - CEE 534
+  - CEE 557
+  - CSE 566
+  - CHEM 550
+  id: option-1-7
+- name: Option 1
+  section: Requirements
+  rule: manual
+  notes:
+  - Computer Software, Hardware and Graphics
+  courses:
+  - CSE 402
+  - CSE 422
+  - CSE 423
+  - CSE 426
+  - CSE 427
+  - CSE 429
+  - CSE 521
+  - CSE 522
+  - CSE 527
+  id: option-1-8
+- name: Option 1
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Electronics and Electromagnetics:'
+  courses:
+  - CSE 530
+  - CSE 532
+  id: option-1-9
+- name: Option 1
+  section: Requirements
+  rule: manual
+  notes:
+  - Fluid Mechanics
+  courses:
+  - CSE 450
+  - CSE 461
+  - CSE 560
+  - CSE 561
+  - CSE 566
+  - CSE 412
+  id: option-1-10
+- name: Option 1
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Numerical Computing:'
+  courses:
+  - CSE 401
+  - CSE 414
+  - CSE 441
+  - CSE 510
+  - CSE 511
+  - CSE 512
+  - CSE 513
+  - CSE 515
+  - CS 598
+  - CSE 517
+  - CSE 553
+  id: option-1-11
+- name: Option 1
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Other Related Fields:'
+  courses:
+  - TAM 598
+  - CS 598
+  - CEE 528
+  - ASTR 510
+  id: option-1-12
+- name: Option 1
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Physics and Materials Science:'
+  courses:
+  - CSE 485
+  - MSE 498
+  - AE 598
+  id: option-1-13
+- name: Option 1
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Power Systems, Control and Signal and Image Processing:'
+  courses:
+  - CSE 441
+  - CSE 543
+  - ECE 513
+  - ECE 558
+  id: option-1-14
+- name: Option 1
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Solid Mechanics:'
+  courses:
+  - CSE 450
+  - CSE 451
+  - CSE 517
+  - CSE 551
+  - CSE 552
+  - ME 570
+  - TAM 598
+  id: option-1-15
+- name: Option 1
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Statistics and Data Sciences:'
+  courses:
+  - CSE 428
+  - CSE 440
+  - CSE 448
+  - CSE 525
+  - STAT 530
+  - CSE 542
+  - STAT 430
+  - STAT 432
+  - CS 412
+  - CS 410
+  id: option-1-16
+- name: OPTION 2
+  section: Requirements
+  rule: manual
+  notes:
+  - Two 400-level CSE courses listed above AND an independent study on a computational topic. In order for an independent
+    study to fulfill the minor requirement, the student must conduct the undergraduate research with one of the CSE affiliated
+    faculty.
+  id: option-2-17

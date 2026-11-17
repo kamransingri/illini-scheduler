@@ -1,0 +1,31 @@
+# Russian, East European, & Eurasian Studies Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/russian-east-european-eurasian-studies/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: russian-east-european-eurasian-studies-minor
+type: minor
+program: Russian, East European, & Eurasian Studies Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/russian-east-european-eurasian-studies/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 21
+notes: []
+double_counting: []
+groups:
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - The equivalent of three semesters of college-level language study in Russian or another language of Eastern Europe or
+    Eurasia. This stipulation may be satisfied through partial fulfillment of the LAS two-year language requirement if a regionally
+    appropriate language is chosen for that purpose. If a non-REEE language is selected to meet the LAS requirement, then
+    the three semesters of REEE language study specified here must be taken in addition to those completed to satisfy the
+    LAS requirement. Only those hours earned in the second and third semester of language study are calculated into the degree,
+    as the first semester represents a prerequisite for the other two.
+  - Courses on Russia, Eastern Europe, or Eurasia from at least three different academic units. (Literature courses are acceptable
+    for this requirement; language courses are not.) No more than 6 hours may be counted from any one unit; 6 hours must be
+    at the 300- or 400-level.
+  id: more-requirements-1

@@ -1,0 +1,42 @@
+# East Asian Languages & Cultures Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/east-asian-languages-culture/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: east-asian-languages-culture-minor
+type: minor
+program: East Asian Languages & Cultures Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/east-asian-languages-culture/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 20
+notes: []
+double_counting: []
+groups:
+- name: More requirements
+  section: Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - CHIN 204
+  - JAPN 204
+  - KOR 204
+  notes:
+  - 'Select one of the following:'
+  id: more-requirements-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Non-language courses as follows:'
+  courses:
+  - EALC 120
+  id: more-requirements-2
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 12 additional hours of East Asia-related courses (at least 6 of these hours must be at the 300 or 400 level)
+  id: more-requirements-3

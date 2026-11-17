@@ -1,0 +1,50 @@
+# Ecology & Conservation Biology Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/ecology-conservation-biology/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: ecology-conservation-biology-minor
+type: minor
+program: Ecology & Conservation Biology Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/ecology-conservation-biology/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 17
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - IB 150
+  - IB 203
+  - - IB 204
+    - IB 201
+  id: required-courses-1
+- name: More requirements
+  section: Requirements
+  rule: n_of
+  n: 2
+  courses:
+  - IB 348
+  - IB 362
+  - IB 431
+  - CPSC 431 + IB 440
+  - IB 444
+  - IB 451
+  - IB 452
+  - IB 453
+  - IB 455
+  notes:
+  - 'Select two of the following:'
+  id: more-requirements-2
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Please note: all prerequisite courses must be taken if specified, and students must complete 6 advanced hours of coursework
+    that are distinct from advanced hours required for their major.'
+  id: more-requirements-3

@@ -1,0 +1,47 @@
+# Child Health and Well-being Minor (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/minors/child-health-well-being/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: child-health-well-being-minor
+type: minor
+program: Child Health and Well-being Minor
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/minors/child-health-well-being/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 19
+notes: []
+double_counting: []
+groups:
+- name: Development Courses
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 10 hours.'
+  - The catalog lists these courses under Development Courses; see the catalog page for the rule.
+  courses:
+  - HDFS 105
+  - HDFS 301
+  id: development-courses-1
+- name: Development Courses
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Choose one course from:'
+  courses:
+  - HDFS 305
+  - HDFS 405
+  id: development-courses-2
+- name: Health and Well-being courses
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 9 hours.'
+  - 'Choose one course from:'
+  courses:
+  - HDFS 108
+  - HDFS 208
+  - HDFS 408
+  id: health-and-well-being-courses-3

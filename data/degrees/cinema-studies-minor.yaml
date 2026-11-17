@@ -1,0 +1,71 @@
+# Cinema Studies Minor (College of Media), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/media/minors/cinema-studies-minor/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: cinema-studies-minor
+type: minor
+program: Cinema Studies Minor
+college: College of Media
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/media/minors/cinema-studies-minor/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Required Courses
+  section: Requirements
+  rule: all
+  courses:
+  - MACS 203
+  - MACS 261
+  - MACS 262
+  - MACS 361
+  notes:
+  - 'Catalog total: 12 hours.'
+  id: required-courses-1
+- name: Required Courses
+  section: Requirements
+  rule: manual
+  notes:
+  - Select one course from EITHER Non-US Cinema OR Identity Culture and Politics
+  - Non-US Cinema (Contact department for complete list)
+  courses:
+  - MACS 207
+  - MACS 382
+  - MACS 383
+  - MACS 419
+  - MACS 466
+  - MACS 470
+  - MACS 490
+  - MACS 493
+  - ITAL 270
+  id: required-courses-2
+- name: Required Courses
+  section: Requirements
+  rule: manual
+  notes:
+  - Identity Culture and Politics (Contact department for complete list)
+  courses:
+  - MACS 205
+  - MACS 211
+  - MACS 250
+  - MACS 275
+  - MACS 335
+  - MACS 356
+  - MACS 365
+  - MACS 375
+  - MACS 380
+  - MACS 381
+  - MACS 432
+  - MDIA 223
+  id: required-courses-3
+- name: Required Courses
+  section: Requirements
+  rule: manual
+  notes:
+  - Select one additional course (300-level or above) on film offered by or cross-listed with MACS, other than those used
+    to fulfill the requirements above
+  id: required-courses-4

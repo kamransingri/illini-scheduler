@@ -1,0 +1,54 @@
+# Business Minor for Non-Business Majors (Gies College of Business), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/bus/minors/business-non-business/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: business-non-business-minor
+type: minor
+program: Business Minor for Non-Business Majors
+college: Gies College of Business
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/bus/minors/business-non-business/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: Core Courses Requirement
+  section: Degree Requirements
+  rule: all
+  courses:
+  - - ACCY 200
+    - ACCY 201 + ACCY 202
+  - BADM 310
+  - BADM 320
+  - FIN 221
+  notes:
+  - 'Catalog total: 12 hours.'
+  id: core-courses-requirement-1
+- name: Elective Courses Requirement
+  section: Degree Requirements
+  rule: all
+  courses:
+  - BADM 275
+  - BADM 300
+  - BADM 311
+  - BADM 312
+  - BADM 313
+  - BADM 314
+  - BADM 323
+  - BADM 326
+  - BADM 340
+  - BADM 350
+  - BADM 380
+  - BADM 381
+  - BDI 367
+  - BDI 411
+  - BDI 475
+  - BDI 477
+  - FIN 230
+  - FIN 241
+  - FIN 435
+  notes:
+  - 'Catalog total: 6 hours.'
+  id: elective-courses-requirement-2

@@ -1,0 +1,55 @@
+# International Development Economics Minor (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/minors/international-development-economics/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: international-development-economics-minor
+type: minor
+program: International Development Economics Minor
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/minors/international-development-economics/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Required for the Minor in International Development Economics
+  section: Requirements
+  rule: all
+  courses:
+  - - ACE 100
+    - ECON 102
+  - ACE 251
+  id: required-for-the-minor-in-international-1
+- name: Required for the Minor in International Development Economics
+  section: Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - ACE 222
+  - ACE 254
+  - ACE 255
+  - ACE 270
+  notes:
+  - 'Select one of the following:'
+  id: required-for-the-minor-in-international-2
+- name: Required for the Minor in International Development Economics
+  section: Requirements
+  rule: n_of
+  n: 2
+  courses:
+  - ACE 411
+  - ACE 436
+  - ACE 451
+  - ACE 455
+  notes:
+  - 'Select two of the following:'
+  id: required-for-the-minor-in-international-3
+- name: Required for the Minor in International Development Economics
+  section: Requirements
+  rule: manual
+  notes:
+  - At least 12 hours taken from the preceding two categories
+  id: required-for-the-minor-in-international-4

@@ -1,0 +1,56 @@
+# German Business & Commercial Studies Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/german-business-commercial-studies/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: german-business-commercial-studies-minor
+type: minor
+program: German Business & Commercial Studies Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/german-business-commercial-studies/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 19
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - GER 211
+  - GER 320
+  - GER 321
+  - GER 420
+  id: required-courses-1
+- name: More requirements
+  section: Requirements
+  rule: n_of
+  n: 2
+  courses:
+  - GER 201
+  - GER 203
+  - GER 204
+  - GER 205
+  - GER 212
+  - - GER 250
+    - GER 251
+  - - GER 260
+    - GER 261
+  - GER 270
+  - GER 331
+  - GER 332
+  - GER 401
+  - PS 385
+  - GER 403
+  - GER 465
+  - GER 470
+  - GER 471
+  - GER 472
+  - GER 473
+  - GER 493
+  - GER 494
+  notes:
+  - 'Select two courses from the list below:'
+  id: more-requirements-2

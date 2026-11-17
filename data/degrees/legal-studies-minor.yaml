@@ -1,0 +1,147 @@
+# Legal Studies Minor (College of Law), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/law/minors/legal-studies/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: legal-studies-minor
+type: minor
+program: Legal Studies Minor
+college: College of Law
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/law/minors/legal-studies/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: Core Course work (at least 9 hours)
+  section: Degree Requirements
+  rule: all
+  courses:
+  - LAW 201
+  - LAW 301
+  - LAW 302
+  - LAW 303
+  - LAW 304
+  - LAW 305
+  - LAW 306
+  - LAW 307
+  - LLS 310
+  - SOC 479
+  notes:
+  - 'Catalog total: 9 hours.'
+  id: core-course-work-at-least-9-hours-1
+- name: Law & Politics Track
+  section: 'Students will select one of the following tracks:'
+  rule: hours
+  hours: 9
+  courses:
+  - CEE 433
+  - CMN 220
+  - CMN 327
+  - CMN 328
+  - GLBL 392
+  - HDFS 330
+  - HIST 135
+  - HIST 274
+  - HIST 277
+  - HIST 278
+  - HIST 335
+  - HIST 338
+  - HIST 372
+  - HIST 442
+  - HIST 445
+  - HIST 488
+  - JOUR 310
+  - JOUR 311
+  - LER 225
+  - LER 300
+  - NRES 434
+  - PHIL 106
+  - PHIL 107
+  - PHIL 380
+  - PHIL 435
+  - PHIL 436
+  - PS 214
+  - PS 220
+  - PS 224
+  - PS 225
+  - PS 270
+  - PS 301
+  - PS 302
+  - PS 305
+  - PS 306
+  - PS 320
+  - PS 322
+  - PS 370
+  - PS 386
+  notes:
+  - 'choose at least 9 hours from the following:'
+  id: law-politics-track-2
+- name: Law & Cultures Track
+  section: 'Students will select one of the following tracks:'
+  rule: hours
+  hours: 9
+  courses:
+  - AAS 370 + LLS 372
+  - AFRO 378 + HIST 389
+  - ANSC 255
+  - ANTH 350
+  - GGIS 210
+  - GLBL 220
+  - GLBL 260
+  - SOC 201
+  - HDFS 220
+  - HDFS 320
+  - HDFS 330
+  - HDFS 420
+  - HIST 135
+  - HIST 170
+  - HIST 171
+  - HIST 263
+  - HIST 277
+  - HIST 278
+  - HIST 337
+  - HIST 338
+  - IS 202
+  - IS 308
+  - JOUR 311
+  - JOUR 310
+  - LAST 180
+  - GWS 343
+  - LLS 473
+  - NRES 224
+  - PHIL 106
+  - PHIL 214
+  - PHIL 380
+  - LLS 201
+  - PS 214
+  - PSYC 468
+  notes:
+  - 'choose at least 9 hours from the following:'
+  id: law-cultures-track-3
+- name: Law & Economics of Food Security Track
+  section: 'Students will select one of the following tracks:'
+  rule: hours
+  hours: 9
+  courses:
+  - ACE 210
+  - ACE 251
+  - ACE 255
+  - ACE 306
+  - ACE 310
+  - ACE 321
+  - ACE 403
+  - ACE 406
+  - ACE 410
+  - ACE 411
+  - ACE 456
+  - ANSC 255
+  - CEE 433
+  - LER 225
+  - LER 300
+  - NRES 325
+  - PS 225
+  notes:
+  - 'choose at least 9 hours from the following:'
+  id: law-economics-of-food-security-track-4

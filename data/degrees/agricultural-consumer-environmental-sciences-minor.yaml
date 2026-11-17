@@ -1,0 +1,86 @@
+# International Minor in Agricultural, Consumer, & Environmental Sciences (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/minors/agricultural-consumer-environmental-sciences/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: agricultural-consumer-environmental-sciences-minor
+type: minor
+program: International Minor in Agricultural, Consumer, & Environmental Sciences
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/minors/agricultural-consumer-environmental-sciences/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 21
+notes: []
+double_counting: []
+groups:
+- name: Global Study in the Social Science Disciplines
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Minimum of 3 hours, maximum of 9 hours selected from:'
+  courses:
+  - ACE 251
+  - ACE 254
+  - ACE 411
+  - ACE 435
+  - ACE 451
+  - ACE 455
+  - AGCM 420
+  - ANTH 262
+  - BADM 380
+  - BADM 381
+  - BADM 382
+  - ECON 420
+  - ECON 450
+  - GGIS 204
+  - GGIS 210
+  - GGIS 410
+  - HDFS 220
+  - HIST 258
+  - HIST 259
+  - NRES 287
+  - PS 241
+  - PS 280
+  - PS 382
+  - PS 389
+  - REL 110
+  - UP 423
+  id: global-study-in-the-social-science-disci-1
+- name: Global Study in the Natural Science Disciplines
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Minimum of 3 hours, maximum of 9 hours, selected from:'
+  courses:
+  - ANSC 205
+  - ATMS 140
+  - CPSC 116
+  - CPSC 431
+  - PLPA 200
+  - ETMA 311
+  id: global-study-in-the-natural-science-disc-2
+- name: Regional Specialization
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - The following approaches/options can be used (separately or in combinations) to complete this portion of the minor.
+  - 'Academic credit earned through study or supervised activities outside the U.S. through:'
+  courses:
+  - ACES 293
+  - ACES 298
+  - ACES 299
+  id: regional-specialization-3
+- name: Regional Specialization
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - Completion of courses that are approved by Area Studies Programs (see minor advisor)
+  - Center for African Studies
+  - Center for East Asian and Pacific Studies
+  - Center for Latin American and Caribbean Studies
+  - Program in South Asian and Middle Eastern Studies
+  - European Union Center
+  - Foreign language courses that exceed College of ACES graduation requirements.
+  id: regional-specialization-4

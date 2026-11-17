@@ -30,8 +30,9 @@ GENED_RE = re.compile(r"^gened:([A-Z0-9]+)$")
 GENED_CODES = {"ACP", "COMP1", "HP", "LA", "LS", "PS", "QR1", "QR2", "SS", "BSC", "NW", "US", "WCC"}
 RULES = {"all", "n_of", "hours", "manual"}
 KINDS = {"program", "gened"}
-TOP_KEYS = {"id", "program", "college", "catalog_year", "source", "read_on", "total_hours", "notes", "double_counting",
-            "groups", "generated"}
+TYPES = {"major", "minor"}
+TOP_KEYS = {"id", "type", "program", "college", "catalog_year", "source", "read_on", "total_hours", "notes",
+            "double_counting", "groups", "generated"}
 GROUP_KEYS = {"id", "name", "section", "kind", "rule", "n", "hours", "courses", "from", "exclude", "max_hours",
               "min_from", "not_with", "exclusive", "source", "notes"}
 
@@ -74,6 +75,7 @@ class Degree:
     groups: list[Group]
     unknown: list[str] = field(default_factory=list)
     generated: str = ""  # date, for files written by pipeline/catalog_import.py
+    type: str = "major"  # or "minor"
 
     def codes(self) -> set[str]:
         """Every course code named in a list, an exclusion or a cap."""
@@ -118,6 +120,8 @@ def validate(doc: Any, name: str = "?") -> Degree:
             errs.append(f"missing '{k}'")
     if "id" in doc and (not isinstance(doc["id"], str) or not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", doc["id"])):
         errs.append("'id' must be a lower-case slug like finance-data-science")
+    if "type" in doc and doc["type"] not in TYPES:
+        errs.append("'type' must be major or minor (leave it out for a major)")
     if "catalog_year" in doc and not re.fullmatch(r"\d{4}-\d{4}", str(doc["catalog_year"])):
         errs.append("'catalog_year' must look like 2026-2027")
     if "source" in doc and not str(doc["source"]).startswith("https://catalog.illinois.edu/"):
@@ -245,7 +249,7 @@ def validate(doc: Any, name: str = "?") -> Degree:
         source=doc["source"], read_on=str(read_on), total_hours=doc.get("total_hours"),
         notes=list(doc.get("notes") or []),
         double_counting=[dict(r) for r in dc], groups=groups,
-        generated=str(doc.get("generated") or ""),
+        generated=str(doc.get("generated") or ""), type=str(doc.get("type") or "major"),
     )
 
 
@@ -310,7 +314,8 @@ def resolve(d: Degree, catalog: dict[str, CatalogCourse]) -> dict[str, list[str]
 def to_json(d: Degree, eligible: dict[str, list[str]], courses: dict[str, dict]) -> dict:
     """Gen-ed-only groups export no eligible list: the page fills it from the shared degrees/gened-courses.json."""
     return {
-        "id": d.id, "program": d.program, "college": d.college, "catalog_year": d.catalog_year, "source": d.source,
+        "id": d.id, "type": d.type, "program": d.program, "college": d.college, "catalog_year": d.catalog_year,
+        "source": d.source,
         "read_on": d.read_on, "generated": d.generated, "total_hours": d.total_hours, "notes": d.notes,
         "double_counting": d.double_counting,
         "groups": [{
@@ -349,7 +354,8 @@ def export(conn: sqlite3.Connection, out_dir: Path, summaries: dict[str, dict], 
                               for c in eligible.get(g.id, [])}
         courses = {code: info(code) for code in sorted(listed) if code in catalog and code not in gened}
         (dest / f"{d.id}.json").write_text(json.dumps(to_json(d, eligible, courses), separators=(",", ":")))
-        index.append({"id": d.id, "program": d.program, "college": d.college, "catalog_year": d.catalog_year,
+        index.append({"id": d.id, "type": d.type, "program": d.program, "college": d.college,
+                      "catalog_year": d.catalog_year,
                       "groups": len(d.groups), "generated": d.generated})
     (dest / "index.json").write_text(json.dumps(sorted(index, key=lambda x: (x["college"], x["program"])),
                                                 separators=(",", ":")))

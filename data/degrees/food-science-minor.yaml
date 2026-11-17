@@ -1,0 +1,53 @@
+# Food Science Minor (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/minors/food-science/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: food-science-minor
+type: minor
+program: Food Science Minor
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/minors/food-science/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Courses required for minor in food science
+  section: Requirements
+  rule: all
+  courses:
+  - FSHN 101
+  - FSHN 414
+  - FSHN 471
+  id: courses-required-for-minor-in-food-scien-1
+- name: Select one of the following
+  section: Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - FSHN 465
+  - FSHN 481 + FSHN 483
+  notes:
+  - Select one of the following
+  id: select-one-of-the-following-2
+- name: Select one of the following
+  section: Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - FSHN 232
+  - FSHN 260
+  - FSHN 302
+  - FSHN 416
+  - FSHN 418
+  - FSHN 460
+  - FSHN 466
+  - ANSC 350
+  - MCB 450
+  - ABE 483
+  notes:
+  - Select one of the following
+  id: select-one-of-the-following-3

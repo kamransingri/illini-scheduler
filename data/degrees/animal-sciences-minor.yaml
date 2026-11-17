@@ -1,0 +1,56 @@
+# Animal Sciences Minor (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/minors/animal-sciences/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: animal-sciences-minor
+type: minor
+program: Animal Sciences Minor
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/minors/animal-sciences/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: Courses Required
+  section: Degree Requirements
+  rule: all
+  courses:
+  - ANSC 100
+  id: courses-required-1
+- name: Courses Required
+  section: Degree Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - ANSC 101
+  - ANSC 110
+  - ANSC 120
+  - ANSC 205
+  - ANSC 250
+  - ANSC 255
+  notes:
+  - 'Select one of the following:'
+  id: courses-required-2
+- name: Courses Required
+  section: Degree Requirements
+  rule: n_of
+  n: 2
+  courses:
+  - ANSC 223
+  - ANSC 224
+  - ANSC 221
+  - ANSC 222
+  notes:
+  - 'Select two of the following:'
+  id: courses-required-3
+- name: Courses Required
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - Minimum two additional 300- or 400-level ANSC courses. These courses must be distinct from the student's major or an additional
+    minor.
+  - ANSC 398 and ANSC 499 do not count toward the minor.
+  id: courses-required-4

@@ -1,0 +1,51 @@
+# Journalism Minor (College of Media), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/media/minors/journalism/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: journalism-minor
+type: minor
+program: Journalism Minor
+college: College of Media
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/media/minors/journalism/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - JOUR 200
+  - - JOUR 205
+    - JOUR 452
+  - - JOUR 250
+    - JOUR 456
+  - - JOUR 311
+    - JOUR 310
+  id: required-courses-1
+- name: Select two courses from the following
+  section: Requirements
+  rule: n_of
+  n: 2
+  courses:
+  - JOUR 210
+  - JOUR 240
+  - JOUR 361
+  - JOUR 410
+  - JOUR 440
+  - JOUR 450
+  - JOUR 451
+  - JOUR 453
+  - JOUR 454
+  - JOUR 471
+  - JOUR 472
+  - JOUR 473
+  - JOUR 482
+  - JOUR 483
+  notes:
+  - Select two courses from the following
+  id: select-two-courses-from-the-following-2

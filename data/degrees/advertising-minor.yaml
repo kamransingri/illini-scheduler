@@ -1,0 +1,63 @@
+# Advertising Minor (College of Media), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/media/minors/advertising/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: advertising-minor
+type: minor
+program: Advertising Minor
+college: College of Media
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/media/minors/advertising/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: Foundations of Advertising
+  section: Requirements
+  rule: all
+  courses:
+  - ADV 150
+  - ADV 393
+  notes:
+  - 'Catalog total: 6 hours.'
+  id: foundations-of-advertising-1
+- name: Exploring Advertising Topics
+  section: Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - ADV 175
+  - ADV 200
+  - ADV 201
+  - ADV 212
+  - ADV 214
+  - ADV 290
+  notes:
+  - 'Catalog total: 3 hours.'
+  - 'Choose 1 course from the following list:'
+  id: exploring-advertising-topics-2
+- name: Advanced Advertising Topics
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 9 hours.'
+  - Select at least 3 courses at the 300- or 400-level from the list below.
+  courses:
+  - ADV 301
+  - ADV 305
+  - ADV 311
+  - ADV 376
+  - ADV 378
+  - ADV 391
+  - ADV 392
+  - ADV 396
+  - ADV 399
+  - ADV 400
+  - ADV 409
+  - ADV 480
+  - ADV 490
+  - ADV 491
+  - ADV 494
+  id: advanced-advertising-topics-3
