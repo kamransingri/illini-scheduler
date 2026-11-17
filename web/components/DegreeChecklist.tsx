@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { alsoCounts, evaluate, hydrate, needText, options, prereqNote, rankCourse, type Degree, type DegreeCourse, type DegreeIndex, type GroupResult, type GroupStatus, type Ranked } from "@/lib/degree";
 import { courseHref, dataUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, termLabel } from "@/lib/format";
-import { EMPTY, onMineChange, readMine, sameState, STATUS_LABEL, stateFromParams, stateToParams, writeMine, type CourseStatus, type MyState } from "@/lib/mycourses";
+import { EMPTY, MINOR_TICK, onMineChange, readMine, sameState, STATUS_LABEL, stateFromParams, stateToParams, writeMine, type CourseStatus, type MyState } from "@/lib/mycourses";
 import type { ScorePriors } from "@/lib/score";
 import type { SearchIndex } from "@/lib/types";
 import { useWeights } from "@/lib/weights";
@@ -61,6 +61,10 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
   const [ready, setReady] = useState(false);
   const [deg, setDeg] = useState<Degree | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [minorDeg, setMinorDeg] = useState<Degree | null>(null);
+  const [minorError, setMinorError] = useState<string | null>(null);
+  const majors = useMemo(() => programs.filter((p) => p.type !== "minor"), [programs]);
+  const minors = useMemo(() => programs.filter((p) => p.type === "minor"), [programs]);
   const [index, setIndex] = useState<SearchIndex | null>(null);
   const weights = useWeights();
 
@@ -71,7 +75,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
     let start = fromUrl ?? saved;
     if (fromUrl && saved.courses.length && !sameState(saved, fromUrl)) setShared(saved);
     else if (fromUrl) writeMine(fromUrl);
-    if (!start.program && programs.length === 1) start = { ...start, program: programs[0].id };
+    if (!start.program && majors.length === 1) start = { ...start, program: majors[0].id };
     setSt(start);
     setReady(true);
     loadIndex().then(setIndex).catch(() => setIndex(null));
@@ -79,7 +83,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
       setShared(null);
       setSt(readMine());
     });
-  }, [programs]);
+  }, [majors]);
 
   const update = (next: MyState) => {
     setSt(next);
@@ -102,8 +106,21 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
       .catch((e: Error) => setError(e.message));
   }, [st.program]);
 
-  const ev = useMemo(() => (deg ? evaluate(deg, st.courses, st.ticked) : null), [deg, st.courses, st.ticked]);
-  const generatedOn = programs.find((p) => p.id === st.program)?.generated;
+  useEffect(() => {
+    setMinorDeg(null);
+    setMinorError(null);
+    if (!st.minor) return;
+    loadDegree(st.minor)
+      .then(setMinorDeg)
+      .catch((e: Error) => setMinorError(e.message));
+  }, [st.minor]);
+
+  const majorTicks = useMemo(() => st.ticked.filter((t) => !t.startsWith(MINOR_TICK)), [st.ticked]);
+  const minorTicks = useMemo(() => st.ticked.filter((t) => t.startsWith(MINOR_TICK)).map((t) => t.slice(MINOR_TICK.length)), [st.ticked]);
+  const ev = useMemo(() => (deg ? evaluate(deg, st.courses, majorTicks) : null), [deg, st.courses, majorTicks]);
+  const minorEv = useMemo(() => (minorDeg ? evaluate(minorDeg, st.courses, minorTicks) : null), [minorDeg, st.courses, minorTicks]);
+  const generatedOn = majors.find((p) => p.id === st.program)?.generated;
+  const minorGeneratedOn = minors.find((p) => p.id === st.minor)?.generated;
   const taken = useMemo(() => new Set(st.courses.map((c) => `${c.s} ${c.n}`)), [st.courses]);
 
   // Until the saved list (or the link's) has been read, hold the space instead of flashing an empty checklist.
@@ -140,35 +157,87 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
 
       <section className="grid gap-x-8 gap-y-6 rounded bg-panel p-4 sm:p-5 lg:grid-cols-[19rem_minmax(0,1fr)]" aria-label="Your program and courses">
         <div className="space-y-5">
-          <ProgramPicker programs={programs} value={st.program} onChange={(program) => update({ ...st, program })} />
+          <ProgramPicker
+            programs={majors}
+            value={st.program}
+            onChange={(program) => update({ ...st, program })}
+            label="Major"
+            idPrefix="program"
+            noun={["major", "majors"]}
+            hint="finance, CS, MCB"
+          />
+          {minors.length > 0 && (
+            <ProgramPicker
+              programs={minors}
+              value={st.minor}
+              // a different minor starts with none of the old one's boxes ticked
+              onChange={(minor) => update({ ...st, minor, ticked: st.ticked.filter((t) => !t.startsWith(MINOR_TICK)) })}
+              label={
+                <>
+                  Minor <span className="font-normal text-muted">(optional)</span>
+                </>
+              }
+              idPrefix="minor"
+              noun={["minor", "minors"]}
+              hint="business, CS, music"
+              clearable
+            />
+          )}
           <AddCourse st={st} update={update} deg={deg} index={index} />
         </div>
         <MyCourseList st={st} update={update} deg={deg} index={index} />
       </section>
 
       <section aria-label="Requirements" className="min-w-0">
-          {!st.program && <p className="text-muted">Choose a program to see its requirements.</p>}
+          {!st.program && <p className="text-muted">Choose a major{minors.length ? " (and a minor, if you have one)" : ""} to see its requirements.</p>}
           {error && (
             <p className="flex items-start gap-2" role="alert">
               <Icon name="alert" className="mt-1" />
               Couldn&apos;t load the requirements ({error}). Reload to try again.
             </p>
           )}
-          {generatedOn && (
-            // From the program index embedded in the page, so it shows before the program's own file has loaded.
-            <p className="mb-6 flex max-w-3xl items-start gap-2 rounded bg-panel p-3" data-testid="generated-note">
-              <Icon name="info" className="mt-1 shrink-0 text-heading" />
-              <span>
-                Read automatically from the catalog page on {fmtDate(generatedOn)}. Course lists, alternatives and &ldquo;select N&rdquo; rules come
-                straight from its tables; rules the catalog writes out in words (electives, concentrations) are shown in its own words for you to tick
-                when you&apos;ve met them. Check the catalog page before you rely on it.
-              </span>
+          {/* From the program index embedded in the page, so it shows before the program's own file has loaded. */}
+          {generatedOn && <GeneratedNote on={generatedOn} testId="generated-note" />}
+          {st.program && !deg && !error && <p className="min-h-screen text-muted">Loading requirements…</p>}
+          {deg && ev && <Checklist deg={deg} results={ev.results} st={st} update={update} taken={taken} meta={meta} weights={weights} tickPrefix="" />}
+      </section>
+
+      {st.minor && (
+        <section aria-label="Minor requirements" className="min-w-0 border-t-4 border-heading pt-6" data-testid="minor-checklist">
+          {minorError && (
+            <p className="flex items-start gap-2" role="alert">
+              <Icon name="alert" className="mt-1" />
+              Couldn&apos;t load the minor&apos;s requirements ({minorError}). Reload to try again.
             </p>
           )}
-          {st.program && !deg && !error && <p className="min-h-screen text-muted">Loading requirements…</p>}
-          {deg && ev && <Checklist deg={deg} results={ev.results} st={st} update={update} taken={taken} meta={meta} weights={weights} />}
-      </section>
+          <p className="mb-4 flex max-w-3xl items-start gap-2 rounded bg-panel p-3">
+            <Icon name="info" className="mt-1 shrink-0 text-heading" />
+            <span>
+              Your courses count toward your major and your minor here. Some minors and colleges limit how many hours can count for both, or need some
+              courses taken outside your major: the minor&apos;s catalog page says so. Most minors also need a form filed with your college.
+              {minorGeneratedOn && <> This minor was read automatically from its catalog page on {fmtDate(minorGeneratedOn)}; check that page before you rely on it.</>}
+            </span>
+          </p>
+          {!minorDeg && !minorError && <p className="text-muted">Loading the minor&apos;s requirements…</p>}
+          {minorDeg && minorEv && (
+            <Checklist deg={minorDeg} results={minorEv.results} st={st} update={update} taken={taken} meta={meta} weights={weights} tickPrefix={MINOR_TICK} />
+          )}
+        </section>
+      )}
     </div>
+  );
+}
+
+function GeneratedNote({ on, testId }: { on: string; testId?: string }) {
+  return (
+    <p className="mb-6 flex max-w-3xl items-start gap-2 rounded bg-panel p-3" data-testid={testId}>
+      <Icon name="info" className="mt-1 shrink-0 text-heading" />
+      <span>
+        Read automatically from the catalog page on {fmtDate(on)}. Course lists, alternatives and &ldquo;select N&rdquo; rules come straight from its
+        tables; rules the catalog writes out in words (electives, concentrations) are shown in its own words for you to tick when you&apos;ve met them.
+        Check the catalog page before you rely on it.
+      </span>
+    </p>
   );
 }
 
@@ -306,6 +375,7 @@ function Checklist({
   taken,
   meta,
   weights,
+  tickPrefix,
 }: {
   deg: Degree;
   results: GroupResult[];
@@ -314,7 +384,9 @@ function Checklist({
   taken: Set<string>;
   meta: { next_term: string; score_priors: ScorePriors | null };
   weights: ReturnType<typeof useWeights>;
+  tickPrefix: string; // "" for the major, MINOR_TICK for the minor
 }) {
+  const minor = deg.type === "minor";
   const counts = (s: GroupStatus) => results.filter((r) => r.status === s).length;
   const total = results.length;
   const sections = [...new Set(results.map((r) => r.group.section || "Requirements"))];
@@ -327,10 +399,15 @@ function Checklist({
             Catalog page
             <Icon name="external" />
           </a>
-          <span className="block text-sm">Read {fmtDate(deg.read_on)}. Minimum {deg.total_hours ?? "–"} hours to graduate.</span>
+          <span className="block text-sm">
+            Read {fmtDate(deg.read_on)}. {minor ? (deg.total_hours ? `At least ${deg.total_hours} hours for the minor.` : "") : `Minimum ${deg.total_hours ?? "–"} hours to graduate.`}
+          </span>
         </p>
-        <h2 className="mt-2 font-display text-xl font-bold text-heading">{deg.program}</h2>
-        <p className="mt-3 text-lg" data-testid="degree-progress">
+        <h2 className="mt-2 font-display text-xl font-bold text-heading">
+          {minor && <span className="mr-2 align-middle text-sm font-semibold tracking-wide text-muted uppercase">Minor </span>}
+          {deg.program}
+        </h2>
+        <p className="mt-3 text-lg" data-testid={minor ? "minor-progress" : "degree-progress"}>
           <span className="font-semibold text-heading tnum">
             {counts("done")} of {total}
           </span>{" "}
@@ -344,19 +421,19 @@ function Checklist({
           <div className="bg-heading/15" style={{ width: `${(100 * counts("partial")) / total}%` }} />
         </div>
         {deg.unknown.length > 0 && <p className="mt-2 text-sm text-muted">Not in this site&apos;s course data, so not shown as options: {deg.unknown.join(", ")}.</p>}
-        {meta.score_priors && <WeightsControl className="mt-4" />}
+        {meta.score_priors && !minor && <WeightsControl className="mt-4" />}
       </header>
 
       {sections.map((sec) => (
-        <section key={sec} className="mt-8" aria-labelledby={`sec-${sec}`}>
-          <h3 id={`sec-${sec}`} className="font-display text-lg font-bold text-heading">
+        <section key={sec} className="mt-8" aria-labelledby={`sec-${deg.id}-${sec}`}>
+          <h3 id={`sec-${deg.id}-${sec}`} className="font-display text-lg font-bold text-heading">
             {sec}
           </h3>
           <ul className="mt-2" data-testid="requirements">
             {results
               .filter((r) => (r.group.section || "Requirements") === sec)
               .map((r) => (
-                <Requirement key={r.group.id} r={r} results={results} deg={deg} st={st} update={update} taken={taken} meta={meta} weights={weights} />
+                <Requirement key={r.group.id} r={r} results={results} deg={deg} st={st} update={update} taken={taken} meta={meta} weights={weights} tickPrefix={tickPrefix} />
               ))}
           </ul>
         </section>
@@ -374,6 +451,7 @@ function Requirement({
   taken,
   meta,
   weights,
+  tickPrefix,
 }: {
   r: GroupResult;
   results: GroupResult[];
@@ -383,8 +461,10 @@ function Requirement({
   taken: Set<string>;
   meta: { next_term: string; score_priors: ScorePriors | null };
   weights: ReturnType<typeof useWeights>;
+  tickPrefix: string;
 }) {
   const g = r.group;
+  const tick = tickPrefix + g.id;
   const finished = r.status === "done" || r.status === "in_progress";
   const [showAll, setShowAll] = useState(false);
   const ranked = useMemo(() => {
@@ -431,8 +511,8 @@ function Requirement({
           <input
             type="checkbox"
             className="mt-1 size-4 accent-action"
-            checked={st.ticked.includes(g.id)}
-            onChange={(e) => update({ ...st, ticked: e.target.checked ? [...st.ticked, g.id] : st.ticked.filter((x) => x !== g.id) })}
+            checked={st.ticked.includes(tick)}
+            onChange={(e) => update({ ...st, ticked: e.target.checked ? [...st.ticked, tick] : st.ticked.filter((x) => x !== tick) })}
           />
           <span>I&apos;ve met this requirement</span>
         </label>

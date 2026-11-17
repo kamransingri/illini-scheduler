@@ -1,0 +1,55 @@
+# Classical Civilizations Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/classical-civilizations/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: classical-civilizations-minor
+type: minor
+program: Classical Civilizations Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/classical-civilizations/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 18 hours in classical civilization or archaeology courses at the level of 114 and above. A maximum of 6 hours is allowed
+    at the 100-level. At least 6 of these hours must be at the advanced (300 or 400) level. Choose courses from the following,
+    in consultation with the Department of the Classics Director of Undergraduate Studies.
+  courses:
+  - CLCV 114
+  - CLCV 115
+  - CLCV 116
+  - CLCV 120
+  - CLCV 131
+  - CLCV 132
+  - CLCV 133
+  - CLCV 160
+  - CLCV 206
+  - CLCV 203
+  - CLCV 220
+  - CLCV 221
+  - CLCV 224
+  - CLCV 225
+  - CLCV 230
+  - CLCV 231
+  - CLCV 232
+  - CLCV 240
+  - CLCV 250
+  - CLCV 322
+  - CLCV 323
+  - CLCV 443
+  - CLCV 444
+  - CLCV 450
+  - CLCV 490
+  - CLCV 491
+  - CLCV 492
+  - CLCV 493
+  - GRKM 260
+  id: more-requirements-1

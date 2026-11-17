@@ -1,0 +1,54 @@
+# Bioengineering Minor (The Grainger College of Engineering), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/minors/bioengineering/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: bioengineering-minor
+type: minor
+program: Bioengineering Minor
+college: The Grainger College of Engineering
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/engineering/minors/bioengineering/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - BIOE 120
+  - - BIOE 414
+    - CHBE 472
+  - CHEM 232
+  - MCB 244
+  - - MCB 246
+    - MCB 250
+  - MCB 252
+  - MCB 253
+  id: required-courses-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Bioengineering Related Technical Electives. See list below:'
+  courses:
+  - BIOE 414
+  - CHBE 472
+  - BIOE 480
+  - CHBE 471
+  - CHBE 473
+  - CHBE 474
+  - ECE 473
+  - MCB 400
+  - MCB 450
+  - MSE 470
+  - TAM 461
+  id: more-requirements-2
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Other Department Specialities related to Bioengineering (taken as electives)
+  id: more-requirements-3

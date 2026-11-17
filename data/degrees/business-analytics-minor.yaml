@@ -1,0 +1,42 @@
+# Business Analytics Minor (Gies College of Business), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/bus/minors/business-analytics/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: business-analytics-minor
+type: minor
+program: Business Analytics Minor
+college: Gies College of Business
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/bus/minors/business-analytics/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Required Courses
+  section: Degree Requirements
+  rule: all
+  courses:
+  - BADM 352
+  - BADM 356
+  - BADM 358
+  - BADM 373
+  - BADM 374
+  id: required-courses-1
+- name: Elective Courses
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - Select any one (1) course
+  courses:
+  - BADM 336
+  - BADM 351
+  - BADM 361
+  - BADM 362
+  - BADM 379
+  - BADM 453
+  - ACCY 302
+  - FIN 464
+  id: elective-courses-2

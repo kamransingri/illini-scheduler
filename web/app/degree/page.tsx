@@ -5,7 +5,7 @@ import { getDegreeIndex, getMeta } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Degree checklist",
-  description: "Enter the courses you've finished and see which degree requirements and gen-eds are still open, with the best courses for each.",
+  description: "Enter the courses you've finished and see which requirements of your major, minor and gen-eds are still open, with the best courses for each.",
 };
 
 export default function DegreePage() {

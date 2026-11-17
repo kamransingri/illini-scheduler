@@ -1,7 +1,8 @@
-"""Import every undergraduate program's degree requirements from the Academic Catalog into data/degrees/<id>.yaml.
+"""Import every undergraduate major's and minor's requirements from the Academic Catalog into data/degrees/<id>.yaml.
 
     python -m pipeline.catalog_import            # fetch (cached in data/raw/catalog, 1 request/s) and write the files
     python -m pipeline.catalog_import --offline  # re-parse the cached pages only
+    python -m pipeline.catalog_import --only minors   # just the minors (or --only majors)
 
 The catalog lays requirements out as course-list tables. This reads only what the tables state outright: course lists
 ("all of these"), "or" alternatives, "&" pairs taken together, "Select N of the following" and "N hours from". A block
@@ -29,6 +30,7 @@ from .degrees import DEGREES_DIR, DegreeError, validate
 
 CATALOG = "https://catalog.illinois.edu"
 INDEX = f"{CATALOG}/undergraduate/"
+MINORS_INDEX = f"{CATALOG}/undergraduate/minors/"
 CACHE = RAW / "catalog"
 COLLEGES = {
     "aces": "College of Agricultural, Consumer and Environmental Sciences",
@@ -41,6 +43,10 @@ COLLEGES = {
     "las": "College of Liberal Arts and Sciences",
     "media": "College of Media",
     "socw": "School of Social Work",
+    "informatics-programs": "Informatics Programs",
+    "law": "College of Law",
+    "ler": "School of Labor and Employment Relations",
+    "provost": "Office of the Provost",
 }
 GENED_SOURCE = "https://catalog.illinois.edu/general-information/degree-general-education-requirements/"
 GENED_RULES_SOURCE = "https://gened.illinois.edu/requirements/"
@@ -68,10 +74,29 @@ def program_links(index_html: str | bytes) -> list[str]:
     return [f"{CATALOG}{u}" for u in links if not re.search(r"undeclared|individual-plans", u)]
 
 
+def minor_links(index_html: str | bytes) -> list[str]:
+    """Minor pages listed on the catalog's minors index ('/undergraduate/<college>/minors/<minor>/')."""
+    text = index_html.decode("utf-8", "replace") if isinstance(index_html, bytes) else index_html
+    links = sorted(set(re.findall(r'href="(/undergraduate/[a-z0-9-]+/minors/[a-z0-9-]+/)"', text)))
+    return [f"{CATALOG}{u}" for u in links]
+
+
+def is_minor(url: str) -> bool:
+    return "/minors/" in url.split("/undergraduate/", 1)[-1]
+
+
+def has_requirements(page: bytes, url: str) -> bool:
+    """A requirements tab, or (some minors) course lists on the overview tab."""
+    return b"degreerequirementstextcontainer" in page or (is_minor(url) and b"sc_courselist" in page)
+
+
 def program_id(url: str) -> str:
     """'.../las/english-balas/' -> 'english-balas'; a concentration '.../english-balas/english-teaching/' ->
-    'english-balas-english-teaching'."""
+    'english-balas-english-teaching'; a minor '.../aces/minors/nutrition/' -> 'nutrition-minor'."""
     parts = url.rstrip("/").split("/undergraduate/", 1)[-1].split("/")
+    if len(parts) >= 3 and parts[1] == "minors":
+        slug = "-".join(parts[2:])
+        return slug if "minor" in slug.split("-") else f"{slug}-minor"
     return "-".join(parts[1:])
 
 
@@ -90,7 +115,8 @@ def fetch_all(urls: list[str], delay: float = 1.0, offline: bool = False, client
                                                         follow_redirects=True))
     try:
         for u in urls:
-            path = CACHE / f"{program_id(u) if u != INDEX else '_index'}.html"
+            name = {INDEX: "_index", MINORS_INDEX: "_minors"}.get(u) or program_id(u)
+            path = CACHE / f"{name}.html"
             if path.exists():
                 out[u] = path.read_bytes()
                 continue
@@ -253,6 +279,9 @@ def program_groups(rows: list[dict], section: str, start_index: int) -> list[dic
             t = r["text"]
             if len(t) > 70 or t.endswith("."):  # a rule written into a header row
                 seg = new(lead=[t])
+            elif SELECT_N.match(t) or SELECT_HOURS.match(t):  # "Select two of the following:" as a header row
+                name = t.rstrip(":").strip()
+                seg = new(lead=[name], hours=_hours(r["hours"]))
             else:
                 name = t.rstrip(":").strip()
                 seg = new(listish=t.endswith(":"), hours=_hours(r["hours"]))
@@ -285,10 +314,13 @@ def parse_program(page: str | bytes, url: str, read_on: str) -> dict:
     doc = lhtml.fromstring(page)
     title = norm(doc.findtext(".//title") or "")
     h1 = [norm(h.text_content()) for h in doc.xpath("//h1")]
-    program = h1[-1] if h1 else title.split("|")[0].strip()
+    program = re.sub(r",\s*UG$", "", h1[-1] if h1 else title.split("|")[0].strip())  # "History Minor, UG"
     year = re.search(r"(\d{4}-\d{4}) Course Catalog", title)
-    c = doc.get_element_by_id("degreerequirementstextcontainer")
+    # some minors have no requirements tab and list their courses on the overview tab
+    found = doc.xpath('//*[@id="degreerequirementstextcontainer"]')
+    c = found[0] if found else doc.get_element_by_id("textcontainer")
     text = norm(c.text_content())
+    minor = is_minor(url)
     total = re.search(r"Minimum hours required for graduation:\s*(\d+)", text)
     notes = []
     if total:
@@ -298,10 +330,12 @@ def parse_program(page: str | bytes, url: str, read_on: str) -> dict:
         notes.append(upper.group(1))
     has_quote = PROGRAM_GENED_QUOTE in text
     groups: list[dict] = []
-    section = ""
+    section = "Requirements" if minor else ""
+    sums: list[int] = []  # a minor states its size in a "Total Hours" row: "18", "18-21", "Minimum of 18"
     for el in c.iter("h2", "h3", "h4", "p", "table"):
         if el.tag == "table" and "sc_courselist" in (el.get("class") or ""):
             rows = _rows(el)
+            sums += [int(m.group()) for r in rows if r["kind"] == "sum" and (m := re.search(r"\d+", r["hours"]))]
             first = next((r for r in rows if r["kind"] != "sum"), None)
             if first and first.get("text", "").lower().startswith("composition i"):
                 groups.extend(gened_groups(rows, has_quote))
@@ -310,7 +344,8 @@ def parse_program(page: str | bytes, url: str, read_on: str) -> dict:
         elif el.tag != "table" and not el.xpath("ancestor::table"):
             t = norm(el.text_content())
             heading_like = 0 < len(t) <= 80 and not t.endswith(".")
-            if el.tag != "p" or (heading_like and not t.lower().startswith(("for the degree", "minimum", "follows"))):
+            if el.tag != "p" or (heading_like and not t.lower().startswith(("for the degree", "minimum", "follows"))
+                                              and not (minor and t.lower().startswith("for the "))):
                 section = t
     rules: list[dict[str, Any]] = [
         {"allow": False, "within": "cultural-studies", "quote": CS_QUOTE, "source": GENED_RULES_SOURCE},
@@ -323,15 +358,20 @@ def parse_program(page: str | bytes, url: str, read_on: str) -> dict:
                  if r.get("within") != "cultural-studies" and "cultural-studies" not in list(r.get("between") or [])]
     seg = url.split("/undergraduate/", 1)[-1].split("/")[0]
     college = COLLEGES.get(seg, seg.upper())
+    for g in groups:  # a minor's lists under no heading of their own
+        if minor and g["name"] == "Requirements":
+            g["name"] = "Required courses" if g["rule"] == "all" else "More requirements"
+            g["id"] = f"{_slug(g['name'])}-{g['id'].rsplit('-', 1)[1]}"
+    hours = int(total.group(1)) if total else sums[-1] if minor and sums else None
     seen: dict[str, int] = {}
     for g in groups:  # a page with several gen-ed or concentration tables can repeat an id
         seen[g["id"]] = seen.get(g["id"], 0) + 1
         if seen[g["id"]] > 1:
             g["id"] = f"{g['id']}-{seen[g['id']]}"
     return {
-        "id": program_id(url), "program": program, "college": college,
+        "id": program_id(url), **({"type": "minor"} if minor else {}), "program": program, "college": college,
         "catalog_year": year.group(1) if year else "", "source": url, "read_on": read_on, "generated": read_on,
-        **({"total_hours": int(total.group(1))} if total else {}), "notes": notes, "double_counting": rules,
+        **({"total_hours": hours} if hours else {}), "notes": notes, "double_counting": rules,
         "groups": groups,
     }
 
@@ -354,17 +394,26 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--offline", action="store_true", help="only re-parse pages already in data/raw/catalog")
     ap.add_argument("--delay", type=float, default=1.0, help="seconds between requests")
+    ap.add_argument("--only", choices=["majors", "minors"], help="import just the majors or just the minors")
     args = ap.parse_args(argv)
     today = dt.date.today().isoformat()
-    index = fetch_all([INDEX], args.delay, args.offline).get(INDEX)
-    if not index:
-        print("could not read the catalog index", file=sys.stderr)
-        return 1
-    urls = program_links(index)
+    urls: list[str] = []
+    if args.only != "minors":
+        index = fetch_all([INDEX], args.delay, args.offline).get(INDEX)
+        if not index:
+            print("could not read the catalog index", file=sys.stderr)
+            return 1
+        urls += program_links(index)
+    if args.only != "majors":
+        minors_index = fetch_all([MINORS_INDEX], args.delay, args.offline).get(MINORS_INDEX)
+        if minors_index:
+            urls += minor_links(minors_index)
+        else:
+            print("warn: could not read the catalog's minors index; minors are not updated", file=sys.stderr)
     pages = fetch_all(urls, args.delay, args.offline)
     # Programs whose requirements are on concentration pages (English, Political Science...): import those instead.
     for u in list(urls):
-        if u in pages and b"degreerequirementstextcontainer" not in pages[u]:
+        if u in pages and not has_requirements(pages[u], u):
             subs = concentration_links(pages[u], u)
             urls.remove(u)
             urls.extend(subs)
@@ -395,8 +444,8 @@ def main(argv: list[str] | None = None) -> int:
             written += 1
         else:
             kept += 1
-    print(f"{len(urls)} programs: {written} written, {kept} hand-checked kept, {failed} skipped; "
-          f"groups by rule {rules}")
+    print(f"{len(urls)} programs ({sum(map(is_minor, urls))} minors): {written} written, {kept} hand-checked kept, "
+          f"{failed} skipped; groups by rule {rules}")
     return 0
 
 

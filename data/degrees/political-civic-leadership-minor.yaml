@@ -1,0 +1,37 @@
+# Political & Civic Leadership Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/political-civic-leadership/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: political-civic-leadership-minor
+type: minor
+program: Political & Civic Leadership Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/political-civic-leadership/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 17
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - PS 100
+  - PS 101
+  - GLBL 100
+  - GLBL 220
+  id: required-courses-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - An intermediate (200 level) or advanced (300 level) course in public policy
+  - A course examining the construction and consequences of social identity relating to race, religion, ethnicity, or gender
+  - A course exploring different perspectives on a just, ordered, and moral society
+  - PS 491 or approved internship course in another department
+  - At least two sections of PS 191 designated as pertaining to the Civic Leadership Program. A list of such sections is available
+    in the Undergraduate Studies Office of the Department of Political Science.
+  id: more-requirements-2

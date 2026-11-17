@@ -1,0 +1,36 @@
+# Interdisciplinary Minor in the Study of the Islamic World (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/islamic-world/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: islamic-world-minor
+type: minor
+program: Interdisciplinary Minor in the Study of the Islamic World
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/islamic-world/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 19
+notes: []
+double_counting: []
+groups:
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Completion of a fourth semester course in an Islamic language (e.g. Arabic, Turkish, Swahili, Wolof). Select courses from
+    the approved course list.
+  - 'Select one of the following:'
+  courses:
+  - HIST 135
+  - SAME 152
+  - REL 214
+  id: more-requirements-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Additional courses chosen from the approved course list. The courses must come from at least two disciplines. At least
+    six hours must be at the 300- or 400-level.
+  id: more-requirements-2

@@ -1,0 +1,75 @@
+# Art & Design Minor (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/minors/art-design/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: art-design-minor
+type: minor
+program: Art & Design Minor
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/minors/art-design/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Course Requirements
+  section: Course Requirements
+  rule: manual
+  notes:
+  - '1 required course:'
+  courses:
+  - ART 100
+  - ART 140
+  - ARTH 110
+  id: course-requirements-1
+- name: Course Requirements
+  section: Course Requirements
+  rule: manual
+  notes:
+  - 'A minimum of 1 course from the academic menu:'
+  courses:
+  - ART 100
+  - ART 140
+  - ARTH 110
+  id: course-requirements-2
+- name: Course Requirements
+  section: Course Requirements
+  rule: manual
+  notes:
+  - 'ARTH ###'
+  courses:
+  - ARTJ 209
+  - ARTJ 299
+  - ARTJ 302
+  - ARTJ 398
+  - ARTJ 397
+  - ARTE 260
+  - ARTE 475
+  - ARTE 480
+  id: course-requirements-3
+- name: Course Requirements
+  section: Course Requirements
+  rule: manual
+  notes:
+  - 'A minimum of 3 courses from the studio menu:'
+  - 'ART ###'
+  - 'ARTD ###'
+  - 'ARTE ###'
+  - 'ARTF ###'
+  - 'ARTS ###'
+  courses:
+  - ARTJ 101
+  - ARTJ 199
+  - ARTJ 301
+  - ARTJ 399
+  id: course-requirements-4
+- name: Course Requirements
+  section: Course Requirements
+  rule: manual
+  notes:
+  - At least 1 additional course in either academic or studio course menu.
+  - A minimum of six hours must be completed at the 300 or 400 level.
+  id: course-requirements-5

@@ -117,7 +117,7 @@ fed by the live job. A cheaper step first: let students "watch" a section so the
 
 - Hand-check the largest majors first (Computer Science, Psychology, Economics, Mechanical Engineering, Finance,
   Accountancy…) and fix what the importer gets wrong.
-- Minors and certificates.
+- Certificates. (Minors are on the degree checklist.)
 - Paste your DARS report or transcript as text and have the browser fill in "My courses". The text would be read in
   the browser and never uploaded, so no NetID is involved.
 - Check prerequisites against "My courses" instead of only showing the catalog's text.

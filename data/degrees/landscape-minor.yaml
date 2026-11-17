@@ -1,0 +1,56 @@
+# Landscape Studies Minor (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/minors/landscape/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: landscape-minor
+type: minor
+program: Landscape Studies Minor
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/minors/landscape/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 17
+notes: []
+double_counting: []
+groups:
+- name: Required introductory course
+  section: Degree Requirements
+  rule: all
+  courses:
+  - LA 101
+  id: required-introductory-course-1
+- name: Select a minimum of 15 hours from the following course list
+  section: Degree Requirements
+  rule: hours
+  hours: 15
+  courses:
+  - LA 214
+  - LA 221
+  - LA 222
+  - LA 242
+  - LA 250
+  - LA 315
+  - LA 387
+  - LA 427
+  - LA 430
+  - LA 446
+  - LA 466
+  - LA 480
+  notes:
+  - Select a minimum of 15 hours from the following course list
+  id: select-a-minimum-of-15-hours-from-the-fo-2
+- name: Select a minimum of 15 hours from the following course list
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - Other courses as approved by the Landscape Architecture advisor
+  id: select-a-minimum-of-15-hours-from-the-fo-3
+- name: Select a minimum of 15 hours from the following course list
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - At least six hours of coursework for the minor should be advanced (300-level or 400-level courses) and must be distinct
+    from credit earned for your major or another minor.
+  id: select-a-minimum-of-15-hours-from-the-fo-4

@@ -1,0 +1,216 @@
+# Game Studies & Design Minor (School of Information Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/ischool/minors/game-studies-design/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: game-studies-design-minor
+type: minor
+program: Game Studies & Design Minor
+college: School of Information Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/ischool/minors/game-studies-design/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Core Required Foundational Courses
+  section: Degree Requirements
+  rule: all
+  courses:
+  - GSD 101
+  id: core-required-foundational-courses-1
+- name: Core Required Foundational Courses
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - A minimum of one 100-200 level historical/social perspectives course.
+  - 'Choose from the following:'
+  courses:
+  - GSD 102
+  - IS 142
+  - GSD 202
+  id: core-required-foundational-courses-2
+- name: Core Required Foundational Courses
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - A minimum of one 100-200 level introductory game design course.
+  - 'Choose from the following:'
+  courses:
+  - GSD 103
+  - CI 210
+  id: core-required-foundational-courses-3
+- name: Electives
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - Students must choose a minimum of three elective courses, at least 2 at the 300-400 level, from the lists below.
+  id: electives-4
+- name: COMMUNITY HEALTH
+  section: Electives from the College of Applied Health Sciences
+  rule: all
+  courses:
+  - CHLH 441
+  id: community-health-5
+- name: KINESIOLOGY
+  section: Electives from the College of Applied Health Sciences
+  rule: all
+  courses:
+  - KIN 346
+  - KIN 369
+  - KIN 442
+  - KIN 474
+  id: kinesiology-6
+- name: RECREATION, SPORT AND TOURISM
+  section: Electives from the College of Applied Health Sciences
+  rule: all
+  courses:
+  - RST 199
+  id: recreation-sport-and-tourism-7
+- name: CURRICULUM & INSTRUCTION
+  section: Electives from the College of Education
+  rule: all
+  courses:
+  - CI 210
+  - CI 437
+  - CI 439
+  - CI 483
+  - CI 499
+  id: curriculum-instruction-8
+- name: FINE & APPLIED ARTS
+  section: Electives from the College of Fine & Applied Arts
+  rule: all
+  courses:
+  - FAA 499
+  id: fine-applied-arts-9
+- name: ART
+  section: Electives from the College of Fine & Applied Arts
+  rule: all
+  courses:
+  - ART 310
+  - ART 350
+  - ART 499
+  - ARTD 318
+  - ARTD 418
+  - ARTD 451
+  - ARTD 499
+  - ARTJ 301
+  - ARTJ 302
+  - ARTS 320
+  - ARTS 340
+  - ARTS 444
+  - ARTS 445
+  - ARTS 499
+  id: art-10
+- name: DANCE
+  section: Electives from the College of Fine & Applied Arts
+  rule: all
+  courses:
+  - DANC 256
+  - DANC 330
+  - DANC 405
+  - DANC 465
+  id: dance-11
+- name: MUSIC
+  section: Electives from the College of Fine & Applied Arts
+  rule: all
+  courses:
+  - MUS 209
+  - MUS 407
+  - MUS 409
+  - MUS 499
+  id: music-12
+- name: THEATRE
+  section: Electives from the College of Fine & Applied Arts
+  rule: all
+  courses:
+  - THEA 409
+  - THEA 410
+  - THEA 411
+  - THEA 418
+  - THEA 426
+  - THEA 427
+  - THEA 428
+  - THEA 445
+  - THEA 448
+  - THEA 453
+  - THEA 455
+  - THEA 456
+  - THEA 461
+  id: theatre-13
+- name: COMPUTER SCIENCE
+  section: Electives from the Grainger College of Engineering
+  rule: all
+  courses:
+  - CS 415
+  - CS 418
+  - CS 419
+  id: computer-science-14
+- name: GAME STUDIES & DESIGN
+  section: Electives from the School of Information Sciences
+  rule: all
+  courses:
+  - GSD 399
+  - GSD 403
+  - GSD 405
+  - GSD 409
+  id: game-studies-design-15
+- name: INFORMATICS
+  section: Electives from the School of Information Sciences
+  rule: all
+  courses:
+  - INFO 303
+  - INFO 416
+  - INFO 418
+  - INFO 424
+  - INFO 448
+  id: informatics-16
+- name: INFORMATION SCIENCES
+  section: Electives from the School of Information Sciences
+  rule: all
+  courses:
+  - IS 142
+  - IS 145
+  - IS 357
+  - IS 410
+  - IS 426
+  - IS 436
+  id: information-sciences-17
+- name: ENGLISH
+  section: Electives from the College of Liberal Arts & Sciences
+  rule: all
+  courses:
+  - ENGL 253
+  - ENGL 277
+  - ENGL 396
+  id: english-18
+- name: ADVERTISING
+  section: Electives from the College of Media
+  rule: all
+  courses:
+  - ADV 390
+  id: advertising-19
+- name: JOURNALISM
+  section: Electives from the College of Media
+  rule: all
+  courses:
+  - JOUR 101
+  - JOUR 430
+  - JOUR 460
+  id: journalism-20
+- name: MEDIA AND CINEMA STUDIES
+  section: Electives from the College of Media
+  rule: all
+  courses:
+  - MACS 323
+  - MACS 326
+  - MACS 370
+  - MACS 371
+  - MACS 372
+  - MACS 480
+  - MACS 481
+  - MACS 485
+  - MACS 496
+  id: media-and-cinema-studies-21

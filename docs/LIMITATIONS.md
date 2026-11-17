@@ -81,8 +81,10 @@ comes from. For future plans, see [IDEAS.md](IDEAS.md).
   concentrations) show the catalog's wording and a checkbox you tick yourself.
 - **Missing courses.** 288 course codes in 71 programs aren't offered in the terms the site loads (old or rarely
   taught courses). They show greyed out, without a link.
-- **Scope.** Undergraduate majors and their concentrations in the 2026-2027 catalog only. No minors, certificates,
+- **Scope.** Undergraduate majors (with their concentrations) and minors in the 2026-2027 catalog only. No certificates,
   graduate programs or earlier catalog years.
+- **Major and minor overlap.** A course counts toward both your major and your minor on the checklist. Some minors and
+  colleges limit that overlap; the minor's catalog page says so, and the checklist doesn't check it.
 - **You enter your courses by hand.** There's no transcript or DARS import, because those sit behind a NetID.
 - **Prerequisites** are shown as catalog text, not checked against your courses.
 - **Double counting** is allowed only where the catalog or the gen-ed rules say so in quotable words. Anything else

@@ -1,0 +1,53 @@
+# Food & Agribusiness Management Minor (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/minors/food-agribusiness-management/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: food-agribusiness-management-minor
+type: minor
+program: Food & Agribusiness Management Minor
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/minors/food-agribusiness-management/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Required for the Minor in Food and Agribusiness Management
+  section: Requirements
+  rule: all
+  courses:
+  - - ACE 100
+    - ECON 102
+  - ACE 222
+  - ACE 231
+  id: required-for-the-minor-in-food-and-agrib-1
+- name: Required for the Minor in Food and Agribusiness Management
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Select at least three hours from:'
+  courses:
+  - ACE 210
+  - ACE 251
+  - ACE 306
+  - ACE 335
+  - ACE 345
+  id: required-for-the-minor-in-food-and-agrib-2
+- name: Required for the Minor in Food and Agribusiness Management
+  section: Requirements
+  rule: n_of
+  n: 2
+  courses:
+  - ACE 427
+  - ACE 428
+  - ACE 430
+  - ACE 431
+  - ACE 435
+  - ACE 436
+  - ACE 444
+  notes:
+  - 'Select two of the following:'
+  id: required-for-the-minor-in-food-and-agrib-3

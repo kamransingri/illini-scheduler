@@ -1,0 +1,34 @@
+# Earth, Society, & Environment Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/earth-society-environment/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: earth-society-environment-minor
+type: minor
+program: Earth, Society, & Environment Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/earth-society-environment/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Introductory course from the Earth's Physical Systems, Resources, and Hazards Area course list.
+  - Introductory course from either the Environment and the Human Response or Sustainability, Policy, and Global Change Area
+    course lists
+  courses:
+  - ESE 200
+  id: more-requirements-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Three Advanced Courses from a list maintained by the minor advisor, at least two of which must be listed or cross listed
+    as ESE courses
+  id: more-requirements-2

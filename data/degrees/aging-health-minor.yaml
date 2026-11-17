@@ -1,0 +1,58 @@
+# Aging and Health Minor (College of Applied Health Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/ahs/minors/aging-health/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: aging-health-minor
+type: minor
+program: Aging and Health Minor
+college: College of Applied Health Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/ahs/minors/aging-health/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Foundational Courses (Required)
+  section: Degree Requirements
+  rule: all
+  courses:
+  - HK 272
+  - HK 404
+  - RST 316
+  - SHS 271
+  notes:
+  - 'Catalog total: 12 hours.'
+  id: foundational-courses-required-1
+- name: Elective Courses
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 6 hours.'
+  - The catalog lists these courses under Elective Courses; see the catalog page for the rule.
+  courses:
+  - HK 271
+  - HK 304
+  - HK 342
+  - HK 351
+  - HK 400
+  - HK 403
+  - HK 405
+  - HK 413
+  - HK 441
+  - HK 459
+  - HK 472
+  - RST 335
+  - SHS 352
+  - SHS 480
+  - SOCW 240
+  id: elective-courses-2
+- name: Elective Courses
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - Internship or Independent Study– In consultation and upon approval with minor advisor, students may apply up to 3 credit
+    hours towards this requirement.
+  id: elective-courses-3

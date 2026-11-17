@@ -1,0 +1,26 @@
+# Media Minor (College of Media), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/media/minors/media/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: media-minor
+type: minor
+program: Media Minor
+college: College of Media
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/media/minors/media/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 100- or 200-level Advertising Course
+  - 100- or 200-level Journalism Course
+  - 100- or 200-level Media and Cinema Studies Course
+  - Additional 300- or 400-level Courses - Must be from at least two different College of Media departments
+  id: more-requirements-1
