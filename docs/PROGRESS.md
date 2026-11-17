@@ -65,7 +65,7 @@ CI hygiene (see DECISIONS.md D12). Remaining, ranked:
 2. **Final-exam conflicts.** Course pages call `/ajax/finalexam/{year}/{season}/{SUBJ}/{NUM}`; parse it in the slow job and
    warn in the schedule builder when two finals overlap.
 3. **Instructor matching.** Curate `data/name_overrides.csv` from `data/unmatched.csv` (STAT lecture match 78.9%).
-4. **Official term dates** for the .ics export (`web/lib/terms.ts` holds estimates).
+4. ~~**Official term dates** for the .ics export~~: done (`web/lib/terms.ts`, from the Registrar's calendar, #28).
 5. **Student notes intake.** GitHub issue form for `student-note` + a script that turns approved issues into YAML.
 6. **Bigger features:** prerequisite graph / "what can I take next", degree checklist (CS + Stats), several named
    schedules, side-by-side comparison.
