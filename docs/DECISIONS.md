@@ -634,3 +634,10 @@ Every judgment call made during the autonomous build, newest phase last.
   instructors matched instead of 1,263, no match lost; professor entries on course pages with RMP 4,475 → 7,834 of
   25,775 (17% → 30%), entries with a review written for that course 739 → 2,169. The rest come as the nightly runs
   reach names never searched before (about 4,600 surnames at roughly 1,000 a night).
+
+## Course reviews go to RMP (2026-11-17)
+
+- **D19.1 No GitHub route for reviews.** "Suggest a note" opened a GitHub issue, which most students can't or won't do.
+  The course page now asks students who took the course to rate their professor on Rate My Professors and pick the
+  course there; those reviews come back through the nightly RMP job (D18). The issue form and intake planned in #31
+  were dropped. `data/notes/` stays for notes a maintainer adds with a source.

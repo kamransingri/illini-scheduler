@@ -1,5 +1,5 @@
-"""Curated student notes: data/notes/*.yaml (one file per course). No backend; new notes arrive as GitHub issues
-("Suggest a note" on the course page) and approved ones are added by pipeline/notes_intake.py.
+"""Curated notes: data/notes/*.yaml (one file per course), each added by a maintainer with a source. Students review
+courses on Rate My Professors instead; the course page points them there.
 
     course: CS 124
     notes:
