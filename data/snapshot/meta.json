@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-17T21:17:10+00:00",
+ "built_at": "2026-11-17T21:49:35+00:00",
  "current_term": "2026-fa",
  "next_term": "2027-sp",
  "terms": {
@@ -2079,10 +2079,10 @@
   },
   "campus_gpa": 3.522,
   "rmp": {
-   "quality": 3.625,
-   "difficulty": 2.963,
-   "would_take_again": 64.342,
-   "n_instructors": 2253
+   "quality": 3.632,
+   "difficulty": 2.959,
+   "would_take_again": 64.428,
+   "n_instructors": 2738
   }
  }
 }
