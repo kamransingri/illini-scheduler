@@ -10,6 +10,8 @@ history).
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-11-17
+
 ### Added
 
 - Course pages: a "Rate them on RMP" link next to each matched professor's Rate My Professors page, and "Be the first
@@ -124,7 +126,8 @@ history).
 - A partial Rate My Professors error no longer stops `make data`.
 - RSS feeds are written as UTF-8.
 
-[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.3.0...v0.4.0
