@@ -34,8 +34,11 @@ comes from. For future plans, see [IDEAS.md](IDEAS.md).
 - **Snapshots.** The nightly build reads Course Explorer through Wade Fagen-Ulmschneider's mirror, because the live
   feed refuses bursts of requests from GitHub (DECISIONS D11.3). The mirror can lag the live site.
 - **Final exams** appear only after Course Explorer publishes them, and are refreshed weekly.
-- **Calendar export (.ics)** uses estimated instruction start and end dates (`web/lib/terms.ts`), not the official
-  calendar.
+- **Calendar export (.ics)** uses the Registrar's academic calendar for each loaded term (`web/lib/terms.ts`, copied
+  by hand with the source and read date): first and last day of instruction, the 8-week halves, and all-campus holidays
+  and breaks, which are left out as `EXDATE`s. Final exams aren't in the export, and a class that meets on a different
+  schedule than Course Explorer lists won't match. A term the Registrar hasn't published gets estimated dates, and the
+  builder and every exported event say so.
 - **Search by CRN** covers the next and the current term only.
 - **Renumbered courses aren't linked.** The data has no link between an old number and its new one (D4.6), so a
   course's history stops at the renumbering.

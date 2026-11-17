@@ -9,6 +9,12 @@ the first build, phases 0 to 12, recorded in docs/PROGRESS.md.
 
 ## [Unreleased]
 
+### Fixed
+
+- Calendar export (.ics): dates now come from the Registrar's Fall 2026 and Spring 2027 academic calendars, with the
+  source and read date in every event. Labor Day (September 7, 2026) is now skipped; before, Monday classes showed up
+  on it. The builder names the breaks it skips.
+
 ### Added
 
 - Degree checklist: minors. Pick an optional minor under your major and its requirements get their own checklist below

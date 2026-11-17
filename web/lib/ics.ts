@@ -1,6 +1,6 @@
 // iCalendar export with weekly recurrences (RFC 5545), America/Chicago time zone.
 import type { Schedule } from "./schedule";
-import { TERM_DATES } from "./terms";
+import { breakNames, TERM_DATES } from "./terms";
 
 const BYDAY: [number, string, number][] = [
   [1, "MO", 1],
@@ -80,6 +80,9 @@ export function buildIcs(schedule: Schedule, term: string, termLabel: string, no
   if (!dates) throw new Error(`No instruction dates for ${term}`);
   const stamp = `${ymd(now)}T${pad(now.getUTCHours())}${pad(now.getUTCMinutes())}${pad(now.getUTCSeconds())}Z`;
   const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Illini Scheduler//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH", `X-WR-CALNAME:${esc(termLabel)} classes`, ...VTIMEZONE];
+  const dateNote = dates.estimated
+    ? "Dates are estimated from the usual academic calendar; the Registrar hasn't published this term's yet."
+    : `Dates from the Registrar's ${termLabel} academic calendar, read ${dates.read_on}${dates.breaks.length ? `; no classes on ${breakNames(dates)}` : ""}.`;
   let n = 0;
   for (const b of schedule.bundles) {
     for (const s of b.sections) {
@@ -113,7 +116,7 @@ export function buildIcs(schedule: Schedule, term: string, termLabel: string, no
           ...(exdates.length ? [`EXDATE;TZID=America/Chicago:${exdates.join(",")}`] : []),
           `SUMMARY:${esc(`${b.course} ${s.code} (${s.type})`)}`,
           ...(m.b ? [`LOCATION:${esc(`${m.r} ${m.b}`.trim())}`] : []),
-          `DESCRIPTION:${esc(`CRN ${s.crn}. ${s.instructors_raw.length ? `Instructor: ${s.instructors_raw.join("; ")}. ` : ""}Dates are estimated from the usual academic calendar.`)}`,
+          `DESCRIPTION:${esc(`CRN ${s.crn}. ${s.instructors_raw.length ? `Instructor: ${s.instructors_raw.join("; ")}. ` : ""}${dateNote}`)}`,
           "END:VEVENT",
         );
       });
