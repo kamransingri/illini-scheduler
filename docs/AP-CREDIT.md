@@ -24,6 +24,12 @@ table usually appears in spring; add it as a new file and the newest becomes the
 Why by hand and not a scraper: about 40 exams change once a year, the current table only renders after clicking
 filters, and the pages have slips a scraper would copy (below).
 
+**Watching for changes.** Every Monday `citl-watch.yml` runs `python -m pipeline.citl_watch`: it reads each year's
+source again (the cutoff tool's rows come from the JSON service its page uses) and compares the exam names and rows
+with `data/ap-credit/citl/<year>.txt`, the snapshot taken when the file was last checked. A changed row, or a year in
+CITL's tool with no file here (2027-2028), opens one issue with the diff. After updating the YAML by hand, run
+`python -m pipeline.citl_watch --update` and commit the new snapshots.
+
 ## File
 
 ```yaml
