@@ -166,6 +166,9 @@ describe("my courses encoding", () => {
       program: "finance-data-science",
       courses: [{ s: "STAT", n: "107", status: "done" }],
       ticked: ["language"],
+      ap: [],
+      year: "",
+      declined: [],
     });
     expect(stateFromParams(new URLSearchParams("q=1"))).toBeNull();
   });
