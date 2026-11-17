@@ -1,7 +1,14 @@
 name: CI
 on:
   push:
+    branches-ignore: [live-seats] # the live seat file's branch has no code
   pull_request:
+
+# A newer push to the same branch replaces a run that's still going
+concurrency:
+  group: ci-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-24.04
@@ -17,3 +24,25 @@ jobs:
         run: make lint
       - name: Unit tests
         run: make test
+
+  # Versions and branches (CONTRIBUTING.md). Only the standard library, so no installs.
+  versions:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with: { fetch-depth: 0 } # tags and the base branch, to compare with
+      - uses: actions/setup-python@v7
+        with: { python-version: "3.11" }
+      - name: Version files agree, CHANGELOG covers the version, and it only goes up
+        env:
+          BASE: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || '' }}
+        run: python -m tools.release check ${BASE:+--base "$BASE"}
+      - name: Branch name is type/short-name
+        if: github.event_name == 'pull_request'
+        env:
+          BRANCH: ${{ github.head_ref }}
+        run: |
+          if [[ ! "$BRANCH" =~ ^(feature|fix|docs|chore|data|hotfix|release|dependabot)/[A-Za-z0-9._/-]+$ ]]; then
+            echo "::error::Branch '$BRANCH' should be named type/short-name, with type one of feature, fix, docs, chore, data, hotfix, release (CONTRIBUTING.md). Rename it with: git branch -m feature/$BRANCH && git push -u origin feature/$BRANCH"
+            exit 1
+          fi

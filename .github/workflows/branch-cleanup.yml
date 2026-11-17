@@ -1,0 +1,52 @@
+name: Delete merged branches
+# The branch of a merged pull request is deleted as soon as it's merged (GitHub keeps a "Restore branch" button on the
+# pull request). Running this by hand also deletes older branches whose pull request was merged and that have had no
+# commits since. Branches without a merged pull request are never touched.
+on:
+  pull_request:
+    types: [closed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  merged-pr:
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Delete the merged branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ github.event.pull_request.head.ref }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          case "$BRANCH" in main|live-seats) echo "keeping $BRANCH"; exit 0;; esac
+          tip=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/$BRANCH" --jq .object.sha 2>/dev/null || true)
+          if [ -z "$tip" ]; then echo "$BRANCH is already gone"; exit 0; fi
+          if [ "$tip" != "$HEAD_SHA" ]; then echo "$BRANCH has commits after the merge; keeping it"; exit 0; fi
+          gh api -X DELETE "repos/$GITHUB_REPOSITORY/git/refs/heads/$BRANCH" && echo "deleted $BRANCH"
+
+  sweep:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Delete every branch whose pull request was merged
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # newest first: a branch reused for several pull requests is judged by its latest one
+          gh pr list -R "$GITHUB_REPOSITORY" --state merged --limit 200 \
+            --json headRefName,headRefOid,headRepository,headRepositoryOwner \
+            --jq ".[] | select(.headRepositoryOwner.login == \"${GITHUB_REPOSITORY%/*}\" and .headRepository.name == \"${GITHUB_REPOSITORY#*/}\") | \"\(.headRefName) \(.headRefOid)\"" |
+          while read -r branch sha; do
+            case "$branch" in main|live-seats) continue;; esac
+            tip=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/$branch" --jq .object.sha 2>/dev/null || true)
+            [ -n "$tip" ] || continue
+            if [ "$tip" = "$sha" ]; then
+              gh api -X DELETE "repos/$GITHUB_REPOSITORY/git/refs/heads/$branch" && echo "deleted $branch"
+            else
+              echo "keeping $branch: commits after its merged pull request"
+            fi
+          done
