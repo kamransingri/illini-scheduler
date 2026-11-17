@@ -93,7 +93,7 @@ Every judgment call made during the autonomous build, newest phase last.
   discussions/labs can never match. The report shows both "all names" and "names on primary (lecture) sections".
 - **D3.5 RMP.** Implemented per spec (school id from RMP's own search, exact last name + compatible first name +
   plausible department, two-person initial collisions are not guessed, 2 concurrent / 0.5 s delay, 7-day cache,
-  3 snippets ≤ 200 chars). The host is blocked here, so `meta.rmp_status = unavailable` and the UI links to RMP's
+  3 snippets ≤ 200 chars; who is looked up, the cache and the matching changed in D18). The host is blocked here, so `meta.rmp_status = unavailable` and the UI links to RMP's
   search page. Tests use HANDMADE fixtures with invented placeholder values.
 - **D3.6 Teachers Ranked as Excellent.** Instructor-role rows since Fall 2020 are joined on (last name, course
   number, compatible initial) among instructors who taught that number; only unique matches get a badge.
@@ -603,3 +603,34 @@ Every judgment call made during the autonomous build, newest phase last.
   and in-progress courses don't.
 - **D17.4 AP year notes.** Each year file's top-level `notes` (AP-CREDIT.md, until now shown nowhere) are listed word
   for word under the expected AP credit for the chosen year. The footer no longer paraphrases the elective-credit note.
+
+## RMP coverage and matching (2026-11-17, issues #8, #11, #13)
+
+- **D18.1 Who is looked up.** Everyone a course page shows, not only next term's teachers: next term's (most primary
+  sections first), then this term's, then past instructors (latest term taught, then students graded). Kim Whittlesey
+  taught MATH 221 in Fall 2026 but not Spring 2027, so she was never looked up and MATH 221 said "No RMP match" over
+  her 104 ratings (#8). Course pages show RMP for past instructors too; before, only current and next-term teachers
+  got it.
+- **D18.2 Cache.** An answer is asked again after 7 days when the run's 20-minute budget reaches it, and used for up to
+  90 days. Before, an answer older than 7 days that the budget didn't reach was dropped, so coverage stopped growing
+  once the lookups needed more than one night. If RMP stops answering mid-run, older answers are used for the rest of
+  the run; the status is "unavailable" only when nothing at all could be read.
+- **D18.3 Matching.** The department check passes if it fits any subject the professor teaches (it used the
+  alphabetically first). A nickname from a fixed list ("Bob" for Robert), a middle name RMP lists first ("Robert Lee
+  Deville" for Lee DeVille) or a one-letter spelling difference (Elisabeth/Elizabeth, RMP's "Micheal") counts only
+  with stronger evidence: a review for one of their subjects, or a department from the subject list. When the name
+  fits several people, a review for one of the professor's own courses decides; without one an initial alone is still
+  not guessed. A surname that fills RMP's 20 results ("Lee") is searched again with the first name. On the cached
+  answers, the 37 new matches with a loose name fit were checked by hand and are all the same person; the 2 matches
+  that changed both moved from an empty duplicate profile to the one with reviews.
+- **D18.4 A profile only shows on subjects it fits (#13).** Course Explorer prints "Anderson, J" for James Anderson
+  (Education, EPOL 552) and for a different J. Anderson who teaches MATH 221 and 231; both got one key, so MATH 221
+  showed his AFRO 310 and EPS 310 reviews. Export now shows a profile on a course page only when its department is
+  plausible for that subject or one of its reviews is for a course in it (`rmp.fits_subject`).
+- **D18.5 Reviews (#11).** The client keeps all 20 ratings a search returns (each still cut to 200 characters); a course
+  page gets 6 per professor, that course's first. Older ratings for a course aren't fetched: that would take a request
+  per professor and course.
+- **D18.6 Measured.** Re-running this step on the 2026-11-16 database with cached answers only (no new requests): 1,867
+  instructors matched instead of 1,263, no match lost; professor entries on course pages with RMP 4,475 → 7,834 of
+  25,775 (17% → 30%), entries with a review written for that course 739 → 2,169. The rest come as the nightly runs
+  reach names never searched before (about 4,600 surnames at roughly 1,000 a night).
