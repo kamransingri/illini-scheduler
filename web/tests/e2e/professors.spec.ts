@@ -74,3 +74,36 @@ test("keyboard: a professor row opens and closes with Enter, and a source popove
   await page.keyboard.press("Escape");
   await expect(info).toHaveAttribute("aria-expanded", "false");
 });
+
+test("matched professors link to RMP's rating form for their stored profile", async ({ page }) => {
+  await page.goto("./course/CS/124/");
+  const rows = page.getByTestId("prof-row");
+  await expect(rows.first()).toBeVisible();
+  // every professor with a stored RMP profile gets a "Rate on RMP" link to that profile's rating form
+  const n = await rows.count();
+  let checked = 0;
+  for (let i = 0; i < n; i++) {
+    const row = rows.nth(i);
+    const profile = row.getByRole("link", { name: "Rate My Professors page" });
+    await row.getByRole("button", { expanded: false }).first().click();
+    if (!(await profile.count())) continue; // unmatched: the search link stays
+    const id = /\/professor\/(\d+)/.exec((await profile.getAttribute("href"))!)![1];
+    const rate = row.locator('[id$="-panel"]').getByTestId("rate-on-rmp");
+    await expect(rate).toHaveAttribute("href", `https://www.ratemyprofessors.com/add/professor-rating/${id}`);
+    await expect(rate).toHaveAttribute("target", "_blank");
+    await expect(rate).toHaveAttribute("rel", "noopener");
+    checked++;
+  }
+  test.skip(checked === 0, "no RMP matches in this build");
+});
+
+test("375px: the Rate on RMP link sits in the row without scrolling the page sideways", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 800 });
+  await page.goto("./course/MATH/221/");
+  await expect(page.getByTestId("prof-row").first()).toBeVisible();
+  const rate = page.getByTestId("prof-row").getByTestId("rate-on-rmp").first();
+  test.skip(!(await rate.count()), "no RMP matches in this build");
+  await expect(rate).toBeVisible();
+  const [sw, iw] = await page.evaluate(() => [document.documentElement.scrollWidth, window.innerWidth]);
+  expect(sw).toBeLessThanOrEqual(iw);
+});

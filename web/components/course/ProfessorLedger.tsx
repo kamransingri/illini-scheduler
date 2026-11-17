@@ -20,6 +20,33 @@ export function rmpSearchUrl(name: string): string {
   return `https://www.ratemyprofessors.com/search/professors?q=${encodeURIComponent(name + " University of Illinois")}`;
 }
 
+/**
+ * RMP's "rate this professor" form for a stored profile URL (".../professor/209729" -> ".../add/professor-rating/209729").
+ * RMP has no posting API, so the site can only send people there; new ratings come back through the nightly RMP job.
+ * Anything that isn't a profile URL is returned as it is.
+ */
+export function rmpRateUrl(profileUrl: string): string {
+  const m = /^https:\/\/www\.ratemyprofessors\.com\/professor\/(\d+)\/?$/.exec(profileUrl);
+  return m ? `https://www.ratemyprofessors.com/add/professor-rating/${m[1]}` : profileUrl;
+}
+
+/** "Rate on RMP" for a matched professor: opens RMP's rating form in a new tab. */
+function RateLink({ name, url, className = "" }: { name: string; url: string; className?: string }) {
+  return (
+    <a
+      href={rmpRateUrl(url)}
+      target="_blank"
+      rel="noopener"
+      className={`inline-flex items-center gap-1 text-sm font-semibold text-action underline ${className}`}
+      aria-label={`Rate ${name} on Rate My Professors (opens in a new tab)`}
+      data-testid="rate-on-rmp"
+    >
+      Rate on RMP
+      <Icon name="external" />
+    </a>
+  );
+}
+
 function gpaSource(course: Course, p: ProfEntry): string {
   const g = p.ins.gpa!;
   return `UIUC GPA dataset: ${course.subject} ${course.number} with this professor, ${termRange(g.first_term, g.last_term)}, ${fmtInt(g.students)} graded students over ${g.n_terms} term${g.n_terms === 1 ? "" : "s"}. Recent (last 8 fall/spring terms): ${fmtGpa(g.recent)}.`;
@@ -141,6 +168,7 @@ export function ProfessorRow({ p, ctx, open, onToggle, rank }: { p: Scored; ctx:
               <span className="block leading-tight">
                 <span className="tnum text-lg font-semibold text-heading">{r.rating?.toFixed(1) ?? "–"}</span>
                 <span className="block text-sm text-muted tnum">{fmtInt(r.num_ratings)} ratings</span>
+                <RateLink name={p.ins.name} url={r.url} className="md:hidden" />
               </span>
             </Cell>
             <Cell label="Difficulty" className="md:text-right">
@@ -153,6 +181,7 @@ export function ProfessorRow({ p, ctx, open, onToggle, rank }: { p: Scored; ctx:
         ) : (
           <Cell label="Rate My Professors" className="col-span-3 md:text-center">
             <span className="text-muted">{ctx.rmpStatus.startsWith("unavailable") ? "RMP unavailable in this build" : p.ins.rmp ? "On RMP, no ratings yet" : "No RMP match"}</span>
+            {p.ins.rmp && <RateLink name={p.ins.name} url={p.ins.rmp.url} className="ml-2" />}
           </Cell>
         )}
         <Cell label={ctx.term ? termLabel(ctx.term) : "This term"}>
@@ -329,12 +358,16 @@ function ProfessorPanel({ p, ctx }: { p: ProfEntry; ctx: Ctx }) {
         <div className="mt-2">
           <Reviews p={p} course={course} />
         </div>
-        <p className="mt-3">
+        <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1">
           {rmp ? (
-            <a href={rmp.url} className="inline-flex items-center gap-1 font-semibold text-action underline" rel="noopener">
-              Rate My Professors page
-              <Icon name="external" />
-            </a>
+            <>
+              <a href={rmp.url} className="inline-flex items-center gap-1 font-semibold text-action underline" rel="noopener">
+                Rate My Professors page
+                <Icon name="external" />
+              </a>
+              <RateLink name={p.ins.name} url={rmp.url} />
+              <span className="basis-full text-sm text-muted">Took {course.subject} {course.number} with {p.ins.name}? A rating on RMP reaches this page with the next nightly update.</span>
+            </>
           ) : (
             <>
               <span className="text-muted">{ctx.rmpStatus.startsWith("unavailable") ? "RMP unavailable in this build. " : "No confident RMP match. "}</span>

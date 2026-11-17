@@ -58,6 +58,9 @@ comes from. For future plans, see [IDEAS.md](IDEAS.md).
   "Gonzalez Cedre") was until v0.3.0.
 - **RMP ratings are self-selected.** The people who rate are not a random sample, which is why the best pick score
   pulls ratings with few reviews toward an average.
+- **Rating goes through RMP.** RMP has no posting API, so **Rate on RMP** only opens RMP's rating form for the matched
+  profile. A new rating shows here after the next nightly run whose RMP lookup reaches that professor (the 7-day cache
+  can delay it). My courses doesn't record which professor taught you, so the link is on the course page only.
 
 ## Gen-ed finder and schedule builder
 

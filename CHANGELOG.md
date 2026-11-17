@@ -11,6 +11,11 @@ the first build, phases 0 to 12, recorded in docs/PROGRESS.md.
 
 ### Added
 
+- Course pages: a **Rate on RMP** link for every professor with a matched Rate My Professors profile. It opens RMP's
+  rating form for that profile in a new tab, in the professor's details and, on phones, in the row itself.
+
+### Added
+
 - Degree checklist: minors. Pick an optional minor under your major and its requirements get their own checklist below
   the major's, filled from the same course list, with the same ranked course options. All 127 minors in the 2026-2027
   catalog are imported (`python -m pipeline.catalog_import --only minors`). The minor is saved with your list and
