@@ -479,7 +479,7 @@ Every judgment call made during the autonomous build, newest phase last.
   section, so the earlier detection wins and open → closed → open stays three events. Each row says when the change was
   found and the section's latest known status ("Still open (4 min ago)", "Now closed"). If `live.json` is missing or
   older than 45 minutes, the page says "Daily" and explains, rather than calling stale data live. "New" marks and the
-  optional browser notification only cover changes that arrive while the page is open (no push backend; IDEAS.md 3).
+  optional browser notification only cover changes that arrive while the page is open (no push backend; [#16](https://github.com/kamransingri/illini-scheduler/issues/16)).
 - **D14.5 Gen-ed finder keeps to picking courses.** The time filters (no 8am, no Friday, online only) are gone: times
   and days belong to the schedule builder, which applies them to whole weeks. "Only courses with an open section" is on
   by default (`?nx=0` turns it off); old links with `e`, `nf` or `on` still open, without those filters. The pipeline
@@ -550,7 +550,7 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D15.7 Merge commits.** Pull requests are merged with merge commits, as #1 to #5 were, so each branch's commits stay
   visible and a release tag sits on a commit that was actually deployed.
 
-## v0.6.0 (2026-11-17, AP credit from CITL, IDEAS.md 5)
+## v0.6.0 (2026-11-17, AP credit from CITL)
 
 - **D16.1 Copied by hand, three years.** CITL's 2026-2027 table only appears in a page that needs filters clicked,
   and the older pages have slips (docs/AP-CREDIT.md lists each correction). About 40 exams change once a year, so
@@ -589,3 +589,17 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D16.11 Loaded on demand.** The three tables are 57 KB of JSON, fetched by the degree page rather than built into
   it. While a list with AP scores waits for the file, the checklist shows "Loading requirements…" instead of a
   checklist that changes a moment later.
+
+## v0.7.0 (2026-11-17, issues #9 and #24)
+
+- **D17.1 Rating link.** RMP has no posting API, so the site links to RMP's own form,
+  `ratemyprofessors.com/add/professor-rating/<id>`, using the numeric id the pipeline already stores (all 4,475 matched
+  professor entries in the 2026-11-17 build have one). An id in any other shape falls back to the profile page. New
+  ratings reach the site through the nightly RMP job. Same tab, like every other external link on the site.
+- **D17.2 Where it shows.** In the open professor panel next to the profile link, and in the row itself only for
+  professors on RMP with no ratings yet (606 entries), where the row has room because it has no numbers to show.
+- **D17.3 My courses.** My courses keeps no term or professor (D13.14), so "after the term ends" can't be known.
+  Completed courses link to their course page's professor list (`#professors`) with one line inviting a rating; AP
+  and in-progress courses don't.
+- **D17.4 AP year notes.** Each year file's top-level `notes` (AP-CREDIT.md, until now shown nowhere) are listed word
+  for word under the expected AP credit for the chosen year. The footer no longer paraphrases the elective-credit note.
