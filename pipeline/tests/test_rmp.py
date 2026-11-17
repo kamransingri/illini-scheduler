@@ -1,4 +1,7 @@
 import json
+import os
+import time
+from datetime import UTC, datetime, timedelta
 
 import httpx
 import pytest
@@ -34,7 +37,7 @@ def test_lookup_parses_and_trims(tmp_path):
     t = c.lookup("Example, T", "CS")
     assert t is not None and t.rmp_id == "111" and t.num_ratings == 40
     assert t.top_tags[0] == "Amazing lectures"
-    assert len(t.reviews) == 3 and all(len(r["text"]) <= 200 for r in t.reviews)
+    assert len(t.reviews) == 4 and all(len(r["text"]) <= 200 for r in t.reviews)  # every non-blank one, up to 20
     assert t.reviews[0]["date"] == "2026-05-01"  # newest first, blank comments dropped
     assert t.url.endswith("/111")
 
@@ -120,3 +123,102 @@ def test_compound_surname_on_rmp_matches():
 def test_truncated_gpa_surname_still_matches_the_full_rmp_name():
     wade = rmp.RmpTeacher("9", "Wade", "Fagen-Ulmschneider", "Computer Science", 4.5, 3, 90, 50)
     assert rmp.choose_match(parse_name("Fagen-Ulmschnei, Wade"), "CS", [wade]).rmp_id == "9"
+
+
+def _t(rid, first, last, dept, n=10, courses=()):
+    reviews = [{"text": "ok", "course": c, "date": "2026-01-01"} for c in courses]
+    return rmp.RmpTeacher(rid, first, last, dept, 4.0, 3.0, 50, n, reviews=reviews)
+
+
+def _age(path, days):
+    when = time.time() - days * 86400
+    for f in path.glob("*.json"):
+        os.utime(f, (when, when))
+
+
+def test_any_subject_they_teach_can_vouch_for_the_department():
+    # Before, only the alphabetically first subject was checked: CHEM rejected a Computer Science profile.
+    zhang = _t("1", "Jing", "Zhang", "Computer Science")
+    assert rmp.choose_match(parse_name("Zhang, Jing"), {"CHEM", "CS"}, [zhang]).rmp_id == "1"
+    assert rmp.choose_match(parse_name("Zhang, Jing"), {"CHEM"}, [zhang]) is None
+
+
+def test_nicknames_middle_names_and_spellings_need_evidence():
+    # Seen live: MATH 220's Robert Murphy is "Bob Murphy" on RMP (Mathematics, 186 ratings).
+    bob = _t("1", "Bob", "Murphy", "Mathematics", 186, ["MATH220"])
+    assert rmp.choose_match(parse_name("Murphy, Robert"), "MATH", [bob], {"MATH220"}).rmp_id == "1"
+    # In a subject without a department list, a nickname needs a review for one of their subjects.
+    sandy = _t("2", "Sandy", "Kopels", "Social Work", 12)
+    assert rmp.choose_match(parse_name("Kopels, Sandra"), "SOCW", [sandy]) is None
+    sandy.reviews = [{"text": "ok", "course": "SOCW589", "date": "2026-01-01"}]
+    assert rmp.choose_match(parse_name("Kopels, Sandra"), "SOCW", [sandy], {"SOCW589"}).rmp_id == "2"
+    # One letter apart, and a middle name RMP lists first.
+    eliz = _t("3", "Elizabeth", "Bigsby", "Communication", 10, ["CMN345"])
+    assert rmp.choose_match(parse_name("Bigsby, Elisabeth"), "CMN", [eliz], {"CMN345"}).rmp_id == "3"
+    lee = _t("4", "Robert Lee", "Deville", "Mathematics", 34, ["MATH416"])
+    assert rmp.choose_match(parse_name("DeVille, Lee"), "MATH", [lee], {"MATH416"}).rmp_id == "4"
+    # A different given name is a different person, even on the same course (seen live: ACCY 312).
+    michelle = _t("5", "Michelle", "Hutchens", "Accounting", 2, ["ACCY312"])
+    assert rmp.choose_match(parse_name("Hutchens, Matthew"), "ACCY", [michelle], {"ACCY312"}) is None
+    assert rmp.choose_match(parse_name("Kemper, Kim"), "MCB", [_t("6", "Jongsook", "Kemper", "Biochem", 1, ["MCB465"])],
+                            {"MCB465"}) is None
+
+
+def test_a_review_for_their_own_course_picks_between_people_with_one_initial():
+    sang = _t("1", "Sang", "Lee", "Art", 7, ["ARTD218"])
+    sarah = _t("2", "Sarah", "Lee", "Art", 30, ["ARTD101"])
+    assert rmp.choose_match(parse_name("Lee, S"), "ARTD", [sang, sarah], {"ARTD218"}).rmp_id == "1"
+    assert rmp.choose_match(parse_name("Lee, S"), "ARTD", [sang, sarah], {"ARTD300"}) is None  # nothing decides
+
+
+def test_a_profile_shows_only_on_subjects_it_fits():
+    # Seen live: Course Explorer's "Anderson, J" is two people. James Anderson (Education; reviews for AFRO 310 and
+    # EPS 310) teaches EPOL 552, and his reviews were showing on MATH 221, taught by another J. Anderson.
+    reviews = [{"text": "x", "course": "AFRO310", "date": ""}, {"text": "y", "course": "EPS310", "date": ""}]
+    assert rmp.fits_subject("EPOL", "Education", reviews)
+    assert not rmp.fits_subject("MATH", "Education", reviews)
+    assert rmp.fits_subject("MATH", "Education", reviews + [{"text": "z", "course": "math 221", "date": ""}])
+    assert rmp.course_code("CS-124") == "CS124" and rmp.course_code("Intro") == ""
+
+
+def test_full_name_search_when_the_surname_fills_a_page(tmp_path):
+    others = [{"node": {"legacyId": 100 + i, "firstName": f"Other{i}", "lastName": "Lee", "department": "Physics",
+                        "numRatings": 1}} for i in range(20)]
+    amy = {"node": {"legacyId": 7, "firstName": "Amy", "lastName": "Lee", "department": "English", "numRatings": 5}}
+    texts = []
+
+    def handler(request):
+        body = json.loads(request.content)
+        if "schools" in body["query"]:
+            return httpx.Response(200, json=SCHOOL)
+        texts.append(body["variables"]["query"]["text"])
+        edges = [amy] if texts[-1] == "amy Lee" else others
+        return httpx.Response(200, json={"data": {"newSearch": {"teachers": {"edges": edges}}}})
+
+    c = rmp.RmpClient(tmp_path, transport=httpx.MockTransport(handler), delay=0)
+    assert c.lookup("Lee, Amy", "ENGL").rmp_id == "7"
+    assert texts == ["Lee", "amy Lee"]
+
+
+def test_older_answers_are_used_after_the_budget_and_refreshed_before_it(tmp_path):
+    calls = []
+    rmp.RmpClient(tmp_path, transport=transport(calls), delay=0).lookup("Example, T", "CS")
+    _age(tmp_path, 30)  # past CACHE_DAYS, inside STALE_DAYS
+    offline = rmp.RmpClient(tmp_path, enabled=False)  # what the loop switches to once the budget is spent
+    t = offline.lookup("Example, T", "CS")
+    week_ago = (datetime.now(UTC) - timedelta(days=7)).isoformat()
+    assert t is not None and t.rmp_id == "111" and t.fetched_at < week_ago  # the cache's date, not today
+    n = len(calls)
+    rmp.RmpClient(tmp_path, transport=transport(calls), delay=0).lookup("Example, T", "CS")
+    assert len(calls) > n  # with budget left, a 30-day-old answer is asked again
+    _age(tmp_path, 120)  # past STALE_DAYS: too old to show
+    with pytest.raises(rmp.RmpUnavailable):
+        rmp.RmpClient(tmp_path, enabled=False).lookup("Example, T", "CS")
+
+
+def test_rmp_failing_mid_run_falls_back_to_older_answers(tmp_path):
+    rmp.RmpClient(tmp_path, transport=transport([]), delay=0).lookup("Example, T", "CS")
+    _age(tmp_path, 10)
+    down = rmp.RmpClient(tmp_path, transport=httpx.MockTransport(lambda r: httpx.Response(503)), delay=0)
+    assert down.lookup("Example, T", "CS").rmp_id == "111"
+    assert down.error and "503" in down.error
