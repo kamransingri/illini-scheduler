@@ -553,14 +553,24 @@ function ApCredits({ st, update, year, sum }: { st: MyState; update: (s: MyState
           </li>
         ))}
       </ul>
+      {year.notes.length > 0 && (
+        // the year's general notes, word for word: they differ between years (which year's policy applies, DARS)
+        <div className="mt-2 rounded border border-line bg-white p-3 text-sm" data-testid="ap-year-notes">
+          <h4 className="font-semibold text-heading">CITL&apos;s notes for the {year.label} table</h4>
+          <ul className="mt-1 list-disc space-y-1 pl-5">
+            {year.notes.map((n) => (
+              <li key={n}>{n}</li>
+            ))}
+          </ul>
+        </div>
+      )}
       <p className="mt-2 text-sm text-muted">
         From CITL&apos;s{" "}
         <a href={year.source} className="font-semibold text-action underline" rel="noopener">
           {year.label} AP credit table
         </a>{" "}
         for students starting in {year.entering}, read {fmtDate(year.read_on)}. It&apos;s an estimate until the credit shows on your DARS report. Untick a course
-        if you&apos;d rather take it than accept the credit (ask your advisor first). Elective credit such as MATH 1-- counts toward your hours; ask your advisor
-        where else it can count.
+        if you&apos;d rather take it than accept the credit (ask your advisor first). Elective credit such as MATH 1-- counts toward your hours here.
         {collegeRows && !st.program && " Calculus credit differs for Grainger engineering programs: choose your program to see yours."}
       </p>
     </div>

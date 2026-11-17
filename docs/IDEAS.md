@@ -128,7 +128,7 @@ fed by the live job. A cheaper step first: let students "watch" a section so the
 
 > **Built in v0.6.0** as described below, for students entering 2024-2025, 2025-2026 and 2026-2027
 > ([AP-CREDIT.md](AP-CREDIT.md), DECISIONS D16). Still open: the weekly check that opens an issue when CITL's page
-> changes (step 1), IB scores and transfer credit ("Later"), and showing the year's general notes.
+> changes (step 1) and IB scores and transfer credit ("Later"). Each year's general notes show in the AP panel.
 
 **The idea:** a student coming from high school enters their AP exams and scores, and the degree checklist fills in
 the Illinois courses those scores count as. The mapping comes from the table CITL (the Center for Innovation in Teaching

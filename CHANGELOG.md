@@ -11,6 +11,11 @@ the first build, phases 0 to 12, recorded in docs/PROGRESS.md.
 
 ### Added
 
+- Degree checklist: the AP panel shows CITL's general notes for the chosen starting year word for word (which year's
+  policy applies to you, elective credit, DARS), and they change with the year.
+
+### Added
+
 - Degree checklist: minors. Pick an optional minor under your major and its requirements get their own checklist below
   the major's, filled from the same course list, with the same ranked course options. All 127 minors in the 2026-2027
   catalog are imported (`python -m pipeline.catalog_import --only minors`). The minor is saved with your list and

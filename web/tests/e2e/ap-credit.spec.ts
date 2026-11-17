@@ -76,10 +76,27 @@ test("a shared link: Grainger programs get Grainger's Calculus rows, and the sta
   await expect(page).toHaveURL(/y=2025/);
 });
 
+test("the starting year's general notes show word for word, and change with the year", async ({ page }) => {
+  await page.goto("./degree/?p=finance-data-science");
+  await expect(exam(page)).toBeEnabled();
+  await expect(page.getByTestId("ap-year-notes")).toHaveCount(0); // only once an exam is added
+  await exam(page).selectOption({ label: "Calculus AB" });
+  await score(page).selectOption("4");
+  await addExam(page).click();
+  const notes = page.getByTestId("ap-year-notes");
+  await expect(notes).toContainText("CITL's notes for the 2026-2027 table");
+  await expect(notes).toContainText("Policies get reviewed every year and may change. To see AP credit in your academic record, run a new DARS report.");
+  await page.getByLabel("Starting term at Illinois").selectOption({ label: "Summer 2024, Fall 2024 or Spring 2025" });
+  await expect(notes).toContainText("CITL's notes for the 2024-2025 table");
+  await expect(notes).toContainText("The credit policies in effect when you first enrolled at Illinois are the ones that apply to you.");
+  await expect(notes).not.toContainText("Policies get reviewed every year");
+});
+
 test("375px: the AP panel doesn't make the page scroll sideways", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 800 });
   await page.goto("./degree/?p=computer-science-bs&a=CALCBC-5,CHEM-5,MUSTH-5-5,ENGLIT-4,ENGLANG-5&m=CS124");
   await expect(panel(page).locator('[data-exam="MUSTH"]')).toContainText("MUS 107");
+  await expect(page.getByTestId("ap-year-notes")).toBeVisible();
   await expect(page.getByTestId("degree-progress")).toBeVisible();
   const [sw, iw] = await page.evaluate(() => [document.documentElement.scrollWidth, window.innerWidth]);
   expect(sw).toBeLessThanOrEqual(iw);

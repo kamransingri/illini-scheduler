@@ -31,7 +31,7 @@ year: 2026-2027                       # must match the file name
 entering: Summer 2026, Fall 2026 or Spring 2027
 source: https://citl.illinois.edu/current-cutoff-scores
 read_on: 2026-11-17
-notes: [...]                          # optional, shown nowhere yet
+notes: [...]                          # optional, shown word for word under the AP panel once an exam is added
 exams:
   - id: CALCBC                        # 2-10 capitals/digits; the same id every year, because links store it
     name: Calculus BC                 # the College Board's exam name, without "AP"
