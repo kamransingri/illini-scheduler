@@ -1,0 +1,44 @@
+# Interdisciplinary Minor in Jewish Culture & Society (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/jewish-culture/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: jewish-culture-minor
+type: minor
+program: Interdisciplinary Minor in Jewish Culture & Society
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/jewish-culture/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - One course in the cluster of Religion, chosen from a list of courses maintained by the Advisor in the Program in Jewish
+    Culture and Society Office.
+  - One course in the cluster of Culture, chosen from a list of courses maintained by the Advisor in the Program in Jewish
+    Culture and Society Office.
+  - One course in the cluster of History, chosen from a list of courses maintained by the Advisor in the Program in Jewish
+    Culture and Society Office.
+  - Of the 18 required hours, two courses (6 hours) must be 300-or 400-level courses. HEBR 403 and HEBR 404 cannot be used
+    to satisfy this requirement.
+  - 'Electives within the minor. Students may choose additional courses from any of the three clusters or can choose from
+    the following language courses:'
+  courses:
+  - HEBR 199
+  - HEBR 201
+  - HEBR 202
+  - HEBR 205
+  - HEBR 403
+  - HEBR 404
+  - HEBR 405
+  - HEBR 406
+  - HEBR 407
+  - YDSH 203
+  - YDSH 204
+  id: more-requirements-1

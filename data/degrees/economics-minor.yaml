@@ -1,0 +1,89 @@
+# Economics Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/economics/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: economics-minor
+type: minor
+program: Economics Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/economics/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Core Economics Requirements
+  section: Requirements
+  rule: all
+  courses:
+  - ECON 102
+  - ECON 202
+  - ECON 203
+  - ECON 302
+  id: core-economics-requirements-1
+- name: Core Economics Requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Students will select one of the following tracks:'
+  id: core-economics-requirements-2
+- name: Microeconomics Track
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 6 hours.'
+  - 'Two 400-level elective courses in Microeconomics:'
+  courses:
+  - ECON 411
+  - ECON 414
+  - ECON 440
+  - ECON 450
+  - ECON 480
+  - ECON 483
+  - ECON 482
+  - ECON 484
+  - ECON 490
+  id: microeconomics-track-3
+- name: Macroeconomics Track
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 9 hours.'
+  - 'Students will select one of the following tracks:'
+  - 'Two 400-level elective courses in Microeconomics:'
+  courses:
+  - ECON 103
+  - ECON 303
+  id: macroeconomics-track-4
+- name: Macroeconomics Track
+  section: Requirements
+  rule: manual
+  notes:
+  - 'One 400-level elective course in Macroeconomics:'
+  courses:
+  - ECON 420
+  - ECON 425
+  - ECON 490
+  id: macroeconomics-track-5
+- name: Econometrics Track
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 9 hours.'
+  - 'Two 400-level elective courses in Microeconomics:'
+  - 'One 400-level elective course in Macroeconomics:'
+  courses:
+  - ECON 471
+  id: econometrics-track-6
+- name: Econometrics Track
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Two 400-level elective courses in Econometrics:'
+  courses:
+  - ECON 465
+  - ECON 490
+  id: econometrics-track-7

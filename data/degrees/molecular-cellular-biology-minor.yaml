@@ -1,0 +1,36 @@
+# Molecular and Cellular Biology Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/molecular-cellular-biology/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: molecular-cellular-biology-minor
+type: minor
+program: Molecular and Cellular Biology Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/molecular-cellular-biology/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 19
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - - MCB 244
+    - MCB 246
+  - MCB 250
+  - MCB 251
+  - MCB 252
+  - MCB 253
+  - - MCB 354
+    - MCB 450
+  id: required-courses-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Choose one additional 3-5 credit hour course from the approved list of 300- and 400-level courses for MCB majors.
+  id: more-requirements-2

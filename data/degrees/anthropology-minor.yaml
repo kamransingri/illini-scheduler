@@ -1,0 +1,40 @@
+# Anthropology Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/anthropology/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: anthropology-minor
+type: minor
+program: Anthropology Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/anthropology/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Degree Requirements
+  section: Degree Requirements
+  rule: n_of
+  n: 2
+  courses:
+  - - ANTH 220
+    - ANTH 105
+  - - ANTH 230
+    - ANTH 103
+  - - ANTH 240
+    - ANTH 102
+  - - ANTH 270
+    - ANTH 104
+  notes:
+  - Select at least 2 of the following courses. Up to one 100-level course may be chosen from the options listed below.
+  id: degree-requirements-1
+- name: Degree Requirements
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - Six hours of 300- or 400-level courses in Anthropology (ANTH). Only 3 hours of ANTH 499 may be used to fulfill this requirement.
+  - Anthropology (ANTH) courses at any level.
+  id: degree-requirements-2

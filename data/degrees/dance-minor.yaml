@@ -1,0 +1,104 @@
+# Dance Minor (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/minors/dance/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: dance-minor
+type: minor
+program: Dance Minor
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/minors/dance/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Context - 6 hours
+  section: Context - 6 hours
+  rule: all
+  courses:
+  - - DANC 100
+    - DANC 125
+  id: context-6-hours-1
+- name: Context - 6 hours
+  section: Context - 6 hours
+  rule: n_of
+  n: 1
+  courses:
+  - DANC 240
+  - DANC 340
+  - DANC 405
+  - DANC 426
+  - DANC 440
+  - DANC 476
+  notes:
+  - 'Choose one from the following:'
+  id: context-6-hours-2
+- name: Choose 5 hours from
+  section: Moving & Making - 8 hours
+  rule: hours
+  hours: 5
+  courses:
+  - DANC 116
+  - DANC 209
+  - DANC 212
+  - DANC 216
+  - DANC 160
+  - DANC 260
+  - DANC 360
+  - DANC 460
+  notes:
+  - Choose 5 hours from
+  id: choose-5-hours-from-3
+- name: Choose a minimum of 2 hours from
+  section: Moving & Making - 8 hours
+  rule: hours
+  hours: 2
+  courses:
+  - DANC 104
+  - DANC 200
+  - DANC 465
+  notes:
+  - Choose a minimum of 2 hours from
+  id: choose-a-minimum-of-2-hours-from-4
+- name: Choose a minimum of 1 hour from
+  section: Moving & Making - 8 hours
+  rule: hours
+  hours: 1
+  courses:
+  - DANC 201
+  - DANC 245
+  - DANC 246
+  - DANC 401
+  notes:
+  - Choose a minimum of 1 hour from
+  id: choose-a-minimum-of-1-hour-from-5
+- name: Choose 2 hours from
+  section: Production/Performance - 4 hours
+  rule: hours
+  hours: 2
+  courses:
+  - DANC 231
+  - DANC 330
+  - DANC 331
+  - DANC 431
+  notes:
+  - Choose 2 hours from
+  id: choose-2-hours-from-6
+- name: Choose 2 hours from
+  section: Production/Performance - 4 hours
+  rule: hours
+  hours: 2
+  courses:
+  - DANC 162
+  - DANC 220
+  - DANC 256
+  - DANC 290
+  - DANC 424
+  - DANC 456
+  - MUSC 469
+  notes:
+  - Choose 2 hours from
+  id: choose-2-hours-from-7

@@ -121,6 +121,6 @@ Details: [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## More docs
 
-Everything else is in [`docs/`](docs/README.md): what the site can't do yet, what we'd like to build next (including
-student reviews and reading Reddit for course and professor feedback), every judgment call, the design system, the
-degree data format, the build log and before/after screenshots.
+Everything else is in [`docs/`](docs/README.md): what the site can't do yet, every judgment call, the design system,
+the degree and AP credit data formats and before/after screenshots. What we'd like to build next (student reviews,
+Reddit feedback, seat alerts, better degree planning) is tracked in [GitHub issues](https://github.com/kamransingri/illini-scheduler/issues).

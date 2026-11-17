@@ -4,7 +4,7 @@ const req = (page: import("@playwright/test").Page, id: string) => page.locator(
 
 test("adding a finished course updates the checklist and the URL", async ({ page }) => {
   await page.goto("./degree/");
-  const program = page.getByRole("combobox", { name: "Program" });
+  const program = page.getByRole("combobox", { name: "Major", exact: true });
   await program.fill("finance data");
   await page.getByRole("option", { name: /^Finance \+ Data Science, BS/ }).click();
   await expect(page.getByTestId("degree-progress")).toContainText("0 of 19");
@@ -81,7 +81,7 @@ test("keyboard: type a course code and press Enter to add it", async ({ page }) 
 test("programs imported from the catalog say so and show prose rules in the catalog's words", async ({ page }) => {
   await page.goto("./degree/?p=computer-science-bs");
   await expect(page.getByTestId("generated-note")).toContainText("Read automatically from the catalog page");
-  await expect(page.getByRole("combobox", { name: "Program" })).toHaveValue("Computer Science, BS");
+  await expect(page.getByRole("combobox", { name: "Major", exact: true })).toHaveValue("Computer Science, BS");
   const focus = page.locator('[data-group^="software-foundations"]');
   await expect(focus).toHaveAttribute("data-status", "open");
   await expect(focus.getByTestId("catalog-words")).toContainText("single focus area");
@@ -89,9 +89,9 @@ test("programs imported from the catalog say so and show prose rules in the cata
   await expect(page.locator('[data-group^="computer-science-technical-core"]')).toContainText(/more courses/);
 });
 
-test("the program picker searches all programs by name, acronym and college", async ({ page }) => {
+test("the major picker searches all majors by name, acronym and college", async ({ page }) => {
   await page.goto("./degree/");
-  const program = page.getByRole("combobox", { name: "Program" });
+  const program = page.getByRole("combobox", { name: "Major", exact: true });
   const list = page.getByTestId("program-list");
   // focus shows every program, grouped by college
   await program.click();
@@ -110,7 +110,7 @@ test("the program picker searches all programs by name, acronym and college", as
   // nothing matches: say so; Escape puts the current program back
   await program.click();
   await program.fill("zzzz");
-  await expect(page.getByText(/No program matches “zzzz”/)).toBeVisible();
+  await expect(page.getByText(/No major matches “zzzz”/)).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(list).toBeHidden();
   await expect(program).toHaveValue("Computer Science, BS");
@@ -120,4 +120,68 @@ test("the program picker searches all programs by name, acronym and college", as
   await page.keyboard.press("ArrowDown");
   await page.keyboard.press("Enter");
   await expect(page).not.toHaveURL(/p=computer-science-bs/);
+});
+
+test("finished courses link to their professors, so students can rate them", async ({ page }) => {
+  await page.goto("./degree/?p=finance-data-science&m=STAT107,CS124~p");
+  const mine = page.getByTestId("my-courses");
+  await expect(mine.getByRole("link", { name: "STAT 107" })).toHaveAttribute("href", /\/course\/STAT\/107\/#professors$/);
+  await expect(mine).toContainText("CS 124");
+  await expect(mine.getByRole("link", { name: "CS 124" })).toHaveCount(0); // in progress, not finished
+  await expect(page.getByTestId("rate-hint")).toBeVisible();
+});
+
+test("the college filter narrows the major list without scrolling", async ({ page }) => {
+  await page.goto("./degree/");
+  const major = page.getByRole("combobox", { name: "Major", exact: true });
+  const list = page.getByTestId("program-list");
+  await page.getByLabel("Show majors from one college").selectOption("Gies College of Business");
+  await expect(list).toBeVisible(); // choosing a college opens its list
+  await expect(list.getByRole("group")).toHaveCount(1);
+  await expect(list.getByRole("option").first()).toBeVisible();
+  for (const name of await list.getByRole("option").allTextContents()) expect(name).not.toMatch(/Computer Science, BS/);
+  // typing searches within that college only
+  await major.fill("data");
+  await expect(page.getByText(/^\d+ of \d+ majors in Gies Business$/)).toBeVisible();
+  await expect(list.getByRole("option", { name: /Finance \+ Data Science/ })).toBeVisible();
+  await expect(list.getByRole("option", { name: /Statistics & Computer Science/ })).toHaveCount(0); // an LAS major
+  await list.getByRole("option").first().click();
+  await expect(page).toHaveURL(/p=/);
+  await expect(page.getByTestId("degree-progress")).toBeVisible();
+});
+
+test("a minor gets its own checklist from the same course list, and can be removed", async ({ page }) => {
+  await page.goto("./degree/?p=computer-science-bs&m=FSHN220,FSHN420");
+  await expect(page.getByTestId("degree-progress")).toBeVisible();
+  await expect(page.getByTestId("minor-checklist")).toHaveCount(0); // optional: none until you pick one
+  const minor = page.getByRole("combobox", { name: /Minor/ });
+  await minor.fill("nutrition");
+  await page.getByRole("option", { name: /^Human Nutrition Minor/ }).click();
+  await expect(page).toHaveURL(/mn=nutrition-minor/);
+  const checklist = page.getByTestId("minor-checklist");
+  await expect(checklist.getByRole("heading", { name: /Human Nutrition Minor/ })).toBeVisible();
+  // the courses you've added count toward the minor too
+  const required = checklist.locator('[data-group^="required-courses"]');
+  await expect(required).toHaveAttribute("data-status", "partial");
+  await expect(required).toContainText("FSHN 220");
+  await expect(checklist.locator('[data-group^="select-two"]')).toContainText("2 more courses (0 of 2)");
+  await expect(page.getByTestId("minor-progress")).toContainText("0 of 2");
+  // the major's checklist is still there, and the link carries both
+  await expect(page.getByTestId("degree-progress")).toBeVisible();
+  await page.reload();
+  await expect(page.getByTestId("minor-checklist")).toBeVisible();
+  await expect(minor).toHaveValue("Human Nutrition Minor");
+  // remove it
+  await page.getByRole("button", { name: "Remove Human Nutrition Minor" }).click();
+  await expect(page.getByTestId("minor-checklist")).toHaveCount(0);
+  await expect(page).not.toHaveURL(/mn=/);
+});
+
+test("a minor's tick boxes are kept apart from the major's", async ({ page }) => {
+  await page.goto("./degree/?p=finance-data-science&mn=history-minor");
+  const more = page.getByTestId("minor-checklist").locator('[data-group^="more-requirements"]');
+  await more.getByLabel("I've met this requirement").check();
+  await expect(more).toHaveAttribute("data-status", "done");
+  await expect(page).toHaveURL(/x=mn--more-requirements/);
+  await expect(req(page, "language")).toHaveAttribute("data-status", "open"); // the major's boxes are untouched
 });

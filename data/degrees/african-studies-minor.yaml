@@ -1,0 +1,48 @@
+# Interdisciplinary Minor in African Studies (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/african-studies/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: african-studies-minor
+type: minor
+program: Interdisciplinary Minor in African Studies
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/african-studies/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 20
+notes: []
+double_counting: []
+groups:
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Study of an indigenous African Language. Acceptable languages include but are not limited to Arabic, Bamana, Lingala,
+    Swahili, Wolof, and Zulu.
+  id: more-requirements-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 'African Studies core courses. These courses contain a minimum of 50 percent African content and are defined according
+    to a list maintained and regularly updated by the Center for African Studies. Courses completed to satisfy the core must
+    come from at least 3 separate departments and must include the following three components:'
+  - 'Course-work surverying the continent. Choose one of the following:'
+  courses:
+  - AFST 210
+  - AFST 222
+  - AFST 254
+  - HIST 111
+  - HIST 112
+  id: more-requirements-2
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 300- or 400-level core courses. Language courses cannot be used to meet this requirement.
+  - Additional core courses at any level. African language courses may be used to satisfy this requirement if they are at
+    the advanced level (fifth semester or higher). Only 3 hours of AFST 199 may be used to satisfy the requirements of the
+    minor.
+  id: more-requirements-3

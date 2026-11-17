@@ -1,0 +1,56 @@
+# Speech & Hearing Science Minor (College of Applied Health Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/ahs/minors/speech-hearing-science/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: speech-hearing-science-minor
+type: minor
+program: Speech & Hearing Science Minor
+college: College of Applied Health Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/ahs/minors/speech-hearing-science/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - SHS 170
+  id: required-courses-1
+- name: More requirements
+  section: Requirements
+  rule: n_of
+  n: 2
+  courses:
+  - SHS 222
+  - SHS 240
+  - SHS 300
+  - SHS 320
+  - SHS 352
+  notes:
+  - 'Select two of the following:'
+  id: more-requirements-2
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Eight (8) to nine (9) additional hours of speech and hearing science courses chosen from the following list, with at least
+    six (6) credit hours at the 300-400 level.
+  courses:
+  - SHS 120
+  - SHS 200
+  - SHS 271
+  - SHS 280
+  - SHS 301
+  - SHS 375
+  - SHS 380
+  - SHS 389
+  - SHS 427
+  - SHS 433
+  - SHS 450
+  - SHS 451
+  - SHS 473
+  id: more-requirements-3

@@ -18,3 +18,22 @@ web/playwright-report/
 web/public/data/
 *.tsbuildinfo
 .env*
+web/screenshots/
+# Local environments and tools
+.venv/
+venv/
+*.egg-info/
+node_modules/
+.coverage
+htmlcov/
+coverage/
+*.log
+graphify-out/
+.claude/settings.local.json
+# Editors and OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
