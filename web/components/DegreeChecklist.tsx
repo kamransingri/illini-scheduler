@@ -290,7 +290,13 @@ function MyCourseList({ st, update, deg, index, ap }: MineProps & { ap: { year: 
                     const code = `${c.s} ${c.n}`;
                     return (
                       <li key={code} className="inline-flex items-center rounded border border-line bg-white pl-2" title={titleIn(deg, index, code)}>
-                        <span className="font-semibold">{code}</span>
+                        {s === "done" ? (
+                          <Link href={`${courseHref(c.s, c.n)}#professors`} className="font-semibold text-action hover:underline">
+                            {code}
+                          </Link>
+                        ) : (
+                          <span className="font-semibold">{code}</span>
+                        )}
                         <button
                           type="button"
                           className="inline-flex size-8 items-center justify-center rounded text-muted hover:text-action"
@@ -303,6 +309,11 @@ function MyCourseList({ st, update, deg, index, ap }: MineProps & { ap: { year: 
                     );
                   })}
                 </ul>
+                {s === "done" && (
+                  <p className="mt-1 text-sm text-muted" data-testid="rate-hint">
+                    Open a finished course to rate your professor on Rate My Professors, so the next student gets better advice.
+                  </p>
+                )}
               </div>
             );
           })}
@@ -494,10 +505,19 @@ function ApCredits({ st, update, year, sum }: { st: MyState; update: (s: MyState
           {year.label} AP credit table
         </a>{" "}
         for students starting in {year.entering}, read {fmtDate(year.read_on)}. It&apos;s an estimate until the credit shows on your DARS report. Untick a course
-        if you&apos;d rather take it than accept the credit (ask your advisor first). Elective credit such as MATH 1-- counts toward your hours; ask your advisor
-        where else it can count.
+        if you&apos;d rather take it than accept the credit (ask your advisor first). Elective credit such as MATH 1-- counts toward your hours.
         {collegeRows && !st.program && " Calculus credit differs for Grainger engineering programs: choose your program to see yours."}
       </p>
+      {year.notes.length > 0 && (
+        <div className="mt-2 text-sm text-muted" data-testid="ap-year-notes">
+          <p className="font-semibold">CITL&apos;s notes for {year.label}</p>
+          <ul className="mt-0.5 list-disc space-y-0.5 pl-5">
+            {year.notes.map((n) => (
+              <li key={n}>{n}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

@@ -10,6 +10,13 @@ history).
 
 ## [Unreleased]
 
+### Added
+
+- Course pages: a "Rate them on RMP" link next to each matched professor's Rate My Professors page, and "Be the first
+  to rate" on professors RMP knows but nobody has rated yet. Both open RMP's own rating form; the site posts nothing.
+- Degree checklist: completed courses in My courses link to that course's professors, so you can rate yours.
+- Degree checklist: CITL's general notes for the AP table you picked, word for word, under your expected AP credit.
+
 ### Changed
 
 - The backlog is now GitHub issues (#9 to #34), labelled by area (`degree-planner`, `seats`, `rmp`, `needs-backend`,

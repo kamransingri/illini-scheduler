@@ -121,3 +121,12 @@ test("the program picker searches all programs by name, acronym and college", as
   await page.keyboard.press("Enter");
   await expect(page).not.toHaveURL(/p=computer-science-bs/);
 });
+
+test("finished courses link to their professors, so students can rate them", async ({ page }) => {
+  await page.goto("./degree/?p=finance-data-science&m=STAT107,CS124~p");
+  const mine = page.getByTestId("my-courses");
+  await expect(mine.getByRole("link", { name: "STAT 107" })).toHaveAttribute("href", /\/course\/STAT\/107\/#professors$/);
+  await expect(mine).toContainText("CS 124");
+  await expect(mine.getByRole("link", { name: "CS 124" })).toHaveCount(0); // in progress, not finished
+  await expect(page.getByTestId("rate-hint")).toBeVisible();
+});

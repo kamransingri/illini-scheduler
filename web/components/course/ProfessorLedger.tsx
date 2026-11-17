@@ -1,7 +1,7 @@
 "use client";
 import { useMemo, useState } from "react";
 import type { Course, ExamProfile, Section } from "@/lib/types";
-import { cisUrl, daysStr, fmtDate, fmtGpa, fmtInt, fmtPct, fmtTime, termLabel, termRange, treLabel } from "@/lib/format";
+import { cisUrl, daysStr, fmtDate, fmtGpa, fmtInt, fmtPct, fmtTime, rmpRateUrl, termLabel, termRange, treLabel } from "@/lib/format";
 import { normCourse, profDomId, type ProfEntry } from "@/lib/sections";
 import type { Scored } from "@/lib/rank";
 import CopyButton from "../CopyButton";
@@ -153,6 +153,11 @@ export function ProfessorRow({ p, ctx, open, onToggle, rank }: { p: Scored; ctx:
         ) : (
           <Cell label="Rate My Professors" className="col-span-3 md:text-center">
             <span className="text-muted">{ctx.rmpStatus.startsWith("unavailable") ? "RMP unavailable in this build" : p.ins.rmp ? "On RMP, no ratings yet" : "No RMP match"}</span>
+            {p.ins.rmp && (
+              <a href={rmpRateUrl(p.ins.rmp)} className="block text-sm font-semibold text-action underline" rel="noopener" data-testid="rmp-rate">
+                Be the first to rate
+              </a>
+            )}
           </Cell>
         )}
         <Cell label={ctx.term ? termLabel(ctx.term) : "This term"}>
@@ -331,10 +336,16 @@ function ProfessorPanel({ p, ctx }: { p: ProfEntry; ctx: Ctx }) {
         </div>
         <p className="mt-3">
           {rmp ? (
-            <a href={rmp.url} className="inline-flex items-center gap-1 font-semibold text-action underline" rel="noopener">
-              Rate My Professors page
-              <Icon name="external" />
-            </a>
+            <span className="flex flex-wrap gap-x-5 gap-y-1">
+              <a href={rmp.url} className="inline-flex items-center gap-1 font-semibold text-action underline" rel="noopener">
+                Rate My Professors page
+                <Icon name="external" />
+              </a>
+              <a href={rmpRateUrl(rmp)} className="inline-flex items-center gap-1 font-semibold text-action underline" rel="noopener" data-testid="rmp-rate">
+                Took {course.subject} {course.number} with them? Rate them on RMP
+                <Icon name="external" />
+              </a>
+            </span>
           ) : (
             <>
               <span className="text-muted">{ctx.rmpStatus.startsWith("unavailable") ? "RMP unavailable in this build. " : "No confident RMP match. "}</span>

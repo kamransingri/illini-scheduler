@@ -589,3 +589,17 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D16.11 Loaded on demand.** The three tables are 57 KB of JSON, fetched by the degree page rather than built into
   it. While a list with AP scores waits for the file, the checklist shows "Loading requirements…" instead of a
   checklist that changes a moment later.
+
+## v0.7.0 (2026-11-17, issues #9 and #24)
+
+- **D17.1 Rating link.** RMP has no posting API, so the site links to RMP's own form,
+  `ratemyprofessors.com/add/professor-rating/<id>`, using the numeric id the pipeline already stores (all 4,475 matched
+  professor entries in the 2026-11-17 build have one). An id in any other shape falls back to the profile page. New
+  ratings reach the site through the nightly RMP job. Same tab, like every other external link on the site.
+- **D17.2 Where it shows.** In the open professor panel next to the profile link, and in the row itself only for
+  professors on RMP with no ratings yet (606 entries), where the row has room because it has no numbers to show.
+- **D17.3 My courses.** My courses keeps no term or professor (D13.14), so "after the term ends" can't be known.
+  Completed courses link to their course page's professor list (`#professors`) with one line inviting a rating; AP
+  and in-progress courses don't.
+- **D17.4 AP year notes.** Each year file's top-level `notes` (AP-CREDIT.md, until now shown nowhere) are listed word
+  for word under the expected AP credit for the chosen year. The footer no longer paraphrases the elective-credit note.
