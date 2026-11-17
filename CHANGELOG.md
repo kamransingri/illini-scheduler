@@ -9,6 +9,8 @@ the first build, phases 0 to 12, recorded in docs/PROGRESS.md.
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-11-17
+
 ### Added
 
 - Degree checklist: add your AP exams and scores and the checklist fills in the courses they're expected to give,
@@ -108,7 +110,8 @@ the first build, phases 0 to 12, recorded in docs/PROGRESS.md.
 - A partial Rate My Professors error no longer stops `make data`.
 - RSS feeds are written as UTF-8.
 
-[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.2.0...v0.3.0
