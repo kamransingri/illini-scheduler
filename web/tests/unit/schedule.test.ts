@@ -10,6 +10,7 @@ import {
   buildBundles,
   DEFAULT_PREFS,
   generate,
+  hasLunch,
   finalClashes,
   finalsOf,
   isValidBundle,
@@ -118,12 +119,13 @@ describe("generator properties", () => {
       });
       const lockSec = inputs[0].course.terms["2027-sp"].sections.find((s) => s.component === "primary")!;
       inputs[0].locked = [lockSec.crn];
-      const prefs = { ...DEFAULT_PREFS, earliest: 540, noFriday: true, blocked: [{ d: T, s: 720, e: 840 }] };
+      const prefs = { ...DEFAULT_PREFS, earliest: 540, latest: 1140, daysOff: F, blocked: [{ d: T, s: 720, e: 840 }] };
       const res = generate(inputs, "2027-sp", prefs);
       for (const s of res.schedules) {
         for (const m of s.bundles.flatMap((b) => b.meetings)) {
           if (m.s === null) continue;
           expect(m.s).toBeGreaterThanOrEqual(540);
+          expect(m.e!).toBeLessThanOrEqual(1140);
           expect(m.d & F).toBe(0);
           expect(meetingsConflict(m, { d: T, s: 720, e: 840, part: "1" })).toBe(false);
         }
@@ -219,6 +221,39 @@ describe("explanations", () => {
     c.locked = [c.course.terms["2027-sp"].sections[0].crn];
     expect(generate([c], "2027-sp", DEFAULT_PREFS).schedules.length).toBe(1);
   });
+  it("open sections only skips closed ones (unless locked) and says why when nothing is left", () => {
+    const c = mk("150", [{ ...fixed("A", "primary", "*", M, 600, 650), status: "Closed" }, { ...fixed("B", "primary", "*", T, 600, 650), status: "Open" }]);
+    const only = { ...DEFAULT_PREFS, openOnly: true };
+    expect(generate([c], "2027-sp", only).schedules.map((x) => x.bundles[0].sections[0].code)).toEqual(["B"]);
+    const closed = mk("151", [{ ...fixed("A", "primary", "*", M, 600, 650), status: "Closed" }]);
+    expect(generate([closed], "2027-sp", only).emptyCourses).toEqual(["X 151"]);
+    expect(explainEmpty(closed, "2027-sp", only)).toMatch(/Closed at the last check/);
+    closed.locked = [closed.course.terms["2027-sp"].sections[0].crn];
+    expect(generate([closed], "2027-sp", only).schedules.length).toBe(1);
+  });
+  it("prefers open sections when that weight is on", () => {
+    const c = mk("152", [{ ...fixed("A", "primary", "*", M, 600, 650), status: "Closed" }, { ...fixed("B", "primary", "*", T, 600, 650), status: "Open" }]);
+    const w0 = { gpa: 0, rmp: 0, early: 0, late: 0, daysOff: 0, compact: 0, walking: 0, open: 0 };
+    expect(generate([c], "2027-sp", { ...DEFAULT_PREFS, weights: { ...w0, open: 3 } }).schedules[0].bundles[0].sections[0].code).toBe("B");
+  });
+  it("late classes count against the 'avoid classes after' time the student picks", () => {
+    const c = mk("153", [fixed("A", "primary", "*", M, 1080, 1170), fixed("B", "primary", "*", M, 600, 650)]);
+    const w0 = { gpa: 0, rmp: 0, early: 0, late: 3, daysOff: 0, compact: 0, walking: 0, open: 0 };
+    expect(generate([c], "2027-sp", { ...DEFAULT_PREFS, weights: w0 }).schedules[0].bundles[0].sections[0].code).toBe("B");
+    // with "too late" at 8pm, the 6pm class is fine too and the two tie
+    const tie = generate([c], "2027-sp", { ...DEFAULT_PREFS, softLate: 1200, weights: w0 }).schedules;
+    expect(tie[0].score).toBeCloseTo(tie[1].score);
+  });
+  it("lunch break: 45 free minutes between 11am and 2pm on every day with class", () => {
+    expect(hasLunch([{ d: M, s: 660, e: 710 }, { d: M, s: 780, e: 840 }])).toBe(true); // 11:50-1:00 free
+    expect(hasLunch([{ d: M, s: 660, e: 750 }, { d: M, s: 780, e: 840 }])).toBe(false); // only 30 min
+    expect(hasLunch([{ d: M, s: 600, e: 840 }, { d: T, s: 600, e: 650 }])).toBe(false);
+    expect(hasLunch([{ d: T, s: 480, e: 650 }])).toBe(true);
+    const a = mk("154", [fixed("A", "primary", "*", M, 660, 750)]);
+    const b = mk("155", [fixed("B", "primary", "*", M, 780, 840), fixed("C", "primary", "*", M, 900, 950)]);
+    const res = generate([a, b], "2027-sp", { ...DEFAULT_PREFS, lunch: true });
+    expect(res.schedules.map((x) => x.bundles[1].sections[0].code)).toEqual(["C"]);
+  });
   it("RMP ratings from a few students are pulled toward the UIUC average when a prior is given", () => {
     const c = mk("300", [
       { ...fixed("A", "primary", "*", M, 600, 650), instructors: ["few"] },
@@ -229,7 +264,7 @@ describe("explanations", () => {
       few: { name: "Few", teaching: ["2027-sp"], gpa: null, rmp: rmp(5, 2), exam: null, tre: [], in_gpa_dataset: false },
       many: { name: "Many", teaching: ["2027-sp"], gpa: null, rmp: rmp(4.6, 200), exam: null, tre: [], in_gpa_dataset: false },
     };
-    const prefs = { ...DEFAULT_PREFS, weights: { gpa: 0, rmp: 3, early: 0, daysOff: 0, compact: 0, walking: 0 } };
+    const prefs = { ...DEFAULT_PREFS, weights: { gpa: 0, rmp: 3, early: 0, late: 0, daysOff: 0, compact: 0, walking: 0, open: 0 } };
     const first = (input: CourseInput) => generate([input], "2027-sp", prefs).schedules[0].bundles[0].sections[0].code;
     expect(first(c)).toBe("A"); // raw ratings: 2 ratings of 5.0 beat 200 ratings of 4.6
     expect(first({ ...c, rmpPrior: 3.6 })).toBe("B"); // shrunk: (2*5 + 10*3.6) / 12 = 3.83 < 4.55

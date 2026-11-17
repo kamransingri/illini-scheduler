@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 async function addViaSearch(page: import("@playwright/test").Page, q: string) {
-  const box = page.getByLabel("Search courses or instructors");
+  const box = page.getByLabel(/Search courses/);
   await box.fill(q);
   const list = page.getByRole("listbox");
   await list.getByRole("button", { name: "Add to schedule" }).first().click();
@@ -45,7 +45,7 @@ test("cart survives reload and the URL is shareable", async ({ page }) => {
   await expect(page.getByTestId("cart").locator("li")).toHaveCount(2);
   await page.goto("./schedule/");
   await expect(page.getByTestId("cart").locator("li")).toHaveCount(2);
-  expect(page.url()).toContain("c=CS124%2CSTAT107");
+  await expect(page).toHaveURL(/c=CS124%2CSTAT107/); // the URL is written just after the list renders
 });
 
 test("6-course cart generates quickly in the browser", async ({ page }) => {

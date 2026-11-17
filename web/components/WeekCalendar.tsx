@@ -17,10 +17,13 @@ export default function WeekCalendar({
   schedule,
   colorOf,
   blocked = [],
+  daysOff = 0,
 }: {
   schedule: Schedule;
   colorOf: (course: string) => string;
   blocked?: { d: number; s: number; e: number }[];
+  /** days kept free by the student's must-haves (bit mask), shaded */
+  daysOff?: number;
 }) {
   const timed = schedule.bundles.flatMap((b) => b.sections.flatMap((s) => s.meetings.filter((m) => m.s !== null).map((m) => ({ b, s, m }))));
   const untimed = schedule.bundles.flatMap((b) => b.sections.filter((s) => s.meetings.every((m) => m.s === null)).map((s) => ({ b, s })));
@@ -48,7 +51,8 @@ export default function WeekCalendar({
           ))}
         </div>
         {DAYS.map(([bit, n]) => (
-          <div key={n} className="relative border-l border-line" style={{ height: (hi - lo) * PX }}>
+          <div key={n} className={`relative border-l border-line ${daysOff & bit ? "bg-panel" : ""}`} style={{ height: (hi - lo) * PX }}>
+            {daysOff & bit ? <div className="absolute inset-x-0 top-2 text-center text-muted">Day off</div> : null}
             {hours.map((h) => (
               <div key={h} className="absolute inset-x-0 border-t border-dashed border-line" style={{ top: (h - lo) * PX }} />
             ))}
