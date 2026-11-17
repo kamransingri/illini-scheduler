@@ -1,0 +1,414 @@
+## AP African American Studies
+Score: 3-5
+Course Credited: AFRO 100
+Credit Hours: 3
+Placement Message: --
+## AP Precalculus
+Score: 3-5
+Course Credited: MATH 1--
+Credit Hours: 3
+Placement Message: Follow your ALEKS placement.
+## AP Research
+Score: 3, 4, or 5
+Course Credited: LAS 1--
+Credit Hours: 3
+Placement Message: --
+## AP Seminar
+Score: 3, 4, or 5
+Course Credited: LAS 1--
+Credit Hours: 3
+Placement Message: --
+## Art History
+Score: 3, 4, or 5
+Course Credited: ART 1--
+Credit Hours: 3
+Placement Message: --
+## Art: 2-D Art and Design
+Score: 3, 4, or 5
+Course Credited: ART 105
+Credit Hours: 3
+Placement Message: --
+## Art: 3-D Art and Design
+Score: 3, 4, or 5
+Course Credited: ART 104
+Credit Hours: 3
+Placement Message: --
+## Art: Drawing
+Score: 3, 4, or 5
+Course Credited: ART 102
+Credit Hours: 3
+Placement Message: --
+## Biology
+Score: 3 or 4
+Course Credited: IB 100
+Credit Hours: 3
+Placement Message: --
+Score: 5
+Course Credited: IB 150, MCB 150
+Credit Hours: 4
+Placement Message: Consult with your advisor, as your next biology course will depend on your major and your educational goals.
+## Calculus AB for Students Entering Any Colleges other than the Grainger College of Engineering
+Score: 3
+Course Credited: MATH 234
+Credit Hours: 4
+Placement Message: Talk with your advisor. If your program requires MATH 220 or MATH 221, you will not receive credit towards graduation for MATH 234.
+Score: 4 or 5
+Course Credited: MATH 220
+Credit Hours: 5
+Placement Message: Placed into MATH 231.
+## Calculus AB for Students Entering the Grainger College of Engineering
+Score: 3
+Course Credited: MATH 234
+Credit Hours: 4
+Placement Message: Talk with your advisor. If your program requires MATH 220 or MATH 221, you will not receive credit towards graduation for MATH 234.
+Score: 4
+Course Credited: MATH 220
+Credit Hours: 5
+Placement Message: Talk with your advisor. Grainger Engineering recommends you take MATH 221 despite having course credit for MATH 220.
+Score: 5
+Course Credited: MATH 220
+Credit Hours: 5
+Placement Message: Placed into MATH 231 (Section EL1 or EL2) with concurrent enrollment in MATH 299.
+## Calculus BC for Students Entering Any College other than the Grainger College of Engineering
+Score: 3 with no sub score or with a sub score of 1, 2, or 3
+Course Credited: MATH 234
+Credit Hours: 4
+Placement Message: Talk with your advisor. If your program requires MATH 220 or MATH 221, you will not receive credit towards graduation for MATH 234.
+Score: 3 with a sub score of 4 or 5
+Course Credited: MATH 220
+Credit Hours: 5
+Placement Message: Placed into MATH 231.
+Score: 4 or 5
+Course Credited: MATH 220, MATH 231
+Credit Hours: 5 for MATH 220, 3 for MATH 231
+Placement Message: Placed into MATH 241.
+## Calculus BC for Students Entering the Grainger College of Engineering
+Score: 3 with no sub score or with a sub score of 1, 2, or 3
+Course Credited: MATH 234
+Credit Hours: 4
+Placement Message: Discuss during your advising appointment on your New Student Registration Day. Your ALEKS math placement test score and any other earned math credit will determine your placement.
+Score: 3 with a sub score of 4
+Course Credited: MATH 220
+Credit Hours: 5
+Placement Message: Discuss during your advising appointment on your New Student Registration Day. Grainger Engineering recommends you take MATH 220 or MATH 221.
+Score: 3 with a sub score of 5
+Course Credited: MATH 220
+Credit Hours: 5
+Placement Message: Placed into MATH 231 (Section EL1 or EL2) with concurrent enrollment in MATH 299.
+Score: 4
+Course Credited: MATH 220, MATH 231
+Credit Hours: 5 for MATH 220, 3 for MATH 231
+Placement Message: Discuss during your advising appointment on your New Student Registration Day. Grainger Engineering recommends taking MATH231 (Section EL1 or EL2) with concurrent enrollment in MATH 229.
+Score: 5
+Course Credited: MATH 220
+Credit Hours: 5 for MATH 220, 3 for MATH 231
+Placement Message: Placed into MATH 241.
+## Chemistry
+Score: 3
+Course Credited: CHEM 102, lecture only; CHEM 103 lab credit is NOT awarded for AP
+Credit Hours: 3
+Placement Message: CHEM 104; Consult with your advisor to determine which Chemistry course you should enroll in.
+Score: 4 or 5
+Course Credited: CHEM 102 and CHEM 104, lectures only; CHEM 103 and 105 lab credit is NOT awarded for AP
+Credit Hours: 3 for CHEM 102, 3 for CHEM 104
+Placement Message: Consult with your advisor to determine which Chemistry course you should enroll in.
+## Chinese
+Score: 3
+Course Credited: CHIN 2--
+Credit Hours: 5
+Placement Message: CHIN 203
+Score: 4
+Course Credited: CHIN 203, CHIN 204
+Credit Hours: 5 for both CHIN 203, CHIN 204
+Placement Message: CHIN 305
+Score: 5
+Course Credited: CHIN 203, CHIN 204, CHIN 305, CHIN 306
+Credit Hours: 5 for each CHIN 203, CHIN 204, CHIN 305, CHIN 306
+Placement Message: CHIN 407 OR CHIN 440
+## Computer Science A
+Score: 3
+Course Credited: CS 105
+Credit Hours: 3
+Placement Message: -
+Score: 4 or 5
+Course Credited: CS 101
+Credit Hours: 3
+Placement Message: -
+## Computer Science Principles
+Score: 3 or 4
+Course Credited: CS 102
+Credit Hours: 4
+Placement Message: -
+Score: 5
+Course Credited: CS 105
+Credit Hours: 3
+Placement Message: -
+## Economics, Macro
+Score: 3 or 4
+Course Credited: ECON 1--
+Credit Hours: 3
+Placement Message: You may register for the departmental ECON 103 proficiency exam. Consult with your advisor for a course recommendation.
+Score: 5
+Course Credited: ECON 105
+Credit Hours: 3
+Placement Message: Consult with your advisor.
+## Economics, Micro
+Score: 3 or 4
+Course Credited: ECON 1--
+Credit Hours: 3
+Placement Message: You may register fo rhte departmental ECON 102 proficiency exam. Consult with your advisor for a course recommendation.
+Score: 5
+Course Credited: ECON 102
+Credit Hours: 3
+Placement Message: Consult with your advisor.
+## English Language & Composition
+Score: 3
+Course Credited: RHET 1--
+Credit Hours: 3
+Placement Message: -
+Score: 4 or 5
+Course Credited: RHET 105
+Credit Hours: 4
+Placement Message: You have fulfilled the 'Composition I' requirement.
+## English Literature & Composition
+Score: 3
+Course Credited: RHET 1--
+Credit Hours: 3
+Placement Message: -
+Score: 4 or 5, if there is no English Language score or it is 1, 2, or 3
+Course Credited: RHET 105
+Credit Hours: 4
+Placement Message: You have fulfilled the 'Composition I' requirement.
+Score: 4 or 5, if English Language score is 4 or 5
+Course Credited: RHET 105, ENGL 1--
+Credit Hours: 4 for RHET 105, 3 for ENGL 1--
+Placement Message: You have fulfilled the 'Composition I' requirement.
+## Environmental Science
+Score: 3
+Course Credited: NRES 1--
+Credit Hours: 3
+Placement Message: -
+Score: 4 or 5
+Course Credited: NRES 100
+Credit Hours: 3
+Placement Message: -
+## French
+Score: 3
+Course Credited: FR 103
+Credit Hours: 4
+Placement Message: FR 104
+Score: 4
+Course Credited: FR 103, FR 104, FR 205
+Credit Hours: 4 for both FR 103 and FR 104, 2 for FR 205
+Placement Message: FR 207
+Score: 5
+Course Credited: FR 103, FR 104, FR 205, FR 207
+Credit Hours: 4 for both FR 103 and FR 104, 2 for FR 205, 3 for FR 207
+Placement Message: FR 211 or FR 212
+## German
+Score: 3
+Course Credited: GER 103, GER 104
+Credit Hours: 4 for both GER 103, GER 104
+Placement Message: GER 211
+Score: 4 or 5
+Course Credited: GER 103, GER 104, GER 105
+Credit Hours: 4 for both GER 103 and GER 104, 3 for GER 211
+Placement Message: GER 212
+## Government & Politics: Comparative
+Score: 3 or 4
+Course Credited: PS 1--
+Credit Hours: 3
+Placement Message: Any PS course numbered higher than PS 199
+Score: 5
+Course Credited: PS 240
+Credit Hours: 3
+Placement Message: Any PS course numbered higher than PS 199 other than PS 240
+## Government & Politics: U.S.
+Score: 3
+Course Credited: PS 1--
+Credit Hours: 3
+Placement Message: PS 101
+Score: 4 or 5
+Course Credited: PS 101
+Credit Hours: 3
+Placement Message: Any PS course numbered higher than PS 199.
+## History, European
+Score: 3 or 4
+Course Credited: HIST 1--
+Credit Hours: 3
+Placement Message: -
+Score: 5
+Course Credited: HIST 142
+Credit Hours: 3
+Placement Message: -
+## History, U.S.
+Score: 3, 4, or 5
+Course Credited: HIST 1--
+Credit Hours: 3
+Placement Message: -
+## History, World
+Score: 3 or 4
+Course Credited: HIST 1--
+Credit Hours: 3
+Placement Message: -
+Score: 5
+Course Credited: HIST 100
+Credit Hours: 3
+Placement Message: -
+## Human Geography
+Score: 3
+Course Credited: GGIS 1--
+Credit Hours: 3
+Placement Message: GGIS 104
+Score: 4 or 5
+Course Credited: GGIS 104
+Credit Hours: 4
+Placement Message: GGIS 204 or GGIS 210
+## Italian
+Score: 3
+Course Credited: ITAL 102
+Credit Hours: 4
+Placement Message: Please meet with Laura Callegari Hill to discuss opportunities for higher placement and possibly additional proficiency credit.
+Score: 4
+Course Credited: ITAL 103
+Credit Hours: 4
+Placement Message: Please meet with Laura Callegari Hill to discuss opportunities for higher placement and possibly additional proficiency credit.
+Score: 5
+Course Credited: ITAL 103, ITAL 104
+Credit Hours: 4 for both ITAl 103, ITAL 104
+Placement Message: Please meet with Laura Callegari Hill to discuss opportunities for higher placement and possibly additional proficiency credit.
+## Japanese
+Score: 3
+Course Credited: JAPN 2--
+Credit Hours: 5
+Placement Message: Take the UIUC Japanese Placement Test.
+Score: 4
+Course Credited: JAPN 203, JAPN 204
+Credit Hours: 5 for JAPN 203, 5 for JAPN 204
+Placement Message: JAPN 305
+Score: 5
+Course Credited: JAPN 203, JAPN 204, JAPN 305, JAPN 306
+Credit Hours: 5 for each JAPN 203, JAPN 204, JAPN 305, JAPN 306
+Placement Message: Take the UIUC Japanese Placement Test.
+## Latin
+Score: 3
+Course Credited: LAT 201, LAT 202
+Credit Hours: 4 for both LAT 201, LAT 202
+Placement Message: LAT 401
+Score: 4 or 5
+Course Credited: LAT 201, LAT 202, LAT 1--
+Credit Hours: 4 for both LAT 201, LAT 202, 3 for LAT 1--
+Placement Message: LAT 401
+## Music Theory
+Score: 3
+Course Credited: MUS 1--
+Credit Hours: 2
+Placement Message: You may take the Music Theory or the Musicianship proficiency exam, if you wish.
+Score: 4 with an aural sub score of 1, 2, or 3
+Course Credited: MUS 1--
+Credit Hours: 2
+Placement Message: You may take the Music Theory or the Musicianship proficiency exam, if you wish.
+Score: 4 with an aural sub score of 4
+Course Credited: MUS 102
+Credit Hours: 2
+Placement Message: You may take the Musicianship proficiency exam, if you wish.
+Score: 4 with an aural sub score of 5
+Course Credited: MUS 102, MUS 107
+Credit Hours: 2 for both MUS 102, 107
+Placement Message: -
+Score: 5 with an aural sub score of 1, 2, 3, or 4
+Course Credited: MUS 102
+Credit Hours: 2
+Placement Message: You may take the Musicianship proficiency exam, if you wish.
+Score: 5 with an aural sub score of 5
+Course Credited: MUS 102, MUS 107
+Credit Hours: 2 for each MUS 102, 107
+Placement Message: -
+## Physics 1
+Score: 3
+Course Credited: PHYS 1--
+Credit Hours: 3
+Placement Message: Take the UIUC Physics Placement Test prior to enrolling in a Physics course. You may register for the PHYS 101 proficiency exam.
+Score: 4
+Course Credited: PHYS 1--
+Credit Hours: 4
+Placement Message: Take the UIUC Physics Placement Test prior to enrolling in a Physics course. You may register for the PHYS 101 proficiency exam.
+Score: 5
+Course Credited: PHYS 101
+Credit Hours: 5
+Placement Message: Consult with your advisor.
+## Physics 2
+Score: 3
+Course Credited: PHYS 1--
+Credit Hours: 3
+Placement Message: Take the UIUC Physics Placement Test prior to enrolling in a Physics course. You may register for the PHYS 101 or the proficiency exam.
+Score: 4
+Course Credited: PHYS 1--
+Credit Hours: 4
+Placement Message: Take the UIUC Physics Placement Test prior to enrolling in a Physics course. You may register for the PHYS 101 or the PHYS 102 proficiency exam.
+Score: 5
+Course Credited: PHYS 102
+Credit Hours: 5
+Placement Message: Consult with your advisor.
+## Physics C: Electricity & Magnetism
+Score: 3
+Course Credited: PHYS 2--
+Credit Hours: 3
+Placement Message: Take the UIUC Physics Placement Test prior to enrolling in a Physics course. You may register for the Physics proficiency exam that corresponds to the requirements of your program.
+Score: 4
+Course Credited: PHYS 2--
+Credit Hours: 4
+Placement Message: Take the UIUC Physics Placement Test prior to enrolling in a Physics course. You may register for the Physics proficiency exam that corresponds to the requirements of your program.
+Score: 5
+Course Credited: PHYS 212
+Credit Hours: 4
+Placement Message: Consult with your advisor.
+## Physics C: Mechanics
+Score: 3
+Course Credited: PHYS 2--
+Credit Hours: 3
+Placement Message: Take the UIUC Physics Placement Test prior to enrolling in a Physics course. You may register for the Physics proficiency exam that corresponds to the requirements of your program.
+Score: 4
+Course Credited: PHYS 2--
+Credit Hours: 4
+Placement Message: Take the UIUC Physics Placement Test prior to enrolling in a Physics course. You may register for the Physics proficiency exam that corresponds to the requirements of your program.
+Score: 5
+Course Credited: PHYS 211
+Credit Hours: 4
+Placement Message: Consult with your advisor.
+## Psychology
+Score: 3 or 4
+Course Credited: PSYC 1--
+Credit Hours: 3
+Placement Message: -
+Score: 5
+Course Credited: PSYC 100
+Credit Hours: 4
+Placement Message: -
+## Spanish
+Score: 3
+Course Credited: SPAN 141
+Credit Hours: 4
+Placement Message: SPAN 200, 202, 204, 208, 228, or 232
+Score: 5
+Course Credited: SPAN 141, SPAN 200, SPAN 204
+Credit Hours: 4 for SPAN 141, 3 for SPAN 200 and SPAN 204
+Placement Message: SPAN 202, 208, 228, or 232
+## Spanish Literature
+Score: 3
+Course Credited: SPAN 141
+Credit Hours: 4
+Placement Message: SPAN 200, 202, 204, 208, 228, or 232
+Score: 5
+Course Credited: SPAN 141, 200, 204
+Credit Hours: 4 for SPAN 141, 3 for SPAN 200, SPAN 204
+Placement Message: SPAN 202, 208, 228, or 232
+## Statistics
+Score: 3
+Course Credited: STAT 1--
+Credit Hours: 3
+Placement Message: -
+Score: 4 or 5
+Course Credited: STAT 100
+Credit Hours: 3
+Placement Message: -

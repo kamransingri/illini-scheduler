@@ -40,3 +40,12 @@ test("course with no GPA data says so", async ({ page }) => {
   await page.goto("./course/RHET/105/");
   await expect(page.getByText("No grade data", { exact: true })).toBeVisible();
 });
+
+test("Suggest a note opens the Student note form with the course filled in", async ({ page }) => {
+  await page.goto("./course/CS/124/");
+  const href = await page.getByRole("link", { name: /Suggest a note/ }).getAttribute("href");
+  const url = new URL(href!);
+  expect(url.pathname).toMatch(/\/issues\/new$/);
+  expect(url.searchParams.get("template")).toBe("student-note.yml");
+  expect(url.searchParams.get("course")).toBe("CS 124");
+});
