@@ -549,3 +549,43 @@ Every judgment call made during the autonomous build, newest phase last.
   be made by the release workflow. Both let GitHub Actions through, because the nightly data jobs commit to `main`.
 - **D15.7 Merge commits.** Pull requests are merged with merge commits, as #1 to #5 were, so each branch's commits stay
   visible and a release tag sits on a commit that was actually deployed.
+
+## v0.6.0 (2026-11-17, AP credit from CITL, IDEAS.md 5)
+
+- **D16.1 Copied by hand, three years.** CITL's 2026-2027 table only appears in a page that needs filters clicked,
+  and the older pages have slips (docs/AP-CREDIT.md lists each correction). About 40 exams change once a year, so
+  `data/ap-credit/<year>.yaml` is typed from the page with its URL and read date, the way degree files are (D13.10).
+  2024-2025, 2025-2026 and 2026-2027 are included: students follow the table for the year they first enrolled, and those
+  three cover today's juniors to freshmen.
+- **D16.2 Corrections are visible.** Where the page contradicts itself (a course credited without its hours, hours for
+  a course not credited, a course that doesn't exist), the file takes the reading the rest of the page or the
+  neighbouring year supports and says so in `fix`, quoting the page. The checklist shows that note under the exam.
+  Placement messages are otherwise word for word.
+- **D16.3 Scores in the link, not courses.** `a=CALCBC-3-4`, `y=2025`, `d=MATH220`. Working the courses out each
+  time keeps links short, shows where each course came from, corrects old links when a table is fixed, and holds
+  elective credit (`MATH 1--`), which the `m=` format can't. Exam ids stay the same across years, so switching the year
+  keeps the scores.
+- **D16.4 Subscores only when they matter.** The subscore box appears only when the chosen score has rows that depend
+  on one. For Calculus BC a missing subscore counts as "no subscore" (the table has a row for that); Music Theory has
+  no such row, so a link without one shows the exam with no credit until it's re-added with the aural subscore.
+- **D16.5 Grainger rows from the program.** Calculus AB and BC have separate rows for the Grainger College of
+  Engineering. The college of the chosen program decides; without a program the other rows apply and the panel says
+  Grainger differs.
+- **D16.6 Counting.** AP courses count as completed credit at CITL's hours (AP French gives FR 205 at 2 hours, the
+  catalog says 3). One course from two exams (RHET 105 from both English exams) counts once; elective credit in one
+  subject from two exams adds up, since each exam posts its own. Elective credit fills a subject range only when the
+  range takes every number at that level (`RHET 100-199` takes `RHET 1--`; `RHET 150-199` doesn't), and otherwise
+  only the hours line. The student's own entry for a course wins over AP credit for it.
+- **D16.7 No gen-ed column.** A credited course keeps the gen-eds the course has in the site's data rather than CITL's
+  column, which sometimes disagrees with the course (2026-2027 lists CS 101 as QR I; the course is QR II).
+- **D16.8 Declining credit.** Each credited course has a checkbox. CITL and Grainger note it's sometimes better to take
+  the course; unticking keeps the score but drops that course from the checklist, and the link keeps the choice.
+- **D16.9 MATH 234 vs 220/221.** No special rule: a program that lists MATH 234 counts it, one that needs MATH 220 or
+  221 doesn't, and CITL's message ("If your program requires MATH 220 or MATH 221, you will not receive credit towards
+  graduation for MATH 234") is shown with the score.
+- **D16.10 Hours so far.** The checklist header now adds up the hours in My courses (AP credit at CITL's hours,
+  variable-credit courses at their minimum, courses with unknown hours listed), next to the program's minimum. Without
+  it elective credit would count toward nothing visible.
+- **D16.11 Loaded on demand.** The three tables are 57 KB of JSON, fetched by the degree page rather than built into
+  it. While a list with AP scores waits for the file, the checklist shows "Loading requirements…" instead of a
+  checklist that changes a moment later.

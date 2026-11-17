@@ -24,7 +24,7 @@ make serve     # http://localhost:4173
 | **Course search** (`/`) | Find a course by code in any spelling (`cs124`, `CS 124`), title, nickname (`calc 2`), professor or **CRN** (a CRN opens the course page on that exact section). The home page also shows what just opened and where you left off. |
 | **Course page** (`/course/CS/124/`) | One row per professor teaching the term: GPA in this course and how far above or below the course average they grade, grade distribution, RMP quality / difficulty / would-take-again with rating counts, Teachers Ranked as Excellent, lectures taught and how many are open. A row opens to that professor's sections, reviews, tags and exam notes; "Compare" shows a sortable table. Then sections (CRN to copy, times, rooms, seat status, final exam, links to live seats and Self-Service), the offering pattern and next-term prediction, course GPA over time and what changed. |
 | **Gen-ed finder** (`/geneds/`) | Courses that count for every gen-ed category you pick, ranked by the best pick score (or GPA, % A, RMP, open lectures). Only courses with an open section show unless you turn that off. |
-| **Degree checklist** (`/degree/`) | Your finished, transfer and in-progress courses checked against any of the 171 undergraduate programs in the 2026-2027 catalog (find yours by typing part of its name, an acronym such as CS or MCB, or its college); each requirement shows as done, in progress, partly done or open, with the best options for what's left. Kept in your browser and the link, never on a server. |
+| **Degree checklist** (`/degree/`) | Your finished, transfer and in-progress courses checked against any of the 171 undergraduate programs in the 2026-2027 catalog (find yours by typing part of its name, an acronym such as CS or MCB, or its college); each requirement shows as done, in progress, partly done or open, with the best options for what's left. Add your AP exams and scores and it fills in the courses they're expected to give, from CITL's table for the year you started. Kept in your browser and the link, never on a server. |
 | **Just opened** (`/opened/`) | Sections that just went from closed to open, newest first, updated while the page is open: when it was found, whether it's still open, the CRN to copy, a button that adds that exact section to your schedule, and an optional browser notification. |
 | **Schedule builder** (`/schedule/`) | Every conflict-free combination of your courses (lecture plus its linked discussion or lab), ranked by what you care about. **Must-haves** are never broken: earliest start, latest end, days off, a lunch break, open sections only, special sections, blocked times. **What matters to you** ranks the rest: expected GPA, professor ratings, open sections, days off, gaps, early or late classes (you pick the times) and rushed walks, from Off to High, with one-click presets. Weekly calendar, a table comparing the top schedules, CRN copy, `.ics` download, share links and final-exam clash warnings. |
 
@@ -44,6 +44,7 @@ Formula: [docs/DECISIONS.md](docs/DECISIONS.md) D13.18.
 | Rate My Professors (unofficial GraphQL) | Ratings, tags, snippets | Optional; cached 7 days; the site works without it |
 | Student notes (`data/notes/*.yaml`) | Exam and grading notes | Curated from "Suggest a note" GitHub issues |
 | [Academic Catalog](https://catalog.illinois.edu/) | Degree requirements (`data/degrees/*.yaml`) | All 171 undergraduate programs, 2026-2027 |
+| [CITL AP credit tables](https://citl.illinois.edu/current-cutoff-scores) | Courses each AP score gives (`data/ap-credit/*.yaml`) | Students entering 2024-2025 to 2026-2027, copied by hand |
 
 Self-Service (Banner) needs a NetID and is never scraped: the site only links to it and copies CRNs. Seat counts and
 waitlists live only there, so the site knows open / restricted / closed, not how many seats are left.
@@ -85,6 +86,7 @@ Course Explorer ───> pipeline/live_seats.py every ~10 min ─> live.json o
 | `python -m pipeline.live_seats --state s.json --out out/ --minutes 2` | One round of the live seat check, by hand |
 | `python -m pipeline.degrees` | Validate `data/degrees/*.yaml` and list course codes the loaded data doesn't know |
 | `python -m pipeline.catalog_import` | Import every undergraduate program's requirements from the Academic Catalog |
+| `python -m pipeline.ap_credit` | Validate `data/ap-credit/*.yaml` (CITL's AP credit tables) and list credited codes the loaded data doesn't know |
 | `make version` | Check that the version files agree and CHANGELOG.md covers the version |
 | `make release V=minor` | Next version (`major`, `minor`, `patch` or `0.6.0-beta.1`) in every version file, and Unreleased in CHANGELOG.md becomes that version |
 
@@ -106,6 +108,9 @@ Each program is one YAML file in `data/degrees/`, copied from its Academic Catal
 by `python -m pipeline.catalog_import` (rules from the catalog's tables; anything written in prose stays a `manual`
 requirement in the catalog's own words). To check a program by hand, edit its file and delete its `generated:` line:
 the importer never overwrites a file without one. Format and workflow: [docs/DEGREE-DATA.md](docs/DEGREE-DATA.md).
+
+AP credit is one file per entering year in `data/ap-credit/`, copied by hand from CITL's table, with every correction to
+the page noted in the file. Format, sources and the corrections: [docs/AP-CREDIT.md](docs/AP-CREDIT.md).
 
 ## Branches, versions and releases
 

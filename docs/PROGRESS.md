@@ -2,11 +2,11 @@
 
 Newest first at the top: the current state, then the build log in the order it happened.
 
-## Current state (v0.5.0, 2026-11-17)
+## Current state (v0.5.0 + AP credit on `feature/ap-credit`, 2026-11-17)
 
 - **Site:** 7,147 static pages (7,138 course pages). Course search by code, title, nickname, professor or CRN; course
-  pages built around professors; gen-ed finder; degree checklist for 171 programs, found by typing; Just opened, near
-  real time; schedule builder with must-haves, priorities and presets.
+  pages built around professors; gen-ed finder; degree checklist for 171 programs, found by typing, with AP credit
+  from CITL's tables; Just opened, near real time; schedule builder with must-haves, priorities and presets.
 - **Process:** branches, versions and releases in [CONTRIBUTING.md](../CONTRIBUTING.md); every version in
   [CHANGELOG.md](../CHANGELOG.md), tagged and released from `main` by `release.yml`.
 - **Data:** nightly build at 09:00 UTC; every course's seats read daily (04:17 UTC); the busiest next-term courses
@@ -615,3 +615,34 @@ searched instead of scrolled. Decisions: DECISIONS.md D15.1 to D15.7.
   Windows line endings, checks against a base branch, publish commands), `web/tests/unit/programs.test.ts`, and a
   picker test in `web/tests/e2e/degree.spec.ts` (browse, acronym, Enter, no match, Escape, college, arrow keys); the
   other degree tests now pick the program by typing.
+
+## AP credit in the degree checklist (2026-11-17, branch `feature/ap-credit`, for v0.6.0)
+
+Every phase above was done, so this session built IDEAS.md idea 5. Decisions: DECISIONS.md D16.1 to D16.11; format,
+sources and corrections: AP-CREDIT.md.
+
+- **Data:** `data/ap-credit/2024-2025.yaml`, `2025-2026.yaml`, `2026-2027.yaml`, 40 exams each, copied by hand on
+  2026-11-17. The 2026-2027 table was read in CITL's cutoff score tool (year 2026-2027, exam type AP, every test); the
+  older two from their static pages. 13 `fix` notes (9 in 2024-2025) say where the copy differs from the page and
+  quote it. 2026-2027 credits the
+  renumbered language courses (FR 203/204, GER 203/204, ITAL 203/204, SPAN 203/210/214), which match the site's
+  Spring 2027 data. Only ART 105 (AP 2-D Art and Design) isn't in the loaded terms.
+- **Pipeline:** `pipeline/ap_credit.py` validates the files (every problem at once, including two rows that both apply
+  to one score) and `export.py` writes `ap-credit.json` (57 KB, newest year first, with unknown codes).
+- **Site:** "Add an AP exam" under My courses (starting term, exam, score, subscore when needed), an "Expected AP
+  credit" card per exam with its courses (each can be unticked), CITL's placement message and notes, AP credit counted
+  at CITL's hours with an "AP credit" tag, Grainger's Calculus rows for engineering programs, prerequisites notes that
+  know about AP courses, and an hours-so-far line. Link format `a=`, `y=`, `d=`; old links and saved lists still open.
+- **Tests added:** `pipeline/tests/test_ap_credit.py` (the real files valid and covering the same 40 exams, facts
+  copied from each page, schema errors, overlapping rows, file name, export), `web/tests/unit/apcredit.test.ts` (link
+  format, year choice, Grainger rows, subscores, English Literature's dependency, merged and elective credit, declining,
+  CITL hours in the evaluation, elective credit against ranges, hours so far, state round trips),
+  `web/tests/e2e/ap-credit.spec.ts` (add exams through the form, placement message, untick and remove, the Calculus BC
+  subscore, a shared link on a Grainger program, switching the starting year, 375px).
+- **Fixed on the way:** at 375px a long `<select>` option ("Summer 2026, Fall 2026 or Spring 2027") widened the
+  checklist's top panel to 431px; the panel's grid now has a shrinkable column (`grid-cols-1`).
+- **Checks (Windows laptop):** pytest 204/204, Vitest 122/122, ruff, mypy, ESLint and tsc clean. Playwright on a
+  `PAGES_LIMIT=5` build, one worker: 54 passed, 3 failed, none from this change: the Windows-only lower-case URL test,
+  and two tests that open course pages a light build doesn't have (the CS 124 console check sees 404s for ECON 102 and
+  others; "gen-ed filters survive Back" opens a course page). The AP and degree specs: 14/14. Not run here: a full
+  build (28,600 files in OneDrive) and Lighthouse; CI's full build covers the Playwright suite.

@@ -1,6 +1,6 @@
 # Limitations
 
-What Illini Scheduler can't do, or does only approximately, as of v0.4.0 (2026-11-17). Each item says where the gap
+What Illini Scheduler can't do, or does only approximately, as of v0.6.0 (2026-11-17). Each item says where the gap
 comes from. For future plans, see [IDEAS.md](IDEAS.md).
 
 ## The site itself
@@ -84,6 +84,11 @@ comes from. For future plans, see [IDEAS.md](IDEAS.md).
 - **Scope.** Undergraduate majors and their concentrations in the 2026-2027 catalog only. No minors, certificates,
   graduate programs or earlier catalog years.
 - **You enter your courses by hand.** There's no transcript or DARS import, because those sit behind a NetID.
+- **AP credit is an estimate.** The courses come from CITL's AP table for the year you started (2024-2025, 2025-2026
+  or 2026-2027 only), copied by hand, with a few slips on CITL's pages corrected (docs/AP-CREDIT.md). The real credit
+  shows on DARS once your scores reach the university. IB scores, dual credit and transfer credit aren't worked out;
+  add those courses yourself as "AP or transfer credit". Elective credit such as `MATH 1--` counts toward your hours,
+  and toward a requirement only when it takes every course at that level in that subject.
 - **Prerequisites** are shown as catalog text, not checked against your courses.
 - **Double counting** is allowed only where the catalog or the gen-ed rules say so in quotable words. Anything else
   shows as "rules unclear" instead of being guessed.

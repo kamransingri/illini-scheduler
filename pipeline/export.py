@@ -361,7 +361,11 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
     from .degrees import export as export_degrees
 
     deg = export_degrees(conn, out_dir, summaries)
-    return f"{n_files} course files, {len(gened_rows)} gen-ed rows, {len(inst_index)} instructors, {deg} -> {out_dir}"
+    from .ap_credit import export as export_ap_credit
+
+    ap = export_ap_credit(conn, out_dir)
+    return (f"{n_files} course files, {len(gened_rows)} gen-ed rows, {len(inst_index)} instructors, {deg}, {ap} "
+            f"-> {out_dir}")
 
 
 def course_summary(g: dict | None, nxt: dict | None, rec: dict, gi: dict[str, dict], display: Any, rmp_block: Any,
