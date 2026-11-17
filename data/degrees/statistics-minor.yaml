@@ -1,0 +1,76 @@
+# Statistics Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/statistics/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: statistics-minor
+type: minor
+program: Statistics Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/statistics/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 17
+notes: []
+double_counting: []
+groups:
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Three courses (9-12 hours), including at least one from the Advanced Statistical methods group, must be STAT courses.
+  id: more-requirements-1
+- name: Statistics Concepts -Select one of the following
+  section: Requirements
+  rule: manual
+  notes:
+  - Three courses (9-12 hours), including at least one from the Advanced Statistical methods group, must be STAT courses.
+  courses:
+  - CPSC 241
+  - ECON 202
+  - EPSY 280
+  - PSYC 235
+  - STAT 100
+  - STAT 107
+  - SOC 280
+  id: statistics-concepts-select-one-of-the-fo-2
+- name: Data Analysis -Select one of the following
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 3 hours.'
+  - Three courses (9-12 hours), including at least one from the Advanced Statistical methods group, must be STAT courses.
+  courses:
+  - STAT 200
+  - STAT 207
+  - STAT 212
+  - ECON 203
+  id: data-analysis-select-one-of-the-followin-3
+- name: Linear Algebra -Select one of the following
+  section: Requirements
+  rule: manual
+  notes:
+  - Three courses (9-12 hours), including at least one from the Advanced Statistical methods group, must be STAT courses.
+  courses:
+  - MATH 225
+  - MATH 257
+  - MATH 415
+  id: linear-algebra-select-one-of-the-followi-4
+- name: Mathematical Statistics -Select one of the following
+  section: Requirements
+  rule: manual
+  notes:
+  - Three courses (9-12 hours), including at least one from the Advanced Statistical methods group, must be STAT courses.
+  courses:
+  - STAT 400
+  - STAT 408
+  - MATH 461
+  id: mathematical-statistics-select-one-of-th-5
+- name: Advanced Statistical Methods
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 6 hours.'
+  - Select two 300- or 400- level STAT courses. STAT courses numbered 409 and above meet this requirement.
+  id: advanced-statistical-methods-6

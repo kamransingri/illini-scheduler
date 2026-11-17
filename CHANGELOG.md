@@ -5,7 +5,8 @@ Every release of the site and the data pipeline, newest first. The format follow
 CONTRIBUTING.md says what counts as a major, minor or patch change. Add a line under **Unreleased** in the same pull
 request as the change. `make release V=minor` (or `patch`) turns Unreleased into the next version, and the release
 workflow tags it and publishes the GitHub release once it reaches `main`. Before 0.2.0-beta.1 the version was 0.1.0:
-the first build, phases 0 to 12, recorded in docs/PROGRESS.md.
+the first build, phases 0 to 12 (its build log, docs/PROGRESS.md, was removed after 0.6.0 and is in git
+history).
 
 ## [Unreleased]
 
@@ -21,6 +22,31 @@ the first build, phases 0 to 12, recorded in docs/PROGRESS.md.
   professor with the same name in Course Explorer.
 - Course pages show up to 6 RMP reviews per professor, the ones written for that course first (it was 3, from any
   course).
+
+## [0.7.0] - 2026-11-17
+
+### Added
+
+- Degree checklist: minors. Pick an optional minor under your major and its requirements get their own checklist below
+  the major's, filled from the same course list, with the same ranked course options. All 127 minors in the 2026-2027
+  catalog are imported (`python -m pipeline.catalog_import --only minors`). The minor is saved with your list and
+  carried in the share link (`mn=`).
+- Degree checklist: a college filter under the major and minor boxes ("Gies Business (6)", "LAS (52)"…) narrows the
+  list to one college, and typing then searches only that college.
+- Course pages: a "Rate them on RMP" link next to each matched professor's Rate My Professors page, and "Be the first
+  to rate" on professors RMP knows but nobody has rated yet. Both open RMP's own rating form; the site posts nothing.
+- Degree checklist: completed courses in My courses link to that course's professors, so you can rate yours.
+- Degree checklist: CITL's general notes for the AP table you picked, word for word, under your expected AP credit.
+
+### Changed
+
+- Degree checklist: the program box is now labelled Major, and it opens empty with a "Type a major" hint, so you can
+  type straight away instead of scrolling the full list.
+- Catalog importer: a "Select two of the following:" header row becomes a "choose 2" rule instead of a tick box, and
+  requirement files can say `type: minor`.
+- The backlog is now GitHub issues (#9 to #34), labelled by area (`degree-planner`, `seats`, `rmp`, `needs-backend`,
+  `needs-human`…); docs/IDEAS.md and docs/PROGRESS.md were removed (both are in git history). `.gitignore` also covers
+  virtualenvs, logs, editor folders and OS files.
 
 ## [0.6.0] - 2026-11-17
 
@@ -123,7 +149,8 @@ the first build, phases 0 to 12, recorded in docs/PROGRESS.md.
 - A partial Rate My Professors error no longer stops `make data`.
 - RSS feeds are written as UTF-8.
 
-[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.3.0...v0.4.0

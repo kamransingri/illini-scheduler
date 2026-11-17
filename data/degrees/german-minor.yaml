@@ -1,0 +1,53 @@
+# German Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/german/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: german-minor
+type: minor
+program: German Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/german/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - GER 211
+  - GER 420
+  id: required-courses-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Elective courses, including at least one 300- or 400-level course from the list below:'
+  courses:
+  - GER 201
+  - GER 203
+  - GER 204
+  - GER 205
+  - GER 212
+  - - GER 250
+    - GER 251
+  - - GER 260
+    - GER 261
+  - GER 270
+  - GER 331
+  - GER 332
+  - GER 401
+  - PS 385
+  - GER 403
+  - GER 465
+  - GER 470
+  - GER 471
+  - GER 472
+  - GER 473
+  - GER 493
+  - GER 494
+  id: more-requirements-2

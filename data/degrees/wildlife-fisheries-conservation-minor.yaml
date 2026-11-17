@@ -1,0 +1,60 @@
+# Wildlife & Fisheries Conservation Minor (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/minors/wildlife-fisheries-conservation/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: wildlife-fisheries-conservation-minor
+type: minor
+program: Wildlife & Fisheries Conservation Minor
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/minors/wildlife-fisheries-conservation/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 17
+notes: []
+double_counting: []
+groups:
+- name: Required Courses for a Minor in Wildlife & Fisheries
+  section: Requirements
+  rule: all
+  courses:
+  - - NRES 219
+    - IB 203
+  - NRES 348
+  id: required-courses-for-a-minor-in-wildlife-1
+- name: Required Courses for a Minor in Wildlife & Fisheries
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Pick one:'
+  courses:
+  - NRES 407
+  - NRES 409
+  id: required-courses-for-a-minor-in-wildlife-2
+- name: Required Courses for a Minor in Wildlife & Fisheries
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Pick one:'
+  courses:
+  - NRES 465
+  - NRES 420
+  - NRES 429
+  - NRES 480
+  - NRES 485
+  id: required-courses-for-a-minor-in-wildlife-3
+- name: Required Courses for a Minor in Wildlife & Fisheries
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Pick one:'
+  courses:
+  - NRES 302
+  - IB 407
+  - NRES 415
+  - NRES 461
+  - IB 462 + NRES 442
+  - NRES 463
+  - NRES 464
+  id: required-courses-for-a-minor-in-wildlife-4

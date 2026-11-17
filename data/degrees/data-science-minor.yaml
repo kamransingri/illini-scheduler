@@ -1,0 +1,73 @@
+# Data Science (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/data-science/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: data-science-minor
+type: minor
+program: Data Science
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/data-science/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - IS 107
+  - STAT 207
+  - CS 307
+  id: required-courses-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Note that students must complete one calculus course (e.g., MATH 234, MATH 220) and one linear algebra course (e.g., MATH
+    227, MATH 257) prior to taking CS 307.
+  id: more-requirements-2
+- name: Choose 2 courses in Domain Specific Data Science
+  section: Requirements
+  rule: manual
+  notes:
+  - Note that students must complete one calculus course (e.g., MATH 234, MATH 220) and one linear algebra course (e.g., MATH
+    227, MATH 257) prior to taking CS 307.
+  courses:
+  - ATMS 207
+  - CS 225
+  - CS 277
+  id: choose-2-courses-in-domain-specific-data-3
+- name: Choose 2 courses in Domain Specific Data Science
+  section: Requirements
+  rule: manual
+  notes:
+  - Students may use credit from CS 225 or CS 277, but not both.
+  courses:
+  - CS 416
+  - CS 441
+  - GGIS 407
+  - IS 357
+  - IS 417
+  - IS 445
+  - LING 406
+  - MATH 467
+  - STAT 432
+  - STAT 440
+  - STAT 447
+  - STAT 480
+  id: choose-2-courses-in-domain-specific-data-4
+- name: Choose 1 course in Data Ethics
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 3 hours.'
+  - Note that students must complete one calculus course (e.g., MATH 234, MATH 220) and one linear algebra course (e.g., MATH
+    227, MATH 257) prior to taking CS 307.
+  - Students may use credit from CS 225 or CS 277, but not both.
+  courses:
+  - IS 467
+  - IS 477
+  id: choose-1-course-in-data-ethics-5

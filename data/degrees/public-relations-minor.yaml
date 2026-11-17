@@ -1,0 +1,55 @@
+# Public Relations Minor (College of Media), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/media/minors/public-relations/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: public-relations-minor
+type: minor
+program: Public Relations Minor
+college: College of Media
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/media/minors/public-relations/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Foundations of public relations
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 9 hours.'
+  - 'Courses all students must complete:'
+  courses:
+  - JOUR 200
+  - ADV 310
+  - ADV 410
+  id: foundations-of-public-relations-1
+- name: Writing for public relations and media
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Students must select one course from:'
+  courses:
+  - ADV 350
+  - JOUR 210
+  - CMN 220
+  id: writing-for-public-relations-and-media-2
+- name: Advanced topics in public relations
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 6 hours.'
+  - 'Students must select two courses from:'
+  courses:
+  - ADV 393
+  - ADV 490
+  - ADV 494
+  - JOUR 360
+  - JOUR 453
+  - JOUR 460
+  - CMN 321
+  - CMN 377
+  - CMN 464
+  id: advanced-topics-in-public-relations-3

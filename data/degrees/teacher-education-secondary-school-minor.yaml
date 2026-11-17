@@ -1,0 +1,32 @@
+# Teacher Education in Secondary School Teaching Minor (College of Education), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/education/minors/teacher-education-secondary-school/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: teacher-education-secondary-school-minor
+type: minor
+program: Teacher Education in Secondary School Teaching Minor
+college: College of Education
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/education/minors/teacher-education-secondary-school/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 39
+notes: []
+double_counting: []
+groups:
+- name: Professional Education Required Courses
+  section: Requirements for the Teacher Education in Secondary School Teaching Minor
+  rule: all
+  courses:
+  - EDUC 201
+  - EDUC 202
+  - CI 401
+  - CI 403
+  - CI 404
+  - CI 473
+  - EPSY 201
+  - EPSY 485
+  - SPED 405
+  - EDPR 442
+  id: professional-education-required-courses-1

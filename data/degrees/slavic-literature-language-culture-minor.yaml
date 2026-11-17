@@ -1,0 +1,53 @@
+# Slavic Language, Literature, & Culture Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/slavic-literature-language-culture/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: slavic-literature-language-culture-minor
+type: minor
+program: Slavic Language, Literature, & Culture Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/slavic-literature-language-culture/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Introduction to Slavic culture. Select from:'
+  courses:
+  - BCS 115
+  - POL 115
+  - REES 200
+  - REES 201
+  - RUSS 261
+  - SLAV 117
+  - SLAV 120
+  - UKR 113
+  id: more-requirements-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Intermediate Slavic Language:'
+  courses:
+  - BCS 201 + BCS 202
+  - CZCH 201 + CZCH 202
+  - POL 201 + POL 202
+  - UKR 201 + UKR 202
+  id: more-requirements-2
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Slavic Literature and Culture: Three 200-, 300- or 400-level courses from the list maintained by the undergraduate advisor,
+    including at least one at the 300- or 400-level. Advanced Slavic language (the 301 or 302 level of the language of specialization,
+    or equivalent) can substitute for one course in this requirement. Also, one course at the same level in another department,
+    chosen in consultation with the advisor, that treats the history, culture, and society of the region can count toward
+    this requirement.'
+  id: more-requirements-3

@@ -1,0 +1,124 @@
+# Informatics Minor (Informatics Programs), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/informatics-programs/minors/informatics/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: informatics-minor
+type: minor
+program: Informatics Minor
+college: Informatics Programs
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/informatics-programs/minors/informatics/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 19
+notes: []
+double_counting: []
+groups:
+- name: 'Course requirements for students who are NOT CS or CS+ or ECE or Information Systems or Art & Design majors or CS
+    minors:'
+  section: 'Course requirements for students who are NOT CS or CS+ or ECE or Information Systems or Art & Design majors or
+    CS minors:'
+  rule: all
+  courses:
+  - INFO 102
+  - INFO 202
+  id: course-requirements-for-students-who-are-1
+- name: 'Course requirements for students who are NOT CS or CS+ or ECE or Information Systems or Art & Design majors or CS
+    minors:'
+  section: 'Course requirements for students who are NOT CS or CS+ or ECE or Information Systems or Art & Design majors or
+    CS minors:'
+  rule: n_of
+  n: 1
+  courses:
+  - CS 105
+  - CS 101
+  - CS 124
+  - STAT 107
+  - ECE 120 + ECE 220
+  notes:
+  - 'Select one of the following:'
+  id: course-requirements-for-students-who-are-2
+- name: 'Course requirements for students who are NOT CS or CS+ or ECE or Information Systems or Art & Design majors or CS
+    minors:'
+  section: 'Course requirements for students who are NOT CS or CS+ or ECE or Information Systems or Art & Design majors or
+    CS minors:'
+  rule: manual
+  notes:
+  - 3 upper-level courses from an Informatics-approved list of courses
+  id: course-requirements-for-students-who-are-3
+- name: 'Course requirements for students who are CS, CS+, or ECE majors or CS minors:'
+  section: 'Course requirements for students who are CS, CS+, or ECE majors or CS minors:'
+  rule: all
+  courses:
+  - INFO 202
+  id: course-requirements-for-students-who-are-4
+- name: 'Course requirements for students who are CS, CS+, or ECE majors or CS minors:'
+  section: 'Course requirements for students who are CS, CS+, or ECE majors or CS minors:'
+  rule: n_of
+  n: 1
+  courses:
+  - CS 101
+  - CS 124
+  - ECE 220
+  notes:
+  - 'Select one of the following:'
+  id: course-requirements-for-students-who-are-5
+- name: 'Course requirements for students who are CS, CS+, or ECE majors or CS minors:'
+  section: 'Course requirements for students who are CS, CS+, or ECE majors or CS minors:'
+  rule: manual
+  notes:
+  - 4 upper-level, non-CS courses from an Informatics-approved list of courses
+  id: course-requirements-for-students-who-are-6
+- name: 'Course requirements for students who are Information Systems majors:'
+  section: 'Course requirements for students who are Information Systems majors:'
+  rule: all
+  courses:
+  - INFO 102
+  - INFO 202
+  id: course-requirements-for-students-who-are-7
+- name: 'Course requirements for students who are Information Systems majors:'
+  section: 'Course requirements for students who are Information Systems majors:'
+  rule: n_of
+  n: 1
+  courses:
+  - CS 105
+  - CS 101
+  - CS 124
+  - STAT 107
+  - ECE 120 + ECE 220
+  notes:
+  - 'Select one of the following:'
+  id: course-requirements-for-students-who-are-8
+- name: 'Course requirements for students who are Information Systems majors:'
+  section: 'Course requirements for students who are Information Systems majors:'
+  rule: manual
+  notes:
+  - Three upper-level non-BADM courses from an Informatics approved list of courses.
+  id: course-requirements-for-students-who-are-9
+- name: 'Course requirements for students who are Art & Design majors:'
+  section: 'Course requirements for students who are Art & Design majors:'
+  rule: all
+  courses:
+  - INFO 102
+  - INFO 202
+  id: course-requirements-for-students-who-are-10
+- name: 'Course requirements for students who are Art & Design majors:'
+  section: 'Course requirements for students who are Art & Design majors:'
+  rule: n_of
+  n: 1
+  courses:
+  - CS 105
+  - CS 101
+  - CS 124
+  - STAT 107
+  - ECE 120 + ECE 220
+  notes:
+  - 'Select one of the following:'
+  id: course-requirements-for-students-who-are-11
+- name: 'Course requirements for students who are Art & Design majors:'
+  section: 'Course requirements for students who are Art & Design majors:'
+  rule: manual
+  notes:
+  - 3 upper-level, non-ARTS and non-ARTD courses from an Informatics-approved list of courses
+  id: course-requirements-for-students-who-are-12

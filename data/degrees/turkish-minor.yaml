@@ -1,0 +1,70 @@
+# Turkish Studies Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/turkish/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: turkish-minor
+type: minor
+program: Turkish Studies Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/turkish/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Language Requirement (Students who test out of the advanced language requirement (405-406) must take six additional hours
+    of advanced (300- or 400-level) coursework from the list of Turkey/Ottoman Empire electives.)
+  courses:
+  - TURK 405
+  - TURK 406
+  id: more-requirements-1
+- name: Turkish Language & Culture
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 3 hours.'
+  - Language Requirement (Students who test out of the advanced language requirement (405-406) must take six additional hours
+    of advanced (300- or 400-level) coursework from the list of Turkey/Ottoman Empire electives.)
+  courses:
+  - TURK 270
+  id: turkish-language-culture-2
+- name: Additional Courses related to Turkey/Ottoman Empire
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 9 hours.'
+  - 'Chosen from the following list or from other applicable courses in consultation with the minor advisor:'
+  courses:
+  - ANTH 488
+  - EURO 415
+  - HIST 135
+  - HIST 335
+  - HIST 337
+  - HIST 356
+  - HIST 439
+  - FR 418
+  - MUS 418
+  - PS 152
+  - PS 347
+  - REL 214
+  - REL 223
+  - REL 403
+  - REL 408
+  - REES 201
+  - SOC 483
+  id: additional-courses-related-to-turkey-ott-3
+- name: Additional Courses related to Turkey/Ottoman Empire
+  section: Requirements
+  rule: manual
+  notes:
+  - Study Abroad course(s) relevant to Turkey (maximum of 3 hours; must be approved by the advisor)
+  courses:
+  - TURK 490
+  id: additional-courses-related-to-turkey-ott-4

@@ -3,7 +3,7 @@
 One YAML file per program in `data/degrees/`, read from the official Academic Catalog page for one catalog year
 (https://catalog.illinois.edu/). Most files are written by `python -m pipeline.catalog_import` (they carry a
 `generated:` date); `finance-data-science.yaml` was checked by hand. Never fill a file in from memory: if the catalog
-can't be read, leave `groups: []` and say so in PROGRESS.md. `make data` validates every file (`pipeline/degrees.py`), checks each course code against
+can't be read, leave `groups: []` and say so in the pull request. `make data` validates every file (`pipeline/degrees.py`), checks each course code against
 the Course Explorer data it loads, logs codes it can't find, and exports `web/public/data/degrees/<id>.json` for the
 degree checklist at `/degree/`.
 
@@ -11,13 +11,14 @@ degree checklist at `/degree/`.
 
 | Key | Required | Meaning |
 | --- | --- | --- |
-| `id` | yes | Slug, same as the file name (`finance-data-science`) |
+| `id` | yes | Slug, same as the file name (`finance-data-science`; minors end in `-minor`) |
+| `type` | no | `minor` for a minor; leave it out for a major |
 | `program`, `college` | yes | As the catalog names them |
 | `catalog_year` | yes | `2026-2027` |
 | `source` | yes | The catalog page URL |
 | `read_on` | yes | Date the page was read, `YYYY-MM-DD` |
 | `generated` | no | Date `pipeline/catalog_import.py` wrote the file. The importer overwrites only files that have this key; delete it once you've checked a file by hand |
-| `total_hours` | no | Minimum hours for the degree |
+| `total_hours` | no | Minimum hours for the degree, or for the minor (the lowest number of a range like "18-21") |
 | `notes` | no | Catalog text for rules the schema can't express (copied, not paraphrased) |
 | `double_counting` | no | When one course may count toward two requirements (below) |
 | `groups` | yes | The requirement groups, in catalog order |
@@ -80,8 +81,10 @@ double_counting:
 ## Importing every program
 
 `python -m pipeline.catalog_import` reads https://catalog.illinois.edu/undergraduate/, every program page on it (and
-the concentration pages of programs whose requirements live there), one request per second, cached in
-`data/raw/catalog/`; `--offline` re-parses the cache. What it turns into rules, and what it leaves as `manual`, is in
+the concentration pages of programs whose requirements live there), then https://catalog.illinois.edu/undergraduate/minors/
+and every minor page on it, one request per second, cached in `data/raw/catalog/`; `--offline` re-parses the cache and
+`--only majors` or `--only minors` limits the run. Minor pages have no gen-ed table; a few keep their course list on the
+Overview tab instead of a Requirements tab, and the importer reads it from there. What it turns into rules, and what it leaves as `manual`, is in
 DECISIONS.md D13.28. Run it when a new catalog year is published, then `python -m pipeline.degrees` and `make data`.
 
 ## Adding or checking a program by hand

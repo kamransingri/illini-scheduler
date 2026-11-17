@@ -1,0 +1,60 @@
+# Psychology Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/psychology/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: psychology-minor
+type: minor
+program: Psychology Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/psychology/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - PSYC 100
+  - PSYC 235
+  id: required-courses-1
+- name: Biological/Cognitive Psychology Course
+  section: Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - PSYC 204
+  - PSYC 210
+  - PSYC 220
+  - PSYC 224
+  - PSYC 230
+  - PSYC 248
+  notes:
+  - 'Catalog total: 3 hours.'
+  - 'Select one from the following:'
+  id: biological-cognitive-psychology-course-2
+- name: Clinical/Developmental/Social Psychology Course
+  section: Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - PSYC 201
+  - PSYC 216
+  - PSYC 238
+  - PSYC 239
+  - PSYC 245
+  - PSYC 250
+  notes:
+  - 'Catalog total: 3 hours.'
+  - 'Select one from the following:'
+  id: clinical-developmental-social-psychology-3
+- name: Clinical/Developmental/Social Psychology Course
+  section: Requirements
+  rule: manual
+  notes:
+  - Select two 300- or 400- level Psychology courses
+  id: clinical-developmental-social-psychology-4

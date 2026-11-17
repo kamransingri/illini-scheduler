@@ -1,0 +1,63 @@
+# Music Minor (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/minors/music/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: music-minor
+type: minor
+program: Music Minor
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/minors/music/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Technical Studies
+  section: Course Requirements
+  rule: all
+  courses:
+  - - MUS 101
+    - MUS 102
+    - MUS 103
+    - MUS 106
+    - MUS 127
+    - MUS 135
+    - MUS 209
+    - MUS 407
+  id: technical-studies-1
+- name: Cultural Studies
+  section: Course Requirements
+  rule: all
+  courses:
+  - - MUS 110
+    - MUS 130
+    - MUS 132
+    - MUS 133
+    - MUS 313
+    - MUS 314
+  notes:
+  - 'Catalog total: 3 hours.'
+  id: cultural-studies-2
+- name: Upper Division Music Courses (300- and 400-level)
+  section: Course Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 6 hours.'
+  - MUS 300- and 400-level courses will be selected in consultation with a School of Music advisor in accordance with student
+    interest.
+  - MUSC applied lessons at the 400-level will satisfy this requirement providing the student has taken four semesters of
+    MUSC applied lessons at the 100-level in the same applied area. Ensemble courses (MUSC 447 through MUSC 498) do not satisfy
+    the six-hour upper-division requirement for the minor.
+  id: upper-division-music-courses-300-and-400-3
+- name: Music Electives
+  section: Course Requirements
+  rule: manual
+  notes:
+  - Any MUS or MUSC course may satisfy elective credits, however, only three (3) credit hours of ensemble courses (MUSC 447
+    through MUSC 498) may be used for elective credit.
+  - Registering for non-major applied lessons requires communicating with the appropriate music professor and the availability
+    of teaching staff. It also requires a semester fee for weekly lessons.
+  id: music-electives-4

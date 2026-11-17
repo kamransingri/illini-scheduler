@@ -1,0 +1,61 @@
+# Leadership Studies Minor (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/minors/leadership-studies/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: leadership-studies-minor
+type: minor
+program: Leadership Studies Minor
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/minors/leadership-studies/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - LEAD 260
+  - LEAD 425
+  - PSYC 245
+  - - LEAD 460
+    - LEAD 480
+  id: required-courses-1
+- name: Two(2) electives from
+  section: Requirements
+  rule: manual
+  notes:
+  - The catalog lists these courses under Two(2) electives from; see the catalog page for the rule.
+  courses:
+  - ACE 231
+  - ACE 291
+  - ACES 298
+  - AFAS 331
+  - AFAS 332
+  - LEAD 339
+  - LEAD 340
+  - LEAD 460
+  - LEAD 480
+  - HK 361
+  - ANSC 471
+  - BADM 310
+  - BADM 311
+  - BADM 314
+  - CMN 321
+  - HK 270
+  - JOUR 250
+  - HK 362
+  - MILS 341
+  - MILS 342
+  - NS 303
+  - NS 308
+  - PHIL 436
+  - PS 304
+  - PSYC 455
+  - RST 200
+  - SE 361
+  - SOCW 321
+  id: two-2-electives-from-2

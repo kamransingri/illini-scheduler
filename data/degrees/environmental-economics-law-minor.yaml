@@ -1,0 +1,47 @@
+# Environmental Economics & Law Minor (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/minors/environmental-economics-law/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: environmental-economics-law-minor
+type: minor
+program: Environmental Economics & Law Minor
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/minors/environmental-economics-law/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Required for the Minor in Environmental Economics and Law
+  section: Requirements
+  rule: all
+  courses:
+  - ACE 210
+  - ACE 310
+  id: required-for-the-minor-in-environmental-1
+- name: Required for the Minor in Environmental Economics and Law
+  section: Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - ACE 100
+  - ECON 102
+  notes:
+  - 'Select one of the following:'
+  id: required-for-the-minor-in-environmental-2
+- name: Required for the Minor in Environmental Economics and Law
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Select three(3) of the following:'
+  courses:
+  - ACE 306
+  - ACE 403
+  - ACE 406
+  - ACE 411
+  - ACE 456
+  - BADM 300
+  id: required-for-the-minor-in-environmental-3

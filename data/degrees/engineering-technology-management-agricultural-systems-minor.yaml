@@ -1,0 +1,45 @@
+# Engineering Technology and Management for Agricultural Systems Minor (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/minors/engineering-technology-management-agricultural-systems/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: engineering-technology-management-agricultural-systems-minor
+type: minor
+program: Engineering Technology and Management for Agricultural Systems Minor
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/minors/engineering-technology-management-agricultural-systems/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - ETMA 100
+  id: required-courses-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Fifteen Hours, at least six of which must be at the 400 level. No more than 4 hours of independent study will count toward
+    the minor (ETMA 496). Selected from:'
+  courses:
+  - ETMA 232
+  - ETMA 233
+  - ETMA 234
+  - ETMA 262
+  - ETMA 352
+  - ETMA 363
+  - ETMA 371
+  - ETMA 372
+  - ETMA 381
+  - ETMA 435
+  - ETMA 438
+  - ETMA 464
+  - ETMA 467
+  - ETMA 496
+  id: more-requirements-2

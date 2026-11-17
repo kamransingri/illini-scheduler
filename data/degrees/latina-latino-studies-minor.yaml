@@ -1,0 +1,34 @@
+# Latina/Latino Studies Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/latina-latino-studies/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: latina-latino-studies-minor
+type: minor
+program: Latina/Latino Studies Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/latina-latino-studies/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - LLS 100
+  id: required-courses-1
+- name: Thematic Areas
+  section: Requirements
+  rule: manual
+  notes:
+  - Students must take one course in each of the following three areas. A list of courses is maintained in the Department's
+    office.
+  - A. Literature, Media, and Culture
+  - B. Race, Gender, and Sexuality
+  - C. History, Politics, and Society
+  - 2 elective courses selected from the list of all LLS and cross-listed LLS classes
+  id: thematic-areas-2
