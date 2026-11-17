@@ -1,7 +1,7 @@
 # Limitations
 
 What Illini Scheduler can't do, or does only approximately, as of v0.6.0 (2026-11-17). Each item says where the gap
-comes from. For future plans, see [IDEAS.md](IDEAS.md).
+comes from. For future plans, see the [GitHub issues](https://github.com/kamransingri/illini-scheduler/issues).
 
 ## The site itself
 
@@ -25,7 +25,7 @@ comes from. For future plans, see [IDEAS.md](IDEAS.md).
 - **A seat can be gone already.** Openings in popular courses can fill within minutes. Copy the CRN and confirm in
   Self-Service.
 - **Notifications only while the page is open.** "Notify me" uses the browser's notifications for changes that arrive
-  while the tab is open; there are no email or phone alerts (that needs a backend, IDEAS.md 3).
+  while the tab is open; there are no email or phone alerts (that needs a backend, [#16](https://github.com/kamransingri/illini-scheduler/issues/16)).
 
 ## Course and seat data
 
@@ -46,7 +46,7 @@ comes from. For future plans, see [IDEAS.md](IDEAS.md).
   history.
 - **Name matching.** Course Explorer and the GPA dataset write names differently ("Gonzalez, D"). When a match is
   ambiguous the site leaves it unmatched rather than guess: 3,863 names are logged in `data/unmatched.csv`, mostly
-  TAs. When last measured, about 80% of lecture instructors were matched (CS 83%, MATH 86%, STAT 79%; PROGRESS.md).
+  TAs. When last measured, about 80% of lecture instructors were matched (CS 83%, MATH 86%, STAT 79%; [#12](https://github.com/kamransingri/illini-scheduler/issues/12)).
 
 ## Rate My Professors
 

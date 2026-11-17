@@ -479,7 +479,7 @@ Every judgment call made during the autonomous build, newest phase last.
   section, so the earlier detection wins and open → closed → open stays three events. Each row says when the change was
   found and the section's latest known status ("Still open (4 min ago)", "Now closed"). If `live.json` is missing or
   older than 45 minutes, the page says "Daily" and explains, rather than calling stale data live. "New" marks and the
-  optional browser notification only cover changes that arrive while the page is open (no push backend; IDEAS.md 3).
+  optional browser notification only cover changes that arrive while the page is open (no push backend; [#16](https://github.com/kamransingri/illini-scheduler/issues/16)).
 - **D14.5 Gen-ed finder keeps to picking courses.** The time filters (no 8am, no Friday, online only) are gone: times
   and days belong to the schedule builder, which applies them to whole weeks. "Only courses with an open section" is on
   by default (`?nx=0` turns it off); old links with `e`, `nf` or `on` still open, without those filters. The pipeline
@@ -550,7 +550,7 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D15.7 Merge commits.** Pull requests are merged with merge commits, as #1 to #5 were, so each branch's commits stay
   visible and a release tag sits on a commit that was actually deployed.
 
-## v0.6.0 (2026-11-17, AP credit from CITL, IDEAS.md 5)
+## v0.6.0 (2026-11-17, AP credit from CITL)
 
 - **D16.1 Copied by hand, three years.** CITL's 2026-2027 table only appears in a page that needs filters clicked,
   and the older pages have slips (docs/AP-CREDIT.md lists each correction). About 40 exams change once a year, so
