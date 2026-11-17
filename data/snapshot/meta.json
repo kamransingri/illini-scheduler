@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-17T01:57:21+00:00",
+ "built_at": "2026-11-17T05:09:30+00:00",
  "current_term": "2026-fa",
  "next_term": "2027-sp",
  "terms": {
@@ -1906,6 +1906,7 @@
   }
  },
  "repo_url": "https://github.com/kamransingri/illini-scheduler",
+ "live_url": "https://raw.githubusercontent.com/kamransingri/illini-scheduler/live-seats/live.json",
  "n_courses": 7138,
  "history_terms": [
   "2022-fa",
