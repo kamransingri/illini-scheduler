@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { applyFilters, DEFAULT_FILTERS as DF, filtersFromQuery, filtersToQuery, matches, sortRows } from "@/lib/geneds";
-const DEFAULT_FILTERS = { ...DF, minStudents: 0 };
+const DEFAULT_FILTERS = { ...DF, minStudents: 0, openNext: false };
 import type { GenedRow } from "@/lib/types";
 
 const row = (o: Partial<GenedRow>): GenedRow => ({
@@ -38,24 +38,14 @@ describe("gen-ed filters", () => {
     expect(matches(row({ cr: [3, 4] }), { ...DEFAULT_FILTERS, credits: 4 })).toBe(true);
     expect(matches(row({ cr: [3, 3] }), { ...DEFAULT_FILTERS, credits: 4 })).toBe(false);
   });
-  it("no 8am needs some bundle starting at or after 9", () => {
-    const f = { ...DEFAULT_FILTERS, earliest: 540 };
-    expect(matches(row({ opts: [[480, 21, 0]] }), f)).toBe(false);
-    expect(matches(row({ opts: [[480, 21, 0], [600, 21, 0]] }), f)).toBe(true);
-    expect(matches(row({ opts: [[-1, 0, 1]] }), f)).toBe(true); // online, no set time
-  });
-  it("no Friday and online only", () => {
-    expect(matches(row({ opts: [[600, 21, 0]] }), { ...DEFAULT_FILTERS, noFriday: true })).toBe(false);
-    expect(matches(row({ opts: [[600, 10, 0]] }), { ...DEFAULT_FILTERS, noFriday: true })).toBe(true);
-    expect(matches(row({ opts: [[600, 10, 0]] }), { ...DEFAULT_FILTERS, onlineOnly: true })).toBe(false);
-    expect(matches(row({ opts: [[-1, 0, 1]] }), { ...DEFAULT_FILTERS, onlineOnly: true })).toBe(true);
-  });
   it("open next term uses status when known, listed sections otherwise", () => {
     const f = { ...DEFAULT_FILTERS, openNext: true };
     expect(matches(row({ nSec: 0, opts: [] }), f)).toBe(false);
     expect(matches(row({ statusKnown: true, nOpen: 0 }), f)).toBe(false);
     expect(matches(row({ statusKnown: true, nOpen: 1 }), f)).toBe(true);
+    expect(matches(row({ statusKnown: true, nOpen: 0 }), { ...f, openNext: false })).toBe(true);
   });
+  it("open sections are on by default", () => expect(DF.openNext).toBe(true));
   it("sample-size floor", () => {
     expect(matches(row({ gpaN: 150 }), { ...DEFAULT_FILTERS, minStudents: 200 })).toBe(false);
     expect(matches(row({ gpaN: 250 }), { ...DEFAULT_FILTERS, minStudents: 200 })).toBe(true);
@@ -80,8 +70,11 @@ describe("gen-ed sorting", () => {
 
 describe("gen-ed URL state", () => {
   it("round trip", () => {
-    const f = { ...DF, codes: ["HP", "LA"], openNext: true, earliest: 540, minStudents: 0 };
+    const f = { ...DF, codes: ["HP", "LA"], openNext: false, minStudents: 0 };
     expect(filtersFromQuery(filtersToQuery(f, "pctA"))).toEqual({ f, sort: "pctA" });
+    expect(filtersToQuery(f, "pctA")).toContain("nx=0");
+    // old links with time filters still open (the time filters moved to the schedule builder)
+    expect(filtersFromQuery("codes=HP&e=540&nf=1&on=1").f).toEqual({ ...DF, codes: ["HP"] });
     expect(filtersToQuery(DF, "score")).toBe(""); // the best-pick score is the default sort
     expect(filtersToQuery(DF, "gpa")).toBe("sort=gpa");
     expect(filtersFromQuery("").sort).toBe("score");

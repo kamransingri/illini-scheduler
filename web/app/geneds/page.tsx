@@ -14,7 +14,7 @@ export default function GenedsPage() {
     <div>
       <h1 className="font-display text-2xl font-bold text-heading">Gen-ed finder</h1>
       <p className="mt-2 mb-6 inline-flex flex-wrap items-center">
-        Gen-eds for {termLabel(meta.next_term)}, filtered by category, time and seats and ranked by the best pick score.
+        Gen-eds for {termLabel(meta.next_term)} that count for every category you pick, ranked by the best pick score. Only courses with an open section show until you turn that off.
         <Info label="Where the gen-ed data comes from">
           Gen-ed codes from the UIUC gen-ed list (as of {fmtDate(meta.geneds_snapshot)}) and Course Explorer. GPA is the recent average over{" "}
           {termRange(meta.gpa.recent[0], meta.gpa.recent[meta.gpa.recent.length - 1])} from the UIUC GPA dataset. Sections from the{" "}

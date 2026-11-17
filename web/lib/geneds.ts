@@ -15,36 +15,28 @@ export const DEFAULT_SORT: SortKey = "score";
 export type Filters = {
   codes: string[]; // the course must carry every one of these gen-ed codes
   credits: number | null; // course must be able to award this many hours
-  earliest: number | null; // minutes; some section bundle must start at or after this (e.g. 540 = no 8am)
-  noFriday: boolean;
-  onlineOnly: boolean;
-  openNext: boolean;
+  openNext: boolean; // has an open section next term (on by default; status unknown = any section)
   minRmp: number | null;
   doubleDip: boolean; // satisfies 2+ categories
   minStudents: number; // GPA sample size floor (0 = off)
 };
 
+// Times and days are the schedule builder's job (D14.4): this page only picks the course.
 export const DEFAULT_FILTERS: Filters = {
   codes: [],
   credits: null,
-  earliest: null,
-  noFriday: false,
-  onlineOnly: false,
-  openNext: false,
+  openNext: true,
   minRmp: null,
   doubleDip: false,
   minStudents: 200,
 };
 
-/** Filters + sort <-> URL query, so Back / reload / sharing keep them. */
+/** Filters + sort <-> URL query, so Back / reload / sharing keep them. Only what differs from the defaults is written. */
 export function filtersToQuery(f: Filters, sort: SortKey): string {
   const p = new URLSearchParams();
   if (f.codes.length) p.set("codes", f.codes.join(","));
   if (f.credits !== null) p.set("cr", String(f.credits));
-  if (f.earliest !== null) p.set("e", String(f.earliest));
-  if (f.noFriday) p.set("nf", "1");
-  if (f.onlineOnly) p.set("on", "1");
-  if (f.openNext) p.set("nx", "1");
+  if (!f.openNext) p.set("nx", "0");
   if (f.minRmp !== null) p.set("rmp", String(f.minRmp));
   if (f.doubleDip) p.set("dd", "1");
   if (f.minStudents !== DEFAULT_FILTERS.minStudents) p.set("min", String(f.minStudents));
@@ -61,10 +53,7 @@ export function filtersFromQuery(q: string): { f: Filters; sort: SortKey } {
     f: {
       codes: (p.get("codes") ?? "").split(",").filter((c) => /^[A-Z0-9]{2,5}$/.test(c)),
       credits: num("cr"),
-      earliest: num("e"),
-      noFriday: p.get("nf") === "1",
-      onlineOnly: p.get("on") === "1",
-      openNext: p.get("nx") === "1",
+      openNext: p.get("nx") !== "0",
       minRmp: num("rmp"),
       doubleDip: p.get("dd") === "1",
       minStudents: num("min") ?? DEFAULT_FILTERS.minStudents,
@@ -77,16 +66,6 @@ export function openCount(r: GenedRow): number {
   return r.statusKnown ? (r.nOpen ?? 0) : r.nSec;
 }
 
-function timeOk(r: GenedRow, f: Filters): boolean {
-  if (f.earliest === null && !f.noFriday && !f.onlineOnly) return true;
-  return r.opts.some(([start, days, online]) => {
-    if (f.onlineOnly && !online) return false;
-    if (f.earliest !== null && start !== -1 && start < f.earliest) return false;
-    if (f.noFriday && days & 16) return false;
-    return true;
-  });
-}
-
 export function matches(r: GenedRow, f: Filters): boolean {
   // every selected gen-ed code: picking Humanities and Non-Western shows only courses that count for both
   if (f.codes.length && !f.codes.every((c) => r.codes.includes(c))) return false;
@@ -95,8 +74,7 @@ export function matches(r: GenedRow, f: Filters): boolean {
   if (f.credits !== null && !(r.cr[0] <= f.credits && f.credits <= r.cr[1])) return false;
   if (f.openNext && openCount(r) === 0) return false;
   if (f.minRmp !== null && (r.rmp === null || r.rmp < f.minRmp)) return false;
-  if ((f.earliest !== null || f.noFriday || f.onlineOnly) && !r.opts.length) return false;
-  return timeOk(r, f);
+  return true;
 }
 
 const nullsLast = (a: number | null, b: number | null) => (b ?? -Infinity) - (a ?? -Infinity);
