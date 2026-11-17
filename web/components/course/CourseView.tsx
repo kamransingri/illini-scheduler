@@ -366,9 +366,10 @@ function SeatChanges({ course }: { course: Course }) {
 }
 
 function NotesBlock({ course, repoUrl }: { course: Course; repoUrl: string }) {
-  const title = `Note for ${course.subject} ${course.number}`;
-  const body = `Course: ${course.subject} ${course.number}\nInstructor (as on Course Explorer):\nTerm taken (e.g. 2026-fa):\n\nWhat should other students know? (exams, CBTF, curve, attendance, homework platform, projects, textbook)\n\n`;
-  const href = `${repoUrl}/issues/new?labels=student-note&title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+  // The "Student note" issue form (.github/ISSUE_TEMPLATE/student-note.yml) with the course filled in; approved notes
+  // reach data/notes/ through pipeline/notes_intake.py.
+  const code = `${course.subject} ${course.number}`;
+  const href = `${repoUrl}/issues/new?template=student-note.yml&title=${encodeURIComponent(`Student note: ${code}`)}&course=${encodeURIComponent(code)}`;
   return (
     <section aria-labelledby="notes-h">
       <SectionHeader

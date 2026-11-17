@@ -10,6 +10,11 @@ history).
 
 ## [Unreleased]
 
+### Added
+
+- Course pages: "Suggest a note" opens a short form with the course filled in. Once a maintainer approves a note, it
+  shows on the course page word for word.
+
 ### Fixed
 
 - Rate My Professors on course pages: professors who teach this term but not next, and past instructors, are now
