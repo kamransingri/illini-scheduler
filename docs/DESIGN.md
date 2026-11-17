@@ -202,6 +202,7 @@ rule. No cards around the tools, no hero image, no gradients.
 | `home/LiveOpenings` | Newest openings, one row per course, kept fresh by `useSeatFeed` (`web/lib/live.ts`) |
 | `home/YourSchedule` | The saved course list in a sentence, with a link back to the builder |
 | `JustOpened` `Freshness` | "Live" or "Daily" and how old the data is, in words |
+| `ProgramPicker` (v0.5.0) | A searchable list for one choice among many: type to filter (best match first, college underneath), or browse everything grouped under sticky headings. Same input style as the other fields, a chevron to say it opens, the current choice ticked |
 
 The schedule builder's left column uses the same pattern as the home page's "How it works": each block (Your courses,
 Must-haves, What matters to you) sits under a 4px navy rule, and the two rule blocks fold with a one-line summary of
