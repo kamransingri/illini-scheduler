@@ -1,7 +1,9 @@
 # Student notes
 
-One YAML file per course, e.g. `cs-124.yaml`. Only add notes that a student actually submitted (via the
-"Suggest a note" GitHub issue link on a course page). Schema:
+One YAML file per course, e.g. `cs-124.yaml`. Only notes a student actually submitted, through "Suggest a note" on a
+course page (the "Student note" issue form). To publish them: read the issue, add the `approved` label, and run the
+"Student notes intake" workflow in the Actions tab. `pipeline/notes_intake.py` appends each approved note here with
+its issue as `source` and opens a pull request that closes the issues. Schema:
 
 ```yaml
 course: CS 124
