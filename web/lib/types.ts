@@ -154,6 +154,8 @@ export type Meta = {
   rmp_status: string;
   match_report: Record<string, unknown>;
   repo_url: string;
+  /** live seat changes between builds (pipeline/live_seats.py); missing in older builds */
+  live_url?: string;
   n_courses: number;
   history_terms: string[];
   /** averages the "best pick" score shrinks small samples toward (pipeline/export.py score_priors) */

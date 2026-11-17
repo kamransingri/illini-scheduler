@@ -1,9 +1,9 @@
 # Degree requirements
 
-One YAML file per program, read from the official Academic Catalog page for one catalog year
+One YAML file per program in `data/degrees/`, read from the official Academic Catalog page for one catalog year
 (https://catalog.illinois.edu/). Most files are written by `python -m pipeline.catalog_import` (they carry a
-`generated:` date); `finance-data-science.yaml` was checked by hand. Never fill a file in from memory: if the catalog can't be read, leave `groups: []`
-and say so in PROGRESS.md. `make data` validates every file (`pipeline/degrees.py`), checks each course code against
+`generated:` date); `finance-data-science.yaml` was checked by hand. Never fill a file in from memory: if the catalog
+can't be read, leave `groups: []` and say so in PROGRESS.md. `make data` validates every file (`pipeline/degrees.py`), checks each course code against
 the Course Explorer data it loads, logs codes it can't find, and exports `web/public/data/degrees/<id>.json` for the
 degree checklist at `/degree/`.
 
@@ -21,6 +21,25 @@ degree checklist at `/degree/`.
 | `notes` | no | Catalog text for rules the schema can't express (copied, not paraphrased) |
 | `double_counting` | no | When one course may count toward two requirements (below) |
 | `groups` | yes | The requirement groups, in catalog order |
+
+A short example, from the hand-checked `finance-data-science.yaml`:
+
+```yaml
+id: finance-data-science
+program: Finance + Data Science, BS
+college: Gies College of Business
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/bus/finance-data-science-bs/
+read_on: 2026-11-16
+total_hours: 124
+groups:
+  - id: business-core
+    name: Business core
+    section: Business Core Requirements
+    rule: all
+    courses: [ACCY 201, ACCY 202, BADM 275, BADM 300, BADM 310, BADM 320, BADM 449, BUS 101, BUS 201, BUS 401,
+              CMN 101, ECON 102, ECON 103, FIN 221]
+```
 
 ## Groups
 

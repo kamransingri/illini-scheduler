@@ -2,10 +2,11 @@ import { expect, test } from "@playwright/test";
 
 test("search cs124 lands on CS 124 with sections, a professor row and grades over time, no console errors", async ({ page }) => {
   const errors: string[] = [];
-  page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
+  // the live seat feed (raw.githubusercontent.com) may not exist yet; the page falls back to the daily data on its own
+  page.on("console", (m) => m.type() === "error" && !m.location().url.includes("raw.githubusercontent.com") && errors.push(`${m.text()} ${m.location().url}`));
   page.on("pageerror", (e) => errors.push(String(e)));
   await page.goto("./");
-  await page.getByLabel("Search courses or instructors").fill("cs124");
+  await page.getByLabel(/Search courses/).fill("cs124");
   await expect(page.getByRole("listbox")).toContainText("Introduction to Computer Science I");
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/\/course\/CS\/124\/?$/);

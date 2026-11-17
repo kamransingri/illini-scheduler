@@ -1,6 +1,6 @@
 """Degree requirements: validate data/degrees/*.yaml and export web/public/data/degrees/*.json.
 
-The schema is documented in data/degrees/README.md. Schema problems stop the build (a wrong checklist is worse than
+The schema is documented in docs/DEGREE-DATA.md. Schema problems stop the build (a wrong checklist is worse than
 none); course codes the loaded Course Explorer data doesn't know are logged and exported as `unknown`, not fatal,
 because a catalog can list a course before or after the terms this build loads.
 

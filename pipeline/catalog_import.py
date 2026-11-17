@@ -7,7 +7,7 @@ The catalog lays requirements out as course-list tables. This reads only what th
 ("all of these"), "or" alternatives, "&" pairs taken together, "Select N of the following" and "N hours from". A block
 the catalog writes in prose (technical electives, concentrations, free electives) becomes a `manual` group that shows
 the catalog's own words and a checkbox, never a guessed rule. Each file says it was generated and when; files without
-`generated:` (hand-checked, like finance-data-science.yaml) are never overwritten. Schema: data/degrees/README.md.
+`generated:` (hand-checked, like finance-data-science.yaml) are never overwritten. Schema: docs/DEGREE-DATA.md.
 """
 
 from __future__ import annotations

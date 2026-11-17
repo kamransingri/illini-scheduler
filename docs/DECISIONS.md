@@ -353,7 +353,7 @@ Every judgment call made during the autonomous build, newest phase last.
   supporting colours: Industrial, Berry, Arches, Altgeld, Illini Blue, Storm; green and the seat-status hues are left
   out). The cart cards lost their tinted backgrounds; a coloured edge is enough to match the calendar. The lock menus
   dropped the padlock emoji.
-- **D13.10 Degree data** lives in `data/degrees/<id>.yaml` (schema in `data/degrees/README.md`): requirement groups
+- **D13.10 Degree data** lives in `data/degrees/<id>.yaml` (schema in `docs/DEGREE-DATA.md`): requirement groups
   with rules `all`, `n_of`, `hours` and `manual`; items can be a code, a sequence that counts as one ("RHET 101 +
   RHET 102") or a list of alternatives; `from` takes number ranges ("FIN 400-499") and gen-ed codes; `exclude`,
   `max_hours`, `min_from`, `not_with` and `exclusive` cover the catalog's caveats. The first file is the Finance + Data
@@ -449,3 +449,72 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D13.29 Degree data size.** Every course with a gen-ed code goes once into `degrees/gened-courses.json` (234 KB);
   each program file keeps only its own listed courses (10–145 KB), and the page fills gen-ed groups' options from the
   shared file. 173 files, 3 MB in all, instead of ~280 KB per program.
+
+## v0.4.0 (2026-11-17, owner's requests)
+
+- **D14.1 Search by CRN.** `pipeline/export.py` writes `crns.json`: every section of the next and current term as
+  `{term: {crn: [subject, number, section code, type]}}`, next term first (25,010 sections, 1.1 MB, ~190 KB gzipped).
+  It's a separate file because most searches never need it: the search box downloads it only when the query is 3 to 5
+  digits (optionally "CRN 31152"). Five digits is an exact match; fewer list the sections that start with them. A hit
+  opens the course page at `#crn-31152`, which switches to that section's term, expands the list if it's past the first
+  40 rows, scrolls to it and highlights it. In the schedule builder, a CRN adds the course with that section locked (it
+  replaces the course's other locks, so the pick is predictable), and "Add this section" buttons do the same.
+- **D14.2 Live seat changes without a backend.** Course Explorer sends no cross-origin headers, so a browser can't ask
+  it directly, and the site is static. `pipeline/live_seats.py` runs in GitHub Actions (`live-seats.yml`) every 10
+  minutes, re-reads the busiest next-term courses for about 6 minutes and force-pushes `live.json` (events from the last
+  48 hours plus the latest status of each section in them) and `state.json` (its memory) to a `live-seats` branch that
+  always has exactly one commit, so the repo doesn't grow. The page polls `live.json` from raw.githubusercontent.com,
+  which allows cross-origin reads and caches for 5 minutes, every 2 minutes while the tab is visible. A change is on
+  the page about 5 to 15 minutes after it happens, instead of up to a day. No cache-busting query: every poll would then
+  reach GitHub's origin.
+- **D14.3 Which courses, and how politely.** "Busy" comes from the daily crawl's term file: recent seat changes (×3),
+  closed sections (×2, up to 10), a bonus for any closed section, and size (sections / 4, up to 5). Courses with every
+  section open and nothing changing are skipped. Of the top 400, the 60 busiest are re-read every run and the rest
+  rotate, least recently re-read first; a run gets through about 240, so those come round every 15 to 20 minutes. One
+  request at a time, 1.5 s apart, the project's User-Agent, and the run stops after 5 pushbacks in a row (HTTP 202, 429,
+  503). It runs every 30 minutes instead of 10 between 04:00 and 09:00 UTC, while `availability.yml` reads every
+  course, so the two jobs together stay under about 2 requests a second.
+- **D14.4 One list from two sources.** The daily crawl and the live job can find the same change hours apart. The page
+  merges both, walking oldest to newest and dropping an event that only repeats the status already known for that
+  section, so the earlier detection wins and open → closed → open stays three events. Each row says when the change was
+  found and the section's latest known status ("Still open (4 min ago)", "Now closed"). If `live.json` is missing or
+  older than 45 minutes, the page says "Daily" and explains, rather than calling stale data live. "New" marks and the
+  optional browser notification only cover changes that arrive while the page is open (no push backend; IDEAS.md 3).
+- **D14.5 Gen-ed finder keeps to picking courses.** The time filters (no 8am, no Friday, online only) are gone: times
+  and days belong to the schedule builder, which applies them to whole weeks. "Only courses with an open section" is on
+  by default (`?nx=0` turns it off); old links with `e`, `nf` or `on` still open, without those filters. The pipeline
+  still exports each course's section start times and days (`opts`) and the bundle rule keeps its parity test (D13.22).
+- **D14.6 Gen-ed names that fit.** Long names ("Humanities: Lit & Arts") wrapped and stacked in the "Counts for"
+  column. Category chips in the filters and the table now use short names under their group headings ("Lit & Arts"
+  under "Humanities & the Arts"), one chip per category on its own line, with the full name in the tooltip and for
+  screen readers.
+- **D14.7 Navigation.** Five pages, two words each, in the order students use them: Course search, Gen-ed finder,
+  Degree checklist, Just opened, Schedule builder (with the cart count). Hairline dividers between items, an icon per
+  page, and the current page marked with a light fill, bold text and an orange bar that joins the header's orange rule
+  (orange stays brand chrome, D13 colour rules). Below 1024px a Menu button opens the same list, one item per row.
+  The footer lists the pages too.
+- **D14.8 Logo.** The old favicon was a generic calendar glyph. The new mark is the "ili" of Illini drawn as three
+  timetable columns: white day strokes, orange squares for the dots of the i's (classes dropped into a week). Flat
+  Illini Blue, white and Illinois Orange; deliberately not the Block I, which is the University's trademark. The header
+  shows the mark with "**Illini** Scheduler".
+- **D14.9 Home page.** Search first (now with CRNs), then four numbers from the build (course pages, courses offered
+  next term, gen-eds, professors teaching), the live "Just opened" panel (one row per course so a big course doesn't
+  fill it, CRN to copy), the four other pages with the question each answers, where you left off (your saved courses),
+  and a three-step "How it works". Ruled rows and one panel, no wall of cards (DESIGN Part 2).
+- **D14.10 Schedule builder: must-haves and priorities.** The left column is three blocks: Your courses, Must-haves
+  (never broken) and What matters to you (ranking). Must-haves gained a latest end time, any set of days off (replaces
+  "No Friday"), a lunch break (45 free minutes between 11am and 2pm on every day with class) and "Open sections only"
+  (sections you lock are kept). Priorities gained "Sections open right now" (default Low) and "Avoid classes after"
+  (default Off), and both time-based ones take the time the student picks (8am to noon, 3pm to 9pm). Each slider shows
+  Off / Low / Medium / High, and five presets set them in one click (Balanced, Best grades, Sleep in, Fewer days on
+  campus, Can register now). The branch-and-bound bound stays optimistic for the new terms (late days and open sections
+  use the same per-course best case as GPA); the lunch rule is checked on complete schedules only. On a phone the two
+  rule blocks start folded with a one-line summary.
+- **D14.11 Schedule builder: results.** After the first "Generate schedules", results follow every change (250 ms
+  after the last one), since a full run takes well under a second. Each schedule shows six numbers (expected GPA,
+  credits, days off, day span, gaps a week, open sections), seat status per section, the days off shaded in the
+  calendar, and a table comparing the top schedules with the sections each one changes from the top pick (otherwise
+  near-identical rows looked the same).
+- **D14.12 Old links keep working.** Builder links from before v0.4.0 used `nf=1` and 6-digit weights; `nf=1` now means
+  Friday off and a 6-digit weight string keeps the two new weights at their defaults. New parameters (`l`, `do`, `lu`,
+  `oo`, `se`, `sl`) are written only when they differ from the defaults.

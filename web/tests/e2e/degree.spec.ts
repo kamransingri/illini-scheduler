@@ -5,8 +5,8 @@ const req = (page: import("@playwright/test").Page, id: string) => page.locator(
 test("adding a finished course updates the checklist and the URL", async ({ page }) => {
   await page.goto("./degree/");
   const program = page.getByLabel("Program", { exact: true });
-  // every catalog program, grouped by college (0 options = not rendered yet, so poll for more than one)
-  await expect.poll(() => program.locator("option").count(), { timeout: 15_000 }).toBeGreaterThan(1);
+  // every catalog program, grouped by college; wait for the one this test picks (no options = not rendered yet)
+  await expect(program.locator('option[value="finance-data-science"]')).toBeAttached({ timeout: 15_000 });
   await program.selectOption("finance-data-science");
   await expect(page.getByTestId("degree-progress")).toContainText("0 of 19");
   await page.getByLabel("Course code").fill("stat 107");

@@ -2,7 +2,7 @@
 
 How Illini Scheduler looks and why. Part 1 is the audit of the site as it was on 2026-11-16 (screenshots in
 `docs/screenshots/before/`). Part 2 is the direction the redesign follows. Part 3 lists the tokens and shared
-components that implement it.
+components that implement it. Part 4 covers the logo, navigation and page structure added in v0.4.0.
 
 ## Part 1. Audit (before)
 
@@ -144,7 +144,7 @@ can't creep back in. Classes to use:
 
 | Component | Use |
 | --- | --- |
-| `Icon` | The only icon set: chevrons, info, external, copy, check, plus, rss, award, sort, alert... |
+| `Icon` | The only icon set: chevrons, info, external, copy, check, plus, rss, award, sort, alert, search, clock, layers, cap, bolt, bell, refresh... |
 | `Info` | (i) button with a popover for a number's source, term range and sample size; hover, focus or tap |
 | `Stat` | One labelled number with optional sub-line and source (`<dl>` item) |
 | `Badge` | Neutral chip: gen-ed code, credit hours, "Limited data", "special" |
@@ -158,3 +158,51 @@ can't creep back in. Classes to use:
 `web/components/WeightsControl.tsx` is the one place students set the best-pick weights (course page, gen-ed finder,
 degree checklist). Course-page pieces built on them live in `web/components/course/` (`ProfessorLedger`, `SectionsList`, `CompareTable`,
 `BestPick`, `ScoreBreakdown`, `CourseView`).
+
+## Part 4. Logo, navigation and page structure (v0.4.0)
+
+### Logo
+
+The first favicon was a calendar glyph: a rounded square with two rings on top, the icon every scheduling app uses.
+The mark is now the "ili" of Illini drawn as three columns of a week timetable: the white strokes are days and the
+orange squares, which are also the dots of the i's, are classes placed in them. Flat colour only (Illini Blue tile,
+white, Illinois Orange), no gradient or outline, and readable at 16px because it's three bars. It deliberately isn't
+the Block I, which belongs to the University. `web/components/Logo.tsx` has the mark (`LogoMark`, without the tile, for
+the navy header and footer) and the wordmark "**Illini** Scheduler" (bold, then regular, Source Sans 3);
+`web/app/icon.svg` is the same mark on its tile.
+
+### Navigation
+
+- Five pages, two words each, in the order students use them: Course search, Gen-ed finder, Degree checklist, Just
+  opened, Schedule builder. The labels say what the page does, not just its topic ("Degree" told you nothing about
+  what's there). The list lives in `web/lib/nav.ts` and feeds the header and the footer.
+- Hairline dividers (white at 25%) between items so each one reads as its own target, and a 16px line icon before
+  each label.
+- The current page: light fill, bold, and a 4px orange bar at the bottom that joins the header's orange rule. Orange is
+  still only brand chrome (the rule and the mark); the bar is part of that rule.
+- Below 1024px the items don't fit in one row, so a Menu button (with the cart count) opens the same list as full-width
+  rows separated by hairlines, the current one marked by an orange bar on its left.
+
+### Home page
+
+Top to bottom: the page title and the search box (codes, titles, professors, CRNs) with often-searched courses as
+outlined chips; four build numbers on a ruled strip (course pages, courses offered next term, gen-eds, professors
+teaching) with tabular figures; the live Just opened panel on the right (the page's one `panel` surface: one row per
+course, CRN to copy, a "Live" badge in the seat-status Open colours only when the feed is fresh). Then the four other
+pages as a two-column ruled grid, each with its icon on an `action-tint` square, its name, the question it answers and
+what it does; a quiet `panel` line with your saved courses; and "How it works" as three numbered steps under a navy
+rule. No cards around the tools, no hero image, no gradients.
+
+### Shared pieces added
+
+| Component | Use |
+| --- | --- |
+| `Logo`, `LogoMark` | Wordmark and mark (header, footer) |
+| `SiteNav` | Header with the divided nav, current-page marker and phone menu |
+| `home/LiveOpenings` | Newest openings, one row per course, kept fresh by `useSeatFeed` (`web/lib/live.ts`) |
+| `home/YourSchedule` | The saved course list in a sentence, with a link back to the builder |
+| `JustOpened` `Freshness` | "Live" or "Daily" and how old the data is, in words |
+
+The schedule builder's left column uses the same pattern as the home page's "How it works": each block (Your courses,
+Must-haves, What matters to you) sits under a 4px navy rule, and the two rule blocks fold with a one-line summary of
+what's set. Sliders always show their level in words (Off / Low / Medium / High) next to the track.

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /*
- * Design tokens (DESIGN.md). Colours are the Illinois brand web palette (brand.illinois.edu/visual-identity/color and
+ * Design tokens (docs/DESIGN.md). Colours are the Illinois brand web palette (brand.illinois.edu/visual-identity/color and
  * /web/web-color); each one has a single meaning. Five type sizes only. One radius. One spacing scale (Tailwind's 4px).
  */
 @theme {
