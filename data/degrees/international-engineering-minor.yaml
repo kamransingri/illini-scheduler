@@ -1,0 +1,29 @@
+# International Minor in Engineering (The Grainger College of Engineering), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/minors/international-engineering/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: international-engineering-minor
+type: minor
+program: International Minor in Engineering
+college: The Grainger College of Engineering
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/engineering/minors/international-engineering/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 21
+notes: []
+double_counting: []
+groups:
+- name: Degree Requirements
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - Language courses, maximum of 12 credit hours. Students completing a minor in Great Britain or Australian studies will
+    not have to complete a language requirement. Instead, the courses will all be chosen from the non-engineering, globally
+    focused course list
+  - Non-engineering, globally focused courses. Must include one 300/400 level course and one political science or economics
+    related course.
+  courses:
+  - ENG 299
+  id: degree-requirements-1

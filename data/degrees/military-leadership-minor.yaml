@@ -1,0 +1,75 @@
+# Military Leadership Minor (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/minors/military-leadership/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: military-leadership-minor
+type: minor
+program: Military Leadership Minor
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/minors/military-leadership/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Required Coursework
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 6 hours.'
+  - The catalog lists these courses under Required Coursework; see the catalog page for the rule.
+  courses:
+  - LEAD 260
+  - LEAD 425
+  id: required-coursework-1
+- name: Elective Coursework (choose one of the four military branches)
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Air Force (all courses are required):'
+  courses:
+  - AFAS 221
+  - AFAS 222
+  - AFAS 331
+  - AFAS 332
+  - AFAS 341
+  - AFAS 342
+  id: elective-coursework-choose-one-of-the-fo-2
+- name: Elective Coursework (choose one of the four military branches)
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Army (select 13 hours from the following):'
+  courses:
+  - MILS 201
+  - MILS 202
+  - MILS 301
+  - MILS 302
+  - MILS 341
+  - MILS 342
+  id: elective-coursework-choose-one-of-the-fo-3
+- name: Elective Coursework (choose one of the four military branches)
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Navy (all courses are required):'
+  courses:
+  - NS 204
+  - NS 303
+  - NS 307
+  - NS 308
+  id: elective-coursework-choose-one-of-the-fo-4
+- name: Elective Coursework (choose one of the four military branches)
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Marines (all courses are required):'
+  courses:
+  - NS 303
+  - NS 308
+  - NS 321
+  - NS 323
+  id: elective-coursework-choose-one-of-the-fo-5

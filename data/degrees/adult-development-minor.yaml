@@ -1,0 +1,61 @@
+# Adult Development Minor (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/minors/adult-development/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: adult-development-minor
+type: minor
+program: Adult Development Minor
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/minors/adult-development/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Foundation courses
+  section: Requirements
+  rule: all
+  courses:
+  - HDFS 105
+  - HDFS 120
+  - HDFS 310
+  notes:
+  - 'Catalog total: 9 hours.'
+  id: foundation-courses-1
+- name: Foundation courses
+  section: Requirements
+  rule: manual
+  notes:
+  - 'One course selected from:'
+  id: foundation-courses-2
+- name: Adult roles in the family context
+  section: Requirements
+  rule: manual
+  notes:
+  - 'One course selected from:'
+  courses:
+  - HDFS 225
+  - HDFS 425
+  - HDFS 426
+  id: adult-roles-in-the-family-context-3
+- name: Adult choices/challenges
+  section: Requirements
+  rule: hours
+  hours: 6
+  courses:
+  - HDFS 207
+  - HDFS 445
+  - CMN 336
+  - CMN 368
+  - EPSY 407
+  - HK 404
+  - PSYC 361
+  - RST 316
+  - SOCW 240
+  - SOCW 315
+  notes:
+  - 'Choose at least 6 hours from:'
+  id: adult-choices-challenges-4

@@ -1,0 +1,37 @@
+# Geography & Geographic Information Science Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/geography-geographic-information-science/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: geography-geographic-information-science-minor
+type: minor
+program: Geography & Geographic Information Science Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/geography-geographic-information-science/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Two core courses selected from the following:'
+  courses:
+  - GGIS 101
+  - GGIS 103
+  - GGIS 104
+  - GGIS 106
+  - GGIS 210
+  - GGIS 221
+  - GGIS 224
+  id: more-requirements-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Four 200-, 300-, or 400-level GGIS courses, at least six hours of which must be at 300- or 400-level
+  id: more-requirements-2

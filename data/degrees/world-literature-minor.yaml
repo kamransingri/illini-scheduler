@@ -1,0 +1,45 @@
+# World Literature Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/world-literature/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: world-literature-minor
+type: minor
+program: World Literature Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/world-literature/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - CWL 202
+  id: required-courses-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Select five of the following:'
+  - At least six hours of coursework should be advanced (300-level or 400-level courses) and must be distinct from credit
+    earned for the student’s major or another minor
+  courses:
+  - CWL 114
+  - CWL 151
+  - CWL 189
+  - CWL 190
+  - CWL 201
+  - CWL 241
+  - CWL 242
+  - CWL 320
+  - CWL 395
+  - CWL 441
+  - CWL 461
+  - CWL 471
+  - CWL 496
+  id: more-requirements-2

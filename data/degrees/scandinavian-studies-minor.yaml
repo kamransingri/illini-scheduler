@@ -1,0 +1,45 @@
+# Scandinavian Studies Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/scandinavian-studies/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: scandinavian-studies-minor
+type: minor
+program: Scandinavian Studies Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/scandinavian-studies/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - SCAN 102
+  id: required-courses-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Any of the following, with at least 6 credits at the 300- or 400-level
+  courses:
+  - SCAN 203
+  - SCAN 204
+  - SCAN 215
+  - SCAN 225
+  - SCAN 251
+  - SCAN 252
+  - SCAN 305
+  - SCAN 306
+  - SCAN 376
+  - SCAN 463
+  - SCAN 470
+  - SCAN 472
+  - SCAN 490
+  - SCAN 492
+  - SCAN 494
+  - SCAN 496
+  id: more-requirements-2

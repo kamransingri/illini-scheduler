@@ -3,7 +3,10 @@
 
 export type CourseStatus = "done" | "credit" | "in_progress";
 export type MyCourse = { s: string; n: string; status: CourseStatus };
-export type MyState = { courses: MyCourse[]; program: string; ticked: string[] };
+// `program` is the major; `minor` is optional (""). `ticked` holds the major's hand-ticked group ids and the minor's as
+// MINOR_TICK + id ("mn--language"): group ids never contain "--", so the two can't collide.
+export type MyState = { courses: MyCourse[]; program: string; minor: string; ticked: string[] };
+export const MINOR_TICK = "mn--";
 
 export const STATUS_LABEL: Record<CourseStatus, string> = {
   done: "Completed",
@@ -15,7 +18,8 @@ const KEY = "illini-scheduler:mycourses:v1";
 const EVENT = "illini-mycourses-change";
 const SUFFIX: Record<CourseStatus, string> = { done: "", credit: "~c", in_progress: "~p" };
 
-export const EMPTY: MyState = { courses: [], program: "", ticked: [] };
+export const EMPTY: MyState = { courses: [], program: "", minor: "", ticked: [] };
+const SLUG = /^[a-z0-9-]*$/;
 
 /** "STAT107,MATH220~c,CS124~p" (no suffix = completed, ~c = AP/transfer credit, ~p = in progress). */
 export function encodeCourses(items: MyCourse[]): string {
@@ -35,16 +39,17 @@ export function decodeCourses(param: string | null | undefined): MyCourse[] {
 }
 
 export function encodeState(st: MyState): string {
-  return JSON.stringify({ c: encodeCourses(st.courses), p: st.program, x: st.ticked });
+  return JSON.stringify({ c: encodeCourses(st.courses), p: st.program, n: st.minor, x: st.ticked });
 }
 
 export function decodeState(raw: string | null): MyState {
   if (!raw) return EMPTY;
   try {
-    const o = JSON.parse(raw) as { c?: string; p?: string; x?: unknown };
+    const o = JSON.parse(raw) as { c?: string; p?: string; n?: string; x?: unknown };
     return {
       courses: decodeCourses(o.c),
-      program: typeof o.p === "string" && /^[a-z0-9-]*$/.test(o.p) ? o.p : "",
+      program: typeof o.p === "string" && SLUG.test(o.p) ? o.p : "",
+      minor: typeof o.n === "string" && SLUG.test(o.n) ? o.n : "",
       ticked: Array.isArray(o.x) ? o.x.filter((t): t is string => typeof t === "string" && /^[a-z0-9-]+$/.test(t)) : [],
     };
   } catch {
@@ -78,10 +83,12 @@ export function onMineChange(fn: () => void): () => void {
   };
 }
 
-/** URL params for a shareable checklist: ?p=<program>&m=<courses>&x=<ticked groups>. */
+/** URL params for a shareable checklist: ?p=<major>&mn=<minor>&m=<courses>&x=<ticked groups>. */
 export function stateToParams(st: MyState, params: URLSearchParams): void {
   if (st.program) params.set("p", st.program);
   else params.delete("p");
+  if (st.minor) params.set("mn", st.minor);
+  else params.delete("mn");
   if (st.courses.length) params.set("m", encodeCourses(st.courses));
   else params.delete("m");
   if (st.ticked.length) params.set("x", st.ticked.join(","));
@@ -89,11 +96,13 @@ export function stateToParams(st: MyState, params: URLSearchParams): void {
 }
 
 export function stateFromParams(params: URLSearchParams): MyState | null {
-  if (!params.has("m") && !params.has("p") && !params.has("x")) return null;
+  if (!params.has("m") && !params.has("p") && !params.has("mn") && !params.has("x")) return null;
   const p = params.get("p") ?? "";
+  const mn = params.get("mn") ?? "";
   return {
     courses: decodeCourses(params.get("m")),
-    program: /^[a-z0-9-]*$/.test(p) ? p : "",
+    program: SLUG.test(p) ? p : "",
+    minor: SLUG.test(mn) ? mn : "",
     ticked: (params.get("x") ?? "").split(",").filter((t) => /^[a-z0-9-]+$/.test(t)),
   };
 }

@@ -1,0 +1,41 @@
+# Hospitality Management Minor (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/minors/hospitality-management/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: hospitality-management-minor
+type: minor
+program: Hospitality Management Minor
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/minors/hospitality-management/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: Courses required for minor in Hospitality Management
+  section: Requirements
+  rule: all
+  courses:
+  - FSHN 140
+  - FSHN 345
+  - FSHN 346
+  - FSHN 441
+  - FSHN 442
+  id: courses-required-for-minor-in-hospitalit-1
+- name: Select a minimum of 4 credit hours from the following
+  section: Requirements
+  rule: hours
+  hours: 4
+  courses:
+  - FSHN 145
+  - FSHN 249
+  - FSHN 340
+  - FSHN 343
+  - ANSC 309
+  - FSHN 443
+  - LEAD 321
+  notes:
+  - Select a minimum of 4 credit hours from the following
+  id: select-a-minimum-of-4-credit-hours-from-2

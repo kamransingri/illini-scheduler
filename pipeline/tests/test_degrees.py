@@ -41,10 +41,11 @@ def test_the_real_degree_files_are_valid():
     fds = next(d for d in ds if d.id == "finance-data-science")
     assert fds.source == "https://catalog.illinois.edu/undergraduate/bus/finance-data-science-bs/"
     assert {g.kind for g in fds.groups} == {"program", "gened"}
+    assert fds.type == "major" and any(d.type == "minor" for d in ds)
 
 
 def test_schema_errors_are_all_reported():
-    bad = doc(extra=1, catalog_year="26-27", groups=[
+    bad = doc(extra=1, catalog_year="26-27", type="certificate", groups=[
         {"id": "a", "name": "A", "rule": "n_of", "courses": ["FIN 221"]},  # no n
         {"id": "a", "name": "Dup", "rule": "all", "courses": ["fin221"]},  # duplicate id, bad code
         {"id": "m", "name": "Manual", "rule": "manual"},  # no notes
@@ -56,7 +57,8 @@ def test_schema_errors_are_all_reported():
     msg = str(e.value)
     for expected in ["unknown key 'extra'", "catalog_year", "needs a whole number 'n'", "duplicate id",
                      "'fin221' is not a course code", "rule 'manual' needs 'notes'", "runs backwards",
-                     "'not_with' must list other group ids", "'kind' must be one of", "unknown key 'colour'"]:
+                     "'not_with' must list other group ids", "'kind' must be one of", "unknown key 'colour'",
+                     "'type' must be major or minor"]:
         assert expected in msg, expected
 
 
@@ -118,7 +120,8 @@ def test_export_writes_index_and_program(tmp_path):
                          directory=tmp_path / "deg")
     assert "1 degree file" in msg and "1 with unknown codes" in msg
     index = json.loads((tmp_path / "out" / "degrees" / "index.json").read_text())
-    assert index == [{"id": "test-bs", "program": "Test, BS", "college": "Test College", "catalog_year": "2026-2027",
+    assert index == [{"id": "test-bs", "type": "major", "program": "Test, BS", "college": "Test College",
+                      "catalog_year": "2026-2027",
                       "groups": 2, "generated": ""}]
     out = json.loads((tmp_path / "out" / "degrees" / "test-bs.json").read_text())
     assert out["unknown"] == ["ZZZ 999"]

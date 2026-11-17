@@ -1,0 +1,57 @@
+# Teacher Education in English as a Second Language Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/teacher-education-minor-english-second-language/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: teacher-education-minor-english-second-language
+type: minor
+program: Teacher Education in English as a Second Language Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/teacher-education-minor-english-second-language/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 21
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - LING 100
+  - EIL 411
+  - LING 489
+  - EIL 460
+  id: required-courses-1
+- name: More requirements
+  section: Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - LING 450
+  - EIL 456
+  - CI 446
+  notes:
+  - 'Select one of the following:'
+  id: more-requirements-2
+- name: More requirements
+  section: Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - EIL 422
+  - EIL 488
+  notes:
+  - 'Select one of the following:'
+  id: more-requirements-3
+- name: More requirements
+  section: Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - EIL 214
+  - EIL 215
+  notes:
+  - 'Select one of the following:'
+  id: more-requirements-4

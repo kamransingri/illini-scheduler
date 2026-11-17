@@ -44,6 +44,7 @@ export type DegreeCourse = {
 
 export type Degree = {
   id: string;
+  type?: "major" | "minor"; // missing in files exported before minors were added: a major
   program: string;
   college: string;
   catalog_year: string;
@@ -58,7 +59,7 @@ export type Degree = {
   generated?: string; // date, when the file was imported automatically from the catalog (pipeline/catalog_import.py)
 };
 
-export type DegreeIndex = { id: string; program: string; college: string; catalog_year: string; groups: number; generated?: string }[];
+export type DegreeIndex = { id: string; type?: "major" | "minor"; program: string; college: string; catalog_year: string; groups: number; generated?: string }[];
 
 /**
  * Add the shared gen-ed courses (degrees/gened-courses.json, the same for every program) to a program's own courses,

@@ -1,0 +1,91 @@
+# Sustainability, Energy, and Environment Fellows Program Minor (Office of the Provost), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/provost/minors/sustainability-energy-environment/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: sustainability-energy-environment-minor
+type: minor
+program: Sustainability, Energy, and Environment Fellows Program Minor
+college: Office of the Provost
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/provost/minors/sustainability-energy-environment/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 16
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - ENVS 301
+  - ENVS 492
+  id: required-courses-1
+- name: 'Introduction to Sustainability: Choose one of the following'
+  section: Requirements
+  rule: all
+  courses:
+  - ANTH 278
+  - CPSC 336
+  - ESE 200
+  - ESE 210
+  - NRES 287
+  notes:
+  - 'Catalog total: 3 hours.'
+  id: introduction-to-sustainability-choose-on-2
+- name: 'Economic/Policy/Social Dimensions: Choose one of the following'
+  section: Requirements
+  rule: all
+  courses:
+  - ACE 210
+  - ACE 255
+  - ACE 406
+  - AGCM 330
+  - ATMS 322
+  - ENSU 303
+  - ESE 311
+  - ESE 482
+  - GGIS 410
+  - GGIS 465
+  - LA 370
+  - LA 446
+  - MDIA 223
+  - NRES 224
+  - NRES 325
+  - NRES 472
+  - PS 225
+  - RST 242
+  - SOC 447
+  - UP 460
+  - UP 486
+  id: economic-policy-social-dimensions-choose-3
+- name: 'Environmental/Natural Systems: Choose one of the following'
+  section: Requirements
+  rule: all
+  courses:
+  - ABE 452
+  - ANTH 361
+  - ARTD 326
+  - ARTS 321
+  - ATMS 307
+  - CEE 330
+  - CHEM 360
+  - ECE 333
+  - ENSU 310
+  - ESE 320
+  - ESE 445
+  - FAA 230
+  - GEOL 333
+  - GGIS 220
+  - HK 408
+  - HORT 435
+  - IB 440
+  - LA 466
+  - ME 400
+  - MSE 489
+  - NPRE 201
+  - NRES 219
+  - NRES 348
+  - NRES 429
+  id: environmental-natural-systems-choose-one-4
