@@ -40,11 +40,18 @@ export function writeCart(items: CartItem[]): void {
   window.dispatchEvent(new Event(EVENT));
 }
 
-export function addToCart(s: string, n: string): CartItem[] {
+/** Add a course; with `lock`, also pin that section (a CRN found by search), replacing the course's other locks. */
+export function addToCart(s: string, n: string, lock?: string): CartItem[] {
   const items = readCart();
-  if (!items.some((i) => i.s === s && i.n === n)) items.push({ s, n, locked: [] });
+  const cur = items.find((i) => i.s === s && i.n === n);
+  if (!cur) items.push({ s, n, locked: lock ? [lock] : [] });
+  else if (lock) cur.locked = [lock];
   writeCart(items);
   return items;
+}
+
+export function isLocked(s: string, n: string, crn: string): boolean {
+  return readCart().some((i) => i.s === s && i.n === n && i.locked.includes(crn));
 }
 
 export function removeFromCart(s: string, n: string): CartItem[] {

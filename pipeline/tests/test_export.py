@@ -46,6 +46,11 @@ def test_export_end_to_end(tmp_path):
     assert meta["next_term"] == "2027-sp" and meta["rmp_status"].startswith("unavailable")
     search = json.loads((tmp_path / "out" / "search.json").read_text())
     assert {"s": "CS", "n": "124"}.items() <= next(c for c in search["courses"] if c["n"] == "124").items()
+    crns = json.loads((tmp_path / "out" / "crns.json").read_text())
+    assert list(crns)[0] == "2027-sp"  # next term first
+    crn, row = next((k, v) for k, v in crns["2027-sp"].items() if v[:2] == ["CS", "124"])
+    assert len(crn) == 5 and row[2] in {s["code"] for s in cs["terms"]["2027-sp"]["sections"]}
+    assert meta["live_url"].endswith("/live.json")
 
 
 def test_score_priors():

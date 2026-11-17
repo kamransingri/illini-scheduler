@@ -3,6 +3,7 @@
     meta.json                 build info, terms + snapshot dates, GPA windows, RMP status, match report
     search.json               every course with a page + instructors teaching next term (home search)
     geneds.json               gen-ed finder rows (next term)
+    crns.json                 CRN -> course, section code and type, per live term (search by CRN; loaded on demand)
     course/{SUBJ}/{NUM}.json  everything the course page and schedule builder need for one course
 """
 
@@ -24,6 +25,10 @@ from .names import parse_name, term_order
 
 REPO_URL = "https://github.com/kamransingri/illini-scheduler"
 SITE_URL = os.environ.get("SITE_URL", "https://kamransingri.github.io/illini-scheduler")
+# Seat changes found between site builds (pipeline/live_seats.py pushes them to this branch every ~10 minutes); the
+# "Just opened" page polls the file from raw.githubusercontent.com, which allows cross-origin reads.
+LIVE_URL = os.environ.get(
+    "LIVE_SEATS_URL", "https://raw.githubusercontent.com/kamransingri/illini-scheduler/live-seats/live.json")
 RECENT_EVENT_DAYS = 7  # "Just opened" page window
 ONLINE_TYPES = {"ONL", "OLC", "OLD", "OD", "OLB"}
 MAX_BUNDLES = 400
@@ -337,6 +342,7 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
     (out_dir / "search.json").write_text(json.dumps({"courses": search_courses, "instructors": inst_index},
                                                     separators=(",", ":")))
     (out_dir / "geneds.json").write_text(json.dumps(gened_rows, separators=(",", ":")))
+    (out_dir / "crns.json").write_text(json.dumps(crn_index(sections, keys, live_terms), separators=(",", ":")))
     titles = {(c["s"], c["n"]): c["t"] for c in search_courses}
     write_seat_feeds(out_dir, all_events, titles)
     meta = {
@@ -347,7 +353,7 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
         "geneds_snapshot": meta_rows.get("geneds_snapshot"),
         "rmp_status": meta_rows.get("rmp_status", "unavailable: not run"),
         "match_report": json.loads(meta_rows.get("match_report", "{}")),
-        "repo_url": REPO_URL, "n_courses": n_files,
+        "repo_url": REPO_URL, "live_url": LIVE_URL, "n_courses": n_files,
         "history_terms": sorted(terms, key=term_order),
         "score_priors": score_priors(gpa_course.values(), rmp.values()),
     }
@@ -383,6 +389,22 @@ def course_summary(g: dict | None, nxt: dict | None, rec: dict, gi: dict[str, di
         "nSec": nxt["n_primary"] if nxt else 0, "nOpen": nxt["n_open"] if nxt else None,
         "known": bool(nxt and nxt["status_known"]), "pre": rec.get("prereq_text", ""), "profs": profs[:6],
     }
+
+
+def crn_index(sections: dict[tuple[str, str], dict[str, list[dict]]], keys: set[tuple[str, str]],
+              terms: list[str]) -> dict[str, dict[str, list[str]]]:
+    """{term: {crn: [subject, number, section code, type name]}} for every section of a course with a page,
+    next term first, so the search box can find a section by its CRN."""
+    out: dict[str, dict[str, list[str]]] = {}
+    for t in sorted(terms, key=lambda t: t != NEXT_TERM):
+        rows: dict[str, list[str]] = {}
+        for key in sorted(keys):
+            for sec in sections.get(key, {}).get(t, []):
+                if sec["crn"]:
+                    rows[sec["crn"]] = [key[0], key[1], sec["code"], sec["type_name"] or sec["type"]]
+        if rows:
+            out[t] = rows
+    return out
 
 
 def score_priors(gpa_rows: Any, rmp_rows: Any) -> dict:

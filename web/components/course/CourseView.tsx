@@ -35,6 +35,7 @@ export default function CourseView({ subject, number, meta }: { subject: string;
   const [showPast, setShowPast] = useState(false);
   const [showAssistants, setShowAssistants] = useState(false);
   const [scrollTo, setScrollTo] = useState<string | null>(null);
+  const [focusCrn, setFocusCrn] = useState<string | null>(null);
   const weights = useWeights();
   const hashRead = useRef(false);
 
@@ -47,7 +48,11 @@ export default function CourseView({ subject, number, meta }: { subject: string;
       .then((c) => {
         setCourse(c);
         const terms = Object.keys(c.terms);
-        setTerm(terms.includes(meta.next_term) && c.terms[meta.next_term].sections.length ? meta.next_term : (terms.sort((a, b) => termOrder(b) - termOrder(a))[0] ?? null));
+        // A #crn-12345 link (search by CRN) opens the term that section is in.
+        const crn = /^#crn-(\d{5})$/.exec(window.location.hash)?.[1];
+        const crnTerm = crn ? terms.find((t) => c.terms[t].sections.some((s) => s.crn === crn)) : undefined;
+        if (crnTerm) setFocusCrn(crn!);
+        setTerm(crnTerm ?? (terms.includes(meta.next_term) && c.terms[meta.next_term].sections.length ? meta.next_term : (terms.sort((a, b) => termOrder(b) - termOrder(a))[0] ?? null)));
       })
       .catch((e: Error) => setError(e.message));
   }, [subject, number, meta.next_term]);
@@ -267,7 +272,7 @@ export default function CourseView({ subject, number, meta }: { subject: string;
               Not offered in {termLabel(term ?? meta.next_term)}.{course.pattern ? ` Usual pattern: ${course.pattern.label}.` : ""}
             </p>
           ) : (
-            <SectionsList course={course} term={term!} block={block} onPickProf={pickProf} />
+            <SectionsList course={course} term={term!} block={block} onPickProf={pickProf} focusCrn={focusCrn} />
           )}
         </section>
 

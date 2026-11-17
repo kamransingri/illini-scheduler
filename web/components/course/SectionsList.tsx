@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Course, TermBlock } from "@/lib/types";
 import { cisUrl, daysStr, fmtAgo, fmtDate, fmtTime, SELF_SERVICE_URL, termLabel } from "@/lib/format";
 import { groupSections } from "@/lib/sections";
@@ -10,10 +10,31 @@ import Info from "../ui/Info";
 
 const COLS = "md:grid md:grid-cols-[5.75rem_7.5rem_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_8.5rem] md:gap-x-3";
 
-export default function SectionsList({ course, term, block, onPickProf }: { course: Course; term: string; block: TermBlock; onPickProf: (key: string) => void }) {
+export default function SectionsList({
+  course,
+  term,
+  block,
+  onPickProf,
+  focusCrn = null,
+}: {
+  course: Course;
+  term: string;
+  block: TermBlock;
+  onPickProf: (key: string) => void;
+  /** A CRN to scroll to and highlight (a #crn-12345 link from search). */
+  focusCrn?: string | null;
+}) {
   const groups = groupSections(block.sections);
-  const [showAll, setShowAll] = useState(false);
+  const flat = groups.flatMap((g) => g.sections);
+  const focusAt = focusCrn ? flat.findIndex((s) => s.crn === focusCrn) : -1;
+  const [showAll, setShowAll] = useState(focusAt >= 40);
   const total = block.sections.length;
+  useEffect(() => {
+    if (focusAt < 0) return;
+    if (focusAt >= 40) setShowAll(true);
+    const t = setTimeout(() => document.getElementById(`crn-${focusCrn}`)?.scrollIntoView({ block: "center" }), 50);
+    return () => clearTimeout(t);
+  }, [focusAt, focusCrn]);
   let budget = showAll ? Infinity : 40;
   return (
     <div>
@@ -53,7 +74,13 @@ export default function SectionsList({ course, term, block, onPickProf }: { cour
               )}
               <ul className={g.title ? "mt-1 border-l-2 border-action/40 pl-3" : ""}>
                 {secs.map((s) => (
-                  <li key={s.crn} className={`grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 border-b border-line py-2.5 ${COLS} md:items-start`} data-testid="section-row">
+                  <li
+                    key={s.crn}
+                    id={`crn-${s.crn}`}
+                    className={`grid scroll-mt-20 grid-cols-[auto_1fr] gap-x-3 gap-y-1 border-b border-line py-2.5 ${COLS} md:items-start ${s.crn === focusCrn ? "-mx-2 bg-action-tint px-2 outline-2 outline-action" : ""}`}
+                    data-testid="section-row"
+                    aria-current={s.crn === focusCrn ? "true" : undefined}
+                  >
                     <span>
                       <CopyButton text={s.crn} label={s.crn} />
                     </span>
