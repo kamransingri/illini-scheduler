@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { applyFilters, DEFAULT_FILTERS, DEFAULT_SORT, filtersFromQuery, filtersToQuery, GENED_GROUPS, openCount, type Filters, type SortKey } from "@/lib/geneds";
-import { courseHref, dataUrl, fmtGpa, fmtInt, fmtPct, GENED_NAMES, termLabel } from "@/lib/format";
+import { courseHref, dataUrl, fmtGpa, fmtInt, fmtPct, GENED_NAMES, GENED_SHORT, termLabel } from "@/lib/format";
 import { rankCourse } from "@/lib/rank";
 import type { ScorePriors } from "@/lib/score";
 import type { GenedRow } from "@/lib/types";
@@ -15,8 +15,8 @@ import WeightsControl from "./WeightsControl";
 
 const PAGE = 50;
 // Table cells: hairline row and column dividers (the first column has no left rule).
-const TH = "border-l border-line px-3 py-2 font-semibold first:border-l-0";
-const TD = "border-l border-line px-3 py-2.5 first:border-l-0";
+const TH = "border-l border-line px-2.5 py-2 align-bottom font-semibold first:border-l-0";
+const TD = "border-l border-line px-2.5 py-2.5 first:border-l-0";
 
 export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTerm: string; rmpAvailable: boolean; priors: ScorePriors | null }) {
   const [rows, setRows] = useState<GenedRow[] | null>(null);
@@ -92,11 +92,12 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
                     return (
                       <label
                         key={code}
-                        className={`inline-flex cursor-pointer items-center gap-1 rounded border px-2 leading-8 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-action ${on ? "border-action bg-action-tint font-semibold text-heading" : "border-line hover:border-action"}`}
+                        title={GENED_NAMES[code]}
+                        className={`inline-flex cursor-pointer items-center gap-1 rounded border px-2 leading-8 whitespace-nowrap has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-action ${on ? "border-action bg-action-tint font-semibold text-heading" : "border-line hover:border-action"}`}
                       >
-                        <input type="checkbox" className="sr-only" checked={on} onChange={() => toggleCode(code)} />
+                        <input type="checkbox" className="sr-only" checked={on} onChange={() => toggleCode(code)} aria-label={GENED_NAMES[code] ?? code} />
                         {on && <Icon name="check" className="text-action" />}
-                        {GENED_NAMES[code] ?? code}
+                        {GENED_SHORT[code] ?? code}
                       </label>
                     );
                   })}
@@ -107,14 +108,18 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
           <div className="mt-3">{check("Double-dips only (2+ categories)", f.doubleDip, (v) => set("doubleDip", v))}</div>
         </fieldset>
         <fieldset>
-          <legend className="font-semibold text-heading">Schedule</legend>
+          <legend className="font-semibold text-heading">Show</legend>
           <div className="mt-1">
-            {check(`${statusKnown ? "Open sections" : "Has sections"} in ${termLabel(nextTerm)}`, f.openNext, (v) => set("openNext", v))}
+            {check(statusKnown ? `Only courses with an open section in ${termLabel(nextTerm)}` : `Only courses offered in ${termLabel(nextTerm)}`, f.openNext, (v) => set("openNext", v))}
             {check("Only GPA from 200+ students", f.minStudents === 200, (v) => set("minStudents", v ? 200 : 0))}
-            {check("No 8am classes", f.earliest === 540, (v) => set("earliest", v ? 540 : null))}
-            {check("No Friday classes", f.noFriday, (v) => set("noFriday", v))}
-            {check("Online only", f.onlineOnly, (v) => set("onlineOnly", v))}
           </div>
+          <p className="mt-2 text-sm text-muted">
+            Times and days are set in the{" "}
+            <Link href="/schedule/" className="text-action underline">
+              schedule builder
+            </Link>
+            .
+          </p>
         </fieldset>
         <label className="block">
           <span className="font-semibold text-heading">Credit hours</span>
@@ -206,7 +211,8 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
                     </span>
                   </th>
                   <th scope="col" className={TH}>
-                    Best professor, {termLabel(nextTerm)}
+                    Best professor
+                    <span className="block font-normal text-muted">{termLabel(nextTerm)}</span>
                   </th>
                   <th scope="col" className={`${TH} text-right`}>
                     RMP
@@ -226,7 +232,7 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
                   const bp = rk?.best;
                   return (
                     <tr key={r.s + r.n} className="border-t border-line align-top even:bg-panel/50" data-gpa={r.gpa ?? ""} data-codes={r.codes.join(" ")}>
-                      <th scope="row" className={`${TD} min-w-[10rem] font-normal`}>
+                      <th scope="row" className={`${TD} min-w-[11rem] font-normal`}>
                         <Link href={courseHref(r.s, r.n)} className="group">
                           <span className="font-semibold text-action group-hover:underline">
                             {r.s} {r.n}
@@ -234,15 +240,22 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
                           <span className="group-hover:underline">{r.t}</span>
                         </Link>
                       </th>
-                      <td className={`${TD} min-w-[9rem]`}>
-                        <ul className="space-y-0.5 text-sm">
+                      <td className={TD}>
+                        <ul className="flex flex-col items-start gap-1" aria-label={`${r.s} ${r.n} counts for`}>
                           {r.codes.map((c) => {
                             const picked = f.codes.includes(c);
                             return (
-                              <li key={c} className={`flex items-start gap-1 ${picked ? "font-semibold text-heading" : ""}`}>
-                                {picked ? <Icon name="check" className="mt-0.5 text-action" /> : <span aria-hidden className="inline-block w-4" />}
-                                {GENED_NAMES[c] ?? c}
-                                {picked && <span className="sr-only"> (selected)</span>}
+                              <li
+                                key={c}
+                                title={GENED_NAMES[c]}
+                                className={`inline-flex items-center gap-1 rounded border px-1.5 text-sm leading-6 whitespace-nowrap ${picked ? "border-action bg-action-tint font-semibold text-heading" : "border-line bg-white"}`}
+                              >
+                                {picked && <Icon name="check" className="text-action" />}
+                                <span aria-hidden>{GENED_SHORT[c] ?? c}</span>
+                                <span className="sr-only">
+                                  {GENED_NAMES[c] ?? c}
+                                  {picked ? " (selected)" : ""}
+                                </span>
                               </li>
                             );
                           })}
