@@ -518,3 +518,34 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D14.12 Old links keep working.** Builder links from before v0.4.0 used `nf=1` and 6-digit weights; `nf=1` now means
   Friday off and a 6-digit weight string keeps the two new weights at their defaults. New parameters (`l`, `do`, `lu`,
   `oo`, `se`, `sl`) are written only when they differ from the defaults.
+
+## v0.5.0 (2026-11-17, owner's requests)
+
+- **D15.1 Searching for a program.** A select of 171 programs meant scrolling. The picker is now a combobox: type and
+  the list filters; open it without typing and every program is there, grouped by college, the current one in the
+  middle. A query matches when every word of it matches. Matches score, from highest: an acronym of the name or of
+  one part of a joint name ("mcb", "me", "ds" in "Finance + Data Science"), the start of the name, the start of any
+  other word, another ending of a long word ("accounting" finds Accountancy), and lastly the college ("gies", "las",
+  "engineering" also lists Grainger programs). Ties go to the shorter name, so the plain major comes before its
+  "+ X" programs. A short list of nicknames covers what students type and the catalog never says ("cs" means computer
+  science, so it finds Statistics & Computer Science and not Crop Sciences; "polisci", "ischool").
+  Everything runs on the 171-row index already in the page, so there's nothing extra to download.
+- **D15.2 One version, changed only by the tool.** The version lives in `web/package.json`, its lock file and
+  `pyproject.toml`; they were bumped by hand and could drift. `tools/release.py` (`make release V=...`) changes all of
+  them and the changelog together, and CI fails when they disagree. pyproject keeps PEP 440 spelling (0.6.0b1) for
+  pre-releases.
+- **D15.3 Keep a Changelog.** CHANGELOG.md, written for people using the site, is the one record of what each version
+  brought. The release notes, the docs index and the site footer point to it rather than keeping their own lists. Older
+  versions were filled in from the tag messages.
+- **D15.4 Tags are made on `main`, by a workflow.** Until v0.4.0 a tag was pushed from the feature branch before the
+  pull request was merged, so a tag could point at something that never shipped. Now the version is bumped in the pull
+  request and `release.yml` tags the commit that reached `main` and publishes the GitHub release, including the
+  releases missing for v0.2.0-beta.1 to v0.4.0. It only does what's missing, so re-running it is safe.
+- **D15.5 Branch names and cleanup.** `type/short-name` with seven types (CONTRIBUTING.md), checked in CI so the branch
+  list stays readable. Merged branches are deleted by a workflow, because the setting that does it needs admin rights.
+  A branch is only deleted if its tip is still the merged commit, so later work on it is never lost.
+- **D15.6 Protection as files.** Branch and tag protection need an admin, so `.github/rulesets/` holds them as JSON for
+  the owner to import. `main` changes only through pull requests with `test` and `versions` passing; `v*` tags can only
+  be made by the release workflow. Both let GitHub Actions through, because the nightly data jobs commit to `main`.
+- **D15.7 Merge commits.** Pull requests are merged with merge commits, as #1 to #5 were, so each branch's commits stay
+  visible and a release tag sits on a commit that was actually deployed.

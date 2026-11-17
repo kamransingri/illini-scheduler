@@ -3,7 +3,9 @@ import { Source_Sans_3 } from "next/font/google";
 import Link from "next/link";
 import Logo from "@/components/Logo";
 import SiteNav from "@/components/SiteNav";
+import { getMeta } from "@/lib/data";
 import { NAV } from "@/lib/nav";
+import pkg from "../package.json";
 import "./globals.css";
 
 // Source Sans 3, the Illinois brand's workhorse face (brand.illinois.edu/visual-identity/typography: body copy, and
@@ -18,6 +20,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const repo = getMeta()?.repo_url;
   return (
     <html lang="en" className={sourceSans.variable}>
       <body className="flex min-h-screen flex-col font-sans antialiased">
@@ -35,6 +38,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <p className="mt-3">
                 Unofficial and not affiliated with the University of Illinois. Data comes from public sources and can be out of date: confirm sections,
                 seats and restrictions in Self-Service before registering.
+              </p>
+              <p className="mt-3" data-testid="site-version">
+                Version {pkg.version}
+                {repo && (
+                  <>
+                    .{" "}
+                    <a className="underline hover:text-orange" href={`${repo}/releases/tag/v${pkg.version}`}>
+                      What&apos;s new
+                    </a>
+                  </>
+                )}
               </p>
             </div>
             <nav aria-label="Footer">

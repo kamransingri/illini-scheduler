@@ -7,19 +7,18 @@ reference for whoever works on the code.
 | --- | --- | --- |
 | [LIMITATIONS.md](LIMITATIONS.md) | What the site can't do yet, or does only approximately, and why | Before trusting a number, or before filing a bug |
 | [IDEAS.md](IDEAS.md) | What we'd like to build next: student reviews and rankings, course and professor feedback from Reddit, seat alerts, better degree planning | Picking the next thing to build |
-| [DECISIONS.md](DECISIONS.md) | Every judgment call, numbered by phase (D13 redesign and degree planner, D14 v0.4.0) | Wondering why something works the way it does |
+| [DECISIONS.md](DECISIONS.md) | Every judgment call, numbered by phase (D13 redesign and degree planner, D14 v0.4.0, D15 v0.5.0) | Wondering why something works the way it does |
 | [DESIGN.md](DESIGN.md) | Design audit, direction, tokens, shared components, the logo and navigation | Changing anything people see |
 | [DEGREE-DATA.md](DEGREE-DATA.md) | The `data/degrees/*.yaml` format and the catalog importer | Fixing or adding a degree program |
 | [PROGRESS.md](PROGRESS.md) | What was built and how it was checked, release by release, newest summary first | Checking what's been verified |
+| [../CHANGELOG.md](../CHANGELOG.md) | What changed in each version, newest first | Seeing what a release brought |
+| [../CONTRIBUTING.md](../CONTRIBUTING.md) | Branches, commits, pull requests, versions and how a release is made | Before your first pull request or release |
 | [screenshots/](screenshots/) | `before/` (2026-11-16 baseline) and `after/` (v0.4.0) at desktop and phone width | Seeing the site without running it |
 
 ## Releases
 
-| Version | Date | Highlights |
-| --- | --- | --- |
-| v0.4.0 | 2026-11-17 | Search by CRN, near-real-time Just opened, new home page, navigation and logo, schedule builder must-haves and priorities, gen-ed finder cleanup |
-| v0.3.0 | 2026-11-16 | All 171 undergraduate programs, gen-ed categories combine with AND, one typeface |
-| v0.2.0 | 2026-11-16 | Course page built around professors, best pick score, degree checklist, final-exam clashes |
+Every version, with what changed, is in [CHANGELOG.md](../CHANGELOG.md) and on the repository's Releases page. How a
+release is made: [CONTRIBUTING.md](../CONTRIBUTING.md#releasing).
 
 ## Screenshots
 

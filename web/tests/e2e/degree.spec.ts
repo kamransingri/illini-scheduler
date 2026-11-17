@@ -4,10 +4,9 @@ const req = (page: import("@playwright/test").Page, id: string) => page.locator(
 
 test("adding a finished course updates the checklist and the URL", async ({ page }) => {
   await page.goto("./degree/");
-  const program = page.getByLabel("Program", { exact: true });
-  // every catalog program, grouped by college; wait for the one this test picks (no options = not rendered yet)
-  await expect(program.locator('option[value="finance-data-science"]')).toBeAttached({ timeout: 15_000 });
-  await program.selectOption("finance-data-science");
+  const program = page.getByRole("combobox", { name: "Program" });
+  await program.fill("finance data");
+  await page.getByRole("option", { name: /^Finance \+ Data Science, BS/ }).click();
   await expect(page.getByTestId("degree-progress")).toContainText("0 of 19");
   await page.getByLabel("Course code").fill("stat 107");
   await page.getByRole("button", { name: "Add", exact: true }).click();
@@ -82,10 +81,43 @@ test("keyboard: type a course code and press Enter to add it", async ({ page }) 
 test("programs imported from the catalog say so and show prose rules in the catalog's words", async ({ page }) => {
   await page.goto("./degree/?p=computer-science-bs");
   await expect(page.getByTestId("generated-note")).toContainText("Read automatically from the catalog page");
-  expect(await page.getByLabel("Program", { exact: true }).locator("option").count()).toBeGreaterThan(150);
+  await expect(page.getByRole("combobox", { name: "Program" })).toHaveValue("Computer Science, BS");
   const focus = page.locator('[data-group^="software-foundations"]');
   await expect(focus).toHaveAttribute("data-status", "open");
   await expect(focus.getByTestId("catalog-words")).toContainText("single focus area");
   await expect(focus.getByTestId("catalog-words").getByRole("link", { name: "CS 422" })).toBeVisible(); // a listed course links to its page
   await expect(page.locator('[data-group^="computer-science-technical-core"]')).toContainText(/more courses/);
+});
+
+test("the program picker searches all programs by name, acronym and college", async ({ page }) => {
+  await page.goto("./degree/");
+  const program = page.getByRole("combobox", { name: "Program" });
+  const list = page.getByTestId("program-list");
+  // focus shows every program, grouped by college
+  await program.click();
+  await expect(list.getByRole("group").first()).toBeVisible();
+  expect(await list.getByRole("option").count()).toBeGreaterThan(100);
+  // an acronym: the plain major first, then the CS + X programs
+  await program.fill("cs");
+  await expect(list.getByRole("option").first()).toContainText("Computer Science, BS");
+  await expect(list.getByRole("option").filter({ hasText: "Computer Science +" }).first()).toBeVisible();
+  // keyboard: Enter picks the highlighted program and the checklist loads
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/p=computer-science-bs/);
+  await expect(program).toHaveValue("Computer Science, BS");
+  await expect(page.getByText("The Grainger College of Engineering, 2026-2027 catalog", { exact: true })).toBeVisible();
+  await expect(page.getByTestId("degree-progress")).toBeVisible();
+  // nothing matches: say so; Escape puts the current program back
+  await program.click();
+  await program.fill("zzzz");
+  await expect(page.getByText(/No program matches “zzzz”/)).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(list).toBeHidden();
+  await expect(program).toHaveValue("Computer Science, BS");
+  // a college finds its programs; arrows move the highlight
+  await program.fill("gies");
+  await expect(list.getByRole("option").first()).toContainText("Gies College of Business");
+  await page.keyboard.press("ArrowDown");
+  await page.keyboard.press("Enter");
+  await expect(page).not.toHaveURL(/p=computer-science-bs/);
 });
