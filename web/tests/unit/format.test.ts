@@ -1,8 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { cisUrl, daysStr, fmtDate, fmtDelta, fmtGpa, fmtTime, termLabel, termOrder, treLabel } from "@/lib/format";
+import { cisUrl, daysStr, fmtDate, fmtDelta, fmtGpa, fmtTime, rmpRateUrl, termLabel, termOrder, treLabel } from "@/lib/format";
 import { decodeCart, encodeCart } from "@/lib/cart";
 
 describe("format", () => {
+  it("RMP rating link: RMP's add-a-rating page for a numeric id, else the profile", () => {
+    const url = "https://www.ratemyprofessors.com/professor/209729";
+    expect(rmpRateUrl({ id: "209729", url })).toBe("https://www.ratemyprofessors.com/add/professor-rating/209729");
+    expect(rmpRateUrl({ id: "VGVhY2hlci0yMDk3Mjk=", url })).toBe(url);
+    expect(rmpRateUrl({ id: "", url })).toBe(url);
+  });
   it("terms", () => {
     expect(termLabel("2027-sp")).toBe("Spring 2027");
     expect(termOrder("2026-fa")).toBeGreaterThan(termOrder("2026-sp"));
