@@ -50,14 +50,15 @@ test("opening a share link doesn't overwrite your own list", async ({ page }) =>
 
 test("rules survive reload", async ({ page }) => {
   await page.goto("./schedule/?c=CS124&t=2027-sp");
-  await page.getByLabel("No Friday classes").check();
+  await page.locator('label[title="Keep Friday free"]').click();
+  await expect(page.getByLabel("Keep Friday free")).toBeChecked();
   await page.goto("./schedule/");
-  await expect(page.getByLabel("No Friday classes")).toBeChecked();
+  await expect(page.getByLabel("Keep Friday free")).toBeChecked();
 });
 
 test("Enter in the builder's search adds the course instead of leaving", async ({ page }) => {
   await page.goto("./schedule/?c=CS124&t=2027-sp");
-  await page.getByLabel("Search courses or instructors").fill("stat 200");
+  await page.getByLabel(/Search courses/).fill("stat 200");
   await expect(page.getByRole("listbox")).toBeVisible();
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/schedule/);
@@ -66,7 +67,7 @@ test("Enter in the builder's search adds the course instead of leaving", async (
 
 test("gen-ed filters survive Back", async ({ page }) => {
   await page.goto("./geneds/");
-  await page.getByText("Humanities: Hist & Phil", { exact: true }).first().click();
+  await page.getByText("Hist & Phil", { exact: true }).first().click();
   await expect(page).toHaveURL(/codes=HP/);
   const count = await page.getByText(/^\d+ courses?$/).textContent();
   await page.locator('[data-testid="gened-results"] a').first().click();
