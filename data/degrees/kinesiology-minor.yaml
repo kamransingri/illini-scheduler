@@ -1,0 +1,126 @@
+# Kinesiology Minor (College of Applied Health Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/ahs/minors/kinesiology/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: kinesiology-minor
+type: minor
+program: Kinesiology Minor
+college: College of Applied Health Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/ahs/minors/kinesiology/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 9
+notes: []
+double_counting: []
+groups:
+- name: Foundational Courses (Required)
+  section: Foundational Courses (Required)
+  rule: all
+  courses:
+  - HK 140
+  - HK 150
+  - HK 154
+  - HK 160
+  id: foundational-courses-required-1
+- name: Exercise Psychology & Health Behavior
+  section: 'Specialization Areas (choose one):'
+  rule: manual
+  notes:
+  - 'Required Courses:'
+  courses:
+  - HK 340
+  - HK 440
+  id: exercise-psychology-health-behavior-2
+- name: Exercise Psychology & Health Behavior
+  section: 'Specialization Areas (choose one):'
+  rule: manual
+  notes:
+  - 'Electives (choose at least 1):'
+  courses:
+  - HK 242
+  - HK 342
+  - HK 402
+  - HK 441
+  - HK 443
+  - HK 472
+  id: exercise-psychology-health-behavior-3
+- name: Exercise Physiology
+  section: 'Specialization Areas (choose one):'
+  rule: manual
+  notes:
+  - 'Required Courses:'
+  courses:
+  - HK 352
+  - HK 452
+  id: exercise-physiology-4
+- name: Exercise Physiology
+  section: 'Specialization Areas (choose one):'
+  rule: manual
+  notes:
+  - 'Electives (choose at least 1):'
+  courses:
+  - HK 448
+  - HK 450
+  - HK 453
+  - HK 455
+  id: exercise-physiology-5
+- name: Teaching & Coaching Physical Activity
+  section: 'Specialization Areas (choose one):'
+  rule: manual
+  notes:
+  - 'Required Courses:'
+  courses:
+  - HK 461
+  - HK 462
+  id: teaching-coaching-physical-activity-6
+- name: Teaching & Coaching Physical Activity
+  section: 'Specialization Areas (choose one):'
+  rule: manual
+  notes:
+  - 'Electives (choose at least 1):'
+  courses:
+  - HK 362
+  - HK 460
+  - HK 463
+  - HK 464
+  id: teaching-coaching-physical-activity-7
+- name: Biomechanics
+  section: 'Specialization Areas (choose one):'
+  rule: manual
+  notes:
+  - 'Required Courses:'
+  courses:
+  - HK 250
+  - HK 353
+  id: biomechanics-8
+- name: Biomechanics
+  section: 'Specialization Areas (choose one):'
+  rule: manual
+  notes:
+  - 'Electives (choose at least 1):'
+  courses:
+  - HK 354
+  - HK 457
+  - HK 458
+  id: biomechanics-9
+- name: Social and Cultural Aspects of Sport & Physical Activity
+  section: 'Specialization Areas (choose one):'
+  rule: manual
+  notes:
+  - 'Required Courses:'
+  courses:
+  - HK 243
+  - HK 442
+  id: social-and-cultural-aspects-of-sport-phy-10
+- name: Social and Cultural Aspects of Sport & Physical Activity
+  section: 'Specialization Areas (choose one):'
+  rule: manual
+  notes:
+  - 'Electives (choose at least 1):'
+  courses:
+  - HK 302
+  - HK 446
+  - HK 472
+  id: social-and-cultural-aspects-of-sport-phy-11

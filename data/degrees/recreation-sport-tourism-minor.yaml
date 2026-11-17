@@ -1,0 +1,80 @@
+# Recreation, Sport & Tourism Minor (College of Applied Health Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/ahs/minors/recreation-sport-tourism/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: recreation-sport-tourism-minor
+type: minor
+program: Recreation, Sport & Tourism Minor
+college: College of Applied Health Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/ahs/minors/recreation-sport-tourism/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 19
+notes: []
+double_counting: []
+groups:
+- name: Foundational Courses
+  section: Degree Requirements
+  rule: all
+  courses:
+  - RST 100
+  - RST 210
+  notes:
+  - 'Catalog total: 9 hours.'
+  id: foundational-courses-1
+- name: Foundational Courses
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'One of the following:'
+  courses:
+  - RST 120
+  - RST 130
+  - RST 150
+  id: foundational-courses-2
+- name: RST Electives
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'One of the following:'
+  courses:
+  - RST 120
+  - RST 130
+  - RST 150
+  - RST 180
+  - RST 185
+  - RST 200
+  - RST 204
+  - RST 205
+  - RST 216
+  - RST 226
+  - RST 230
+  - RST 238
+  - RST 240
+  - RST 242
+  - RST 255
+  - RST 260
+  - RST 290
+  id: rst-electives-3
+- name: Six (6) hours from the following
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 6 hours.'
+  - 'One of the following:'
+  courses:
+  - RST 301
+  - RST 316
+  - RST 317
+  - RST 325
+  - RST 335
+  - RST 340
+  - RST 350
+  - RST 354
+  - RST 360
+  - RST 370
+  - RST 407
+  - RST 440
+  id: six-6-hours-from-the-following-4

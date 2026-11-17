@@ -1,0 +1,56 @@
+# Criminology, Law, & Society Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/criminology-law-society/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: criminology-law-society-minor
+type: minor
+program: Criminology, Law, & Society Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/criminology-law-society/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - - SOC 100
+    - SOC 163
+  - SOC 275
+  id: required-courses-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 'One of the following courses:'
+  courses:
+  - SOC 378
+  - SOC 477
+  - SOC 479
+  id: more-requirements-2
+- name: More requirements
+  section: Requirements
+  rule: n_of
+  n: 3
+  courses:
+  - SOC 101
+  - SOC 225
+  - SOC 310
+  - SOC 373
+  - SOC 375
+  - SOC 378
+  - SOC 390
+  - SOC 396
+  - SOC 400
+  - SOC 477
+  - SOC 479
+  - SOC 490
+  - SOC 496
+  notes:
+  - 'Choose three courses from the following (9 hours minimum); at least 3 hours must be at the 300- or 400-level:'
+  id: more-requirements-3

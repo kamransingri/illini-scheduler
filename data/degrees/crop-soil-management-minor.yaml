@@ -1,0 +1,44 @@
+# Crop & Soil Management Minor (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/minors/crop-soil-management/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: crop-soil-management-minor
+type: minor
+program: Crop & Soil Management Minor
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/minors/crop-soil-management/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 20
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - CPSC 112
+  - CPSC 418
+  - NRES 201
+  - NRES 488
+  id: required-courses-1
+- name: More requirements
+  section: Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - NRES 438
+  - NRES 471
+  - NRES 474
+  - NRES 475
+  notes:
+  - 'Select one course from the following:'
+  id: more-requirements-2
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Select 3 hours from any CPSC, HORT, or PLPA course (excluding CPSC 393/HORT 393 & CPSC 395/HORT 395/PLPA 395).
+  id: more-requirements-3

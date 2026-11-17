@@ -1,0 +1,44 @@
+# LGBT/Queer Studies Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/lgbt-queer-studies/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: lgbt-queer-studies-minor
+type: minor
+program: LGBT/Queer Studies Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/lgbt-queer-studies/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - - GWS 202
+    - GWS 255
+  - GWS 370
+  id: required-courses-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Additional Coursework- Select three of the following:'
+  courses:
+  - GWS 385
+  - GWS 387
+  - GWS 459
+  - GWS 467
+  - GWS 470
+  - GWS 478
+  id: more-requirements-2
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Area electives at any level. For a list of approved courses contact the GWS Department office or the GWS advisor.
+  id: more-requirements-3

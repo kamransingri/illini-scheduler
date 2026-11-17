@@ -67,3 +67,42 @@ def test_hand_checked_files_are_never_overwritten(tmp_path):
     (tmp_path / "accountancy-bs.yaml").unlink()
     assert catalog_import.write(parse("accountancy-bs", ACCY), tmp_path) is True
     assert "generated: '2026-11-16'" in (tmp_path / "accountancy-bs.yaml").read_text(encoding="utf-8")
+
+
+NUTRITION = "https://catalog.illinois.edu/undergraduate/aces/minors/nutrition/"
+HISTORY = "https://catalog.illinois.edu/undergraduate/las/minors/history/"
+
+
+def test_minor_ids_and_links():
+    assert catalog_import.program_id(NUTRITION) == "nutrition-minor"
+    # a slug that already says "minor" isn't doubled
+    assert catalog_import.program_id("https://catalog.illinois.edu/undergraduate/faa/minors/cinema-studies-minor/") \
+        == "cinema-studies-minor"
+    assert catalog_import.is_minor(NUTRITION) and not catalog_import.is_minor(ACCY)
+    index = ('<a href="/undergraduate/aces/minors/nutrition/">a</a><a href="/undergraduate/minors/socw/">b</a>'
+             '<a href="/undergraduate/bus/accountancy-bs/">c</a>')
+    assert catalog_import.minor_links(index) == [NUTRITION]
+
+
+def test_minor_page_type_total_and_select_n_header():
+    d = parse("nutrition-minor", NUTRITION)
+    assert (d["id"], d["type"], d["program"], d["total_hours"]) == (
+        "nutrition-minor", "minor", "Human Nutrition Minor", 19)
+    assert not any(g.get("kind") == "gened" for g in d["groups"])
+    required, choice = d["groups"]
+    assert required["rule"] == "all" and required["courses"] == ["FSHN 220", "FSHN 420", "FSHN 426", "FSHN 427"]
+    # "Select two of the following:" written as a header row is a counted choice, not a tick box
+    assert (choice["rule"], choice["n"], choice["name"]) == ("n_of", 2, "Select two of the following")
+    assert "FSHN 429" in choice["courses"]
+
+
+def test_minor_with_its_list_on_the_overview_tab():
+    page = (FIXTURES / "catalog" / "history-minor.html").read_bytes()
+    assert b"degreerequirementstextcontainer" not in page and catalog_import.has_requirements(page, HISTORY)
+    d = parse("history-minor", HISTORY)
+    assert d["program"] == "History Minor"  # the catalog's ", UG" suffix is dropped
+    assert d["total_hours"] == 18  # from the hours column; a footnote mark beside "Total Hours" isn't read as "118"
+    names = [(g["name"], g["section"], g["rule"]) for g in d["groups"]]
+    assert names[0] == ("Required courses", "Requirements", "all") and d["groups"][0]["courses"] == ["HIST 200"]
+    assert [g["id"] for g in d["groups"]] == ["required-courses-1", "more-requirements-2"]
+    assert names[1][2] == "manual" and any("Non-Western" in n for n in d["groups"][1]["notes"])

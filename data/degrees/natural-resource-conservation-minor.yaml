@@ -1,0 +1,69 @@
+# Natural Resource Conservation Minor (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/minors/natural-resource-conservation/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: natural-resource-conservation-minor
+type: minor
+program: Natural Resource Conservation Minor
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/minors/natural-resource-conservation/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Required Courses for a Minor in Natural Resource Conservation
+  section: Requirements
+  rule: all
+  courses:
+  - - NRES 102
+    - NRES 100
+  - - NRES 287
+    - NRES 219
+  id: required-courses-for-a-minor-in-natural-1
+- name: General Electives
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Minimum of 12 credit hours, at least 6 of which much be 400-level, selected from:'
+  courses:
+  - NRES 108
+  - NRES 201
+  - NRES 210
+  - - NRES 219
+    - NRES 287
+  - NRES 310
+  - NRES 302
+  - NRES 325
+  - NRES 340
+  - NRES 348
+  - NRES 351
+  - NRES 362
+  - NRES 407
+  - NRES 409
+  - NRES 415
+  - NRES 418
+  - NRES 419
+  - NRES 420
+  - NRES 421
+  - NRES 427
+  - NRES 429
+  - NRES 434
+  - NRES 438
+  - NRES 439
+  - NRES 454
+  - NRES 455
+  - NRES 465
+  - NRES 471
+  - NRES 472
+  - NRES 474
+  - NRES 475
+  - NRES 480
+  - NRES 482
+  - NRES 485
+  - NRES 487
+  - NRES 488
+  id: general-electives-2

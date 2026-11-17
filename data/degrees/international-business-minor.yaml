@@ -1,0 +1,43 @@
+# International Business Minor (Gies College of Business), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/bus/minors/international-business/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: international-business-minor
+type: minor
+program: International Business Minor
+college: Gies College of Business
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/bus/minors/international-business/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Minor Core Requirements
+  section: Degree Requirements
+  rule: all
+  courses:
+  - BADM 338
+  - BADM 380
+  - BADM 381
+  - BADM 382
+  - BADM 383
+  notes:
+  - 'Catalog total: 15 hours.'
+  id: minor-core-requirements-1
+- name: Minor Elective Requirements
+  section: Degree Requirements
+  rule: all
+  courses:
+  - BADM 383
+  notes:
+  - 'Catalog total: 3 hours.'
+  id: minor-elective-requirements-2
+- name: Minor Elective Requirements
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - Any 200-level langugage course
+  id: minor-elective-requirements-3

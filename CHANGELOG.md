@@ -14,6 +14,12 @@ history).
 
 ### Added
 
+- Degree checklist: minors. Pick an optional minor under your major and its requirements get their own checklist below
+  the major's, filled from the same course list, with the same ranked course options. All 127 minors in the 2026-2027
+  catalog are imported (`python -m pipeline.catalog_import --only minors`). The minor is saved with your list and
+  carried in the share link (`mn=`).
+- Degree checklist: a college filter under the major and minor boxes ("Gies Business (6)", "LAS (52)"…) narrows the
+  list to one college, and typing then searches only that college.
 - Course pages: a "Rate them on RMP" link next to each matched professor's Rate My Professors page, and "Be the first
   to rate" on professors RMP knows but nobody has rated yet. Both open RMP's own rating form; the site posts nothing.
 - Degree checklist: completed courses in My courses link to that course's professors, so you can rate yours.
@@ -21,6 +27,10 @@ history).
 
 ### Changed
 
+- Degree checklist: the program box is now labelled Major, and it opens empty with a "Type a major" hint, so you can
+  type straight away instead of scrolling the full list.
+- Catalog importer: a "Select two of the following:" header row becomes a "choose 2" rule instead of a tick box, and
+  requirement files can say `type: minor`.
 - The backlog is now GitHub issues (#9 to #34), labelled by area (`degree-planner`, `seats`, `rmp`, `needs-backend`,
   `needs-human`…); docs/IDEAS.md and docs/PROGRESS.md were removed (both are in git history). `.gitignore` also covers
   virtualenvs, logs, editor folders and OS files.

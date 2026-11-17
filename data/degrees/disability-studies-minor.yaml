@@ -1,0 +1,58 @@
+# Disability Studies Minor (College of Applied Health Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/ahs/minors/disability-studies/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: disability-studies-minor
+type: minor
+program: Disability Studies Minor
+college: College of Applied Health Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/ahs/minors/disability-studies/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Foundational Courses (Required)
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 9 hours.'
+  - The catalog lists these courses under Foundational Courses (Required); see the catalog page for the rule.
+  courses:
+  - HK 302
+  - RST 260
+  - SHS 433
+  id: foundational-courses-required-1
+- name: Elective Courses
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - The catalog lists these courses under Elective Courses; see the catalog page for the rule.
+  courses:
+  - ARTD 420
+  - HDFS 208
+  - HK 405
+  - HK 407
+  - HK 411
+  - HK 442
+  - HK 446
+  - HK 463
+  - HK 472
+  - HK 480
+  - HK 481
+  - HK 482
+  - HK 484
+  - HK 485
+  - RST 230
+  - SHS 170
+  - SHS 222
+  - SHS 270
+  - SHS 380
+  - SHS 427
+  - SHS 480
+  - SPED 117
+  - SOCW 370
+  id: elective-courses-2
