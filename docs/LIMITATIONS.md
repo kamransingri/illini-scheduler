@@ -50,12 +50,16 @@ comes from. For future plans, see [IDEAS.md](IDEAS.md).
 
 ## Rate My Professors
 
-- **No official API.** The pipeline uses the same queries the RMP website uses, rate limited and cached for 7 days. If
-  RMP changes them, ratings stop updating until the pipeline is fixed.
-- **Coverage.** About 1,230 instructors have a match so far. New lookups are capped at 20 minutes per nightly run, so
-  coverage grows over several nights. Instructors without a match show a search link.
-- **Matching is by name and department.** Some professors will be missed, as Daniel Gonzalez (listed on RMP as
-  "Gonzalez Cedre") was until v0.3.0.
+- **No official API.** The pipeline uses the same queries the RMP website uses, rate limited and cached (asked again
+  after 7 days, used for up to 90). If RMP changes them, ratings stop updating until the pipeline is fixed.
+- **Coverage.** Every professor a course page shows is looked up, next term's first. New lookups are capped at 20
+  minutes per nightly run, so coverage keeps growing over several nights (DECISIONS D18.6). Instructors without a
+  match show a search link.
+- **Matching is by name, department and reviews.** Nicknames, middle names and one-letter spelling slips match only
+  when the department or the reviews back them up, so some professors will still be missed, and a profile shows only
+  on courses whose subject it fits.
+- **Reviews.** Only a professor's 20 newest RMP ratings are read; a course page shows up to 6, that course's first. A
+  professor with many newer reviews for other courses may show none for this one.
 - **RMP ratings are self-selected.** The people who rate are not a random sample, which is why the best pick score
   pulls ratings with few reviews toward an average.
 

@@ -9,6 +9,19 @@ the first build, phases 0 to 12, recorded in docs/PROGRESS.md.
 
 ## [Unreleased]
 
+### Fixed
+
+- Rate My Professors on course pages: professors who teach this term but not next, and past instructors, are now
+  looked up too. MATH 221's Kim Whittlesey (104 ratings) showed "No RMP match" because she isn't teaching in Spring
+  2027. Course pages now show RMP for past instructors as well.
+- Rate My Professors matching: nicknames ("Bob" for Robert), a middle name RMP lists first and one-letter spelling
+  differences now match when the reviews or department back it up; every subject a professor teaches counts, not just
+  the first; reviews for a professor's own courses settle which of several same-named people it is.
+- A profile only shows on courses it fits: MATH 221's "J. Anderson" was showing the reviews of an Education
+  professor with the same name in Course Explorer.
+- Course pages show up to 6 RMP reviews per professor, the ones written for that course first (it was 3, from any
+  course).
+
 ## [0.6.0] - 2026-11-17
 
 ### Added
