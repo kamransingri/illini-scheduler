@@ -1,0 +1,40 @@
+# Biomolecular Engineering Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/biomolecular-engineering/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: biomolecular-engineering-minor
+type: minor
+program: Biomolecular Engineering Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/biomolecular-engineering/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 21
+notes: []
+double_counting: []
+groups:
+- name: Minor Course Requirements
+  section: Requirements
+  rule: all
+  courses:
+  - CHBE 221
+  - CHEM 232
+  - MCB 450
+  id: minor-course-requirements-1
+- name: Biomolecular Engineering Electives
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 9 hours.'
+  - 'Choose 3 from the following: CHBE 471, CHBE 472, CHBE 473, CHBE 474, CHBE 475, CHBE 476, CHBE 478, CHBE 497, CHBE 499'
+  id: biomolecular-engineering-electives-2
+- name: Technical Electives
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 3 hours.'
+  - 'Choose 1 from the following: ABE 436, ABE 483, ABE 488, BIOE 414, BIOE 415, BIOE 476, ECE 467, ECE 480, MSE 470, MSE
+    473, MSE 474, TAM 461'
+  id: technical-electives-3

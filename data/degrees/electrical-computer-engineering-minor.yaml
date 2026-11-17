@@ -1,0 +1,105 @@
+# Electrical & Computer Engineering Minor (The Grainger College of Engineering), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/minors/electrical-computer-engineering/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: electrical-computer-engineering-minor
+type: minor
+program: Electrical & Computer Engineering Minor
+college: The Grainger College of Engineering
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/engineering/minors/electrical-computer-engineering/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: Circuits Requirement
+  section: Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - ECE 110
+  - ECE 205
+  notes:
+  - 'Catalog total: 3 hours.'
+  - 'Select one of the following:'
+  id: circuits-requirement-1
+- name: Programming Requirement
+  section: Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - CS 101
+  - CS 124
+  notes:
+  - 'Select one of the following (with no particular preference) unless ECE 220 is taken:'
+  id: programming-requirement-2
+- name: A probability or statistics course chosen from an approved list below
+  section: Requirements
+  rule: manual
+  notes:
+  - The catalog lists these courses under A probability or statistics course chosen from an approved list below; see the catalog
+    page for the rule.
+  courses:
+  - ECE 313
+  - IE 300
+  - BIOE 310
+  - MATH 461
+  - MATH 463
+  - CEE 202
+  - CS 361
+  id: a-probability-or-statistics-course-chose-3
+- name: A probability or statistics course chosen from an approved list below
+  section: Requirements
+  rule: manual
+  notes:
+  - Select one of the following options below. Both the Core and Advanced Core courses from Option A or B must be completed
+  id: a-probability-or-statistics-course-chose-4
+- name: A. Electrical Engineering Option
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Core requirement:'
+  courses:
+  - ECE 210
+  id: a-electrical-engineering-option-5
+- name: A. Electrical Engineering Option
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Advanced Core Electives:'
+  - 'Two ECE courses chosen from an approved list below:'
+  courses:
+  - ECE 310
+  - ECE 329
+  - ECE 330
+  - ECE 340
+  - ECE 342 + ECE 343
+  id: a-electrical-engineering-option-6
+- name: B. Computing Engineering Option
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Core Requirement:'
+  courses:
+  - ECE 120
+  - ECE 220
+  id: b-computing-engineering-option-7
+- name: B. Computing Engineering Option
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Advanced Core Electives:'
+  - 'Two ECE courses chosen from an approved list below:'
+  courses:
+  - ECE 385
+  - ECE 391
+  - ECE 411
+  id: b-computing-engineering-option-8
+- name: B. Computing Engineering Option
+  section: Requirements
+  rule: manual
+  notes:
+  - Elective ECE Courses to achieve a minimum of 18 hours of ECE course work.
+  id: b-computing-engineering-option-9

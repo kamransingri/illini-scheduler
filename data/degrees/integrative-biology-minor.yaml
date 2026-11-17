@@ -1,0 +1,109 @@
+# Integrative Biology Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/integrative-biology/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: integrative-biology-minor
+type: minor
+program: Integrative Biology Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/integrative-biology/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 16
+notes: []
+double_counting: []
+groups:
+- name: Select one of the following
+  section: Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - IB 150
+  - IB 103
+  - IB 104
+  notes:
+  - 'Catalog total: 4 hours.'
+  - Select one of the following
+  id: select-one-of-the-following-1
+- name: Select two of the following
+  section: Requirements
+  rule: n_of
+  n: 2
+  courses:
+  - IB 201
+  - IB 202
+  - IB 203
+  - IB 204
+  - IB 302
+  notes:
+  - Select two of the following
+  id: select-two-of-the-following-2
+- name: Select two of the following Area courses
+  section: Requirements
+  rule: manual
+  notes:
+  - Select two of the following Area courses
+  - 'Area I: Organismal & Evolutionary Biology'
+  courses:
+  - IB 360
+  - IB 362
+  - IB 368
+  - IB 401
+  - IB 407
+  - IB 461
+  - IB 462
+  - IB 463
+  - IB 464
+  - IB 467
+  - IB 468
+  - IB 471
+  id: select-two-of-the-following-area-courses-3
+- name: Select two of the following Area courses
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Area II: Behavior, Ecology, & the Environment'
+  courses:
+  - IB 329
+  - IB 361
+  - IB 405
+  - IB 430
+  - IB 431
+  - IB 432
+  - IB 439
+  - IB 440
+  - IB 444
+  - IB 451
+  - IB 452
+  - IB 453
+  - IB 455
+  - IB 481
+  - IB 482
+  - IB 494
+  id: select-two-of-the-following-area-courses-4
+- name: Select two of the following Area courses
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Area III: Integrative Anatomy, Physiology, & Molecular Biology'
+  courses:
+  - IB 303
+  - IB 364
+  - IB 411
+  - IB 420
+  - IB 421
+  - IB 426
+  - IB 433
+  - IB 435
+  - IB 438
+  - IB 465
+  id: select-two-of-the-following-area-courses-5
+- name: Select two of the following Area courses
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Please note: all prerequisite courses must be taken if specified, and students must complete 6 advanced hours of coursework
+    that are distinct from advanced hours required for their major.'
+  id: select-two-of-the-following-area-courses-6

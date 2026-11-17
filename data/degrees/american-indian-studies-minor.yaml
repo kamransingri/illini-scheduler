@@ -1,0 +1,70 @@
+# American Indian Studies Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/american-indian-studies/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: american-indian-studies-minor
+type: minor
+program: American Indian Studies Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/american-indian-studies/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Foundation Courses
+  section: Requirements
+  rule: all
+  courses:
+  - AIS 101
+  - AIS 102
+  id: foundation-courses-1
+- name: Subject Area Courses
+  section: Requirements
+  rule: manual
+  notes:
+  - Students must complete 12 hours selected from 3 of the 4 subject areas.
+  id: subject-area-courses-2
+- name: Culture, Identity, Ethics, and Community
+  section: Requirements
+  rule: manual
+  notes:
+  - Students must complete 12 hours selected from 3 of the 4 subject areas.
+  courses:
+  - AIS 140
+  - AIS 165
+  - AIS 288
+  id: culture-identity-ethics-and-community-3
+- name: Sovereignty, Governance, and Politics
+  section: Requirements
+  rule: manual
+  notes:
+  - Students must complete 12 hours selected from 3 of the 4 subject areas.
+  courses:
+  - AAS 215
+  - HIST 277
+  - HIST 278
+  - AIS 280
+  id: sovereignty-governance-and-politics-4
+- name: Literature, Language, and Performance
+  section: Requirements
+  rule: manual
+  notes:
+  - Students must complete 12 hours selected from 3 of the 4 subject areas.
+  courses:
+  - AIS 265
+  - AIS 275
+  - AIS 459
+  id: literature-language-and-performance-5
+- name: Colonialism, Decolonization, and Indigeneity
+  section: Requirements
+  rule: manual
+  notes:
+  - Students must complete 12 hours selected from 3 of the 4 subject areas.
+  courses:
+  - AIS 285
+  - AIS 481
+  id: colonialism-decolonization-and-indigenei-6

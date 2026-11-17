@@ -1,0 +1,36 @@
+# Portuguese Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/portuguese/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: portuguese-minor
+type: minor
+program: Portuguese Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/portuguese/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 16
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - PORT 401
+  - PORT 402
+  id: required-courses-1
+- name: More requirements
+  section: Requirements
+  rule: hours
+  hours: 9
+  courses:
+  - PORT 403
+  - PORT 404
+  - PORT 406
+  - PORT 410
+  notes:
+  - 'Select at least 9 hours from the following list:'
+  id: more-requirements-2

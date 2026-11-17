@@ -1,0 +1,89 @@
+# Interdisciplinary Minor in Medieval Studies (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/medieval-studies/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: medieval-studies-minor
+type: minor
+program: Interdisciplinary Minor in Medieval Studies
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/medieval-studies/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 21
+notes: []
+double_counting: []
+groups:
+- name: Introduction to Medieval Studies
+  section: Requirements
+  rule: all
+  courses:
+  - ENGL 202 + MDVL 201 + CWL 253
+  notes:
+  - 'Catalog total: 3 hours.'
+  id: introduction-to-medieval-studies-1
+- name: Geographical Distribution Coursework
+  section: Requirements
+  rule: manual
+  notes:
+  - (A student may substitute 3 hours in geographical distribution coursework with a course on the medieval civilizations
+    of Oceania or the Americas, including ANTH 278.)
+  - 'Medieval Europe (choose one from the following):'
+  courses:
+  - MDVL 111
+  - MDVL 222
+  - MDVL 231
+  - HIST 141
+  - MDVL 245
+  - MDVL 247
+  - MDVL 255
+  - HIST 345
+  - HIST 445
+  - MDVL 240
+  - MDVL 251
+  - MDVL 252
+  - MDVL 412
+  id: geographical-distribution-coursework-2
+- name: Geographical Distribution Coursework
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Classical and Medieval East Asia (choose one from the following):'
+  courses:
+  - EALC 240
+  - EALC 275
+  - EALC 305
+  - EALC 320
+  - HIST 220
+  - HIST 425 + EALC 476
+  - REL 287
+  id: geographical-distribution-coursework-3
+- name: Geographical Distribution Coursework
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Medieval Central Asia, South Asia, the Mediterranean region, or Africa (choose one from the following):'
+  courses:
+  - REL 208
+  - HIST 111
+  - HIST 130
+  - HIST 135
+  - HIST 432 + REL 442
+  - HIST 443
+  - LA 222
+  - REL 106
+  - REL 214
+  - REL 223
+  - REL 260
+  - REL 283
+  id: geographical-distribution-coursework-4
+- name: Additional Medieval Studies Coursework
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 9 hours.'
+  - Medieval-related coursework from participating departments selected in consultation with the minor advisor. At least 6
+    hours must be at the 300- or 400-level. 3 hours of appropriate language study can be applied to meet this requirement
+    with approval of the Director of the Program in Medieval Studies.
+  id: additional-medieval-studies-coursework-5

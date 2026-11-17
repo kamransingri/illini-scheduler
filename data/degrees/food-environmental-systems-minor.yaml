@@ -1,0 +1,117 @@
+# Food & Environmental Systems Minor (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/minors/food-environmental-systems/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: food-environmental-systems-minor
+type: minor
+program: Food & Environmental Systems Minor
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/minors/food-environmental-systems/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Required Courses for the Food and Environmental Systems Minor
+  section: Required Courses for the Food and Environmental Systems Minor
+  rule: all
+  courses:
+  - ACES 102
+  - FSHN 101
+  - NRES 100
+  id: required-courses-for-the-food-and-enviro-1
+- name: Required Courses for the Food and Environmental Systems Minor
+  section: Required Courses for the Food and Environmental Systems Minor
+  rule: manual
+  notes:
+  - 'Select a minimum of three hours from the following introductory level courses:'
+  courses:
+  - ANSC 100
+  - ANSC 101
+  - ANSC 110
+  - ANSC 223
+  - ANSC 224
+  - ANSC 250
+  - ACE 100
+  - ACE 210
+  - ACE 222
+  - ACE 231
+  - ACE 232
+  - ACE 251
+  - CPSC 112
+  - CPSC 116
+  - ETMA 100
+  - - FSHN 120
+    - FSHN 220
+  - FSHN 232
+  - FSHN 260
+  - HORT 105
+  - HORT 106
+  - NRES 201
+  - NRES 219
+  - NRES 287
+  id: required-courses-for-the-food-and-enviro-2
+- name: Required Courses for the Food and Environmental Systems Minor
+  section: Required Courses for the Food and Environmental Systems Minor
+  rule: manual
+  notes:
+  - 'Select a minimum of six hours from the following advanced level courses:'
+  courses:
+  - ACE 306
+  - ACE 310
+  - ACE 346
+  - ACE 403
+  - ACE 406
+  - ACE 411
+  - ACE 430
+  - ACE 431
+  - ACE 432
+  - ACE 435
+  - ACE 436
+  - ACE 451
+  - ACE 456
+  - ANSC 305
+  - ANSC 306
+  - ANSC 309
+  - ANSC 322
+  - ANSC 363
+  - ANSC 400
+  - ANSC 401
+  - ANSC 402
+  - ANSC 403
+  - ANSC 404
+  - ANSC 406
+  - ANSC 407
+  - ANSC 409
+  - ANSC 422
+  - ANSC 431
+  - ANSC 438
+  - ANSC 444
+  - ANSC 446
+  - ANSC 450
+  - ANSC 451
+  - ANSC 452
+  - ANSC 467
+  - CPSC 407
+  - CPSC 418
+  - CPSC 431
+  - ETMA 311
+  - FSHN 302
+  - FSHN 322
+  - FSHN 425
+  - FSHN 428
+  - NRES 325
+  - NRES 330
+  - NRES 348
+  - NRES 370
+  - NRES 409
+  - NRES 419
+  - NRES 420
+  - NRES 431
+  - NRES 474
+  - NRES 488
+  - PLPA 405
+  id: required-courses-for-the-food-and-enviro-3

@@ -1,0 +1,42 @@
+# Architectural Studies Minor (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/minors/architectural-studies/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: architectural-studies-minor
+type: minor
+program: Architectural Studies Minor
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/minors/architectural-studies/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: Required Courses
+  section: Degree Requirements
+  rule: all
+  courses:
+  - ARCH 101
+  - ARCH 210
+  - ARCH 237
+  - ARCH 321
+  notes:
+  - 'Catalog total: 11 hours.'
+  id: required-courses-1
+- name: Required Courses
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Elective courses: Must choose six credit hours minimum from the following:'
+  courses:
+  - LA 214
+  - ARCH 403
+  - ARCH 407
+  - ARCH 412
+  - ARCH 415
+  - ARCH 416
+  - ARCH 417
+  - ARCH 434
+  id: required-courses-2

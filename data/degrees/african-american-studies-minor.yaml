@@ -1,0 +1,40 @@
+# Interdisciplinary Minor in African American Studies (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/african-american-studies/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: african-american-studies-minor
+type: minor
+program: Interdisciplinary Minor in African American Studies
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/african-american-studies/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 21
+notes: []
+double_counting: []
+groups:
+- name: I. Core course requirements
+  section: Requirements
+  rule: all
+  courses:
+  - AFRO 100
+  - - AFRO 490
+    - AFRO 220
+  - AFRO 495
+  id: i-core-course-requirements-1
+- name: II. Areas of Concentration
+  section: Requirements
+  rule: manual
+  notes:
+  - A. Comparitive Race, Racialized Communities & Identities. Students must take at least one course in this area. Students
+    may choose courses from a list in the Department office.
+  - B. Cultural Production & Cultural Movements. Students must take at least one course in this area. Students may choose
+    courses from a list in the Department office.
+  - C. Political Economy, Public Policy & Contemporary Issues. Students must take at least one course in this area. Students
+    may choose courses from a list in the Department office.
+  - Elective in any of the above areas
+  - Students must take at least one course focusing on Black Women, Gender, and Sexuality Studies chosen from a list in the
+    Department office. Students may count this course toward any of the required areas above.
+  id: ii-areas-of-concentration-2

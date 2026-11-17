@@ -1,0 +1,35 @@
+# Communication Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/communication/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: communication-minor
+type: minor
+program: Communication Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/communication/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 19
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - - CMN 101
+    - CMN 112
+  - CMN 102
+  id: required-courses-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - At least one course from each of two areas of specialization within the Department of Communication (Communication and
+    Culture, Communication and Health, Communication and Organizations, Interpersonal Communication, Mediated Communication
+    and Technology, and Rhetoric and Public Communication). These courses must be numbered at the 200-level or above. A list
+    of courses is available from the Communication undergraduate advisor.
+  - Additional hours in Communication. These courses must be numbered at the 200-level or above.
+  id: more-requirements-2

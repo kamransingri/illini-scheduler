@@ -1,0 +1,76 @@
+# Semiconductor Engineering (The Grainger College of Engineering), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/minors/semiconductor-engineering/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: semiconductor-engineering-minor
+type: minor
+program: Semiconductor Engineering
+college: The Grainger College of Engineering
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/engineering/minors/semiconductor-engineering/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 16
+notes: []
+double_counting: []
+groups:
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Semiconductor Core Courses - At least three courses must be selected from the list below.
+  courses:
+  - - ECE 340
+    - MSE 304
+  - - IE 330
+    - IE 361
+  - - ECE 444
+    - ME 487
+  - MSE 460
+  - NPRE 429
+  - - ME 432
+    - ECE 443
+  id: more-requirements-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Semiconductor Elective courses. Additional courses may be selected from the list below or in consultation with an advisor
+    to reach the required 16 credit hours.
+  courses:
+  - ECE 304
+  - ECE 441
+  - ECE 442
+  - ECE 460
+  - ECE 481
+  - ECE 488
+  - ECE 495
+  - IE 360
+  - IE 412
+  - IE 431
+  - MSE 422
+  - MSE 461
+  - MSE 485
+  - MSE 487
+  - MSE 488
+  - ME 453
+  - ME 455
+  - NPRE 321
+  - NPRE 423
+  - PHYS 370
+  - PHYS 402
+  - PHYS 404
+  - PHYS 427
+  - PHYS 460
+  - PHYS 486
+  - PHYS 487
+  - SE 411
+  - SE 413
+  id: more-requirements-2
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Independent Study - Students may apply up to 3 credit hours towards this requirement, once approved.
+  id: more-requirements-3

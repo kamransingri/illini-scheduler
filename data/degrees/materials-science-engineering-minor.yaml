@@ -1,0 +1,70 @@
+# Materials Science & Engineering Minor (The Grainger College of Engineering), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/minors/materials-science-engineering/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: materials-science-engineering-minor
+type: minor
+program: Materials Science & Engineering Minor
+college: The Grainger College of Engineering
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/engineering/minors/materials-science-engineering/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: 'Minor Requirements:'
+  section: 'Minor Requirements:'
+  rule: manual
+  notes:
+  - Core Course Work
+  courses:
+  - MSE 280
+  - MSE 401
+  id: minor-requirements-1
+- name: 'Minor Requirements:'
+  section: 'Minor Requirements:'
+  rule: manual
+  notes:
+  - 'One additional course chosen from an approved list below:'
+  courses:
+  - MSE 304
+  - MSE 402
+  - MSE 403
+  - MSE 405
+  - MSE 406
+  id: minor-requirements-2
+- name: 'Minor Requirements:'
+  section: 'Minor Requirements:'
+  rule: manual
+  notes:
+  - 'Nine additional hours in advanced courses selected from:'
+  courses:
+  - MSE 404
+  - MSE 420
+  - MSE 421
+  - MSE 422
+  - MSE 440
+  - MSE 441
+  - MSE 443
+  - MSE 450
+  - MSE 453
+  - MSE 455
+  - MSE 456
+  - MSE 457
+  - MSE 458
+  - MSE 460
+  - MSE 461
+  - MSE 466
+  - MSE 470
+  - MSE 473
+  - MSE 474
+  - MSE 480
+  - MSE 481
+  - MSE 485
+  - MSE 487
+  - MSE 488
+  - MSE 489
+  - ECE 444
+  id: minor-requirements-3

@@ -1,0 +1,49 @@
+# Linguistics Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/linguistics/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: linguistics-minor
+type: minor
+program: Linguistics Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/linguistics/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - LING 100
+  id: required-courses-1
+- name: More requirements
+  section: Requirements
+  rule: n_of
+  n: 2
+  courses:
+  - LING 301
+  - LING 302
+  - LING 307
+  notes:
+  - 'Select two of the following:'
+  id: more-requirements-2
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Nine additional hours of linguistics courses, including at least six hours chosen from the following:'
+  courses:
+  - LING 301
+  - LING 302
+  - LING 307
+  - LING 210
+  - LING 225
+  - LING 250
+  - LING 400
+  - LING 401
+  - LING 406
+  id: more-requirements-3

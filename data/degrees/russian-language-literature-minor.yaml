@@ -1,0 +1,45 @@
+# Russian Language & Literature Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/russian-language-literature/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: russian-language-literature-minor
+type: minor
+program: Russian Language & Literature Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/russian-language-literature/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Introduction to Slavic culture. Select from:'
+  courses:
+  - RUSS 115
+  - RUSS 261
+  - SLAV 117
+  - SLAV 120
+  id: more-requirements-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Intermediate Russian Language:'
+  courses:
+  - RUSS 201
+  - RUSS 202
+  id: more-requirements-2
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Russian literature and culture: Three 200-, 300- or 400-level courses from the list maintained by the undergraduate advisor,
+    including at least one at the 300- or 400-level. Advanced Russian language (RUSS 301, 302, 305, or equivalent) can substitute
+    for one course in this requirement.'
+  id: more-requirements-3

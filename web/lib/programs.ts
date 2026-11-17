@@ -44,8 +44,9 @@ function entries(programs: DegreeIndex): Entry[] {
   let e = cache.get(programs);
   if (!e) {
     e = programs.map((p) => {
-      // "Computer Science + Education: Learning Sciences, BS": the field before the degree, each part on its own
-      const field = p.program.replace(/,\s*[^,]+$/, "");
+      // "Computer Science + Education: Learning Sciences, BS": the field before the degree, each part on its own;
+      // "Human Nutrition Minor": the field before "Minor"
+      const field = p.program.replace(/,\s*[^,]+$/, "").replace(/\s+minor$/i, "");
       const parts = field.split(/\s*[+:]\s*/);
       const acr = new Set([acronym(field), ...parts.map(acronym)].filter((a) => a.length > 1));
       const name = words(p.program);
@@ -104,4 +105,18 @@ export function byCollege(programs: DegreeIndex): { college: string; programs: P
   const groups = new Map<string, Program[]>();
   for (const p of programs) groups.set(p.college, [...(groups.get(p.college) ?? []), p]);
   return [...groups].map(([college, ps]) => ({ college, programs: [...ps].sort((a, b) => a.program.localeCompare(b.program)) }));
+}
+
+// What students call the colleges, for the college filter. Unknown names lose "The" and "College of" / "School of".
+const SHORT: Record<string, string> = {
+  "College of Agricultural, Consumer and Environmental Sciences": "ACES",
+  "Gies College of Business": "Gies Business",
+  "The Grainger College of Engineering": "Grainger Engineering",
+  "College of Liberal Arts and Sciences": "LAS",
+  "College of Fine and Applied Arts": "FAA",
+};
+
+/** A short college name: "Gies Business", "LAS", "Applied Health Sciences". */
+export function shortCollege(college: string): string {
+  return SHORT[college] ?? college.replace(/^The\s+/, "").replace(/^(College|School) of (the\s+)?/, "");
 }
