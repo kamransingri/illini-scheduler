@@ -2,7 +2,7 @@
 
 Newest first at the top: the current state, then the build log in the order it happened.
 
-## Current state (v0.5.0 + AP credit on `feature/ap-credit`, 2026-11-17)
+## Current state (v0.6.0, 2026-11-17)
 
 - **Site:** 7,147 static pages (7,138 course pages). Course search by code, title, nickname, professor or CRN; course
   pages built around professors; gen-ed finder; degree checklist for 171 programs, found by typing, with AP credit
@@ -616,7 +616,7 @@ searched instead of scrolled. Decisions: DECISIONS.md D15.1 to D15.7.
   picker test in `web/tests/e2e/degree.spec.ts` (browse, acronym, Enter, no match, Escape, college, arrow keys); the
   other degree tests now pick the program by typing.
 
-## AP credit in the degree checklist (2026-11-17, branch `feature/ap-credit`, for v0.6.0)
+## v0.6.0: AP credit in the degree checklist (2026-11-17)
 
 Every phase above was done, so this session built IDEAS.md idea 5. Decisions: DECISIONS.md D16.1 to D16.11; format,
 sources and corrections: AP-CREDIT.md.
