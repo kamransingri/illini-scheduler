@@ -1,0 +1,87 @@
+# Classical Languages Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/classical-languages/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: classical-languages-minor
+type: minor
+program: Classical Languages Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/classical-languages/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 22
+notes: []
+double_counting: []
+groups:
+- name: Ancient Greek Track
+  section: Ancient Greek Track
+  rule: manual
+  notes:
+  - Ancient Greek Track
+  courses:
+  - GRK 101
+  - GRK 102
+  - GRK 201
+  - GRK 202
+  id: ancient-greek-track-1
+- name: Ancient Greek Track
+  section: Ancient Greek Track
+  rule: manual
+  notes:
+  - '6 hours in GRK courses at the 400-level, chosen from the following:'
+  courses:
+  - GRK 401
+  - GRK 411
+  - GRK 491
+  - GRK 493
+  id: ancient-greek-track-2
+- name: Modern Greek Track
+  section: Modern Greek Track
+  rule: manual
+  notes:
+  - Modern Greek Track
+  courses:
+  - GRKM 201
+  - GRKM 202
+  - GRKM 403
+  - GRKM 404
+  id: modern-greek-track-3
+- name: Modern Greek Track
+  section: Modern Greek Track
+  rule: manual
+  notes:
+  - '5 hours in courses in Modern Greek language, literature, or culture, chosen from the following:'
+  courses:
+  - CLCV 120
+  - GRKM 199
+  - GRKM 260
+  - GRKM 453
+  - GRKM 454
+  - GRKM 492
+  - GRKM 493
+  id: modern-greek-track-4
+- name: Latin Track
+  section: Latin Track
+  rule: manual
+  notes:
+  - Latin Track
+  courses:
+  - LAT 101
+  - LAT 102
+  - LAT 201
+  - LAT 202
+  id: latin-track-5
+- name: Latin Track
+  section: Latin Track
+  rule: manual
+  notes:
+  - '6 hours in Latin courses at the 400-level from the following:'
+  courses:
+  - LAT 401
+  - LAT 411
+  - LAT 460
+  - LAT 491
+  - LAT 493
+  id: latin-track-6

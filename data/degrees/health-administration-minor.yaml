@@ -1,0 +1,47 @@
+# Health Administration Minor (College of Applied Health Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/ahs/minors/health-administration/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: health-administration-minor
+type: minor
+program: Health Administration Minor
+college: College of Applied Health Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/ahs/minors/health-administration/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 17
+notes: []
+double_counting: []
+groups:
+- name: Foundational Courses (Required)
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - The catalog lists these courses under Foundational Courses (Required); see the catalog page for the rule.
+  courses:
+  - HK 206
+  - HK 417
+  - HK 421
+  id: foundational-courses-required-1
+- name: Electives Courses
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - The catalog lists these courses under Electives Courses; see the catalog page for the rule.
+  courses:
+  - HK 202
+  - HK 208
+  - HK 272
+  - HK 305
+  - HK 361
+  - HK 416
+  - HK 418
+  - HK 419
+  - HK 420
+  - HK 422
+  - HK 424
+  - HK 472
+  - HK 480
+  id: electives-courses-2

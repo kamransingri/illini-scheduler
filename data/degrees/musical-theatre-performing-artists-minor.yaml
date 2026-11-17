@@ -1,0 +1,87 @@
+# Musical Theatre Minor for Performing Artists (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/minors/musical-theatre-performing-artists/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: musical-theatre-performing-artists-minor
+type: minor
+program: Musical Theatre Minor for Performing Artists
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/minors/musical-theatre-performing-artists/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: Prerequisite Courses for Dance Majors
+  section: Requirements for Dance Majors
+  rule: all
+  courses:
+  - - MUS 101
+    - MUS 102
+    - MUS 103
+  - MUS 222
+  - THEA 170
+  id: prerequisite-courses-for-dance-majors-1
+- name: Required Courses for Dance Majors
+  section: Requirements for Dance Majors
+  rule: all
+  courses:
+  - MUSC 105
+  - MUS 107
+  - - DANC 209
+    - DANC 212
+  id: required-courses-for-dance-majors-2
+- name: Elective Courses for Dance Majors
+  section: Requirements for Dance Majors
+  rule: manual
+  notes:
+  - 'Catalog total: 6 hours.'
+  - 'Choose six (6) hours from these courses:'
+  courses:
+  - MUSC 468
+  - MUSC 469
+  - MUS 125
+  - MUS 422
+  - MUS 472
+  id: elective-courses-for-dance-majors-3
+- name: Prerequisite Courses for Theatre Majors, Acting Concentration
+  section: Requirements for Theatre Majors in the Acting Concentration
+  rule: all
+  courses:
+  - - MUS 101
+    - MUS 102
+    - MUS 103
+  - MUS 222
+  - - DANC 116
+    - DANC 216
+  id: prerequisite-courses-for-theatre-majors-4
+- name: Required Courses for Theatre Majors, Acting Concentration
+  section: Requirements for Theatre Majors in the Acting Concentration
+  rule: all
+  courses:
+  - MUSC 105
+  - MUS 107
+  - - DANC 209
+    - DANC 212
+  id: required-courses-for-theatre-majors-acti-5
+- name: Elective Courses for Theatre Majors, Acting Concentration
+  section: Requirements for Theatre Majors in the Acting Concentration
+  rule: manual
+  notes:
+  - 'Catalog total: 6 hours.'
+  - 'Choose six (6) hours from these courses:'
+  courses:
+  - MUSC 468
+  - MUSC 469
+  - MUS 125
+  - MUS 422
+  - MUS 472
+  id: elective-courses-for-theatre-majors-acti-6
+- name: Elective Courses for Theatre Majors, Acting Concentration
+  section: Requirements for Theatre Majors in the Acting Concentration
+  rule: manual
+  notes:
+  - Total Minimum Hours for Theatre Majors, Acting Concentration to Complete the Minor
+  id: elective-courses-for-theatre-majors-acti-7

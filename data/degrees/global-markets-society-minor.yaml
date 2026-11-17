@@ -1,0 +1,183 @@
+# Global Markets & Society Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/global-markets-society/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: global-markets-society-minor
+type: minor
+program: Global Markets & Society Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/global-markets-society/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - GLBL 270
+  id: required-courses-1
+- name: Core Courses
+  section: Requirements
+  rule: n_of
+  n: 2
+  courses:
+  - CMN 211
+  - CS 105
+  - ECON 102
+  - GGIS 205
+  - HIST 259
+  - PS 220
+  - PSYC 245
+  - SOC 160
+  notes:
+  - 'Catalog total: 6 hours.'
+  - Choose 2 from the following list (Courses used in the core cannot be used again in your Specialization Track)
+  id: core-courses-2
+- name: Specialization Track
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 9 hours.'
+  - Choose three courses in your track. At least 2 of the 3 courses must be at the 300- or 400-level. Alternate courses may
+    be considered on a case-by-case basis.
+  - Global Markets and Governance
+  courses:
+  - ANTH 368
+  - BADM 380
+  - GLBL 220
+  - HIST 310
+  - HIST 380
+  - PS 180
+  - PS 220
+  - PS 282
+  - PS 321
+  - PS 340
+  - PS 356
+  - PS 382
+  - PS 384
+  id: specialization-track-3
+- name: Specialization Track
+  section: Requirements
+  rule: manual
+  notes:
+  - Science, Technology, and Markets
+  courses:
+  - ANTH 374
+  - ANTH 423
+  - GGIS 204
+  - GGIS 205
+  - GGIS 438
+  - GGIS 465
+  - GGIS 479
+  - HIST 264
+  - INFO 202
+  - ENVS 101
+  - PHYS 150
+  - SOC 350
+  id: specialization-track-4
+- name: Specialization Track
+  section: Requirements
+  rule: manual
+  notes:
+  - Global Encounters
+  courses:
+  - ANTH 104
+  - ANTH 270
+  - CWL 114
+  - CWL 441
+  - HIST 221
+  - HIST 260
+  - HIST 405
+  - HIST 430
+  id: specialization-track-5
+- name: Specialization Track
+  section: Requirements
+  rule: manual
+  notes:
+  - Markets, Development, and the Environment
+  courses:
+  - ANTH 278
+  - ANTH 379
+  - ANTH 420
+  - ANTH 466
+  - ECON 411
+  - ECON 414
+  - ECON 450
+  - ECON 482
+  - ENGL 476
+  - ESE 200
+  - GGIS 101
+  - GGIS 210
+  - GGIS 287
+  - GGIS 410
+  - GLBL 250
+  - GLBL 350
+  - GLBL 450
+  - HIST 202
+  - SOC 364
+  - SOC 373
+  - SOC 447
+  - SOC 470
+  id: specialization-track-6
+- name: Specialization Track
+  section: Requirements
+  rule: manual
+  notes:
+  - The Global Workforce
+  courses:
+  - ANTH 466
+  - CMN 212
+  - CMN 232
+  - ECON 440
+  - GLBL 392
+  - HIST 480
+  - PSYC 245
+  - PSYC 455
+  id: specialization-track-7
+- name: Specialization Track
+  section: Requirements
+  rule: manual
+  notes:
+  - Analytical Approaches & Languages
+  courses:
+  - BTW 250
+  - BTW 261
+  - BTW 271
+  - CMN 211
+  - CMN 321
+  - CMN 323
+  - CMN 411
+  - CS 105
+  - ECON 202
+  - FR 485
+  - FR 486
+  - GER 320
+  - GER 321
+  - GGIS 379
+  - GGIS 380
+  - GGIS 473
+  - GGIS 479
+  - HIST 391
+  - HNDI 412
+  - SOC 280
+  - SOC 380
+  - SPAN 205
+  - SPAN 212
+  - SPAN 332
+  - STAT 200
+  id: specialization-track-8
+- name: OPTIONAL Professional Development Capstone Experience (3 hours)
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Choose one option in consultation with the Global Markets and Society minor advisor:'
+  - Internship or Field Experience in a market-focused organization
+  - Research Experience with a faculty member
+  - Analytical/Research Paper with faculty guidance
+  - Credit is awarded for each of these three options on the basis of an analytical/research paper written by the student
+    under the supervision of a faculty adviser
+  id: optional-professional-development-capsto-9

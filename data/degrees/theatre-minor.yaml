@@ -1,0 +1,82 @@
+# Theatre Minor (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/minors/theatre/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: theatre-minor
+type: minor
+program: Theatre Minor
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/minors/theatre/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: Required Courses
+  section: Requirements
+  rule: all
+  courses:
+  - THEA 100
+  - THEA 101
+  - THEA 208
+  notes:
+  - 'Catalog total: 10 hours.'
+  id: required-courses-1
+- name: Required Courses
+  section: Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - THEA 304
+  - THEA 364
+  notes:
+  - 'Select one of the following courses to fulfill the theatre history requirement:'
+  id: required-courses-2
+- name: Elective Courses
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 6 hours.'
+  - Courses may not count toward both the Theatre History requirement and the Theatre Elective requirements for the minor.
+  - 'Select one course from History/Criticism:'
+  courses:
+  - THEA 110
+  - THEA 209
+  - THEA 211
+  - THEA 218
+  - THEA 260
+  - THEA 263
+  - THEA 304
+  - THEA 323
+  - THEA 364
+  - THEA 410
+  - THEA 411
+  - THEA 417
+  - THEA 418
+  - THEA 467
+  - THEA 483
+  id: elective-courses-3
+- name: Elective Courses
+  section: Requirements
+  rule: manual
+  notes:
+  - 'Select one course from Production/Performance:'
+  courses:
+  - THEA 100
+  - THEA 126
+  - THEA 153
+  - THEA 170
+  - THEA 175
+  - THEA 220
+  - THEA 222
+  - THEA 231
+  - THEA 270
+  - THEA 402
+  - THEA 407
+  - THEA 418
+  - THEA 433
+  - THEA 452
+  - THEA 456
+  id: elective-courses-4

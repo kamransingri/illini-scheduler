@@ -1,0 +1,31 @@
+# Sociology Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/sociology/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: sociology-minor
+type: minor
+program: Sociology Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/sociology/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: 'The coursework must include the requirements listed below:'
+  section: 'The coursework must include the requirements listed below:'
+  rule: all
+  courses:
+  - SOC 100
+  - SOC 200
+  - SOC 280
+  id: the-coursework-must-include-the-requirem-1
+- name: 'The coursework must include the requirements listed below:'
+  section: 'The coursework must include the requirements listed below:'
+  rule: manual
+  notes:
+  - Sociology (SOC) courses at the 300- or 400-level
+  id: the-coursework-must-include-the-requirem-2

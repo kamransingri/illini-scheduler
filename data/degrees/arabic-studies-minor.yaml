@@ -1,0 +1,55 @@
+# Arabic Studies Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/arabic-studies/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: arabic-studies-minor
+type: minor
+program: Arabic Studies Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/arabic-studies/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Language requirement
+  courses:
+  - ARAB 405
+  - ARAB 406
+  id: more-requirements-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Arabic Culture and Linguistics courses
+  - 'Choose two courses from the following in consultation with the advisor: ARAB 150- Lang;Culture of Arab World OR ARAB
+    210: Colloquial Arabic I OR ARAB 412: Business Arabic OR a Study Abroad Equivalent (must be approved by the advisor)'
+  - Two Interdisciplinary courses related to the Arab World (To be chosen from the following list in consultation with the
+    advisor)
+  courses:
+  - ARAB 407
+  - ARAB 408
+  - ARAB 409
+  - ARAB 410
+  - ARAB 413
+  - CWL 481
+  - HIST 135
+  - HIST 334
+  - HIST 335
+  - HIST 337
+  - HIST 338
+  - PS 347
+  - REL 214
+  - REL 223
+  - REL 260
+  - REL 403
+  - REL 408
+  - REL 481
+  id: more-requirements-2

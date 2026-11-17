@@ -1,0 +1,101 @@
+# Interdisciplinary Minor in Health Technology (College of Applied Health Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/ahs/minors/interdisciplinary-health-technology/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: interdisciplinary-health-technology-minor
+type: minor
+program: Interdisciplinary Minor in Health Technology
+college: College of Applied Health Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/ahs/minors/interdisciplinary-health-technology/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 19
+notes: []
+double_counting: []
+groups:
+- name: Required Courses
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 10 hours.'
+  - The catalog lists these courses under Required Courses; see the catalog page for the rule.
+  courses:
+  - HK 203
+  - HK 401
+  - IE 340
+  id: required-courses-1
+- name: Required Courses
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Choose a computing course:'
+  courses:
+  - CS 101
+  - CS 124
+  - ECE 120
+  id: required-courses-2
+- name: Electives
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Choose One (1) from Health & Human Behavior electives:'
+  courses:
+  - HK 111
+  - HK 154
+  - HK 206
+  - HK 208
+  - HK 271
+  - HK 272
+  - HK 300
+  - HK 340
+  - HK 391
+  - HK 402
+  - HK 403
+  - HK 458
+  - HK 494
+  - IE 445
+  - IS 406
+  - SHS 352
+  - SHS 473
+  - RST 216
+  - RST 260
+  - RST 316
+  id: electives-3
+- name: Electives
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Choose One(1) from Engineering/Computing/Information Science electives:'
+  courses:
+  - ARTD 317
+  - BDI 367
+  - BDI 475
+  - CS 440
+  - CS 446
+  - CS 465
+  - CS 466
+  - CS 467
+  - ECE 365
+  - ECE 380
+  - ECE 416
+  - ECE 434
+  - ECE 437
+  - IE 300
+  - - IE 397
+    - IE 497
+  - - IE 398
+    - IE 498
+  - IE 405
+  - IE 413
+  - IE 431
+  - INFO 333
+  - INFO 407
+  - IS 226
+  - IS 316
+  - IS 407
+  - IS 445
+  - IS 457
+  - IS 459
+  id: electives-4

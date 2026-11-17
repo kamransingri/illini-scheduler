@@ -1,0 +1,56 @@
+# Japanese Arts and Aesthetics (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/minors/japanese-arts-aesthetics/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: japanese-arts-aesthetics-minor
+type: minor
+program: Japanese Arts and Aesthetics
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/minors/japanese-arts-aesthetics/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: Degree Requirements
+  section: Degree Requirements
+  rule: all
+  courses:
+  - ARTJ 101
+  - ARTJ 209
+  id: degree-requirements-1
+- name: Degree Requirements
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Choose one:'
+  courses:
+  - ARTJ 199
+  - ARTJ 299
+  id: degree-requirements-2
+- name: Degree Requirements
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - Another ARTJ 100/200 level course
+  - 'Choose two:'
+  courses:
+  - ARTJ 301
+  - ARTJ 302
+  - ARTJ 391
+  - ARTJ 397
+  - ARTJ 398
+  - ARTJ 399
+  id: degree-requirements-3
+- name: Degree Requirements
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - Other ARTJ 300/400 level courses
+  - 'A minimum of two elective courses from the following list:'
+  - Additional ARTJ courses
+  - Other Japan-focused courses
+  - Additional courses as approved by minor advisor
+  id: degree-requirements-4

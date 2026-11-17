@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { accepts, alsoCounts, canShare, evaluate, hydrate, needText, options, prereqNote, rankCourse, type Degree, type DegreeCourse, type DegreeGroup } from "@/lib/degree";
-import { decodeCourses, encodeCourses, stateFromParams, type MyCourse } from "@/lib/mycourses";
+import { decodeCourses, decodeState, encodeCourses, encodeState, stateFromParams, stateToParams, type MyCourse } from "@/lib/mycourses";
 import { DEFAULT_WEIGHTS } from "@/lib/score";
 
 function group(p: Partial<DegreeGroup> & { id: string }): DegreeGroup {
@@ -164,6 +164,7 @@ describe("my courses encoding", () => {
     expect(encodeCourses(list)).toBe("STAT107,MATH220~c,CS124~p");
     expect(stateFromParams(new URLSearchParams("p=finance-data-science&m=STAT107&x=language,<bad>"))).toEqual({
       program: "finance-data-science",
+      minor: "",
       courses: [{ s: "STAT", n: "107", status: "done" }],
       ticked: ["language"],
       ap: [],
@@ -171,6 +172,18 @@ describe("my courses encoding", () => {
       declined: [],
     });
     expect(stateFromParams(new URLSearchParams("q=1"))).toBeNull();
+  });
+
+  it("carries an optional minor and its ticked groups in the link and in storage", () => {
+    const st = stateFromParams(new URLSearchParams("p=computer-science-bs&mn=nutrition-minor&x=language,mn--electives"))!;
+    expect(st).toMatchObject({ program: "computer-science-bs", minor: "nutrition-minor", ticked: ["language", "mn--electives"] });
+    expect(stateFromParams(new URLSearchParams("mn=nutrition-minor"))).toMatchObject({ program: "", minor: "nutrition-minor" });
+    expect(stateFromParams(new URLSearchParams("p=x&mn=<bad>"))!.minor).toBe("");
+    const params = new URLSearchParams("mn=old-minor");
+    stateToParams({ ...st, minor: "" }, params);
+    expect(params.has("mn")).toBe(false); // removing the minor drops it from the link
+    expect(decodeState(encodeState(st))).toEqual(st);
+    expect(decodeState(JSON.stringify({ c: "STAT107", p: "finance-data-science", x: [] })).minor).toBe(""); // lists saved before minors
   });
 });
 

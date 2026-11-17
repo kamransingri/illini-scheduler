@@ -1,0 +1,62 @@
+# Minoritarian Aesthetics Minor (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/minors/minoritarian-aesthetics/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: minoritarian-aesthetics-minor
+type: minor
+program: Minoritarian Aesthetics Minor
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/minors/minoritarian-aesthetics/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 16
+notes: []
+double_counting: []
+groups:
+- name: Introductory Course Requirements (at least 2 courses)
+  section: Minoritarian Aesthetics Undergraduate Minor
+  rule: all
+  courses:
+  - FAA 201
+  notes:
+  - 'Catalog total: 6 hours.'
+  id: introductory-course-requirements-at-leas-1
+- name: Introductory Course Requirements (at least 2 courses)
+  section: Minoritarian Aesthetics Undergraduate Minor
+  rule: manual
+  notes:
+  - 'Select one from:'
+  - Gender and Women’s Studies (GWS) course
+  - US Minority Cultural Studies course
+  id: introductory-course-requirements-at-leas-2
+- name: Select at least 9 hours from the following
+  section: Minoritarian Aesthetics Undergraduate Minor
+  rule: hours
+  hours: 9
+  courses:
+  - FAA 494
+  - FAA 495
+  - FAA 496
+  - FAA 490
+  notes:
+  - Select at least 9 hours from the following
+  id: select-at-least-9-hours-from-the-followi-3
+- name: Select one Culminating Experience
+  section: Minoritarian Aesthetics Undergraduate Minor
+  rule: manual
+  notes:
+  - 'Catalog total: 1 hours.'
+  - Must have completed at least 12 hours towards the minor prior to enrolling
+  courses:
+  - FAA 493
+  - FAA 490
+  id: select-one-culminating-experience-4
+- name: Select one Culminating Experience
+  section: Minoritarian Aesthetics Undergraduate Minor
+  rule: manual
+  notes:
+  - At least six hours of coursework for the minor should be advanced (300-level or 400-level courses) and must be distinct
+    from credit earned for your major or another minor.
+  id: select-one-culminating-experience-5

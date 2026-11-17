@@ -1,0 +1,37 @@
+# Computer Science Minor (The Grainger College of Engineering), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/minors/computer-science/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: computer-science-minor
+type: minor
+program: Computer Science Minor
+college: The Grainger College of Engineering
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/engineering/minors/computer-science/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 'The following four courses are required:'
+  courses:
+  - CS 173
+  - CS 124
+  - CS 128
+  - CS 225
+  id: more-requirements-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Students must take two upper level courses, each from CS at the 300 level or 400 level. At the 300 level, all CS courses
+    are allowed, except CS 397 and CS 398, each of which may only be used by prior special permission from the CS Academic
+    Office. At the 400 level, all CS courses are allowed, excluding CS 400, CS 401, CS 402, CS 403, CS 413, CS 491, CS 492,
+    CS 493, CS 494, CS 497, and CS 499. The two upper level courses must be taken as University of Illinois credit (though
+    one may be taken in a Study Abroad program).
+  id: more-requirements-2

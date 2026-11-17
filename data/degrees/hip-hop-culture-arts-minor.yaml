@@ -1,0 +1,95 @@
+# Hip Hop Culture and the Arts Minor (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/minors/hip-hop-culture-arts/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: hip-hop-culture-arts-minor
+type: minor
+program: Hip Hop Culture and the Arts Minor
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/minors/hip-hop-culture-arts/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 16
+notes: []
+double_counting: []
+groups:
+- name: Required Core Studies
+  section: Requirements
+  rule: all
+  courses:
+  - AFRO 228
+  - FAA 481
+  notes:
+  - 'Catalog total: 6 hours.'
+  id: required-core-studies-1
+- name: Creative Studies
+  section: Requirements
+  rule: all
+  courses:
+  - ARTD 217
+  - ARTS 220
+  - ARTS 221
+  - ARTS 241
+  - ARTS 245
+  - ARTS 320
+  - ARTS 420
+  - ARTS 446
+  - DANC 116
+  - DANC 216
+  - DANC 330
+  - DANC 340
+  - DANC 424
+  - FAA 481
+  - MUS 127
+  - MUS 128
+  - MUS 129
+  - MUS 327
+  - MUS 328
+  - MUS 329
+  - MUS 425
+  - MUS 446
+  - MUSC 457
+  - UP 320
+  id: creative-studies-2
+- name: Cultural Studies
+  section: Requirements
+  rule: all
+  courses:
+  - AFRO 132
+  - ARTE 480
+  - ARTH 260
+  - EALC 230
+  - EALC 369
+  - FAA 201
+  - FAA 480
+  - GWS 462
+  - LLS 240
+  - MACS 320
+  - MUS 132
+  - MUS 411
+  - MUS 418
+  - THEA 263
+  - UP 160
+  - UP 330
+  - UP 473
+  id: cultural-studies-3
+- name: Digital Media Studies
+  section: Requirements
+  rule: all
+  courses:
+  - ART 160
+  - MACS 140
+  - MACS 150
+  - THEA 151
+  id: digital-media-studies-4
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - If needed, select from any additional or repeatable courses above to complete the 16 minimum hours required for the minor
+  - Other courses may be approved in selection with and approved by minor advisor
+  - At least six hours of coursework for the minor should be advanced (300-level or 400-level courses) and must be distinct
+    from credit earned for your major or another minor.
+  id: more-requirements-5

@@ -1,0 +1,119 @@
+# Entrepreneurship Minor (Gies College of Business), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/bus/minors/entrepreneurship/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: entrepreneurship-minor
+type: minor
+program: Entrepreneurship Minor
+college: Gies College of Business
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/bus/minors/entrepreneurship/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 16
+notes: []
+double_counting: []
+groups:
+- name: Core Courses Requirement
+  section: Degree Requirements
+  rule: all
+  courses:
+  - BADM 346
+  - TE 250
+  notes:
+  - 'Catalog total: 5 hours.'
+  id: core-courses-requirement-1
+- name: Entrepreneurship, the Economy, and Society (choose 1)
+  section: Degree Requirements
+  rule: all
+  courses:
+  - ANTH 279
+  - ECON 402
+  - ECON 482
+  - ECON 483
+  - GLBL 270
+  - HIST 164
+  - HIST 264
+  - PS 356
+  notes:
+  - 'Catalog total: 3 hours.'
+  id: entrepreneurship-the-economy-and-society-2
+- name: Applications of Entrepreneurship (choose 0, 1, or 2)
+  section: Degree Requirements
+  rule: all
+  courses:
+  - ACE 280
+  - ADV 301
+  - ADV 409
+  - ANSC 471
+  - ARTS 321
+  - ARTS 351
+  - BADM 463
+  - BADM 464
+  - FIN 380
+  - FSHN 193
+  - IS 419
+  - SOCW 321
+  - SPAN 332
+  - TE 461
+  - UP 475
+  id: applications-of-entrepreneurship-choose-3
+- name: Business, Innovation, and Entrepreneurship (choose 1 or 2)
+  section: Degree Requirements
+  rule: all
+  courses:
+  - ACCY 200
+  - ACE 220
+  - ACE 221
+  - ACE 345
+  - ACE 398
+  - ADV 391
+  - ARTD 301
+  - ARTD 328
+  - ARTD 420
+  - ARTD 426
+  - ARTS 220
+  - BADM 312
+  - BADM 329
+  - BADM 331
+  - BADM 365
+  - BADM 367
+  - BADM 371
+  - BADM 377
+  - BADM 395
+  - DTX 221
+  - DTX 251
+  - FIN 423
+  - LER 182
+  - ARTD 230
+  - TE 333
+  - TE 390
+  - TE 450
+  - TE 466
+  id: business-innovation-and-entrepreneurship-4
+- name: Complementary Competencies for Entrepreneurs (choose 0 or 1)
+  section: Degree Requirements
+  rule: all
+  courses:
+  - ACE 242
+  - ACE 243
+  - ADV 175
+  - ARTD 217
+  - ARTD 317
+  - ARTS 245
+  - BADM 330
+  - BADM 372
+  - BADM 395
+  - CI 210
+  - EPOL 230
+  - EPOL 270
+  - EPOL 474
+  - GLBL 250
+  - PHIL 440
+  - PHIL 442
+  - TE 401
+  - TE 462
+  - UP 327
+  - UP 357
+  id: complementary-competencies-for-entrepren-5

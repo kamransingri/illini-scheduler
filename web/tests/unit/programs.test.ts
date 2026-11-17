@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { DegreeIndex } from "@/lib/degree";
-import { byCollege, searchPrograms, words } from "@/lib/programs";
+import { byCollege, searchPrograms, shortCollege, words } from "@/lib/programs";
 
 const LAS = "College of Liberal Arts and Sciences";
 const ENG = "The Grainger College of Engineering";
@@ -79,5 +79,28 @@ describe("program search", () => {
       "Mechanical Engineering, BS",
     ]);
     expect(groups.flatMap((g) => g.programs)).toHaveLength(P.length);
+  });
+});
+
+describe("minors and colleges", () => {
+  const M: DegreeIndex = [
+    ["nutrition-minor", "Human Nutrition Minor", "College of Agricultural, Consumer and Environmental Sciences"],
+    ["computer-science-minor", "Computer Science Minor", ENG],
+    ["history-minor", "History Minor", LAS],
+  ].map(([id, program, college]) => ({ id, type: "minor" as const, program, college, catalog_year: "2026-2027", groups: 2 }));
+
+  it("finds a minor by the acronym of its field, without the word Minor", () => {
+    expect(searchPrograms(M, "cs").map((p) => p.id)).toEqual(["computer-science-minor"]);
+    expect(searchPrograms(M, "hn").map((p) => p.id)).toEqual(["nutrition-minor"]);
+    expect(searchPrograms(M, "minor").length).toBe(3);
+  });
+
+  it("shortens college names for the college filter", () => {
+    expect(shortCollege("College of Agricultural, Consumer and Environmental Sciences")).toBe("ACES");
+    expect(shortCollege(GIES)).toBe("Gies Business");
+    expect(shortCollege(ENG)).toBe("Grainger Engineering");
+    expect(shortCollege("College of Applied Health Sciences")).toBe("Applied Health Sciences");
+    expect(shortCollege("School of Information Sciences")).toBe("Information Sciences");
+    expect(shortCollege("Office of the Provost")).toBe("Office of the Provost");
   });
 });

@@ -1,0 +1,113 @@
+# Teacher Education in Mathematics, Grades 9-12 Minor (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/minors/teacher-education-minor-mathematics-grades-9-12/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: teacher-education-minor-mathematics-grades-9-12
+type: minor
+program: Teacher Education in Mathematics, Grades 9-12 Minor
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/minors/teacher-education-minor-mathematics-grades-9-12/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - To obtain an endorsement to teach mathematics in grades 9-12, students must also pass the Illinois Certification Testing
+    System Test in Mathematics. Information and practice exams are available at www.icts.nesinc.com.
+  courses:
+  - MATH 220
+  - MATH 231
+  - MATH 241
+  id: more-requirements-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Methods courses in the teaching of mathematics
+  courses:
+  - CI 434
+  id: more-requirements-2
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - A course covering topics in non-Euclidean geometry
+  courses:
+  - - MATH 402
+    - MATH 403
+  id: more-requirements-3
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - 'At least 7 hours of work from at least two of the following areas:'
+  id: more-requirements-4
+- name: Computer Science (one course only)
+  section: Requirements
+  rule: manual
+  notes:
+  - A course covering topics in non-Euclidean geometry
+  - 'At least 7 hours of work from at least two of the following areas:'
+  courses:
+  - CS 101
+  - CS 105
+  id: computer-science-one-course-only-5
+- name: Linear Algebra
+  section: Requirements
+  rule: manual
+  notes:
+  - A course covering topics in non-Euclidean geometry
+  - 'At least 7 hours of work from at least two of the following areas:'
+  courses:
+  - MATH 225
+  - MATH 415
+  - MATH 416
+  id: linear-algebra-6
+- name: Modern Algebra
+  section: Requirements
+  rule: manual
+  notes:
+  - A course covering topics in non-Euclidean geometry
+  - 'At least 7 hours of work from at least two of the following areas:'
+  courses:
+  - MATH 413
+  - MATH 417
+  - MATH 453
+  id: modern-algebra-7
+- name: Applied Mathematics
+  section: Requirements
+  rule: manual
+  notes:
+  - A course covering topics in non-Euclidean geometry
+  - 'At least 7 hours of work from at least two of the following areas:'
+  courses:
+  - MATH 347
+  - MATH 285
+  - MATH 441
+  - MATH 444
+  - MATH 446
+  id: applied-mathematics-8
+- name: Probability-Statistics
+  section: Requirements
+  rule: manual
+  notes:
+  - A course covering topics in non-Euclidean geometry
+  - 'At least 7 hours of work from at least two of the following areas:'
+  courses:
+  - STAT 400 + MATH 463
+  id: probability-statistics-9
+- name: History of Calculus
+  section: Requirements
+  rule: manual
+  notes:
+  - A course covering topics in non-Euclidean geometry
+  - 'At least 7 hours of work from at least two of the following areas:'
+  courses:
+  - MATH 406
+  id: history-of-calculus-10

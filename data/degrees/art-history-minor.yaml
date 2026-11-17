@@ -1,0 +1,63 @@
+# Art History Minor (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/minors/art-history/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: art-history-minor
+type: minor
+program: Art History Minor
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/minors/art-history/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - ARTH 110
+  id: required-courses-1
+- name: More requirements
+  section: Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - ARTH 212
+  - ARTH 214
+  - ARTH 219
+  - ARTH 220
+  - ARTH 320
+  - ARTH 342
+  - ARTH 402
+  - ARTH 403
+  - ARTH 404
+  - ARTH 413
+  notes:
+  - Select one course below, which focuses on a subject outside of Europe and the Modern Americas
+  id: more-requirements-2
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Other courses may be approved in consultation with the minor advisor.
+  - Additional ARTH courses at the 200, 300 or 400 level
+  - Additional ARTH courses at the 300 or 400 level
+  courses:
+  - ARTH 495
+  id: more-requirements-3
+- name: Additional Minor Credit Policies
+  section: Requirements
+  rule: manual
+  notes:
+  - A maximum of one course from other universities will satisfy the requirements for upper-level Art History courses.
+  - A maximum of one history of architecture course below at UIUC will count toward the requirements of the Art History Minor
+  courses:
+  - ARCH 407
+  - ARCH 412
+  - ARCH 415
+  - ARCH 416
+  - ARCH 417
+  id: additional-minor-credit-policies-4

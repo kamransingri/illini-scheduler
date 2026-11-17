@@ -1,0 +1,46 @@
+# Quantum Information Science Minor (The Grainger College of Engineering), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/minors/quantum-information-science/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: quantum-information-science-minor
+type: minor
+program: Quantum Information Science Minor
+college: The Grainger College of Engineering
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/engineering/minors/quantum-information-science/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 16
+notes: []
+double_counting: []
+groups:
+- name: Degree Requirements
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - Core Courses - At least two courses must be selected from the list below.
+  courses:
+  - CS 478
+  - ECE 305
+  - ECE 404
+  - ECE 405
+  - ECE 406
+  - PHYS 370
+  id: degree-requirements-1
+- name: Degree Requirements
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - Elective Courses - Additional courses can be selected from the list below or in consultation with an advisor.
+  courses:
+  - CS 374
+  - MATH 416
+  - MSE 404
+  - PHYS 403
+  - PHYS 446
+  - PHYS 485
+  - PHYS 486
+  - PHYS 487
+  - PHYS 495
+  id: degree-requirements-2

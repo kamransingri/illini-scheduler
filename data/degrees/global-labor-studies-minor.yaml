@@ -1,0 +1,31 @@
+# Global Labor Studies Minor (School of Labor and Employment Relations), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/ler/minors/global-labor-studies/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: global-labor-studies-minor
+type: minor
+program: Global Labor Studies Minor
+college: School of Labor and Employment Relations
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/ler/minors/global-labor-studies/
+read_on: '2026-11-17'
+generated: '2026-11-17'
+total_hours: 18
+notes: []
+double_counting: []
+groups:
+- name: Required courses
+  section: Requirements
+  rule: all
+  courses:
+  - LER 100
+  - LER 130
+  id: required-courses-1
+- name: More requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Minimum of six hours 300- or 400-level courses.
+  - Two courses that focus on international or comparative labor issues. (LER 200, LER 240, LER 330 and LER 410).
+  id: more-requirements-2
