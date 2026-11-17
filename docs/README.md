@@ -6,10 +6,11 @@ reference for whoever works on the code.
 | File | What's in it | Read it when |
 | --- | --- | --- |
 | [LIMITATIONS.md](LIMITATIONS.md) | What the site can't do yet, or does only approximately, and why | Before trusting a number, or before filing a bug |
-| [IDEAS.md](IDEAS.md) | What we'd like to build next: student reviews and rankings, course and professor feedback from Reddit, seat alerts, better degree planning | Picking the next thing to build |
-| [DECISIONS.md](DECISIONS.md) | Every judgment call, numbered by phase (D13 redesign and degree planner, D14 v0.4.0, D15 v0.5.0) | Wondering why something works the way it does |
+| [IDEAS.md](IDEAS.md) | What we'd like to build next: student reviews and rankings, course and professor feedback from Reddit, seat alerts, better degree planning, AP credit from CITL in the degree checklist (built in v0.6.0) | Picking the next thing to build |
+| [DECISIONS.md](DECISIONS.md) | Every judgment call, numbered by phase (D13 redesign and degree planner, D14 v0.4.0, D15 v0.5.0, D16 AP credit) | Wondering why something works the way it does |
 | [DESIGN.md](DESIGN.md) | Design audit, direction, tokens, shared components, the logo and navigation | Changing anything people see |
 | [DEGREE-DATA.md](DEGREE-DATA.md) | The `data/degrees/*.yaml` format and the catalog importer | Fixing or adding a degree program |
+| [AP-CREDIT.md](AP-CREDIT.md) | The `data/ap-credit/*.yaml` format, where CITL's tables are, and the corrections made to them | Adding next year's AP table or fixing one |
 | [PROGRESS.md](PROGRESS.md) | What was built and how it was checked, release by release, newest summary first | Checking what's been verified |
 | [../CHANGELOG.md](../CHANGELOG.md) | What changed in each version, newest first | Seeing what a release brought |
 | [../CONTRIBUTING.md](../CONTRIBUTING.md) | Branches, commits, pull requests, versions and how a release is made | Before your first pull request or release |
