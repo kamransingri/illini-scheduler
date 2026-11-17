@@ -1,0 +1,82 @@
+{
+ "data": {
+  "newSearch": {
+   "schools": {
+    "edges": [
+     {
+      "node": {
+       "city": "Urbana-Champaign",
+       "id": "U2Nob29sLTExMTI=",
+       "legacyId": 1112,
+       "name": "University Of Illinois at Urbana - Champaign",
+       "state": "IL"
+      }
+     },
+     {
+      "node": {
+       "city": "Springfield",
+       "id": "U2Nob29sLTExMTM=",
+       "legacyId": 1113,
+       "name": "University of Illinois at Springfield",
+       "state": "IL"
+      }
+     },
+     {
+      "node": {
+       "city": "Urbana-Champaign",
+       "id": "U2Nob29sLTU2NjU=",
+       "legacyId": 5665,
+       "name": "UIC College of Medicine",
+       "state": "IL"
+      }
+     },
+     {
+      "node": {
+       "city": "Chicago",
+       "id": "U2Nob29sLTU2Njc=",
+       "legacyId": 5667,
+       "name": "UIC College of Medicine",
+       "state": "IL"
+      }
+     },
+     {
+      "node": {
+       "city": "Peoria",
+       "id": "U2Nob29sLTU2Njg=",
+       "legacyId": 5668,
+       "name": "UIC College of Medicine",
+       "state": "IL"
+      }
+     },
+     {
+      "node": {
+       "city": "Rockford",
+       "id": "U2Nob29sLTU2NjY=",
+       "legacyId": 5666,
+       "name": "UIC College of Medicine",
+       "state": "IL"
+      }
+     },
+     {
+      "node": {
+       "city": "Chicago",
+       "id": "U2Nob29sLTExMTE=",
+       "legacyId": 1111,
+       "name": "University of Illinois Chicago",
+       "state": "IL"
+      }
+     },
+     {
+      "node": {
+       "city": "Champaign",
+       "id": "U2Nob29sLTEyMDEx",
+       "legacyId": 12011,
+       "name": "University of Illinois Urbana Champaign Law School",
+       "state": "IL"
+      }
+     }
+    ]
+   }
+  }
+ }
+}

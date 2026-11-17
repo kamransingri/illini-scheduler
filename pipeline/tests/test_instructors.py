@@ -40,7 +40,7 @@ def test_rmp_loop_with_instructors_outside_gpa_window(tmp_path):
         course_explorer.store(conn, term, c, s, "wade-course-catalog", "")
     df = gpa.load_gpa_csv(FIXTURES / "gpa" / "uiuc-gpa-dataset.csv")
     gpa.store(conn, gpa.compute(df, window_start="2026-sp"))  # tiny window: most matches fall outside it
-    school = json.loads((FIXTURES / "rmp" / "HANDMADE_school_search.json").read_text())
+    school = json.loads((FIXTURES / "rmp" / "school_search.json").read_text(encoding="utf-8"))
     empty = {"data": {"newSearch": {"teachers": {"edges": []}}}}
 
     def handler(request):
@@ -59,7 +59,7 @@ def test_rmp_covers_this_terms_and_past_instructors_after_next_terms(tmp_path):
     said "No RMP match" over her 104 ratings. In the fixtures Challen teaches only in Fall 2026 and Whittlesey only
     appears in the grade history."""
     conn, df = build(tmp_path)
-    school = json.loads((FIXTURES / "rmp" / "HANDMADE_school_search.json").read_text())
+    school = json.loads((FIXTURES / "rmp" / "school_search.json").read_text(encoding="utf-8"))
     people = {"Challen": ("Geoffrey", "Computer Science", "CS124"), "Whittlesey": ("Kim", "Mathematics", "MATH221")}
     searched = []
 
