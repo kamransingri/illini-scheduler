@@ -9,7 +9,8 @@ some of them change what the site is: today it's a static site with no backend (
 | 2 | Course and professor feedback from Reddit | No (a weekly job, like RMP) | Medium |
 | 3 | Seat alerts | Yes, for alerts with the tab closed | Medium |
 | 4 | Better degree planning | No | Medium to large |
-| 5 | Smaller improvements | No | Small |
+| 5 | AP credit from CITL in the degree checklist | No | Built in v0.6.0; IB and a change check left |
+| 6 | Smaller improvements | No | Small |
 
 ## 1. Student reviews and rankings
 
@@ -123,7 +124,84 @@ fed by the live job. A cheaper step first: let students "watch" a section so the
 - Check prerequisites against "My courses" instead of only showing the catalog's text.
 - A four-year plan: drag courses into terms and see which requirements each term finishes.
 
-## 5. Smaller improvements
+## 5. AP credit from CITL in the degree checklist
+
+> **Built in v0.6.0** as described below, for students entering 2024-2025, 2025-2026 and 2026-2027
+> ([AP-CREDIT.md](AP-CREDIT.md), DECISIONS D16). Still open: the weekly check that opens an issue when CITL's page
+> changes (step 1), IB scores and transfer credit ("Later"), and showing the year's general notes.
+
+**The idea:** a student coming from high school enters their AP exams and scores, and the degree checklist fills in
+the Illinois courses those scores count as. The mapping comes from the table CITL (the Center for Innovation in Teaching
+& Learning) publishes for each entering year. For example, the
+[current one](https://citl.illinois.edu/test-placement-proficiency/proficiency-testing/advanced-placement-ap-credit)
+covers students entering Summer 2026 to Spring 2027, and there are older pages for
+[2025-2026](https://citl.illinois.edu/advanced-placement-ap-credit-2025) and
+[2024-2025](https://citl.illinois.edu/test-placement-proficiency/proficiency-testing/advanced-placement-ap-credit/advanced-placement-ap-credit-1).
+
+What the site does today: My courses already has an "AP or transfer credit" status (`~c`, D13.14), which counts as
+completed. But the student has to know the mapping already: that a 4 in Calculus BC gives MATH 220 and MATH 231, or
+that a 4 in Chemistry gives the CHEM 102 and CHEM 104 lectures but no lab credit. Most incoming students don't know
+this, and they need it before they can see what's left in their degree.
+
+### What the CITL table holds
+
+For each exam (about 40), there is one row per score range:
+
+- **The score, sometimes with a condition.** Some rows depend on a sub score (Calculus BC, Music Theory aural), on
+  another exam (the English Literature row depends on the English Language score) or on the student's college
+  (Calculus AB and BC have separate rows for the Grainger College of Engineering).
+- **The courses credited.** These are either real courses (`PSYC 100`) or elective credit in a subject (`MATH 1--`,
+  `RHET 1--`). Elective credit counts as hours, but it isn't any particular course.
+- **The credit hours.** These can differ from the catalog's hours for the course: AP French credits FR 205 at 2 hours.
+- **A placement message,** for example "Placed into MATH 231", "Take the UIUC Physics Placement Test" or "Talk with
+  your advisor. If your program requires MATH 220 or MATH 221, you will not receive credit towards graduation for
+  MATH 234."
+
+The page lists only the scores that earn credit.
+
+### How it would work
+
+1. **Data.** Copy each year's table by hand into `data/ap-credit/<entering-year>.yaml`, with the source URL and the date
+   it was read, the way the degree files are made (D13.10). It's about 40 exams and changes once a year, so a scraper
+   isn't worth it. The pages also have mistakes a scraper would copy. For example, the 2024-2025 Calculus BC Grainger
+   row for a 5 credits only "MATH 220" but lists hours for MATH 231 too, and the German row for 4-5 credits GER 105
+   but lists hours for GER 211. A weekly check can compare the page with a stored hash and open an issue when it
+   changes.
+2. **Input.** Add an "AP exams" box to My courses where the student picks an exam and a score. A sub score or the other
+   English exam is asked for only when a row depends on it. The entering year defaults to the newest table. The college
+   comes from the program already chosen in the checklist, so the Calculus rows pick the Grainger version for
+   engineering programs without asking.
+3. **Store the exams, not the courses.** Keep the exams in the link as their own field (for example
+   `&a=CALCBC4,CHEM5,ENGLANG4` plus the entering year) and work out the courses from the table each time. This keeps
+   links short, keeps the source of each course visible, and corrects old links when a mistake in our table is fixed.
+   It also handles elective credit like `MATH 1--`, which the current `m=` format can't hold because it expects
+   three-digit numbers.
+4. **Counting.** Credited courses count as completed, like `~c` today, at CITL's hours rather than the catalog's.
+   Elective credit counts toward total hours and toward rules that accept any course in that subject and level, and
+   shows "rules unclear, ask your advisor" anywhere else, the same as D13.11. Chemistry credits the lectures only, so a
+   program that requires CHEM 103 still shows it as open.
+5. **Show it.** Each credited course carries a tag such as "AP Calculus BC, 4", and the placement messages appear word
+   for word in a short "From your AP scores" panel. Credited courses also count for prerequisites (D13.16): MATH 231's
+   "Check prerequisites" note goes away once MATH 220 is credited.
+
+### Things to get right
+
+- **It's an estimate until DARS says so.** Label it "expected AP credit". The official credit appears once the College
+  Board scores reach the university and the student runs a new DARS report (CITL says this on the page). The DARS paste
+  idea in section 4 would replace the estimate with the real record.
+- **Declining credit.** CITL notes that it's sometimes better to take the course than to accept the credit (for
+  example, Grainger recommends MATH 221 even with credit for MATH 220). Let students switch any credited course off.
+- **Overlapping credit rules.** The catalog says "Credit is not given for both MATH 221 and either MATH 220 or MATH 234",
+  and a 3 in Calculus gives MATH 234. Show the placement message instead of quietly counting MATH 234 toward a program
+  that needs MATH 220 or 221.
+- **The right year.** Policies follow the term the student entered, not the current year. Keep every year's file, and
+  ask "When did you start (or will you start) at Illinois?"
+- **Privacy.** Scores stay in the browser and the link like the rest of My courses, and are never sent anywhere. A
+  shared link shows them, so say that next to the share button.
+- **Later:** IB scores (the CITL page mentions the IB Programme too), and dual-credit or community college courses through the
+  university's transfer equivalency tables. Both have a different shape and are a separate step.
+
+## 6. Smaller improvements
 
 - Several named schedules side by side ("plan A", "plan B if CS 225 fills"), each with its own share link.
 - A "waitlist mode" in the schedule builder: plan around closed sections and see which ones to watch.
