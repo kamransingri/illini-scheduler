@@ -1,0 +1,48 @@
+# Near-real-time seat changes for the "Just opened" page. Every 10 minutes (every 30 while the daily crawl runs and
+# overnight), re-read the busiest next-term courses for ~6 minutes and force-push live.json + state.json to the
+# single-commit `live-seats` branch. The page polls live.json from raw.githubusercontent.com, so no site rebuild is
+# needed. pipeline/live_seats.py has the details.
+name: Live seats
+on:
+  schedule:
+    - cron: "*/10 0-3,9-23 * * *" # 3am to 10pm Central: every 10 minutes
+    - cron: "*/30 4-8 * * *" # overnight, while availability.yml crawls everything: every 30 minutes
+  workflow_dispatch:
+    inputs:
+      minutes:
+        description: "Time budget in minutes"
+        default: "6"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: live-seats
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: { python-version: "3.11", cache: pip }
+      - run: pip install -r requirements.txt
+      - name: Previous state from the live-seats branch
+        run: |
+          mkdir -p prev out
+          if git fetch -q --depth=1 origin live-seats; then git show FETCH_HEAD:state.json > prev/state.json || true; fi
+      - name: Re-read the busiest courses
+        run: python -m pipeline.live_seats --state prev/state.json --out out --minutes "${{ inputs.minutes || '6' }}"
+      - name: Publish (one commit, force-pushed, so the branch never grows)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd out
+          git init -q -b live-seats
+          git config user.name "illini-scheduler-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add live.json state.json
+          git commit -qm "live seats $(date -u +%FT%H:%MZ)"
+          git push -qf "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" live-seats
