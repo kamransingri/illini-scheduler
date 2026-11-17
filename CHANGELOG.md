@@ -5,9 +5,16 @@ Every release of the site and the data pipeline, newest first. The format follow
 CONTRIBUTING.md says what counts as a major, minor or patch change. Add a line under **Unreleased** in the same pull
 request as the change. `make release V=minor` (or `patch`) turns Unreleased into the next version, and the release
 workflow tags it and publishes the GitHub release once it reaches `main`. Before 0.2.0-beta.1 the version was 0.1.0:
-the first build, phases 0 to 12, recorded in docs/PROGRESS.md.
+the first build, phases 0 to 12 (its build log, docs/PROGRESS.md, was removed after 0.6.0 and is in git
+history).
 
 ## [Unreleased]
+
+### Changed
+
+- The backlog is now GitHub issues (#9 to #34), labelled by area (`degree-planner`, `seats`, `rmp`, `needs-backend`,
+  `needs-human`…); docs/IDEAS.md and docs/PROGRESS.md were removed (both are in git history). `.gitignore` also covers
+  virtualenvs, logs, editor folders and OS files.
 
 ## [0.6.0] - 2026-11-17
 
