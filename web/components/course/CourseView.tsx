@@ -309,7 +309,7 @@ export default function CourseView({ subject, number, meta }: { subject: string;
         </section>
 
         <SeatChanges course={course} />
-        <NotesBlock course={course} repoUrl={meta.repo_url} />
+        <ReviewBlock course={course} />
       </div>
     </div>
   );
@@ -365,25 +365,22 @@ function SeatChanges({ course }: { course: Course }) {
   );
 }
 
-function NotesBlock({ course, repoUrl }: { course: Course; repoUrl: string }) {
-  // The "Student note" issue form (.github/ISSUE_TEMPLATE/student-note.yml) with the course filled in; approved notes
-  // reach data/notes/ through pipeline/notes_intake.py.
+/** Students review a course on Rate My Professors, through their professor's page; the site has no form of its own. */
+function ReviewBlock({ course }: { course: Course }) {
   const code = `${course.subject} ${course.number}`;
-  const href = `${repoUrl}/issues/new?template=student-note.yml&title=${encodeURIComponent(`Student note: ${code}`)}&course=${encodeURIComponent(code)}`;
   return (
-    <section aria-labelledby="notes-h">
-      <SectionHeader
-        id="notes-h"
-        title="Student notes"
-        actions={
-          <a href={href} className="inline-flex items-center gap-1 font-semibold text-action underline" rel="noopener">
-            Suggest a note
-            <Icon name="external" />
-          </a>
-        }
-      />
-      {course.notes.length ? (
-        <ul className="max-w-3xl space-y-3">
+    <section aria-labelledby="review-h" data-testid="review-block">
+      <SectionHeader id="review-h" title="Took this course?" />
+      <p className="max-w-prose">
+        Review it on Rate My Professors: find your professor under{" "}
+        <a href="#professors" className="font-semibold text-action underline">
+          Professors
+        </a>
+        , open their row and use <span className="font-semibold">Rate them on RMP</span>. Pick {code} as the course, and your review shows up here with
+        theirs after the next nightly update.
+      </p>
+      {course.notes.length > 0 && (
+        <ul className="mt-4 max-w-3xl space-y-3">
           {course.notes.map((n, i) => (
             <li key={i}>
               <p className="text-sm text-muted">
@@ -394,8 +391,6 @@ function NotesBlock({ course, repoUrl }: { course: Course; repoUrl: string }) {
             </li>
           ))}
         </ul>
-      ) : (
-        <p className="text-muted">No student notes yet. Notes are added from GitHub issues after review.</p>
       )}
     </section>
   );
