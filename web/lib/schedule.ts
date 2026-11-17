@@ -27,21 +27,40 @@ export type CourseInput = {
   rmpPrior?: number | null;
 };
 
+/** Must-haves (hard rules: a schedule breaking one is never shown) and what matters to you (weights 0-3). */
 export type Prefs = {
   earliest: number | null; // hard: no meeting may start before this (minutes); 540 = "no 8am"
-  noFriday: boolean; // hard
+  latest: number | null; // hard: no meeting may end after this (minutes)
+  daysOff: number; // hard: weekdays to keep free (bit mask, M=1 ... F=16)
   blocked: { d: number; s: number; e: number }[]; // hard: work, practice
+  lunch: boolean; // hard: a 45-minute break between 11am and 2pm on every day with class
+  openOnly: boolean; // hard: skip sections that were Closed at the last check (locked ones are kept)
   includeSpecial: boolean; // allow sections flagged as restricted / special-program
-  weights: { gpa: number; rmp: number; early: number; daysOff: number; compact: number; walking: number };
+  softEarly: number; // "too early": a class starting before this counts against `early` (minutes)
+  softLate: number; // "too late": a class ending after this counts against `late` (minutes)
+  weights: { gpa: number; rmp: number; early: number; late: number; daysOff: number; compact: number; walking: number; open: number };
 };
 
 export const DEFAULT_PREFS: Prefs = {
   earliest: null,
-  noFriday: false,
+  latest: null,
+  daysOff: 0,
   blocked: [],
+  lunch: false,
+  openOnly: false,
   includeSpecial: false,
-  weights: { gpa: 2, rmp: 1, early: 1, daysOff: 1, compact: 1, walking: 1 },
+  softEarly: 600,
+  softLate: 1020,
+  weights: { gpa: 2, rmp: 1, early: 1, late: 0, daysOff: 1, compact: 1, walking: 1, open: 1 },
 };
+
+/** Lunch window and the shortest break that counts as lunch. */
+export const LUNCH = { from: 660, to: 840, min: 45 };
+
+/** Closed at the last check (Course Explorer's status; "Open (Restricted)" isn't closed). */
+export function isClosed(s: Section): boolean {
+  return /closed/i.test(s.status);
+}
 
 export type Schedule = { bundles: Bundle[]; score: number; stats: ScheduleStats };
 
@@ -146,7 +165,11 @@ function instructorStats(course: Course, secs: Section[], rmpPrior: number | nul
 export function prepareBundles(input: CourseInput, term: string, prefs: Prefs): Bundle[] {
   const block = input.course.terms[term];
   if (!block) return [];
-  const raw = buildBundles(block.sections, input.key, prefs.includeSpecial, input.locked).filter((b) => input.locked.every((crn) => !block.sections.some((s) => s.crn === crn) || b.some((s) => s.crn === crn)));
+  const raw = buildBundles(block.sections, input.key, prefs.includeSpecial, input.locked).filter(
+    (b) =>
+      input.locked.every((crn) => !block.sections.some((s) => s.crn === crn) || b.some((s) => s.crn === crn)) &&
+      (!prefs.openOnly || b.every((s) => !isClosed(s) || input.locked.includes(s.crn))),
+  );
   const byKey = new Map<string, Bundle>();
   for (const secs of raw) {
     const meetings = secs.flatMap((s) => sectionMeetings(s, input.key));
@@ -167,15 +190,21 @@ export function prepareBundles(input: CourseInput, term: string, prefs: Prefs): 
   return [...byKey.values()];
 }
 
+/** 1 when none of the bundle's sections was Closed at the last check. */
+export function bundleOpen(b: Pick<Bundle, "sections">): number {
+  return b.sections.some(isClosed) ? 0 : 1;
+}
+
 function bundleValue(b: Bundle, prefs: Prefs): number {
-  return prefs.weights.gpa * ((b.gpa ?? 3) - 2) / 2 + prefs.weights.rmp * (((b.rmp ?? 3) - 1) / 4) + (b.sections.every((s) => !/closed/i.test(s.status)) ? 0.01 : 0);
+  return prefs.weights.gpa * ((b.gpa ?? 3) - 2) / 2 + prefs.weights.rmp * (((b.rmp ?? 3) - 1) / 4) + (prefs.weights.open + 0.01) * bundleOpen(b);
 }
 
 function hardOk(meetings: Mtg[], prefs: Prefs): boolean {
   for (const m of meetings) {
     if (m.s === null) continue;
     if (prefs.earliest !== null && m.s < prefs.earliest) return false;
-    if (prefs.noFriday && m.d & 16) return false;
+    if (prefs.latest !== null && m.e !== null && m.e > prefs.latest) return false;
+    if (prefs.daysOff & m.d) return false;
     for (const bl of prefs.blocked) if (meetingsConflict(m, { d: bl.d, s: bl.s, e: bl.e, part: "1" })) return false;
   }
   return true;
@@ -244,19 +273,41 @@ export function scoreSchedule(st: ScheduleStats, bundles: Bundle[], prefs: Prefs
   const gpa = st.expectedGpa === null ? 0.5 : Math.max(0, Math.min(1, (st.expectedGpa - 2) / 2));
   const rmps = bundles.map((b) => b.rmp).filter((r): r is number => r !== null);
   const rmp = rmps.length ? (rmps.reduce((a, b) => a + b, 0) / rmps.length - 1) / 4 : 0.5;
-  const timed = bundles.flatMap((b) => b.meetings).filter((m) => m.s !== null);
+  const timed = bundles.flatMap((b) => b.meetings).filter((m) => m.s !== null && m.e !== null);
   let earlyDays = 0;
-  for (const [bit] of DAY_NAMES) if (timed.some((m) => m.d & bit && m.s! < 600)) earlyDays++;
-  const early = 1 - earlyDays / 5;
+  let lateDays = 0;
+  for (const [bit] of DAY_NAMES) {
+    if (timed.some((m) => m.d & bit && m.s! < prefs.softEarly)) earlyDays++;
+    if (timed.some((m) => m.d & bit && m.e! > prefs.softLate)) lateDays++;
+  }
   const daysOff = st.daysOff.length / 5;
   const compact = 1 - Math.min(st.gapMinutes / 900, 1);
   const walking = 1 - Math.min(st.backToBackFar / 3, 1);
-  return w.gpa * gpa + w.rmp * rmp + w.early * early + w.daysOff * daysOff + w.compact * compact + w.walking * walking;
+  const open = bundles.length ? bundles.reduce((a, b) => a + bundleOpen(b), 0) / bundles.length : 1;
+  return (
+    w.gpa * gpa + w.rmp * rmp + w.early * (1 - earlyDays / 5) + w.late * (1 - lateDays / 5) + w.daysOff * daysOff + w.compact * compact + w.walking * walking + w.open * open
+  );
+}
+
+/** True when every day with a timed class keeps a free stretch of LUNCH.min minutes inside the lunch window. */
+export function hasLunch(meetings: Pick<Mtg, "d" | "s" | "e">[]): boolean {
+  for (const [bit] of DAY_NAMES) {
+    if (!meetings.some((m) => m.s !== null && m.d & bit)) continue;
+    const day = meetings.filter((m) => m.s !== null && m.e !== null && m.d & bit && m.s < LUNCH.to && m.e > LUNCH.from).sort((a, b) => a.s! - b.s!);
+    let free = LUNCH.from;
+    let ok = false;
+    for (const m of day) {
+      if (m.s! - free >= LUNCH.min) ok = true;
+      free = Math.max(free, m.e!);
+    }
+    if (!ok && LUNCH.to - free < LUNCH.min) return false;
+  }
+  return true;
 }
 
 const popcount5 = (x: number) => [1, 2, 4, 8, 16].filter((b) => x & b).length;
 
-type Node = { b: Bundle; timed: Mtg[]; days: number; early: number };
+type Node = { b: Bundle; timed: Mtg[]; days: number; early: number; late: number; open: number };
 
 function farPairs(a: Mtg[], b: Mtg[]): number {
   let n = 0;
@@ -286,12 +337,13 @@ export function generate(inputs: CourseInput[], term: string, prefs: Prefs, limi
     p.bundles
       .map((b) => {
         const timed = b.meetings.filter((m) => m.s !== null && m.e !== null);
-        let days = 0, early = 0;
+        let days = 0, early = 0, late = 0;
         for (const m of timed) {
           days |= m.d;
-          if (m.s! < 600) early |= m.d;
+          if (m.s! < prefs.softEarly) early |= m.d;
+          if (m.e! > prefs.softLate) late |= m.d;
         }
-        return { b, timed, days, early };
+        return { b, timed, days, early, late, open: bundleOpen(b) };
       })
       .sort((x, y) => bundleValue(y.b, prefs) - bundleValue(x.b, prefs) || popcount5(x.days) - popcount5(y.days)),
   );
@@ -301,6 +353,9 @@ export function generate(inputs: CourseInput[], term: string, prefs: Prefs, limi
   // days / early days every bundle of a level uses (so any completion must use them too)
   const mustDays = levels.map((l) => l.reduce((acc, n) => acc & n.days, 31));
   const mustEarly = levels.map((l) => l.reduce((acc, n) => acc & n.early, 31));
+  const mustLate = levels.map((l) => l.reduce((acc, n) => acc & n.late, 31));
+  const maxOpen = levels.map((l) => Math.max(...l.map((n) => n.open)));
+  const nLevels = levels.length;
   // pair[i][j][a * |Lj| + b] = -1 if bundle a (level i) conflicts with bundle b (level j), else # rushed walks
   const pair: Int8Array[][] = levels.map(() => []);
   for (let i = 0; i < levels.length; i++)
@@ -331,10 +386,12 @@ export function generate(inputs: CourseInput[], term: string, prefs: Prefs, limi
   let truncated = false;
   const chosen: Node[] = [];
 
-  const bound = (depth: number, days: number, early: number, far: number, gW: number, gS: number, rN: number, rS: number) => {
+  const bound = (depth: number, days: number, early: number, late: number, open: number, far: number, gW: number, gS: number, rN: number, rS: number) => {
     for (let i = depth; i < levels.length; i++) {
       days |= mustDays[i];
       early |= mustEarly[i];
+      late |= mustLate[i];
+      open += maxOpen[i];
       if (maxG[i] >= 0) {
         gW += credits[i];
         gS += credits[i] * maxG[i];
@@ -346,16 +403,20 @@ export function generate(inputs: CourseInput[], term: string, prefs: Prefs, limi
     }
     const gpa = gW ? Math.max(0, Math.min(1, (gS / gW - 2) / 2)) : 0.5;
     const rmp = rN ? (rS / rN - 1) / 4 : 0.5;
-    return w.gpa * gpa + w.rmp * rmp + w.early * (1 - popcount5(early) / 5) + w.daysOff * ((5 - popcount5(days)) / 5) + w.compact + w.walking * (1 - Math.min(far / 3, 1));
+    return (
+      w.gpa * gpa + w.rmp * rmp + w.early * (1 - popcount5(early) / 5) + w.late * (1 - popcount5(late) / 5) + w.daysOff * ((5 - popcount5(days)) / 5) + w.compact +
+      w.walking * (1 - Math.min(far / 3, 1)) + w.open * (nLevels ? open / nLevels : 1)
+    );
   };
 
-  const rec = (i: number, days: number, early: number, far: number, gW: number, gS: number, rN: number, rS: number) => {
+  const rec = (i: number, days: number, early: number, late: number, open: number, far: number, gW: number, gS: number, rN: number, rS: number) => {
     if (truncated) return;
     if (++nodes % 2048 === 0 && Date.now() - t0 > budgetMs) {
       truncated = true;
       return;
     }
     if (i === levels.length) {
+      if (prefs.lunch && !hasLunch(chosen.flatMap((c) => c.timed))) return;
       total++;
       // cheap exact score; build the full stats object only for schedules that make the top list
       const gpa = gW ? Math.max(0, Math.min(1, (gS / gW - 2) / 2)) : 0.5;
@@ -372,8 +433,8 @@ export function generate(inputs: CourseInput[], term: string, prefs: Prefs, limi
         }
       }
       const score =
-        w.gpa * gpa + w.rmp * rmp + w.early * (1 - popcount5(early) / 5) + w.daysOff * ((5 - popcount5(days)) / 5) +
-        w.compact * (1 - Math.min(gap / 900, 1)) + w.walking * (1 - Math.min(far / 3, 1));
+        w.gpa * gpa + w.rmp * rmp + w.early * (1 - popcount5(early) / 5) + w.late * (1 - popcount5(late) / 5) + w.daysOff * ((5 - popcount5(days)) / 5) +
+        w.compact * (1 - Math.min(gap / 900, 1)) + w.walking * (1 - Math.min(far / 3, 1)) + w.open * (nLevels ? open / nLevels : 1);
       if (best.length < limit || score > worst) {
         const bundles = chosen.map((n) => n.b);
         const sched = { bundles, score, stats: scheduleStats(bundles, credits) };
@@ -397,16 +458,16 @@ export function generate(inputs: CourseInput[], term: string, prefs: Prefs, limi
       const g = n.b.gpa, r = n.b.rmp;
       const ngW = gW + (g !== null ? credits[i] : 0), ngS = gS + (g !== null ? credits[i] * g : 0);
       const nrN = rN + (r !== null ? 1 : 0), nrS = rS + (r ?? 0);
-      if (best.length >= limit && bound(i + 1, days | n.days, early | n.early, far + addFar, ngW, ngS, nrN, nrS) <= worst + 1e-9) continue;
+      if (best.length >= limit && bound(i + 1, days | n.days, early | n.early, late | n.late, open + n.open, far + addFar, ngW, ngS, nrN, nrS) <= worst + 1e-9) continue;
       chosen.push(n);
       idx.push(b);
-      rec(i + 1, days | n.days, early | n.early, far + addFar, ngW, ngS, nrN, nrS);
+      rec(i + 1, days | n.days, early | n.early, late | n.late, open + n.open, far + addFar, ngW, ngS, nrN, nrS);
       chosen.pop();
       idx.pop();
       if (truncated) return;
     }
   };
-  if (levels.length) rec(0, 0, 0, 0, 0, 0, 0, 0);
+  if (levels.length) rec(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
   const order = new Map(inputs.map((x, i) => [x.key, i]));
   for (const s of best) s.bundles.sort((a, b) => (order.get(a.course) ?? 0) - (order.get(b.course) ?? 0));
   return { schedules: best, total, truncated, emptyCourses, ms: Date.now() - t0 };
@@ -425,7 +486,9 @@ export function explainEmpty(input: CourseInput, term: string, prefs: Prefs): st
   }
   const visible = prefs.includeSpecial ? withLocks : withLocks.filter((b) => b.every((s) => !s.special || locked.includes(s.crn)));
   if (!visible.length) return "only special/restricted-looking sections are left (tick “Include special sections” to allow them)";
-  return "every section breaks one of your rules (no classes before, no Friday, or a blocked time)";
+  const open = prefs.openOnly ? visible.filter((b) => b.every((s) => !isClosed(s) || locked.includes(s.crn))) : visible;
+  if (!open.length) return "every section was Closed at the last check (turn off “Open sections only” to plan around a waitlist)";
+  return "every section breaks one of your must-haves (start or end time, days off, or a blocked time)";
 }
 
 /** Pairs of courses that can never be scheduled together under the current rules. */

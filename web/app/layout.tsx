@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Source_Sans_3 } from "next/font/google";
 import Link from "next/link";
-import CartCount from "@/components/CartCount";
+import Logo from "@/components/Logo";
+import SiteNav from "@/components/SiteNav";
+import { NAV } from "@/lib/nav";
 import "./globals.css";
 
 // Source Sans 3, the Illinois brand's workhorse face (brand.illinois.edu/visual-identity/typography: body copy, and
@@ -15,13 +17,6 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = { width: "device-width", initialScale: 1 };
 
-const NAV: [string, string][] = [
-  ["/", "Search"],
-  ["/geneds/", "Gen-eds"],
-  ["/degree/", "Degree"],
-  ["/opened/", "Just opened"],
-];
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={sourceSans.variable}>
@@ -29,35 +24,32 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:bg-white focus:p-2">
           Skip to content
         </a>
-        <header className="border-b-4 border-orange bg-navy text-white">
-          <nav className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-5 gap-y-1 px-4 py-3" aria-label="Main">
-            <Link href="/" className="mr-auto font-display text-lg font-bold no-underline">
-              Illini Scheduler
-            </Link>
-            {NAV.map(([href, label]) => (
-              <Link key={href} href={href} className={`whitespace-nowrap hover:underline ${href === "/" || href === "/opened/" ? "hidden sm:inline" : ""}`}>
-                {label}
-              </Link>
-            ))}
-            <Link href="/schedule/" className="whitespace-nowrap hover:underline">
-              Schedule
-              <CartCount />
-            </Link>
-          </nav>
-        </header>
+        <SiteNav />
         <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
           {children}
         </main>
         <footer className="border-t-4 border-orange bg-navy text-white">
-          <div className="mx-auto grid max-w-6xl gap-x-10 gap-y-4 px-4 py-8 text-sm leading-relaxed sm:grid-cols-[1fr_1.4fr]">
+          <div className="mx-auto grid max-w-6xl gap-x-10 gap-y-6 px-4 py-8 text-sm leading-relaxed sm:grid-cols-2 lg:grid-cols-[1.1fr_0.7fr_1.4fr]">
             <div>
-              <p className="text-base font-bold">Illini Scheduler</p>
-              <p className="mt-1">
+              <Logo />
+              <p className="mt-3">
                 Unofficial and not affiliated with the University of Illinois. Data comes from public sources and can be out of date: confirm sections,
                 seats and restrictions in Self-Service before registering.
               </p>
             </div>
-            <div>
+            <nav aria-label="Footer">
+              <p className="font-semibold">Pages</p>
+              <ul className="mt-1 space-y-0.5">
+                {NAV.map((n) => (
+                  <li key={n.href}>
+                    <Link className="underline-offset-2 hover:text-orange hover:underline" href={n.href}>
+                      {n.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <div className="sm:col-span-2 lg:col-span-1">
               <p className="font-semibold">Where the data comes from</p>
               <p className="mt-1">
                 Course Explorer (sections, seats, final exams), the{" "}

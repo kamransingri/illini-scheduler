@@ -12,10 +12,10 @@ test("an impossible lock is explained and the schedule is marked incomplete", as
   await expect(page.getByTestId("cart").locator("li")).toHaveCount(2);
   const lec = page.getByLabel("Lock Lecture for MATH 231");
   const dis = page.getByLabel("Lock Discussion for MATH 231");
-  // wait until course data has loaded and the selects list sections
-  // (count 0 = not rendered yet, 1 = only "any section"); poll until real sections are listed
-  await expect.poll(() => dis.locator("option").count(), { timeout: 15_000 }).toBeGreaterThan(1);
-  await expect.poll(() => lec.locator("option").count(), { timeout: 15_000 }).toBeGreaterThan(1);
+  // wait until course data has loaded and the selects list real sections (0 options = not rendered yet, 1 = only
+  // "any section"; a count check alone raced on GitHub's runners)
+  await expect(dis.locator("option", { hasText: "CRN" }).first()).toBeAttached({ timeout: 15_000 });
+  await expect(lec.locator("option", { hasText: "CRN" }).first()).toBeAttached({ timeout: 15_000 });
   // lock a discussion first, then a lecture from a different group (the lecture list isn't filtered)
   const disFirst = (await dis.locator("option").allTextContents()).find((o) => o.includes("CRN"))!;
   await dis.selectOption({ label: disFirst });
@@ -50,14 +50,15 @@ test("opening a share link doesn't overwrite your own list", async ({ page }) =>
 
 test("rules survive reload", async ({ page }) => {
   await page.goto("./schedule/?c=CS124&t=2027-sp");
-  await page.getByLabel("No Friday classes").check();
+  await page.locator('label[title="Keep Friday free"]').click();
+  await expect(page.getByLabel("Keep Friday free")).toBeChecked();
   await page.goto("./schedule/");
-  await expect(page.getByLabel("No Friday classes")).toBeChecked();
+  await expect(page.getByLabel("Keep Friday free")).toBeChecked();
 });
 
 test("Enter in the builder's search adds the course instead of leaving", async ({ page }) => {
   await page.goto("./schedule/?c=CS124&t=2027-sp");
-  await page.getByLabel("Search courses or instructors").fill("stat 200");
+  await page.getByLabel(/Search courses/).fill("stat 200");
   await expect(page.getByRole("listbox")).toBeVisible();
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/schedule/);
@@ -66,7 +67,7 @@ test("Enter in the builder's search adds the course instead of leaving", async (
 
 test("gen-ed filters survive Back", async ({ page }) => {
   await page.goto("./geneds/");
-  await page.getByText("Humanities: Hist & Phil", { exact: true }).first().click();
+  await page.getByText("Hist & Phil", { exact: true }).first().click();
   await expect(page).toHaveURL(/codes=HP/);
   const count = await page.getByText(/^\d+ courses?$/).textContent();
   await page.locator('[data-testid="gened-results"] a').first().click();

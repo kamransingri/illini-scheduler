@@ -1,6 +1,19 @@
 # Progress
 
-## Final summary
+Newest first at the top: the current state, then the build log in the order it happened.
+
+## Current state (v0.4.0, 2026-11-17)
+
+- **Site:** 7,147 static pages (7,138 course pages). Course search by code, title, nickname, professor or CRN; course
+  pages built around professors; gen-ed finder; degree checklist for 171 programs; Just opened, near real time;
+  schedule builder with must-haves, priorities and presets.
+- **Data:** nightly build at 09:00 UTC; every course's seats read daily (04:17 UTC); the busiest next-term courses
+  re-read about every 10 minutes by `live-seats.yml` (starts once this release is on `main`).
+- **Checks on the full build (Windows laptop, one Playwright worker):** pytest 189/189, Vitest 97/97, ruff, mypy,
+  ESLint and tsc clean, Playwright 50/51 (the Windows-only lower-case URL test, which passes on GitHub's Linux runners).
+- **Not done yet:** see [LIMITATIONS.md](LIMITATIONS.md) and [IDEAS.md](IDEAS.md).
+
+## Original build summary (2026-11-04)
 
 **Live URL:** https://kamransingri.github.io/illini-scheduler/ (deployed by run 41774876513 on 2026-11-04; nightly
 refresh at 09:00 UTC). **Run locally:** `pip install -r requirements.txt && (cd web && npm ci) && make data && make build
@@ -469,7 +482,7 @@ Just opened 0.88/1.00/1.00 (performance/accessibility/best practices); no sidewa
 `data/degrees/finance-data-science.yaml` from https://catalog.illinois.edu/undergraduate/bus/finance-data-science-bs/
 (2026-2027, read 2026-11-16) plus the campus gen-ed rules from
 https://catalog.illinois.edu/general-information/degree-general-education-requirements/ and
-https://gened.illinois.edu/requirements/; schema in `data/degrees/README.md`; loader and validator
+https://gened.illinois.edu/requirements/; schema in `docs/DEGREE-DATA.md`; loader and validator
 `pipeline/degrees.py` (`python -m pipeline.degrees` checks the files); `export.py` writes `degrees/index.json` and
 `degrees/<id>.json` (19 groups, 1,063 courses, 0 unknown codes, 282 KB). pytest 175/175 (9 new: real files valid,
 every schema error reported, double-counting rules, alternatives and sequences, FIN 400-499 with exclusions and caps,
@@ -535,3 +548,49 @@ DB + export), Vitest 84/84 (overlap, different days, back-to-back, make-up slots
   Playwright on the full build, one worker: 41 passed, 2 failed (the Windows-only lower-case URL test, and a new
   degree test that counted options before they loaded, since fixed). After the last changes the affected specs
   (gen-ed, degree, schedule, professors: 21 tests) were rerun on a light build and all pass.
+
+## Repo cleanup (2026-11-16)
+
+- Docs moved into `docs/` (DECISIONS, DESIGN, PROGRESS, the degree data format as DEGREE-DATA.md, and the new
+  LIMITATIONS and IDEAS), with an index in `docs/README.md` and links from the main README. References in code
+  comments point at the new paths.
+- Removed the early `screenshots/` folder (2026-11-04 pages, superseded by `docs/screenshots/before/`).
+- Screenshots: `after/` retaken for v0.3.0 (one typeface, new footer, gen-ed table) and `degree` added to the
+  script's default pages. The script now caps a shot at 4,000 px tall on desktop and 8,000 px on a phone, and every
+  PNG is reduced to 256 colours: tracked screenshots went from about 27 MB to 4.4 MB. Git history still holds the old
+  images; rewriting history to drop them would need a force push to main, so it wasn't done.
+
+## v0.4.0 (2026-11-17)
+
+The owner asked for: better docs; search by CRN; a better structured home page; a schedule builder where every filter
+and "what matters to you" is properly customisable; a nav with two words per item and dividers; Reddit feedback in
+the ideas doc; a logo that doesn't look generated; a real-time Just opened page; and gen-ed finder fixes (the "Counts
+for" column, no schedule filters, open sections shown by default). Decisions: DECISIONS.md D14.1 to D14.12.
+
+- **Search by CRN** (D14.1): `crns.json` (25,010 sections of Spring 2027 and Fall 2026), loaded only for digit
+  queries. Course pages open on `#crn-…` with the section highlighted; in the builder a CRN adds the course with that
+  section locked.
+- **Just opened, near real time** (D14.2 to D14.4): `pipeline/live_seats.py` + `.github/workflows/live-seats.yml`, a
+  single-commit `live-seats` branch, and `web/lib/live.ts` polling it every 2 minutes. Tried locally against Course
+  Explorer with a 15-second budget: 8 busy courses re-read, 111 real status changes found (the local daily file was a
+  day old). The page shows when each change was found, whether the section is still open, CRN copy, "Add this
+  section", "Only my schedule's courses" and optional notifications; without the live file it says "Daily".
+- **Navigation and logo** (D14.7, D14.8): Course search, Gen-ed finder, Degree checklist, Just opened, Schedule builder,
+  with dividers, icons and the current page marked; a Menu button below 1024px. New mark and wordmark, new favicon.
+- **Home page** (D14.9): search with CRNs, build numbers, the live Just opened panel, the four other pages with the
+  question each answers, your saved courses and "How it works".
+- **Gen-ed finder** (D14.5, D14.6): time filters removed, open sections on by default, short category chips one per
+  line in "Counts for", the table fits its box at 1280px (measured: 846 of 846 px).
+- **Schedule builder** (D14.10 to D14.12): Must-haves (start and end times, any days off, lunch break, open sections
+  only, special sections, blocked times) and What matters to you (8 sliders labelled Off to High, custom "too early" and
+  "too late" times, 5 presets); results update as you change things after the first run, with six numbers per schedule,
+  seat status per section, days off shaded and a table comparing the top schedules. Old share links still open.
+- **Docs:** README restructured around the pages; docs index with releases; LIMITATIONS, IDEAS (new section on Reddit
+  feedback), DESIGN Part 4, DEGREE-DATA example; screenshots in `after/` retaken.
+- **Tests added:** `pipeline/tests/test_live_seats.py` (busy-course choice and rotation, one event per change, stop on
+  pushback, the published file), the CRN index in `test_export.py`, `web/tests/unit/crn.test.ts` (CRN search, merging
+  live and daily events), new schedule tests (open-only, open weight, late weight, lunch break), prefs round trip with
+  the new fields and old links, and `web/tests/e2e/v040.spec.ts` (CRN search to course page and into the builder, nav,
+  live and daily states of Just opened, gen-ed defaults and chips, builder must-haves surviving reload).
+- **Fixed on the way:** two e2e tests read the URL once instead of waiting for it to update (a race on slow runs), and
+  the hand-checked degree file pointed at an old schema path.

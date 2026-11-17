@@ -42,11 +42,28 @@ import { DEFAULT_PREFS } from "@/lib/schedule";
 
 describe("prefs in the URL", () => {
   it("round trip", () => {
-    const p = { ...DEFAULT_PREFS, earliest: 540, noFriday: true, includeSpecial: true, blocked: [{ d: 10, s: 900, e: 1080 }], weights: { ...DEFAULT_PREFS.weights, gpa: 3, walking: 0 } };
+    const p = {
+      ...DEFAULT_PREFS,
+      earliest: 540,
+      latest: 1080,
+      daysOff: 17,
+      lunch: true,
+      openOnly: true,
+      includeSpecial: true,
+      softEarly: 540,
+      softLate: 960,
+      blocked: [{ d: 10, s: 900, e: 1080 }],
+      weights: { ...DEFAULT_PREFS.weights, gpa: 3, walking: 0, late: 2, open: 3 },
+    };
     const params = new URLSearchParams();
     prefsToParams(p, params);
     expect(hasPrefParams(params)).toBe(true);
     expect(prefsFromParams(params)).toEqual(p);
+  });
+  it("links from before v0.4.0 still open: nf=1 is Friday off, 6-digit weights keep the new ones at default", () => {
+    const p = prefsFromParams(new URLSearchParams("nf=1&w=300000"));
+    expect(p.daysOff).toBe(16);
+    expect(p.weights).toEqual({ ...DEFAULT_PREFS.weights, gpa: 3, rmp: 0, early: 0, daysOff: 0, compact: 0, walking: 0 });
   });
   it("defaults add nothing", () => {
     const params = new URLSearchParams();

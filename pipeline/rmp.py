@@ -1,6 +1,6 @@
 """Rate My Professors client (unofficial GraphQL endpoint used by ratemyprofessors.com).
 
-Rules (DECISIONS.md D3.x): look up the UIUC school id through RMP's own school search (never hard-coded),
+Rules (docs/DECISIONS.md D3.x): look up the UIUC school id through RMP's own school search (never hard-coded),
 max 2 concurrent requests with a 0.5 s delay, a User-Agent naming the project, responses cached 7 days in
 data/raw/rmp/, and only short review snippets (<= 200 chars, 3 per instructor) are kept. Any failure makes
 the client report "unavailable" so the pipeline still finishes and the UI shows "RMP unavailable".

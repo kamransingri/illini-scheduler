@@ -87,6 +87,23 @@ export const GENED_NAMES: Record<string, string> = {
   BSC: "Behavioral Sciences",
 };
 
+/** Short names for tight spots (the gen-ed finder's chips and its "Counts for" column); GENED_NAMES has the full ones. */
+export const GENED_SHORT: Record<string, string> = {
+  ACP: "Advanced Comp",
+  COMP1: "Composition I",
+  US: "US Minority",
+  WCC: "Western",
+  NW: "Non-Western",
+  HP: "Hist & Phil",
+  LA: "Lit & Arts",
+  PS: "Physical Sci",
+  LS: "Life Sci",
+  QR1: "Quant Reasoning I",
+  QR2: "Quant Reasoning II",
+  SS: "Social Sci",
+  BSC: "Behavioral Sci",
+};
+
 export const GENED_CATEGORY_NAMES: Record<string, string> = {
   ACP: "Advanced Composition",
   CS: "Cultural Studies",
