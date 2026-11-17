@@ -315,12 +315,16 @@ class RmpClient:
 
     def find_school(self, name: str = SCHOOL_NAME) -> str:
         data = self._post(SCHOOL_QUERY, {"query": {"text": name}})
-        edges = data["data"]["newSearch"]["schools"]["edges"]
-        for e in edges:
-            n = e["node"]
-            if "urbana" in (n.get("name", "") + " " + n.get("city", "")).lower() and n.get("state") == "IL":
-                self.school_id = n["id"]
-                return str(n["id"])
+        nodes = [e["node"] for e in data["data"]["newSearch"]["schools"]["edges"]]
+        urbana = [n for n in nodes if n.get("state") == "IL"
+                  and "urbana" in (n.get("name", "") + " " + n.get("city", "")).lower()]
+        # RMP also lists "UIC College of Medicine" in Urbana-Champaign and the law school; the university itself is the
+        # one with Urbana in its name and no college or school after it, wherever RMP puts it in the list.
+        urbana.sort(key=lambda n: ("urbana" not in n.get("name", "").lower(),
+                                   bool(re.search(r"\b(college|school)\b", n.get("name", ""), re.I))))
+        if urbana:
+            self.school_id = str(urbana[0]["id"])
+            return self.school_id
         self.error = "UIUC not found in RMP school search"
         raise RmpUnavailable(self.error)
 

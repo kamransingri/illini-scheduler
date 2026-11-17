@@ -1,0 +1,185 @@
+{
+ "data": {
+  "newSearch": {
+   "teachers": {
+    "edges": [
+     {
+      "node": {
+       "avgDifficulty": 3.5,
+       "avgRating": 2.2,
+       "department": "Computer Science",
+       "firstName": "Colleen",
+       "id": "VGVhY2hlci0yNzc0MzYy",
+       "lastName": "Lewis",
+       "legacyId": 2774362,
+       "numRatings": 38,
+       "ratings": {
+        "edges": [
+         {
+          "node": {
+           "class": "CS105",
+           "comment": "Lectures are worthless not helpful at all. Attendance mandatory and class is entirely self taught. ",
+           "date": "2026-05-13 05:27:08 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS105",
+           "comment": "This class is the easiest thing ever if you have a working brain. The practice questions are EXACTLY like the exam questions if you do enough. She is a great professor, and is always open to criticism. She goes the extra mile to making videos for confused CS105 students. The only students complaining are the ones who don't wanna show up to class.",
+           "date": "2026-05-12 17:07:19 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS105",
+           "comment": "Bad delivery of material, had to self study everything anyways, but wasted time being had to sit in the mandatory lecture ",
+           "date": "2026-05-10 21:44:55 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS105",
+           "comment": "the mandatory lectures were about as helpful as watching paint dry",
+           "date": "2026-05-10 21:43:19 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS105",
+           "comment": "My main problem with this course is that the self-readings cover a good chunk of topics, yet the lectures will only cover a small portion of the reading. Also, the discussions/labs will be way harder than the lectures and homework. The bright side is that you can retake any midterm, but prepare to study a lot for them and the final exam.",
+           "date": "2026-05-10 02:19:28 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS105",
+           "comment": "Attendance should not be mandatory. Everything talked about in lecture is not on the exam. Always asks  us to boo her when she makes a mistake in lecture. She says yo atleast 10,000 times during lecture. You need to self learn everything if you want a good grade in this class. ",
+           "date": "2026-05-08 04:45:20 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS105",
+           "comment": "I would highly recommend taking an alternative class if possible because genuinely what is this. She doesn't even know what she's doing. The lectures are absolutely not helpful at all when it's mandatory which I don't understand because I had to self-learn anyway. The questions in the exams are so different from what we learned in lectures. ",
+           "date": "2026-04-30 02:12:07 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS105",
+           "comment": "Colleen does not know what she's doing. the lectures are no help at all and there is limited resources to help you. we have 4 exams and a final asking the most irrelevant questions at times making you lose points for a question about the internet. coding questions on the exam are hard to do with no help or guidance from the prof during lecture",
+           "date": "2026-04-30 01:23:08 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS105",
+           "comment": "Attendance for this class should not be mandatory, the content in lecture did not match the quiz content at all, had to self teach regardless.",
+           "date": "2026-04-07 03:43:43 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS105",
+           "comment": "Everything you learn will be from the Zybooks not lecture",
+           "date": "2026-04-01 05:06:37 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS105",
+           "comment": "The lectures were so unhelpful they should not have been mandatory. Avoid if possible!",
+           "date": "2026-03-30 22:31:41 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS105",
+           "comment": "Hopefully they find a new professor for this mandatory course",
+           "date": "2026-03-30 22:23:43 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS105",
+           "comment": "wouldn't wish this class on my worst enemy",
+           "date": "2026-03-30 22:21:54 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS105",
+           "comment": "Worst prof ever. Mandatory lectures and points off for checking your phone. The lecture was not even helpful, and when all the students asked for live coding she did it once and did it wrong. Worst 2 hours of my week.",
+           "date": "2026-02-23 02:30:20 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS105",
+           "comment": "Yo, so if you're reading this and yo let me tell you you might be the most patient person on earth but, yo, I can't emphasize this enough: Yo gone get sick of the word \"yo\" if you take this class.",
+           "date": "2026-02-06 20:45:12 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS105",
+           "comment": "Colleen's class made me reconsider taking more CS courses. The material wasn't very difficult, but lectures were often disorganized and hard to follow. Attendance was emphasized more than clear instruction. Many resources were mentioned, though few were truly helpful for understanding the material. (RMP doesn't support free speech)",
+           "date": "2025-12-25 21:27:31 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS105",
+           "comment": "Basically needed to teach myself everything to actually learn. This course is very test-heavy and has lots of homework. The professor does not listen to feedback.",
+           "date": "2025-12-15 21:52:30 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS105",
+           "comment": "Probably the worst professor at UIUC. Lectures aren't worth anything so get ready to teach yourself everything. She's also really annoying and will say 'Yo' about 99 times a lecture. Take stat 107 this is the worst class ever taught by the worst professor ever.",
+           "date": "2025-12-08 22:01:16 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS105",
+           "comment": "She's really goooood, best professor",
+           "date": "2025-11-17 22:10:36 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS105",
+           "comment": "She's great",
+           "date": "2025-11-17 22:09:19 +0000 UTC"
+          }
+         }
+        ]
+       },
+       "teacherRatingTags": [],
+       "wouldTakeAgainPercent": 26.3158
+      }
+     },
+     {
+      "node": {
+       "avgDifficulty": 0,
+       "avgRating": 0,
+       "department": "East Asian Studies",
+       "firstName": "Alesha",
+       "id": "VGVhY2hlci0yOTgxMDAz",
+       "lastName": "Lewis",
+       "legacyId": 2981003,
+       "numRatings": 0,
+       "ratings": {
+        "edges": []
+       },
+       "teacherRatingTags": [],
+       "wouldTakeAgainPercent": -1
+      }
+     }
+    ]
+   }
+  }
+ }
+}

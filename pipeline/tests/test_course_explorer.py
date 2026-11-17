@@ -43,14 +43,26 @@ def test_csv_fixture_parses_without_warnings(term, subj, num):
 
 
 @pytest.mark.parametrize("term,subj,num", REF)
-def test_xml_fixture_matches_csv(term, subj, num):
-    course, secs = parse_course_xml((XML / f"HANDMADE_{term}_{subj}{num}_cascade.xml").read_bytes())
+def test_real_xml_matches_the_csv(term, subj, num):
+    """The saved Course Explorer XML (fixtures/README.md) against Wade's CSV for the same term: same course, same
+    sections, times, types and links. The CSV snapshot is older, so the XML may name an instructor or a room where the
+    CSV still had none ("Location Pending"); an instructor or room the CSV does name must match."""
+    course, secs = parse_course_xml((XML / f"{term}_{subj}{num}_cascade.xml").read_bytes())
     c2, secs2 = _course(term, subj, num)
     assert (course.term, course.subject, course.number, course.title) == (c2.term, c2.subject, c2.number, c2.title)
     assert course.gened_codes == c2.gened_codes
     key = lambda s: (s.crn, s.section_code, s.type, s.link_group, s.component,  # noqa: E731
-                     [(m.start, m.end, m.days, m.building) for m in s.meetings], s.instructors)
+                     [(m.start, m.end, m.days) for m in s.meetings])
     assert sorted(map(key, secs)) == sorted(map(key, secs2))
+    old = {s.crn: s for s in secs2}
+    for s in secs:
+        if old[s.crn].instructors:
+            assert s.instructors == old[s.crn].instructors, s.crn
+        when = lambda m: (m.start or -1, m.end or -1, m.days)  # noqa: E731
+        for m, m2 in zip(sorted(s.meetings, key=when), sorted(old[s.crn].meetings, key=when), strict=True):
+            if m2.building not in ("", "Location Pending"):
+                assert m.building == m2.building, s.crn
+    assert any(s.instructors for s in secs)
 
 
 def test_cs124_has_lecture_and_crns():
@@ -114,7 +126,7 @@ def test_prereq():
 
 
 def test_schedule_index():
-    subs = parse_index_xml((XML / "HANDMADE_schedule_2027_spring.xml").read_bytes(), "subject")
+    subs = parse_index_xml((XML / "schedule_2027_spring.xml").read_bytes(), "subject")
     assert ("CS", "Computer Science") in subs
 
 
@@ -148,7 +160,7 @@ def test_api_crawler_retries_caches_and_404(tmp_path):
     from pipeline.course_explorer import ApiCrawler
 
     calls = {"n": 0}
-    body = (XML / "HANDMADE_2027-sp_CS124_cascade.xml").read_bytes()
+    body = (XML / "2027-sp_CS124_cascade.xml").read_bytes()
 
     def handler(request):
         calls["n"] += 1
@@ -187,8 +199,8 @@ def test_crawl_tolerates_a_few_failed_course_pages(tmp_path, monkeypatch):
 
     import pipeline.course_explorer as ce
 
-    cs124 = (XML / "HANDMADE_2027-sp_CS124_cascade.xml").read_bytes()
-    term_xml = (XML / "HANDMADE_schedule_2027_spring.xml").read_bytes()
+    cs124 = (XML / "2027-sp_CS124_cascade.xml").read_bytes()
+    term_xml = (XML / "schedule_2027_spring.xml").read_bytes()
     subj = (b'<ns2:subject xmlns:ns2="http://rest.cis.illinois.edu" id="CS"><courses>'
             b'<course id="124">x</course><course id="999">y</course></courses></ns2:subject>')
 
@@ -222,7 +234,7 @@ def test_crawl_stops_early_when_most_pages_are_still_generating(tmp_path, monkey
 
     import pipeline.course_explorer as ce
 
-    term_xml = (XML / "HANDMADE_schedule_2027_spring.xml").read_bytes()
+    term_xml = (XML / "schedule_2027_spring.xml").read_bytes()
     courses = b"".join(b'<course id="%d">x</course>' % (100 + i) for i in range(40))
     head = b'<ns2:subject xmlns:ns2="http://rest.cis.illinois.edu" id="CS"><courses>'
     subj = head + courses + b"</courses></ns2:subject>"

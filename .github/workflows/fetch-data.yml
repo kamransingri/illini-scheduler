@@ -1,12 +1,8 @@
-# Fallback for sessions whose network blocks Course Explorer / RMP: GitHub runners
-# have open internet. Runs the raw fetchers and commits fixtures/ + data/raw snapshots.
+# Refreshes the real Course Explorer and RMP responses the tests use (fixtures/README.md), from GitHub's runners.
+# After a refresh, update the date in fixtures/README.md.
 name: Fetch data
 on:
   workflow_dispatch:
-    inputs:
-      subjects:
-        description: "Comma list of subjects, or 'all'"
-        default: "CS,MATH,STAT,RHET"
 permissions:
   contents: write
 jobs:
@@ -17,8 +13,8 @@ jobs:
       - uses: actions/setup-python@v7
         with: { python-version: "3.11" }
       - run: pip install -r requirements.txt
-      - name: Fetch Course Explorer XML + RMP samples
-        run: python -m pipeline.fetch_fixtures --subjects "${{ inputs.subjects }}"
+      - name: Fetch Course Explorer XML + RMP answers for the tests
+        run: python -m pipeline.fetch_fixtures
       - name: Commit fixtures
         run: |
           git config user.name "illini-scheduler-bot"

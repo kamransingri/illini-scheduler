@@ -59,9 +59,9 @@ Every judgment call made during the autonomous build, newest phase last.
   decodes line by line.
 - **D1.9 Handmade XML fixtures.** `fixtures/course-explorer/HANDMADE_*.xml` are generated from the real CSV slice
   in the documented XML layout so the XML parser is tested offline; a test asserts the XML and CSV parsers agree.
+  Replaced by real saved responses on 2026-11-17 (fixtures/README.md, #32).
 
 ## Phase 2 — GPA and grade disparity
-
 - **D2.1 Real columns** of `gpa/uiuc-gpa-dataset.csv`: Year, Term, YearTerm, Subject, Number, Course Title,
   Sched Type, A+, A, A-, B+, B, B-, C+, C, C-, D+, D, D-, F, W, Students, Primary Instructor. 110,326 rows,
   terms 2005-fa to 2026-su (upstream updated 2026-10-29). `Students` = graded students (W not included).
@@ -94,7 +94,8 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D3.5 RMP.** Implemented per spec (school id from RMP's own search, exact last name + compatible first name +
   plausible department, two-person initial collisions are not guessed, 2 concurrent / 0.5 s delay, 7-day cache,
   3 snippets ≤ 200 chars; who is looked up, the cache and the matching changed in D18). The host is blocked here, so `meta.rmp_status = unavailable` and the UI links to RMP's
-  search page. Tests use HANDMADE fixtures with invented placeholder values.
+  search page. Tests used HANDMADE fixtures with invented placeholder values until 2026-11-17; now real
+  saved answers (fixtures/README.md), which showed that RMP sends no rating tags any more.
 - **D3.6 Teachers Ranked as Excellent.** Instructor-role rows since Fall 2020 are joined on (last name, course
   number, compatible initial) among instructors who taught that number; only unique matches get a badge.
 
