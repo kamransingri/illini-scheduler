@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-16T21:56:35+00:00",
+ "built_at": "2026-11-17T01:57:21+00:00",
  "current_term": "2026-fa",
  "next_term": "2027-sp",
  "terms": {
@@ -91,8 +91,8 @@
    "primary_matched": 22,
    "primary_names": 23,
    "primary_gpa_pct": 95.7,
-   "rmp_matched": 17,
-   "rmp_pct": 73.9
+   "rmp_matched": 18,
+   "rmp_pct": 78.3
   },
   "AE": {
    "gpa_matched": 30,
@@ -241,8 +241,8 @@
    "primary_matched": 17,
    "primary_names": 21,
    "primary_gpa_pct": 81.0,
-   "rmp_matched": 15,
-   "rmp_pct": 71.4
+   "rmp_matched": 16,
+   "rmp_pct": 76.2
   },
   "ARTE": {
    "gpa_matched": 3,
@@ -451,8 +451,8 @@
    "primary_matched": 15,
    "primary_names": 22,
    "primary_gpa_pct": 68.2,
-   "rmp_matched": 9,
-   "rmp_pct": 40.9
+   "rmp_matched": 10,
+   "rmp_pct": 45.5
   },
   "CB": {
    "gpa_matched": 0,
@@ -481,8 +481,8 @@
    "primary_matched": 45,
    "primary_names": 50,
    "primary_gpa_pct": 90.0,
-   "rmp_matched": 31,
-   "rmp_pct": 62.0
+   "rmp_matched": 32,
+   "rmp_pct": 64.0
   },
   "CGGE": {
    "gpa_matched": 2,
@@ -511,8 +511,8 @@
    "primary_matched": 54,
    "primary_names": 67,
    "primary_gpa_pct": 80.6,
-   "rmp_matched": 34,
-   "rmp_pct": 50.0
+   "rmp_matched": 35,
+   "rmp_pct": 51.5
   },
   "CHIN": {
    "gpa_matched": 3,
@@ -541,8 +541,8 @@
    "primary_matched": 22,
    "primary_names": 28,
    "primary_gpa_pct": 78.6,
-   "rmp_matched": 8,
-   "rmp_pct": 27.6
+   "rmp_matched": 10,
+   "rmp_pct": 34.5
   },
   "CIC": {
    "gpa_matched": 0,
@@ -601,8 +601,8 @@
    "primary_matched": 133,
    "primary_names": 160,
    "primary_gpa_pct": 83.1,
-   "rmp_matched": 85,
-   "rmp_pct": 49.1
+   "rmp_matched": 87,
+   "rmp_pct": 50.3
   },
   "CSE": {
    "gpa_matched": 16,
@@ -671,8 +671,8 @@
    "primary_matched": 97,
    "primary_names": 106,
    "primary_gpa_pct": 91.5,
-   "rmp_matched": 66,
-   "rmp_pct": 56.9
+   "rmp_matched": 67,
+   "rmp_pct": 57.8
   },
   "ECON": {
    "gpa_matched": 34,
@@ -721,8 +721,8 @@
    "primary_matched": 32,
    "primary_names": 42,
    "primary_gpa_pct": 76.2,
-   "rmp_matched": 20,
-   "rmp_pct": 43.5
+   "rmp_matched": 21,
+   "rmp_pct": 45.7
   },
   "ENGL": {
    "gpa_matched": 52,
@@ -871,8 +871,8 @@
    "primary_matched": 39,
    "primary_names": 48,
    "primary_gpa_pct": 81.2,
-   "rmp_matched": 27,
-   "rmp_pct": 56.2
+   "rmp_matched": 28,
+   "rmp_pct": 58.3
   },
   "FR": {
    "gpa_matched": 14,
@@ -1271,8 +1271,8 @@
    "primary_matched": 22,
    "primary_names": 29,
    "primary_gpa_pct": 75.9,
-   "rmp_matched": 9,
-   "rmp_pct": 31.0
+   "rmp_matched": 10,
+   "rmp_pct": 34.5
   },
   "MATH": {
    "gpa_matched": 62,
@@ -1281,8 +1281,8 @@
    "primary_matched": 60,
    "primary_names": 70,
    "primary_gpa_pct": 85.7,
-   "rmp_matched": 57,
-   "rmp_pct": 74.0
+   "rmp_matched": 58,
+   "rmp_pct": 75.3
   },
   "MBA": {
    "gpa_matched": 17,
@@ -1361,8 +1361,8 @@
    "primary_matched": 18,
    "primary_names": 28,
    "primary_gpa_pct": 64.3,
-   "rmp_matched": 12,
-   "rmp_pct": 42.9
+   "rmp_matched": 13,
+   "rmp_pct": 46.4
   },
   "MSE": {
    "gpa_matched": 26,
@@ -1381,8 +1381,8 @@
    "primary_matched": 43,
    "primary_names": 95,
    "primary_gpa_pct": 45.3,
-   "rmp_matched": 30,
-   "rmp_pct": 23.4
+   "rmp_matched": 31,
+   "rmp_pct": 24.2
   },
   "MUSC": {
    "gpa_matched": 28,
@@ -1391,8 +1391,8 @@
    "primary_matched": 27,
    "primary_names": 76,
    "primary_gpa_pct": 35.5,
-   "rmp_matched": 19,
-   "rmp_pct": 23.2
+   "rmp_matched": 20,
+   "rmp_pct": 24.4
   },
   "MUSE": {
    "gpa_matched": 1,
@@ -1731,8 +1731,8 @@
    "primary_matched": 23,
    "primary_names": 31,
    "primary_gpa_pct": 74.2,
-   "rmp_matched": 16,
-   "rmp_pct": 51.6
+   "rmp_matched": 18,
+   "rmp_pct": 58.1
   },
   "SPED": {
    "gpa_matched": 10,
@@ -1861,8 +1861,8 @@
    "primary_matched": 31,
    "primary_names": 131,
    "primary_gpa_pct": 23.7,
-   "rmp_matched": 10,
-   "rmp_pct": 7.6
+   "rmp_matched": 11,
+   "rmp_pct": 8.4
   },
   "WLOF": {
    "gpa_matched": 2,
@@ -2078,10 +2078,10 @@
   },
   "campus_gpa": 3.522,
   "rmp": {
-   "quality": 3.646,
-   "difficulty": 2.93,
-   "would_take_again": 64.095,
-   "n_instructors": 1203
+   "quality": 3.644,
+   "difficulty": 2.933,
+   "would_take_again": 64.059,
+   "n_instructors": 1215
   }
  }
 }
