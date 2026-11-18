@@ -65,8 +65,9 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
 
 ## Gen-ed finder and schedule builder
 
-- **The gen-ed finder has no time filters** since v0.4.0: add courses to the schedule builder and set start times,
-  days off and the rest there (DECISIONS D14.5).
+- **The gen-ed finder checks only start time, end time and days off** from the schedule builder's must-haves. Blocked
+  times and the lunch break are applied once the course is in the builder (DECISIONS D20.2). The times come from this
+  browser, so a shared link with "Only courses that fit them" filters by the reader's own times.
 - **The lunch break rule is fixed** at 45 free minutes between 11am and 2pm on each day with class.
 - **Expected GPA** in the builder uses each section's instructor GPA for that course, else the course average; it is
   a guide, not a prediction.
