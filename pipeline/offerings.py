@@ -18,6 +18,7 @@ from dataclasses import dataclass
 
 from .course_explorer import term_label
 from .names import parse_name, term_order
+from .renumbered import Renamer
 
 ONLINE_TYPES = {"ONL", "OLC", "OLD", "OD", "OLB"}
 COURSE_CODE = re.compile(r"\b([A-Z]{2,4})\s?(\d{3})\b")
@@ -218,7 +219,9 @@ def diff_records(old: dict, new: dict) -> list[tuple[str, str, str]]:
 # Pipeline stage
 # ---------------------------------------------------------------------------------------------------------
 
-def run(conn: sqlite3.Connection, next_term: str) -> str:
+def run(conn: sqlite3.Connection, next_term: str, rename: Renamer | None = None) -> str:
+    """`rename` (data/renumbered.csv) counts an old number's terms before the change as the new course (#29)."""
+    rn = rename or Renamer(())
     conn.execute("DELETE FROM offerings")
     conn.execute("DELETE FROM offering_pattern")
     conn.execute("DELETE FROM course_changes")
@@ -229,7 +232,7 @@ def run(conn: sqlite3.Connection, next_term: str) -> str:
     ).fetchall()
     agg: dict[tuple[str, str, str], dict] = defaultdict(lambda: {"n": 0, "online": 0, "primary": 0, "inst": []})
     for r in sec_rows:
-        a = agg[(r["subject"], r["number"], r["term"])]
+        a = agg[(*rn(r["subject"], r["number"], r["term"]), r["term"])]
         a["n"] += 1
         if r["component"] == "primary":
             a["primary"] += 1
@@ -261,16 +264,20 @@ def run(conn: sqlite3.Connection, next_term: str) -> str:
     course_rows: dict[tuple[str, str], dict[str, dict]] = defaultdict(dict)
     for r in conn.execute("SELECT * FROM courses"):
         rec = dict(r)
-        ag = agg.get((r["subject"], r["number"], r["term"]))
+        ck = rn(r["subject"], r["number"], r["term"])
+        ag = agg.get((*ck, r["term"]))
         if ag and ag["primary"]:
             rec["online_share"] = ag["online"] / ag["primary"]
-        course_rows[(r["subject"], r["number"])][r["term"]] = rec
+        course_rows[ck][r["term"]] = rec
     n_changes = 0
     for (subj, num), recs in course_rows.items():
         # Compare consecutive regular (fall/spring) offerings; summer listings are often a different format.
         ts = sorted((t for t in recs if season(t) in ("fa", "sp")), key=term_order) or sorted(recs, key=term_order)
         for prev, t in zip(ts, ts[1:], strict=False):
-            for field, old, new in diff_records(recs[prev], recs[t]):
+            before = dict(recs[prev])
+            for f in ("description", "prereq_text"):
+                before[f] = rn.modernize(before.get(f) or "", prev, t)
+            for field, old, new in diff_records(before, recs[t]):
                 conn.execute("INSERT INTO course_changes VALUES (?,?,?,?,?,?,?)",
                              (subj, num, t, field, old, new, summarize(field, old, new)))
                 n_changes += 1
@@ -293,6 +300,15 @@ def run(conn: sqlite3.Connection, next_term: str) -> str:
                              (subj, num, latest, "instructor", "", "; ".join(names),
                               f"{len(names)} new instructors this term, e.g. {', '.join(names[:3])}"))
                 n_changes += 1
+    # Renumbered courses: the change timeline says so in the first term under the new number.
+    for x in rn.links:
+        recs = course_rows.get(x.new, {})
+        after = sorted((t for t in recs if term_order(t) >= term_order(x.first_term)), key=term_order)
+        if after and any(term_order(t) < term_order(x.first_term) for t in recs):
+            conn.execute("INSERT INTO course_changes VALUES (?,?,?,?,?,?,?)",
+                         (*x.new, after[0], "number", x.old_code, x.new_code,
+                          f"Renumbered: {x.old_code} is now {x.new_code}"))
+            n_changes += 1
     return (f"{len(agg)} course-terms, {len(by_course)} courses with patterns (predicting {target}), "
             f"{n_changes} changes")
 

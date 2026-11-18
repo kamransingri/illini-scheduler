@@ -108,7 +108,9 @@ export function search(index: SearchIndex, query: string, limit = 20): SearchHit
     });
   }
   let code = parseCode(q);
-  if (code && !index.courses.some((c) => c.s === code!.subject)) code = null; // "calc 2" is not subject CALC
+  const old = code && `${code.subject} ${code.number}`;
+  // "calc 2" is not subject CALC; an old subject (NPRE 470, now ES 470) still counts
+  if (code && !index.courses.some((c) => c.s === code!.subject || c.f?.some((f) => f.startsWith(`${code!.subject} `)))) code = null;
   const subjOnly = /^\s*([a-z]{2,4})\s*$/i.exec(q);
   const nq = norm(q);
   const words = nq.split(" ").filter((w) => w && !STOP.has(w));
@@ -120,6 +122,7 @@ export function search(index: SearchIndex, query: string, limit = 20): SearchHit
     let score = 0;
     if (code) {
       if (c.s === code.subject && c.n === code.number) score = 1000;
+      else if (old && c.f?.includes(old)) score = 950; // renumbered: "FR 103" finds FR 203
       else if (c.s === code.subject && c.n.startsWith(code.number)) score = 500 - Number(c.n);
     } else if (subjOnly && c.s === subjOnly[1].toUpperCase()) {
       score = 300 - Number(c.n) / 10;

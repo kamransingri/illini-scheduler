@@ -45,6 +45,7 @@ export default function GpaChart({ gpa }: { gpa: GpaBlock }) {
               <tr key={r.term} className="border-b border-line">
                 <th scope="row" className="w-28 py-1.5 pr-3 text-left font-normal whitespace-nowrap">
                   {termLabel(r.term)}
+                  {r.as && <span className="block text-sm text-muted">as {r.as}</span>}
                 </th>
                 <td className="py-1.5 pr-3">
                   <div className="flex h-3 w-full overflow-hidden rounded" role="img" aria-label={mix} title={mix}>
