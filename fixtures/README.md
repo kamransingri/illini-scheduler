@@ -10,7 +10,7 @@ the network.
 | `course-catalog/`, `gpa/` | Slices of Wade Fagen-Ulmschneider's datasets for the reference courses | 2026-11-04 | `python -m pipeline.make_fixtures` |
 | `course-explorer-web/` | Course Explorer web pages (sections, seat status, final exams) | 2026-11-16 | saved by hand from the site |
 | `catalog/` | Academic catalog program pages for the importer tests | 2026-11-17 | saved by hand from the catalog |
-| `bundle-parity.json` | Section bundles both test suites must agree on | 2026-11-16 | `pipeline/tests` |
+| `bundle-parity.json` | Section bundles both test suites must agree on | 2026-11-16, cases added 2026-11-17 | `pipeline/tests` |
 
 `course-explorer/` and `rmp/` can be refreshed with the "Fetch data" workflow (or the command above). Then update
 the date here. The Course Explorer test compares the XML with the older CSV slice, so it allows an instructor or room

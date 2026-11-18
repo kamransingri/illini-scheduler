@@ -1,3 +1,4 @@
+import type { Prefs } from "./schedule";
 import type { GenedRow } from "./types";
 
 export const GENED_GROUPS: { cat: string; label: string; codes: string[] }[] = [
@@ -19,9 +20,10 @@ export type Filters = {
   minRmp: number | null;
   doubleDip: boolean; // satisfies 2+ categories
   minStudents: number; // GPA sample size floor (0 = off)
+  fits: boolean; // only courses that fit the schedule builder's start time, end time and days off (#30)
 };
 
-// Times and days are the schedule builder's job (D14.4): this page only picks the course.
+// Times and days are set in the schedule builder (D14.5); `fits` reads them from there instead of having its own.
 export const DEFAULT_FILTERS: Filters = {
   codes: [],
   credits: null,
@@ -29,7 +31,43 @@ export const DEFAULT_FILTERS: Filters = {
   minRmp: null,
   doubleDip: false,
   minStudents: 200,
+  fits: false,
 };
+
+/** The schedule builder's must-haves that `fitsTimes` checks (and the two that decide which sections count). */
+export type TimeRules = Pick<Prefs, "earliest" | "latest" | "daysOff" | "openOnly" | "includeSpecial">;
+
+export function hasTimeRules(p: TimeRules | null): p is TimeRules {
+  return !!p && (p.earliest !== null || p.latest !== null || p.daysOff !== 0);
+}
+
+// Flags on an `opts` entry (pipeline/export.py bundle_opts)
+const OPT_CLOSED = 1;
+const OPT_WITH_SPECIAL = 2;
+const OPT_BY_DEFAULT = 4;
+
+/**
+ * How the course fares with the schedule builder's must-haves. "fits": the builder would keep at least one way to take
+ * it, with every meeting inside the start and end times and none on a day off (untimed meetings always fit), as hardOk
+ * in lib/schedule.ts. Otherwise why not: "special" (all its sections look special, which the builder leaves out unless
+ * allowed), "closed" (no open section, with "Open sections only" on) or "times". Null when it has no sections. Blocked
+ * times and the lunch break aren't checked here; the builder still applies them.
+ */
+export type Fit = "fits" | "times" | "special" | "closed";
+
+export function timesFit(r: GenedRow, p: TimeRules): Fit | null {
+  if (!r.opts.length) return null;
+  const made = r.opts.filter(([, , , fl]) => fl & (p.includeSpecial ? OPT_WITH_SPECIAL : OPT_BY_DEFAULT));
+  if (!made.length) return "special";
+  const usable = p.openOnly ? made.filter(([, , , fl]) => !(fl & OPT_CLOSED)) : made;
+  if (!usable.length) return "closed";
+  const inside = ([s, e, d]: number[]) => s < 0 || ((p.earliest === null || s >= p.earliest) && (p.latest === null || e <= p.latest) && !(d & p.daysOff));
+  return usable.some(inside) ? "fits" : "times";
+}
+
+export function fitsTimes(r: GenedRow, p: TimeRules): boolean {
+  return timesFit(r, p) === "fits";
+}
 
 /** Filters + sort <-> URL query, so Back / reload / sharing keep them. Only what differs from the defaults is written. */
 export function filtersToQuery(f: Filters, sort: SortKey): string {
@@ -40,6 +78,7 @@ export function filtersToQuery(f: Filters, sort: SortKey): string {
   if (f.minRmp !== null) p.set("rmp", String(f.minRmp));
   if (f.doubleDip) p.set("dd", "1");
   if (f.minStudents !== DEFAULT_FILTERS.minStudents) p.set("min", String(f.minStudents));
+  if (f.fits) p.set("fit", "1");
   if (sort !== DEFAULT_SORT) p.set("sort", sort);
   return p.toString();
 }
@@ -57,6 +96,7 @@ export function filtersFromQuery(q: string): { f: Filters; sort: SortKey } {
       minRmp: num("rmp"),
       doubleDip: p.get("dd") === "1",
       minStudents: num("min") ?? DEFAULT_FILTERS.minStudents,
+      fits: p.get("fit") === "1",
     },
   };
 }
@@ -66,7 +106,8 @@ export function openCount(r: GenedRow): number {
   return r.statusKnown ? (r.nOpen ?? 0) : r.nSec;
 }
 
-export function matches(r: GenedRow, f: Filters): boolean {
+/** `rules`: the schedule builder's saved must-haves; `fits` does nothing without time rules among them. */
+export function matches(r: GenedRow, f: Filters, rules: TimeRules | null = null): boolean {
   // every selected gen-ed code: picking Humanities and Non-Western shows only courses that count for both
   if (f.codes.length && !f.codes.every((c) => r.codes.includes(c))) return false;
   if (f.doubleDip && r.cats.length < 2) return false;
@@ -74,6 +115,7 @@ export function matches(r: GenedRow, f: Filters): boolean {
   if (f.credits !== null && !(r.cr[0] <= f.credits && f.credits <= r.cr[1])) return false;
   if (f.openNext && openCount(r) === 0) return false;
   if (f.minRmp !== null && (r.rmp === null || r.rmp < f.minRmp)) return false;
+  if (f.fits && hasTimeRules(rules) && !fitsTimes(r, rules)) return false;
   return true;
 }
 
@@ -94,9 +136,9 @@ export function sortRows(rows: GenedRow[], key: SortKey, scoreOf?: (r: GenedRow)
   return out;
 }
 
-export function applyFilters(rows: GenedRow[], f: Filters, key: SortKey, scoreOf?: (r: GenedRow) => number | null): GenedRow[] {
+export function applyFilters(rows: GenedRow[], f: Filters, key: SortKey, scoreOf?: (r: GenedRow) => number | null, rules: TimeRules | null = null): GenedRow[] {
   return sortRows(
-    rows.filter((r) => matches(r, f)),
+    rows.filter((r) => matches(r, f, rules)),
     key,
     scoreOf,
   );

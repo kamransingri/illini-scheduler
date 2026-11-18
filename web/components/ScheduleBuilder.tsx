@@ -4,7 +4,7 @@ import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react"
 import { decodeCart, encodeCart, onCartChange, readCart, writeCart, type CartItem } from "@/lib/cart";
 import { courseHref, dataUrl, daysStr, fmtGpa, fmtTime, SELF_SERVICE_URL, termLabel } from "@/lib/format";
 import { buildIcs } from "@/lib/ics";
-import { hasPrefParams, loadPrefs, prefsFromParams, prefsToParams, PRESETS, savePrefs } from "@/lib/prefs";
+import { hasPrefParams, loadPrefs, prefsFromParams, prefsToParams, PRESETS, savePrefs, timeRulesSummary } from "@/lib/prefs";
 import {
   bundleOpen,
   clashingPairs,
@@ -84,10 +84,7 @@ function fmtHours(min: number): string {
 
 /** Plain-words list of the must-haves that are on, for a collapsed panel. */
 function mustSummary(p: Prefs): string[] {
-  const out: string[] = [];
-  if (p.earliest !== null) out.push(`start ${fmtTime(p.earliest)} or later`);
-  if (p.latest !== null) out.push(`done by ${fmtTime(p.latest)}`);
-  if (p.daysOff) out.push(`${WEEKDAYS.filter(([b]) => p.daysOff & b).map(([, , n]) => n.slice(0, 3)).join(", ")} off`);
+  const out = timeRulesSummary(p);
   if (p.lunch) out.push("lunch break");
   if (p.openOnly) out.push("open sections only");
   if (p.includeSpecial) out.push("special sections allowed");

@@ -1,5 +1,5 @@
 {
-  "_about": "Shared cases for the two copies of the section-bundle rule (pipeline/export.py bundles() and web/lib/schedule.ts buildBundles()). Both test suites check these, so the copies can't drift apart unnoticed. No case has internal time conflicts or special sections, which only the web copy filters.",
+  "_about": "Shared cases for the two copies of the section-bundle rule (pipeline/export.py bundles() and web/lib/schedule.ts buildBundles()). Both test suites check these, so the copies can't drift apart unnoticed. Optional fields: a section's \"part\" of term (default \"1\") and \"special\" flag, and a case's \"include_special\" (default true).",
   "cases": [
     {
       "name": "letter groups: lecture + discussion within a group only",
@@ -28,6 +28,33 @@
         {"crn": "21", "code": "C2", "component": "primary", "group": "C2", "meetings": [{"d": 0, "s": null, "e": null}]}
       ],
       "bundles": [["20"], ["21"]]
+    },
+    {
+      "name": "a discussion that overlaps its lecture can't go with it",
+      "sections": [
+        {"crn": "30", "code": "L1", "component": "primary", "group": "*", "meetings": [{"d": 10, "s": 600, "e": 650}]},
+        {"crn": "31", "code": "D1", "component": "DIS", "group": "*", "meetings": [{"d": 2, "s": 630, "e": 680}]},
+        {"crn": "32", "code": "D2", "component": "DIS", "group": "*", "meetings": [{"d": 2, "s": 660, "e": 710}]}
+      ],
+      "bundles": [["30", "32"]]
+    },
+    {
+      "name": "first- and second-half sections at the same time don't clash",
+      "sections": [
+        {"crn": "40", "code": "L1", "component": "primary", "group": "*", "part": "A", "meetings": [{"d": 10, "s": 600, "e": 650}]},
+        {"crn": "41", "code": "D1", "component": "DIS", "group": "*", "part": "B", "meetings": [{"d": 2, "s": 600, "e": 650}]},
+        {"crn": "42", "code": "D2", "component": "DIS", "group": "*", "part": "1", "meetings": [{"d": 2, "s": 600, "e": 650}]}
+      ],
+      "bundles": [["40", "41"]]
+    },
+    {
+      "name": "special sections are left out unless allowed",
+      "include_special": false,
+      "sections": [
+        {"crn": "50", "code": "AL1", "component": "primary", "group": "A", "meetings": [{"d": 10, "s": 600, "e": 650}]},
+        {"crn": "51", "code": "AD@", "component": "primary", "group": "B", "special": "Unusual section code", "meetings": [{"d": 10, "s": 700, "e": 750}]}
+      ],
+      "bundles": [["50"]]
     }
   ]
 }
