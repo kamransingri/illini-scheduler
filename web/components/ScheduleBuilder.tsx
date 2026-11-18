@@ -20,7 +20,11 @@ import {
   type Prefs,
   type Schedule,
 } from "@/lib/schedule";
+import { rankProfs } from "@/lib/rank";
+import type { ScorePriors } from "@/lib/score";
+import { professorsFor } from "@/lib/sections";
 import { breakNames, TERM_DATES } from "@/lib/terms";
+import { useWeights } from "@/lib/weights";
 import type { Course, Section } from "@/lib/types";
 import CopyButton from "./CopyButton";
 import { Badge, SeatStatus } from "./ui/Badge";
@@ -30,7 +34,7 @@ import SearchBox from "./SearchBox";
 import WatchButton from "./WatchButton";
 import WeekCalendar, { COURSE_COLORS } from "./WeekCalendar";
 
-type MetaLite = { next_term: string; current_term: string; rmpAvailable: boolean; rmpPrior?: number | null };
+type MetaLite = { next_term: string; current_term: string; rmpAvailable: boolean; rmpPrior?: number | null; scorePriors?: ScorePriors | null };
 type W = keyof Prefs["weights"];
 
 const COMPONENT_NAMES: Record<string, string> = { primary: "Lecture", DIS: "Discussion", LAB: "Lab", LBD: "Lab-discussion", Q: "Quiz", OD: "Online discussion", OLB: "Online lab", PR: "Practice" };
@@ -191,15 +195,27 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
     };
   }, [cart]);
 
+  // Each lecturer's best-pick score for the chosen term, exactly as the course page ranks them (#49).
+  const scoreWeights = useWeights();
+  const profRanks = useMemo(() => {
+    const out: Record<string, { scores: Record<string, number | null>; best: string | null }> = {};
+    if (!meta.scorePriors) return out;
+    for (const [key, course] of Object.entries(courses)) {
+      const ranked = rankProfs(course, professorsFor(course, term).profs, meta.scorePriors, scoreWeights);
+      out[key] = { scores: Object.fromEntries(ranked.map((p) => [p.key, p.score.score])), best: ranked.find((p) => p.score.score !== null)?.key ?? null };
+    }
+    return out;
+  }, [courses, term, meta.scorePriors, scoreWeights]);
   const inputs: CourseInput[] = useMemo(
     () =>
       cart
         .filter((c) => courses[`${c.s} ${c.n}`])
         .map((c) => {
-          const course = courses[`${c.s} ${c.n}`];
-          return { key: `${c.s} ${c.n}`, course, credits: course.credit_range[1] || 3, locked: c.locked, rmpPrior: meta.rmpPrior ?? null };
+          const key = `${c.s} ${c.n}`;
+          const course = courses[key];
+          return { key, course, credits: course.credit_range[1] || 3, locked: c.locked, rmpPrior: meta.rmpPrior ?? null, profScores: profRanks[key]?.scores };
         }),
-    [cart, courses, meta.rmpPrior],
+    [cart, courses, meta.rmpPrior, profRanks],
   );
   const loaded = inputs.length + loadErrors.length >= cart.length;
 
@@ -590,6 +606,20 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
             </div>
             <div className="space-y-2.5" role="group" aria-label="Priorities">
               {weightRow("gpa", "Higher expected GPA", "Higher expected GPA")}
+              {weightRow(
+                "prof",
+                <span className="inline-flex items-center">
+                  Best professor
+                  <Info label="About Best professor">
+                    Prefers each course&apos;s lecture taught by the professor with the highest best-pick score, the same score and order as the
+                    course page (course GPA, the professor&apos;s GPA difference, RMP and open seats, small samples pulled toward an average). A
+                    lecture with no scored professor counts as average.
+                  </Info>
+                </span>,
+                "Best professor",
+                !meta.scorePriors,
+                !meta.scorePriors ? "No scores in this build" : undefined,
+              )}
               {weightRow("rmp", "Better-rated professors", "Better-rated professors", !meta.rmpAvailable, !meta.rmpAvailable ? "RMP unavailable in this build" : undefined)}
               {weightRow("open", "Sections open right now", "Sections open right now")}
               {weightRow("daysOff", "More days off", "More days off")}
@@ -749,6 +779,9 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                       <span className="min-w-[9rem] flex-1 tnum">{s.meetings.map((m) => (m.s === null ? "No set time" : `${daysStr(m.d)} ${fmtTime(m.s)}–${fmtTime(m.e)}`)).join("; ")}</span>
                       {s.status && <SeatStatus status={s.status} />}
                       <span className="text-sm text-muted">{s.instructors_raw.join("; ") || "TBA"}</span>
+                      {b.prof && s.instructors.includes(b.prof.key) && (
+                        <ProfBadge name={inputs.find((x) => x.key === b.course)?.course.instructors[b.prof.key]?.name ?? ""} score={b.prof.score} best={profRanks[b.course]?.best === b.prof.key} />
+                      )}
                       {s.special && (
                         <span className="w-full">
                           <Badge icon="alert">Special section: {s.special}</Badge>
@@ -836,6 +869,15 @@ function diffFromFirst(first: Schedule, s: Schedule): string {
     .filter((b) => first.bundles.find((x) => x.course === b.course)?.crns.join() !== b.crns.join())
     .map((b) => `${b.course} ${b.sections.map((x) => x.code).join("+")}`);
   return parts.join(", ") || "same sections";
+}
+
+/** The lecture's professor score, and "Best pick" when they're the course's top-scored professor this term (#49). */
+function ProfBadge({ name, score, best }: { name: string; score: number; best: boolean }) {
+  return (
+    <span data-testid="prof-pick" data-best={best || undefined} title={`${name}: best-pick score ${score} of 100, as on the course page`}>
+      <Badge icon={best ? "award" : undefined}>{best ? `Best pick, ${score}` : `Professor score ${score}`}</Badge>
+    </span>
+  );
 }
 
 function CompareTop({ schedules, idx, onPick }: { schedules: Schedule[]; idx: number; onPick: (i: number) => void }) {
