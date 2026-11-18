@@ -14,6 +14,8 @@ export type Bundle = {
   gpa: number | null;
   /** best RMP quality among the bundle's instructors, null if unknown */
   rmp: number | null;
+  /** the lecture's professor with the highest best-pick score (0-100, as on the course page), null if none is scored */
+  prof: { key: string; score: number } | null;
   /** how many equivalent alternatives (same times + areas) this bundle represents */
   alternatives: Section[][];
 };
@@ -25,6 +27,8 @@ export type CourseInput = {
   locked: string[];
   /** UIUC-wide mean RMP quality; when set, ratings from few students are pulled toward it, as in the best-pick score */
   rmpPrior?: number | null;
+  /** each professor's best-pick score for this course and term (lib/rank.ts rankProfs), by instructor key */
+  profScores?: Record<string, number | null>;
 };
 
 /** Must-haves (hard rules: a schedule breaking one is never shown) and what matters to you (weights 0-3). */
@@ -38,7 +42,7 @@ export type Prefs = {
   includeSpecial: boolean; // allow sections flagged as restricted / special-program
   softEarly: number; // "too early": a class starting before this counts against `early` (minutes)
   softLate: number; // "too late": a class ending after this counts against `late` (minutes)
-  weights: { gpa: number; rmp: number; early: number; late: number; daysOff: number; compact: number; walking: number; open: number };
+  weights: { gpa: number; rmp: number; early: number; late: number; daysOff: number; compact: number; walking: number; open: number; prof: number };
 };
 
 export const DEFAULT_PREFS: Prefs = {
@@ -51,7 +55,7 @@ export const DEFAULT_PREFS: Prefs = {
   includeSpecial: false,
   softEarly: 600,
   softLate: 1020,
-  weights: { gpa: 2, rmp: 1, early: 1, late: 0, daysOff: 1, compact: 1, walking: 1, open: 1 },
+  weights: { gpa: 2, rmp: 1, early: 1, late: 0, daysOff: 1, compact: 1, walking: 1, open: 1, prof: 2 },
 };
 
 /** Lunch window and the shortest break that counts as lunch. */
@@ -161,6 +165,22 @@ function instructorStats(course: Course, secs: Section[], rmpPrior: number | nul
   return { gpa, rmp };
 }
 
+/** The lecture professor with the highest best-pick score among a bundle's primary sections (#49). */
+export function bundleProf(secs: Section[], scores: Record<string, number | null> | undefined): Bundle["prof"] {
+  let best: Bundle["prof"] = null;
+  for (const s of secs) {
+    if (s.component !== "primary") continue;
+    for (const k of s.instructors) {
+      const v = scores?.[k];
+      if (v !== null && v !== undefined && (!best || v > best.score)) best = { key: k, score: v };
+    }
+  }
+  return best;
+}
+
+/** A professor score on the 0-1 scale the other priorities use; an unscored lecture counts as average. */
+const profValue = (p: Bundle["prof"]) => (p ? p.score / 100 : 0.5);
+
 /** Bundles with hard preferences applied and equivalent ones (same times + campus areas) merged. */
 export function prepareBundles(input: CourseInput, term: string, prefs: Prefs): Bundle[] {
   const block = input.course.terms[term];
@@ -180,7 +200,7 @@ export function prepareBundles(input: CourseInput, term: string, prefs: Prefs): 
       .sort()
       .join("|");
     const cur = byKey.get(sig);
-    const b: Bundle = { course: input.key, sections: secs, meetings, crns: secs.map((s) => s.crn), gpa, rmp, alternatives: [] };
+    const b: Bundle = { course: input.key, sections: secs, meetings, crns: secs.map((s) => s.crn), gpa, rmp, prof: bundleProf(secs, input.profScores), alternatives: [] };
     if (!cur) byKey.set(sig, { ...b, alternatives: [secs] });
     else {
       cur.alternatives.push(secs);
@@ -200,8 +220,12 @@ export function bundleOpen(b: Pick<Bundle, "sections">): number {
   return b.sections.some(isClosed) ? 0 : 1;
 }
 
+/** How good one course's section choice is on its own: decides which of several same-time sections represents them
+ * (so with Best professor on, the better professor's section is the one shown) and the order the search tries them. */
 function bundleValue(b: Bundle, prefs: Prefs): number {
-  return prefs.weights.gpa * ((b.gpa ?? 3) - 2) / 2 + prefs.weights.rmp * (((b.rmp ?? 3) - 1) / 4) + (prefs.weights.open + 0.01) * bundleOpen(b);
+  return (
+    prefs.weights.gpa * ((b.gpa ?? 3) - 2) / 2 + prefs.weights.rmp * (((b.rmp ?? 3) - 1) / 4) + prefs.weights.prof * profValue(b.prof) + (prefs.weights.open + 0.01) * bundleOpen(b)
+  );
 }
 
 function hardOk(meetings: Mtg[], prefs: Prefs): boolean {
@@ -289,8 +313,11 @@ export function scoreSchedule(st: ScheduleStats, bundles: Bundle[], prefs: Prefs
   const compact = 1 - Math.min(st.gapMinutes / 900, 1);
   const walking = 1 - Math.min(st.backToBackFar / 3, 1);
   const open = bundles.length ? bundles.reduce((a, b) => a + bundleOpen(b), 0) / bundles.length : 1;
+  const profs = bundles.map((b) => b.prof).filter((p): p is NonNullable<Bundle["prof"]> => p !== null);
+  const prof = profs.length ? profs.reduce((a, p) => a + p.score, 0) / profs.length / 100 : 0.5;
   return (
-    w.gpa * gpa + w.rmp * rmp + w.early * (1 - earlyDays / 5) + w.late * (1 - lateDays / 5) + w.daysOff * daysOff + w.compact * compact + w.walking * walking + w.open * open
+    w.gpa * gpa + w.rmp * rmp + w.early * (1 - earlyDays / 5) + w.late * (1 - lateDays / 5) + w.daysOff * daysOff + w.compact * compact + w.walking * walking + w.open * open +
+    w.prof * prof
   );
 }
 
@@ -355,6 +382,7 @@ export function generate(inputs: CourseInput[], term: string, prefs: Prefs, limi
   // best possible GPA / RMP per remaining level (suffix sums)
   const maxG = levels.map((l) => Math.max(...l.map((n) => n.b.gpa ?? -1)));
   const maxR = levels.map((l) => Math.max(...l.map((n) => n.b.rmp ?? -1)));
+  const maxP = levels.map((l) => Math.max(...l.map((n) => n.b.prof?.score ?? -1)));
   // days / early days every bundle of a level uses (so any completion must use them too)
   const mustDays = levels.map((l) => l.reduce((acc, n) => acc & n.days, 31));
   const mustEarly = levels.map((l) => l.reduce((acc, n) => acc & n.early, 31));
@@ -391,7 +419,7 @@ export function generate(inputs: CourseInput[], term: string, prefs: Prefs, limi
   let truncated = false;
   const chosen: Node[] = [];
 
-  const bound = (depth: number, days: number, early: number, late: number, open: number, far: number, gW: number, gS: number, rN: number, rS: number) => {
+  const bound = (depth: number, days: number, early: number, late: number, open: number, far: number, gW: number, gS: number, rN: number, rS: number, pN: number, pS: number) => {
     for (let i = depth; i < levels.length; i++) {
       days |= mustDays[i];
       early |= mustEarly[i];
@@ -408,13 +436,17 @@ export function generate(inputs: CourseInput[], term: string, prefs: Prefs, limi
     }
     const gpa = gW ? Math.max(0, Math.min(1, (gS / gW - 2) / 2)) : 0.5;
     const rmp = rN ? (rS / rN - 1) / 4 : 0.5;
+    // The exact professor term is the average score of the chosen scored lectures (0.5 when none is scored). An average
+    // is never above the larger of the average so far and the best score still to come, so that is the bound.
+    let prof = pN ? pS / pN / 100 : 0.5;
+    for (let i = depth; i < levels.length; i++) if (maxP[i] >= 0) prof = Math.max(prof, maxP[i] / 100);
     return (
       w.gpa * gpa + w.rmp * rmp + w.early * (1 - popcount5(early) / 5) + w.late * (1 - popcount5(late) / 5) + w.daysOff * ((5 - popcount5(days)) / 5) + w.compact +
-      w.walking * (1 - Math.min(far / 3, 1)) + w.open * (nLevels ? open / nLevels : 1)
+      w.walking * (1 - Math.min(far / 3, 1)) + w.open * (nLevels ? open / nLevels : 1) + w.prof * prof
     );
   };
 
-  const rec = (i: number, days: number, early: number, late: number, open: number, far: number, gW: number, gS: number, rN: number, rS: number) => {
+  const rec = (i: number, days: number, early: number, late: number, open: number, far: number, gW: number, gS: number, rN: number, rS: number, pN: number, pS: number) => {
     if (truncated) return;
     if (++nodes % 2048 === 0 && Date.now() - t0 > budgetMs) {
       truncated = true;
@@ -437,9 +469,10 @@ export function generate(inputs: CourseInput[], term: string, prefs: Prefs, limi
           if (gg > 10) gap += gg - 10;
         }
       }
+      const prof = pN ? pS / pN / 100 : 0.5;
       const score =
         w.gpa * gpa + w.rmp * rmp + w.early * (1 - popcount5(early) / 5) + w.late * (1 - popcount5(late) / 5) + w.daysOff * ((5 - popcount5(days)) / 5) +
-        w.compact * (1 - Math.min(gap / 900, 1)) + w.walking * (1 - Math.min(far / 3, 1)) + w.open * (nLevels ? open / nLevels : 1);
+        w.compact * (1 - Math.min(gap / 900, 1)) + w.walking * (1 - Math.min(far / 3, 1)) + w.open * (nLevels ? open / nLevels : 1) + w.prof * prof;
       if (best.length < limit || score > worst) {
         const bundles = chosen.map((n) => n.b);
         const sched = { bundles, score, stats: scheduleStats(bundles, credits) };
@@ -463,16 +496,18 @@ export function generate(inputs: CourseInput[], term: string, prefs: Prefs, limi
       const g = n.b.gpa, r = n.b.rmp;
       const ngW = gW + (g !== null ? credits[i] : 0), ngS = gS + (g !== null ? credits[i] * g : 0);
       const nrN = rN + (r !== null ? 1 : 0), nrS = rS + (r ?? 0);
-      if (best.length >= limit && bound(i + 1, days | n.days, early | n.early, late | n.late, open + n.open, far + addFar, ngW, ngS, nrN, nrS) <= worst + 1e-9) continue;
+      const p = n.b.prof;
+      const npN = pN + (p ? 1 : 0), npS = pS + (p ? p.score : 0);
+      if (best.length >= limit && bound(i + 1, days | n.days, early | n.early, late | n.late, open + n.open, far + addFar, ngW, ngS, nrN, nrS, npN, npS) <= worst + 1e-9) continue;
       chosen.push(n);
       idx.push(b);
-      rec(i + 1, days | n.days, early | n.early, late | n.late, open + n.open, far + addFar, ngW, ngS, nrN, nrS);
+      rec(i + 1, days | n.days, early | n.early, late | n.late, open + n.open, far + addFar, ngW, ngS, nrN, nrS, npN, npS);
       chosen.pop();
       idx.pop();
       if (truncated) return;
     }
   };
-  if (levels.length) rec(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+  if (levels.length) rec(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
   const order = new Map(inputs.map((x, i) => [x.key, i]));
   for (const s of best) s.bundles.sort((a, b) => (order.get(a.course) ?? 0) - (order.get(b.course) ?? 0));
   return { schedules: best, total, truncated, emptyCourses, ms: Date.now() - t0 };
