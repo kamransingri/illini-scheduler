@@ -779,7 +779,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                       <span className="min-w-[9rem] flex-1 tnum">{s.meetings.map((m) => (m.s === null ? "No set time" : `${daysStr(m.d)} ${fmtTime(m.s)}–${fmtTime(m.e)}`)).join("; ")}</span>
                       {s.status && <SeatStatus status={s.status} />}
                       <span className="text-sm text-muted">{s.instructors_raw.join("; ") || "TBA"}</span>
-                      {b.prof && s.instructors.includes(b.prof.key) && (
+                      {b.prof && s.component === "primary" && s.instructors.includes(b.prof.key) && (
                         <ProfBadge name={inputs.find((x) => x.key === b.course)?.course.instructors[b.prof.key]?.name ?? ""} score={b.prof.score} best={profRanks[b.course]?.best === b.prof.key} />
                       )}
                       {s.special && (

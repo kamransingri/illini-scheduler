@@ -727,3 +727,24 @@ Every judgment call made during the autonomous build, newest phase last.
   stretches the rotation of the other 340 from about 20 to about 30 minutes (three runs of ~240), which the tests
   check. For Spring 2027, 1,144 courses qualify as busy and the job considers 400, so the list is for quiet courses
   that matter, not a way to cover the long tail.
+
+## Best professor in the schedule builder (2026-11-18, issue #49)
+
+- **D24.1 The same score as the course page.** Each lecture option gets its professor's best-pick score for the chosen
+  term (`rankProfs` in `web/lib/rank.ts`: course GPA, the professor's GPA difference, RMP and open seats, small samples
+  shrunk, with the student's own score weights). The builder's "Best pick" is therefore always the professor the course
+  page ranks first. A lecture with two scored professors takes the higher score; one with none counts as average (0.5),
+  not as zero, so an unrated new lecturer isn't pushed to the bottom.
+- **D24.2 A priority, not a rule.** "Best professor" sits with the other priorities (default Medium, 2). It is the
+  average score of the schedule's scored lectures, on the same 0-1 scale as the rest. It overlaps Higher expected GPA
+  and Better-rated professors on purpose: those stay for students who care about one part only. A "Best professors"
+  starting point sets it to High.
+- **D24.3 Same-time sections.** Sections with identical times and campus area are merged into one choice; the one
+  shown is now the one with the best professor too (when the priority is on), and the others stay listed as
+  same-time alternatives.
+- **D24.4 Search bound.** The branch-and-bound needs an optimistic estimate for a partial schedule. An average is never
+  above the larger of the average so far and the best score still available, so that is the bound; a unit test
+  compares the top schedule with an exhaustive search on 300 random carts.
+- **D24.5 Links.** Weights are written as digits; Best professor is the ninth. Links with 8 digits (before this) keep
+  its default.
+
