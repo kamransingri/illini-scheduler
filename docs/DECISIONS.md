@@ -642,3 +642,24 @@ Every judgment call made during the autonomous build, newest phase last.
   The course page now asks students who took the course to rate their professor on Rate My Professors and pick the
   course there; those reviews come back through the nightly RMP job (D18). The issue form and intake planned in #31
   were dropped. `data/notes/` stays for notes a maintainer adds with a source.
+
+## Gen-ed finder reads the builder's times (2026-11-17, issue #30)
+
+- **D20.1 One set of times.** The gen-ed finder doesn't get its own time filters back (D14.5). It reads the schedule
+  builder's saved must-haves (start time, end time, days off) from browser storage and marks each course "Fits your
+  times", "Outside your times", "Only special sections" or "No open section". "Only courses that fit them" (`fit=1`)
+  hides the rest. The times are always the viewer's own, so a shared `fit=1` link filters by the reader's times, and
+  does nothing for a reader who hasn't set any. A builder open in another tab updates the finder as the times change.
+- **D20.2 Same answer as the builder.** "Fits" means the builder would keep at least one way to take the course under
+  those must-haves, so a student who adds it finds a schedule. `opts` in `geneds.json` is now
+  `[earliest start, latest end, day mask, flags]` for each distinct bundle, counting timed meetings only (as `hardOk`
+  does). The flags say whether a section was Closed (for "Open sections only") and whether the builder makes the
+  bundle by default or only with special sections allowed. Blocked times and the lunch break aren't checked: they need
+  every meeting, and lunch depends on the other courses.
+- **D20.3 The Python bundle rule caught up.** `export.bundles` now drops bundles whose meetings clash with each other
+  (first- and second-half sections never clash) and can leave special sections out, as `buildBundles` does.
+  `fixtures/bundle-parity.json` has a case for each, so the parity test (D13.22) covers them.
+- **D20.4 Hand-off.** Courses still go to the builder one by one with "Add". Once any are in the schedule, a "Plan
+  them in the schedule builder" link above the results opens the builder, which already has the courses and the
+  must-haves. Sending the whole filtered list wouldn't work, because the builder schedules every course in its list
+  together.

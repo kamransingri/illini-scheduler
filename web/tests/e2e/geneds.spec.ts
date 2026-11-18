@@ -41,3 +41,40 @@ test("375px: the gen-ed table scrolls inside its own box, not the page", async (
   const [sw, iw] = await page.evaluate(() => [document.documentElement.scrollWidth, window.innerWidth]);
   expect(sw).toBeLessThanOrEqual(iw);
 });
+
+test("the finder checks courses against the schedule builder's times and hands the picks back to it (#30)", async ({ page }) => {
+  await page.goto("./geneds/");
+  await expect(page.getByTestId("gened-times")).toContainText("Set a start time, end time or days off");
+  await expect(page.locator('[data-testid="gened-results"] > tr[data-fit]')).toHaveCount(0);
+
+  // must-haves set in the builder: nothing before 10am, Fridays free
+  await page.goto("./schedule/");
+  await page.getByLabel("No classes before").selectOption("600");
+  await page.locator('label[title="Keep Friday free"]').click();
+  await expect(page.getByLabel("Keep Friday free")).toBeChecked();
+
+  await page.goto("./geneds/");
+  const times = page.getByTestId("gened-times");
+  await expect(times).toContainText("start 10:00am or later, Fri off");
+  const rows = page.locator('[data-testid="gened-results"] > tr');
+  await expect(rows.first()).toHaveAttribute("data-fit", /^(fits|times|special|closed)$/);
+  const before = await rows.count();
+  await times.getByLabel("Only courses that fit them").check();
+  await expect(page).toHaveURL(/fit=1/);
+  await expect(rows.first()).toBeVisible();
+  for (const v of await rows.evaluateAll((els) => els.map((e) => e.getAttribute("data-fit")))) expect(v).toBe("fits");
+  expect(await rows.count()).toBeLessThanOrEqual(before);
+
+  // add the top pick and open it in the builder, which keeps the must-haves and finds a schedule with them
+  const code = ((await rows.first().locator("th a span").first().textContent()) ?? "").trim();
+  await rows.first().getByRole("button", { name: `Add to schedule: ${code}` }).click();
+  await page.getByTestId("gened-handoff").getByRole("link", { name: "Plan it in the schedule builder" }).click();
+  await expect(page.getByTestId("cart")).toContainText(code);
+  await expect(page.getByLabel("No classes before")).toHaveValue("600");
+  await expect(page.getByLabel("Keep Friday free")).toBeChecked();
+  await page.getByRole("button", { name: "Generate schedules" }).click();
+  await expect(page.getByTestId("schedule-result")).toBeVisible();
+  const sections = page.getByTestId("schedule-sections").locator("li");
+  for (const start of await sections.evaluateAll((els) => els.map((e) => Number(e.getAttribute("data-start"))))) expect(start).toBeGreaterThanOrEqual(600);
+  for (const t of await sections.locator("span.tnum").allTextContents()) expect(t).not.toMatch(/(^|; )[MTWR]*F /);
+});
