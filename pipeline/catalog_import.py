@@ -53,9 +53,9 @@ GENED_RULES_SOURCE = "https://gened.illinois.edu/requirements/"
 CS_QUOTE = ("These courses may fulfill other curricular requirements, but no single course can fulfill multiple "
             "Cultural Studies categories.")
 GENED_POLICY_SOURCE = "https://gened.illinois.edu/faculty-staff/details-criteria/"
-TWO_CATEGORIES_QUOTE = ("Individual courses will be approved to satisfy only one General Education requirement except as "
-                        "follows. Exceptions are the Advanced Composition, Quantitative Reasoning II, and the Cultural "
-                        "Studies requirements.")
+TWO_CATEGORIES_QUOTE = ("Individual courses will be approved to satisfy only one General Education requirement "
+                        "except as follows. Exceptions are the Advanced Composition, Quantitative Reasoning II, and "
+                        "the Cultural Studies requirements.")
 PROGRAM_GENED_QUOTE = "Some Gen Ed requirements may be met by courses required and/or electives in the program."
 COMP1 = ["RHET 105", "RHET 101 + RHET 102", "CMN 111 + CMN 112", "ESL 115", "ESL 111 + ESL 112"]
 CODE_RE = re.compile(r"\b([A-Z]{2,5})\s+(\d{3})\b")
