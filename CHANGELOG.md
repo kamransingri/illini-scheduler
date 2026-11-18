@@ -12,6 +12,8 @@ history).
 
 ### Added
 
+- A Versions page (`/versions/`) lists every version and what changed in it, from CHANGELOG.md. The footer names the
+  site's version and date and links the three before it and the full list.
 - Gen-ed finder: it uses the start time, end time and days off you set in the schedule builder (#30). Each course is
   marked "Fits your times" or says why not ("Outside your times", "Only special sections", "No open section"), and
   "Only courses that fit them" hides the rest. Once you've added courses, "Plan them in the schedule builder" opens
