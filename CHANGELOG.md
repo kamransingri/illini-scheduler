@@ -10,6 +10,19 @@ history).
 
 ## [Unreleased]
 
+### Added
+
+- Watch a section (#15). Course pages have a Watch button on every section row for the current and next term, and so
+  does the schedule builder's "Sections to watch". Just opened lists the sections you watch at the top with their
+  latest status and when they were checked, "Only sections I watch" shows only their changes (so "Notify me" covers
+  only them), and "Copy link to this list" shares the list. Your list stays in your browser.
+- The live seat check re-reads the courses on a watch list kept in the repo (`data/watch.txt`) on every run, even when
+  they're quiet.
+
+### Changed
+
+- Just opened's live status line says how many courses were re-checked, instead of "watched".
+
 ## [0.8.0] - 2026-11-18
 
 ### Added

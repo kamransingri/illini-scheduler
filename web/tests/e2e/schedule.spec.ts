@@ -81,7 +81,14 @@ test("sections to watch: a schedule that needs closed sections lists them and li
   expect(await rows.count()).toBeGreaterThan(0);
   for (const t of await rows.allTextContents()) expect(t).toContain("STAT 107");
   await expect(watch.getByRole("link", { name: "Self-Service" })).toHaveAttribute("href", /^https:/);
+  // watch one (#15): it's on Just opened's list
+  await rows.first().getByRole("button", { name: /^Watch STAT 107 / }).click();
+  await expect(rows.first().getByRole("button", { name: /^Watching STAT 107 / })).toHaveAttribute("aria-pressed", "true");
+  await expect(watch.getByRole("link", { name: "your watched sections" })).toHaveAttribute("href", /\/opened\/\?watch=1$/);
   await watch.getByRole("link", { name: "Just opened" }).click();
   await expect(page).toHaveURL(/\/opened\/\?mine=1$/);
   await expect(page.getByLabel(/Only my schedule's courses/)).toBeChecked();
+  const watched = page.getByTestId("watched").getByTestId("watched-row");
+  await expect(watched).toContainText("STAT 107");
+  await expect(watched).toContainText(/checked/); // its course file has loaded (through the route above)
 });

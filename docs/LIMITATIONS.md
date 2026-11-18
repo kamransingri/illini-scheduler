@@ -20,8 +20,14 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
   by a GitHub Actions job, and the page picks that up within about 5 minutes (GitHub caches the file for 5 minutes).
   Expect a change on the page roughly 5 to 15 minutes after it happens. GitHub can delay or skip scheduled runs when
   it's busy, and then the page says "Daily" instead of "Live".
-- **Only busy courses.** A run reads about 240 courses: the 60 busiest every time, the next 340 in rotation. A quiet
-  course is only checked by the daily crawl, so its openings show up the next day.
+- **Only busy courses.** A run reads about 240 courses: the 60 busiest every time, the next 340 in rotation, and up
+  to 30 courses on the site's watch list (`data/watch.txt`, added by pull request). A quiet course is only checked by
+  the daily crawl, so its openings show up the next day. For Spring 2027 about 1,100 courses have a closed section, so
+  about 700 of them are quiet in this sense.
+- **Watching a section doesn't make it checked more often.** "Watch" keeps a section in your list on Just opened with
+  its latest status and lets you filter and be notified on it. The list stays in your browser (and its share link), so
+  the live job can't see it; only `data/watch.txt` changes what the job reads ([#15](https://github.com/kamransingri/illini-scheduler/issues/15)).
+  A list holds up to 40 sections.
 - **A seat can be gone already.** Openings in popular courses can fill within minutes. Copy the CRN and confirm in
   Self-Service.
 - **Notifications only while the page is open.** "Notify me" uses the browser's notifications for changes that arrive
