@@ -94,9 +94,23 @@ def test_an_empty_read_is_an_error_not_a_quiet_pass(citl):
 
 def test_main_exits_10_and_writes_the_issue_when_something_changed(tmp_path, monkeypatch):
     rep = cw.Report(lines={"2026-2027": ["x"]}, new_years=["2027-2028"])
-    monkeypatch.setattr(cw, "check", lambda client: rep)
+    monkeypatch.setattr(cw, "check", lambda client, d, t: rep if t == "AP" else cw.Report(t, d))
     out = tmp_path / "issue.md"
     assert cw.main(["--issue", str(out)]) == cw.CHANGED
     assert "2027-2028" in out.read_text(encoding="utf-8")
-    monkeypatch.setattr(cw, "check", lambda client: cw.Report(lines={"2026-2027": ["x"]}))
+    monkeypatch.setattr(cw, "check", lambda client, d, t: cw.Report(t, d, lines={"2026-2027": ["x"]}))
     assert cw.main([]) == 0
+
+
+def test_ib_rows_are_checked_on_their_own_and_older_missing_years_are_not_new(citl):
+    folder, state, client = citl
+    (folder / "2025-2026.yaml").unlink()  # IB has no 2025-2026 file on purpose (the tool's rows have no level)
+    state["entries"].append({"Exam Type": "IB", "Test Name": "ECONOMICS", "Level": "HL", "Score": "4, 5, 6, 7",
+                             "Course Credit": "ECON 102, 103", "Credit Earned": "3 + 3 = 6"})
+    rep = cw.check(client, folder, "IB")
+    assert rep.lines["2026-2027"] == ["ECONOMICS | HL | 4, 5, 6, 7 | ECON 102, 103 | 3 + 3 = 6 |  | "]
+    assert rep.new_years == []  # 2025-2026 is older than the newest file
+    state["years"].insert(0, "2027-2028")
+    rep = cw.check(client, folder, "IB")
+    assert rep.new_years == ["2027-2028"]
+    assert f"`data/{folder.name}/2027-2028.yaml`" in cw.issue_body([rep]) and "(IB)" in cw.issue_body([rep])

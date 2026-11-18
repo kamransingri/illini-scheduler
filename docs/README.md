@@ -10,7 +10,7 @@ Start with **LIMITATIONS** (what to keep in mind when using the site). Planned w
 | [DECISIONS.md](DECISIONS.md) | Every judgment call, numbered by phase (D13 redesign and degree planner, D14 v0.4.0, D15 v0.5.0, D16 AP credit) | Wondering why something works the way it does |
 | [DESIGN.md](DESIGN.md) | Design audit, direction, tokens, shared components, the logo and navigation | Changing anything people see |
 | [DEGREE-DATA.md](DEGREE-DATA.md) | The `data/degrees/*.yaml` format and the catalog importer | Fixing or adding a degree program |
-| [AP-CREDIT.md](AP-CREDIT.md) | The `data/ap-credit/*.yaml` format, where CITL's tables are, and the corrections made to them | Adding next year's AP table or fixing one |
+| [AP-CREDIT.md](AP-CREDIT.md) | The `data/ap-credit/*.yaml` and `data/ib-credit/*.yaml` formats, where CITL's tables are, and the corrections made to them | Adding next year's AP or IB table or fixing one |
 | [../CHANGELOG.md](../CHANGELOG.md) | What changed in each version, newest first | Seeing what a release brought |
 | [../CONTRIBUTING.md](../CONTRIBUTING.md) | Branches, commits, pull requests, versions and how a release is made | Before your first pull request or release |
 | [screenshots/](screenshots/) | `before/` (2026-11-16 baseline) and `after/` (v0.4.0) at desktop and phone width | Seeing the site without running it |

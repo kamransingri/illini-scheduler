@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { apCredit, creditCourses, isElective, isGrainger, pickYear, subOptions, type ApSummary, type ApTable, type ApYear } from "@/lib/apcredit";
+import { allCredits, apCredit, creditCourses, IB_LEVEL, ibCredit, isElective, isGrainger, pickIbYear, pickYear, subOptions, type ApSummary, type ApTable, type ApYear, type IbLevel } from "@/lib/apcredit";
 import { alsoCounts, evaluate, hoursSoFar, hydrate, needText, options, parseHours, prereqNote, rankCourse, type Degree, type DegreeCourse, type DegreeIndex, type GroupResult, type GroupStatus, type HoursSoFar, type Ranked } from "@/lib/degree";
 import { courseHref, dataUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, termLabel } from "@/lib/format";
 import { EMPTY, MINOR_TICK, onMineChange, readMine, sameState, STATUS_LABEL, stateFromParams, stateToParams, writeMine, type CourseStatus, type MyState } from "@/lib/mycourses";
@@ -56,15 +56,24 @@ const loadDegree = (id: string): Promise<Degree> => {
   return Promise.all([getJson<Degree>(`degrees/${id}.json`), genedCache]).then(([deg, gened]) => hydrate(deg, gened));
 };
 
-// CITL's AP credit tables (pipeline/ap_credit.py), one small file for every entering year.
-let apCache: Promise<ApTable> | null = null;
-const loadAp = (): Promise<ApTable> => {
-  if (!apCache) {
-    apCache = getJson<ApTable>("ap-credit.json");
-    apCache.catch(() => (apCache = null));
+// CITL's AP and IB credit tables (pipeline/ap_credit.py), one small file each with every entering year.
+const tableCache = new Map<string, Promise<ApTable>>();
+const loadTable = (file: "ap-credit.json" | "ib-credit.json"): Promise<ApTable> => {
+  let p = tableCache.get(file);
+  if (!p) {
+    p = getJson<ApTable>(file);
+    tableCache.set(file, p);
+    p.catch(() => tableCache.delete(file));
   }
-  return apCache;
+  return p;
 };
+
+/** "AP credit", "IB credit" or "AP and IB credit", from the exam labels a course's credit came from. */
+function examCreditLabel(from: string): string {
+  const ap = /(^|; )AP /.test(from);
+  const ib = /(^|; )IB /.test(from);
+  return ap && ib ? "AP and IB credit" : ib ? "IB credit" : "AP credit";
+}
 
 export default function DegreeChecklist({ programs, meta }: { programs: DegreeIndex; meta: { next_term: string; score_priors: ScorePriors | null } }) {
   const [st, setSt] = useState<MyState>(EMPTY);
@@ -79,6 +88,8 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
   const [index, setIndex] = useState<SearchIndex | null>(null);
   const [apTable, setApTable] = useState<ApTable | null>(null);
   const [apError, setApError] = useState(false);
+  const [ibTable, setIbTable] = useState<ApTable | null>(null);
+  const [ibError, setIbError] = useState(false);
   const weights = useWeights();
 
   // Start from the link if it carries a list; never overwrite a saved list without asking.
@@ -86,15 +97,18 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
     const fromUrl = stateFromParams(new URLSearchParams(window.location.search));
     const saved = readMine();
     let start = fromUrl ?? saved;
-    if (fromUrl && (saved.courses.length || saved.ap.length) && !sameState(saved, fromUrl)) setShared(saved);
+    if (fromUrl && (saved.courses.length || saved.ap.length || saved.ib.length) && !sameState(saved, fromUrl)) setShared(saved);
     else if (fromUrl) writeMine(fromUrl);
     if (!start.program && majors.length === 1) start = { ...start, program: majors[0].id };
     setSt(start);
     setReady(true);
     loadIndex().then(setIndex).catch(() => setIndex(null));
-    loadAp()
+    loadTable("ap-credit.json")
       .then(setApTable)
       .catch(() => setApError(true));
+    loadTable("ib-credit.json")
+      .then(setIbTable)
+      .catch(() => setIbError(true));
     return onMineChange(() => {
       setShared(null);
       setSt(readMine());
@@ -131,12 +145,15 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
       .catch((e: Error) => setMinorError(e.message));
   }, [st.minor]);
 
-  // AP scores become "credit" courses at CITL's hours; the college picks the Grainger rows for Calculus.
+  // AP and IB scores become "credit" courses at CITL's hours; the college picks the Grainger rows for Calculus. Both use
+  // the tables for the same entering year.
   const grainger = isGrainger(programs.find((p) => p.id === st.program)?.college);
   const apYear = apTable ? pickYear(apTable, st.year) : null;
+  const ibYear = ibTable && apYear ? pickIbYear(ibTable, apYear) : null;
   const apSum = useMemo(() => (apYear && st.ap.length ? apCredit(apYear, st.ap, grainger) : null), [apYear, st.ap, grainger]);
-  const allCourses = useMemo(() => [...st.courses, ...(apSum ? creditCourses(apSum.credits, st.declined, st.courses) : [])], [st.courses, st.declined, apSum]);
-  const apReady = !st.ap.length || !!apTable || apError;
+  const ibSum = useMemo(() => (ibYear && st.ib.length ? ibCredit(ibYear, st.ib) : null), [ibYear, st.ib]);
+  const allCourses = useMemo(() => [...st.courses, ...creditCourses(allCredits(apSum, ibSum), st.declined, st.courses)], [st.courses, st.declined, apSum, ibSum]);
+  const apReady = (!st.ap.length || !!apTable || apError) && (!st.ib.length || (!!ibTable && !!apTable) || ibError || apError);
   const majorTicks = useMemo(() => st.ticked.filter((t) => !t.startsWith(MINOR_TICK)), [st.ticked]);
   const minorTicks = useMemo(() => st.ticked.filter((t) => t.startsWith(MINOR_TICK)).map((t) => t.slice(MINOR_TICK.length)), [st.ticked]);
   const ev = useMemo(() => (deg && apReady ? evaluate(deg, allCourses, majorTicks) : null), [deg, apReady, allCourses, majorTicks]);
@@ -158,7 +175,8 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
       {shared && (
         <div className="rounded bg-panel p-4" role="status">
           You opened a shared checklist. Your own list ({shared.courses.length} course{shared.courses.length === 1 ? "" : "s"}
-          {shared.ap.length ? `, ${shared.ap.length} AP exam${shared.ap.length === 1 ? "" : "s"}` : ""}) is untouched.
+          {shared.ap.length ? `, ${shared.ap.length} AP exam${shared.ap.length === 1 ? "" : "s"}` : ""}
+          {shared.ib.length ? `, ${shared.ib.length} IB exam${shared.ib.length === 1 ? "" : "s"}` : ""}) is untouched.
           <div className="mt-2 flex flex-wrap gap-2">
             <button
               type="button"
@@ -214,9 +232,15 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
             />
           )}
           <AddCourse st={st} update={update} deg={deg} index={index} />
-          <ApForm st={st} update={update} table={apTable} error={apError} />
+          <ApForm st={st} update={update} table={apTable} ibTable={ibTable} error={apError || ibError} />
         </div>
-        <MyCourseList st={st} update={update} deg={deg} index={index} ap={apYear && apSum ? { year: apYear, sum: apSum } : null} />
+        <MyCourseList
+          st={st}
+          update={update}
+          deg={deg}
+          index={index}
+          exams={apReady && apYear ? { year: apYear, sum: apSum, ibYear, ibSum, ibLoaded: !!ibTable } : null}
+        />
       </section>
 
       <section aria-label="Requirements" className="min-w-0">
@@ -334,14 +358,16 @@ function AddCourse({ st, update, deg, index }: MineProps) {
   );
 }
 
-function MyCourseList({ st, update, deg, index, ap }: MineProps & { ap: { year: ApYear; sum: ApSummary } | null }) {
+type ExamSums = { year: ApYear; sum: ApSummary | null; ibYear: ApYear | null; ibSum: ApSummary | null; ibLoaded: boolean };
+
+function MyCourseList({ st, update, deg, index, exams }: MineProps & { exams: ExamSums | null }) {
   return (
     <div aria-labelledby="mine-h" role="group">
       <h2 id="mine-h" className="font-display text-xl font-bold text-heading">
         My courses
       </h2>
-      {!st.courses.length && !st.ap.length ? (
-        <p className="mt-2 text-muted">None yet. Add what you&apos;ve finished, your AP exams, transfer credit, and what you&apos;re taking now.</p>
+      {!st.courses.length && !st.ap.length && !st.ib.length ? (
+        <p className="mt-2 text-muted">None yet. Add what you&apos;ve finished, your AP and IB exams, transfer credit, and what you&apos;re taking now.</p>
       ) : (
         <div className="mt-2 space-y-3" data-testid="my-courses">
           {STATUSES.map((s) => {
@@ -382,7 +408,7 @@ function MyCourseList({ st, update, deg, index, ap }: MineProps & { ap: { year: 
               </div>
             );
           })}
-          {st.ap.length > 0 && (ap ? <ApCredits st={st} update={update} year={ap.year} sum={ap.sum} /> : <p className="text-muted">Loading the AP credit table…</p>)}
+          {st.ap.length + st.ib.length > 0 && (exams ? <ApCredits st={st} update={update} exams={exams} /> : <p className="text-muted">Loading the credit tables…</p>)}
           <ShareLink />
         </div>
       )}
@@ -390,15 +416,30 @@ function MyCourseList({ st, update, deg, index, ap }: MineProps & { ap: { year: 
   );
 }
 
-/** The exams in the chosen year's table, a score, and the subscore when the table tells subscores apart. */
-function ApForm({ st, update, table, error }: { st: MyState; update: (s: MyState) => void; table: ApTable | null; error: boolean }) {
+/**
+ * Add an AP or IB exam: the exams in the chosen year's table, a score, the subscore when the AP table tells subscores
+ * apart, and the level (Higher or Standard) for IB.
+ */
+function ApForm({ st, update, table, ibTable, error }: { st: MyState; update: (s: MyState) => void; table: ApTable | null; ibTable: ApTable | null; error: boolean }) {
+  const [kind, setKind] = useState<"AP" | "IB">("AP");
   const [examId, setExamId] = useState("");
   const [score, setScore] = useState("");
   const [sub, setSub] = useState("");
+  const [level, setLevel] = useState<IbLevel | "">("");
   const year = table ? pickYear(table, st.year) : null;
-  const exam = year?.exams.find((e) => e.id === examId);
-  const subs = exam && score ? subOptions(exam, Number(score)) : [];
-  const ok = !!exam && !!score && (!subs.length || sub !== "");
+  const ibYear = ibTable && year ? pickIbYear(ibTable, year) : null;
+  const exams = kind === "AP" ? year?.exams : ibYear?.exams;
+  const exam = exams?.find((e) => e.id === examId);
+  const subs = kind === "AP" && exam && score ? subOptions(exam, Number(score)) : [];
+  const levels = kind === "IB" ? (exam?.levels ?? []) : [];
+  const lvl = levels.length === 1 ? levels[0] : level;
+  const ok = !!exam && !!score && (!subs.length || sub !== "") && (kind === "AP" || (!!lvl && levels.includes(lvl)));
+  const reset = () => {
+    setExamId("");
+    setScore("");
+    setSub("");
+    setLevel("");
+  };
   return (
     <form
       className="space-y-2"
@@ -406,24 +447,26 @@ function ApForm({ st, update, table, error }: { st: MyState; update: (s: MyState
       onSubmit={(e) => {
         e.preventDefault();
         if (!ok) return;
-        const next = { exam: examId, score: Number(score), sub: subs.length ? Number(sub) : null };
-        update({ ...st, ap: [...st.ap.filter((a) => a.exam !== examId), next] });
-        setExamId("");
-        setScore("");
-        setSub("");
+        if (kind === "AP") {
+          const next = { exam: examId, score: Number(score), sub: subs.length ? Number(sub) : null };
+          update({ ...st, ap: [...st.ap.filter((a) => a.exam !== examId), next] });
+        } else {
+          update({ ...st, ib: [...st.ib.filter((a) => a.exam !== examId), { exam: examId, level: lvl as IbLevel, score: Number(score) }] });
+        }
+        reset();
       }}
     >
       <h2 id="ap-h" className="inline-flex items-center font-semibold text-heading">
-        Add an AP exam
-        <Info label="About AP credit">
-          Illinois gives course credit for AP scores from a table CITL (the Center for Innovation in Teaching &amp; Learning) publishes for each starting year.
-          Add your exams and scores to see the courses they&apos;re expected to give. It&apos;s an estimate until the credit shows on your DARS report. Your
-          scores stay in this browser and in the share link.
+        Add an AP or IB exam
+        <Info label="About AP and IB credit">
+          Illinois gives course credit for AP and IB scores from tables CITL (the Center for Innovation in Teaching &amp; Learning) publishes for each starting
+          year. Add your exams and scores to see the courses they&apos;re expected to give. It&apos;s an estimate until the credit shows on your DARS report.
+          Your scores stay in this browser and in the share link.
         </Info>
       </h2>
       {error && (
         <p className="text-sm" role="alert">
-          Couldn&apos;t load the AP credit table. Reload to try again.
+          Couldn&apos;t load the AP or IB credit table. Reload to try again.
         </p>
       )}
       <label className="block text-sm">
@@ -442,19 +485,45 @@ function ApForm({ st, update, table, error }: { st: MyState; update: (s: MyState
           ))}
         </select>
       </label>
+      <div className="flex gap-1.5" role="group" aria-label="Exam type">
+        {(["AP", "IB"] as const).map((k) => (
+          <button
+            key={k}
+            type="button"
+            aria-pressed={kind === k}
+            onClick={() => {
+              setKind(k);
+              reset();
+            }}
+            className={`rounded border px-3 text-sm leading-7 font-semibold ${kind === k ? "border-action bg-action-tint text-heading" : "border-line bg-white text-action hover:border-action"}`}
+          >
+            {k}
+          </button>
+        ))}
+      </div>
+      {kind === "IB" && year && ibTable && !ibYear && (
+        <p className="text-sm" data-testid="ib-no-table">
+          IB credit here starts with students entering in {ibTable.years[ibTable.years.length - 1]?.entering}. For {year.label}, see{" "}
+          <a href="https://citl.illinois.edu/current-cutoff-scores" className="font-semibold text-action underline" rel="noopener">
+            CITL&apos;s cutoff scores
+          </a>{" "}
+          and add the courses you get as credit above.
+        </p>
+      )}
       <div className="flex gap-2">
         <select
           className="min-w-0 flex-1 rounded border border-line bg-white px-2 py-1.5"
-          aria-label="AP exam"
+          aria-label={`${kind} exam`}
           value={examId}
-          disabled={!year}
+          disabled={!exams}
           onChange={(e) => {
             setExamId(e.target.value);
             setSub("");
+            setLevel("");
           }}
         >
-          <option value="">AP exam</option>
-          {year?.exams.map((x) => (
+          <option value="">{kind} exam</option>
+          {exams?.map((x) => (
             <option key={x.id} value={x.id}>
               {x.name}
             </option>
@@ -464,20 +533,31 @@ function ApForm({ st, update, table, error }: { st: MyState; update: (s: MyState
           className="w-24 rounded border border-line bg-white px-2 py-1.5"
           aria-label="Score"
           value={score}
-          disabled={!year}
+          disabled={!exams}
           onChange={(e) => {
             setScore(e.target.value);
             setSub("");
           }}
         >
           <option value="">Score</option>
-          {[5, 4, 3, 2, 1].map((n) => (
+          {(kind === "AP" ? [5, 4, 3, 2, 1] : [7, 6, 5, 4, 3, 2, 1]).map((n) => (
             <option key={n} value={n}>
               {n}
             </option>
           ))}
         </select>
       </div>
+      {levels.length > 1 && (
+        <select className="w-full rounded border border-line bg-white px-2 py-1.5" aria-label="Level" value={level} onChange={(e) => setLevel(e.target.value as IbLevel | "")}>
+          <option value="">Level</option>
+          {levels.map((v) => (
+            <option key={v} value={v}>
+              {IB_LEVEL[v]} ({v})
+            </option>
+          ))}
+        </select>
+      )}
+      {levels.length === 1 && <p className="text-sm text-muted">{IB_LEVEL[levels[0]]} only.</p>}
       {exam?.sub && subs.length > 0 && (
         <select className="w-full rounded border border-line bg-white px-2 py-1.5" aria-label={exam.sub} value={sub} onChange={(e) => setSub(e.target.value)}>
           <option value="">{exam.sub}</option>
@@ -496,34 +576,49 @@ function ApForm({ st, update, table, error }: { st: MyState; update: (s: MyState
         <Icon name="plus" />
         Add exam
       </button>
+      <p className="text-sm text-muted" data-testid="transfer-hint">
+        Dual credit or community college courses: look each one up on{" "}
+        <a href="https://www.transferology.com/school/illinois" className="font-semibold text-action underline" rel="noopener">
+          Transferology
+        </a>
+        , which Illinois uses for transfer equivalencies, then add the Illinois course above as AP, IB or transfer credit.
+      </p>
     </form>
   );
 }
 
-/** What each AP score gives: its courses (each can be switched off), CITL's placement message word for word, and notes. */
-function ApCredits({ st, update, year, sum }: { st: MyState; update: (s: MyState) => void; year: ApYear; sum: ApSummary }) {
+/** What each AP or IB score gives: its courses (each can be switched off), CITL's placement message word for word, and notes. */
+function ApCredits({ st, update, exams }: { st: MyState; update: (s: MyState) => void; exams: ExamSums }) {
+  const { year, sum, ibYear, ibSum, ibLoaded } = exams;
   const own = new Set(st.courses.map((c) => `${c.s} ${c.n}`));
-  const collegeRows = sum.results.some((r) => r.exam?.rows.some((x) => x.college));
+  const collegeRows = !!sum?.results.some((r) => r.exam?.rows.some((x) => x.college));
   const toggle = (code: string, on: boolean) => update({ ...st, declined: on ? st.declined.filter((x) => x !== code) : [...st.declined, code] });
+  const cards = [
+    ...(sum?.results ?? []).map((r) => ({ r, kind: "AP" as const, table: year.label, remove: () => update({ ...st, ap: st.ap.filter((a) => a.exam !== r.score.exam) }) })),
+    ...(ibSum?.results ?? []).map((r) => ({ r, kind: "IB" as const, table: ibYear?.label ?? "", remove: () => update({ ...st, ib: st.ib.filter((a) => a.exam !== r.score.exam) }) })),
+  ];
+  // IB scores without an IB table for this starting year still show, so they can be removed
+  const orphans = ibLoaded && !ibYear ? st.ib : [];
+  const tables = [...(st.ap.length ? [{ y: year, kind: "AP" }] : []), ...(st.ib.length && ibYear ? [{ y: ibYear, kind: "IB" }] : [])];
   return (
     <div data-testid="ap-credit">
-      <h3 className="text-sm text-muted">Expected AP credit</h3>
+      <h3 className="text-sm text-muted">Expected {st.ib.length ? (st.ap.length ? "AP and IB" : "IB") : "AP"} credit</h3>
       <ul className="mt-1 grid grid-cols-1 items-start gap-2 xl:grid-cols-2">
-        {sum.results.map((r) => (
-          <li key={r.score.exam} className="rounded border border-line bg-white p-3" data-exam={r.score.exam}>
+        {cards.map(({ r, kind, table, remove }) => (
+          <li key={`${kind}-${r.score.exam}`} className="rounded border border-line bg-white p-3" data-exam={r.score.exam} data-kind={kind}>
             <div className="flex items-start justify-between gap-2">
               <span className="font-semibold">{r.label}</span>
               <button
                 type="button"
                 className="-mt-1 -mr-1 inline-flex size-8 shrink-0 items-center justify-center rounded text-muted hover:text-action"
                 aria-label={`Remove ${r.label}`}
-                onClick={() => update({ ...st, ap: st.ap.filter((a) => a.exam !== r.score.exam) })}
+                onClick={remove}
               >
                 <Icon name="x" />
               </button>
             </div>
             {!r.exam ? (
-              <p className="text-sm text-muted">Not in the {year.label} table.</p>
+              <p className="text-sm text-muted">Not in the {table} table.</p>
             ) : r.needsSub ? (
               <p className="text-sm">Remove this exam and add it again with your {r.exam.sub?.toLowerCase()} to see its credit.</p>
             ) : !r.row?.credit.length ? (
@@ -560,28 +655,56 @@ function ApCredits({ st, update, year, sum }: { st: MyState; update: (s: MyState
                 {n}
               </p>
             ))}
-            {r.row?.fix && <p className="mt-1 text-sm text-muted">Where our copy differs from CITL&apos;s page: {r.row.fix}</p>}
+            {r.row?.fix && <p className="mt-1 text-sm text-muted">Where our copy differs from CITL&apos;s table: {r.row.fix}</p>}
+          </li>
+        ))}
+        {orphans.map((a) => (
+          <li key={`IB-${a.exam}`} className="rounded border border-line bg-white p-3" data-exam={a.exam} data-kind="IB">
+            <div className="flex items-start justify-between gap-2">
+              <span className="font-semibold">
+                IB {a.exam} {a.level}, {a.score}
+              </span>
+              <button
+                type="button"
+                className="-mt-1 -mr-1 inline-flex size-8 shrink-0 items-center justify-center rounded text-muted hover:text-action"
+                aria-label={`Remove IB ${a.exam}`}
+                onClick={() => update({ ...st, ib: st.ib.filter((x) => x.exam !== a.exam) })}
+              >
+                <Icon name="x" />
+              </button>
+            </div>
+            <p className="text-sm text-muted">No IB table here for students starting in {year.entering}.</p>
           </li>
         ))}
       </ul>
-      <p className="mt-2 text-sm text-muted">
-        From CITL&apos;s{" "}
-        <a href={year.source} className="font-semibold text-action underline" rel="noopener">
-          {year.label} AP credit table
-        </a>{" "}
-        for students starting in {year.entering}, read {fmtDate(year.read_on)}. It&apos;s an estimate until the credit shows on your DARS report. Untick a course
-        if you&apos;d rather take it than accept the credit (ask your advisor first). Elective credit such as MATH 1-- counts toward your hours.
+      {tables.map(({ y, kind }) => (
+        <p key={kind} className="mt-2 text-sm text-muted">
+          From CITL&apos;s{" "}
+          <a href={y.source} className="font-semibold text-action underline" rel="noopener">
+            {y.label} {kind} credit table
+          </a>{" "}
+          for students starting in {y.entering}, read {fmtDate(y.read_on)}.
+        </p>
+      ))}
+      <p className="mt-1 text-sm text-muted">
+        It&apos;s an estimate until the credit shows on your DARS report. Untick a course if you&apos;d rather take it than accept the credit (ask your advisor
+        first). Elective credit such as MATH 1-- counts toward your hours.
         {collegeRows && !st.program && " Calculus credit differs for Grainger engineering programs: choose your program to see yours."}
       </p>
-      {year.notes.length > 0 && (
-        <div className="mt-2 text-sm text-muted" data-testid="ap-year-notes">
-          <p className="font-semibold">CITL&apos;s notes for {year.label}</p>
-          <ul className="mt-0.5 list-disc space-y-0.5 pl-5">
-            {year.notes.map((n) => (
-              <li key={n}>{n}</li>
-            ))}
-          </ul>
-        </div>
+      {tables.map(
+        ({ y, kind }) =>
+          y.notes.length > 0 && (
+            <div key={kind} className="mt-2 text-sm text-muted" data-testid={kind === "AP" ? "ap-year-notes" : "ib-year-notes"}>
+              <p className="font-semibold">
+                CITL&apos;s {kind} notes for {y.label}
+              </p>
+              <ul className="mt-0.5 list-disc space-y-0.5 pl-5">
+                {y.notes.map((n) => (
+                  <li key={n}>{n}</li>
+                ))}
+              </ul>
+            </div>
+          ),
       )}
     </div>
   );
@@ -649,7 +772,12 @@ function Checklist({
           {hours && (hours.done > 0 || hours.inProgress > 0) && (
             <span className="block text-sm" data-testid="hours-so-far">
               <span className="font-semibold text-ink tnum">{hours.done}</span> hours in My courses
-              {apHours > 0 && <> ({apHours} from AP credit)</>}
+              {apHours > 0 && (
+                <>
+                  {" "}
+                  ({apHours} from {st.ib.length ? (st.ap.length ? "AP and IB" : "IB") : "AP"} credit)
+                </>
+              )}
               {hours.inProgress > 0 && <>, {hours.inProgress} more in progress</>}.{hours.variable && " Variable-credit courses count at their minimum."}
               {hours.unknown.length > 0 && <> Not counted (hours unknown): {hours.unknown.join(", ")}.</>}
             </span>
@@ -838,7 +966,7 @@ function UsedList({ r }: { r: GroupResult }) {
       {r.used.map((u) => (
         <Badge key={u.code} icon={u.status === "in_progress" ? "calendar" : u.ap ? "award" : "check"} title={u.ap ?? STATUS_LABEL[u.status]}>
           {u.code}
-          {u.status !== "done" ? <span className="text-muted">, {u.ap ? "AP credit" : u.status === "credit" ? "credit" : "in progress"}</span> : null}
+          {u.status !== "done" ? <span className="text-muted">, {u.ap ? examCreditLabel(u.ap) : u.status === "credit" ? "credit" : "in progress"}</span> : null}
         </Badge>
       ))}
     </p>
