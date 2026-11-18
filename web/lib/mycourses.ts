@@ -1,21 +1,21 @@
-// "My courses": what a student has finished, has credit for, or is taking, plus their AP scores. Stored in this browser
+// "My courses": what a student has finished, has credit for, or is taking, plus their AP and IB scores. Stored in this browser
 // (localStorage) and encodable into the URL like the cart (lib/cart.ts); nothing is sent anywhere or committed.
-import { decodeAp, encodeAp, type ApScore } from "./apcredit";
+import { decodeAp, decodeIb, encodeAp, encodeIb, type ApScore, type IbScore } from "./apcredit";
 
 export type CourseStatus = "done" | "credit" | "in_progress";
-/** `hours` and `ap` are set only on courses worked out from AP scores (lib/apcredit.ts), never on the student's own. */
+/** `hours` and `ap` are set only on courses worked out from AP or IB scores (lib/apcredit.ts), never on the student's own. */
 export type MyCourse = { s: string; n: string; status: CourseStatus; hours?: number; ap?: string };
 /**
  * `program` is the major; `minor` is optional (""). `ticked` holds the major's hand-ticked group ids and the minor's as
  * MINOR_TICK + id ("mn--language"): group ids never contain "--", so the two can't collide.
- * `year`: the AP table's entering year ("2026" = 2026-2027; "" = the newest). `declined`: AP credit switched off.
+ * `year`: the AP and IB tables' entering year ("2026" = 2026-2027; "" = the newest). `declined`: AP or IB credit switched off.
  */
-export type MyState = { courses: MyCourse[]; program: string; minor: string; ticked: string[]; ap: ApScore[]; year: string; declined: string[] };
+export type MyState = { courses: MyCourse[]; program: string; minor: string; ticked: string[]; ap: ApScore[]; ib: IbScore[]; year: string; declined: string[] };
 export const MINOR_TICK = "mn--";
 
 export const STATUS_LABEL: Record<CourseStatus, string> = {
   done: "Completed",
-  credit: "AP or transfer credit",
+  credit: "AP, IB or transfer credit",
   in_progress: "In progress",
 };
 
@@ -23,7 +23,7 @@ const KEY = "illini-scheduler:mycourses:v1";
 const EVENT = "illini-mycourses-change";
 const SUFFIX: Record<CourseStatus, string> = { done: "", credit: "~c", in_progress: "~p" };
 
-export const EMPTY: MyState = { courses: [], program: "", minor: "", ticked: [], ap: [], year: "", declined: [] };
+export const EMPTY: MyState = { courses: [], program: "", minor: "", ticked: [], ap: [], ib: [], year: "", declined: [] };
 const SLUG = /^[a-z0-9-]*$/;
 
 /** "STAT107,MATH220~c,CS124~p" (no suffix = completed, ~c = AP/transfer credit, ~p = in progress). */
@@ -43,7 +43,7 @@ export function decodeCourses(param: string | null | undefined): MyCourse[] {
   return out;
 }
 
-/** Declined AP credit in the link: "MATH220,RHET1--". */
+/** Declined AP or IB credit in the link: "MATH220,RHET1--". */
 const encodeCodes = (codes: string[]) => codes.map((c) => c.replace(" ", "")).join(",");
 function decodeCodes(param: string | null | undefined): string[] {
   const out: string[] = [];
@@ -57,19 +57,20 @@ function decodeCodes(param: string | null | undefined): string[] {
 const cleanYear = (y: unknown) => (typeof y === "string" && /^\d{4}$/.test(y) ? y : "");
 
 export function encodeState(st: MyState): string {
-  return JSON.stringify({ c: encodeCourses(st.courses), p: st.program, n: st.minor, x: st.ticked, a: encodeAp(st.ap), y: st.year, d: encodeCodes(st.declined) });
+  return JSON.stringify({ c: encodeCourses(st.courses), p: st.program, n: st.minor, x: st.ticked, a: encodeAp(st.ap), i: encodeIb(st.ib), y: st.year, d: encodeCodes(st.declined) });
 }
 
 export function decodeState(raw: string | null): MyState {
   if (!raw) return EMPTY;
   try {
-    const o = JSON.parse(raw) as { c?: string; p?: string; n?: string; x?: unknown; a?: unknown; y?: unknown; d?: unknown };
+    const o = JSON.parse(raw) as { c?: string; p?: string; n?: string; x?: unknown; a?: unknown; i?: unknown; y?: unknown; d?: unknown };
     return {
       courses: decodeCourses(o.c),
       program: typeof o.p === "string" && SLUG.test(o.p) ? o.p : "",
       minor: typeof o.n === "string" && SLUG.test(o.n) ? o.n : "",
       ticked: Array.isArray(o.x) ? o.x.filter((t): t is string => typeof t === "string" && /^[a-z0-9-]+$/.test(t)) : [],
       ap: decodeAp(typeof o.a === "string" ? o.a : ""),
+      ib: decodeIb(typeof o.i === "string" ? o.i : ""),
       year: cleanYear(o.y),
       declined: decodeCodes(typeof o.d === "string" ? o.d : ""),
     };
@@ -106,7 +107,7 @@ export function onMineChange(fn: () => void): () => void {
 
 /**
  * URL params for a shareable checklist: ?p=<major>&mn=<minor>&m=<courses>&x=<ticked groups>&a=<AP scores>
- * &y=<entering year>&d=<declined AP credit>.
+ * &i=<IB scores>&y=<entering year>&d=<declined AP or IB credit>.
  */
 export function stateToParams(st: MyState, params: URLSearchParams): void {
   const put = (k: string, v: string) => (v ? params.set(k, v) : params.delete(k));
@@ -115,11 +116,13 @@ export function stateToParams(st: MyState, params: URLSearchParams): void {
   put("m", encodeCourses(st.courses));
   put("x", st.ticked.join(","));
   put("a", encodeAp(st.ap));
-  put("y", st.ap.length ? st.year : "");
-  put("d", st.ap.length ? encodeCodes(st.declined) : "");
+  put("i", encodeIb(st.ib));
+  const exams = st.ap.length + st.ib.length;
+  put("y", exams ? st.year : "");
+  put("d", exams ? encodeCodes(st.declined) : "");
 }
 
-const PARAMS = ["m", "p", "mn", "x", "a", "y", "d"];
+const PARAMS = ["m", "p", "mn", "x", "a", "i", "y", "d"];
 
 export function stateFromParams(params: URLSearchParams): MyState | null {
   if (!PARAMS.some((k) => params.has(k))) return null;
@@ -131,6 +134,7 @@ export function stateFromParams(params: URLSearchParams): MyState | null {
     minor: SLUG.test(mn) ? mn : "",
     ticked: (params.get("x") ?? "").split(",").filter((t) => /^[a-z0-9-]+$/.test(t)),
     ap: decodeAp(params.get("a")),
+    ib: decodeIb(params.get("i")),
     year: cleanYear(params.get("y")),
     declined: decodeCodes(params.get("d")),
   };

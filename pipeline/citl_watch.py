@@ -1,10 +1,13 @@
-"""Weekly check that CITL's AP credit tables still say what data/ap-credit/*.yaml copied from them (issue #23).
+"""Weekly check that CITL's AP and IB credit tables still say what data/ap-credit/*.yaml and data/ib-credit/*.yaml
+copied from them (issues #23 and #25).
 
 Each year file's `source` is read again and cut down to its content lines: exam names and table rows for a static CITL
 page, or the AP rows of the cutoff-score tool's data (that page is an empty shell its script fills from a JSON
 service). The lines are compared with data/ap-credit/citl/<year>.txt, taken when the YAML was last checked by hand.
-The tool's list of years is checked too, so a new table (2027-2028) is noticed. Nothing here edits the YAML: the hand
-copy and its `fix` notes stay the source of truth (docs/AP-CREDIT.md).
+The tool's list of years is checked too, so a new table (2027-2028) is noticed; a year older than the newest file is
+not, because some are left out on purpose (the tool's 2025-2026 IB rows have no level). IB files are checked the same
+way, against the tool's IB rows and data/ib-credit/citl/. Nothing here edits the YAML: the hand copy and its `fix`
+notes stay the source of truth (docs/AP-CREDIT.md).
 
     python -m pipeline.citl_watch               report; exit code 10 when something changed
     python -m pipeline.citl_watch --issue F     also write an issue body (Markdown) to F when something changed
@@ -25,13 +28,14 @@ from typing import Any
 import httpx
 import yaml
 
-from .ap_credit import AP_DIR
+from .ap_credit import AP_DIR, IB_DIR
 from .config import USER_AGENT
 
 CUTOFF_PAGE = "https://citl.illinois.edu/current-cutoff-scores"
 # Where the cutoff page's script reads its data; the page names it (PNP_API_BASE_URL), and that wins over this.
 CUTOFF_API = "https://pnp-cutoffs-backend-104034467107.us-central1.run.app"
 COLUMNS = ("Test Name", "Level", "Score", "Course Credit", "Credit Earned", "Placement Message", "Gen Ed Fulfillment")
+KINDS = (("AP", AP_DIR), ("IB", IB_DIR))  # exam type in CITL's tool, folder of year files
 CHANGED = 10  # exit code when something changed; errors exit 1, so the workflow can tell them apart
 MAX_DIFF_LINES = 120
 VOID = {"area", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "wbr"}
@@ -116,14 +120,16 @@ def page_lines(html: str) -> list[str]:
     return p.lines
 
 
-def api_lines(data: dict[str, Any]) -> list[str]:
-    """The AP rows of one year from the cutoff tool, one line each, sorted so a reordering isn't a change."""
-    rows = [e for e in data.get("entries") or [] if str(e.get("Exam Type", "")).upper() == "AP"]
+def api_lines(data: dict[str, Any], exam_type: str = "AP") -> list[str]:
+    """One exam type's rows of one year from the cutoff tool, one line each, sorted so a reordering isn't a change."""
+    rows = [e for e in data.get("entries") or [] if str(e.get("Exam Type", "")).upper() == exam_type]
     return sorted(" | ".join(_norm(str(e.get(c) or "")) for c in COLUMNS) for e in rows)
 
 
 @dataclass
 class Report:
+    exam_type: str = "AP"
+    directory: Path = AP_DIR
     lines: dict[str, list[str]] = field(default_factory=dict)       # year -> what the source says now
     changed: dict[str, list[str]] = field(default_factory=dict)     # year -> diff against the snapshot
     no_snapshot: list[str] = field(default_factory=list)
@@ -149,16 +155,16 @@ def api_base(client: httpx.Client) -> str:
     return (m.group(1) if m else CUTOFF_API).rstrip("/")
 
 
-def check(client: httpx.Client, directory: Path = AP_DIR) -> Report:
-    rep = Report()
+def check(client: httpx.Client, directory: Path = AP_DIR, exam_type: str = "AP") -> Report:
+    rep = Report(exam_type, directory)
     files = year_files(directory)
     base = api_base(client)
     offered = [str(y["id"]) for y in client.get(f"{base}/api/public/years").raise_for_status().json()]
-    rep.new_years = sorted(set(offered) - set(files))
+    rep.new_years = sorted(y for y in set(offered) - set(files) if not files or y > max(files))
     for year, source in files.items():
         rep.sources[year] = source
         if source.rstrip("/") == CUTOFF_PAGE:
-            lines = api_lines(client.get(f"{base}/api/public/years/{year}").raise_for_status().json())
+            lines = api_lines(client.get(f"{base}/api/public/years/{year}").raise_for_status().json(), exam_type)
         else:
             lines = page_lines(client.get(source).raise_for_status().text)
         if not lines:
@@ -174,24 +180,29 @@ def check(client: httpx.Client, directory: Path = AP_DIR) -> Report:
     return rep
 
 
-def save_snapshots(rep: Report, directory: Path = AP_DIR) -> None:
+def save_snapshots(rep: Report, directory: Path | None = None) -> None:
+    directory = directory or rep.directory
     (directory / "citl").mkdir(parents=True, exist_ok=True)
     for year, lines in rep.lines.items():
         (directory / "citl" / f"{year}.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def issue_body(rep: Report) -> str:
-    out = ["CITL's AP credit pages no longer match the snapshots taken when `data/ap-credit/*.yaml` were last checked "
-           "(`python -m pipeline.citl_watch`).", ""]
-    for year in rep.new_years:
-        out += [f"- **New year in CITL's cutoff tool: {year}.** Copy it by hand into `data/ap-credit/{year}.yaml` "
-                f"from {CUTOFF_PAGE} (docs/AP-CREDIT.md)."]
-    for year in rep.no_snapshot:
-        out += [f"- **{year}:** no snapshot yet in `data/ap-credit/citl/`."]
-    for year, diff in rep.changed.items():
-        shown = diff[:MAX_DIFF_LINES]
-        more = f"\n… and {len(diff) - len(shown)} more lines" if len(diff) > len(shown) else ""
-        out += ["", f"### {year} ({rep.sources[year]})", "", "```diff", *shown, "```" + more]
+def issue_body(reps: Report | list[Report]) -> str:
+    reps = [reps] if isinstance(reps, Report) else reps
+    out = ["CITL's AP or IB credit tables no longer match the snapshots taken when `data/ap-credit/*.yaml` and "
+           "`data/ib-credit/*.yaml` were last checked (`python -m pipeline.citl_watch`).", ""]
+    for rep in reps:
+        folder = rep.directory.name
+        for year in rep.new_years:
+            out += [f"- **New year in CITL's cutoff tool: {year}** ({rep.exam_type}). Copy it by hand into "
+                    f"`data/{folder}/{year}.yaml` from {CUTOFF_PAGE} (docs/AP-CREDIT.md)."]
+        for year in rep.no_snapshot:
+            out += [f"- **{rep.exam_type} {year}:** no snapshot yet in `data/{folder}/citl/`."]
+    for rep in reps:
+        for year, diff in rep.changed.items():
+            shown = diff[:MAX_DIFF_LINES]
+            more = f"\n… and {len(diff) - len(shown)} more lines" if len(diff) > len(shown) else ""
+            out += ["", f"### {rep.exam_type} {year} ({rep.sources[year]})", "", "```diff", *shown, "```" + more]
     out += ["", "To close this: update the YAML by hand (keep the `fix` notes), check it with `python -m "
             "pipeline.ap_credit`, then run `python -m pipeline.citl_watch --update` and commit the new snapshots."]
     return "\n".join(out) + "\n"
@@ -203,21 +214,21 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--issue", type=Path, help="write an issue body here when something changed")
     args = ap.parse_args(argv)
     with httpx.Client(headers={"User-Agent": USER_AGENT}, timeout=30, follow_redirects=True) as client:
-        rep = check(client)
-    if args.update:
-        save_snapshots(rep)
-        print(f"snapshots taken for {', '.join(rep.lines)}" + (f"; new in CITL's tool: {rep.new_years}"
-                                                             if rep.new_years else ""))
-        return 0
-    for year in rep.lines:
-        state = ("changed" if year in rep.changed else "no snapshot" if year in rep.no_snapshot else "unchanged")
-        print(f"{year}: {len(rep.lines[year])} lines, {state}")
-    if rep.new_years:
-        print(f"new in CITL's tool: {', '.join(rep.new_years)}")
-    if not rep.anything:
+        reps = [check(client, directory, exam_type) for exam_type, directory in KINDS]
+    for rep in reps:
+        if args.update:
+            save_snapshots(rep)
+            print(f"{rep.exam_type}: snapshots taken for {', '.join(rep.lines)}")
+            continue
+        for year in rep.lines:
+            state = ("changed" if year in rep.changed else "no snapshot" if year in rep.no_snapshot else "unchanged")
+            print(f"{rep.exam_type} {year}: {len(rep.lines[year])} lines, {state}")
+        if rep.new_years:
+            print(f"{rep.exam_type} new in CITL's tool: {', '.join(rep.new_years)}")
+    if args.update or not any(rep.anything for rep in reps):
         return 0
     if args.issue:
-        args.issue.write_text(issue_body(rep), encoding="utf-8")
+        args.issue.write_text(issue_body(reps), encoding="utf-8")
     return CHANGED
 
 

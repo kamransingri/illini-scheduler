@@ -4,6 +4,7 @@
 import type { MyCourse } from "./mycourses";
 
 export type ApRow = {
+  level?: IbLevel; // IB only: the row is for Higher or Standard Level
   scores: number[];
   sub: number[] | null; // subscore values this row needs (0 = no subscore); null = any
   college: "grainger" | "other" | null;
@@ -12,7 +13,7 @@ export type ApRow = {
   message: string | null; // CITL's placement message, word for word
   fix: string | null; // where our copy differs from the page, quoting it
 };
-export type ApExam = { id: string; name: string; sub: string | null; notes: string[]; rows: ApRow[] };
+export type ApExam = { id: string; name: string; sub: string | null; notes: string[]; rows: ApRow[]; levels?: IbLevel[] };
 export type ApYear = { id: string; label: string; entering: string; source: string; read_on: string; notes: string[]; exams: ApExam[]; unknown: string[] };
 export type ApTable = { years: ApYear[] };
 /** One exam the student took. `sub` is the subscore when the table needs one (Calculus BC's AB subscore, Music Theory's aural). */
@@ -92,19 +93,69 @@ export type ApResult = {
 export type ApCredit = { code: string; hours: number; elective: boolean; from: string[] };
 export type ApSummary = { results: ApResult[]; credits: ApCredit[] };
 
-/**
- * What the scores give under one year's table. The same course from two exams (RHET 105 from both English exams)
- * counts once; elective credit in the same subject from two exams adds up, since each exam posts its own.
- */
+/** What the scores give under one year's table (credits merged as in allCredits). */
 export function apCredit(year: ApYear, list: ApScore[], grainger: boolean): ApSummary {
   const byId = new Map(year.exams.map((e) => [e.id, e]));
   const scores = new Map(list.map((a) => [a.exam, a.score]));
-  const credits = new Map<string, ApCredit>();
   const results = list.map((a): ApResult => {
     const exam = byId.get(a.exam);
-    const label = scoreLabel(exam, a);
     const needsSub = !!exam && effectiveSub(exam, a) === null;
     const row = exam ? rowFor(exam, a, grainger, scores) : null;
+    return { score: a, exam, label: scoreLabel(exam, a), row, needsSub };
+  });
+  return { results, credits: allCredits({ results, credits: [] }) };
+}
+
+// IB (issue #25): the same table shape from web/public/data/ib-credit.json, with a level on every row and scores 1 to 7.
+export type IbLevel = "HL" | "SL";
+export const IB_LEVEL: Record<IbLevel, string> = { HL: "Higher Level", SL: "Standard Level" };
+export type IbScore = { exam: string; level: IbLevel; score: number };
+
+const IB_PART = /^([A-Z][A-Z0-9]{1,9})-(HL|SL)-([1-7])$/;
+
+/** "ECON-HL-6,MATHAA-SL-5". */
+export function encodeIb(list: IbScore[]): string {
+  return list.map((a) => `${a.exam}-${a.level}-${a.score}`).join(",");
+}
+
+/** One score per exam (the last one wins); anything that doesn't parse is dropped. */
+export function decodeIb(param: string | null | undefined): IbScore[] {
+  const out = new Map<string, IbScore>();
+  for (const part of (param ?? "").split(",")) {
+    const m = IB_PART.exec(part.trim().toUpperCase());
+    if (m) out.set(m[1], { exam: m[1], level: m[2] as IbLevel, score: Number(m[3]) });
+  }
+  return [...out.values()];
+}
+
+/** The IB table for the same entering year as the AP table in use; null when that year's IB table isn't copied. */
+export function pickIbYear(table: ApTable, apYear: ApYear | null): ApYear | null {
+  return apYear ? (table.years.find((y) => y.id === apYear.id) ?? null) : (table.years[0] ?? null);
+}
+
+export function ibLabel(exam: ApExam | undefined, a: IbScore): string {
+  return `IB ${exam?.name ?? a.exam} ${a.level}, ${a.score}`;
+}
+
+/** What the IB scores give under one year's table, in the same shape as apCredit. */
+export function ibCredit(year: ApYear, list: IbScore[]): ApSummary {
+  const byId = new Map(year.exams.map((e) => [e.id, e]));
+  const results = list.map((a): ApResult => {
+    const exam = byId.get(a.exam);
+    const row = exam?.rows.find((r) => r.level === a.level && r.scores.includes(a.score)) ?? null;
+    return { score: { exam: a.exam, score: a.score, sub: null }, exam, label: ibLabel(exam, a), row, needsSub: false };
+  });
+  return { results, credits: allCredits({ results, credits: [] }) };
+}
+
+/**
+ * The courses the exams of one or more summaries give (AP and IB together). The same course twice counts once (RHET 105
+ * from both English exams, or from an AP and an IB exam); elective credit in the same subject adds up, since each exam
+ * posts its own.
+ */
+export function allCredits(...sums: (ApSummary | null)[]): ApCredit[] {
+  const credits = new Map<string, ApCredit>();
+  for (const { row, label } of sums.flatMap((s) => s?.results ?? [])) {
     for (const [code, hours] of row?.credit ?? []) {
       const seen = credits.get(code);
       const elective = isElective(code);
@@ -114,9 +165,8 @@ export function apCredit(year: ApYear, list: ApScore[], grainger: boolean): ApSu
         seen.from.push(label);
       }
     }
-    return { score: a, exam, label, row, needsSub };
-  });
-  return { results, credits: [...credits.values()] };
+  }
+  return [...credits.values()];
 }
 
 /**
