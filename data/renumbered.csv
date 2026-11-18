@@ -1,0 +1,40 @@
+# Renumbered courses (#29, pipeline/renumbered.py). One row per link, checked by hand; never from titles alone.
+# first_term = the first term the data has under the new number. Rows of the old code before it count as the new course.
+# Candidates: python -m pipeline.renumbered --suggest. Kept: an explicit "formerly", or a credit-exclusion /
+# prerequisite statement with the same title and the new number starting right after the old one. Left out on review:
+# title changes (except SPAN 141, named in #29), many-to-one merges (SPED 44x, SOC 500/501), topics courses (IS 590,
+# ADV 290), gaps of more than one regular term, and pairs taught at the same time (ECON 528 / FIN 574, IS 501 / IS 505).
+old,new,first_term,source
+FR 103,FR 203,2026-fa,"Catalog 2026-2027 FR 204: ""Prerequisite: FR 103, FR 203, or equivalent""; CITL AP French credit is FR 103 in 2025-2026 and FR 203 in 2026-2027 (read 2026-11-18)"
+FR 104,FR 204,2026-fa,"Catalog 2026-2027 FR 205: ""Prerequisite: FR 104, FR 204, or equivalent""; CITL AP French credit is FR 104 in 2025-2026 and FR 204 in 2026-2027 (read 2026-11-18)"
+GER 103,GER 203,2026-fa,"Course Explorer GER 203 (2027-sp): ""Credit is not given toward graduation for: GER 103 and GER 203."""
+GER 104,GER 204,2026-fa,"Course Explorer GER 204 (2027-sp): ""Credit is not given toward graduation for: GER 104 and GER 204."""
+ITAL 103,ITAL 203,2026-fa,"Catalog 2026-2027 ITAL 204: ""Prerequisite: ITAL 103, ITAL 203, or three years of high school Italian""; CITL AP Italian credit is ITAL 103 in 2025-2026 and ITAL 203 in 2026-2027 (read 2026-11-18)"
+ITAL 104,ITAL 204,2026-fa,"CITL AP Italian (score 5): ITAL 103 and ITAL 104 in 2025-2026, ITAL 203 and ITAL 204 in 2026-2027 (read 2026-11-18); same title, ITAL 104 last listed Spring 2026"
+SPAN 130,SPAN 201,2026-fa,"Course Explorer SPAN 201 (2027-sp): ""Credit is not given toward graduation for: SPAN 130 and SPAN 201."""
+SPAN 141,SPAN 203,2026-fa,"Course Explorer SPAN 203 (2027-sp): ""Credit is not given towards graduation for both SPAN 141 and SPAN 203"" (title changed from Introduction to Spanish Grammar)"
+SPAN 142,SPAN 205,2026-fa,"Course Explorer SPAN 205 (2027-sp): ""Credit is not given towards graduation for both SPAN 142 and SPAN 205"""
+SPAN 200,SPAN 210,2026-fa,"Course Explorer SPAN 210 (2027-sp): ""Credit is not given toward graduation for: SPAN 200 and SPAN 210."""
+SPAN 202,SPAN 212,2026-fa,"Course Explorer SPAN 212 (2027-sp): ""Credit is not given toward graduation for: SPAN 202 and SPAN 212."""
+SPAN 204,SPAN 214,2026-fa,"Course Explorer SPAN 214 (2027-sp): ""Credit is not given toward graduation for: SPAN 204 and SPAN 214."""
+SPAN 208,SPAN 218,2026-fa,"Course Explorer SPAN 218 (2027-sp): ""Credit is not given toward graduation for: SPAN 208 and SPAN 218."""
+SCAN 103,SCAN 203,2026-fa,"Course Explorer SCAN 203 (2026-fa): ""Credit is not given toward graduation for: SCAN 103 and SCAN 203.""; same title"
+SCAN 104,SCAN 204,2027-sp,"Course Explorer SCAN 204 (2027-sp): ""Credit is not given toward graduation for: SCAN 104 and SCAN 204.""; same title"
+SOCW 300,SOCW 296,2026-fa,"Course Explorer SOCW 296 (2027-sp): ""Formerly SOCW 300."""
+MATH 012,MATH 112,2015-fa,"Course Explorer MATH 103 (2027-sp): ""Prerequisite: MATH 112 (formerly MATH 012) or equivalent."""
+MATH 210,ASRM 210,2018-fa,"Course Explorer ASRM 471 (2026-sp): ""Prerequisite: ASRM 401 (formerly MATH 408) and ASRM 210 (formerly MATH 210)."""
+MATH 410,ASRM 406,2018-fa,"Course Explorer ASRM 406 (2026-sp): ""Credit is not given for both ASRM 406 (formerly MATH 410) and any of MATH 125, MATH 225, MATH 415 or MATH 416."""
+MATH 471,ASRM 471,2018-fa,"Course Explorer ASRM 575 (2026-sp): ""Prerequisite: ASRM 471 (formerly MATH 471)."""
+MATH 472,ASRM 472,2019-sp,"Course Explorer ASRM 575 (2026-sp): ""Credit is not given for ASRM 472 (formerly MATH 472) and ASRM 575 (formerly MATH 565)."""
+MATH 478,ASRM 461,2019-sp,"Course Explorer ASRM 561 (2024-fa): ""Credit is not given for ASRM 461 (formerly MATH 478) and ASRM 561 (formerly MATH 568)."""
+MATH 479,ASRM 469,2018-fa,"Course Explorer ASRM 469 (2026-sp): ""Credit is not given for ASRM 469 (formerly MATH 479) and ASRM 569 (formerly MATH 569)."""
+MATH 568,ASRM 561,2022-fa,"Course Explorer ASRM 561 (2024-fa): ""Credit is not given for ASRM 461 (formerly MATH 478) and ASRM 561 (formerly MATH 568)."""
+IS 452,IS 430,2020-fa,"Course Explorer IS 521 (2024-su): ""IS 430 (formerly IS 452, SU 20 and before)"""
+ADV 283,ADV 250,2023-fa,"Course Explorer ADV 250 (2027-sp): ""Credit is not given toward graduation for ADV 250 and ADV 283.""; same title"
+ADV 460,ADV 360,2023-fa,"Course Explorer ADV 360 (2027-sp): ""Credit is not given toward graduation for ADV 360 and ADV 460.""; same title"
+ANSC 470,ANSC 372,2027-sp,"Course Explorer ANSC 372 (2027-sp): ""Credit is not given toward graduation for: both ANSC 470 and ANSC 372.""; same title"
+IB 292,IB 392,2024-sp,"Course Explorer IB 392 (2027-sp): ""Credit is not given for both IB 292 and IB 392.""; same title"
+NPRE 470,ES 470,2026-fa,"Course Explorer ES 470 (2027-sp): ""Credit is not given toward graduation for ES 470 and NPRE 470.""; same title"
+ENG 471,ES 471,2026-fa,"Course Explorer ES 471 (2027-sp): ""Credit is not given toward graduation for both ES 471 and ENG 471.""; same title"
+NPRE 475,ES 475,2027-sp,"Course Explorer ES 475 (2027-sp): ""Credit is not given toward graduation for ES 475 and NPRE 475.""; same title"
+ENG 571,ES 571,2026-fa,"Course Explorer ES 571 (2027-sp): ""Credit is not given toward graduation for both ES 571 and ENG 571.""; same title"
