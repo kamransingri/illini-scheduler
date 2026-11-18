@@ -1,10 +1,11 @@
 // Builder rules/weights <-> URL params and localStorage, so share links reproduce the same schedules.
-// Only what differs from DEFAULT_PREFS is written. Links from before v0.4.0 (nf=1, 6-digit weights) still open.
+// Only what differs from DEFAULT_PREFS is written. Links from before v0.4.0 (nf=1, 6-digit weights) still open, and
+// links with 8-digit weights (before Best professor) keep its default.
 import { fmtTime } from "./format";
 import { DEFAULT_PREFS, type Prefs } from "./schedule";
 
 const KEY = "illini-scheduler:prefs:v1";
-const W_ORDER: (keyof Prefs["weights"])[] = ["gpa", "rmp", "early", "daysOff", "compact", "walking", "late", "open"];
+const W_ORDER: (keyof Prefs["weights"])[] = ["gpa", "rmp", "early", "daysOff", "compact", "walking", "late", "open", "prof"];
 const PARAMS = ["e", "l", "do", "nf", "lu", "oo", "sp", "b", "w", "se", "sl"];
 
 const minutes = (v: string | null, lo = 0, hi = 1440): number | null => {
@@ -47,7 +48,7 @@ export function prefsFromParams(params: URLSearchParams): Prefs {
     if (d > 0 && d < 128 && s >= 0 && en > s && en <= 1440) p.blocked.push({ d, s, e: en });
   }
   const w = params.get("w");
-  if (w && /^[0-3]{6}([0-3]{2})?$/.test(w)) W_ORDER.forEach((k, i) => i < w.length && (p.weights[k] = Number(w[i])));
+  if (w && /^[0-3]{6}([0-3]{2}[0-3]?)?$/.test(w)) W_ORDER.forEach((k, i) => i < w.length && (p.weights[k] = Number(w[i])));
   return p;
 }
 
@@ -99,8 +100,9 @@ export function loadPrefs(): Prefs | null {
 /** One-click starting points for "What matters to you" (the student can still move every slider). */
 export const PRESETS: { id: string; label: string; weights: Prefs["weights"] }[] = [
   { id: "balanced", label: "Balanced", weights: DEFAULT_PREFS.weights },
-  { id: "gpa", label: "Best grades", weights: { gpa: 3, rmp: 2, early: 0, late: 0, daysOff: 0, compact: 0, walking: 1, open: 1 } },
-  { id: "sleep", label: "Sleep in", weights: { gpa: 1, rmp: 1, early: 3, late: 0, daysOff: 1, compact: 1, walking: 1, open: 1 } },
-  { id: "compact", label: "Fewer days on campus", weights: { gpa: 1, rmp: 1, early: 0, late: 0, daysOff: 3, compact: 2, walking: 1, open: 1 } },
-  { id: "open", label: "Can register now", weights: { gpa: 1, rmp: 1, early: 1, late: 0, daysOff: 1, compact: 1, walking: 1, open: 3 } },
+  { id: "gpa", label: "Best grades", weights: { gpa: 3, rmp: 2, early: 0, late: 0, daysOff: 0, compact: 0, walking: 1, open: 1, prof: 2 } },
+  { id: "prof", label: "Best professors", weights: { gpa: 1, rmp: 1, early: 0, late: 0, daysOff: 0, compact: 0, walking: 1, open: 1, prof: 3 } },
+  { id: "sleep", label: "Sleep in", weights: { gpa: 1, rmp: 1, early: 3, late: 0, daysOff: 1, compact: 1, walking: 1, open: 1, prof: 1 } },
+  { id: "compact", label: "Fewer days on campus", weights: { gpa: 1, rmp: 1, early: 0, late: 0, daysOff: 3, compact: 2, walking: 1, open: 1, prof: 1 } },
+  { id: "open", label: "Can register now", weights: { gpa: 1, rmp: 1, early: 1, late: 0, daysOff: 1, compact: 1, walking: 1, open: 3, prof: 1 } },
 ];
