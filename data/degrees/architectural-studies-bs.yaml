@@ -1,5 +1,5 @@
 # Architectural Studies, BS (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/faa/architectural-studies-bs/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/faa/architectural-studies-bs/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Architectural Studies, BS
 college: College of Fine and Applied Arts
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/faa/architectural-studies-bs/
-read_on: '2026-11-16'
-generated: '2026-11-17'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 120
 notes:
 - 'Minimum hours required for graduation: 120 hours.'
@@ -168,10 +168,8 @@ groups:
   id: health-wellbeing-14
 - name: Urbanism (select one)
   section: Architecture Curriculum
-  rule: manual
-  notes:
-  - 'Catalog total: 3 hours.'
-  - The catalog lists these courses under Urbanism (select one); see the catalog page for the rule.
+  rule: n_of
+  n: 1
   courses:
   - ARCH 418
   - ARCH 468
@@ -179,6 +177,9 @@ groups:
   - GGIS 210
   - GGIS 483
   - UP 101
+  notes:
+  - 'Catalog total: 3 hours.'
+  - Choose 1.
   id: urbanism-select-one-15
 - name: Architectural History
   section: Architecture Curriculum
@@ -250,3 +251,10 @@ groups:
   - Architecture Curriculum
   - Free Electives
   id: summary-of-credits-for-the-bachelor-of-s-21
+- name: Total
+  section: Summary of Credits for the Bachelor of Science in Architectural Studies
+  rule: manual
+  notes:
+  - 'Catalog total: 120 hours.'
+  - 'Total: see the catalog page for which courses count.'
+  id: total-22

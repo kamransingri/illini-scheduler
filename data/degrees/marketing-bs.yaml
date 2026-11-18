@@ -1,5 +1,5 @@
 # Marketing, BS (Gies College of Business), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/bus/marketing-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/bus/marketing-bs/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Marketing, BS
 college: Gies College of Business
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/bus/marketing-bs/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 124
 notes:
 - 'Minimum hours required for graduation: 124 hours.'
@@ -175,9 +175,8 @@ groups:
   id: marketing-bs-major-core-requirements-and-13
 - name: Marketing Major Electives (choose six courses)
   section: Business Core Requirements
-  rule: manual
-  notes:
-  - The catalog lists these courses under Marketing Major Electives (choose six courses); see the catalog page for the rule.
+  rule: n_of
+  n: 6
   courses:
   - BADM 311
   - BADM 312
@@ -198,4 +197,6 @@ groups:
   - BADM 382
   - BADM 395
   - BADM 395
+  notes:
+  - Choose 6.
   id: marketing-major-electives-choose-six-cou-14

@@ -1,0 +1,171 @@
+# Learning & Education Studies: Educational Technology, BS (College of Education), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/education/learning-education-studies-bs/educational-technology/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: learning-education-studies-bs-educational-technology
+program: 'Learning & Education Studies: Educational Technology, BS'
+college: College of Education
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/education/learning-education-studies-bs/educational-technology/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/education/learning-education-studies-bs/educational-technology/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by CI 210 and EPSY 201
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: College of Education Requirements
+  section: College of Education Requirements
+  rule: all
+  courses:
+  - EDUC 101
+  id: college-of-education-requirements-11
+- name: College of Education Requirements
+  section: College of Education Requirements
+  rule: manual
+  notes:
+  - Learning & Education Studies Core
+  courses:
+  - CI 210
+  - EDUC 205
+  - - EPOL 201
+    - EPOL 202
+  - EPOL 215
+  - EPSY 201
+  id: college-of-education-requirements-12
+- name: College of Education Requirements
+  section: College of Education Requirements
+  rule: manual
+  notes:
+  - Educational Technology Concentration
+  courses:
+  - CI 211
+  - CI 312
+  - CI 317
+  - CI 380
+  - CI 382
+  - CI 489
+  id: college-of-education-requirements-13
+- name: College of Education Requirements
+  section: College of Education Requirements
+  rule: manual
+  notes:
+  - Concentration Electives
+  - Select 15 hours of related upper-division coursework within the College of Education in consultation with an academic
+    advisor.
+  id: college-of-education-requirements-14

@@ -1,5 +1,5 @@
 # Computer Engineering, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/engineering/computer-engineering-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/computer-engineering-bs/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Computer Engineering, BS
 college: The Grainger College of Engineering
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/engineering/computer-engineering-bs/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 128
 notes:
 - 'Minimum hours required for graduation: 128 hours.'
@@ -526,7 +526,7 @@ groups:
   - TAM 445
   - TAM 451
   id: technical-electives-8
-- name: Technical Electives
+- name: Select one course from the following list of Electrical Engineering Foundations Courses
   section: Technical Electives
   rule: n_of
   n: 1
@@ -538,9 +538,9 @@ groups:
   - ECE 461
   - ECE 486
   notes:
-  - 'Select one course from the following list of Electrical Engineering Foundations Courses:'
-  id: technical-electives-9
-- name: Technical Electives
+  - Choose 1.
+  id: select-one-course-from-the-following-lis-9
+- name: Select three courses from the following list of Advanced Computing Electives
   section: Technical Electives
   rule: n_of
   n: 3
@@ -592,18 +592,19 @@ groups:
   - ECE 491
   - ECE 492
   notes:
-  - 'Select three courses from the following list of Advanced Computing Electives:'
-  id: technical-electives-10
-- name: Technical Electives
+  - Select three courses from the following list of Advanced Computing Electives
+  id: select-three-courses-from-the-following-10
+- name: Select one course from departmentally approved Design Elective list below
   section: Technical Electives
-  rule: manual
-  notes:
-  - 'Select one course from departmentally approved Design Elective list below:'
+  rule: n_of
+  n: 1
   courses:
   - ECE 411
   - ECE 445
   - ECE 496 + ECE 499
-  id: technical-electives-11
+  notes:
+  - Choose 1.
+  id: select-one-course-from-departmentally-ap-11
 - name: Free Electives
   section: Free Electives
   rule: manual

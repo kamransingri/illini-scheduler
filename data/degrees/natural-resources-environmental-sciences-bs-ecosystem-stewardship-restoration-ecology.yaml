@@ -1,0 +1,302 @@
+# Natural Resources & Environmental Sciences: Ecosystem Stewardship & Restoration Ecology, BS (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/natural-resources-environmental-sciences-bs/ecosystem-stewardship-restoration-ecology/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: natural-resources-environmental-sciences-bs-ecosystem-stewardship-restoration-ecology
+program: 'Natural Resources & Environmental Sciences: Ecosystem Stewardship & Restoration Ecology, BS'
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/natural-resources-environmental-sciences-bs/ecosystem-stewardship-restoration-ecology/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+notes:
+- Minimum of 40 hours of upper-division coursework generally at the 300- and 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/aces/natural-resources-environmental-sciences-bs/ecosystem-stewardship-restoration-ecology/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by CHEM 102, CHEM 104, IB 103; and IB 104 or IB 150; and ABE 152 or ACES 102 or ATMS 140 or CPSC 113 or GEOL
+    107 or GEOL 118 or GGIS 103 or MCB 100 or MCB 150 or NPRE 101 or PHYS 101 or PHYS 211
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by ACE 100 or ECON 102; and NRES 287
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+  notes:
+  - fulfilled by NRES 287
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (6-10 hours; at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 220 or MATH 221 or MATH 234; and ACE 262 or CPSC 241 or ECON 202 or PSYC 235 or SOC 280 or STAT 100
+    or STAT 107
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (0-15 hours; completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Major Requirements
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Communications Requirement
+  - 'Select from the following:'
+  courses:
+  - CMN 101
+  - CMN 111 + CMN 112
+  - ALEC 115
+  id: major-requirements-11
+- name: Major Requirements
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Economics Requirement
+  - 'Select from the following:'
+  courses:
+  - ACE 100
+  - ECON 102
+  id: major-requirements-12
+- name: Major Requirements
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Math Requirement
+  - 'Select from the following:'
+  courses:
+  - MATH 220
+  - MATH 221
+  - MATH 234
+  id: major-requirements-13
+- name: Major Requirements
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Statistics Requirement
+  - 'Select from the following:'
+  courses:
+  - ACE 262
+  - CPSC 241
+  - ECON 202
+  - PSYC 235
+  - SOC 280
+  - STAT 100
+  - STAT 107
+  id: major-requirements-14
+- name: Major Requirements
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Science Requirements
+  courses:
+  - CHEM 102 + CHEM 103
+  - CHEM 104 + CHEM 105
+  - IB 103
+  - - IB 104
+    - IB 150 + IB 151
+  id: major-requirements-15
+- name: Major Requirements
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Select one additional course from the following:'
+  courses:
+  - ABE 152
+  - ACES 102
+  - ATMS 140
+  - CPSC 113
+  - GEOL 107
+  - GEOL 118
+  - GGIS 103
+  - MCB 100
+  - MCB 150
+  - NPRE 101
+  - PHYS 101
+  - PHYS 211
+  id: major-requirements-16
+- name: College of ACES Requirements (Core)
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 2 hours.'
+  - Science Requirements
+  - 'Select one additional course from the following:'
+  courses:
+  - NRES 123
+  id: college-of-aces-requirements-core-17
+- name: Natural Resources and Environmental Sciences Requirements (Core)
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Science Requirements
+  - 'Select one additional course from the following:'
+  courses:
+  - NRES 102
+  - NRES 201
+  - NRES 219
+  - NRES 287
+  - NRES 325
+  - NRES 348
+  - NRES 385
+  - NRES 421
+  - NRES 454
+  - NRES 456
+  id: natural-resources-and-environmental-scie-18
+- name: Natural Resources and Environmental Sciences Requirements (Core)
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Select one additional field experience course from the following:'
+  courses:
+  - NRES 293
+  - NRES 294
+  - NRES 295
+  - NRES 385
+  - NRES 396
+  id: natural-resources-and-environmental-scie-19
+- name: Concentration Core Requirements
+  section: General Education Requirements
+  rule: all
+  courses:
+  - NRES 419
+  - NRES 420
+  - NRES 465
+  id: concentration-core-requirements-20
+- name: Concentration Elective Requirements
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Two Ecology Courses
+  courses:
+  - NRES 302
+  - NRES 362
+  - NRES 407
+  - NRES 415
+  - CPSC 431
+  - IB 329
+  - IB 439
+  - IB 444
+  - IB 452
+  - IB 453
+  id: concentration-elective-requirements-21
+- name: Concentration Elective Requirements
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - One Ecosystem or Management Course
+  courses:
+  - NRES 401
+  - NRES 409
+  - NRES 418
+  - NRES 427
+  - NRES 429
+  - NRES 434
+  - NRES 455
+  - NRES 480
+  - NRES 482
+  - NRES 485
+  - CPSC 437
+  - GGIS 476
+  - IB 361
+  - IB 451
+  - UP 406
+  id: concentration-elective-requirements-22

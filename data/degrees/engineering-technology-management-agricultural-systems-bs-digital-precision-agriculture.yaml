@@ -1,0 +1,329 @@
+# Engineering Technology & Management for Agricultural Systems: Digital & Precision Agriculture, BS (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/engineering-technology-management-agricultural-systems-bs/digital-precision-agriculture/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: engineering-technology-management-agricultural-systems-bs-digital-precision-agriculture
+program: 'Engineering Technology & Management for Agricultural Systems: Digital & Precision Agriculture, BS'
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/engineering-technology-management-agricultural-systems-bs/digital-precision-agriculture/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 126
+notes:
+- 'Minimum hours required for graduation: 126 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300 and 400 level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/aces/engineering-technology-management-agricultural-systems-bs/digital-precision-agriculture/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by AGCM 220, BADM 340, BTW 250, BTW 261, ECE 316, ESE 360, ETMA 311, NRES 419, or PLPA 200
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by CHEM 102, PHYS 101, CPSC 112; and CHEM 104 or PHYS 102
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by ECON 102 or ACE 100 and one other courses approved as Social and Behavioral Sciences
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 234, PHYS 101, CS 105; and ACE 262, CPSC 241, ECON 202, or STAT 107
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Department Foundation
+  section: Concentration Requirements
+  rule: all
+  courses:
+  - ACES 101
+  id: department-foundation-11
+- name: Department Foundation
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - 'Communication Option:'
+  courses:
+  - CMN 101
+  - ALEC 115
+  - CMN 111 + CMN 112
+  id: department-foundation-12
+- name: Department Foundation
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - 'Advanced ETMA Communication Option - Select one of the following:'
+  courses:
+  - AGCM 220
+  - BADM 340
+  - BTW 250
+  - BTW 261
+  - ECE 316
+  - ESE 360
+  - ETMA 311
+  - NRES 419
+  - PLPA 200
+  id: department-foundation-13
+- name: Department Foundation
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - 'Statistics Option - Select one of the following:'
+  courses:
+  - ACE 262
+  - CPSC 241
+  - ECON 202
+  - STAT 107
+  - MATH 234
+  - CHEM 102 + CHEM 103
+  - PHYS 101
+  id: department-foundation-14
+- name: Department Foundation
+  section: Concentration Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - - CHEM 104 + CHEM 105
+    - PHYS 102
+  - - ECON 102
+    - ACE 100
+  notes:
+  - 'Select one of the following:'
+  id: department-foundation-15
+- name: Major Core
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - 'Advanced ETMA Communication Option - Select one of the following:'
+  - 'Statistics Option - Select one of the following:'
+  courses:
+  - CS 105
+  - ETMA 100
+  - ETMA 339
+  - - ETMA 421
+    - ETMA 422
+  - ETMA 430
+  - ETMA 439
+  id: major-core-16
+- name: Business Electives
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 6 hours.'
+  - A total of six hours from the Business Electives list, which do not satisfy any other requirements.
+  courses:
+  - ACCY 200
+  - ACCY 201
+  - ACCY 202
+  - ACE 210
+  - ACE 221
+  - ACE 240
+  - ACE 310
+  - ACE 345
+  - ACE 346
+  - ACE 432
+  - ACE 435
+  - BADM 300
+  - BADM 310
+  - BADM 311
+  - BADM 312
+  - BADM 313
+  - BADM 314
+  - BADM 320
+  - FIN 230
+  - LER 290
+  - LEAD 260
+  - LEAD 340
+  - LEAD 425
+  - SE 361
+  - SE 400
+  - TE 230
+  - TE 450
+  id: business-electives-17
+- name: Introductory-Related Courses
+  section: Concentration Requirements
+  rule: all
+  courses:
+  - CPSC 112
+  - NRES 201
+  notes:
+  - 'Catalog total: 8 hours.'
+  id: introductory-related-courses-18
+- name: ETMA Electives. A minimum of 11 hours at the advanced level are required
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - ETMA Electives. A minimum of 11 hours at the advanced level are required.
+  courses:
+  - ETMA 103
+  - ETMA 262
+  - ETMA 363
+  - ETMA 435
+  - ETMA 467
+  id: etma-electives-a-minimum-of-11-hours-at-19
+- name: ETMA Electives. A minimum of 11 hours at the advanced level are required
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - 'Select an additional 7 hours from the list below for a total of 20 hours:'
+  courses:
+  - ETMA 130
+  - ETMA 132
+  - ETMA 233
+  - ETMA 234
+  - ETMA 295
+  - ETMA 352
+  - ETMA 381
+  - ETMA 396
+  - ETMA 425
+  - ETMA 464
+  - ETMA 486
+  - ETMA 496
+  id: etma-electives-a-minimum-of-11-hours-at-20
+- name: Concentration Electives
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 18 hours.'
+  - Select 18 hours from the lists below with a minimum of 12 hours at the advanced level.
+  id: concentration-electives-21
+- name: Select one of the following
+  section: Concentration Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - ACE 210
+  - ACE 222
+  - ACE 231
+  - ACE 232
+  - ACE 427
+  - ACE 428
+  - ACE 432
+  - ACE 435
+  - - GGIS 379
+    - GGIS 380
+    - GGIS 477
+    - GGIS 478
+    - NRES 454 + NRES 455
+  - NRES 438
+  - NRES 471
+  - NRES 474
+  - NRES 475
+  - NRES 488
+  - CPSC 304
+  - CPSC 370
+  - CPSC 408
+  - CPSC 412
+  - CPSC 418
+  - CPSC 426
+  - CPSC 473
+  notes:
+  - Choose 1.
+  - 'Select one of the following: GGIS 379, GGIS 380, GGIS 477, GGIS 478, NRES 454 + NRES 455'
+  - 'Select one of the following: NRES 438, NRES 471, NRES 474, NRES 475, NRES 488'
+  - 'Select one of the following: CPSC 304, CPSC 370'
+  - 'Select one of the following: CPSC 408, CPSC 412, CPSC 418, CPSC 426, CPSC 473'
+  id: select-one-of-the-following-22

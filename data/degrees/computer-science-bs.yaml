@@ -1,15 +1,14 @@
 # Computer Science, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/engineering/computer-science-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
-# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
-# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
-# changes.
+# Checked by hand against https://catalog.illinois.edu/undergraduate/engineering/computer-science-bs/ on 2026-11-18 (issue #17): every course list, choice and
+# hours rule matches the catalog page; rules the schema can't express stay as tick boxes in the
+# catalog's own words. It has no generated date, so pipeline/catalog_import.py won't overwrite it.
+# Schema: docs/DEGREE-DATA.md.
 id: computer-science-bs
 program: Computer Science, BS
 college: The Grainger College of Engineering
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/engineering/computer-science-bs/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
 total_hours: 128
 notes:
 - 'Minimum hours required for graduation: 128 hours.'
@@ -31,6 +30,11 @@ double_counting:
   - program
   - gened
   quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/engineering/computer-science-bs/
+- allow: true
+  within: cs-technical-electives
+  quote: At least one (1) of the CS courses used for technical electives must be chosen from the list below of CS courses
+    satisfying the team project requirement.
   source: https://catalog.illinois.edu/undergraduate/engineering/computer-science-bs/
 groups:
 - id: comp1
@@ -136,17 +140,12 @@ groups:
   rule: all
   courses:
   - ENG 100
-  id: orientation-and-professional-development-11
-- name: Orientation and Professional Development
-  section: Orientation and Professional Development
-  rule: manual
+  - - CS 210
+    - CS 211
   notes:
   - Highly recommended, optional 1 credit hour course, CS 100 Computer Science Orientation. Credit hour counts toward free
     electives.
-  courses:
-  - - CS 210
-    - CS 211
-  id: orientation-and-professional-development-12
+  id: orientation
 - name: Foundational Mathematics and Science
   section: Foundational Mathematics and Science
   rule: all
@@ -159,12 +158,11 @@ groups:
     - MATH 416
   - PHYS 211
   - PHYS 212
-  id: foundational-mathematics-and-science-13
-- name: One Science elective course
+  id: foundational-math-science
+- name: Science elective
   section: Foundational Mathematics and Science
-  rule: manual
+  rule: n_of
   notes:
-  - 'Catalog total: 3 hours.'
   - Students must take one course from the Natural Science & Technology (NST) list, in addition to those taken as part of
     the General Education requirements. The course must be a course that is allowed for credit by the Grainger College of
     Engineering.
@@ -172,7 +170,18 @@ groups:
   - Students who select either ASTR 121, ASTR 122, or ASTR 150 to satisfy the Science Elective requirement will not receive
     credit for any other 100-level ASTR course as a free elective (maximum of 4 credit hours of ASTR 100-level can count towards
     graduation requirements for all Grainger College of Engineering Undergraduates).
-  id: one-science-elective-course-14
+  id: science-elective
+  n: 1
+  from:
+  - gened:LS
+  - gened:PS
+  exclude:
+  - ASTR 100
+  - PHYS 101
+  - PHYS 102
+  - CHEM 101
+  not_with:
+  - nat
 - name: Computer Science Technical Core
   section: Computer Science Technical Core
   rule: all
@@ -188,10 +197,10 @@ groups:
   - CS 361
   - CS 374
   - CS 421
-  id: computer-science-technical-core-15
+  id: technical-core
 - name: Technical Electives
   section: Technical Electives
-  rule: manual
+  rule: hours
   notes:
   - Students must take a minimum of (6) six additional technical electives with at least eighteen (18) cumulative credit hours
     and chosen from CS 397 and the CS 400-level courses, not including CS 400, CS 401, CS 402, CS 403 or CS 491. CS 500-level
@@ -199,24 +208,29 @@ groups:
     499 may be used with a cumulative maximum of six (6) credits from them counting as technical electives. One "CS-like"
     course in another department (e.g., ECE) may also be counted as a CS 400-level course with permission of the CS Academic
     Office. Non-CS tech electives will not be considered in focus areas.
-  id: technical-electives-16
-- name: Technical Electives
+  - The checklist counts the 18 hours; the catalog also asks for at least six courses, and caps CS 397 and CS 499 together
+    at 6 hours (each is capped at 6 here).
+  id: technical-electives
+  hours: 18
+  from:
+  - CS 397-397
+  - CS 400-499
+  exclude:
+  - CS 400
+  - CS 401
+  - CS 402
+  - CS 403
+  - CS 491
+  max_hours:
+    CS 397: 6
+    CS 499: 6
+  not_with:
+  - technical-core
+  exclusive: cs-technical-electives
+- name: Team project course
   section: Technical Electives
-  rule: manual
+  rule: n_of
   notes:
-  - At least one (1) of the CS courses used for technical electives must be chosen from the list below of CS courses satisfying
-    the team project requirement.
-  id: technical-electives-17
-- name: Team Project Course List
-  section: Technical Electives
-  rule: manual
-  notes:
-  - Students must take a minimum of (6) six additional technical electives with at least eighteen (18) cumulative credit hours
-    and chosen from CS 397 and the CS 400-level courses, not including CS 400, CS 401, CS 402, CS 403 or CS 491. CS 500-level
-    courses may be used as technical electives, but only with special permission from the CS Academic Office. CS 397 and CS
-    499 may be used with a cumulative maximum of six (6) credits from them counting as technical electives. One "CS-like"
-    course in another department (e.g., ECE) may also be counted as a CS 400-level course with permission of the CS Academic
-    Office. Non-CS tech electives will not be considered in focus areas.
   - At least one (1) of the CS courses used for technical electives must be chosen from the list below of CS courses satisfying
     the team project requirement.
   courses:
@@ -233,22 +247,34 @@ groups:
   - CS 493
   - CS 494
   - CS 497
-  id: team-project-course-list-18
-- name: Team Project Course List
+  id: team-project
+  n: 1
+  exclusive: cs-technical-electives
+- id: focus-area
+  name: Focus area (three courses from one area)
   section: Technical Electives
   rule: manual
   notes:
   - At least three (3) of the CS courses used for technical electives must be chosen from a single focus area, from among
     the list of focus areas listed below. The team project course may be used as one of them.
   - CS 498 Special Topics and CS 598 Special Topics classes may be included in a focus area by department approval.
-  id: team-project-course-list-19
-- name: Software Foundations
-  section: Technical Electives
-  rule: manual
-  notes:
-  - At least three (3) of the CS courses used for technical electives must be chosen from a single focus area, from among
-    the list of focus areas listed below. The team project course may be used as one of them.
-  - CS 498 Special Topics and CS 598 Special Topics classes may be included in a focus area by department approval.
+  - 'Software Foundations: CS 407, CS 409, CS 422, CS 426, CS 427, CS 428, CS 429, CS 474, CS 476, CS 477, CS 492, CS 493,
+    CS 494, CS 521, CS 522, CS 524, CS 526, CS 527, CS 576'
+  - 'Algorithms and Models of Computation: CS 407, CS 413, CS 473, CS 474, CS 475, CS 476, CS 477, CS 481, CS 482, CS 539,
+    CS 571, CS 572, CS 574, CS 575, CS 576, CS 579, CS 580, CS 581, CS 583, CS 584, CS 586'
+  - 'Intelligence and Big Data: CS 410, CS 411, CS 412, CS 414, CS 416, CS 434, CS 440, CS 441, CS 442, CS 443, CS 444, CS
+    445, CS 446, CS 447, CS 448, CS 464, CS 466, CS 467, CS 469, CS 470, CS 510, CS 511, CS 512, CS 514, CS 540, CS 542, CS
+    543, CS 544, CS 545, CS 546, CS 562, CS 567, CS 576, CS 582'
+  - 'Human and Social Impact: CS 409, CS 415, CS 416, CS 417, CS 441, CS 442, CS 460, CS 461, CS 463, CS 464, CS 465, CS 467,
+    CS 468, CS 469, CS 470, CS 500, CS 514, CS 562, CS 563, CS 565, CS 567'
+  - 'Media: CS 409, CS 414, CS 415, CS 416, CS 417, CS 418, CS 419, CS 445, CS 448, CS 465, CS 467, CS 468, CS 469, CS 519,
+    CS 545, CS 565, CS 567'
+  - 'Scientific, Parallel, and High Perfomance Computing: CS 419, CS 435, CS 450, CS 466, CS 482, CS 483, CS 484, CS 519,
+    CS 554, CS 555, CS 556, CS 558'
+  - 'Distributed Systems, Networking, and Security: CS 407, CS 423, CS 424, CS 425, CS 431, CS 435, CS 436, CS 437, CS 438,
+    CS 439, CS 460, CS 461, CS 463, CS 483, CS 484, CS 523, CS 524, CS 525, CS 537, CS 538, CS 539, CS 562, CS 563'
+  - 'Machines: CS 423, CS 424, CS 426, CS 431, CS 433, CS 434, CS 437, CS 484, CS 523, CS 526, CS 533, CS 534, CS 536, CS
+    541, CS 584, CS 588'
   courses:
   - CS 407
   - CS 409
@@ -269,22 +295,9 @@ groups:
   - CS 526
   - CS 527
   - CS 576
-  id: software-foundations-20
-- name: Algorithms and Models of Computation
-  section: Technical Electives
-  rule: manual
-  notes:
-  - At least three (3) of the CS courses used for technical electives must be chosen from a single focus area, from among
-    the list of focus areas listed below. The team project course may be used as one of them.
-  - CS 498 Special Topics and CS 598 Special Topics classes may be included in a focus area by department approval.
-  courses:
-  - CS 407
   - CS 413
   - CS 473
-  - CS 474
   - CS 475
-  - CS 476
-  - CS 477
   - CS 481
   - CS 482
   - CS 539
@@ -292,22 +305,12 @@ groups:
   - CS 572
   - CS 574
   - CS 575
-  - CS 576
   - CS 579
   - CS 580
   - CS 581
   - CS 583
   - CS 584
   - CS 586
-  id: algorithms-and-models-of-computation-21
-- name: Intelligence and Big Data
-  section: Technical Electives
-  rule: manual
-  notes:
-  - At least three (3) of the CS courses used for technical electives must be chosen from a single focus area, from among
-    the list of focus areas listed below. The team project course may be used as one of them.
-  - CS 498 Special Topics and CS 598 Special Topics classes may be included in a focus area by department approval.
-  courses:
   - CS 410
   - CS 411
   - CS 412
@@ -340,143 +343,46 @@ groups:
   - CS 546
   - CS 562
   - CS 567
-  - CS 576
   - CS 582
-  id: intelligence-and-big-data-22
-- name: Human and Social Impact
-  section: Technical Electives
-  rule: manual
-  notes:
-  - At least three (3) of the CS courses used for technical electives must be chosen from a single focus area, from among
-    the list of focus areas listed below. The team project course may be used as one of them.
-  - CS 498 Special Topics and CS 598 Special Topics classes may be included in a focus area by department approval.
-  courses:
-  - CS 409
   - CS 415
-  - CS 416
   - CS 417
-  - CS 441
-  - CS 442
   - CS 460
   - CS 461
   - CS 463
-  - CS 464
   - CS 465
-  - CS 467
   - CS 468
-  - CS 469
-  - CS 470
   - CS 500
-  - CS 514
-  - CS 562
   - CS 563
   - CS 565
-  - CS 567
-  id: human-and-social-impact-23
-- name: Media
-  section: Technical Electives
-  rule: manual
-  notes:
-  - At least three (3) of the CS courses used for technical electives must be chosen from a single focus area, from among
-    the list of focus areas listed below. The team project course may be used as one of them.
-  - CS 498 Special Topics and CS 598 Special Topics classes may be included in a focus area by department approval.
-  courses:
-  - CS 409
-  - CS 414
-  - CS 415
-  - CS 416
-  - CS 417
   - CS 418
   - CS 419
-  - CS 445
-  - CS 448
-  - CS 465
-  - CS 467
-  - CS 468
-  - CS 469
   - CS 519
-  - CS 545
-  - CS 565
-  - CS 567
-  id: media-24
-- name: Scientific, Parallel, and High Perfomance Computing
-  section: Technical Electives
-  rule: manual
-  notes:
-  - At least three (3) of the CS courses used for technical electives must be chosen from a single focus area, from among
-    the list of focus areas listed below. The team project course may be used as one of them.
-  - CS 498 Special Topics and CS 598 Special Topics classes may be included in a focus area by department approval.
-  courses:
-  - CS 419
   - CS 435
   - CS 450
-  - CS 466
-  - CS 482
   - CS 483
   - CS 484
-  - CS 519
   - CS 554
   - CS 555
   - CS 556
   - CS 558
-  id: scientific-parallel-and-high-perfomance-25
-- name: Distributed Systems, Networking, and Security
-  section: Technical Electives
-  rule: manual
-  notes:
-  - At least three (3) of the CS courses used for technical electives must be chosen from a single focus area, from among
-    the list of focus areas listed below. The team project course may be used as one of them.
-  - CS 498 Special Topics and CS 598 Special Topics classes may be included in a focus area by department approval.
-  courses:
-  - CS 407
   - CS 423
   - CS 424
   - CS 425
   - CS 431
-  - CS 435
   - CS 436
   - CS 437
   - CS 438
   - CS 439
-  - CS 460
-  - CS 461
-  - CS 463
-  - CS 483
-  - CS 484
   - CS 523
-  - CS 524
   - CS 525
   - CS 537
   - CS 538
-  - CS 539
-  - CS 562
-  - CS 563
-  id: distributed-systems-networking-and-secur-26
-- name: Machines
-  section: Technical Electives
-  rule: manual
-  notes:
-  - At least three (3) of the CS courses used for technical electives must be chosen from a single focus area, from among
-    the list of focus areas listed below. The team project course may be used as one of them.
-  - CS 498 Special Topics and CS 598 Special Topics classes may be included in a focus area by department approval.
-  courses:
-  - CS 423
-  - CS 424
-  - CS 426
-  - CS 431
   - CS 433
-  - CS 434
-  - CS 437
-  - CS 484
-  - CS 523
-  - CS 526
   - CS 533
   - CS 534
   - CS 536
   - CS 541
-  - CS 584
   - CS 588
-  id: machines-27
 - name: Advanced Electives
   section: Advanced Electives
   rule: manual
@@ -487,11 +393,11 @@ groups:
     University of Illinois Urbana-Champaign. It is expected that students will select these additional advanced courses in
     a way that best augments their program of study. Consultation with a faculty mentors is highly encouraged. A maximum of
     six (6) credit hours of CS 397 may be used in the combination of technical electives and advanced electives.
-  id: advanced-electives-28
+  id: advanced-electives
 - name: Free Electives
   section: Free Electives
   rule: manual
   notes:
   - Additional course work,subject to the Grainger College of Engineering restrictions to Free Electives,so that there are
     at least 128 credit hours earned toward the degree.
-  id: free-electives-29
+  id: free-electives

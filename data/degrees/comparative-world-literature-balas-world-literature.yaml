@@ -1,5 +1,5 @@
 # Comparative & World Literature: World Literature, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/las/comparative-world-literature-balas/world-literature/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/las/comparative-world-literature-balas/world-literature/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: 'Comparative & World Literature: World Literature, BALAS'
 college: College of Liberal Arts and Sciences
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/las/comparative-world-literature-balas/world-literature/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 120
 notes:
 - 'Minimum hours required for graduation: 120 hours.'
@@ -138,13 +138,15 @@ groups:
   courses:
   - CWL 202
   id: major-requirements-11
-- name: Major Requirements
+- name: Five core CWL courses chosen from broadly comparative courses, from the following
   section: Major Requirements
   rule: manual
   notes:
-  - 'Five core CWL courses chosen from broadly comparative courses, from the following:'
+  - 'Catalog total: 15 hours.'
+  - Select 15 hours from the list below.
   - At least two courses must be at the 300-400- level. At least one course must be in a period prior to 1800 and one course
     in a period since 1800.
+  - 'Five core CWL courses chosen from broadly comparative courses, from the following:'
   courses:
   - CWL 114
   - CWL 151
@@ -158,8 +160,8 @@ groups:
   - CWL 461
   - CWL 471
   - CWL 496
-  id: major-requirements-12
-- name: Major Requirements
+  id: five-core-cwl-courses-chosen-from-broadl-12
+- name: Five core CWL courses chosen from broadly comparative courses, from the following
   section: Major Requirements
   rule: manual
   notes:
@@ -178,14 +180,21 @@ groups:
   - Latino/Latina Studies
   - Slavic Languages & Literature
   - Spanish & Portuguese
-  id: major-requirements-13
-- name: Major Requirements
+  id: five-core-cwl-courses-chosen-from-broadl-13
+- name: Area / Cultural Studies Coursework - Two courses at 300-400 level in any literature or in one of the following fields
   section: Major Requirements
   rule: manual
   notes:
-  - 'Area / Cultural Studies Coursework - Two courses at 300-400 level in any literature or in one of the following fields:'
+  - 'Catalog total: 6 hours.'
   - 'Another discipline: e.g. philosophy, cinema, art history, fine arts, music, religion, science, medical humanities, law,
     creative writing.'
   - 'Cultural studies: e.g. race, gender, class, postcolonialism, environmental studies.'
   - 'Area Studies: Africa, Middle East, Latin America, South Asia, East Asia, Eastern Europe, the European Union.'
-  id: major-requirements-14
+  id: area-cultural-studies-coursework-two-cou-14
+- name: Minimum Required Hours
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 33 hours.'
+  - 'Minimum Required Hours: see the catalog page for which courses count.'
+  id: minimum-required-hours-15

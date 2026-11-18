@@ -1,5 +1,5 @@
 # English: English Concentration, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/las/english-balas/english/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/las/english-balas/english/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: 'English: English Concentration, BALAS'
 college: College of Liberal Arts and Sciences
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/las/english-balas/english/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 120
 notes:
 - 'Minimum hours required for graduation: 120 hours.'
@@ -159,11 +159,11 @@ groups:
   notes:
   - Any ethnic literature survey with a significant pre-1900 focus
   id: historical-surveys-13
-- name: Period Courses (American, British, Anglophone, etc.)
+- name: Elective Coursework
   section: Major Requirements
   rule: manual
   notes:
-  - 'Catalog total: 15 hours.'
+  - 'Catalog total: 9 hours.'
   - '6 hours: At least two courses that cover at least two of the following categories:'
   - Medieval Literature & Culture (before 1550)
   - Shakespeare
@@ -172,15 +172,9 @@ groups:
   - '3 hours: At least one course in Nineteenth-Century Literature & Culture'
   - '3 hours: At least one course in Twentieth-Century Literature & Culture'
   - '3 hours: At least one course in Contemporary Literature & Culture'
-  id: period-courses-american-british-anglopho-14
-- name: Elective Coursework
-  section: Major Requirements
-  rule: manual
-  notes:
-  - 'Catalog total: 9 hours.'
   - At least three courses chosen from those controlled by or cross-listed with the Department of English (Business and Technical
     Writing, Creative Writing, and English)
   - 'One course in Difference and Diaspora. This requirement can be fulfilled by taking an appropriately focused course from
     among ENGL 350: Writing about Literature, Text, and Culture; the historical surveys; the period courses; or the elective
     coursework.'
-  id: elective-coursework-15
+  id: elective-coursework-14

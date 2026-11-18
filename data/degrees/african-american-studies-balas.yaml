@@ -1,5 +1,5 @@
 # African American Studies, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/las/african-american-studies-balas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/las/african-american-studies-balas/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: African American Studies, BALAS
 college: College of Liberal Arts and Sciences
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/las/african-american-studies-balas/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 120
 notes:
 - 'Minimum hours required for graduation: 120 hours.'
@@ -190,19 +190,10 @@ groups:
   - AFRO 411
   - AFRO 460
   id: methods-16
-- name: III. Thematic Areas
-  section: General Education Requirements
-  rule: manual
-  notes:
-  - 'Catalog total: 21 hours.'
-  - Students must take 21 hours of Thematic Area coursework. At least one course must be taken from each of the following
-    five areas, and the remaining 6 hours must be taken from only one of any of the five areas.
-  id: iii-thematic-areas-17
 - name: A. Comparative Race, Racialized Communities and Identities
   section: General Education Requirements
   rule: manual
   notes:
-  - At least one Theory and one Methods course beyond the core.
   - Students must take 21 hours of Thematic Area coursework. At least one course must be taken from each of the following
     five areas, and the remaining 6 hours must be taken from only one of any of the five areas.
   courses:
@@ -229,7 +220,7 @@ groups:
   - AFRO 465
   - AFRO 474
   - AFRO 498
-  id: a-comparative-race-racialized-communitie-18
+  id: a-comparative-race-racialized-communitie-17
 - name: B. Cultural Production and Cultural Movements
   section: General Education Requirements
   rule: manual
@@ -264,7 +255,7 @@ groups:
   - AFRO 465
   - AFRO 482
   - AFRO 498
-  id: b-cultural-production-and-cultural-movem-19
+  id: b-cultural-production-and-cultural-movem-18
 - name: C. Political Economy, Public Policy and Contemporary Issues
   section: General Education Requirements
   rule: manual
@@ -294,8 +285,8 @@ groups:
   - AFRO 460
   - AFRO 465
   - AFRO 498
-  id: c-political-economy-public-policy-and-co-20
-- name: C. Political Economy, Public Policy and Contemporary Issues
+  id: c-political-economy-public-policy-and-co-19
+- name: 'D. Global Interconnections: Black Transnationalism and the African Diaspora'
   section: General Education Requirements
   rule: manual
   notes:
@@ -308,7 +299,7 @@ groups:
   - AFRO 261
   - AFRO 378
   - AFRO 400
-  id: c-political-economy-public-policy-and-co-21
+  id: d-global-interconnections-black-transnat-20
 - name: E. Black Women, Gender and Sexuality Studies
   section: General Education Requirements
   rule: manual
@@ -328,7 +319,7 @@ groups:
   - AFRO 421
   - AFRO 435
   - AFRO 465
-  id: e-black-women-gender-and-sexuality-studi-22
+  id: e-black-women-gender-and-sexuality-studi-21
 - name: IV. Cognate or Supporting Coursework
   section: General Education Requirements
   rule: manual
@@ -337,4 +328,4 @@ groups:
   - Students must complete 9 hours of supporting coursework. Supporting coursework courses consists of a set of courses which
     are logically grouped, and which reflect or support a student's interests outside of the African American Studies major.
     Supporting coursework courses must be approved by the Department's undergraduate advisor.
-  id: iv-cognate-or-supporting-coursework-23
+  id: iv-cognate-or-supporting-coursework-22

@@ -1,0 +1,277 @@
+# Animal Sciences: Food Animal Production & Management, BS (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/animal-sciences-bs/food-animal-production-management/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: animal-sciences-bs-food-animal-production-management
+program: 'Animal Sciences: Food Animal Production & Management, BS'
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/animal-sciences-bs/food-animal-production-management/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 126
+notes:
+- 'Minimum hours required for graduation: 126 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300 and 400 level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/aces/animal-sciences-bs/food-animal-production-management/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by CHEM 102, CHEM 104, and MCB 100
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by ECON 102 or ACE 100 and one more course approved as Social & Behavioral Sciences
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 220, MATH 221, or MATH 234; and ACE 262, CPSC 241, ECON 202, PSYC 235, STAT 100, or SOC 280
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Department Foundation
+  section: Degree Requirements
+  rule: all
+  courses:
+  - ANSC 198
+  id: department-foundation-11
+- name: Department Foundation
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Communication Option:'
+  courses:
+  - CMN 101
+  - ALEC 115
+  - CMN 111 + CMN 112
+  id: department-foundation-12
+- name: Department Foundation
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Calculus Option - Select one of the following:'
+  courses:
+  - MATH 220
+  - MATH 221
+  - MATH 234
+  id: department-foundation-13
+- name: Department Foundation
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Statistics Option - Select one of the following:'
+  courses:
+  - ACE 262
+  - CPSC 241
+  - ECON 202
+  - PSYC 235
+  - STAT 100
+  - SOC 280
+  - CHEM 102 + CHEM 103
+  - CHEM 104 + CHEM 105
+  - MCB 100 + MCB 101
+  - - ECON 102
+    - ACE 100
+  id: department-foundation-14
+- name: Major Core
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Calculus Option - Select one of the following:'
+  - 'Statistics Option - Select one of the following:'
+  courses:
+  - ANSC 100
+  - ANSC 101
+  - ANSC 103
+  - ANSC 221
+  - ANSC 222
+  - ANSC 223
+  - ANSC 224
+  - ANSC 298
+  - ANSC 398
+  - ANSC 498
+  id: major-core-15
+- name: Food Animal Production and Management Core
+  section: Degree Requirements
+  rule: n_of
+  n: 4
+  courses:
+  - ANSC 201
+  - ANSC 205
+  - ANSC 206
+  - ANSC 211
+  - ANSC 215
+  - ANSC 250
+  - ANSC 301
+  - ANSC 305
+  - ANSC 306
+  - ANSC 307
+  - ANSC 309
+  - ANSC 310
+  - ANSC 312
+  - ANSC 313
+  - ANSC 314
+  - ANSC 322
+  - ANSC 370
+  - ANSC 400
+  - ANSC 401
+  - ANSC 402
+  - ANSC 403
+  - ANSC 404
+  - ANSC 407
+  - ANSC 424
+  - ANSC 435
+  - ANSC 470
+  - ANSC 471
+  - ANSC 500
+  - ANSC 501
+  - ANSC 502
+  - ANSC 580
+  notes:
+  - 'Select four of the following Applied Sciences courses:'
+  id: food-animal-production-and-management-co-16
+- name: Food Animal Production and Management Core
+  section: Degree Requirements
+  rule: n_of
+  n: 2
+  courses:
+  - ANSC 251
+  - ANSC 350
+  - ANSC 363
+  - ANSC 366
+  - ANSC 406
+  - ANSC 409
+  - ANSC 420
+  - ANSC 421
+  - ANSC 422
+  - ANSC 431
+  - ANSC 438
+  - ANSC 440
+  - ANSC 441
+  - ANSC 444
+  - ANSC 445
+  - ANSC 446
+  - ANSC 450
+  - ANSC 451
+  - ANSC 452
+  - ANSC 454
+  - ANSC 464
+  - ANSC 467
+  - ANSC 480
+  - ANSC 520
+  - ANSC 521
+  - ANSC 522
+  - ANSC 523
+  - ANSC 524
+  - ANSC 525
+  - ANSC 526
+  - ANSC 541
+  - ANSC 542
+  - ANSC 543
+  notes:
+  - 'Select two of the following Basic Sciences courses:'
+  id: food-animal-production-and-management-co-17

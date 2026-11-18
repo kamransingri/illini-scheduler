@@ -1,15 +1,14 @@
 # Psychology, BSLAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/las/psychology-bslas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
-# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
-# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
-# changes.
+# Checked by hand against https://catalog.illinois.edu/undergraduate/las/psychology-bslas/ on 2026-11-18 (issue #17): every course list, choice and
+# hours rule matches the catalog page; rules the schema can't express stay as tick boxes in the
+# catalog's own words. It has no generated date, so pipeline/catalog_import.py won't overwrite it.
+# Schema: docs/DEGREE-DATA.md.
 id: psychology-bslas
 program: Psychology, BSLAS
 college: College of Liberal Arts and Sciences
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/las/psychology-bslas/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
 total_hours: 120
 notes:
 - 'Minimum hours required for graduation: 120 hours.'
@@ -139,7 +138,7 @@ groups:
   - - LAS 101
     - LAS 100 + LAS 101
     - LAS 102
-  id: orientation-and-professional-development-11
+  id: orientation
 - name: Introductory Psychology
   section: Major Requirements
   rule: all
@@ -147,7 +146,7 @@ groups:
   - PSYC 100
   notes:
   - 'Catalog total: 4 hours.'
-  id: introductory-psychology-12
+  id: introductory-psychology
 - name: Psychological Statistics
   section: Major Requirements
   rule: all
@@ -155,11 +154,12 @@ groups:
   - PSYC 235
   notes:
   - 'Catalog total: 3 hours.'
-  id: psychological-statistics-13
-- name: Concentration Coursework
+  id: psychological-statistics
+- name: Concentration coursework
   section: Major Requirements
   rule: manual
   notes:
+  - 'Catalog total: 28-29 hours.'
   - 'Students choose from the following concentrations:'
   - Behavioral Neuroscience
   - Clinical/Community Psychology
@@ -171,4 +171,6 @@ groups:
   - Organizational Psychology
   - Personality Psychology
   - Social Psychology
-  id: concentration-coursework-14
+  - 'Each concentration has its own checklist with these courses filled in: pick it in the Major box, e.g. "Psychology: Cognitive
+    Neuroscience, BSLAS".'
+  id: concentration

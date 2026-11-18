@@ -1,5 +1,5 @@
 # Computer Science + Physics, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/engineering/computer-science-physics-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/computer-science-physics-bs/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Computer Science + Physics, BS
 college: The Grainger College of Engineering
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/engineering/computer-science-physics-bs/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 128
 notes:
 - 'Minimum hours required for graduation: 128 hours.'
@@ -137,14 +137,10 @@ groups:
   courses:
   - ENG 100
   - PHYS 110
-  id: orientation-and-professional-development-11
-- name: Orientation and Professional Development
-  section: Orientation and Professional Development
-  rule: manual
   notes:
   - Highly recommended, optional 1 credit hour course, CS 100 Computer Science Orientation. Credit hour counts toward free
     electives.
-  id: orientation-and-professional-development-12
+  id: orientation-and-professional-development-11
 - name: Foundational Mathematics and Science
   section: Foundational Mathematics and Science
   rule: all
@@ -161,7 +157,7 @@ groups:
   - PHYS 214
   - - CS 361
     - STAT 400
-  id: foundational-mathematics-and-science-13
+  id: foundational-mathematics-and-science-12
 - name: Computer Science Core
   section: Computer Science Core
   rule: all
@@ -171,7 +167,7 @@ groups:
   - CS 173
   - CS 222
   - CS 225
-  id: computer-science-core-14
+  id: computer-science-core-13
 - name: Computer Science Core
   section: Computer Science Core
   rule: n_of
@@ -185,13 +181,13 @@ groups:
     - CS 450
   notes:
   - 'Choose one of the following options:'
-  id: computer-science-core-15
+  id: computer-science-core-14
 - name: Computer Science Core
   section: Computer Science Core
   rule: manual
   notes:
   - CS Technical Elective
-  id: computer-science-core-16
+  id: computer-science-core-15
 - name: Physics Core
   section: Physics Core
   rule: all
@@ -203,17 +199,24 @@ groups:
   - - PHYS 486
     - PHYS 485
   - PHYS 446
-  id: physics-core-17
+  id: physics-core-16
 - name: Physics Core
   section: Physics Core
   rule: manual
   notes:
   - 'PHYS technical elective: Choose from CS or PHYS 300- or 400- level courses'
-  id: physics-core-18
+  id: physics-core-17
 - name: Free Electives
   section: Free Electives
   rule: manual
   notes:
   - Additional coursework, subject to the Grainger College of Engineering restrictions to Free Electives, so that there are
     at least 128 credit hours earned toward the degree.
-  id: free-electives-19
+  id: free-electives-18
+- name: Total Minimum Hours of Curriculum to Graduate
+  section: Free Electives
+  rule: manual
+  notes:
+  - 'Catalog total: 128 hours.'
+  - 'Total Minimum Hours of Curriculum to Graduate: see the catalog page for which courses count.'
+  id: total-minimum-hours-of-curriculum-to-gra-19

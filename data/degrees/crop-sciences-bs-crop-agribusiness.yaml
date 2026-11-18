@@ -1,0 +1,205 @@
+# Crop Sciences: Crop Agribusiness, BS (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/crop-sciences-bs/crop-agribusiness/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: crop-sciences-bs-crop-agribusiness
+program: 'Crop Sciences: Crop Agribusiness, BS'
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/crop-sciences-bs/crop-agribusiness/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 126
+notes:
+- 'Minimum hours required for graduation: 126 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300 and 400 level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/aces/crop-sciences-bs/crop-agribusiness/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by CHEM 102, CPSC 112, and IB 103
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by ECON 102 or ACE 100 and any other course approved as Social & Behavioral Sciences
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 220, MATH 221, or MATH 234, and CPSC 241
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Department Foundation
+  section: Department Foundation
+  rule: manual
+  notes:
+  - 'Communication Option:'
+  courses:
+  - CMN 101
+  - ALEC 115
+  - CMN 111 + CMN 112
+  - ACES 101
+  - - ECON 102
+    - ACE 100
+  id: department-foundation-11
+- name: Department Foundation
+  section: Department Foundation
+  rule: manual
+  notes:
+  - 'Calculus Option - Select one of the following:'
+  courses:
+  - MATH 220
+  - MATH 221
+  - MATH 234
+  - CPSC 241
+  - CHEM 102 + CHEM 103
+  id: department-foundation-12
+- name: Major Core
+  section: Major Core
+  rule: manual
+  notes:
+  - 'Communication Option:'
+  - 'Calculus Option - Select one of the following:'
+  courses:
+  - CPSC 102
+  - CPSC 112
+  - CPSC 212
+  id: major-core-13
+- name: Major Core
+  section: Major Core
+  rule: manual
+  notes:
+  - 'Internship or Research Option - Choose 3 hours from the following:'
+  courses:
+  - CPSC 393
+  - CPSC 395
+  - HORT 393
+  - HORT 395
+  - CPSC 498
+  id: major-core-14
+- name: Crop Agribusiness Core
+  section: Crop Agribusiness Core
+  rule: all
+  courses:
+  - - ACCY 200
+    - ACCY 201
+  - ACE 222
+  - ACE 231
+  - ACE 232
+  - IB 103
+  - NRES 201
+  - - NRES 474
+    - NRES 488
+  id: crop-agribusiness-core-15
+- name: Concentration Electives
+  section: Concentration Electives
+  rule: manual
+  notes:
+  - Choose from any 300- or 400-level CPSC, HORT, or PLPA courses, excluding CPSC 393, HORT 393, CPSC 395, HORT 395 & PLPA
+    395
+  - Choose from any 300- or 400-level ACE course
+  id: concentration-electives-16

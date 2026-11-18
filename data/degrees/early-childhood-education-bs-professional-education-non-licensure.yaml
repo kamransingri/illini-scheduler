@@ -1,0 +1,45 @@
+# Early Childhood Education: Professional Education - Non-Licensure, BS (College of Education), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/education/early-childhood-education-bs/professional-education-non-licensure/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: early-childhood-education-bs-professional-education-non-licensure
+program: 'Early Childhood Education: Professional Education - Non-Licensure, BS'
+college: College of Education
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/education/early-childhood-education-bs/professional-education-non-licensure/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+notes: []
+double_counting: []
+groups:
+- name: Professional Education
+  section: Professional Education
+  rule: all
+  courses:
+  - ART 201
+  - CI 415
+  - CI 422
+  - CI 424
+  - CI 425
+  - CI 441
+  - CI 443
+  - CI 444
+  - CI 447
+  - CI 453
+  - CI 454
+  - CI 465
+  - CI 466
+  - CI 468
+  - EDPR 410
+  - EDPR 433
+  - SPED 414
+  - SPED 465
+  id: professional-education-1
+- name: Total minimum hours for degree
+  section: Total minimum hours for degree
+  rule: manual
+  notes:
+  - 'Catalog total: 120 hours.'
+  - 'Total minimum hours for degree: see the catalog page for which courses count.'
+  id: total-minimum-hours-for-degree-2

@@ -64,7 +64,7 @@ test("a shared link: Grainger programs get Grainger's Calculus rows, and the sta
   await page.goto("./degree/?p=computer-science-bs&a=CALCBC-4,PHYSCM-5,FR-3");
   const calc = panel(page).locator('[data-exam="CALCBC"]');
   await expect(calc).toContainText("Grainger Engineering recommends taking MATH 231");
-  const math = req(page, "foundational-mathematics-and-science-13");
+  const math = req(page, "foundational-math-science");
   await expect(math).toContainText("MATH 231");
   await expect(math).toContainText("PHYS 211");
   await expect(math).toHaveAttribute("data-status", "partial"); // MATH 221 is still required

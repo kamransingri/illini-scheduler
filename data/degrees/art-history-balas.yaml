@@ -1,5 +1,5 @@
 # Art History, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/las/art-history-balas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/las/art-history-balas/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Art History, BALAS
 college: College of Liberal Arts and Sciences
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/las/art-history-balas/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 120
 notes:
 - 'Minimum hours required for graduation: 120 hours.'
@@ -139,12 +139,12 @@ groups:
     - LAS 100 + LAS 101
     - LAS 102
   id: orientation-and-professional-development-11
-- name: Major Core Requirements and Electives
+- name: 1 course in studio art (ARTS), graphic design (ARTD) or industrial design (ARTD)
   section: General Education Requirements
   rule: manual
   notes:
   - 1 course in studio art (ARTS), graphic design (ARTD) or industrial design (ARTD)
-  id: major-core-requirements-and-electives-12
+  id: 1-course-in-studio-art-arts-graphic-desi-12
 - name: 1 foundational gateway course at the 100-level
   section: General Education Requirements
   rule: manual
@@ -246,7 +246,7 @@ groups:
   - PHIL 412
   - PHIL 414
   id: three-3-supporting-courses-in-the-humani-14
-- name: Three (3) Supporting Courses in the Humanities offered by LAS
+- name: 1. Africa and the Middle East
   section: General Education Requirements
   rule: manual
   notes:
@@ -259,13 +259,6 @@ groups:
   - At least one course must cover material before 1700
   - At least one course must cover material after 1700
   - Other courses may be approved in consultation with the advisor.
-  id: three-3-supporting-courses-in-the-humani-15
-- name: 1. Africa and the Middle East
-  section: General Education Requirements
-  rule: manual
-  notes:
-  - At least one course must cover material after 1700
-  - Other courses may be approved in consultation with the advisor.
   courses:
   - ARTH 219
   - ARTH 220
@@ -274,7 +267,7 @@ groups:
   - ARTH 313
   - ARTH 410
   - ARTH 413
-  id: 1-africa-and-the-middle-east-16
+  id: 1-africa-and-the-middle-east-15
 - name: 2. Asia
   section: General Education Requirements
   rule: manual
@@ -288,7 +281,7 @@ groups:
   - ARTH 402
   - ARTH 403
   - ARTH 404
-  id: 2-asia-17
+  id: 2-asia-16
 - name: 3. The Americas
   section: General Education Requirements
   rule: manual
@@ -301,7 +294,7 @@ groups:
   - ARTH 260
   - ARTH 342
   - ARTH 343
-  id: 3-the-americas-18
+  id: 3-the-americas-17
 - name: 4. Europe
   section: General Education Requirements
   rule: manual
@@ -332,7 +325,7 @@ groups:
   - ARTH 443
   - ARTH 445
   - ARTH 447
-  id: 4-europe-19
+  id: 4-europe-18
 - name: At least one course must cover material before 1700
   section: General Education Requirements
   rule: manual
@@ -359,7 +352,7 @@ groups:
   - ARTH 435
   - ARTH 436
   - ARCH 412
-  id: at-least-one-course-must-cover-material-20
+  id: at-least-one-course-must-cover-material-19
 - name: At least one course must cover material after 1700
   section: General Education Requirements
   rule: manual
@@ -389,4 +382,4 @@ groups:
   - ARCH 416
   - ARCH 417
   - ARTH 495
-  id: at-least-one-course-must-cover-material-21
+  id: at-least-one-course-must-cover-material-20

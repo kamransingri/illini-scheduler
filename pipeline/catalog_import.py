@@ -97,7 +97,7 @@ def program_id(url: str) -> str:
     if len(parts) >= 3 and parts[1] == "minors":
         slug = "-".join(parts[2:])
         return slug if "minor" in slug.split("-") else f"{slug}-minor"
-    return "-".join(parts[1:])
+    return re.sub(r"-{2,}", "-", "-".join(parts[1:]))  # ".../science-pre-veterinary--medical/" has a double hyphen
 
 
 def concentration_links(page: str | bytes, url: str) -> list[str]:
@@ -230,6 +230,30 @@ def gened_groups(rows: list[dict], has_program_quote: bool) -> list[dict]:
 CHOICE = re.compile(r"\b(select|choose|pick|option|options|list|lists|focus|area|areas)\b", re.I)
 ELECTIVE = re.compile(r"\belectives?\b", re.I)
 CORE = re.compile(r"\b(core|required|requirements?)\b", re.I)
+# A comment that only advises ("Highly recommended, optional 1 credit hour course, CS 100...") states no rule: it
+# becomes a note and doesn't turn the list around it into a tick box. Anything with rule words still counts as a rule.
+INFO = re.compile(r"\b(recommended|optional)\b", re.I)
+RULE_WORDS = re.compile(
+    r"\b(must|required|requires?|select|choose|complete|at least|minimum|maximum|only|hours? (?:of|from))\b", re.I)
+
+
+# A choice written in a heading's parentheses: "Cognitive Neuroscience Advanced Course (choose two):",
+# "Psychological Science Breadth, Group 2 (choose 2):".
+PICK = re.compile(r"\((?:choose|select|pick|take)\s+(\d+|" + "|".join(NUMBERS) + r")\b[^)]*\)", re.I)
+
+
+# A rule that points at the list after it ("...must be chosen from the list below", "...focus areas listed below").
+BELOW = re.compile(r"\b(below|following)\b", re.I)
+# A heading that picks one item: "Statistics elective, one course chosen from:", "Science elective(s), chosen from one
+# of the following:".
+ONE_OF = re.compile(r"\bone (?:course )?(?:chosen )?(?:of|from)\b|\bchosen from one of\b", re.I)
+# A heading that takes its hours column from the list under it: "Technical electives chosen from the departmentally
+# approved list below." (6 hours).
+CHOSEN_FROM = re.compile(r"\b(?:chosen|selected)\s+from\b", re.I)
+
+
+def advisory(text: str) -> bool:
+    return bool(INFO.search(text)) and not RULE_WORDS.search(text) and not SELECT_N.match(text)
 
 
 def listish(name: str, n_items: int, own: bool = True) -> bool:
@@ -256,12 +280,21 @@ def program_groups(rows: list[dict], section: str, start_index: int, fresh: bool
     seg: dict | None = None
     own_name = fresh  # does `name` head this table, or was it inherited from a table above?
 
-    def new(lead: list[str] | None = None, listish: bool = False, hours: int | None = None) -> dict:
+    def new(lead: list[str] | None = None, listish: bool = False, hours: int | None = None,
+            pick: int | None = None) -> dict:
         return {"name": name, "lead": list(lead or []), "items": [], "listish": listish, "hours": hours, "join": False,
-                "own": own_name}
+                "own": own_name, "info": [], "pick": pick, "parts": []}
 
     def flush() -> None:
         nonlocal seg
+        if seg is not None and not seg["items"] and not seg["lead"] and seg["own"] and seg["hours"] and seg["name"]:
+            # a heading with hours and no list ("Additional Advanced (300- or 400-level) PSYC or BCOG Courses", 6 hours)
+            # is a requirement the catalog states in its heading: keep it rather than drop it
+            groups.append({"name": seg["name"], "section": section or seg["name"], "rule": "manual",
+                           "notes": [f"Catalog total: {seg['hours']} hours.",
+                                     f"{seg['name']}: see the catalog page for which courses count."]})
+            seg = None
+            return
         if seg is None or (not seg["items"] and not seg["lead"]):
             seg = None
             return
@@ -271,7 +304,13 @@ def program_groups(rows: list[dict], section: str, start_index: int, fresh: bool
         n = SELECT_N.match(lead[0]) if len(lead) == 1 else None
         h = SELECT_HOURS.match(lead[0]) if len(lead) == 1 else None
         named_choice = listish(seg["name"] or "", len(items), seg["own"])
-        if items and not lead and not prose and not seg["listish"] and not named_choice:
+        parts = [f"{p}: {', '.join(c for i in items[a:b] for c in i)}"
+                 for (p, a), (_, b) in zip(seg["parts"], [*seg["parts"][1:], ("", len(items))], strict=False)]
+        if items and seg["pick"] and seg["pick"] <= len(items) and not lead:
+            # "Cognitive Neuroscience Advanced Course (choose two):", or "Group 1 (choose one):" over several lists
+            g.update(rule="n_of", n=seg["pick"], courses=listed, notes=[f"Choose {seg['pick']}.", *parts])
+        elif items and not lead and not prose and not named_choice and (not seg["listish"] or len(items) == 1):
+            # a colon heading over a single course ("Developmental Psychology Core Course:") is no choice
             g.update(rule="all", courses=listed)
         elif items and n and (int(n.group(1)) if n.group(1).isdigit() else NUMBERS[n.group(1).lower()]) <= len(items):
             k = n.group(1)
@@ -282,9 +321,13 @@ def program_groups(rows: list[dict], section: str, start_index: int, fresh: bool
             fallback = f"The catalog lists these courses under {g['name']}; see the catalog page for the rule."
             notes = lead or prose[-2:] or [fallback]
             g.update(rule="manual", notes=notes, **({"courses": listed} if listed else {}))
+            # a rule governs the lists after it in its table, whether it says so ("...listed below") or not ("At least
+            # one Theory and one Methods course beyond the core.", then a Theory list and a Methods list)
             prose.extend(lead)
         if seg["hours"] is not None and g["rule"] != "hours":
             g.setdefault("notes", []).insert(0, f"Catalog total: {seg['hours']} hours.")
+        if seg["info"]:
+            g["notes"] = [*g.get("notes", []), *seg["info"]]
         groups.append(g)
         seg = None
 
@@ -293,10 +336,42 @@ def program_groups(rows: list[dict], section: str, start_index: int, fresh: bool
             flush()
             name, prose, own_name = section, [], False
         elif r["kind"] == "area":
-            flush()
             t = r["text"]
+            if seg is not None and seg["pick"] and not r["hours"].strip() and not PICK.search(t) and len(t) <= 70:
+                # a sub-heading under "Group 1 (choose one):": its list joins the choice above
+                seg["parts"].append((t.rstrip(":").strip(), len(seg["items"])))
+                continue
+            m = PICK.search(t)
+            if (m or ONE_OF.search(t)) and len(t) <= 120:
+                flush()
+                own_name = True
+                name = t.rstrip(":").strip()
+                k = m.group(1).lower() if m else "1"
+                seg = new(hours=_hours(r["hours"]), pick=int(k) if k.isdigit() else NUMBERS[k])
+                continue
+            if CHOSEN_FROM.search(t) and BELOW.search(t) and _hours(r["hours"]) and len(t) <= 120:
+                # "Technical electives chosen from the departmentally approved list below." with 6 in the hours column
+                flush()
+                own_name = True
+                name = t.rstrip(".:").strip()
+                seg = new(lead=[f"Select {_hours(r['hours'])} hours from the list below."], hours=_hours(r["hours"]))
+                seg["info"].append(t)
+                continue
+            choice = bool(SELECT_N.match(t) or SELECT_HOURS.match(t))
+            short = not (len(t) > 70 or t.endswith(".")) and not choice
+            if (short and seg is not None and seg["lead"] and not seg["items"] and any(map(BELOW.search, seg["lead"]))
+                    and not any(SELECT_N.match(x) or SELECT_HOURS.match(x) for x in seg["lead"])):
+                # a rule written right above a named list ("At least one ... from the list below", then "Team Project
+                # Course List:") is that list's rule, not a requirement of its own with no courses
+                name = t.rstrip(":").strip()
+                seg.update(name=name, listish=t.endswith(":"), hours=_hours(r["hours"]), own=True)
+                own_name = True
+                continue
+            flush()
             own_name = True
-            if len(t) > 70 or t.endswith("."):  # a rule written into a header row
+            if not short and not choice:  # a rule written into a header row
+                if len(t) <= 90:  # short enough to name its group, rather than inheriting the heading above
+                    name = t.rstrip(".:").strip()
                 seg = new(lead=[t])
             elif SELECT_N.match(t) or SELECT_HOURS.match(t):  # "Select two of the following:" as a header row
                 name = t.rstrip(":").strip()
@@ -316,6 +391,10 @@ def program_groups(rows: list[dict], section: str, start_index: int, fresh: bool
         elif r["text"].strip().upper() == "OR":
             if seg is not None:
                 seg["join"] = True
+        elif advisory(r["text"]):
+            if seg is None:
+                seg = new()
+            seg["info"].append(r["text"])
         else:
             if seg is not None and seg["items"]:
                 flush()
@@ -397,11 +476,42 @@ def parse_program(page: str | bytes, url: str, read_on: str) -> dict:
     }
 
 
+def with_concentrations(urls: list[str], pages: dict[str, bytes], fetch: Any) -> list[str]:
+    """The program pages to import, with concentrations. A program whose requirements are only on its concentration
+    pages (English, Political Science) is replaced by them. One with requirements of its own *and* concentration pages
+    (Psychology: "choose one of ten concentrations", 28-29 hours listed only on the concentration pages) is kept, so
+    saved links still open, and each concentration with requirements of its own becomes a program too. `fetch(urls)`
+    returns {url: page} and is merged into `pages`."""
+    out = list(urls)
+    for u in urls:
+        if u not in pages or is_minor(u):
+            continue
+        subs = concentration_links(pages[u], u)
+        if not subs:
+            continue
+        sub_pages = fetch(subs)
+        pages.update(sub_pages)
+        if not has_requirements(pages[u], u):
+            out.remove(u)
+            out.extend(subs)
+        else:
+            out.extend(s for s in subs if s in sub_pages and has_requirements(sub_pages[s], s))
+    return out
+
+
 def write(doc: dict, directory: Path = DEGREES_DIR) -> bool:
-    """Write a generated file; never overwrite a hand-checked one (no `generated:` key). Returns True if written."""
+    """Write a generated file; never overwrite a hand-checked one (no `generated:` key), and leave one whose
+    requirements haven't changed. Returns True if written."""
     path = directory / f"{doc['id']}.yaml"
-    if path.exists() and "generated:" not in path.read_text(encoding="utf-8"):
-        return False
+    if path.exists():
+        text = path.read_text(encoding="utf-8")
+        if "generated:" not in text:
+            return False
+        # the same requirements read again: keep the file (and its date) as it is, so a re-import only shows changes
+        same = {k: v for k, v in doc.items() if k not in ("read_on", "generated")}
+        old = {k: v for k, v in (yaml.safe_load(text) or {}).items() if k not in ("read_on", "generated")}
+        if yaml.safe_dump(same, sort_keys=True) == yaml.safe_dump(old, sort_keys=True):
+            return False
     header = (f"# {doc['program']} ({doc['college']}), {doc['catalog_year']} Academic Catalog.\n"
               f"# Generated from {doc['source']} on {doc['generated']} by pipeline/catalog_import.py: course lists,\n"
               "# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'\n"
@@ -432,13 +542,7 @@ def main(argv: list[str] | None = None) -> int:
         else:
             print("warn: could not read the catalog's minors index; minors are not updated", file=sys.stderr)
     pages = fetch_all(urls, args.delay, args.offline)
-    # Programs whose requirements are on concentration pages (English, Political Science...): import those instead.
-    for u in list(urls):
-        if u in pages and not has_requirements(pages[u], u):
-            subs = concentration_links(pages[u], u)
-            urls.remove(u)
-            urls.extend(subs)
-            pages.update(fetch_all(subs, args.delay, args.offline))
+    urls = with_concentrations(urls, pages, lambda subs: fetch_all(subs, args.delay, args.offline))
     hand = set()
     for f in DEGREES_DIR.glob("*.yaml"):
         text = f.read_text(encoding="utf-8")
@@ -451,6 +555,8 @@ def main(argv: list[str] | None = None) -> int:
             continue
         try:
             doc = parse_program(pages[u], u, today)
+            if not doc["groups"]:  # a requirements tab with no course tables: nothing a checklist could show
+                raise ValueError("no requirement tables on the page")
             validate(yaml.safe_load(yaml.safe_dump(doc)), doc["id"])
         except (DegreeError, KeyError, ValueError) as e:
             failed += 1
@@ -465,8 +571,8 @@ def main(argv: list[str] | None = None) -> int:
             written += 1
         else:
             kept += 1
-    print(f"{len(urls)} programs ({sum(map(is_minor, urls))} minors): {written} written, {kept} hand-checked kept, "
-          f"{failed} skipped; groups by rule {rules}")
+    print(f"{len(urls)} programs ({sum(map(is_minor, urls))} minors): {written} written, {kept} kept (hand-checked or "
+          f"unchanged), {failed} skipped; groups by rule {rules}")
     return 0
 
 

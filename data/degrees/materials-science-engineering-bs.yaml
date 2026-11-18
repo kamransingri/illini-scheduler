@@ -1,5 +1,5 @@
 # Materials Science & Engineering, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/engineering/materials-science-engineering-bs/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/materials-science-engineering-bs/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Materials Science & Engineering, BS
 college: The Grainger College of Engineering
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/engineering/materials-science-engineering-bs/
-read_on: '2026-11-16'
-generated: '2026-11-17'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 128
 notes:
 - 'Minimum hours required for graduation: 128 hours.'
@@ -138,13 +138,9 @@ groups:
   rule: all
   courses:
   - ENG 100
-  id: orientation-and-professional-development-11
-- name: Orientation and Professional Development
-  section: Orientation and Professional Development
-  rule: manual
   notes:
   - Recommended, optional 1 credit course, MSE 183 Introductory MatSE Laboratory. Credit hour counts toward free electives.
-  id: orientation-and-professional-development-12
+  id: orientation-and-professional-development-11
 - name: Foundational Mathematics and Science
   section: Foundational Mathematics and Science
   rule: all
@@ -161,7 +157,7 @@ groups:
   - PHYS 211
   - PHYS 212
   - PHYS 214
-  id: foundational-mathematics-and-science-13
+  id: foundational-mathematics-and-science-12
 - name: For All Students
   section: For All Students
   rule: all
@@ -178,13 +174,13 @@ groups:
   - MSE 401
   - MSE 402
   - MSE 406
-  id: for-all-students-14
+  id: for-all-students-13
 - name: For All Students
   section: For All Students
   rule: manual
   notes:
   - Subtotal Hours of Technical Core for All Students
-  id: for-all-students-15
+  id: for-all-students-14
 - name: For the Biomaterials Area
   section: For the Biomaterials Area
   rule: manual
@@ -197,7 +193,7 @@ groups:
   - MCB 450
   - MCB 252
   - MSE 470
-  id: for-the-biomaterials-area-16
+  id: for-the-biomaterials-area-15
 - name: For All Other Areas
   section: For All Other Areas
   rule: manual
@@ -208,7 +204,7 @@ groups:
     - STAT 400
   - MSE 304
   - MSE 405
-  id: for-all-other-areas-17
+  id: for-all-other-areas-16
 - name: For the Biomaterials Area
   section: For the Biomaterials Area
   rule: manual
@@ -216,14 +212,14 @@ groups:
   - The catalog lists these courses under For the Biomaterials Area; see the catalog page for the rule.
   courses:
   - MSE 404
-  id: for-the-biomaterials-area-18
+  id: for-the-biomaterials-area-17
 - name: For the Biomaterials Area
   section: For the Biomaterials Area
   rule: manual
   notes:
   - Topical lecture courses in the Biomaterials Area. See Topical Lecture list below.
   - Topical lecture courses outside of the Biomaterials Area. See Topical Lecture list below.
-  id: for-the-biomaterials-area-19
+  id: for-the-biomaterials-area-18
 - name: For All Other Areas
   section: For All Other Areas
   rule: manual
@@ -231,7 +227,7 @@ groups:
   - The catalog lists these courses under For All Other Areas; see the catalog page for the rule.
   courses:
   - MSE 404
-  id: for-all-other-areas-20
+  id: for-all-other-areas-19
 - name: For All Other Areas
   section: For All Other Areas
   rule: manual
@@ -241,8 +237,8 @@ groups:
     study, research, or special topics---that do not currently satisfy another requirement. Other courses may be approved
     by the department.'
   - Topical lecture courses. See Topical Lecture list below. No more than 6 hours may be from introductory topical lectures.
-  id: for-all-other-areas-21
-- name: Topical Lectures
+  id: for-all-other-areas-20
+- name: Introductory - No more than 2 introductory courses can count for Topical Lecture
   section: Topical Lectures
   rule: manual
   notes:
@@ -253,7 +249,7 @@ groups:
   - MSE 450
   - MSE 470
   - ECE 340
-  id: topical-lectures-22
+  id: introductory-no-more-than-2-introductory-21
 - name: Biomaterials
   section: Topical Lectures
   rule: manual
@@ -277,8 +273,8 @@ groups:
   - ECE 472
   - ME 482
   - ME 483
-  id: biomaterials-23
-- name: Biomaterials
+  id: biomaterials-22
+- name: Biomaterials Science - Can only count one science course for Topical Lecture Biomaterials
   section: Topical Lectures
   rule: manual
   notes:
@@ -287,7 +283,7 @@ groups:
   - BIOC 446
   - BIOC 455
   - BIOP 401
-  id: biomaterials-24
+  id: biomaterials-science-can-only-count-one-23
 - name: All Other Areas
   section: Topical Lectures
   rule: manual
@@ -335,7 +331,7 @@ groups:
   - SE 412
   - TAM 451
   - TAM 456
-  id: all-other-areas-25
+  id: all-other-areas-24
 - name: Science - Can only count one science course for Topical Lecture
   section: Topical Lectures
   rule: manual
@@ -348,11 +344,11 @@ groups:
   - PHYS 485
   - PHYS 486
   - PHYS 487
-  id: science-can-only-count-one-science-cours-26
+  id: science-can-only-count-one-science-cours-25
 - name: Free Electives
   section: Free Electives
   rule: manual
   notes:
   - Additional course work, subject to the Grainger College of Engineering restrictions to Free Electives, so that there are
     at least 128 credit hours earned toward the degree.
-  id: free-electives-27
+  id: free-electives-26
