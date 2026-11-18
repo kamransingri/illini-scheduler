@@ -128,7 +128,9 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
   and toward a requirement only when it takes every course at that level in that subject.
 - **Prerequisites** are shown as catalog text, not checked against your courses.
 - **Double counting** is allowed only where the catalog or the gen-ed rules say so in quotable words. Anything else
-  shows as "rules unclear" instead of being guessed.
+  shows as "rules unclear" instead of being guessed. A course approved for Advanced Composition or Quantitative
+  Reasoning II counts for its other gen-ed category too. Two program groups that list the same course (common in
+  Grainger programs) are still unclear until an advisor confirms them (#18).
 
 ## Development
 

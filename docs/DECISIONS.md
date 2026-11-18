@@ -933,3 +933,25 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D31.6 Nothing on the site yet.** The course-page column comes after the labelled check (about 200 comments from
   CS 124, MATH 221, STAT 107 and RHET 105: field agreement, and correlation with RMP and GPA), in its own pull request,
   because the check decides which fields are good enough to show. Issue #14 stays open until then.
+
+## Double counting from written policy (2026-11-18, issue #18)
+
+- **D32.1 Written policy first, advisors for the rest.** #18 asks advisors which "rules unclear" pairs may count
+  twice, from a written policy where one exists. Over every major in the live data, almost all gen-ed pairs involved
+  Advanced Composition or Quantitative Reasoning II, and the gen-ed board's written policy answers those. For
+  Finance + Data Science (the issue's example) no two program groups list the same course, so after D32.2 the only
+  unclear case left there is CMN 199 (below).
+- **D32.2 ACP and QR II count for their other category.** The policy (EP.17.74 1.8, on gened.illinois.edu's course
+  criteria page): "Individual courses will be approved to satisfy only one General Education requirement except as
+  follows. Exceptions are the Advanced Composition, Quantitative Reasoning II, and the Cultural Studies
+  requirements." The same page lists the categories that "may be combined with any other Gen Ed category" (ACP, QR II,
+  Cultural Studies); a course approved for two categories under that exception counts for both. A rule's new
+  `approved_for: [ACP, QR2]` limits it to courses approved for one of those plus another category, so `canShare`
+  now takes the course. Every program with an ACP or QR gen-ed group gets the rule (253 files, inserted as the
+  importer now writes it, without re-reading the catalog). HIST 140 (ACP, HP, WCC) fills Advanced Composition,
+  Humanities and Western cultures at once.
+- **D32.3 Still unclear, on purpose.** CMN 199 (special topics) shows HP and SS because its sections carry different
+  approvals; the policy doesn't let one course combine those, so it counts once. Two program groups that list the
+  same course are still unclear: 374 course-and-pair cases in Grainger programs, 20 in LAS, 6 in FAA, and they need
+  the advisors #18 names. Finance, BS's "One additional ... Finance course" gets `not_with: [business-core]` by the
+  D13.11 reading of "additional", so FIN 221 doesn't count twice; it was the only Gies case.

@@ -25,6 +25,10 @@ def test_program_header_and_campus_gened_table():
     assert gen["qr"]["min_from"] == {"gened:QR1": 1} and gen["language"]["rule"] == "manual"
     # the page's own sentence lets program courses count as gen-eds
     assert any(r.get("between") == ["program", "gened"] for r in d["double_counting"])
+    # campus policy: an ACP or QR II course counts for its other category too (#18)
+    two = next(r for r in d["double_counting"] if r.get("approved_for"))
+    assert two["between"] == ["gened", "gened"] and two["approved_for"] == ["ACP", "QR2"]
+    assert two["source"] == "https://gened.illinois.edu/faculty-staff/details-criteria/"
 
 
 def test_required_lists_pairs_and_select_one_segments():

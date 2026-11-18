@@ -239,6 +239,9 @@ def validate(doc: Any, name: str = "?") -> Degree:
         if "between" in r and (not _str_list(r["between"]) or len(r["between"]) != 2
                                or any(x not in KINDS | sets for x in r["between"])):
             errs.append(f"{where}: 'between' must name two kinds or exclusive sets")
+        if "approved_for" in r and ("between" not in r or not _str_list(r["approved_for"]) or not r["approved_for"]
+                                    or any(x not in GENED_CODES for x in r["approved_for"])):
+            errs.append(f"{where}: 'approved_for' goes with 'between' and lists gen-ed codes ({sorted(GENED_CODES)})")
         if not r.get("quote") or not str(r.get("source", "")).startswith("https://"):
             errs.append(f"{where}: needs the 'quote' it rests on and its 'source' URL")
 

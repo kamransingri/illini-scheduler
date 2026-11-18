@@ -27,6 +27,16 @@ double_counting:
   source: https://gened.illinois.edu/requirements/
 - allow: true
   between:
+  - gened
+  - gened
+  approved_for:
+  - ACP
+  - QR2
+  quote: Individual courses will be approved to satisfy only one General Education requirement except as follows. Exceptions
+    are the Advanced Composition, Quantitative Reasoning II, and the Cultural Studies requirements.
+  source: https://gened.illinois.edu/faculty-staff/details-criteria/
+- allow: true
+  between:
   - program
   - gened
   quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
@@ -196,7 +206,8 @@ groups:
   hours: 3
   from:
   - FIN 200-499
-  not_with:
+  not_with:                 # "additional": FIN 221 in the business core doesn't count again (#18)
+  - business-core
   - finance-required
   - finance-400-level
   notes:
