@@ -15,7 +15,7 @@ import pandas as pd
 from .config import DATA
 from .fetch import CURRENT_TERM, NEXT_TERM
 from .gpa import build_matcher
-from .names import compatible, load_overrides, parse_name, term_order
+from .names import InstructorMatcher, compatible, cross_listings, load_overrides, parse_name, term_order
 from .rmp import RmpClient, RmpUnavailable
 
 TRE_SINCE = "2020-fa"
@@ -28,6 +28,90 @@ def split_raw(raw: str) -> list[str]:
 def tre_term(t: str) -> str:
     """'fa2023' -> '2023-fa'."""
     return f"{t[2:]}-{t[:2]}"
+
+
+UNLINKED = ("unmatched", "ambiguous", "blank")
+Links = dict[tuple[str, str], dict[str, tuple[str | None, str]]]  # (raw, subject) -> number -> (key or None, method)
+
+
+def match_course_explorer(conn: sqlite3.Connection, matcher: InstructorMatcher) -> tuple[list[sqlite3.Row], Links]:
+    """Link every Course Explorer name of the current and next term to a GPA-dataset identity, using all the
+    courses it teaches in that subject (next term's lectures first) and the catalog's cross-listings
+    (InstructorMatcher.match_courses). Returns the section rows and the links."""
+    rows = conn.execute(
+        "SELECT DISTINCT term, subject, number, instructors_raw, component FROM sections WHERE term IN (?, ?)",
+        (CURRENT_TERM, NEXT_TERM),
+    ).fetchall()
+    cross = cross_listings(conn.execute("SELECT subject, number, description FROM courses"))
+    taught: dict[tuple[str, str], set[tuple[int, str, str]]] = defaultdict(set)
+    for r in rows:
+        rank = (r["term"] != NEXT_TERM) * 2 + (r["component"] != "primary")
+        for raw in split_raw(r["instructors_raw"]):
+            taught[(raw, r["subject"])].add((rank, r["number"], r["term"]))
+    links: Links = {}
+    for (raw, subject), ts in taught.items():
+        best: dict[str, str] = {}
+        for _rank, n, t in sorted(ts):
+            best.setdefault(n, t)
+        links[(raw, subject)] = matcher.match_courses(raw, subject, list(best.items()), cross)
+    meets_with(conn, links, matcher)
+    return rows, links
+
+
+def meets_with(conn: sqlite3.Connection, links: Links, matcher: InstructorMatcher) -> int:
+    """Course Explorer lists one class under several courses: CS 498 "Applied Large Language Models" and NPRE 498
+    meet on the same days, at the same time, in the same room, with the same instructor name. A name left unlinked
+    in one of them takes the identity it has in the others, when that's one person ("meets-with"). Returns how many
+    courses were linked this way."""
+    slots: dict[tuple, set[tuple[str, str]]] = defaultdict(set)
+    for r in conn.execute(
+            "SELECT term, subject, number, days, start_time, end_time, building, room, instructors_raw FROM sections "
+            "WHERE term IN (?, ?) AND start_time IS NOT NULL AND COALESCE(building, '') <> '' "
+            "AND COALESCE(room, '') <> ''", (CURRENT_TERM, NEXT_TERM)):
+        for raw in split_raw(r["instructors_raw"]):
+            slots[(r["term"], r["days"], r["start_time"], r["end_time"], r["building"], r["room"], raw)].add(
+                (r["subject"], r["number"]))
+    linked = 0
+    for slot, courses in slots.items():
+        raw = slot[-1]
+        if len(courses) < 2:
+            continue
+        got = [links.get((raw, s), {}).get(n, (None, "blank")) for s, n in courses]
+        keys = {k for k, m in got if k is not None and m not in UNLINKED}
+        if len(keys) != 1:
+            continue
+        key = keys.pop()
+        for (s, n), (_k, m) in zip(courses, got, strict=True):
+            if m in ("unmatched", "ambiguous"):
+                links[(raw, s)][n] = (key, "meets-with")
+                matcher.unlog(raw, s, n)
+                linked += 1
+    return linked
+
+
+def match_stats(rows: list[sqlite3.Row], links: Links) -> dict[str, list[int]]:
+    """Per subject, next term's names: [linked, names, linked on lecture (primary) sections, lecture names]. A name
+    counts as linked when every course it teaches next term is."""
+    names: dict[tuple[str, str], bool] = {}
+    primary: dict[tuple[str, str], bool] = {}
+    for r in rows:
+        if r["term"] != NEXT_TERM:
+            continue
+        for raw in split_raw(r["instructors_raw"]):
+            k = (raw, r["subject"])
+            _key, method = links.get(k, {}).get(r["number"], (None, "blank"))
+            if method == "blank":
+                continue
+            ok = method not in UNLINKED
+            names[k] = names.get(k, True) and ok
+            if r["component"] == "primary":
+                primary[k] = primary.get(k, True) and ok
+    stats: dict[str, list[int]] = defaultdict(lambda: [0, 0, 0, 0])
+    for group, i in ((names, 0), (primary, 2)):
+        for (_raw, subj), ok in group.items():
+            stats[subj][i + 1] += 1
+            stats[subj][i] += ok
+    return stats
 
 
 def run(conn: sqlite3.Connection, gpa_df: pd.DataFrame, rmp_enabled: bool, tre_path: Path,
@@ -47,14 +131,23 @@ def run(conn: sqlite3.Connection, gpa_df: pd.DataFrame, rmp_enabled: bool, tre_p
             people[r["instructor_key"]] = {"p": p, "_t": term_order(r["last_term"]), "raw": r["instructor_name"]}
 
     # Course Explorer names for the current and next term.
-    rows = conn.execute(
-        "SELECT DISTINCT term, subject, number, instructors_raw, component FROM sections WHERE term IN (?, ?)",
-        (CURRENT_TERM, NEXT_TERM),
-    ).fetchall()
-    stats: dict[str, list[int]] = defaultdict(lambda: [0, 0, 0, 0])  # matched, total, primary matched, primary
-    alias_method: dict[tuple[str, str], tuple[str, str]] = {}   # (raw, subject) -> (key, method)
-    next_names: set[tuple[str, str]] = set()
-    next_primary: set[tuple[str, str]] = set()                  # names on lecture/primary sections
+    rows, links = match_course_explorer(conn, matcher)
+    # (raw, subject, number) -> (key, method); number "" when one person teaches every course under that name
+    alias_method: dict[tuple[str, str, str], tuple[str, str]] = {}
+    for (raw, subject), per in links.items():
+        one = len({k for k, _m in per.values()}) == 1
+        for number, (key, method) in per.items():
+            if key is None:
+                p = parse_name(raw)
+                if p is None:
+                    continue
+                key = f"{p.last}|{p.first_initial}"
+                people.setdefault(key, {"p": p, "_t": 0, "raw": raw})
+            alias_method[(raw, subject, "" if one else number)] = (key, method)
+            if key not in people:  # matched someone whose GPA rows are all older than the stats window
+                p = parse_name(raw)
+                if p is not None:
+                    people[key] = {"p": p, "_t": 0, "raw": raw}
     teaching_next: dict[str, set[str]] = defaultdict(set)       # key -> subjects taught next term
     teach_count: dict[str, int] = defaultdict(int)              # key -> primary sections next term
     cur_count: dict[str, int] = defaultdict(int)                # key -> primary sections this term
@@ -63,20 +156,10 @@ def run(conn: sqlite3.Connection, gpa_df: pd.DataFrame, rmp_enabled: bool, tre_p
     courses_of: dict[str, set[str]] = defaultdict(set)          # key -> courses taught ("MATH221"), all sources
     for r in rows:
         for raw in split_raw(r["instructors_raw"]):
-            if (raw, r["subject"]) not in alias_method:
-                key, method = matcher.match(raw, r["subject"], r["number"], r["term"])
-                if key is None:
-                    p = parse_name(raw)
-                    if p is None:
-                        continue
-                    key = f"{p.last}|{p.first_initial}"
-                    people.setdefault(key, {"p": p, "_t": 0, "raw": raw})
-                alias_method[(raw, r["subject"])] = (key, method)
-                if key not in people:  # matched someone whose GPA rows are all older than the stats window
-                    p = parse_name(raw)
-                    if p is not None:
-                        people[key] = {"p": p, "_t": 0, "raw": raw}
-            key = alias_method[(raw, r["subject"])][0]
+            hit = alias_method.get((raw, r["subject"], r["number"])) or alias_method.get((raw, r["subject"], ""))
+            if hit is None:
+                continue  # blank / TBA
+            key = hit[0]
             taught_numbers[key].add(r["number"])
             subjects_of[key].add(r["subject"])
             courses_of[key].add(f"{r['subject']}{r['number']}")
@@ -86,20 +169,10 @@ def run(conn: sqlite3.Connection, gpa_df: pd.DataFrame, rmp_enabled: bool, tre_p
                 teaching_next[key].add(r["subject"])
                 if r["component"] == "primary":
                     teach_count[key] += 1
-                next_names.add((raw, r["subject"]))
-                if r["component"] == "primary":
-                    next_primary.add((raw, r["subject"]))
-    for (raw, subj), (key, method) in alias_method.items():
-        conn.execute("INSERT OR REPLACE INTO instructor_aliases VALUES (?,?,?,?,?)",
-                     ("course-explorer", raw, subj, key, method))
-        if (raw, subj) in next_names:
-            stats[subj][1] += 1
-            if method not in ("unmatched", "ambiguous"):
-                stats[subj][0] += 1
-        if (raw, subj) in next_primary:
-            stats[subj][3] += 1
-            if method not in ("unmatched", "ambiguous"):
-                stats[subj][2] += 1
+    for (raw, subj, number), (key, method) in alias_method.items():
+        conn.execute("INSERT OR REPLACE INTO instructor_aliases (source, raw_name, subject, number, instructor_key, "
+                     "method) VALUES (?,?,?,?,?,?)", ("course-explorer", raw, subj, number, key, method))
+    stats = match_stats(rows, links)
     n_unmatched = matcher.write_unmatched(unmatched_path)
 
     # Teachers Ranked as Excellent (instructors only, recent terms).

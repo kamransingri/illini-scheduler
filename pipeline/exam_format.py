@@ -15,6 +15,7 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass
 
 from . import notes as notes_mod
+from .names import alias_key, load_aliases
 
 FIELDS = ["n_midterms", "has_final", "exam_mode", "curve", "attendance_required", "homework_platform",
           "group_projects", "textbook_required"]
@@ -157,13 +158,12 @@ def run(conn: sqlite3.Connection) -> str:
                                      ("Course Explorer section info", " ".join(filter(None, r[3:5])))]
     # instructor-level sources
     inst_text: dict[tuple[str, str, str], list[tuple[str, str]]] = defaultdict(list)
-    alias = {(r[0], r[1]): r[2] for r in conn.execute(
-        "SELECT raw_name, subject, instructor_key FROM instructor_aliases")}
+    alias = load_aliases(conn)
     teaching: dict[tuple[str, str], set[str]] = defaultdict(set)
     for r in conn.execute(
         "SELECT subject, number, instructors_raw, section_text, section_notes FROM sections WHERE term IN (?, ?)",
         (CURRENT_TERM, NEXT_TERM)):
-        keys = [alias.get((raw.strip(), r[0])) for raw in (r[2] or "").split(";") if raw.strip()]
+        keys = [alias_key(alias, raw.strip(), r[0], r[1]) for raw in (r[2] or "").split(";") if raw.strip()]
         for k in filter(None, keys):
             teaching[(r[0], r[1])].add(k)
             txt = " ".join(filter(None, (r[3], r[4])))
@@ -179,7 +179,7 @@ def run(conn: sqlite3.Connection) -> str:
             for (k, s, n) in [key for key in teaching_keys(teaching, r[0])]:
                 inst_text[(k, s, n)].append(("RMP tag", tag))
     for note in notes_mod.load_all():
-        key = alias.get((note.instructor, note.subject)) or note.fallback_key
+        key = alias_key(alias, note.instructor, note.subject, note.number) or note.fallback_key
         inst_text[(key, note.subject, note.number)].append(
             (f"Student note ({note.term})" if note.term else "Student note", note.text))
 
