@@ -1,0 +1,12 @@
+# Watch list for the live seat job (pipeline/live_seats.py, live-seats.yml), issue #15.
+#
+# Every course here is re-read on every run (about every 10 minutes), busy or not. Without it, a quiet course is only
+# read by the daily crawl, so a seat that opens there shows up on Just opened the next day.
+#
+# One entry per line, added by pull request (branch data/...). A course or a CRN; a CRN stands for its whole course,
+# since a course page lists every section. Put a term first to limit an entry to that term. "#" starts a comment, so
+# say who asked and why. At most 30 courses per term are used (MAX_WATCHED); the job's log says which were left out
+# and which entries match nothing this term. Remove entries once registration for their term is over.
+#
+#   CS 124                     # a course, every term the job checks
+#   2027-sp 31152              # one section's CRN, Spring 2027 only

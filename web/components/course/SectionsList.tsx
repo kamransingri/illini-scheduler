@@ -4,6 +4,7 @@ import type { Course, TermBlock } from "@/lib/types";
 import { cisUrl, daysStr, fmtAgo, fmtDate, fmtTime, SELF_SERVICE_URL, termLabel } from "@/lib/format";
 import { groupSections } from "@/lib/sections";
 import CopyButton from "../CopyButton";
+import WatchButton from "../WatchButton";
 import { Badge, SeatStatus } from "../ui/Badge";
 import Icon from "../ui/Icon";
 import Info from "../ui/Info";
@@ -16,6 +17,7 @@ export default function SectionsList({
   block,
   onPickProf,
   focusCrn = null,
+  watchable = false,
 }: {
   course: Course;
   term: string;
@@ -23,6 +25,8 @@ export default function SectionsList({
   onPickProf: (key: string) => void;
   /** A CRN to scroll to and highlight (a #crn-12345 link from search). */
   focusCrn?: string | null;
+  /** The current or next term, which Just opened follows: each row gets a Watch button (#15). */
+  watchable?: boolean;
 }) {
   const groups = groupSections(block.sections);
   const flat = groups.flatMap((g) => g.sections);
@@ -153,6 +157,7 @@ export default function SectionsList({
                         Check live seats
                         <Icon name="external" />
                       </a>
+                      {watchable && <WatchButton item={{ t: term, crn: s.crn, s: course.subject, n: course.number, code: s.code }} />}
                     </span>
                     {s.text && (
                       <details className="col-span-2 text-sm text-muted md:col-span-6">

@@ -27,6 +27,7 @@ import { Badge, SeatStatus } from "./ui/Badge";
 import Icon from "./ui/Icon";
 import Info from "./ui/Info";
 import SearchBox from "./SearchBox";
+import WatchButton from "./WatchButton";
 import WeekCalendar, { COURSE_COLORS } from "./WeekCalendar";
 
 type MetaLite = { next_term: string; current_term: string; rmpAvailable: boolean; rmpPrior?: number | null };
@@ -757,7 +758,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                   )),
                 )}
               </ul>
-              <WatchList schedule={sched} openWeight={prefs.weights.open} />
+              <WatchList schedule={sched} term={term} openWeight={prefs.weights.open} />
               {sched.bundles.some((b) => b.alternatives.length > 1) && (
                 <details className="text-sm">
                   <summary className="cursor-pointer font-semibold text-action">Same-time alternatives (identical times and area)</summary>
@@ -887,8 +888,8 @@ function CompareTop({ schedules, idx, onPick }: { schedules: Schedule[]; idx: nu
   );
 }
 
-/** Closed sections the shown schedule depends on (#27): what to watch, and where waitlist numbers live. */
-function WatchList({ schedule, openWeight }: { schedule: Schedule; openWeight: number }) {
+/** Closed sections the shown schedule depends on (#27): what to watch (#15), and where waitlist numbers live. */
+function WatchList({ schedule, term, openWeight }: { schedule: Schedule; term: string; openWeight: number }) {
   const id = useId();
   const watch = sectionsToWatch(schedule);
   if (!watch.length) return null;
@@ -921,6 +922,7 @@ function WatchList({ schedule, openWeight }: { schedule: Schedule; openWeight: n
               <Link href={`${courseHref(subj, num)}#crn-${s.crn}`} className="text-sm text-action underline">
                 On the course page
               </Link>
+              <WatchButton item={{ t: term, crn: s.crn, s: subj, n: num, code: s.code }} />
             </li>
           );
         })}
@@ -929,7 +931,11 @@ function WatchList({ schedule, openWeight }: { schedule: Schedule; openWeight: n
         <Link href="/opened/?mine=1" className="font-semibold text-action underline">
           Just opened
         </Link>{" "}
-        lists your schedule&apos;s sections as soon as a seat opens.
+        lists your schedule&apos;s sections as soon as a seat opens. Press Watch to follow a section:{" "}
+        <Link href="/opened/?watch=1" className="text-action underline">
+          your watched sections
+        </Link>{" "}
+        are listed at the top of Just opened with their latest status, and the page can notify you when one opens.
         {openWeight < 3 && " To rank schedules that need fewer closed sections first, raise “Sections open right now” under What matters to you."}
       </p>
     </section>

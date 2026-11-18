@@ -272,7 +272,14 @@ export default function CourseView({ subject, number, meta }: { subject: string;
               Not offered in {termLabel(term ?? meta.next_term)}.{course.pattern ? ` Usual pattern: ${course.pattern.label}.` : ""}
             </p>
           ) : (
-            <SectionsList course={course} term={term!} block={block} onPickProf={pickProf} focusCrn={focusCrn} />
+            <SectionsList
+              course={course}
+              term={term!}
+              block={block}
+              onPickProf={pickProf}
+              focusCrn={focusCrn}
+              watchable={term === meta.next_term || term === meta.current_term}
+            />
           )}
         </section>
 
