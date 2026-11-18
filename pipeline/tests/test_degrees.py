@@ -69,6 +69,18 @@ def test_double_counting_rules_need_a_quote_and_a_known_set():
     assert "needs the 'quote'" in str(e.value)
 
 
+def test_approved_for_lists_gen_ed_codes_and_goes_with_between():
+    rule = {"allow": True, "between": ["gened", "gened"], "approved_for": ["ACP", "QR2"],
+            "quote": "Exceptions are the Advanced Composition, Quantitative Reasoning II, and the Cultural Studies",
+            "source": "https://gened.illinois.edu/faculty-staff/details-criteria/"}
+    assert validate(doc(double_counting=[rule])).double_counting[0]["approved_for"] == ["ACP", "QR2"]
+    for bad in [{**rule, "approved_for": ["WRITING"]}, {**rule, "approved_for": []},
+                {k: v for k, v in rule.items() if k != "between"} | {"within": "x"}]:
+        with pytest.raises(DegreeError) as e:
+            validate(doc(double_counting=[bad]))
+        assert "'approved_for' goes with 'between' and lists gen-ed codes" in str(e.value)
+
+
 def test_alternatives_and_sequences():
     assert parse_item("MATH 221") == [["MATH 221"]]
     assert parse_item("RHET 101 + RHET 102") == [["RHET 101", "RHET 102"]]

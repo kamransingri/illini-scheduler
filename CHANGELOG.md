@@ -26,6 +26,10 @@ history).
 - Catalog importer: "(choose one)" in a heading, "one course chosen from", advisory comments, rules above a named
   list, and headings with hours but no list are read correctly. 59 programs have fewer tick boxes and more counted
   rules.
+- Degree checklist: a course approved for Advanced Composition or Quantitative Reasoning II now also counts for its
+  other gen-ed category, as the campus gen-ed policy allows. HIST 140 fills Advanced Composition, Humanities and
+  Western cultures, where Humanities used to say "rules unclear" (#18). In Finance, BS, FIN 221 from the business core
+  no longer also counts as the "one additional" Finance course.
 
 ## [0.12.1] - 2026-11-18
 
