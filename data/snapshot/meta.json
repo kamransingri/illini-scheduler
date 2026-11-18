@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-18T04:50:16+00:00",
+ "built_at": "2026-11-18T05:19:01+00:00",
  "current_term": "2026-fa",
  "next_term": "2027-sp",
  "terms": {
@@ -795,12 +795,12 @@
    "rmp_pct": 37.5
   },
   "ES": {
-   "gpa_matched": 2,
+   "gpa_matched": 3,
    "names": 3,
-   "gpa_pct": 66.7,
-   "primary_matched": 2,
+   "gpa_pct": 100.0,
+   "primary_matched": 3,
    "primary_names": 3,
-   "primary_gpa_pct": 66.7,
+   "primary_gpa_pct": 100.0,
    "rmp_matched": 3,
    "rmp_pct": 100.0
   },
@@ -1275,14 +1275,14 @@
    "rmp_pct": 41.4
   },
   "MATH": {
-   "gpa_matched": 62,
+   "gpa_matched": 63,
    "names": 77,
-   "gpa_pct": 80.5,
-   "primary_matched": 60,
+   "gpa_pct": 81.8,
+   "primary_matched": 61,
    "primary_names": 70,
-   "primary_gpa_pct": 85.7,
-   "rmp_matched": 60,
-   "rmp_pct": 77.9
+   "primary_gpa_pct": 87.1,
+   "rmp_matched": 61,
+   "rmp_pct": 79.2
   },
   "MBA": {
    "gpa_matched": 17,
@@ -1425,14 +1425,14 @@
    "rmp_pct": 58.6
   },
   "NPRE": {
-   "gpa_matched": 18,
+   "gpa_matched": 17,
    "names": 20,
-   "gpa_pct": 90.0,
-   "primary_matched": 18,
+   "gpa_pct": 85.0,
+   "primary_matched": 17,
    "primary_names": 20,
-   "primary_gpa_pct": 90.0,
-   "rmp_matched": 11,
-   "rmp_pct": 55.0
+   "primary_gpa_pct": 85.0,
+   "rmp_matched": 10,
+   "rmp_pct": 50.0
   },
   "NRES": {
    "gpa_matched": 31,
@@ -1907,7 +1907,7 @@
  },
  "repo_url": "https://github.com/kamransingri/illini-scheduler",
  "live_url": "https://raw.githubusercontent.com/kamransingri/illini-scheduler/live-seats/live.json",
- "n_courses": 7139,
+ "n_courses": 7128,
  "history_terms": [
   "2022-fa",
   "2023-sp",
@@ -1982,7 +1982,7 @@
    "ECON": 3.354,
    "EDUC": 3.821,
    "EIL": 3.735,
-   "ENG": 3.822,
+   "ENG": 3.825,
    "ENGL": 3.63,
    "ENSU": 3.325,
    "ENVS": 3.793,
@@ -1990,6 +1990,7 @@
    "EPS": 3.923,
    "EPSY": 3.693,
    "ERAM": 3.825,
+   "ES": 3.631,
    "ESE": 3.413,
    "ETMA": 3.438,
    "EURO": 3.59,
@@ -2041,7 +2042,7 @@
    "MUSC": 3.929,
    "MUSE": 3.754,
    "NE": 3.843,
-   "NPRE": 3.445,
+   "NPRE": 3.432,
    "NRES": 3.432,
    "NUTR": 3.765,
    "PATH": 3.785,
