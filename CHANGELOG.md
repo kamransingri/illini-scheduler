@@ -24,6 +24,9 @@ history).
 
 ### Fixed
 
+- Calendar export (.ics): dates now come from the Registrar's Fall 2026 and Spring 2027 academic calendars, with the
+  source and read date in every event. Labor Day (September 7, 2026) is now skipped; before, Monday classes showed up
+  on it. The builder names the breaks it skips.
 - Rate My Professors on course pages: professors who teach this term but not next, and past instructors, are now
   looked up too. MATH 221's Kim Whittlesey (104 ratings) showed "No RMP match" because she isn't teaching in Spring
   2027. Course pages now show RMP for past instructors as well.

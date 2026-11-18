@@ -19,7 +19,7 @@ import {
   type Prefs,
   type Schedule,
 } from "@/lib/schedule";
-import { TERM_DATES } from "@/lib/terms";
+import { breakNames, TERM_DATES } from "@/lib/terms";
 import type { Course, Section } from "@/lib/types";
 import CopyButton from "./CopyButton";
 import { Badge, SeatStatus } from "./ui/Badge";
@@ -814,7 +814,9 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                 Expected GPA uses each section&apos;s instructor GPA for that course (GPA dataset), else the course average:{" "}
                 {sched.bundles.map((b) => `${b.course} ${b.gpa === null ? "no data" : fmtGpa(b.gpa)}`).join(", ")}.
                 {TERM_DATES[term] &&
-                  ` Calendar dates are estimates (${TERM_DATES[term].start} to ${TERM_DATES[term].end}, break skipped); check the official academic calendar.`}{" "}
+                  (TERM_DATES[term].estimated
+                    ? ` Calendar dates are estimates (${TERM_DATES[term].start} to ${TERM_DATES[term].end}); the Registrar hasn't published this term's calendar yet.`
+                    : ` Calendar export: ${TERM_DATES[term].start} to ${TERM_DATES[term].end}, skipping ${breakNames(TERM_DATES[term])}, from the Registrar's academic calendar.`)}{" "}
                 Seats and restrictions: confirm in Self-Service.
               </p>
             </div>
