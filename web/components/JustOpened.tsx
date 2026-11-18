@@ -54,6 +54,8 @@ export default function JustOpened({ nextTerm, currentTerm, liveUrl, dailyAt }: 
   const [fresh, setFresh] = useState<Set<string>>(new Set());
 
   useEffect(() => {
+    // ?mine=1 (the schedule builder's "Sections to watch") starts with only the schedule's courses
+    if (new URLSearchParams(window.location.search).get("mine") === "1") setMine(true);
     const sync = () => setCart(readCart().map((c) => `${c.s} ${c.n}`));
     sync();
     return onCartChange(sync);

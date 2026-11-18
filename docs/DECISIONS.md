@@ -663,3 +663,13 @@ Every judgment call made during the autonomous build, newest phase last.
   them in the schedule builder" link above the results opens the builder, which already has the courses and the
   must-haves. Sending the whole filtered list wouldn't work, because the builder schedules every course in its list
   together.
+
+## Sections to watch (2026-11-17, issue #27)
+
+- **D21.1 Waitlist mode is the default.** The builder already plans with closed sections unless "Open sections only" is
+  on, and "Sections open right now" under What matters to you already ranks schedules by how many of their sections
+  are open. No separate mode was added. What was missing is the list: under the shown schedule, "Sections to watch"
+  names each section in it that was Closed at the last check, with its CRN and a link to its row on the course page.
+- **D21.2 No waitlist numbers.** The site knows only open or closed (LIMITATIONS "Open or closed only"), so the list
+  says that and links to Self-Service. It links to Just opened with `?mine=1`, which turns on "Only my schedule's
+  courses". Watching a section so the live job checks it more often is #15.

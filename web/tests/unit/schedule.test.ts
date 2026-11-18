@@ -11,6 +11,7 @@ import {
   DEFAULT_PREFS,
   generate,
   hasLunch,
+  sectionsToWatch,
   finalClashes,
   finalsOf,
   isValidBundle,
@@ -235,6 +236,17 @@ describe("explanations", () => {
     const c = mk("152", [{ ...fixed("A", "primary", "*", M, 600, 650), status: "Closed" }, { ...fixed("B", "primary", "*", T, 600, 650), status: "Open" }]);
     const w0 = { gpa: 0, rmp: 0, early: 0, late: 0, daysOff: 0, compact: 0, walking: 0, open: 0 };
     expect(generate([c], "2027-sp", { ...DEFAULT_PREFS, weights: { ...w0, open: 3 } }).schedules[0].bundles[0].sections[0].code).toBe("B");
+  });
+  it("lists the closed sections a schedule needs, and ranks schedules that need fewer of them first (#27)", () => {
+    const a = mk("154", [{ ...fixed("A", "primary", "*", M, 600, 650), status: "Closed" }, { ...fixed("B", "primary", "*", T, 600, 650), status: "Open" }]);
+    const b = mk("155", [{ ...fixed("C", "primary", "*", W, 600, 650), status: "Closed" }, { ...fixed("D", "primary", "*", R, 600, 650), status: "Closed" }]);
+    const w0 = { gpa: 0, rmp: 0, early: 0, late: 0, daysOff: 0, compact: 0, walking: 0, open: 1 };
+    const { schedules } = generate([a, b], "2027-sp", { ...DEFAULT_PREFS, weights: w0 });
+    const watch = schedules.map((s) => sectionsToWatch(s).map((x) => `${x.course} ${x.section.code}`));
+    expect(watch[0]).toHaveLength(1); // B is open; X 155 has no open section, so one closed section is the least
+    expect(watch[0][0]).toMatch(/^X 155 [CD]$/);
+    expect(watch[watch.length - 1]).toHaveLength(2);
+    expect(schedules[0].score).toBeGreaterThan(schedules[schedules.length - 1].score);
   });
   it("late classes count against the 'avoid classes after' time the student picks", () => {
     const c = mk("153", [fixed("A", "primary", "*", M, 1080, 1170), fixed("B", "primary", "*", M, 600, 650)]);

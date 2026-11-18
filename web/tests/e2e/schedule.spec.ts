@@ -63,3 +63,25 @@ test("empty cart shows guidance, not a blank page", async ({ page }) => {
   await page.goto("./schedule/?c=");
   await expect(page.getByText("Your cart is empty")).toBeVisible();
 });
+
+test("sections to watch: a schedule that needs closed sections lists them and links to Just opened (#27)", async ({ page }) => {
+  // every STAT 107 section closed, as after a busy registration day
+  await page.route("**/data/course/STAT/107.json", async (route) => {
+    const course = await (await route.fetch()).json();
+    for (const t of Object.values(course.terms) as { sections: { status: string }[] }[]) for (const s of t.sections) s.status = "Closed";
+    await route.fulfill({ json: course });
+  });
+  await page.goto("./schedule/?c=STAT107,RHET105&t=2027-sp");
+  await expect(page.getByTestId("cart").locator("li")).toHaveCount(2);
+  await page.getByRole("button", { name: "Generate schedules" }).click();
+  const watch = page.getByTestId("watch-list");
+  await expect(watch).toBeVisible();
+  await expect(watch).toContainText(/needs (a section that was|\d+ sections that were) Closed/);
+  const rows = watch.locator("li");
+  expect(await rows.count()).toBeGreaterThan(0);
+  for (const t of await rows.allTextContents()) expect(t).toContain("STAT 107");
+  await expect(watch.getByRole("link", { name: "Self-Service" })).toHaveAttribute("href", /^https:/);
+  await watch.getByRole("link", { name: "Just opened" }).click();
+  await expect(page).toHaveURL(/\/opened\/\?mine=1$/);
+  await expect(page.getByLabel(/Only my schedule's courses/)).toBeChecked();
+});

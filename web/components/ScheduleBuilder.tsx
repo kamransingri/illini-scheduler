@@ -12,6 +12,7 @@ import {
   explainEmpty,
   generate,
   LUNCH,
+  sectionsToWatch,
   summaryLine,
   warnings,
   type CourseInput,
@@ -756,6 +757,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                   )),
                 )}
               </ul>
+              <WatchList schedule={sched} openWeight={prefs.weights.open} />
               {sched.bundles.some((b) => b.alternatives.length > 1) && (
                 <details className="text-sm">
                   <summary className="cursor-pointer font-semibold text-action">Same-time alternatives (identical times and area)</summary>
@@ -881,6 +883,55 @@ function CompareTop({ schedules, idx, onPick }: { schedules: Schedule[]; idx: nu
           Show {Math.min(10, schedules.length - n)} more
         </button>
       )}
+    </section>
+  );
+}
+
+/** Closed sections the shown schedule depends on (#27): what to watch, and where waitlist numbers live. */
+function WatchList({ schedule, openWeight }: { schedule: Schedule; openWeight: number }) {
+  const id = useId();
+  const watch = sectionsToWatch(schedule);
+  if (!watch.length) return null;
+  const n = watch.length;
+  return (
+    <section aria-labelledby={id} className="rounded border border-line bg-panel p-3" data-testid="watch-list">
+      <h3 id={id} className="flex items-center gap-2 font-semibold text-heading">
+        <Icon name="bell" className="text-muted" />
+        Sections to watch
+      </h3>
+      <p className="mt-1">
+        This schedule needs {n === 1 ? "a section that was" : `${n} sections that were`} Closed at the last check. The site only knows open or closed, not
+        whether there&apos;s a waitlist or how long it is:{" "}
+        <a href={SELF_SERVICE_URL} className="text-action underline" rel="noopener">
+          Self-Service
+        </a>{" "}
+        shows that.
+      </p>
+      <ul className="mt-2 border-t border-line">
+        {watch.map(({ course, section: s }) => {
+          const [subj, num] = course.split(" ");
+          return (
+            <li key={s.crn} className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-line py-1.5">
+              <span className="w-24 font-semibold">{course}</span>
+              <span className="w-24">
+                {s.code} {s.type}
+              </span>
+              <CopyButton text={s.crn} />
+              <SeatStatus status={s.status} />
+              <Link href={`${courseHref(subj, num)}#crn-${s.crn}`} className="text-sm text-action underline">
+                On the course page
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+      <p className="mt-2 text-sm">
+        <Link href="/opened/?mine=1" className="font-semibold text-action underline">
+          Just opened
+        </Link>{" "}
+        lists your schedule&apos;s sections as soon as a seat opens.
+        {openWeight < 3 && " To rank schedules that need fewer closed sections first, raise “Sections open right now” under What matters to you."}
+      </p>
     </section>
   );
 }

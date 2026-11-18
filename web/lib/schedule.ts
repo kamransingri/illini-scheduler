@@ -190,6 +190,11 @@ export function prepareBundles(input: CourseInput, term: string, prefs: Prefs): 
   return [...byKey.values()];
 }
 
+/** The sections of a schedule that were Closed at the last check, in schedule order: the ones to watch (#27). */
+export function sectionsToWatch(s: Pick<Schedule, "bundles">): { course: string; section: Section }[] {
+  return s.bundles.flatMap((b) => b.sections.filter(isClosed).map((section) => ({ course: b.course, section })));
+}
+
 /** 1 when none of the bundle's sections was Closed at the last check. */
 export function bundleOpen(b: Pick<Bundle, "sections">): number {
   return b.sections.some(isClosed) ? 0 : 1;
