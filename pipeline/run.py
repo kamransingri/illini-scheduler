@@ -74,6 +74,7 @@ def main(argv: list[str] | None = None) -> int:
         df = df[df["Subject"].isin(subjects)]
     # renumbered courses (#29): the old number's terms before the change count as the new course from here on
     rename = renumbered.Renamer(renumbered.load())
+    df_as_taught = df  # before renumbering: who taught in a subject, for matching names (#12)
     df = renumbered.apply_gpa(df, rename)
     log(f"  {len(rename.links)} renumbered courses linked (data/renumbered.csv)")
     res = gpa.compute(df)
@@ -87,7 +88,7 @@ def main(argv: list[str] | None = None) -> int:
     conn.commit()
 
     log("phase 3: instructors + RMP")
-    report = instructors.run(conn, df, rmp_enabled=not args.no_rmp,
+    report = instructors.run(conn, gpa.matcher_frame(df_as_taught, df), rmp_enabled=not args.no_rmp,
                              tre_path=tre_path,
                              unmatched_path=DATA / "unmatched.csv", rmp_cache=RAW / "rmp")
     log(f"  {report}")

@@ -88,7 +88,8 @@ CREATE TABLE IF NOT EXISTS instructors (
 );
 CREATE TABLE IF NOT EXISTS instructor_aliases (
     source TEXT, raw_name TEXT, subject TEXT, instructor_key TEXT, method TEXT,
-    PRIMARY KEY (source, raw_name, subject)
+    number TEXT NOT NULL DEFAULT '',  -- '' = every course under this name in the subject; else one course (#12)
+    PRIMARY KEY (source, raw_name, subject, number)
 );
 CREATE TABLE IF NOT EXISTS rmp (
     rmp_id TEXT PRIMARY KEY, first_name TEXT, last_name TEXT, department TEXT,
@@ -125,6 +126,10 @@ def connect(path: Path | str = DB_PATH) -> sqlite3.Connection:
     cols = {r[1] for r in conn.execute("PRAGMA table_info(availability)")}
     if "since" not in cols:  # databases built before seat history existed
         conn.execute("ALTER TABLE availability ADD COLUMN since TEXT")
+    if "number" not in {r[1] for r in conn.execute("PRAGMA table_info(instructor_aliases)")}:
+        # built before per-course links (#12); phase 3 refills the table on every run
+        conn.execute("DROP TABLE instructor_aliases")
+        conn.executescript(SCHEMA)
     return conn
 
 
