@@ -1,5 +1,5 @@
 # Computer Science + Bioengineering, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/engineering/computer-science-bioengineering-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/computer-science-bioengineering-bs/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -9,7 +9,7 @@ college: The Grainger College of Engineering
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/engineering/computer-science-bioengineering-bs/
 read_on: '2026-11-16'
-generated: '2026-11-16'
+generated: '2026-11-17'
 total_hours: 128
 notes:
 - 'Minimum hours required for graduation: 128 hours.'
@@ -210,11 +210,8 @@ groups:
   id: bioengineering-core-18
 - name: Select 15 hours of technical elective credit from the below list
   section: Bioengineering Technical Electives
-  rule: manual
-  notes:
-  - 'Catalog total: 15 hours.'
-  - The catalog lists these courses under Select 15 hours of technical elective credit from the below list; see the catalog
-    page for the rule.
+  rule: hours
+  hours: 15
   courses:
   - BIOE 303
   - BIOE 360
@@ -233,6 +230,8 @@ groups:
   - BIOE 488
   - BIOE 489
   - BIOE 498
+  notes:
+  - Select 15 hours of technical elective credit from the below list
   id: select-15-hours-of-technical-elective-cr-19
 - name: Upper Division Technical Electives
   section: Upper Division Technical Electives

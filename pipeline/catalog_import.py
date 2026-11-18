@@ -227,21 +227,38 @@ def gened_groups(rows: list[dict], has_program_quote: bool) -> list[dict]:
     return groups
 
 
-LISTISH = re.compile(r"(list|lists|elective|electives|focus|option|options|select|choose|area|areas)", re.I)
+CHOICE = re.compile(r"\b(select|choose|pick|option|options|list|lists|focus|area|areas)\b", re.I)
+ELECTIVE = re.compile(r"\belectives?\b", re.I)
+CORE = re.compile(r"\b(core|required|requirements?)\b", re.I)
 
 
-def program_groups(rows: list[dict], section: str, start_index: int) -> list[dict]:
+def listish(name: str, n_items: int, own: bool = True) -> bool:
+    """A heading that names a choice rather than a list of required courses: "Urbanism (select one)", "Course List",
+    "Instrumental Music Options" (one table per option, so it counts for each table under it), "Technical Electives".
+    "Electives" counts only on the list's `own` heading (not one inherited from a table above), and not when the
+    heading also says core or required ("Major Core Requirements and Electives" heads the required core) or there's a
+    single item ("Introductory Economics Elective": ECON 102 or ECON 103 is exactly one requirement)."""
+    if CHOICE.search(name):
+        return True
+    return own and bool(ELECTIVE.search(name)) and not CORE.search(name) and n_items > 1
+
+
+def program_groups(rows: list[dict], section: str, start_index: int, fresh: bool = True) -> list[dict]:
     """One course-list table (not the gen-ed one) -> groups. Comment rows split the table into segments: courses before
     any comment are required ("all"); "Select N of the following" / "N hours from" segments become n_of / hours; any
     other comment is prose the schema can't express, so that segment (and any list after prose in the same table, like
-    CS focus areas under "at least three... from a single focus area") becomes `manual`, listing its courses."""
+    CS focus areas under "at least three... from a single focus area") becomes `manual`, listing its courses. So is a
+    list under a heading that names a choice (`listish`); a heading is the list's own when it's an area row in the
+    table or the page heading right above this table (`fresh`)."""
     groups: list[dict] = []
     name = section
     prose: list[str] = []  # the latest prose rule in this table; it governs the lists that follow it
     seg: dict | None = None
+    own_name = fresh  # does `name` head this table, or was it inherited from a table above?
 
     def new(lead: list[str] | None = None, listish: bool = False, hours: int | None = None) -> dict:
-        return {"name": name, "lead": list(lead or []), "items": [], "listish": listish, "hours": hours, "join": False}
+        return {"name": name, "lead": list(lead or []), "items": [], "listish": listish, "hours": hours, "join": False,
+                "own": own_name}
 
     def flush() -> None:
         nonlocal seg
@@ -253,7 +270,8 @@ def program_groups(rows: list[dict], section: str, start_index: int) -> list[dic
         g: dict[str, Any] = {"name": seg["name"] or section or "Requirement", "section": section or seg["name"]}
         n = SELECT_N.match(lead[0]) if len(lead) == 1 else None
         h = SELECT_HOURS.match(lead[0]) if len(lead) == 1 else None
-        if items and not lead and not prose and not seg["listish"] and not LISTISH.search(seg["name"] or ""):
+        named_choice = listish(seg["name"] or "", len(items), seg["own"])
+        if items and not lead and not prose and not seg["listish"] and not named_choice:
             g.update(rule="all", courses=listed)
         elif items and n and (int(n.group(1)) if n.group(1).isdigit() else NUMBERS[n.group(1).lower()]) <= len(items):
             k = n.group(1)
@@ -273,10 +291,11 @@ def program_groups(rows: list[dict], section: str, start_index: int) -> list[dic
     for r in rows:
         if r["kind"] == "sum":
             flush()
-            name, prose = section, []
+            name, prose, own_name = section, [], False
         elif r["kind"] == "area":
             flush()
             t = r["text"]
+            own_name = True
             if len(t) > 70 or t.endswith("."):  # a rule written into a header row
                 seg = new(lead=[t])
             elif SELECT_N.match(t) or SELECT_HOURS.match(t):  # "Select two of the following:" as a header row
@@ -332,6 +351,7 @@ def parse_program(page: str | bytes, url: str, read_on: str) -> dict:
     groups: list[dict] = []
     section = "Requirements" if minor else ""
     sums: list[int] = []  # a minor states its size in a "Total Hours" row: "18", "18-21", "Minimum of 18"
+    fresh = True  # no course table since the last heading
     for el in c.iter("h2", "h3", "h4", "p", "table"):
         if el.tag == "table" and "sc_courselist" in (el.get("class") or ""):
             rows = _rows(el)
@@ -340,13 +360,14 @@ def parse_program(page: str | bytes, url: str, read_on: str) -> dict:
             if first and first.get("text", "").lower().startswith("composition i"):
                 groups.extend(gened_groups(rows, has_quote))
             else:
-                groups.extend(program_groups(rows, section, len(groups) + 1))
+                groups.extend(program_groups(rows, section, len(groups) + 1, fresh))
+            fresh = False
         elif el.tag != "table" and not el.xpath("ancestor::table"):
             t = norm(el.text_content())
             heading_like = 0 < len(t) <= 80 and not t.endswith(".")
             if el.tag != "p" or (heading_like and not t.lower().startswith(("for the degree", "minimum", "follows"))
                                               and not (minor and t.lower().startswith("for the "))):
-                section = t
+                section, fresh = t, True
     rules: list[dict[str, Any]] = [
         {"allow": False, "within": "cultural-studies", "quote": CS_QUOTE, "source": GENED_RULES_SOURCE},
         {"allow": True, "between": ["cultural-studies", "gened"],
