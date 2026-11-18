@@ -1,0 +1,82 @@
+# Weekly r/UIUC signal (pipeline/reddit.py, issue #14, docs/REDDIT.md). Does nothing until the repository has
+# REDDIT_CLIENT_ID and REDDIT_CLIENT_SECRET from an app Reddit has approved; extraction also needs ANTHROPIC_API_KEY.
+# Comment text stays in the Actions cache (data/raw/reddit, never committed); the ratings are uploaded as an artifact
+# for the labelled check, not published, until docs/REDDIT.md's validation step is done.
+name: Reddit signal (r/UIUC)
+on:
+  schedule:
+    - cron: "23 7 * * 0" # Sundays
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: reddit
+  cancel-in-progress: false
+
+jobs:
+  reddit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - name: Reddit API access configured?
+        id: cfg
+        env:
+          ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+        run: |
+          if [ -n "$ID" ] && [ -n "$SECRET" ]; then
+            echo "on=1" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::No Reddit API access yet (REDDIT_CLIENT_ID / REDDIT_CLIENT_SECRET). Nothing to do; see docs/REDDIT.md."
+          fi
+      - if: steps.cfg.outputs.on == '1'
+        uses: actions/checkout@v7
+      - if: steps.cfg.outputs.on == '1'
+        uses: actions/setup-python@v7
+        with: { python-version: "3.11", cache: pip }
+      - if: steps.cfg.outputs.on == '1'
+        run: pip install -r requirements.txt -r requirements-reddit.txt
+      - name: Restore the Reddit cache
+        if: steps.cfg.outputs.on == '1'
+        uses: actions/cache/restore@v6
+        with:
+          path: data/raw/reddit
+          key: reddit-${{ github.run_id }}
+          restore-keys: reddit-
+      - name: Build the course and instructor data the matching needs
+        if: steps.cfg.outputs.on == '1'
+        run: python -m pipeline.run --source csv --no-rmp --skip-export
+        env:
+          AVAILABILITY_MODE: file
+      - name: Collect (new threads; deleted comments dropped)
+        if: steps.cfg.outputs.on == '1'
+        run: python -m pipeline.reddit collect
+        env:
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          REDDIT_SALT: ${{ secrets.REDDIT_SALT }}
+          REDDIT_USER_AGENT: ${{ vars.REDDIT_USER_AGENT }}
+          REDDIT_BUDGET_SECONDS: "1800"
+      - name: Extract with Claude Haiku (Message Batches)
+        if: steps.cfg.outputs.on == '1'
+        run: python -m pipeline.reddit extract
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      - name: Aggregate
+        if: steps.cfg.outputs.on == '1'
+        run: python -m pipeline.reddit aggregate --out reddit-ratings.json && python -m pipeline.reddit status
+      - name: Save the Reddit cache (even if a step failed)
+        if: always() && steps.cfg.outputs.on == '1'
+        uses: actions/cache/save@v6
+        with:
+          path: data/raw/reddit
+          key: reddit-${{ github.run_id }}
+      - name: Upload the ratings for the labelled check
+        if: steps.cfg.outputs.on == '1'
+        uses: actions/upload-artifact@v4
+        with:
+          name: reddit-ratings
+          path: reddit-ratings.json
+          retention-days: 30
