@@ -30,7 +30,7 @@ def main(argv: list[str] | None = None) -> int:
     subjects = None if args.subjects == "all" else {s.strip().upper() for s in args.subjects.split(",")}
     terms = [t.strip() for t in args.terms.split(",") if t.strip()]
 
-    from . import availability, course_explorer, exam_format, export, gpa, instructors, offerings
+    from . import availability, course_explorer, exam_format, export, gpa, instructors, offerings, renumbered
 
     if args.fixtures:
         from .config import FIXTURES
@@ -72,6 +72,10 @@ def main(argv: list[str] | None = None) -> int:
     df = gpa.load_gpa_csv(gpa_path)
     if subjects:
         df = df[df["Subject"].isin(subjects)]
+    # renumbered courses (#29): the old number's terms before the change count as the new course from here on
+    rename = renumbered.Renamer(renumbered.load())
+    df = renumbered.apply_gpa(df, rename)
+    log(f"  {len(rename.links)} renumbered courses linked (data/renumbered.csv)")
     res = gpa.compute(df)
     gpa.store(conn, res)
     gpa.store_geneds(conn, gpa.load_geneds(gened_path))
@@ -90,7 +94,7 @@ def main(argv: list[str] | None = None) -> int:
     conn.commit()
 
     log("phase 4: offerings + changes")
-    log(f"  {offerings.run(conn, NEXT_TERM)}")
+    log(f"  {offerings.run(conn, NEXT_TERM, rename)}")
     conn.commit()
 
     log("phase 5: exam format")
@@ -99,7 +103,7 @@ def main(argv: list[str] | None = None) -> int:
 
     if not args.skip_export:
         log("export JSON")
-        log(f"  {export.run(conn)}")
+        log(f"  {export.run(conn, rename=rename)}")
     log("done")
     return 0
 
