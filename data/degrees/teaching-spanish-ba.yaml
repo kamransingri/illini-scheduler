@@ -1,5 +1,5 @@
 # Teaching of Spanish, BA (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/las/teaching-spanish-ba/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/las/teaching-spanish-ba/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Teaching of Spanish, BA
 college: College of Liberal Arts and Sciences
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/las/teaching-spanish-ba/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 120
 notes:
 - 'Minimum hours required for graduation: 120 hours.'
@@ -136,15 +136,6 @@ groups:
   - SPAN 228
   - SPAN 477
   id: core-spanish-courses-11
-- name: Core Spanish Courses
-  section: Major Requirements
-  rule: manual
-  notes:
-  - '27-30 additional hours of coursework in SPAN at the 200, 300, and/or 400 level, including at least two literature and
-    culture courses and at least two linguisitics courses, chosen from among the following: SPAN 250, 252, 254, 303, 305,
-    307, 308, 309, 310, 312, 318, 320, 324, 326, 395, related SPAN 299 or SPAN 399 study abroad courses, or related SPAN 400-level
-    courses with advisor approval.'
-  id: core-spanish-courses-12
 - name: Core Professional Education Courses
   section: Major Requirements
   rule: manual
@@ -157,7 +148,7 @@ groups:
   - WLTE 471
   - WLTE 475
   - WLTE 478
-  id: core-professional-education-courses-13
+  id: core-professional-education-courses-12
 - name: Core Professional Education Courses
   section: Major Requirements
   rule: manual
@@ -169,4 +160,4 @@ groups:
   - EPSY 201
   - SPED 405
   - EDPR 442
-  id: core-professional-education-courses-14
+  id: core-professional-education-courses-13

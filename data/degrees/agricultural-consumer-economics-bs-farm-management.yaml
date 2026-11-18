@@ -1,0 +1,209 @@
+# Agricultural & Consumer Economics: Farm Management, BS (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/agricultural-consumer-economics-bs/farm-management/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: agricultural-consumer-economics-bs-farm-management
+program: 'Agricultural & Consumer Economics: Farm Management, BS'
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/agricultural-consumer-economics-bs/farm-management/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 126
+notes:
+- 'Minimum hours required for graduation: 126 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300 and 400 level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/aces/agricultural-consumer-economics-bs/farm-management/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by ACE 100, ECON 103, and two other courses approved as Social and Behavioral Sciences
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: U.S. Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 220, MATH 221 or MATH 234; and ACE 262
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Department Foundation
+  section: Graduation Requirements
+  rule: all
+  courses:
+  - ACE 123
+  - ACE 100
+  - ECON 103
+  - - ACE 161
+    - CS 105
+  id: department-foundation-11
+- name: Department Foundation
+  section: Graduation Requirements
+  rule: manual
+  notes:
+  - 'Calculus Option - Select one of the following:'
+  courses:
+  - MATH 220
+  - MATH 221
+  - MATH 234
+  - ACCY 201
+  - ACE 262
+  - ACE 264
+  id: department-foundation-12
+- name: Department Foundation
+  section: Graduation Requirements
+  rule: manual
+  notes:
+  - Communication Option
+  courses:
+  - CMN 101
+  - ALEC 115
+  - CMN 111 + CMN 112
+  id: department-foundation-13
+- name: Department Foundation
+  section: Graduation Requirements
+  rule: manual
+  notes:
+  - Minimum of 6 additional hours of Social & Behavioral Sciences
+  courses:
+  - ACE 341
+  - ACE 300
+  id: department-foundation-14
+- name: Department Foundation
+  section: Graduation Requirements
+  rule: manual
+  notes:
+  - 'ACE International Course or Study Abroad Experience Option - Select one of the following:'
+  courses:
+  - ACE 411
+  - ACE 435
+  - ACE 436
+  - ACE 451
+  - ACE 452
+  - ACE 455
+  id: department-foundation-15
+- name: Farm Management Concentration
+  section: Graduation Requirements
+  rule: all
+  courses:
+  - ACE 222
+  - ACE 231
+  - ACE 232
+  - ACE 345
+  - ACE 360
+  - ACE 428
+  - ACE 432
+  - ACE 444
+  notes:
+  - 'Catalog total: 23 hours.'
+  id: farm-management-concentration-16
+- name: Graduation Requirements
+  section: Graduation Requirements
+  rule: manual
+  notes:
+  - Minimum hours in the College of ACES, 20 of which must be in the Department of ACE
+  id: graduation-requirements-17

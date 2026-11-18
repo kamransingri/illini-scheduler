@@ -1,0 +1,218 @@
+# Theatre: Scenic Technology, BFA (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/theatre-bfa/scenic-technology/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: theatre-bfa-scenic-technology
+program: 'Theatre: Scenic Technology, BFA'
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/theatre-bfa/scenic-technology/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/faa/theatre-bfa/scenic-technology/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by THEA 304
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+  notes:
+  - fulfilled by THEA 122 & THEA 208
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Core Requirements for all Theatre Majors
+  section: Core Requirements for all Theatre Majors
+  rule: all
+  courses:
+  - FAA 101
+  - THEA 100
+  - THEA 200
+  - THEA 121
+  - THEA 122
+  - THEA 123
+  - THEA 208
+  - THEA 304
+  - THEA 364
+  - THEA 404
+  id: core-requirements-for-all-theatre-majors-11
+- name: Scenic Technology Concentration
+  section: Scenic Technology Concentration
+  rule: all
+  courses:
+  - THEA 100
+  - THEA 119
+  - THEA 126
+  - THEA 220
+  - THEA 223
+  - THEA 300
+  - THEA 400
+  - THEA 419
+  - THEA 426
+  id: scenic-technology-concentration-12
+- name: Scenic Technology Concentration
+  section: Scenic Technology Concentration
+  rule: hours
+  hours: 15
+  courses:
+  - THEA 391
+  - THEA 407
+  - THEA 414
+  - THEA 420
+  - THEA 421
+  - THEA 422
+  - THEA 424
+  - THEA 427
+  - THEA 429
+  - THEA 430
+  - THEA 447
+  - THEA 448
+  - THEA 485
+  - THEA 489
+  - THEA 495
+  notes:
+  - 'Choose 15 hours from:'
+  id: scenic-technology-concentration-13
+- name: Scenic Technology Concentration
+  section: Scenic Technology Concentration
+  rule: manual
+  notes:
+  - 'Choose 6 credits:'
+  courses:
+  - THEA 222
+  - THEA 231
+  - THEA 242
+  - THEA 243
+  - THEA 451
+  - THEA 452
+  - THEA 453
+  - THEA 456
+  - THEA 461
+  - THEA 497
+  id: scenic-technology-concentration-14
+- name: Summary of Credits for Bachelor of Fine Arts in Theatre, concentration in Scenic Technology
+  section: Summary of Credits for Bachelor of Fine Arts in Theatre, concentration in Scenic Technology
+  rule: manual
+  notes:
+  - General Education Requirements
+  - Core Requirements for All Theatre Majors
+  - Scenic Technology Concentration Requirements
+  - Free electives to bring the total hours earned to 120, including a minimum of 40 credits at the 300- or 400-level
+  id: summary-of-credits-for-bachelor-of-fine-15
+- name: Total Credits for BFA in Theatre, concentration in Scenic Technology
+  section: Summary of Credits for Bachelor of Fine Arts in Theatre, concentration in Scenic Technology
+  rule: manual
+  notes:
+  - 'Catalog total: 120 hours.'
+  - 'Total Credits for BFA in Theatre, concentration in Scenic Technology: see the catalog page for which courses count.'
+  id: total-credits-for-bfa-in-theatre-concent-16

@@ -1,5 +1,5 @@
 # Computer Science + Bioengineering, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/engineering/computer-science-bioengineering-bs/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/computer-science-bioengineering-bs/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Computer Science + Bioengineering, BS
 college: The Grainger College of Engineering
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/engineering/computer-science-bioengineering-bs/
-read_on: '2026-11-16'
-generated: '2026-11-17'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 128
 notes:
 - 'Minimum hours required for graduation: 128 hours.'
@@ -138,13 +138,9 @@ groups:
   - ENG 100
   - BIOE 100
   - BIOE 120
-  id: major-requirements-orientation-and-profe-11
-- name: 'Major Requirements: Orientation and Professional Development'
-  section: 'Major Requirements: Orientation and Professional Development'
-  rule: manual
   notes:
   - Highly recommended, optional 1 credit hour course, CS 100 Freshman Orientation. Credit hour counts toward free electives.
-  id: major-requirements-orientation-and-profe-12
+  id: major-requirements-orientation-and-profe-11
 - name: Foundational Mathematics and Science
   section: Foundational Mathematics and Science
   rule: all
@@ -157,7 +153,7 @@ groups:
   - MATH 285
   - PHYS 211
   - PHYS 212
-  id: foundational-mathematics-and-science-13
+  id: foundational-mathematics-and-science-12
 - name: Foundational Mathematics and Science
   section: Foundational Mathematics and Science
   rule: n_of
@@ -168,7 +164,7 @@ groups:
   - BIOE 310
   notes:
   - 'Choose one of the following:'
-  id: foundational-mathematics-and-science-14
+  id: foundational-mathematics-and-science-13
 - name: Computer Science Core
   section: Computer Science Core
   rule: all
@@ -178,7 +174,7 @@ groups:
   - CS 173
   - CS 222
   - CS 225
-  id: computer-science-core-15
+  id: computer-science-core-14
 - name: Computer Science Core
   section: Computer Science Core
   rule: n_of
@@ -192,13 +188,13 @@ groups:
     - CS 421
   notes:
   - 'Choose one of the following options:'
-  id: computer-science-core-16
+  id: computer-science-core-15
 - name: Computer Science Core
   section: Computer Science Core
   rule: manual
   notes:
   - CS Technical Elective
-  id: computer-science-core-17
+  id: computer-science-core-16
 - name: Bioengineering Core
   section: Bioengineering Core
   rule: all
@@ -207,7 +203,7 @@ groups:
   - - BIOE 206
     - BIOE 302
   - BIOE 404
-  id: bioengineering-core-18
+  id: bioengineering-core-17
 - name: Select 15 hours of technical elective credit from the below list
   section: Bioengineering Technical Electives
   rule: hours
@@ -232,18 +228,25 @@ groups:
   - BIOE 498
   notes:
   - Select 15 hours of technical elective credit from the below list
-  id: select-15-hours-of-technical-elective-cr-19
+  id: select-15-hours-of-technical-elective-cr-18
 - name: Upper Division Technical Electives
   section: Upper Division Technical Electives
   rule: manual
   notes:
   - 'Students should select 6 hours of 300-400 level general technical elective coursework from the following rubrics: AE,
     ABE, BIOE, CHBE, CHEM, CS, CEE, ECE, IE, MCB, MATH, ME, NE, NEUR, NPRE, PHYS, SE, STAT, and TAM.'
-  id: upper-division-technical-electives-20
+  id: upper-division-technical-electives-19
 - name: Free Electives
   section: Free Electives
   rule: manual
   notes:
   - Additional coursework, subject to the Grainger College of Engineering restrictions to Free Electives, so that there are
     at least 128 credit hours earned toward the degree.
-  id: free-electives-21
+  id: free-electives-20
+- name: Total Minimum Hours of Curriculum to Graduate
+  section: Free Electives
+  rule: manual
+  notes:
+  - 'Catalog total: 128 hours.'
+  - 'Total Minimum Hours of Curriculum to Graduate: see the catalog page for which courses count.'
+  id: total-minimum-hours-of-curriculum-to-gra-21

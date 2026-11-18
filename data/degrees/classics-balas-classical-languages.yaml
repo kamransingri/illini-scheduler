@@ -1,0 +1,332 @@
+# Classics: Classical Languages, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/classics-balas/classical-languages/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: classics-balas-classical-languages
+program: 'Classics: Classical Languages, BALAS'
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/classics-balas/classical-languages/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/classics-balas/classical-languages/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement
+  - fulfilled by GRK 101, GRK 102, 201, 202; and/or LAT 101, LAT 102, 201, 202
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: General Education Requirements
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-and-professional-development-11
+- name: Ancient Greek Track
+  section: Classical Languages Concentration
+  rule: all
+  courses:
+  - GRK 101
+  - GRK 102
+  - GRK 201
+  - GRK 202
+  - GRK 411
+  - CLCV 114
+  notes:
+  - 'Catalog total: 48 hours.'
+  id: ancient-greek-track-12
+- name: Ancient Greek Track
+  section: Classical Languages Concentration
+  rule: manual
+  notes:
+  - '11 hours of Upper-Division GRK courses from the following:'
+  courses:
+  - GRK 401
+  - GRK 491
+  - GRK 492
+  - GRK 493
+  id: ancient-greek-track-13
+- name: Ancient Greek Track
+  section: Classical Languages Concentration
+  rule: manual
+  notes:
+  - 'One additional CLCV or GRKM course chosen from the following:'
+  courses:
+  - CLCV 115
+  - CLCV 116
+  - CLCV 120
+  - CLCV 131
+  - CLCV 132
+  - CLCV 133
+  - CLCV 160
+  - CLCV 203
+  - CLCV 206
+  - CLCV 220
+  - CLCV 221
+  - CLCV 224
+  - CLCV 225
+  - CLCV 230
+  - CLCV 231
+  - CLCV 232
+  - CLCV 240
+  - CLCV 250
+  - CLCV 322
+  - CLCV 323
+  - CLCV 443
+  - CLCV 444
+  - CLCV 450
+  - CLCV 490
+  - CLCV 491
+  - CLCV 492
+  - CLCV 493
+  - GRKM 260
+  id: ancient-greek-track-14
+- name: Ancient Greek Track
+  section: Classical Languages Concentration
+  rule: manual
+  notes:
+  - Supporting coursework, a minor or a second major in an area of study chosen by the student and approved by the Department
+    of Classics Director of Undergraduate Studies
+  id: ancient-greek-track-15
+- name: Latin Track
+  section: Classical Languages Concentration
+  rule: all
+  courses:
+  - LAT 101
+  - LAT 102
+  - LAT 201
+  - LAT 202
+  - LAT 411
+  - CLCV 116
+  notes:
+  - 'Catalog total: 48 hours.'
+  id: latin-track-16
+- name: Latin Track
+  section: Classical Languages Concentration
+  rule: manual
+  notes:
+  - '11 hours of Upper-Division LAT courses chosen from the following:'
+  courses:
+  - LAT 401
+  - MDVL 460
+  - LAT 491
+  - LAT 492
+  - LAT 493
+  id: latin-track-17
+- name: Latin Track
+  section: Classical Languages Concentration
+  rule: manual
+  notes:
+  - 'One additional CLCV or GRKM course chosen from the following:'
+  courses:
+  - CLCV 114
+  - CLCV 115
+  - CLCV 120
+  - CLCV 131
+  - CLCV 132
+  - CLCV 133
+  - CLCV 160
+  - CLCV 203
+  - CLCV 206
+  - CLCV 220
+  - CLCV 221
+  - CLCV 224
+  - CLCV 225
+  - CLCV 230
+  - CLCV 231
+  - CLCV 232
+  - CLCV 240
+  - CLCV 250
+  - CLCV 322
+  - CLCV 323
+  - CLCV 443
+  - CLCV 444
+  - CLCV 450
+  - CLCV 490
+  - CLCV 491
+  - CLCV 492
+  - CLCV 493
+  - GRKM 260
+  id: latin-track-18
+- name: Latin Track
+  section: Classical Languages Concentration
+  rule: manual
+  notes:
+  - Supporting coursework, a minor or a second major in an area of study chosen by the student and approved by the Department
+    of the Classics Director of Undergraduate Studies
+  id: latin-track-19
+- name: Ancient Greek & Latin Track
+  section: Classical Languages Concentration
+  rule: all
+  courses:
+  - GRK 101
+  - GRK 102
+  - GRK 201
+  - GRK 202
+  - LAT 101
+  - LAT 102
+  - LAT 201
+  - LAT 202
+  - - GRK 411
+    - LAT 411
+  notes:
+  - 'Catalog total: 52 hours.'
+  id: ancient-greek-latin-track-20
+- name: Ancient Greek & Latin Track
+  section: Classical Languages Concentration
+  rule: manual
+  notes:
+  - Additional GRK or LAT coursework at 400-level
+  - 'One additional CLCV or GRKM course chosen from the following:'
+  courses:
+  - CLCV 114
+  - CLCV 115
+  - CLCV 116
+  - CLCV 120
+  - CLCV 131
+  - CLCV 132
+  - CLCV 133
+  - CLCV 160
+  - CLCV 203
+  - CLCV 206
+  - CLCV 220
+  - CLCV 221
+  - CLCV 224
+  - CLCV 225
+  - CLCV 230
+  - CLCV 231
+  - CLCV 232
+  - CLCV 240
+  - CLCV 250
+  - CLCV 322
+  - CLCV 323
+  - CLCV 443
+  - CLCV 444
+  - CLCV 450
+  - CLCV 490
+  - CLCV 491
+  - CLCV 492
+  - CLCV 493
+  - GRKM 260
+  id: ancient-greek-latin-track-21
+- name: Ancient Greek & Latin Track
+  section: Classical Languages Concentration
+  rule: manual
+  notes:
+  - Supporting coursework, a minor or a second major in an area of study chosen by the student and approved by the Department
+    of the Classics Director of Undergraduate Studies
+  id: ancient-greek-latin-track-22

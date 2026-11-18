@@ -1,5 +1,5 @@
 # Community Health: Health Education, BS (College of Applied Health Sciences), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/ahs/community-health-bs/health-education-promotion/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/ahs/community-health-bs/health-education-promotion/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: 'Community Health: Health Education, BS'
 college: College of Applied Health Sciences
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/ahs/community-health-bs/health-education-promotion/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 notes: []
 double_counting: []
 groups:
@@ -84,6 +84,13 @@ groups:
     support career goals.
   id: correlate-areas-see-correlates-list-tab-9
 - name: Concentration Requirements
+  section: General Education
+  rule: manual
+  notes:
+  - 'Catalog total: 18 hours.'
+  - 'Concentration Requirements: see the catalog page for which courses count.'
+  id: concentration-requirements-10
+- name: Concentration Requirements
   section: Concentration Requirements
   rule: all
   courses:
@@ -93,4 +100,4 @@ groups:
   - CHLH 243
   - CHLH 380
   - CHLH 485
-  id: concentration-requirements-10
+  id: concentration-requirements-11

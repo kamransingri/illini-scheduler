@@ -1,15 +1,14 @@
 # Finance, BS (Gies College of Business), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/bus/finance-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
-# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
-# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
-# changes.
+# Checked by hand against https://catalog.illinois.edu/undergraduate/bus/finance-bs/ on 2026-11-18 (issue #17): every course list, choice and
+# hours rule matches the catalog page; rules the schema can't express stay as tick boxes in the
+# catalog's own words. It has no generated date, so pipeline/catalog_import.py won't overwrite it.
+# Schema: docs/DEGREE-DATA.md.
 id: finance-bs
 program: Finance, BS
 college: Gies College of Business
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/bus/finance-bs/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
 total_hours: 124
 notes:
 - 'Minimum hours required for graduation: 124 hours.'
@@ -150,7 +149,7 @@ groups:
   - CS 105
   - ECON 102 + ECON 103
   - FIN 221
-  id: business-core-requirements-11
+  id: business-core
 - name: Business Core Math
   section: Business Core Requirements
   rule: n_of
@@ -164,20 +163,41 @@ groups:
   - STAT 100
   notes:
   - 'Choose one course from list below:'
-  id: business-core-math-12
-- name: Finance, BS major requirements
+  id: business-core-math
+- name: Finance required courses
   section: Finance, BS major requirements
   rule: all
   courses:
   - FIN 300
   - FIN 321
   - FIN 411
-  id: finance-bs-major-requirements-13
-- name: Finance, BS major requirements
+  id: finance-required
+- id: finance-400-level
+  name: 400-level Finance courses
   section: Finance, BS major requirements
-  rule: manual
+  rule: hours
+  hours: 12
+  from:
+  - FIN 400-499
+  exclude:
+  - FIN 494
+  - FIN 495
+  max_hours:
+    FIN 490: 3
+  not_with:
+  - finance-required
   notes:
   - Four additional full-semester, 3 hour 400 level-Finance courses except FIN 494 or FIN 495 (Senior Research). A maximum
     of 3 credit hours of FIN 490 (Special Topics) can count toward this requirement.
+- id: finance-additional
+  name: One more Finance course
+  section: Finance, BS major requirements
+  rule: hours
+  hours: 3
+  from:
+  - FIN 200-499
+  not_with:
+  - finance-required
+  - finance-400-level
+  notes:
   - One additional full-semester, 3-hour Finance course at the 200-level or above.
-  id: finance-bs-major-requirements-14

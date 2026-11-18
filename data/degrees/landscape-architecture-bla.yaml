@@ -1,5 +1,5 @@
 # Landscape Architecture, BLA (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/faa/landscape-architecture-bla/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/faa/landscape-architecture-bla/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Landscape Architecture, BLA
 college: College of Fine and Applied Arts
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/faa/landscape-architecture-bla/
-read_on: '2026-11-16'
-generated: '2026-11-17'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 124
 notes:
 - 'Minimum hours required for graduation: 124 hours.'
@@ -142,15 +142,16 @@ groups:
   id: college-orientation-11
 - name: Math, pick one from the following list
   section: Landscape Architecture Curriculum
-  rule: manual
-  notes:
-  - The catalog lists these courses under Math, pick one from the following list; see the catalog page for the rule.
+  rule: n_of
+  n: 1
   courses:
   - STAT 100
   - MATH 115
   - MATH 220
   - MATH 221
   - MATH 234
+  notes:
+  - Choose 1.
   id: math-pick-one-from-the-following-list-12
 - name: Math, pick one from the following list
   section: Landscape Architecture Curriculum
@@ -172,7 +173,7 @@ groups:
   - 'Catalog total: 3 hours.'
   - 'Any Natural Science & Technology: Life Sciences general education course'
   id: life-science-15
-- name: Life Science
+- name: Construction, Plant Materials & Design, History, & Design Communications
   section: Landscape Architecture Curriculum
   rule: manual
   notes:
@@ -187,7 +188,7 @@ groups:
   - LA 342
   - LA 343
   - LA 452
-  id: life-science-16
+  id: construction-plant-materials-design-hist-16
 - name: Design Studio Courses
   section: Landscape Architecture Curriculum
   rule: manual

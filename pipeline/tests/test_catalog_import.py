@@ -127,7 +127,113 @@ def test_a_heading_only_turns_its_own_list_manual():
     assert rule(rows, "Technical Electives", fresh=False) == ["all"]  # that heading was for a table above
     assert rule(rows, "Major Core Requirements and Electives") == ["all"]
     area = [{"kind": "area", "text": "Drawing (select one course)", "hours": ""}, *rows]
-    assert rule(area, "Degree Requirements", fresh=False) == ["manual"]  # an area row is the list's own heading
+    # an area row is the list's own heading; one that says how many to pick is a counted choice (#17)
+    assert rule(area, "Degree Requirements", fresh=False) == ["n_of"]
+    assert catalog_import.program_groups(area, "Degree Requirements", 1, fresh=False)[0]["n"] == 1
     # the rule never changes a group's id, so ticked groups in saved links still match
     ids = [g["id"] for g in catalog_import.program_groups(rows, "Technical Electives", 4)]
     assert ids == [g["id"] for g in catalog_import.program_groups(rows, "Technical Electives", 4, fresh=False)]
+
+
+# ---- #17: importer fixes found by hand-checking the largest majors, on saved catalog pages -----------------------
+
+ME = "https://catalog.illinois.edu/undergraduate/engineering/mechanical-engineering-bs/"
+COGN = "https://catalog.illinois.edu/undergraduate/las/psychology-bslas/cognitive-neuroscience/"
+DEVP = "https://catalog.illinois.edu/undergraduate/las/psychology-bslas/developmental-psychology/"
+
+
+def program(doc):
+    return {g["name"]: g for g in doc["groups"] if g.get("kind") != "gened"}
+
+
+def test_an_advisory_comment_is_a_note_not_a_rule():
+    """CS: "Highly recommended, optional 1 credit hour course, CS 100..." sits between ENG 100 and CS 210/211; it
+    used to turn CS 210 or CS 211 into a tick box."""
+    g = program(parse("computer-science-bs", CS))["Orientation and Professional Development"]
+    assert (g["rule"], g["courses"]) == ("all", ["ENG 100", ["CS 210", "CS 211"]])
+    assert any("optional" in n for n in g["notes"])
+    assert catalog_import.advisory("Recommended, optional 1 credit course, CHEM 103 General Chemistry Lab I.")
+    assert not catalog_import.advisory("Students must take one recommended course from the list below.")
+
+
+def test_a_rule_above_a_named_list_is_that_lists_rule():
+    """CS: "At least one ... must be chosen from the list below" then "Team Project Course List:" is one requirement,
+    not an empty tick box plus a list; the focus-area rule goes with the focus areas only."""
+    d = parse("computer-science-bs", CS)
+    groups = program(d)
+    team = groups["Team Project Course List"]
+    assert len(team["courses"]) == 13 and team["notes"][0].startswith("At least one (1)")
+    assert not any(g["rule"] == "manual" and not g.get("courses") and "At least one (1)" in g["notes"][0]
+                   for g in d["groups"])  # no empty duplicate
+    assert all("At least one (1)" not in n for n in groups["Machines"]["notes"])
+    assert any("single focus area" in n for n in groups["Machines"]["notes"])
+    # a rule of its own ("six additional technical electives") still stands alone
+    assert groups["Technical Electives"]["rule"] == "manual" and not groups["Technical Electives"].get("courses")
+
+
+def test_choose_n_in_a_heading_and_across_its_sub_lists():
+    d = parse("psychology-bslas-cognitive-neuroscience", COGN)
+    assert d["id"] == "psychology-bslas-cognitive-neuroscience" and d["program"].startswith("Psychology: Cognitive")
+    g = program(d)
+    core = g["Cognitive Neuroscience Concentration Core Course (choose one)"]
+    assert (core["rule"], core["n"], core["courses"]) == ("n_of", 1, ["PSYC 204", "PSYC 220"])
+    # "Group 1 (choose one):" over two sub-lists is one choice across both, each sub-list named in the notes
+    g1 = g["Psychological Science Breadth, Group 1 (choose one)"]
+    assert (g1["rule"], g1["n"], len(g1["courses"])) == ("n_of", 1, 7)
+    assert any(n.startswith("Behavioral and Cognitive Neuroscience: PSYC 204") for n in g1["notes"])
+    assert g["Cognitive Neuroscience Advanced Course (choose two)"]["n"] == 2
+    # a heading with hours and no list is kept, not dropped
+    extra = g["Additional Advanced (300- or 400-level) PSYC or BCOG Courses"]
+    assert extra["rule"] == "manual" and "Catalog total: 6 hours." in extra["notes"]
+
+
+def test_one_course_under_a_colon_heading_is_required():
+    g = program(parse("psychology-bslas-developmental-psychology", DEVP))["Developmental Psychology Core Course"]
+    assert g["rule"] == "all" and len(g["courses"]) == 1
+
+
+def test_one_of_and_hours_headings_and_names():
+    g = program(parse("mechanical-engineering-bs", ME))
+    sci = g["Science elective(s), chosen from one of the following"]
+    assert (sci["rule"], sci["n"]) == ("n_of", 1)
+    assert sci["courses"] == ["CHEM 104 + CHEM 105", "MCB 150", "PHYS 213 + PHYS 214"]
+    assert g["Statistics elective, one course chosen from"]["courses"] == ["IE 300", "STAT 400"]
+    tech = g["Technical electives chosen from the departmentally approved list below"]
+    assert (tech["rule"], tech["hours"]) == ("hours", 6) and len(tech["courses"]) > 400
+    # a rule heading names its own group instead of inheriting "Statistics elective..." from above
+    assert "MechSE electives chosen from the departmentally approved list below" in g
+
+
+def test_concentrations_become_programs_and_the_main_page_stays():
+    base = "https://catalog.illinois.edu/undergraduate/las/"
+    psyc, engl = f"{base}psychology-bslas/", f"{base}english-balas/"
+    req = b'<div id="degreerequirementstextcontainer"></div>'
+    pages = {psyc: req + b'<a href="/undergraduate/las/psychology-bslas/social-psychology/">s</a>'
+                     b'<a href="/undergraduate/las/psychology-bslas/old-option/">o</a>',
+             engl: b'<a href="/undergraduate/las/english-balas/english-teaching/">t</a>'}
+    subs = {f"{psyc}social-psychology/": req, f"{psyc}old-option/": b"no requirements here",
+            f"{engl}english-teaching/": req}
+    urls = catalog_import.with_concentrations([psyc, engl], pages, lambda us: {u: subs[u] for u in us})
+    assert urls == [psyc, f"{psyc}social-psychology/", f"{engl}english-teaching/"]
+    assert catalog_import.program_id(f"{base}animal-sciences-bs/science-pre-veterinary--medical/") \
+        == "animal-sciences-bs-science-pre-veterinary-medical"
+
+
+def test_an_unchanged_reimport_keeps_the_file_and_its_date(tmp_path):
+    doc = parse("accountancy-bs", ACCY)
+    assert catalog_import.write(doc, tmp_path) is True
+    before = (tmp_path / "accountancy-bs.yaml").read_text(encoding="utf-8")
+    assert catalog_import.write({**doc, "read_on": "2026-12-01", "generated": "2026-12-01"}, tmp_path) is False
+    assert (tmp_path / "accountancy-bs.yaml").read_text(encoding="utf-8") == before
+    changed = {**doc, "total_hours": 125, "read_on": "2026-12-01", "generated": "2026-12-01"}
+    assert catalog_import.write(changed, tmp_path) is True
+
+
+def test_the_hand_checked_majors_are_protected_and_valid():
+    from pipeline.config import DATA
+
+    for pid in ("computer-science-bs", "economics-balas", "finance-bs", "accountancy-bs", "mechanical-engineering-bs",
+                "psychology-bslas"):
+        text = (DATA / "degrees" / f"{pid}.yaml").read_text(encoding="utf-8")
+        assert "generated:" not in text and "Checked by hand against https://catalog.illinois.edu/" in text, pid
+        validate(yaml.safe_load(text), pid)

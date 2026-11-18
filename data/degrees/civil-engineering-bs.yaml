@@ -1,5 +1,5 @@
 # Civil Engineering, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/engineering/civil-engineering-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/civil-engineering-bs/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Civil Engineering, BS
 college: The Grainger College of Engineering
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/engineering/civil-engineering-bs/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 128
 notes:
 - 'Minimum hours required for graduation: 128 hours.'
@@ -539,23 +539,16 @@ groups:
   notes:
   - 'Select 3 courses from the list below:'
   id: civil-engineering-core-courses-43
-- name: Civil Engineering Core Courses
-  section: Civil Engineering Primary and Secondary Fields
-  rule: manual
-  notes:
-  - 'Advanced Technical Courses - Select 1 course from each of the 3 Areas below and 1 course from the recommended list:'
-  id: civil-engineering-core-courses-44
 - name: Area 1 - Facilities
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
   notes:
-  - 'Required courses:'
   - 'Advanced Technical Courses - Select 1 course from each of the 3 Areas below and 1 course from the recommended list:'
   courses:
   - CEE 405
   - CEE 406
   - CEE 407
-  id: area-1-facilities-45
+  id: area-1-facilities-44
 - name: Area 2 - Systems
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -567,7 +560,7 @@ groups:
   - CEE 415
   - CEE 416
   - CEE 418
-  id: area-2-systems-46
+  id: area-2-systems-45
 - name: Area 3 - Railroad
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -579,7 +572,7 @@ groups:
   - CEE 409
   - CEE 410
   - CEE 411
-  id: area-3-railroad-47
+  id: area-3-railroad-46
 - name: Advanced Technical Courses Recommended
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -600,7 +593,7 @@ groups:
   - CEE 416
   - CEE 417
   - CEE 418
-  id: advanced-technical-courses-recommended-48
+  id: advanced-technical-courses-recommended-47
 - name: Science Electives - Select 1 course from list below
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -611,7 +604,7 @@ groups:
   - CS 357
   - GEOL 107
   - ME 200
-  id: science-electives-select-1-course-from-l-49
+  id: science-electives-select-1-course-from-l-48
 - name: Civil Engineering Core Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -619,7 +612,7 @@ groups:
   - 'Required course:'
   courses:
   - CEE 350
-  id: civil-engineering-core-courses-50
+  id: civil-engineering-core-courses-49
 - name: Civil Engineering Core Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: n_of
@@ -634,7 +627,7 @@ groups:
   - CEE 380
   notes:
   - 'Select 4 courses from the list below:'
-  id: civil-engineering-core-courses-51
+  id: civil-engineering-core-courses-50
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -643,7 +636,7 @@ groups:
   courses:
   - CEE 452
   - CEE 453
-  id: advanced-technical-courses-52
+  id: advanced-technical-courses-51
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -660,7 +653,7 @@ groups:
   - CEE 457
   - CEE 458
   - CEE 459
-  id: advanced-technical-courses-53
+  id: advanced-technical-courses-52
 - name: Science Electives - Select 1 course from list below
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -670,7 +663,7 @@ groups:
   courses:
   - ME 200
   - CHBE 321
-  id: science-electives-select-1-course-from-l-54
+  id: science-electives-select-1-course-from-l-53
 - name: Civil Engineering Core Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -678,7 +671,7 @@ groups:
   - 'Required course:'
   courses:
   - CEE 340
-  id: civil-engineering-core-courses-55
+  id: civil-engineering-core-courses-54
 - name: Civil Engineering Core Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: n_of
@@ -693,7 +686,7 @@ groups:
   - CEE 380
   notes:
   - 'Select 4 courses from the list below:'
-  id: civil-engineering-core-courses-56
+  id: civil-engineering-core-courses-55
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -701,7 +694,7 @@ groups:
   - 'Required course:'
   courses:
   - CEE 493
-  id: advanced-technical-courses-57
+  id: advanced-technical-courses-56
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -727,7 +720,7 @@ groups:
   - ES 475
   - ME 400
   - NPRE 402
-  id: advanced-technical-courses-58
+  id: advanced-technical-courses-57
 - name: Science Electives - Select 1 course from list below
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -740,7 +733,7 @@ groups:
   - LAW 301
   - NRES 287
   - STAT 420
-  id: science-electives-select-1-course-from-l-59
+  id: science-electives-select-1-course-from-l-58
 - name: Civil Engineering Core Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -748,7 +741,7 @@ groups:
   - 'Required course:'
   courses:
   - CEE 340
-  id: civil-engineering-core-courses-60
+  id: civil-engineering-core-courses-59
 - name: Civil Engineering Core Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: n_of
@@ -763,7 +756,7 @@ groups:
   - CEE 380
   notes:
   - 'Select 4 courses from list below:'
-  id: civil-engineering-core-courses-61
+  id: civil-engineering-core-courses-60
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -771,7 +764,7 @@ groups:
   - 'Required course:'
   courses:
   - CEE 491
-  id: advanced-technical-courses-62
+  id: advanced-technical-courses-61
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -796,7 +789,7 @@ groups:
   - STAT 429
   - STAT 430
   - UP 438
-  id: advanced-technical-courses-63
+  id: advanced-technical-courses-62
 - name: Science Electives - Select 1 course from list below
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -817,7 +810,7 @@ groups:
   - SE 320
   - STAT 420
   - UP 406
-  id: science-electives-select-1-course-from-l-64
+  id: science-electives-select-1-course-from-l-63
 - name: Civil Engineering Core Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -825,7 +818,7 @@ groups:
   - 'Required course:'
   courses:
   - CEE 340
-  id: civil-engineering-core-courses-65
+  id: civil-engineering-core-courses-64
 - name: Civil Engineering Core Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: n_of
@@ -840,7 +833,7 @@ groups:
   - CEE 380
   notes:
   - 'Select 4 courses from list below:'
-  id: civil-engineering-core-courses-66
+  id: civil-engineering-core-courses-65
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -848,7 +841,7 @@ groups:
   - 'Required course:'
   courses:
   - CEE 491
-  id: advanced-technical-courses-67
+  id: advanced-technical-courses-66
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -873,7 +866,7 @@ groups:
   - MSE 489
   - UP 466
   - UP 480
-  id: advanced-technical-courses-68
+  id: advanced-technical-courses-67
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -881,21 +874,11 @@ groups:
   - Secondary Field. Students choose 1 secondary field that is different from but complements and adds breadth to their primary
     field selection. This should be done in consultation with academic advisor. See list of classes for each area of study
     below.
-  id: advanced-technical-courses-69
-- name: Construction Engineering and Management Secondary
-  section: Civil Engineering Primary and Secondary Fields
-  rule: manual
-  notes:
   - Students must have taken CEE 320 to pursue this Secondary Field.
-  id: construction-engineering-and-management-70
-- name: Advanced Technical Courses
-  section: Civil Engineering Primary and Secondary Fields
-  rule: manual
-  notes:
   - 'Required course:'
   courses:
   - CEE 421
-  id: advanced-technical-courses-71
+  id: advanced-technical-courses-68
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: n_of
@@ -905,13 +888,13 @@ groups:
   - CEE 422
   notes:
   - 'Select 1 course from list below:'
-  id: advanced-technical-courses-72
+  id: advanced-technical-courses-69
 - name: Construction Materials Engineering Secondary
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
   notes:
   - Students must have taken CEE 300 to pursue this Secondary Field.
-  id: construction-materials-engineering-secon-73
+  id: construction-materials-engineering-secon-70
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: n_of
@@ -922,13 +905,13 @@ groups:
   - CEE 406
   notes:
   - 'Select 2 courses from list below:'
-  id: advanced-technical-courses-74
+  id: advanced-technical-courses-71
 - name: Environmental Engineering Secondary
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
   notes:
   - Students must have taken CEE 330 to pursue this Secondary Field.
-  id: environmental-engineering-secondary-75
+  id: environmental-engineering-secondary-72
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: n_of
@@ -946,13 +929,13 @@ groups:
   - CEE 449
   notes:
   - Select at least 2 courses from list below, a minimum of 6 credit hours required.
-  id: advanced-technical-courses-76
+  id: advanced-technical-courses-73
 - name: Geotechnical Engineering Secondary
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
   notes:
   - Students must have taken CEE 380 to pursue this Secondary Field.
-  id: geotechnical-engineering-secondary-77
+  id: geotechnical-engineering-secondary-74
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -960,7 +943,7 @@ groups:
   - 'Required course:'
   courses:
   - CEE 484
-  id: advanced-technical-courses-78
+  id: advanced-technical-courses-75
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: n_of
@@ -970,13 +953,13 @@ groups:
   - CEE 498
   notes:
   - 'Select 1 course from list below:'
-  id: advanced-technical-courses-79
+  id: advanced-technical-courses-76
 - name: Structural Engineering Secondary
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
   notes:
   - Students must have taken CEE 360 to pursue this Secondary Field.
-  id: structural-engineering-secondary-80
+  id: structural-engineering-secondary-77
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -985,30 +968,23 @@ groups:
   courses:
   - CEE 460
   - CEE 461
-  id: advanced-technical-courses-81
+  id: advanced-technical-courses-78
 - name: Transportation Engineering Secondary
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
   notes:
   - Students must have taken CEE 310 to pursue this Secondary Field.
-  id: transportation-engineering-secondary-82
-- name: Advanced Technical Courses
-  section: Civil Engineering Primary and Secondary Fields
-  rule: manual
-  notes:
-  - 'Select 2 courses, each from a different Area listed below:'
-  id: advanced-technical-courses-83
+  id: transportation-engineering-secondary-79
 - name: Area 1 - Facilities
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
   notes:
-  - Students must have taken CEE 310 to pursue this Secondary Field.
   - 'Select 2 courses, each from a different Area listed below:'
   courses:
   - CEE 405
   - CEE 406
   - CEE 407
-  id: area-1-facilities-84
+  id: area-1-facilities-80
 - name: Area 2 - Systems
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -1020,7 +996,7 @@ groups:
   - CEE 415
   - CEE 416
   - CEE 418
-  id: area-2-systems-85
+  id: area-2-systems-81
 - name: Area 3 - Railroad
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -1033,13 +1009,13 @@ groups:
   - CEE 410
   - CEE 411
   - CEE 412
-  id: area-3-railroad-86
+  id: area-3-railroad-82
 - name: Water Resources Engineering and Science Secondary
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
   notes:
   - Students must have taken CEE 350 to pursue this Secondary Field.
-  id: water-resources-engineering-and-science-87
+  id: water-resources-engineering-and-science-83
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: n_of
@@ -1055,13 +1031,13 @@ groups:
   - CEE 459
   notes:
   - 'Select 2 courses from list below:'
-  id: advanced-technical-courses-88
+  id: advanced-technical-courses-84
 - name: Energy-Water-Environment Sustainability Secondary
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
   notes:
   - Students must have taken CEE 340 to pursue this Secondary Field.
-  id: energy-water-environment-sustainability-89
+  id: energy-water-environment-sustainability-85
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -1069,7 +1045,7 @@ groups:
   - 'Required course:'
   courses:
   - CEE 493
-  id: advanced-technical-courses-90
+  id: advanced-technical-courses-86
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: n_of
@@ -1095,7 +1071,7 @@ groups:
   - NPRE 402
   notes:
   - 'Select 1 course from list below:'
-  id: advanced-technical-courses-91
+  id: advanced-technical-courses-87
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -1103,7 +1079,7 @@ groups:
   - 'Required course:'
   courses:
   - CEE 491
-  id: advanced-technical-courses-92
+  id: advanced-technical-courses-88
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: n_of
@@ -1129,13 +1105,13 @@ groups:
   - UP 438
   notes:
   - 'Select 1 course from the list below:'
-  id: advanced-technical-courses-93
+  id: advanced-technical-courses-89
 - name: Sustainable and Resilient Infrastructure Systems Secondary
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
   notes:
   - Students must have taken CEE 340 to pursue this Secondary Field.
-  id: sustainable-and-resilient-infrastructure-94
+  id: sustainable-and-resilient-infrastructure-90
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -1143,7 +1119,7 @@ groups:
   - 'Required course:'
   courses:
   - CEE 491
-  id: advanced-technical-courses-95
+  id: advanced-technical-courses-91
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: n_of
@@ -1169,13 +1145,13 @@ groups:
   - UP 480
   notes:
   - 'Select 1 course from the list below:'
-  id: advanced-technical-courses-96
+  id: advanced-technical-courses-92
 - name: Global Context Secondary
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
   notes:
   - Students must have taken CEE 340 and either CEE 330 or CEE 350 to pursue this Secondary Field.
-  id: global-context-secondary-97
+  id: global-context-secondary-93
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -1189,7 +1165,7 @@ groups:
   - CEE 447
   - CEE 450
   - ECON 420
-  id: advanced-technical-courses-98
+  id: advanced-technical-courses-94
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -1201,21 +1177,21 @@ groups:
   - CEE 437
   - CEE 449
   - CEE 465
-  id: advanced-technical-courses-99
+  id: advanced-technical-courses-95
 - name: CEE Multidisciplinary Secondary
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
   notes:
+  - 'Advanced Technical Courses: Students must work with CEE Academic Advisors to select courses.'
   - 'Science Electives Recommended: Any recommended science electives from existing CEE Primary and Secondary listed above.'
   - 'Civil Engineering Core Courses Recommended: Core courses relevant to the student''s interests.'
-  - 'Advanced Technical Courses: Students must work with CEE Academic Advisors to select courses.'
-  id: cee-multidisciplinary-secondary-100
+  id: cee-multidisciplinary-secondary-96
 - name: Atmospheric Science Secondary
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
   notes:
   - Students must have taken CEE 330 to pursue this Secondary Field.
-  id: atmospheric-science-secondary-101
+  id: atmospheric-science-secondary-97
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: n_of
@@ -1229,13 +1205,13 @@ groups:
   - CEE 447
   notes:
   - 'Select 2 courses from list below:'
-  id: advanced-technical-courses-102
+  id: advanced-technical-courses-98
 - name: Chemical Engineering Secondary
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
   notes:
   - Students must have taken CEE 330 and CEE 350 to pursue this Secondary Field.
-  id: chemical-engineering-secondary-103
+  id: chemical-engineering-secondary-99
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: n_of
@@ -1247,13 +1223,13 @@ groups:
   - CHBE 424
   notes:
   - 'Select 2 courses from list below:'
-  id: advanced-technical-courses-104
+  id: advanced-technical-courses-100
 - name: Chemistry Secondary
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
   notes:
   - Students must have taken CEE 330 to pursue this Secondary Field.
-  id: chemistry-secondary-105
+  id: chemistry-secondary-101
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: n_of
@@ -1266,13 +1242,13 @@ groups:
   - CHEM 440
   notes:
   - Select at least 2 courses from list below, a minimum of 6 credit hours required.
-  id: advanced-technical-courses-106
+  id: advanced-technical-courses-102
 - name: Microbiology Secondary
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
   notes:
   - Students must have taken CEE 330 to pursue this Secondary Field.
-  id: microbiology-secondary-107
+  id: microbiology-secondary-103
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: n_of
@@ -1284,13 +1260,13 @@ groups:
   - MCB 450
   notes:
   - 'Select 2 courses from list below:'
-  id: advanced-technical-courses-108
+  id: advanced-technical-courses-104
 - name: Toxicology Secondary
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
   notes:
   - Students must have taken CEE 330 to pursue this Secondary Field.
-  id: toxicology-secondary-109
+  id: toxicology-secondary-105
 - name: Advanced Technical Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: n_of
@@ -1301,7 +1277,14 @@ groups:
   - MCB 450
   notes:
   - 'Select 2 courses from list below:'
-  id: advanced-technical-courses-110
+  id: advanced-technical-courses-106
+- name: The General Civil Engineering Option
+  section: Civil Engineering Primary and Secondary Fields
+  rule: manual
+  notes:
+  - 'Catalog total: 37 hours.'
+  - 'The General Civil Engineering Option: see the catalog page for which courses count.'
+  id: the-general-civil-engineering-option-107
 - name: Science Electives - Select 1 course from list below
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -1313,7 +1296,7 @@ groups:
   - CHEM 232
   - ME 200
   - STAT 420
-  id: science-electives-select-1-course-from-l-111
+  id: science-electives-select-1-course-from-l-108
 - name: Civil Engineering Core Courses
   section: Civil Engineering Primary and Secondary Fields
   rule: n_of
@@ -1329,26 +1312,18 @@ groups:
   - CEE 380
   notes:
   - 'Select 7 courses from list below:'
-  id: civil-engineering-core-courses-112
-- name: Advanced Technical Courses
-  section: Civil Engineering Primary and Secondary Fields
-  rule: manual
-  notes:
-  - 'Select 4 courses from Areas below, following either of these two options: Option I: Pick no more than 1 course from each
-    area below. Option II: Pick 2 courses from 1 area and no more than 1 course from each of the remaining areas.'
-  id: advanced-technical-courses-113
+  id: civil-engineering-core-courses-109
 - name: Construction
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
   notes:
-  - Students must have taken CEE 330 to pursue this Secondary Field.
   - 'Select 4 courses from Areas below, following either of these two options: Option I: Pick no more than 1 course from each
     area below. Option II: Pick 2 courses from 1 area and no more than 1 course from each of the remaining areas.'
   courses:
   - CEE 420
   - CEE 421
   - CEE 422
-  id: construction-114
+  id: construction-110
 - name: Environmental
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -1360,7 +1335,7 @@ groups:
   - CEE 437
   - CEE 440
   - CEE 441
-  id: environmental-115
+  id: environmental-111
 - name: Geotechnical
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -1371,7 +1346,7 @@ groups:
   courses:
   - CEE 483
   - CEE 484
-  id: geotechnical-116
+  id: geotechnical-112
 - name: Materials
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -1381,7 +1356,7 @@ groups:
     area below. Option II: Pick 2 courses from 1 area and no more than 1 course from each of the remaining areas.'
   courses:
   - CEE 401
-  id: materials-117
+  id: materials-113
 - name: Structures
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -1392,7 +1367,7 @@ groups:
   courses:
   - CEE 460
   - CEE 461
-  id: structures-118
+  id: structures-114
 - name: Transportation
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -1413,7 +1388,7 @@ groups:
   - CEE 416
   - CEE 417
   - CEE 418
-  id: transportation-119
+  id: transportation-115
 - name: Water Resources
   section: Civil Engineering Primary and Secondary Fields
   rule: manual
@@ -1424,11 +1399,11 @@ groups:
   courses:
   - CEE 451
   - CEE 453
-  id: water-resources-120
+  id: water-resources-116
 - name: Free Electives
   section: Free Electives
   rule: manual
   notes:
   - Additional course work, subject to the Grainger College of Engineering restrictions to Free Electives, so that there are
     at least 128 credit hours earned toward the degree.
-  id: free-electives-121
+  id: free-electives-117

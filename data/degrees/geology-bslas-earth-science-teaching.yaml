@@ -1,0 +1,78 @@
+# Geology: Earth Science Teaching, BSLAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/geology-bslas/earth-science-teaching/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: geology-bslas-earth-science-teaching
+program: 'Geology: Earth Science Teaching, BSLAS'
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/geology-bslas/earth-science-teaching/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+double_counting: []
+groups:
+- name: Foundation Courses
+  section: 'Minimum hours required for graduation: 120 hours.'
+  rule: manual
+  notes:
+  - The following courses must be completed or in progress when students apply to the Secondary Education minor.
+  courses:
+  - GEOL 107
+  - GEOL 208
+  - GEOL 333
+  - - MATH 220
+    - MATH 221
+    - MATH 234
+  id: foundation-courses-1
+- name: Additional Required Coursework
+  section: 'Minimum hours required for graduation: 120 hours.'
+  rule: manual
+  notes:
+  - Teacher Education Minor in Secondary School Teaching
+  - 'Select one group of courses:'
+  courses:
+  - - ASTR 100
+    - ASTR 121 + ASTR 122
+  - ATMS 100
+  - IB 100
+  id: additional-required-coursework-2
+- name: Additional Required Coursework
+  section: 'Minimum hours required for graduation: 120 hours.'
+  rule: manual
+  notes:
+  - 'Select one group of courses:'
+  courses:
+  - - CHEM 102 + CHEM 103
+    - CHEM 202 + CHEM 203
+  - GEOL 117
+  - GEOL 143
+  id: additional-required-coursework-3
+- name: Additional Required Coursework
+  section: 'Minimum hours required for graduation: 120 hours.'
+  rule: manual
+  notes:
+  - Advanced-hour course work in Geology
+  - 'Select one group of courses:'
+  courses:
+  - - PHYS 101 + PHYS 102
+    - PHYS 211 + PHYS 212 + PHYS 213 + PHYS 214
+  id: additional-required-coursework-4
+- name: Professional Education Required Courses
+  section: Requirements for the Teacher Education in Secondary School Teaching Minor
+  rule: all
+  courses:
+  - EDUC 201
+  - EDUC 202
+  - CI 401
+  - CI 403
+  - CI 404
+  - CI 473
+  - EPSY 201
+  - EPSY 485
+  - SPED 405
+  - EDPR 442
+  id: professional-education-required-courses-5

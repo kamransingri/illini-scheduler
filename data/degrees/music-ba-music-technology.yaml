@@ -1,0 +1,260 @@
+# Music: Music Technology, BA (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/music-ba/music-technology/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: music-ba-music-technology
+program: 'Music: Music Technology, BA'
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/music-ba/music-technology/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/faa/music-ba/music-technology/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+  notes:
+  - fulfilled by MUS 313 and MUS 314
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by MUS 209 and any other course approved as Natural Sciences & Technology
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation Requirements
+  section: General Education Requirements
+  rule: all
+  courses:
+  - FAA 101
+  - MUS 100
+  notes:
+  - 'Catalog total: 1 hours.'
+  id: orientation-requirements-11
+- name: Music Theory and Musicianship
+  section: Music Core
+  rule: all
+  courses:
+  - MUS 101
+  - MUS 102
+  - MUS 107
+  - MUS 108
+  - MUS 201
+  - MUS 202
+  - MUS 207
+  - MUS 208
+  id: music-theory-and-musicianship-12
+- name: Music Theory and Musicianship
+  section: Music Core
+  rule: manual
+  notes:
+  - Students in the Music Technology Concentration are required to enroll in MUS 208 section CAL (Critical Audio Listening)
+  - Advanced Music Theory
+  - MUS 400, MUS 404, MUS 407, MUS 408, MUS 409
+  id: music-theory-and-musicianship-13
+- name: Musicology
+  section: Music Core
+  rule: manual
+  notes:
+  - Advanced Music Theory
+  - MUS 400, MUS 404, MUS 407, MUS 408, MUS 409
+  courses:
+  - MUS 110
+  - MUS 313
+  - MUS 314
+  id: musicology-14
+- name: Musicology
+  section: Music Core
+  rule: manual
+  notes:
+  - Advanced Musicology
+  - MUS 410, MUS 411, MUS 412, MUS 413, MUS 414, MUS 415, MUS 416, MUS 418, MUS 421
+  id: musicology-15
+- name: Harmonizing Instrument
+  section: Music Core
+  rule: manual
+  notes:
+  - 'Catalog total: 4 hours.'
+  - All students must demonstrate harmonizing instrument competency when they audition, by proficiency examination when they
+    matriculate, or by enrolling in MUS 172, MUS 173, and/or MUS 176.
+  - 'Select one of the following 4 sequences:'
+  courses:
+  - MUS 172 + MUS 173
+  - MUS 176 + MUS 177
+  - MUS 172 + MUS 176
+  id: harmonizing-instrument-16
+- name: Harmonizing Instrument
+  section: Music Core
+  rule: manual
+  notes:
+  - 'Contingent on successful completion of a Proficiency Examination:'
+  courses:
+  - MUS 173 + MUS 176
+  id: harmonizing-instrument-17
+- name: Music Technology Curriculum Required Courses
+  section: Concentration in Music Technology
+  rule: all
+  courses:
+  - MUS 209
+  - MUS 407
+  - MUS 499
+  notes:
+  - 'Catalog total: 7 hours.'
+  id: music-technology-curriculum-required-cou-18
+- name: Music Technology Electives List
+  section: Concentration in Music Technology
+  rule: manual
+  notes:
+  - The catalog lists these courses under Music Technology Electives List; see the catalog page for the rule.
+  courses:
+  - MUS 127
+  - MUS 327
+  - MUS 402
+  - MUS 403
+  - MUS 405
+  - MUS 427
+  - MUS 428
+  - MUS 401
+  - MUS 404
+  - MUS 409
+  - MUS 460
+  - MUS 461
+  id: music-technology-electives-list-19
+- name: Music Technology Electives List
+  section: Concentration in Music Technology
+  rule: manual
+  notes:
+  - Additional courses as approved by the Music Advisor or Director of Undergraduate Studies
+  id: music-technology-electives-list-20
+- name: Music Technology Supporting Coursework
+  section: Concentration in Music Technology
+  rule: manual
+  notes:
+  - 'Catalog total: 7 hours.'
+  - Non-music supporting coursework (7 hours) is required for the concentration in Music Technology and must be approved by
+    the Music Advisor or Director of Undergraduate Studies
+  id: music-technology-supporting-coursework-21
+- name: Summary of Credit for the Bachelor of Arts in Music, concentration in Music Technology
+  section: Concentration in Music Technology
+  rule: manual
+  notes:
+  - Summary of Credit for the Bachelor of Arts in Music, concentration in Music Technology
+  - General Education
+  - Orientation
+  - Music Core
+  - Music Technology
+  - Supporting Coursework
+  - Electives to bring the total hours earned to 120, including a minimum of 40 credits at the 300- or 400-level.
+  - 8 of these hours are fulfilled by MUS 201, MUS 202, MUS 207, and MUS 208 CAL, each of which has at least 2 prerequisites
+    and may count as advanced
+  - A maximum of 8 hours of upper level coursework may be earned through ensembles, MUSC 447 - MUSC 498.
+  id: summary-of-credit-for-the-bachelor-of-ar-22

@@ -1,5 +1,5 @@
 # Information Sciences, BS (School of Information Sciences), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/ischool/information-sciences-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/ischool/information-sciences-bs/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Information Sciences, BS
 college: School of Information Sciences
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/ischool/information-sciences-bs/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 notes: []
 double_counting: []
 groups:
@@ -63,10 +63,17 @@ groups:
   - - IS 307
     - IS 308 + IS 309
   id: hours-required-in-core-curriculum-6
-- name: Hours Required in Core Curriculum
+- name: School of Information Sciences Electives or approved courses in other departments
   section: Core Curriculum
   rule: manual
   notes:
   - School of Information Sciences Electives or approved courses in other departments
   - Additional electives outside of the school and General Education Requirements
-  id: hours-required-in-core-curriculum-7
+  id: school-of-information-sciences-electives-7
+- name: Hours required for graduation
+  section: Core Curriculum
+  rule: manual
+  notes:
+  - 'Catalog total: 123 hours.'
+  - 'Hours required for graduation: see the catalog page for which courses count.'
+  id: hours-required-for-graduation-8

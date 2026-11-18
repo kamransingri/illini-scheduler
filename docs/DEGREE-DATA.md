@@ -80,12 +80,16 @@ double_counting:
 
 ## Importing every program
 
-`python -m pipeline.catalog_import` reads https://catalog.illinois.edu/undergraduate/, every program page on it (and
-the concentration pages of programs whose requirements live there), then https://catalog.illinois.edu/undergraduate/minors/
+`python -m pipeline.catalog_import` reads https://catalog.illinois.edu/undergraduate/, every program page on it and its
+concentration pages (each concentration with requirements of its own becomes a program, e.g.
+`psychology-bslas-cognitive-neuroscience`; the main page is kept unless it has no requirements, like English), then
+https://catalog.illinois.edu/undergraduate/minors/
 and every minor page on it, one request per second, cached in `data/raw/catalog/`; `--offline` re-parses the cache and
 `--only majors` or `--only minors` limits the run. Minor pages have no gen-ed table; a few keep their course list on the
 Overview tab instead of a Requirements tab, and the importer reads it from there. What it turns into rules, and what it leaves as `manual`, is in
-DECISIONS.md D13.28. Run it when a new catalog year is published, then `python -m pipeline.degrees` and `make data`.
+DECISIONS.md D13.28 and D30. A file whose requirements read the same as before is left alone (date included), so a
+re-import's diff shows only real changes. Run it when a new catalog year is published, then `python -m pipeline.degrees`
+and `make data`.
 
 ## Adding or checking a program by hand
 

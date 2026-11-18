@@ -1,0 +1,59 @@
+# Geology: Earth & Environmental Sciences, BSLAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/geology-bslas/earth-environmental-sciences/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: geology-bslas-earth-environmental-sciences
+program: 'Geology: Earth & Environmental Sciences, BSLAS'
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/geology-bslas/earth-environmental-sciences/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+double_counting: []
+groups:
+- name: 'Minimum hours required for graduation: 120 hours.'
+  section: 'Minimum hours required for graduation: 120 hours.'
+  rule: manual
+  notes:
+  - 'Core requirements:'
+  courses:
+  - GEOL 107
+  - GEOL 208
+  - CHEM 102
+  - CHEM 103
+  id: minimum-hours-required-for-graduation-12-1
+- name: 'Minimum hours required for graduation: 120 hours.'
+  section: 'Minimum hours required for graduation: 120 hours.'
+  rule: n_of
+  n: 1
+  courses:
+  - - MATH 220
+    - MATH 221
+  - MATH 234
+  notes:
+  - 'Select one of the following MATH courses: (An introductory Statistics course, e.g., STAT 100, SOC 280, ECON 202, or a
+    second semester of Calculus is recommended)'
+  id: minimum-hours-required-for-graduation-12-2
+- name: 'Minimum hours required for graduation: 120 hours.'
+  section: 'Minimum hours required for graduation: 120 hours.'
+  rule: manual
+  notes:
+  - Courses beyond the core requirements
+  courses:
+  - - ATMS 140
+    - GEOL 118
+  - - GEOL 333
+    - GEOL 432
+  - GEOL 380
+  id: minimum-hours-required-for-graduation-12-3
+- name: 'Minimum hours required for graduation: 120 hours.'
+  section: 'Minimum hours required for graduation: 120 hours.'
+  rule: manual
+  notes:
+  - Ten to twelve hours of additional advanced geology courses
+  - Six to eight hours Environmental Studies electives. (see Geology advisor for list of approved courses)
+  id: minimum-hours-required-for-graduation-12-4

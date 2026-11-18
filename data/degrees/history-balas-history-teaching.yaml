@@ -1,0 +1,283 @@
+# History: Social Science: History Teaching, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/history-balas/history-teaching/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: history-balas-history-teaching
+program: 'History: Social Science: History Teaching, BALAS'
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/history-balas/history-teaching/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/history-balas/history-teaching/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by HIST 498, EDUC 202
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+  notes:
+  - fulfilled by HIST 100; HIST 140 or HIST 141 or HIST 142 or HIST 143 or HIST 170 or HIST 171 or HIST 172 or HIST 173 or
+    HIST 174; and EDUC 202
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by PS 100 or PS 101 or PS 240 or PS 241, PSYC 100, SOC 100, ECON 102 or ECON 103, and EPSY 201
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+  notes:
+  - fulfilled by HIST 100
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+  notes:
+  - fulfilled by EDUC 201
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+  notes:
+  - fulfilled by HIST 140 or HIST 141 and HIST 142 or HIST 143
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English, or completion
+    of the third semester in two different languages other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: Orientation and Professional Development
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-and-professional-development-11
+- name: Foundation Courses
+  section: Major Requirements
+  rule: manual
+  notes:
+  - The following courses must be completed or in progress when students apply to the Secondary Education minor.
+  - 'Select one of the following Political Science courses:'
+  courses:
+  - PS 100
+  - PS 101
+  - PS 240
+  - PS 241
+  - PSYC 100
+  - SOC 100
+  - HIST 200
+  id: foundation-courses-12
+- name: Foundation Courses
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Select one course each from two of the following three categories:'
+  - Global History
+  courses:
+  - HIST 100
+  id: foundation-courses-13
+- name: Foundation Courses
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Western Civilization
+  courses:
+  - - HIST 140
+    - HIST 141
+  - - HIST 142
+    - HIST 143
+  id: foundation-courses-14
+- name: Foundation Courses
+  section: Major Requirements
+  rule: manual
+  notes:
+  - United States History
+  courses:
+  - - HIST 170
+    - HIST 171
+  - - HIST 172
+    - HIST 173
+  - HIST 174
+  id: foundation-courses-15
+- name: Additional Required coursework
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Teacher Education Minor in Secondary School Teaching
+  id: additional-required-coursework-16
+- name: United States History
+  section: Major Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - - HIST 170
+    - HIST 171
+  - - HIST 172
+    - HIST 173
+  - HIST 174
+  notes:
+  - 'Select one of the following (A US History survey course if not taken as a foundation course):'
+  id: united-states-history-17
+- name: United States History
+  section: Major Requirements
+  rule: manual
+  notes:
+  - One 100-400 level course in US history
+  - One 100-400 level course in US history focusing on US minorities history
+  courses:
+  - - HIST 273
+    - HIST 288
+    - HIST 382
+  id: united-states-history-18
+- name: Nonwestern and Global History
+  section: Major Requirements
+  rule: manual
+  notes:
+  - One 100-400 level course in US history
+  - One 100-400 level course in US history focusing on US minorities history
+  courses:
+  - HIST 100
+  id: nonwestern-and-global-history-19
+- name: Nonwestern and Global History
+  section: Major Requirements
+  rule: manual
+  notes:
+  - One 100-400 level course in global or nonwestern history
+  - One 100-400 level course in global or nonwestern history
+  id: nonwestern-and-global-history-20
+- name: European History
+  section: Major Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - - HIST 140
+    - HIST 141
+  - - HIST 142
+    - HIST 143
+  notes:
+  - 'Select one of the following (A Western Civ survey course if not taken as a foundation course):'
+  id: european-history-21
+- name: European History
+  section: Major Requirements
+  rule: manual
+  notes:
+  - One 100-400 level course in European history
+  - One 100-400 level course in European History
+  - 'Students must take HIST 498 - Research and Writing Seminar. Students may count the 3 hours towards any of the history
+    areas noted above: US, Nonwestern/Global, or European.'
+  - Students must complete 12 hours of advanced (300+) coursework in History. HIST 498 may count toward those 12 hours.
+  - 'Pre modern requirement: One History course must have a significant pre-1800 component.'
+  id: european-history-22
+- name: Social Science Requirement
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Students must complete 12 hours of advanced (300+) coursework in History. HIST 498 may count toward those 12 hours.
+  - 'Pre modern requirement: One History course must have a significant pre-1800 component.'
+  courses:
+  - - ECON 102
+    - ECON 103
+  id: social-science-requirement-23
+- name: Social Science Requirement
+  section: Major Requirements
+  rule: manual
+  notes:
+  - One 100-400 level Geography course
+  id: social-science-requirement-24

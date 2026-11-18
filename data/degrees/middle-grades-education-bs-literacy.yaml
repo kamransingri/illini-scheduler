@@ -1,0 +1,178 @@
+# Middle Grades Education: Literacy, BS (College of Education), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/education/middle-grades-education-bs/literacy/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: middle-grades-education-bs-literacy
+program: 'Middle Grades Education: Literacy, BS'
+college: College of Education
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/education/middle-grades-education-bs/literacy/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+notes: []
+double_counting: []
+groups:
+- name: Orientation Seminar
+  section: Degree Requirements
+  rule: all
+  courses:
+  - EDUC 101
+  id: orientation-seminar-1
+- name: Total
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 1 hours.'
+  - 'Total: see the catalog page for which courses count.'
+  id: total-2
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: gened-2
+  name: Total
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Total
+- name: Advanced Composition
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - Advanced Composition
+  id: advanced-composition-5
+- name: Natural Sciences & Technology
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'If seeking the Science concentration, exclusions apply including, but not limited to: Horticulture, Dance and Urban Planning.
+    Must be a science rubric. Consult with adviser for further information.'
+  - Life science
+  - Physical science
+  id: natural-sciences-technology-6
+- name: Cultural Studies
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - Western/Comparative
+  - U.S. Minority
+  - Non-Western
+  id: cultural-studies-7
+- name: Social & Behavioral Sciences
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - Social & Behavioral Sciences
+  id: social-behavioral-sciences-8
+- name: Quantitative Reasoning
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - Quantitative Reasoning I
+  - Quantitative Reasoning I or II
+  id: quantitative-reasoning-9
+- name: Humanities & the Arts
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - Humanities & the Arts
+  id: humanities-the-arts-10
+- name: Total
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 6 hours.'
+  - 'Total: see the catalog page for which courses count.'
+  id: total-11
+- name: Language Other Than English
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - Three years of one language other than English in high school or completion of the third semester of college level language.
+  id: language-other-than-english-12
+- name: Electives
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - Elective Hours (as needed to complete the 120 graduation requirement)
+  - Six hours of ROTC upper level courses (300 level or above) can count toward the degree as free electives.
+  id: electives-13
+- name: Concentrations
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Students must complete 24-27 credit hours within one of the following concentrations: 1) Social Science, 2) Science,
+    3) Mathematics, or 4) Literacy. Subsequent tables outline the required courses to complete requirements in specific concentrations.'
+  id: concentrations-14
+- name: Professional Education
+  section: Degree Requirements
+  rule: all
+  courses:
+  - CI 404
+  - CI 410
+  - CI 415
+  - CI 467
+  - CI 471
+  - CI 476
+  - EDPR 250
+  - EDPR 442
+  - EDUC 201 + EDUC 202
+  - EPSY 201
+  - EPSY 430
+  - SPED 405
+  id: professional-education-15
+- name: Total minimum hours for degree
+  section: Degree Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 120 hours.'
+  - 'Total minimum hours for degree: see the catalog page for which courses count.'
+  id: total-minimum-hours-for-degree-16
+- name: Literacy Concentration
+  section: Concentration Requirements
+  rule: all
+  courses:
+  - CI 402
+  id: literacy-concentration-17
+- name: Literacy Concentration
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - Composition I
+  - 'Advanced course: Select one from the following:'
+  courses:
+  - BTW 261
+  - ENGL 481
+  - ENGL 482
+  - RHET 233
+  - WRIT 303
+  id: literacy-concentration-18
+- name: Literacy Concentration
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - 'Literature: Select one literature course at the 100 level and a second literature course at the 200 level. Must be an
+    English or Comparative & World Literature rubric.'
+  courses:
+  - CI 467
+  - CI 471
+  - CI 476
+  id: literacy-concentration-19
+- name: Total
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 24 hours.'
+  - 'Total: see the catalog page for which courses count.'
+  id: total-20

@@ -1,15 +1,14 @@
 # Accountancy, BS (Gies College of Business), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/bus/accountancy-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
-# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
-# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
-# changes.
+# Checked by hand against https://catalog.illinois.edu/undergraduate/bus/accountancy-bs/ on 2026-11-18 (issue #17): every course list, choice and
+# hours rule matches the catalog page; rules the schema can't express stay as tick boxes in the
+# catalog's own words. It has no generated date, so pipeline/catalog_import.py won't overwrite it.
+# Schema: docs/DEGREE-DATA.md.
 id: accountancy-bs
 program: Accountancy, BS
 college: Gies College of Business
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/bus/accountancy-bs/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
 total_hours: 124
 notes:
 - 'Minimum hours required for graduation: 124 hours.'
@@ -150,7 +149,7 @@ groups:
   - CS 105
   - ECON 102 + ECON 103
   - FIN 221
-  id: business-core-requirements-11
+  id: business-core
 - name: Business Core Math
   section: Business Core Requirements
   rule: n_of
@@ -164,8 +163,8 @@ groups:
   - STAT 100
   notes:
   - 'Choose one course from list below:'
-  id: business-core-math-12
-- name: Accountancy, BS Major Requirements
+  id: business-core-math
+- name: Accountancy required courses
   section: Accountancy, BS Major Requirements
   rule: all
   courses:
@@ -175,8 +174,8 @@ groups:
   - ACCY 304
   - ACCY 312
   - ACCY 405
-  id: accountancy-bs-major-requirements-13
-- name: Accountancy, BS Major Requirements
+  id: accountancy-required
+- name: 'Accountancy: one of ACCY 410 or ACCY 451'
   section: Accountancy, BS Major Requirements
   rule: n_of
   n: 1
@@ -185,4 +184,4 @@ groups:
   - ACCY 451
   notes:
   - 'Select one of the following:'
-  id: accountancy-bs-major-requirements-14
+  id: accountancy-choice

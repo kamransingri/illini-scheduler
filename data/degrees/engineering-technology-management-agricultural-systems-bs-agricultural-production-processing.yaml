@@ -1,0 +1,385 @@
+# Engineering Technology & Management for Agricultural Systems: Agricultural Production & Processing, BS (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/aces/engineering-technology-management-agricultural-systems-bs/agricultural-production-processing/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: engineering-technology-management-agricultural-systems-bs-agricultural-production-processing
+program: 'Engineering Technology & Management for Agricultural Systems: Agricultural Production & Processing, BS'
+college: College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/aces/engineering-technology-management-agricultural-systems-bs/agricultural-production-processing/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 126
+notes:
+- 'Minimum hours required for graduation: 126 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300 and 400 level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/aces/engineering-technology-management-agricultural-systems-bs/agricultural-production-processing/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by AGCM 220, BADM 340, BTW 250, BTW 261, ECE 316, ESE 360, ETMA 311, NRES 419, or PLPA 200
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by CHEM 102, PHYS 101; and CHEM 104 or PHYS 102
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by ECON 102 or ACE 100 and one other courses approved as Social and Behavioral Sciences
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 234, PHYS 101, CS 105; and ACE 262, CPSC 241, ECON 202, or STAT 107
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Department Foundation
+  section: Concentration Requirements
+  rule: all
+  courses:
+  - ACES 101
+  id: department-foundation-11
+- name: Department Foundation
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - 'Communication Option:'
+  courses:
+  - CMN 101
+  - ALEC 115
+  - CMN 111 + CMN 112
+  id: department-foundation-12
+- name: Department Foundation
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - 'Advanced ETMA Communication Option - Select one of the following:'
+  courses:
+  - AGCM 220
+  - BADM 340
+  - BTW 250
+  - BTW 261
+  - ECE 316
+  - ESE 360
+  - ETMA 311
+  - NRES 419
+  - PLPA 200
+  id: department-foundation-13
+- name: Department Foundation
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - 'Statistics Option - Select one of the following:'
+  courses:
+  - ACE 262
+  - CPSC 241
+  - ECON 202
+  - STAT 107
+  - MATH 234
+  - CHEM 102 + CHEM 103
+  - PHYS 101
+  id: department-foundation-14
+- name: Department Foundation
+  section: Concentration Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - - CHEM 104 + CHEM 105
+    - PHYS 102
+  - - ECON 102
+    - ACE 100
+  notes:
+  - 'Select one of the following:'
+  id: department-foundation-15
+- name: Major Core
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - 'Advanced ETMA Communication Option - Select one of the following:'
+  - 'Statistics Option - Select one of the following:'
+  courses:
+  - CS 105
+  - ETMA 100
+  - ETMA 339
+  - - ETMA 421
+    - ETMA 422
+  - ETMA 430
+  - ETMA 439
+  id: major-core-16
+- name: Business Electives
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 6 hours.'
+  - A total of six hours from the Business Electives list, which do not satisfy any other requirements.
+  courses:
+  - ACCY 200
+  - ACCY 201
+  - ACCY 202
+  - ACE 210
+  - ACE 221
+  - ACE 240
+  - ACE 310
+  - ACE 345
+  - ACE 346
+  - ACE 432
+  - ACE 435
+  - BADM 300
+  - BADM 310
+  - BADM 311
+  - BADM 312
+  - BADM 313
+  - BADM 314
+  - BADM 320
+  - FIN 230
+  - LER 290
+  - LEAD 260
+  - LEAD 340
+  - LEAD 425
+  - SE 361
+  - SE 400
+  - TE 230
+  - TE 450
+  id: business-electives-17
+- name: Introductory-Related Courses
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - 'Select two introductory-related courses from this list:'
+  courses:
+  - ACES 102
+  - ANSC 100
+  - CPSC 112
+  - FSHN 101
+  - HORT 100
+  - LEAD 260
+  - NRES 201
+  id: introductory-related-courses-18
+- name: ETMA Electives. A minimum of 11 hours at the advanced level are required
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - ETMA Electives. A minimum of 11 hours at the advanced level are required.
+  courses:
+  - ETMA 103
+  - ETMA 262
+  - ETMA 381
+  id: etma-electives-a-minimum-of-11-hours-at-19
+- name: ETMA Electives. A minimum of 11 hours at the advanced level are required
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - 'Select an additional 12 hours from the list below for a total of 20 hours:'
+  courses:
+  - ETMA 130
+  - ETMA 132
+  - ETMA 232
+  - ETMA 233
+  - ETMA 234
+  - ETMA 295
+  - ETMA 352
+  - ETMA 363
+  - ETMA 371
+  - ETMA 372
+  - ETMA 396
+  - ETMA 425
+  - ETMA 435
+  - ETMA 464
+  - ETMA 467
+  - ETMA 486
+  - ETMA 496
+  id: etma-electives-a-minimum-of-11-hours-at-20
+- name: Concentration Electives
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 18 hours.'
+  - Select 18 hours from the lists below with a minimum of 12 hours at the advanced level.
+  id: concentration-electives-21
+- name: Select two courses from the Food and Agricultural Marketing Management and Law category
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - 'Select two courses from the Food and Agricultural Marketing Management and Law category:'
+  - Food and Agricultural Marketing Management and Law
+  courses:
+  - ACE 222
+  - ACE 231
+  - ACE 232
+  - ACE 306
+  - ACE 403
+  - ACE 427
+  - ACE 428
+  - ACE 430
+  - ACE 431
+  - ACE 432
+  - ACE 435
+  id: select-two-courses-from-the-food-and-agr-22
+- name: Select four courses from no more than two of these categories
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 12 hours.'
+  - Animal Production & Processing
+  courses:
+  - ANSC 223
+  - ANSC 301
+  - ANSC 310
+  - ANSC 322
+  - ANSC 400
+  - ANSC 401
+  - ANSC 402
+  - ANSC 403
+  - ANSC 404
+  - ANSC 424
+  id: select-four-courses-from-no-more-than-tw-23
+- name: Select four courses from no more than two of these categories
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - Food Production & Processing
+  courses:
+  - FSHN 232
+  - FSHN 260
+  - FSHN 345
+  - FSHN 460
+  - FSHN 465
+  - FSHN 469
+  - FSHN 471
+  - FSHN 472
+  id: select-four-courses-from-no-more-than-tw-24
+- name: Select four courses from no more than two of these categories
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - Horticultural Production & Processing
+  courses:
+  - HORT 205
+  - HORT 341
+  - HORT 360
+  - HORT 361
+  - HORT 363
+  - HORT 435
+  - PLPA 405
+  id: select-four-courses-from-no-more-than-tw-25
+- name: Select four courses from no more than two of these categories
+  section: Concentration Requirements
+  rule: manual
+  notes:
+  - Crop Production & Processing
+  courses:
+  - CPSC 304
+  - CPSC 370
+  - CPSC 408
+  - CPSC 412
+  - CPSC 414
+  - CPSC 415
+  - CPSC 418
+  - CPSC 426
+  - CPSC 473
+  - NRES 474
+  - NRES 488
+  - PLPA 405
+  id: select-four-courses-from-no-more-than-tw-26

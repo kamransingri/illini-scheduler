@@ -1,5 +1,5 @@
 # Industrial Engineering, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/engineering/industrial-engineering-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/industrial-engineering-bs/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Industrial Engineering, BS
 college: The Grainger College of Engineering
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/engineering/industrial-engineering-bs/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 128
 notes:
 - 'Minimum hours required for graduation: 128 hours.'
@@ -285,21 +285,15 @@ groups:
   rule: manual
   notes:
   - Organizational Ergonomics Focus
+  - Optional Health Focus
   courses:
   - ANTH 411
   - BADM 310
   - BADM 312
   - BADM 357
   - PSYC 245
-  id: human-factors-23
-- name: Human Factors
-  section: Track Option Electives
-  rule: manual
-  notes:
-  - Optional Health Focus
-  courses:
   - HK 403
-  id: human-factors-24
+  id: human-factors-23
 - name: Industrial Engineering Fundamentals (IEF)
   section: Track Option Electives
   rule: manual
@@ -311,7 +305,7 @@ groups:
   - IE 412
   - IE 340
   - SE 400
-  id: industrial-engineering-fundamentals-ief-25
+  id: industrial-engineering-fundamentals-ief-24
 - name: Operations Research (OR)
   section: Track Option Electives
   rule: manual
@@ -320,7 +314,7 @@ groups:
   courses:
   - IE 410
   - IE 411
-  id: operations-research-or-26
+  id: operations-research-or-25
 - name: Operations Research (OR)
   section: Track Option Electives
   rule: manual
@@ -339,7 +333,7 @@ groups:
   - STAT 420
   - STAT 424
   - STAT 425
-  id: operations-research-or-27
+  id: operations-research-or-26
 - name: Quality Engineering (QE)
   section: Track Option Electives
   rule: manual
@@ -347,7 +341,7 @@ groups:
   - 'Track Core - complete the following course:'
   courses:
   - IE 330
-  id: quality-engineering-qe-28
+  id: quality-engineering-qe-27
 - name: Quality Engineering (QE)
   section: Track Option Electives
   rule: manual
@@ -357,7 +351,7 @@ groups:
   - IE 431
   - SE 400
   - SE 411
-  id: quality-engineering-qe-29
+  id: quality-engineering-qe-28
 - name: Quality Engineering (QE)
   section: Track Option Electives
   rule: manual
@@ -368,7 +362,7 @@ groups:
   - STAT 420
   - STAT 424
   - STAT 426
-  id: quality-engineering-qe-30
+  id: quality-engineering-qe-29
 - name: Supply Chain, Manufacturing and Logistics (SC&L)
   section: Track Option Electives
   rule: manual
@@ -376,7 +370,7 @@ groups:
   - 'Track Core - complete the following course:'
   courses:
   - IE 412
-  id: supply-chain-manufacturing-and-logistics-31
+  id: supply-chain-manufacturing-and-logistics-30
 - name: Supply Chain, Manufacturing and Logistics (SC&L)
   section: Track Option Electives
   rule: manual
@@ -389,30 +383,31 @@ groups:
   - ME 451
   - ME 452
   - SE 400
-  id: supply-chain-manufacturing-and-logistics-32
+  id: supply-chain-manufacturing-and-logistics-31
 - name: Technical Electives
   section: Technical Electives
   rule: manual
   notes:
   - Courses on these elective lists may only be used to fulfill one curricular requirement.
-  id: technical-electives-33
-- name: Technical Electives
+  id: technical-electives-32
+- name: Computer science elective selected from the departmentally approved list of Computer Science Electives below
   section: Technical Electives
-  rule: manual
-  notes:
-  - 'Computer science elective selected from the departmentally approved list of Computer Science Electives below:'
+  rule: hours
+  hours: 3
   courses:
   - CS 225
   - CS 357
   - CS 411
   - CS 450
   - IE 405
-  id: technical-electives-34
-- name: Technical Electives
-  section: Technical Electives
-  rule: manual
   notes:
-  - 'IE technical electives selected from the departmentally approved list of IE Technical Electives below:'
+  - Select 3 hours from the list below.
+  - 'Computer science elective selected from the departmentally approved list of Computer Science Electives below:'
+  id: computer-science-elective-selected-from-33
+- name: IE technical electives selected from the departmentally approved list of IE Technical Electives below
+  section: Technical Electives
+  rule: hours
+  hours: 3
   courses:
   - IE 330
   - IE 340
@@ -424,11 +419,14 @@ groups:
   - SE 310
   - SE 320
   - SE 424
-  id: technical-electives-35
+  notes:
+  - Select 3 hours from the list below.
+  - 'IE technical electives selected from the departmentally approved list of IE Technical Electives below:'
+  id: ie-technical-electives-selected-from-the-34
 - name: Free Electives
   section: Free Electives
   rule: manual
   notes:
   - Additional course work, subject to the Grainger College of Engineering restrictions to Free Electives, so that there are
     at least 128 credit hours earned toward the degree.
-  id: free-electives-36
+  id: free-electives-35

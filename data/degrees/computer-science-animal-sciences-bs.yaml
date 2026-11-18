@@ -1,5 +1,5 @@
 # Computer Science + Animal Sciences, BS (College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/aces/computer-science-animal-sciences-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/aces/computer-science-animal-sciences-bs/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Computer Science + Animal Sciences, BS
 college: College of Agricultural, Consumer and Environmental Sciences
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/aces/computer-science-animal-sciences-bs/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 126
 notes:
 - 'Minimum hours required for graduation: 126 hours.'
@@ -201,11 +201,8 @@ groups:
   id: animal-sciences-core-15
 - name: Applied Animal Sciences Courses (choose 3)
   section: Applied Animal Sciences Courses (choose 3)
-  rule: manual
-  notes:
-  - 'Catalog total: 9 hours.'
-  - 'Communication Option:'
-  - '& Two 400-level CS courses'
+  rule: n_of
+  n: 3
   courses:
   - ANSC 201
   - ANSC 205
@@ -236,14 +233,14 @@ groups:
   - ANSC 501
   - ANSC 502
   - ANSC 580
+  notes:
+  - 'Catalog total: 9 hours.'
+  - Choose 3.
   id: applied-animal-sciences-courses-choose-3-16
 - name: Basic Animal Sciences Courses (choose 3)
   section: Basic Animal Sciences Courses (choose 3)
-  rule: manual
-  notes:
-  - 'Catalog total: 9 hours.'
-  - 'Communication Option:'
-  - '& Two 400-level CS courses'
+  rule: n_of
+  n: 3
   courses:
   - ANSC 251
   - ANSC 306
@@ -279,4 +276,7 @@ groups:
   - ANSC 541
   - ANSC 542
   - ANSC 543
+  notes:
+  - 'Catalog total: 9 hours.'
+  - Choose 3.
   id: basic-animal-sciences-courses-choose-3-17
