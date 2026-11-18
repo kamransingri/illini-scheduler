@@ -1,5 +1,5 @@
 # Communication, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/las/communication-balas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/las/communication-balas/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Communication, BALAS
 college: College of Liberal Arts and Sciences
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/las/communication-balas/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 120
 notes:
 - 'Minimum hours required for graduation: 120 hours.'
@@ -139,22 +139,12 @@ groups:
     - CMN 112
   - CMN 102
   id: major-requirements-11
-- name: Major Requirements
+- name: Communication & Culture Area
   section: Major Requirements
   rule: manual
   notes:
   - 'Communication Courses: Students will select an option (A or B) and a specialization (if Option B is chosen) in consultation
     with an undergraduate advisor in Communication.'
-  - 'OPTION A: Students who wish a general course of study will take at least one course from five of the following six areas
-    and the remaining hours will be selected in consultation with an advisor.'
-  - 'OPTION B: Students who choose to concentrate within an area must take four courses from one of the six areas listed below
-    and the remaining hours will be selected in consultation with an advisor. Students may complete more than one specialization
-    by completing four courses in each area desired; however, individual courses may not be counted toward more than one specialization.'
-  id: major-requirements-12
-- name: Communication & Culture Area
-  section: Major Requirements
-  rule: manual
-  notes:
   - 'OPTION A: Students who wish a general course of study will take at least one course from five of the following six areas
     and the remaining hours will be selected in consultation with an advisor.'
   - 'OPTION B: Students who choose to concentrate within an area must take four courses from one of the six areas listed below
@@ -171,7 +161,7 @@ groups:
   - CMN 429
   - CMN 432
   - CMN 450
-  id: communication-culture-area-13
+  id: communication-culture-area-12
 - name: Communication & Health Area
   section: Major Requirements
   rule: manual
@@ -194,7 +184,7 @@ groups:
   - CMN 462
   - CMN 464
   - CMN 465
-  id: communication-health-area-14
+  id: communication-health-area-13
 - name: Communication & Organizations Area
   section: Major Requirements
   rule: manual
@@ -216,7 +206,7 @@ groups:
   - CMN 410
   - CMN 411
   - CMN 464
-  id: communication-organizations-area-15
+  id: communication-organizations-area-14
 - name: Interpersonal Communication Area
   section: Major Requirements
   rule: manual
@@ -241,7 +231,7 @@ groups:
   - CMN 432
   - CMN 435
   - CMN 462
-  id: interpersonal-communication-area-16
+  id: interpersonal-communication-area-15
 - name: Mediated Communication & Techonology Area
   section: Major Requirements
   rule: manual
@@ -263,7 +253,7 @@ groups:
   - CMN 375
   - CMN 410
   - CMN 429
-  id: mediated-communication-techonology-area-17
+  id: mediated-communication-techonology-area-16
 - name: Rhetoric & Public Discourse Area
   section: Major Requirements
   rule: manual
@@ -287,4 +277,4 @@ groups:
   - CMN 423
   - CMN 450
   - CMN 464
-  id: rhetoric-public-discourse-area-18
+  id: rhetoric-public-discourse-area-17

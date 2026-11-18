@@ -1,0 +1,300 @@
+# Nuclear, Plasma, and Radiological Engineering: Power, Safety & Environment, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/nuclear-plasma-radiological-engineering-bs/power-safety-environment/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: nuclear-plasma-radiological-engineering-bs-power-safety-environment
+program: 'Nuclear, Plasma, and Radiological Engineering: Power, Safety & Environment, BS'
+college: The Grainger College of Engineering
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/engineering/nuclear-plasma-radiological-engineering-bs/power-safety-environment/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 128
+notes:
+- 'Minimum hours required for graduation: 128 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/engineering/nuclear-plasma-radiological-engineering-bs/power-safety-environment/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by CHEM 102, PHYS 211, PHYS 212
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by ECON 102 or ECON 103 and any other courses approved as Social & Behavioral Sciences
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 220 or MATH 221; and MATH 231, MATH 241, PHYS 211, PHYS 212; and CS 101 or CS 124
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: Orientation and Professional Development
+  rule: all
+  courses:
+  - ENG 100
+  - NPRE 100
+  id: orientation-and-professional-development-11
+- name: Introductory Economics Elective
+  section: Introductory Economics Elective
+  rule: all
+  courses:
+  - - ECON 102
+    - ECON 103
+  id: introductory-economics-elective-12
+- name: Foundational Mathematics and Science
+  section: Foundational Mathematics and Science
+  rule: all
+  courses:
+  - CHEM 102
+  - CHEM 103
+  - MATH 221
+  - MATH 231
+  - MATH 241
+  - MATH 257
+  - MATH 285
+  - PHYS 211
+  - PHYS 212
+  id: foundational-mathematics-and-science-13
+- name: Nuclear, Plasma, and Radiological Engineering Technical Core
+  section: Nuclear, Plasma, and Radiological Engineering Technical Core
+  rule: all
+  courses:
+  - CS 101
+  - ECE 205
+  - ME 200
+  - - ME 310
+    - TAM 335
+  - NPRE 200
+  - NPRE 247
+  - NPRE 321
+  - NPRE 330
+  - NPRE 349
+  - NPRE 441
+  - NPRE 445
+  - NPRE 449
+  - NPRE 451
+  - NPRE 455
+  - NPRE 458
+  - TAM 210
+  - TAM 212
+  id: nuclear-plasma-and-radiological-engineer-14
+- name: Required Course
+  section: Professional Concentration Area
+  rule: all
+  courses:
+  - NPRE 432
+  notes:
+  - 'Catalog total: 2 hours.'
+  id: required-course-15
+- name: Technical Electives
+  section: Professional Concentration Area
+  rule: manual
+  notes:
+  - 'Catalog total: 15 hours.'
+  - From Departmentally Approved List of Technical Electives - students are to take at least 6 hours from the NPRE Power Concentration
+    Electives list. The remaining hours may be taken from any course on the Technical Electives list. The student is to confer
+    with their academic adviser on a chosen course set to ensure that a strong program is achieved.
+  - NPRE Power Concentration Electives List
+  courses:
+  - NPRE 412
+  - NPRE 413
+  - NPRE 430
+  - NPRE 442
+  - NPRE 457
+  - NPRE 461
+  - NPRE 480
+  - NPRE 498
+  id: technical-electives-16
+- name: Technical Electives
+  section: Professional Concentration Area
+  rule: manual
+  notes:
+  - Other Technical Electives
+  - 'Technical Electives from NPRE or from other departments in the subfields: Thermal Sciences; Power and Control Systems;
+    Solid, Fluid and Continuum Mechanics; Computational Sciences and Engineering; Environmental Engineering and Science.'
+  courses:
+  - ES 470
+  - ES 475
+  - NPRE 199
+  - NPRE 201
+  - NPRE 398
+  - NPRE 481
+  - NPRE 483
+  id: technical-electives-17
+- name: Technical Electives
+  section: Professional Concentration Area
+  rule: manual
+  notes:
+  - Thermal Sciences
+  courses:
+  - ME 320
+  - ME 400
+  - ME 402
+  - ME 404
+  - ME 410
+  - ME 411
+  - ME 420
+  id: technical-electives-18
+- name: Technical Electives
+  section: Professional Concentration Area
+  rule: manual
+  notes:
+  - Power and Control Systems
+  courses:
+  - ECE 329
+  - ECE 310
+  - ECE 330
+  - ECE 476
+  - ECE 486
+  id: technical-electives-19
+- name: Technical Electives
+  section: Professional Concentration Area
+  rule: manual
+  notes:
+  - Solid, Fluid and Continuum Mechanics
+  courses:
+  - TAM 251
+  - TAM 252
+  - TAM 424
+  - TAM 435
+  - TAM 445
+  - TAM 451
+  - TAM 456
+  id: technical-electives-20
+- name: Technical Electives
+  section: Professional Concentration Area
+  rule: manual
+  notes:
+  - Computational Sciences and Engineering
+  courses:
+  - CS 357
+  - CS 450
+  - ME 471
+  - STAT 400
+  id: technical-electives-21
+- name: Technical Electives
+  section: Professional Concentration Area
+  rule: manual
+  notes:
+  - Environmental Engineering and Science
+  courses:
+  - CEE 201
+  - CEE 330
+  - CEE 437
+  - CEE 443
+  - CEE 444
+  - CEE 447
+  id: technical-electives-22
+- name: Free Electives
+  section: Free Electives
+  rule: manual
+  notes:
+  - Additional course work, subject to the Grainger College of Engineering restrictions to Free Electives, so that there are
+    at least 128 credit hours earned toward the degree.
+  id: free-electives-23

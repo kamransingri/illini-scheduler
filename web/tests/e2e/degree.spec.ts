@@ -79,14 +79,28 @@ test("keyboard: type a course code and press Enter to add it", async ({ page }) 
 });
 
 test("programs imported from the catalog say so and show prose rules in the catalog's words", async ({ page }) => {
-  await page.goto("./degree/?p=computer-science-bs");
+  await page.goto("./degree/?p=computer-engineering-bs");
   await expect(page.getByTestId("generated-note")).toContainText("Read automatically from the catalog page");
-  await expect(page.getByRole("combobox", { name: "Major", exact: true })).toHaveValue("Computer Science, BS");
-  const focus = page.locator('[data-group^="software-foundations"]');
-  await expect(focus).toHaveAttribute("data-status", "open");
+  await expect(page.getByRole("combobox", { name: "Major", exact: true })).toHaveValue("Computer Engineering, BS");
+  const manual = page.locator('[data-group^="technical-electives"]').first();
+  await expect(manual).toHaveAttribute("data-status", "open");
+  await expect(manual.getByTestId("catalog-words")).not.toBeEmpty();
+});
+
+test("a hand-checked major (Computer Science): no import note, focus areas in one requirement, technical electives counted (#17)", async ({ page }) => {
+  // six 400-level CS courses, one from the team project list; CS 421 is in the core, so it isn't a technical elective too
+  await page.goto("./degree/?p=computer-science-bs&m=CS411,CS412,CS440,CS446,CS447,CS473,CS421");
+  await expect(page.getByTestId("degree-progress")).toBeVisible();
+  await expect(page.getByTestId("generated-note")).toHaveCount(0);
+  await expect(req(page, "orientation")).toContainText(/CS 210|CS 211/); // required again, not a tick box
+  const focus = req(page, "focus-area");
   await expect(focus.getByTestId("catalog-words")).toContainText("single focus area");
+  await expect(focus.getByTestId("catalog-words")).toContainText("Software Foundations: CS 407");
   await expect(focus.getByTestId("catalog-words").getByRole("link", { name: "CS 422" })).toBeVisible(); // a listed course links to its page
-  await expect(page.locator('[data-group^="computer-science-technical-core"]')).toContainText(/more courses/);
+  await expect(page.locator('[data-group^="software-foundations"]')).toHaveCount(0); // one requirement, not eight
+  await expect(req(page, "technical-electives")).toHaveAttribute("data-status", "done"); // 18 hours from CS 4xx
+  await expect(req(page, "technical-electives")).not.toContainText("CS 421");
+  await expect(req(page, "team-project")).toHaveAttribute("data-status", "done"); // CS 411 counts for both, as the catalog says
 });
 
 test("the major picker searches all majors by name, acronym and college", async ({ page }) => {

@@ -1,5 +1,5 @@
 # Musicology, BMUS (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/faa/musicology-bmus/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/faa/musicology-bmus/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Musicology, BMUS
 college: College of Fine and Applied Arts
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/faa/musicology-bmus/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 120
 notes:
 - 'Minimum hours required for graduation: 120 hours.'
@@ -172,9 +172,6 @@ groups:
   rule: manual
   notes:
   - 'Catalog total: 16 hours.'
-  - Students enroll in applied music on the same instrument or in voice each semester. It is strongly recommended that students
-    in this major acquire a thorough practical knowledge of the piano beyond basic keyboard competency as part of the applied
-    music study.
   - 'Applied Music Lessons (years 1 & 2, 8 hours). Students choose from:'
   - MUSC 101, MUSC 102, MUSC 103, MUSC 110, MUSC 111, MUSC 112, MUSC 113, MUSC 114, MUSC 115, MUSC 116, MUSC 117, MUSC 120,
     MUSC 121, MUSC 122, MUSC 123, MUSC 124, MUSC 125, MUSC 126, MUSC 127, MUSC 128, MUSC 129, MUSC 130, MUSC 131, MUSC 132,
@@ -183,6 +180,9 @@ groups:
   - MUSC 401, MUSC 402, MUSC 403, MUSC 410, MUSC 411, MUSC 412, MUSC 413, MUSC 414, MUSC 415, MUSC 416, MUSC 417, MUSC 420,
     MUSC 421, MUSC 422, MUSC 423, MUSC 424, MUSC 425, MUSC 426, MUSC 427, MUSC 428, MUSC 429, MUSC 430, MUSC 431, MUSC 432,
     MUSC 433, MUSC 434, MUSC 435, MUSC 436, MUSC 437, MUSC 438, MUSC 439, MUSC 440, MUSC 441, MUSC 442
+  - Students enroll in applied music on the same instrument or in voice each semester. It is strongly recommended that students
+    in this major acquire a thorough practical knowledge of the piano beyond basic keyboard competency as part of the applied
+    music study.
   id: music-lessons-15
 - name: Ensemble
   section: Musicology Studies

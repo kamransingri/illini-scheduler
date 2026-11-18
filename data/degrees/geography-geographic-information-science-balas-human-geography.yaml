@@ -1,0 +1,135 @@
+# Geography & Geographic Information Science: Human Geography, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/geography-geographic-information-science-balas/human-geography/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: geography-geographic-information-science-balas-human-geography
+program: 'Geography & Geographic Information Science: Human Geography, BALAS'
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/geography-geographic-information-science-balas/human-geography/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300 and 400 level.
+double_counting:
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/geography-geographic-information-science-balas/human-geography/
+groups:
+- name: General Education Requirements
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Composition I
+  - Advanced Composition
+  - Humanities & the Arts (6 hours)
+  - Natural Sciences & Technology (6 hours)
+  - Social & Behavioral Sciences (6 hours)
+  - fulfilled by GGIS 101 or GGIS 104 or GGIS 106 or GGIS 210 or GGIS 221 or GGIS 254 and any other course approved as Social
+    & Behavioral Sciences
+  - 'Cultural Studies: Non-Western Cultures (1 course)'
+  - 'Cultural Studies: US Minority Cultures (1 course)'
+  - 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  - Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English, or completion
+    of the third semester in two different languages other than English is required)
+  id: general-education-requirements-1
+- name: Orientation and Professional Development
+  section: General Education Requirements
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-and-professional-development-2
+- name: Geography & GIS Core Requirements
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Physical Geography Course (Select one):'
+  courses:
+  - GGIS 100
+  - GGIS 103
+  - GGIS 220
+  - GGIS 222
+  id: geography-gis-core-requirements-3
+- name: Geography & GIS Core Requirements
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Human Geography Course (Select one):'
+  courses:
+  - GGIS 101
+  - GGIS 104
+  - GGIS 106
+  - GGIS 210
+  - GGIS 221
+  - GGIS 254
+  id: geography-gis-core-requirements-4
+- name: Geography & GIS Core Requirements
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'GIS Course (Select one):'
+  courses:
+  - GGIS 371
+  - GGIS 379
+  id: geography-gis-core-requirements-5
+- name: Human Geography Concentration Requirements
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Selected from the following (at least 6 hours must be at the 300- or 400- level):'
+  courses:
+  - GGIS 204
+  - GGIS 205
+  - GGIS 210
+  - GGIS 220
+  - GGIS 221
+  - GGIS 223
+  - GGIS 224
+  - GGIS 254
+  - GGIS 280
+  - GGIS 287
+  - GGIS 350
+  - ESE 320 + GGIS 370
+  - GGIS 371
+  - GGIS 379
+  - GGIS 380
+  - GGIS 381
+  - GGIS 384
+  - GGIS 390
+  - GGIS 391
+  - GGIS 403
+  - GGIS 405
+  - GGIS 407
+  - GGIS 410
+  - GGIS 412
+  - GGIS 425
+  - LA 427
+  - GGIS 438
+  - GGIS 439
+  - GGIS 446
+  - GGIS 455
+  - GGIS 460
+  - GGIS 465
+  - GGIS 466
+  - GGIS 471
+  - GGIS 473
+  - GGIS 476
+  - GGIS 477
+  - GGIS 478
+  - GGIS 479
+  - GGIS 480
+  - GGIS 482
+  - GGIS 483
+  - GGIS 489
+  - GGIS 495
+  - GGIS 496
+  id: human-geography-concentration-requiremen-6

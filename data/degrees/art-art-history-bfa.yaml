@@ -1,5 +1,5 @@
 # Art & Art History, BFA (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/faa/art-art-history-bfa/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/faa/art-art-history-bfa/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Art & Art History, BFA
 college: College of Fine and Applied Arts
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/faa/art-art-history-bfa/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 122
 notes:
 - 'Minimum hours required for graduation: 122 hours.'
@@ -146,23 +146,13 @@ groups:
   - ARTF 104
   - ARTF 106
   id: first-year-curriculum-12
-- name: 6 courses at the 200-400 level (3 credit hours each)
-  section: Art History
-  rule: manual
-  notes:
-  - 'Catalog total: 18 hours.'
-  - 'Students must take at least one course in three of the following areas: 1) Africa and the Middle East; 2) Asia; 3) the
-    Americas; 4) Europe; Students must also take at least one course that covers material before 1700 and one course must
-    cover material after 1700.'
-  - Though students must take a total of 6 courses, some courses may count toward the fulfillment of more than one area and
-    period requirement. For instance, a course in 20th century African art could count as a class covering both Africa and
-    the Middle East and material after 1700.
-  - Other courses may be approved in consultation with the advisor.
-  id: 6-courses-at-the-200-400-level-3-credit-13
 - name: 1. Africa and the Middle East
   section: Art History
   rule: manual
   notes:
+  - 'Students must take at least one course in three of the following areas: 1) Africa and the Middle East; 2) Asia; 3) the
+    Americas; 4) Europe; Students must also take at least one course that covers material before 1700 and one course must
+    cover material after 1700.'
   - Though students must take a total of 6 courses, some courses may count toward the fulfillment of more than one area and
     period requirement. For instance, a course in 20th century African art could count as a class covering both Africa and
     the Middle East and material after 1700.
@@ -175,7 +165,7 @@ groups:
   - ARTH 410
   - ARTH 413
   - ARTH 219
-  id: 1-africa-and-the-middle-east-14
+  id: 1-africa-and-the-middle-east-13
 - name: 2. Asia
   section: Art History
   rule: manual
@@ -191,7 +181,7 @@ groups:
   - ARTH 402
   - ARTH 403
   - ARTH 404
-  id: 2-asia-15
+  id: 2-asia-14
 - name: 3. The Americas
   section: Art History
   rule: manual
@@ -206,7 +196,7 @@ groups:
   - ARTH 260
   - ARTH 342
   - ARTH 343
-  id: 3-the-americas-16
+  id: 3-the-americas-15
 - name: 4. Europe
   section: Art History
   rule: manual
@@ -239,7 +229,7 @@ groups:
   - ARTH 443
   - ARTH 445
   - ARTH 447
-  id: 4-europe-17
+  id: 4-europe-16
 - name: At least one course must cover material before 1700
   section: Art History
   rule: manual
@@ -268,7 +258,7 @@ groups:
   - ARTH 435
   - ARTH 436
   - ARCH 412
-  id: at-least-one-course-must-cover-material-18
+  id: at-least-one-course-must-cover-material-17
 - name: At least one course must cover material after 1700
   section: Art History
   rule: manual
@@ -299,19 +289,19 @@ groups:
   - ARCH 415
   - ARCH 416
   - ARCH 417
-  id: at-least-one-course-must-cover-material-19
-- name: At least one course must cover material after 1700
+  id: at-least-one-course-must-cover-material-18
+- name: One Advanced art history course (ARTH) 300 or 400 level not used elsewhere
   section: Art History
   rule: manual
   notes:
   - One Advanced art history course (ARTH) 300 or 400 level not used elsewhere
-  id: at-least-one-course-must-cover-material-20
+  id: one-advanced-art-history-course-arth-300-19
 - name: Art History Seminar
   section: Art History Seminar
   rule: all
   courses:
   - ARTH 495
-  id: art-history-seminar-21
+  id: art-history-seminar-20
 - name: Art & Design Electives
   section: Art & Design Electives
   rule: manual
@@ -319,7 +309,7 @@ groups:
   - 5 ARTS or ARTD courses (at any level)
   - 'Seven (7) additional courses in the School of Art and Design (at any level), including courses with the following rubrics:
     ARTE, ARTD, ARTH, ARTJ or ARTS'
-  id: art-design-electives-22
+  id: art-design-electives-21
 - name: Summary of Credit Hours for the Bachelor of Fine Arts in Art and Art History
   section: Summary of Credit Hours for the Bachelor of Fine Arts in Art and Art History
   rule: manual
@@ -330,4 +320,4 @@ groups:
   - Art History Seminar
   - Art & Design Electives
   - Electives to bring the total hours earned to 122, including a minimum of 40 credits at the 300- or 400-level.
-  id: summary-of-credit-hours-for-the-bachelor-23
+  id: summary-of-credit-hours-for-the-bachelor-22

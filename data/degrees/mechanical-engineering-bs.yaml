@@ -1,15 +1,14 @@
 # Mechanical Engineering, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/engineering/mechanical-engineering-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
-# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
-# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
-# changes.
+# Checked by hand against https://catalog.illinois.edu/undergraduate/engineering/mechanical-engineering-bs/ on 2026-11-18 (issue #17): every course list, choice and
+# hours rule matches the catalog page; rules the schema can't express stay as tick boxes in the
+# catalog's own words. It has no generated date, so pipeline/catalog_import.py won't overwrite it.
+# Schema: docs/DEGREE-DATA.md.
 id: mechanical-engineering-bs
 program: Mechanical Engineering, BS
 college: The Grainger College of Engineering
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/engineering/mechanical-engineering-bs/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
 total_hours: 128
 notes:
 - 'Minimum hours required for graduation: 128 hours.'
@@ -141,14 +140,14 @@ groups:
   courses:
   - ENG 100
   - ME 290
-  id: orientation-and-professional-development-11
+  id: orientation
 - name: Introductory Economics Elective
   section: Introductory Economics Elective
   rule: all
   courses:
   - - ECON 102
     - ECON 103
-  id: introductory-economics-elective-12
+  id: economics-elective
 - name: Foundational Mathematics and Science
   section: Foundational Mathematics and Science
   rule: all
@@ -162,7 +161,7 @@ groups:
   - MATH 285
   - PHYS 211
   - PHYS 212
-  id: foundational-mathematics-and-science-13
+  id: foundational-math-science
 - name: Mechanical Engineering Technical Core
   section: Mechanical Engineering Technical Core
   rule: all
@@ -184,42 +183,48 @@ groups:
   - TAM 210
   - TAM 212
   - TAM 251
-  id: mechanical-engineering-technical-core-14
-- name: Science elective(s), chosen from one of the following
+  id: technical-core
+- name: Science elective
   section: Technical Electives
-  rule: manual
-  notes:
-  - 'Catalog total: 4 hours.'
-  - The catalog lists these courses under Science elective(s), chosen from one of the following; see the catalog page for
-    the rule.
+  rule: n_of
+  n: 1
   courses:
   - CHEM 104 + CHEM 105
   - MCB 150
   - PHYS 213 + PHYS 214
-  id: science-elective-s-chosen-from-one-of-th-15
-- name: Statistics elective, one course chosen from
-  section: Technical Electives
-  rule: manual
   notes:
-  - 'Catalog total: 3 hours.'
-  - The catalog lists these courses under Statistics elective, one course chosen from; see the catalog page for the rule.
+  - 'Science elective(s), chosen from one of the following: (4 hours)'
+  id: science-elective
+- name: Statistics elective
+  section: Technical Electives
+  rule: n_of
+  n: 1
   courses:
   - IE 300
   - STAT 400
-  id: statistics-elective-one-course-chosen-fr-16
-- name: Statistics elective, one course chosen from
+  notes:
+  - 'Statistics elective, one course chosen from: (3 hours)'
+  id: statistics-elective
+- name: MechSE electives
   section: Technical Electives
-  rule: manual
+  rule: hours
   notes:
   - MechSE electives chosen from the departmentally approved list below.
   - All 400 level ME courses, except 470 and potentially 497, 498 (As Approved)
   - All 400 level TAM courses, except potentially 497, 498 (As Approved)
-  id: statistics-elective-one-course-chosen-fr-17
-- name: Statistics elective, one course chosen from
+  id: mechse-electives
+  hours: 6
+  from:
+  - ME 400-499
+  - TAM 400-499
+  exclude:
+  - ME 470
+  not_with:
+  - technical-core
+- name: Technical electives
   section: Technical Electives
-  rule: manual
-  notes:
-  - Technical electives chosen from the departmentally approved list below.
+  rule: hours
+  hours: 6
   courses:
   - ABE 361
   - ABE 430
@@ -742,11 +747,13 @@ groups:
   - TMGT 460
   - TMGT 461
   - UP 430
-  id: statistics-elective-one-course-chosen-fr-18
+  notes:
+  - Technical electives chosen from the departmentally approved list below. (6 hours)
+  id: technical-electives
 - name: Free Electives
   section: Free Electives
   rule: manual
   notes:
   - Additional course work, subject to the Grainger College of Engineering restrictions to Free Electives, so that there are
     at least 128 credit hours earned toward the degree.
-  id: free-electives-19
+  id: free-electives

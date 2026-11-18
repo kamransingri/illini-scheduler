@@ -1,0 +1,397 @@
+# Chemical Engineering: Biomolecular Engineering, BS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/chemical-engineering-bs/biomolecular-engineering/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: chemical-engineering-bs-biomolecular-engineering
+program: 'Chemical Engineering: Biomolecular Engineering, BS'
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/chemical-engineering-bs/biomolecular-engineering/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 129
+notes:
+- 'Minimum hours required for graduation: 129 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/chemical-engineering-bs/biomolecular-engineering/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by CHBE 431
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by CHEM 202 and CHEM 204, or CHEM 102 and CHEM 104; and PHYS 211, PHYS 212
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 220 or MATH 221 and MATH 231, MATH 241, PHYS 211, PHYS 212, CS 101
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: Orientation and Professional Development
+  rule: all
+  courses:
+  - CHBE 121
+  id: orientation-and-professional-development-11
+- name: Orientation and Professional Development
+  section: Orientation and Professional Development
+  rule: manual
+  notes:
+  - For non-first-year students, CHBE 121 can be replaced with 1 hour of credit from Technical Elective List 1 or List 2.
+    (Ref List 1 and List 2 below.)
+  courses:
+  - ENG 100
+  id: orientation-and-professional-development-12
+- name: Foundational Mathematics and Science
+  section: Foundational Mathematics and Science
+  rule: manual
+  notes:
+  - Select one group of courses (Accelerated or General Chemistry)
+  courses:
+  - - CHEM 202 + CHEM 203 + CHEM 204 + CHEM 205
+    - CHEM 102 + CHEM 103 + CHEM 104 + CHEM 105 + CHEM 222 + CHEM 223
+  - MATH 221
+  - MATH 231
+  - MATH 241
+  - - MATH 257
+    - MATH 415
+  - - MATH 285
+    - MATH 441
+  - PHYS 211
+  - PHYS 212
+  - PHYS 214
+  id: foundational-mathematics-and-science-13
+- name: Chemical Engineering Technical Core
+  section: Chemical Engineering Technical Core
+  rule: all
+  courses:
+  - CHBE 221
+  - CHBE 321
+  - CHBE 421
+  - CHBE 422
+  - CHBE 424
+  - CHBE 430
+  - CHBE 431
+  - CHBE 440
+  - CHEM 236
+  - CHEM 237
+  - CHEM 315
+  id: chemical-engineering-technical-core-14
+- name: Chemical Engineering Technical Core
+  section: Chemical Engineering Technical Core
+  rule: manual
+  notes:
+  - Students must register in one of the Chemical Engineering-specific CHEM 315 lab sections.
+  courses:
+  - CHEM 420
+  - CHEM 442
+  - CS 101
+  - - CHBE 411
+    - IE 300
+    - STAT 400
+  id: chemical-engineering-technical-core-15
+- name: Biomolecular Engineering Concentration Technical Core
+  section: Biomolecular Engineering Concentration Technical Core
+  rule: all
+  courses:
+  - MCB 450
+  id: biomolecular-engineering-concentration-t-16
+- name: Select 18 hours from Category A, Category B, List 1 and List 2, with specific requirements listed below.
+  section: Biomolecular Engineering Concentration Technical Electives
+  rule: manual
+  notes:
+  - Select 18 hours from Category A, Category B, List 1 and List 2, with specific requirements listed below.
+  - Three Courses from Category A
+  - Two Additional Courses from Category A or Category B
+  - One additional 400-level course from List 1 or List 2
+  - 'Note: A maximum of 9 hours of UG research credit in CHBE 497 or CHBE 499 may be applied to the total 18 hours of technical
+    elective credit with only 3 of those hours allowed use for Category A requirements. Consult with your advisor to make
+    sure that your research contains sufficient biomolecular content to count as Category A credit.'
+  id: select-18-hours-from-category-a-category-17
+- name: CATEGORY A
+  section: Biomolecular Engineering Concentration Technical Electives
+  rule: all
+  courses:
+  - CHBE 471
+  - CHBE 472
+  - CHBE 473
+  - CHBE 474
+  - CHBE 475
+  - CHBE 476
+  - CHBE 478
+  - CHBE 497
+  - CHBE 499
+  id: category-a-18
+- name: CATEGORY B
+  section: Biomolecular Engineering Concentration Technical Electives
+  rule: all
+  courses:
+  - ABE 436
+  - ABE 483
+  - ABE 488
+  - BIOE 476
+  - ECE 467
+  - ECE 480
+  - MSE 470
+  - MSE 473
+  - MSE 474
+  - TAM 461
+  id: category-b-19
+- name: LIST 1
+  section: Biomolecular Engineering Concentration Technical Electives
+  rule: manual
+  notes:
+  - Any 400-level CHBE courses, excluding CHBE core courses CHBE 411, CHBE 421, CHBE 422, CHBE 424, CHBE 430, CHBE 431, &
+    CHBE 440.
+  courses:
+  - ABE 436
+  - ABE 483
+  - ABE 488
+  - ATMS 420
+  - BIOE 476
+  - CEE 320
+  - CEE 330
+  - CEE 350
+  - CEE 421
+  - CEE 422
+  - CEE 437
+  - CEE 440
+  - CEE 442
+  - CEE 443
+  - CEE 450
+  - CEE 452
+  - CHBE 297
+  - CHBE 397
+  - CS 357
+  - CS 411
+  - CS 427
+  - CS 440
+  - CS 446
+  - CS 450
+  - CS 498
+  - ECE 304
+  - ECE 313
+  - ECE 333
+  - ECE 380
+  - ECE 416
+  - ECE 444
+  - ECE 481
+  - ECE 490
+  - ES 470
+  - ES 475
+  - ME 400
+  - ME 471
+  - ME 482
+  - ME 483
+  - ME 487
+  - MSE 304
+  - MSE 307
+  - MSE 308
+  - MSE 401
+  - MSE 402
+  - MSE 403
+  - MSE 406
+  - MSE 420
+  - MSE 441
+  - MSE 450
+  - MSE 457
+  - MSE 458
+  - MSE 460
+  - MSE 470
+  - MSE 473
+  - MSE 474
+  - MSE 480
+  - MSE 487
+  - MSE 489
+  - NPRE 201
+  - NPRE 402
+  - NPRE 412
+  - NPRE 441
+  - NPRE 442
+  - NPRE 457
+  - NPRE 461
+  - NPRE 480
+  - SE 411
+  - TAM 211
+  - TAM 251
+  - TAM 461
+  id: list-1-20
+- name: LIST 2
+  section: Biomolecular Engineering Concentration Technical Electives
+  rule: manual
+  notes:
+  - Any 400-level CHBE courses, excluding CHBE core courses CHBE 411, CHBE 421, CHBE 422, CHBE 424, CHBE 430, CHBE 431, &
+    CHBE 440.
+  courses:
+  - ABE 425
+  - ABE 430
+  - ABE 497
+  - ABE 498
+  - ANSC 445
+  - ANSC 450
+  - ATMS 421
+  - BADM 461
+  - BIOC 446
+  - CEE 407
+  - CEE 497
+  - CEE 498
+  - CHEM 436
+  - CHEM 437
+  - CHEM 444
+  - CHEM 445
+  - CHEM 483
+  - CHEM 497
+  - CPSC 414
+  - CPSC 415
+  - CPSC 418
+  - CPSC 419
+  - CPSC 453
+  - FSHN 414
+  - FSHN 418
+  - FSHN 426
+  - FSHN 428
+  - FSHN 460
+  - FSHN 465
+  - FSHN 471
+  - FSHN 480
+  - FSHN 481
+  - FSHN 483
+  - GEOL 450
+  - GEOL 451
+  - GEOL 454
+  - GEOL 470
+  - IB 451
+  - IS 467
+  - MATH 402
+  - MATH 413
+  - MATH 417
+  - MATH 442
+  - MATH 446
+  - MATH 461
+  - MATH 487
+  - MCB 408
+  - MCB 424
+  - MCB 436
+  - MCB 450
+  - MCB 462
+  - MSE 497
+  - MSE 498
+  - NPRE 483
+  - NPRE 498
+  - NRES 488
+  - PHYS 435
+  - PHYS 470
+  - SE 400
+  - STAT 410
+  - STAT 420
+  - STAT 430
+  - STAT 440
+  - UP 406
+  - UP 430
+  id: list-2-21

@@ -1,5 +1,5 @@
 # Electrical Engineering, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/engineering/electrical-engineering-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/electrical-engineering-bs/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Electrical Engineering, BS
 college: The Grainger College of Engineering
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/engineering/electrical-engineering-bs/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 128
 notes:
 - 'Minimum hours required for graduation: 128 hours.'
@@ -52,14 +52,6 @@ groups:
   - ECE 385
   - ECE 445
   id: electrical-engineering-technical-core-3
-- name: Technical Electives
-  section: Technical Electives
-  rule: manual
-  notes:
-  - 'From Departmentally Approved List of Technical Electives (below), to include: at least 6 hours of non-ECE electives,
-    at least 21 hours of ECE electives, at least 3 Advanced Core Electives, at least 3 ECE Labs, where at least one must be
-    a Hardware Lab.'
-  id: technical-electives-4
 - name: Non-ECE courses from list below
   section: Technical Electives
   rule: manual
@@ -89,7 +81,7 @@ groups:
   - AE 435
   - AE 451
   - AE 460
-  id: non-ece-courses-from-list-below-5
+  id: non-ece-courses-from-list-below-4
 - name: Non-ECE courses from list below
   section: Technical Electives
   rule: manual
@@ -133,7 +125,7 @@ groups:
   - BIOE 476
   - BIOE 480
   - BIOE 485
-  id: non-ece-courses-from-list-below-6
+  id: non-ece-courses-from-list-below-5
 - name: Non-ECE courses from list below
   section: Technical Electives
   rule: manual
@@ -159,7 +151,7 @@ groups:
   - CHBE 474
   - CHEM 104
   - CHEM 105
-  id: non-ece-courses-from-list-below-7
+  id: non-ece-courses-from-list-below-6
 - name: Non-ECE courses from list below
   section: Technical Electives
   rule: manual
@@ -381,7 +373,7 @@ groups:
   - LING 407
   - LING 427
   - MSE 280
-  id: non-ece-courses-from-list-below-8
+  id: non-ece-courses-from-list-below-7
 - name: Non-ECE courses from list below
   section: Technical Electives
   rule: manual
@@ -541,8 +533,8 @@ groups:
   - TAM 435
   - TAM 445
   - TAM 451
-  id: non-ece-courses-from-list-below-9
-- name: Non-ECE courses from list below
+  id: non-ece-courses-from-list-below-8
+- name: Select three courses from the following list of Advanced Core ECE electives.
   section: Technical Electives
   rule: n_of
   n: 3
@@ -555,8 +547,8 @@ groups:
   - ECE 350
   notes:
   - Select three courses from the following list of Advanced Core ECE electives.
-  id: non-ece-courses-from-list-below-10
-- name: Non-ECE courses from list below
+  id: select-three-courses-from-the-following-9
+- name: Select three courses from the following list of ECE labs. At least one must be a Hardware Lab.
   section: Technical Electives
   rule: manual
   notes:
@@ -591,8 +583,8 @@ groups:
   - ECE 486
   - ECE 489
   - ECE 495
-  id: non-ece-courses-from-list-below-11
-- name: Non-ECE courses from list below
+  id: select-three-courses-from-the-following-10
+- name: Select three courses from the following list of ECE labs. At least one must be a Hardware Lab.
   section: Technical Electives
   rule: manual
   notes:
@@ -603,11 +595,11 @@ groups:
   - ECE 365
   - ECE 411
   - ECE 484
-  id: non-ece-courses-from-list-below-12
+  id: select-three-courses-from-the-following-11
 - name: Free Electives
   section: Free Electives
   rule: manual
   notes:
   - Additional course work, subject to the Grainger College of Engineering restrictions to Free Electives, so that there are
     at least 128 credit hours earned toward the degree.
-  id: free-electives-13
+  id: free-electives-12

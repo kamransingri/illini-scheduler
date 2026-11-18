@@ -1,0 +1,91 @@
+# Classics: Classical Civilizations, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/classics-balas/classical-civilizations/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: classics-balas-classical-civilizations
+program: 'Classics: Classical Civilizations, BALAS'
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/classics-balas/classical-civilizations/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/classics-balas/classical-civilizations/
+groups:
+- name: General Education Requirements
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Composition I
+  - Advanced Composition
+  - Humanities & the Arts (6 hours)
+  - Natural Sciences & Technology (6 hours)
+  - Social & Behavioral Sciences (6 hours)
+  - 'Cultural Studies: Non-Western Cultures (1 course)'
+  - 'Cultural Studies: US Minority Cultures (1 course)'
+  - 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  - Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English, or completion
+    of the third semester in two different languages other than English is required
+  id: general-education-requirements-1
+- name: Orientation and Professional Development
+  section: General Education Requirements
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-and-professional-development-2
+- name: Concentration Coursework
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Students complete 32 credit hours of which 12 must be completed at the 300 or 400 level from the list below:'
+  courses:
+  - CLCV 114
+  - CLCV 115
+  - CLCV 116
+  - CLCV 120
+  - CLCV 131
+  - CLCV 132
+  - CLCV 133
+  - CLCV 160
+  - CLCV 203
+  - CLCV 206
+  - CLCV 220
+  - CLCV 221
+  - CLCV 224
+  - CLCV 225
+  - CLCV 230
+  - CLCV 231
+  - CLCV 232
+  - CLCV 240
+  - CLCV 250
+  - CLCV 322
+  - CLCV 323
+  - CLCV 443
+  - CLCV 444
+  - CLCV 450
+  - CLCV 490
+  - CLCV 491
+  - CLCV 492
+  - CLCV 493
+  - GRKM 260
+  id: concentration-coursework-3
+- name: Concentration Coursework
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Supporting coursework, a minor, or a second major in an area of study chosen by the student and approved by the Department
+    of the Classics Director of Undergraduate Studies
+  id: concentration-coursework-4

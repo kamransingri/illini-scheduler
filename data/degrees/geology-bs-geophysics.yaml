@@ -1,0 +1,100 @@
+# Geology: Geophysics, BS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/geology-bs/geophysics/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: geology-bs-geophysics
+program: 'Geology: Geophysics, BS'
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/geology-bs/geophysics/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 126
+notes:
+- 'Minimum hours required for graduation: 126 hours.'
+double_counting: []
+groups:
+- name: 'Chemistry: Select one group of courses'
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: manual
+  notes:
+  - 'The catalog lists these courses under Chemistry: Select one group of courses; see the catalog page for the rule.'
+  courses:
+  - CHEM 102
+  - CHEM 103
+  - CHEM 104
+  - - CHEM 105
+    - CHEM 202
+  - CHEM 203
+  - CHEM 204
+  - CHEM 205
+  id: chemistry-select-one-group-of-courses-1
+- name: 22 hours of Geology Courses
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: all
+  courses:
+  - GEOL 107
+  - GEOL 208
+  - GEOL 452
+  id: 22-hours-of-geology-courses-2
+- name: 22 hours of Geology Courses
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: manual
+  notes:
+  - 10 additional hours of 300 or 400 level geology courses
+  id: 22-hours-of-geology-courses-3
+- name: Mathematics
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: manual
+  notes:
+  - 10 additional hours of 300 or 400 level geology courses
+  courses:
+  - - MATH 220
+    - MATH 221
+  - MATH 231
+  - MATH 241
+  - - MATH 225
+    - MATH 415
+  - MATH 285
+  id: mathematics-4
+- name: Physics
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: manual
+  notes:
+  - 10 additional hours of 300 or 400 level geology courses
+  courses:
+  - PHYS 211
+  - PHYS 212
+  - PHYS 213
+  - PHYS 214
+  id: physics-5
+- name: Physics
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: n_of
+  n: 1
+  courses:
+  - - PHYS 325
+    - TAM 210 + TAM 212
+  notes:
+  - 'Select one of the following:'
+  id: physics-6
+- name: Additional Technical Requirements
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: manual
+  notes:
+  - 'Catalog total: 13 hours.'
+  - 10 additional hours of 300 or 400 level geology courses
+  courses:
+  - - CS 101
+    - CS 125
+  - - MSE 401
+    - PHYS 427
+    - CHEM 444
+  id: additional-technical-requirements-7
+- name: Additional Technical Requirements
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: manual
+  notes:
+  - Six hours of other 300- or 400-level science, math, or engineering courses selected with adviser approval.
+  id: additional-technical-requirements-8

@@ -1,0 +1,209 @@
+# Recreation, Sport & Tourism: Sport Management, BS (College of Applied Health Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/ahs/recreation-sport-tourism-bs/sport-management/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: recreation-sport-tourism-bs-sport-management
+program: 'Recreation, Sport & Tourism: Sport Management, BS'
+college: College of Applied Health Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/ahs/recreation-sport-tourism-bs/sport-management/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 128
+notes:
+- 'Minimum hours required for graduation: 128 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/ahs/recreation-sport-tourism-bs/sport-management/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by RST 410
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by RST 100 and any other course approved as Social & Behavioral Sciences
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by RST 370 and any other course approved as Quantitative Reasoning I
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Communication Requirement
+  section: 'Major Requirements:'
+  rule: all
+  courses:
+  - - CMN 101
+    - CMN 111 + CMN 112
+  id: communication-requirement-11
+- name: Core Courses
+  section: 'Major Requirements:'
+  rule: all
+  courses:
+  - RST 100
+  - RST 101
+  - RST 200
+  - RST 210
+  - RST 240
+  - RST 255
+  - RST 325
+  - RST 340
+  - RST 370
+  - RST 410
+  - RST 429
+  - RST 440
+  - RST 460
+  - RST 465
+  notes:
+  - 'Catalog total: 39 hours.'
+  id: core-courses-12
+- name: Electives
+  section: 'Major Requirements:'
+  rule: manual
+  notes:
+  - 'Restricted Electives (12 hours): Departmental courses (RST) not required in the core or counted toward concentration
+    requirement.'
+  - 'Free Electives (16-20 hours): Any courses not counted toward core requirements, concentration requirements, or restricted
+    electives.'
+  id: electives-13
+- name: Experiential Education
+  section: 'Major Requirements:'
+  rule: manual
+  notes:
+  - 'Catalog total: 13 hours.'
+  - 'Restricted Electives (12 hours): Departmental courses (RST) not required in the core or counted toward concentration
+    requirement.'
+  - 'Free Electives (16-20 hours): Any courses not counted toward core requirements, concentration requirements, or restricted
+    electives.'
+  courses:
+  - RST 480
+  - RST 485
+  id: experiential-education-14
+- name: Concentration required
+  section: 'Major Requirements:'
+  rule: manual
+  notes:
+  - 'Catalog total: 9 hours.'
+  - Recreation Management
+  - Sport Management
+  - Tourism Management
+  id: concentration-required-15
+- name: Sport Management Concentration Requirements
+  section: Sport Management Concentration Requirements
+  rule: all
+  courses:
+  - RST 130
+  - RST 354
+  - RST 430
+  id: sport-management-concentration-requireme-16
+- name: Concentration Requirements
+  section: Sport Management Concentration Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 9 hours.'
+  - 'Concentration Requirements: see the catalog page for which courses count.'
+  id: concentration-requirements-17

@@ -1,0 +1,102 @@
+# Geology: Environmental Geology, BS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/geology-bs/environmental-geology/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: geology-bs-environmental-geology
+program: 'Geology: Environmental Geology, BS'
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/geology-bs/environmental-geology/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 126
+notes:
+- 'Minimum hours required for graduation: 126 hours.'
+double_counting: []
+groups:
+- name: Chemistry- Select one group of courses
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: manual
+  notes:
+  - The catalog lists these courses under Chemistry- Select one group of courses; see the catalog page for the rule.
+  courses:
+  - CHEM 102
+  - CHEM 103
+  - CHEM 104
+  - - CHEM 105
+    - CHEM 202
+  - CHEM 203
+  - CHEM 204
+  - CHEM 205
+  id: chemistry-select-one-group-of-courses-1
+- name: 24 hours of Geology Courses
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: all
+  courses:
+  - GEOL 107
+  - GEOL 208
+  - GEOL 380
+  - GEOL 401
+  - - GEOL 451
+    - GEOL 452
+  - GEOL 470
+  id: 24-hours-of-geology-courses-2
+- name: Mathematics
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: all
+  courses:
+  - - MATH 220
+    - MATH 221
+  - MATH 231
+  - MATH 241
+  id: mathematics-3
+- name: Physics
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: all
+  courses:
+  - - PHYS 211 + PHYS 212
+    - PHYS 101 + PHYS 102
+  id: physics-4
+- name: Statistics- Select one of the following
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: n_of
+  n: 1
+  courses:
+  - CPSC 440
+  - STAT 400
+  notes:
+  - 'Catalog total: 4 hours.'
+  - Choose 1.
+  id: statistics-select-one-of-the-following-5
+- name: Additional Technical Requirements
+  section: 'Minimum hours required for graduation: 126 hours.'
+  rule: manual
+  notes:
+  - 'Catalog total: 24 hours.'
+  - Select from the following courses. At least 9 hours must be geology courses and at least 9 hours must be non-geology courses.
+  courses:
+  - CEE 330
+  - CHEM 232
+  - CS 101
+  - CS 125
+  - ENVS 431
+  - GGIS 477
+  - GEOL 411
+  - GEOL 417
+  - GEOL 432
+  - GEOL 436
+  - GEOL 440
+  - GEOL 460
+  - MATH 225
+  - MATH 415
+  - MATH 285
+  - MATH 441
+  - MCB 100
+  - MCB 101
+  - PHYS 213
+  - PHYS 214
+  - STAT 420
+  - TAM 210
+  - TAM 211
+  id: additional-technical-requirements-6

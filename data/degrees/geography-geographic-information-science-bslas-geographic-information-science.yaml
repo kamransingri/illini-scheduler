@@ -1,0 +1,247 @@
+# Geography & Geographic Information Science: Geographic Information Science, BSLAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/geography-geographic-information-science-bslas/geographic-information-science/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: geography-geographic-information-science-bslas-geographic-information-science
+program: 'Geography & Geographic Information Science: Geographic Information Science, BSLAS'
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/geography-geographic-information-science-bslas/geographic-information-science/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300 and 400 level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/geography-geographic-information-science-bslas/geographic-information-science/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by GGIS 101, GGIS 104, GGIS 106, GGIS 210, GGIS 221, or GGIS 254 and any other course approved Social & Behavioral
+    Sciences
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by GGIS 371 and any other course approved as Quantitative Reasoning I
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English, or completion
+    of the third semester in two different languages other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: General Education Requirements
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-and-professional-development-11
+- name: Geography & GIS Core Requirements
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Physical Geography Course (Select 1):'
+  courses:
+  - GGIS 100
+  - GGIS 103
+  - GGIS 220
+  - GGIS 222
+  id: geography-gis-core-requirements-12
+- name: Geography & GIS Core Requirements
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Human Geography Course (Select 1):'
+  courses:
+  - GGIS 101
+  - GGIS 104
+  - GGIS 106
+  - GGIS 210
+  - GGIS 221
+  - GGIS 254
+  id: geography-gis-core-requirements-13
+- name: GIS Core Courses
+  section: Geographic Information Science (GIS) Concentration Requirements
+  rule: manual
+  notes:
+  - The catalog lists these courses under GIS Core Courses; see the catalog page for the rule.
+  courses:
+  - GGIS 371
+  - GGIS 379
+  - GGIS 380
+  id: gis-core-courses-14
+- name: GIS Core Courses
+  section: Geographic Information Science (GIS) Concentration Requirements
+  rule: manual
+  notes:
+  - 'Computer Science Course (Select 1):'
+  courses:
+  - CS 105
+  - CS 124
+  id: gis-core-courses-15
+- name: GIS Core Courses
+  section: Geographic Information Science (GIS) Concentration Requirements
+  rule: manual
+  notes:
+  - or equivalent course approved by the Department’s Advisor
+  - 'GIS Elective Courses (Select 3):'
+  courses:
+  - GGIS 205
+  - GGIS 280
+  - GGIS 381
+  - GGIS 403
+  - GGIS 407
+  - GGIS 412
+  - GGIS 421
+  - GGIS 439
+  - GGIS 460
+  - GGIS 473
+  - GGIS 476
+  - GGIS 477
+  - GGIS 478
+  - GGIS 479
+  - GGIS 480
+  - GGIS 489
+  id: gis-core-courses-16
+- name: GIS Core Courses
+  section: Geographic Information Science (GIS) Concentration Requirements
+  rule: manual
+  notes:
+  - 'Human and/or Physical Geography Courses (Select 2):'
+  courses:
+  - GGIS 204
+  - GGIS 210
+  - GGIS 220
+  - GGIS 221
+  - GGIS 222
+  - GGIS 223
+  - GGIS 224
+  - GGIS 254
+  - GGIS 287
+  - GGIS 350
+  - ESE 320 + GGIS 370
+  - GGIS 384
+  - GGIS 401
+  - GGIS 405
+  - GGIS 406
+  - GGIS 408
+  - GGIS 410
+  - GGIS 425
+  - IB 439 + GGIS 436
+  - GGIS 438
+  - GGIS 446
+  - GGIS 455
+  - GGIS 459
+  - GGIS 465
+  - GGIS 466
+  - GGIS 471
+  - GGIS 482
+  - GGIS 483
+  - GGIS 495
+  - GGIS 496
+  id: gis-core-courses-17

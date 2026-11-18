@@ -1,5 +1,5 @@
 # Environmental Sustainability, BSLAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/las/environmental-sustainability-bslas/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/las/environmental-sustainability-bslas/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Environmental Sustainability, BSLAS
 college: College of Liberal Arts and Sciences
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/las/environmental-sustainability-bslas/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 120
 notes:
 - 'Minimum hours required for graduation: 120 hours.'
@@ -144,14 +144,6 @@ groups:
   notes:
   - 'Catalog total: 10 hours.'
   id: ese-coursework-12
-- name: Advanced Courses
-  section: Major Requirements
-  rule: manual
-  notes:
-  - A minimum of six 300- and 400-level courses (from the lists below), totaling at least 18 credit hours, and in an academically
-    coherent program approved by the advisor, are required. At least three of these six advanced courses must be listed or
-    cross-listed as an ESE or ENSU course.
-  id: advanced-courses-13
 - name: Capstone and Experiential
   section: Major Requirements
   rule: manual
@@ -163,7 +155,7 @@ groups:
   - ESE 389
   - ESE 401
   - ESE 497
-  id: capstone-and-experiential-14
+  id: capstone-and-experiential-13
 - name: Earth's Biosphere & Ecology
   section: Major Requirements
   rule: manual
@@ -185,7 +177,7 @@ groups:
   - NRES 348
   - NRES 419
   - NRES 420
-  id: earth-s-biosphere-ecology-15
+  id: earth-s-biosphere-ecology-14
 - name: Earth's Physical Systems, Resources, & Hazards
   section: Major Requirements
   rule: manual
@@ -214,7 +206,7 @@ groups:
   - GGIS 408
   - MSE 489
   - NRES 351
-  id: earth-s-physical-systems-resources-hazar-16
+  id: earth-s-physical-systems-resources-hazar-15
 - name: Environment & the Human Response
   section: Major Requirements
   rule: manual
@@ -241,7 +233,7 @@ groups:
   - NRES 340
   - NRES 472
   - SOC 447
-  id: environment-the-human-response-17
+  id: environment-the-human-response-16
 - name: Sustainability, Policy, and Global Change
   section: Major Requirements
   rule: manual
@@ -273,7 +265,7 @@ groups:
   - UP 446
   - UP 456
   - UP 480
-  id: sustainability-policy-and-global-change-18
+  id: sustainability-policy-and-global-change-17
 - name: Visualizing the Earth System
   section: Major Requirements
   rule: manual
@@ -294,11 +286,11 @@ groups:
   - GGIS 479
   - NRES 427
   - NRES 454
-  id: visualizing-the-earth-system-19
+  id: visualizing-the-earth-system-18
 - name: Required Concentration. Choose one below
   section: Major Requirements
   rule: manual
   notes:
   - Science of the Earth System
   - Society and the Environment
-  id: required-concentration-choose-one-below-20
+  id: required-concentration-choose-one-below-19
