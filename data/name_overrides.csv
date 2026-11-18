@@ -1,3 +1,6 @@
-subject,raw_name,instructor_key
-# Add rows to force a Course Explorer name onto a GPA-dataset identity, e.g.:
-# STAT,"Wang, S",wang|shiyu
+subject,raw_name,instructor_key,source
+# Force a Course Explorer name (in one subject) onto a GPA-dataset identity when the matcher can't link it (#12).
+# Every row needs a primary source in `source`: a department directory page or course page naming the instructor,
+# with the date read. Never guess; a name that stays ambiguous stays unmatched. Example:
+# STAT,"Doe, J",doe|jane,"<department page URL> lists Jane Doe teaching STAT 400 in Spring 2027 (read 2027-01-10)"
+# Check the effect with: python -m pipeline.names --report --subjects STAT

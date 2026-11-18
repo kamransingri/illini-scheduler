@@ -21,7 +21,7 @@ from typing import Any
 
 from .config import WEB_DATA
 from .fetch import CURRENT_TERM, NEXT_TERM
-from .names import parse_name, term_order
+from .names import alias_key, load_aliases, parse_name, term_order
 from .renumbered import Renamer
 from .rmp import course_code, fits_subject
 
@@ -138,11 +138,10 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA, rename: Renamer | No
     # ---- instructors -------------------------------------------------------------------------------------
     people = {r["instructor_key"]: dict(r) for r in conn.execute("SELECT * FROM instructors")}
     rmp = {r["rmp_id"]: dict(r) for r in conn.execute("SELECT * FROM rmp")}
-    alias = {(r["raw_name"], r["subject"]): r["instructor_key"]
-             for r in conn.execute("SELECT raw_name, subject, instructor_key FROM instructor_aliases")}
+    alias = load_aliases(conn)
 
-    def ikey(raw: str, subject: str) -> str:
-        k = alias.get((raw, subject))
+    def ikey(raw: str, subject: str, number: str = "") -> str:
+        k = alias_key(alias, raw, subject, number)
         if k:
             return k
         p = parse_name(raw)
@@ -150,7 +149,7 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA, rename: Renamer | No
 
     # Full last names as Course Explorer prints them (the GPA dataset clips long names at 25 chars).
     ce_last: dict[str, str] = {}
-    for (raw, _subj), k in alias.items():
+    for (raw, _subj, _num), k in alias.items():
         last = raw.split(",")[0].strip()
         if len(last) > len(ce_last.get(k, "")):
             ce_last[k] = last
@@ -250,7 +249,8 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA, rename: Renamer | No
             "credits": r["section_credit_hours"] or "", "title": r["section_title"] or "",
             "text": " ".join(filter(None, (r["section_text"], r["section_notes"]))),
             "meetings": meet.get((r["term"], r["crn"]), []),
-            "instructors": [ikey(x, r["subject"]) for x in raws], "instructors_raw": raws, "special": "",
+            "instructors": [ikey(x, r["subject"], r["number"]) for x in raws], "instructors_raw": raws,
+            "special": "",
             **({"fx": finals[(r["term"], r["crn"])]} if (r["term"], r["crn"]) in finals else {}),
         })
     notes = _load_notes()
