@@ -106,3 +106,28 @@ def test_minor_with_its_list_on_the_overview_tab():
     assert names[0] == ("Required courses", "Requirements", "all") and d["groups"][0]["courses"] == ["HIST 200"]
     assert [g["id"] for g in d["groups"]] == ["required-courses-1", "more-requirements-2"]
     assert names[1][2] == "manual" and any("Non-Western" in n for n in d["groups"][1]["notes"])
+
+
+def test_choice_headings_are_manual_but_core_and_single_electives_stay_required():
+    listish = catalog_import.listish
+    assert listish("Urbanism (select one)", 6) and listish("Citizen Politics Course List", 27)
+    assert listish("For the Biomaterials Area", 1) and listish("Technical Electives", 5)
+    assert listish("Instrumental Music Options", 3, own=False)  # one table per option under one heading
+    assert not listish("Information Systems, BS Major Core Requirements and Electives", 3)  # the required core
+    assert not listish("Introductory Economics Elective", 1)  # ECON 102 or ECON 103: exactly one requirement
+    assert not listish("Introductory Economics Elective", 7, own=False)  # a later table under that heading
+    assert not listish("Business Core Requirements", 9) and not listish("Selectional", 2)
+
+
+def test_a_heading_only_turns_its_own_list_manual():
+    rows = [{"kind": "code", "codes": ["PS 101"], "hours": "3"}, {"kind": "code", "codes": ["PS 201"], "hours": "3"}]
+    rule = lambda r, name, **kw: [g["rule"] for g in catalog_import.program_groups(r, name, 1, **kw)]  # noqa: E731
+    assert rule(rows, "Citizen Politics Course List") == ["manual"]
+    assert rule(rows, "Technical Electives") == ["manual"]
+    assert rule(rows, "Technical Electives", fresh=False) == ["all"]  # that heading was for a table above
+    assert rule(rows, "Major Core Requirements and Electives") == ["all"]
+    area = [{"kind": "area", "text": "Drawing (select one course)", "hours": ""}, *rows]
+    assert rule(area, "Degree Requirements", fresh=False) == ["manual"]  # an area row is the list's own heading
+    # the rule never changes a group's id, so ticked groups in saved links still match
+    ids = [g["id"] for g in catalog_import.program_groups(rows, "Technical Electives", 4)]
+    assert ids == [g["id"] for g in catalog_import.program_groups(rows, "Technical Electives", 4, fresh=False)]

@@ -1,5 +1,5 @@
 # Speech & Hearing Science, BS (College of Applied Health Sciences), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/ahs/speech-hearing-science-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/ahs/speech-hearing-science-bs/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -9,7 +9,7 @@ college: College of Applied Health Sciences
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/ahs/speech-hearing-science-bs/
 read_on: '2026-11-16'
-generated: '2026-11-16'
+generated: '2026-11-17'
 total_hours: 120
 notes:
 - 'Minimum hours required for graduation: 120 hours.'
@@ -136,7 +136,9 @@ groups:
   source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
 - name: Chemistry/Physics Requirement (Select one)
   section: Chemistry/Physics Requirement (Select one)
-  rule: all
+  rule: manual
+  notes:
+  - The catalog lists these courses under Chemistry/Physics Requirement (Select one); see the catalog page for the rule.
   courses:
   - CHEM 101
   - CHEM 102 + CHEM 103
@@ -149,7 +151,9 @@ groups:
   id: chemistry-physics-requirement-select-one-11
 - name: Animal/Human Biology Requirement (Select one)
   section: Animal/Human Biology Requirement (Select one)
-  rule: all
+  rule: manual
+  notes:
+  - The catalog lists these courses under Animal/Human Biology Requirement (Select one); see the catalog page for the rule.
   courses:
   - ANTH 143
   - ANTH 241
@@ -166,7 +170,9 @@ groups:
   id: animal-human-biology-requirement-select-12
 - name: Statistics Requirement (Select one)
   section: Statistics Requirement (Select one)
-  rule: all
+  rule: manual
+  notes:
+  - The catalog lists these courses under Statistics Requirement (Select one); see the catalog page for the rule.
   courses:
   - STAT 100
   - STAT 107
