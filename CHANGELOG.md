@@ -10,6 +10,13 @@ history).
 
 ## [Unreleased]
 
+### Added
+
+- Schedule builder: a **Best professor** priority (Medium by default). Each lecture is scored with the course page's
+  best-pick score, so schedules prefer the lecture taught by the course's best professor, and of two sections at the
+  same time the better professor's is the one picked. Results label the lecture's professor score and "Best pick".
+  A "Best professors" starting point turns it to High (#49).
+
 ## [0.10.0] - 2026-11-18
 
 ### Added

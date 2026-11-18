@@ -744,3 +744,23 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D24.3 Not done here.** The Fall 2027 bump itself waits for March 2027, so #33 stays open. Repo size: `.git` is
   well under the ~200 MB the issue set as the point to move `data/availability/*.json` to a separate branch.
 
+## Best professor in the schedule builder (2026-11-18, issue #49)
+
+- **D25.1 The same score as the course page.** Each lecture option gets its professor's best-pick score for the chosen
+  term (`rankProfs` in `web/lib/rank.ts`: course GPA, the professor's GPA difference, RMP and open seats, small samples
+  shrunk, with the student's own score weights). The builder's "Best pick" is therefore always the professor the course
+  page ranks first. A lecture with two scored professors takes the higher score; one with none counts as average (0.5),
+  not as zero, so an unrated new lecturer isn't pushed to the bottom.
+- **D25.2 A priority, not a rule.** "Best professor" sits with the other priorities (default Medium, 2). It is the
+  average score of the schedule's scored lectures, on the same 0-1 scale as the rest. It overlaps Higher expected GPA
+  and Better-rated professors on purpose: those stay for students who care about one part only. A "Best professors"
+  starting point sets it to High.
+- **D25.3 Same-time sections.** Sections with identical times and campus area are merged into one choice; the one
+  shown is now the one with the best professor too (when the priority is on), and the others stay listed as
+  same-time alternatives.
+- **D25.4 Search bound.** The branch-and-bound needs an optimistic estimate for a partial schedule. An average is never
+  above the larger of the average so far and the best score still available, so that is the bound; a unit test
+  compares the top schedule with an exhaustive search on 300 random carts.
+- **D25.5 Links.** Weights are written as digits; Best professor is the ninth. Links with 8 digits (before this) keep
+  its default.
+

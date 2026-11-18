@@ -112,6 +112,27 @@ describe("generator properties", () => {
     expect(schedules).toBeGreaterThan(1000);
   });
 
+  it("pruning never drops the best schedule when Best professor is on (300 random carts, top 1 vs all)", () => {
+    for (let cart = 0; cart < 300; cart++) {
+      const n = 1 + Math.floor(rnd() * 4);
+      const inputs: CourseInput[] = Array.from({ length: n }, (_, i) => {
+        const c = randomCourse(i);
+        const scores: Record<string, number | null> = {};
+        for (const s of c.terms["2027-sp"].sections)
+          if (s.component === "primary") {
+            s.instructors = [`p${s.crn}`];
+            scores[`p${s.crn}`] = rnd() < 0.2 ? null : Math.round(rnd() * 100);
+          }
+        return { key: `X ${c.number}`, course: c, credits: 3, locked: [], profScores: scores };
+      });
+      const prefs = { ...DEFAULT_PREFS, weights: { ...DEFAULT_PREFS.weights, prof: 3 } };
+      const all = generate(inputs, "2027-sp", prefs, 100000, 60000);
+      const top = generate(inputs, "2027-sp", prefs, 1);
+      if (!all.schedules.length) continue;
+      expect(top.schedules[0].score).toBeCloseTo(all.schedules[0].score, 9);
+    }
+  });
+
   it("respects hard prefs: no 8am, no Friday, blocked times, locked CRN", () => {
     for (let k = 0; k < 200; k++) {
       const inputs: CourseInput[] = [0, 1, 2].map((i) => {
@@ -234,13 +255,13 @@ describe("explanations", () => {
   });
   it("prefers open sections when that weight is on", () => {
     const c = mk("152", [{ ...fixed("A", "primary", "*", M, 600, 650), status: "Closed" }, { ...fixed("B", "primary", "*", T, 600, 650), status: "Open" }]);
-    const w0 = { gpa: 0, rmp: 0, early: 0, late: 0, daysOff: 0, compact: 0, walking: 0, open: 0 };
+    const w0 = { gpa: 0, rmp: 0, early: 0, late: 0, daysOff: 0, compact: 0, walking: 0, open: 0, prof: 0 };
     expect(generate([c], "2027-sp", { ...DEFAULT_PREFS, weights: { ...w0, open: 3 } }).schedules[0].bundles[0].sections[0].code).toBe("B");
   });
   it("lists the closed sections a schedule needs, and ranks schedules that need fewer of them first (#27)", () => {
     const a = mk("154", [{ ...fixed("A", "primary", "*", M, 600, 650), status: "Closed" }, { ...fixed("B", "primary", "*", T, 600, 650), status: "Open" }]);
     const b = mk("155", [{ ...fixed("C", "primary", "*", W, 600, 650), status: "Closed" }, { ...fixed("D", "primary", "*", R, 600, 650), status: "Closed" }]);
-    const w0 = { gpa: 0, rmp: 0, early: 0, late: 0, daysOff: 0, compact: 0, walking: 0, open: 1 };
+    const w0 = { gpa: 0, rmp: 0, early: 0, late: 0, daysOff: 0, compact: 0, walking: 0, open: 1, prof: 0 };
     const { schedules } = generate([a, b], "2027-sp", { ...DEFAULT_PREFS, weights: w0 });
     const watch = schedules.map((s) => sectionsToWatch(s).map((x) => `${x.course} ${x.section.code}`));
     expect(watch[0]).toHaveLength(1); // B is open; X 155 has no open section, so one closed section is the least
@@ -250,7 +271,7 @@ describe("explanations", () => {
   });
   it("late classes count against the 'avoid classes after' time the student picks", () => {
     const c = mk("153", [fixed("A", "primary", "*", M, 1080, 1170), fixed("B", "primary", "*", M, 600, 650)]);
-    const w0 = { gpa: 0, rmp: 0, early: 0, late: 3, daysOff: 0, compact: 0, walking: 0, open: 0 };
+    const w0 = { gpa: 0, rmp: 0, early: 0, late: 3, daysOff: 0, compact: 0, walking: 0, open: 0, prof: 0 };
     expect(generate([c], "2027-sp", { ...DEFAULT_PREFS, weights: w0 }).schedules[0].bundles[0].sections[0].code).toBe("B");
     // with "too late" at 8pm, the 6pm class is fine too and the two tie
     const tie = generate([c], "2027-sp", { ...DEFAULT_PREFS, softLate: 1200, weights: w0 }).schedules;
@@ -276,16 +297,47 @@ describe("explanations", () => {
       few: { name: "Few", teaching: ["2027-sp"], gpa: null, rmp: rmp(5, 2), exam: null, tre: [], in_gpa_dataset: false },
       many: { name: "Many", teaching: ["2027-sp"], gpa: null, rmp: rmp(4.6, 200), exam: null, tre: [], in_gpa_dataset: false },
     };
-    const prefs = { ...DEFAULT_PREFS, weights: { gpa: 0, rmp: 3, early: 0, late: 0, daysOff: 0, compact: 0, walking: 0, open: 0 } };
+    const prefs = { ...DEFAULT_PREFS, weights: { gpa: 0, rmp: 3, early: 0, late: 0, daysOff: 0, compact: 0, walking: 0, open: 0, prof: 0 } };
     const first = (input: CourseInput) => generate([input], "2027-sp", prefs).schedules[0].bundles[0].sections[0].code;
     expect(first(c)).toBe("A"); // raw ratings: 2 ratings of 5.0 beat 200 ratings of 4.6
     expect(first({ ...c, rmpPrior: 3.6 })).toBe("B"); // shrunk: (2*5 + 10*3.6) / 12 = 3.83 < 4.55
+  });
+
+  // #49: the builder prefers the lecture taught by the course's best professor (the course page's best-pick score)
+  const profOnly = { ...DEFAULT_PREFS, weights: { gpa: 0, rmp: 0, early: 0, late: 0, daysOff: 0, compact: 0, walking: 0, open: 0, prof: 3 } };
+  const twoProfs = (sameTime: boolean) =>
+    mk("310", [
+      { ...fixed("A", "primary", "*", M, 600, 650), instructors: ["weak"] },
+      { ...fixed("B", "primary", "*", sameTime ? M : T, 600, 650), instructors: ["strong"] },
+    ]);
+  it("Best professor: the best-pick professor's lecture is chosen, and the bundle says who and why (#49)", () => {
+    const c = { ...twoProfs(false), profScores: { weak: 41, strong: 83 } };
+    const top = generate([c], "2027-sp", profOnly).schedules[0].bundles[0];
+    expect(top.sections[0].code).toBe("B");
+    expect(top.prof).toEqual({ key: "strong", score: 83 });
+    expect(generate([{ ...c, profScores: { weak: 90, strong: 20 } }], "2027-sp", profOnly).schedules[0].bundles[0].sections[0].code).toBe("A");
+    // off: the two lectures tie on this priority
+    const off = generate([c], "2027-sp", { ...profOnly, weights: { ...profOnly.weights, prof: 0 } }).schedules;
+    expect(off[0].score).toBeCloseTo(off[1].score);
+  });
+  it("same-time lectures: the better professor's section stands for them (#49)", () => {
+    const c = { ...twoProfs(true), profScores: { weak: 41, strong: 83 } };
+    const res = generate([c], "2027-sp", DEFAULT_PREFS);
+    expect(res.schedules).toHaveLength(1); // same times and building: one choice, two alternatives
+    const b = res.schedules[0].bundles[0];
+    expect(b.alternatives).toHaveLength(2);
+    expect(b.sections[0].code).toBe("B");
+    expect(b.prof?.key).toBe("strong");
+  });
+  it("a lecture nobody has scored counts as average, not as zero", () => {
+    const c = { ...twoProfs(false), profScores: { strong: 40 } }; // "weak" has no score
+    expect(generate([c], "2027-sp", profOnly).schedules[0].bundles[0].sections[0].code).toBe("A");
   });
 });
 
 describe("final exams", () => {
   const withFinals = (course: string, fx: Section["fx"]): Bundle => ({
-    course, sections: [{ ...sec("AL1", "primary", "A"), fx }], meetings: [], crns: [], gpa: null, rmp: null, alternatives: [],
+    course, sections: [{ ...sec("AL1", "primary", "A"), fx }], meetings: [], crns: [], gpa: null, rmp: null, prof: null, alternatives: [],
   });
   const sched = (...bundles: Bundle[]): Schedule => ({ bundles, score: 0, stats: {} as Schedule["stats"] });
 
