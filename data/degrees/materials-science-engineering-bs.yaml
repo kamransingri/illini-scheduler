@@ -1,5 +1,5 @@
 # Materials Science & Engineering, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/engineering/materials-science-engineering-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/materials-science-engineering-bs/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -9,7 +9,7 @@ college: The Grainger College of Engineering
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/engineering/materials-science-engineering-bs/
 read_on: '2026-11-16'
-generated: '2026-11-16'
+generated: '2026-11-17'
 total_hours: 128
 notes:
 - 'Minimum hours required for graduation: 128 hours.'
@@ -187,7 +187,9 @@ groups:
   id: for-all-students-15
 - name: For the Biomaterials Area
   section: For the Biomaterials Area
-  rule: all
+  rule: manual
+  notes:
+  - The catalog lists these courses under For the Biomaterials Area; see the catalog page for the rule.
   courses:
   - CHEM 232
   - IE 300
@@ -198,7 +200,9 @@ groups:
   id: for-the-biomaterials-area-16
 - name: For All Other Areas
   section: For All Other Areas
-  rule: all
+  rule: manual
+  notes:
+  - The catalog lists these courses under For All Other Areas; see the catalog page for the rule.
   courses:
   - - IE 300
     - STAT 400
@@ -207,7 +211,9 @@ groups:
   id: for-all-other-areas-17
 - name: For the Biomaterials Area
   section: For the Biomaterials Area
-  rule: all
+  rule: manual
+  notes:
+  - The catalog lists these courses under For the Biomaterials Area; see the catalog page for the rule.
   courses:
   - MSE 404
   id: for-the-biomaterials-area-18
@@ -220,7 +226,9 @@ groups:
   id: for-the-biomaterials-area-19
 - name: For All Other Areas
   section: For All Other Areas
-  rule: all
+  rule: manual
+  notes:
+  - The catalog lists these courses under For All Other Areas; see the catalog page for the rule.
   courses:
   - MSE 404
   id: for-all-other-areas-20

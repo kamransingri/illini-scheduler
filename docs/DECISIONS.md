@@ -744,3 +744,24 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D24.3 Not done here.** The Fall 2027 bump itself waits for March 2027, so #33 stays open. Repo size: `.git` is
   well under the ~200 MB the issue set as the point to move `data/availability/*.json` to a separate branch.
 
+## Choice lists in imported degree data (2026-11-18)
+
+- **D25.1 The bug.** `catalog_import.py` meant to keep a list under a heading like "Urbanism (select one)" or "Course
+  List" from becoming "take all of these" (D13.28), but its word-boundary pattern held two backspace characters where
+  `` was meant, so it never matched. 23 such lists in 12 programs were imported as required: Political Science's
+  five concentration course lists (16 to 28 courses each), Speech and Hearing Science's three "(Select one)"
+  requirements, the Fine & Applied Arts online options, Instrumental Music's per-option lists, Materials Science's
+  per-area lists and others. They are now `manual` groups with the catalog's heading as the note.
+- **D25.2 Not every "elective" heading.** Simply fixing the pattern would also have demoted 15 correct lists:
+  "… Major Core Requirements and Electives" heads the required core in five business programs and Integrative
+  Biology; "Introductory Economics Elective" holds one item (ECON 102 or ECON 103) that is exactly one requirement;
+  and a heading also named the next table below it (NPRE + Data Science's required CHEM/MATH table sat under
+  "Introductory Economics Elective"). So choice words (select, choose, pick, option, list, focus, area) always count,
+  even for the further tables under one heading ("Instrumental Music Options" has one table per option); "elective"
+  counts only on the list's own heading (an area row, or the page heading right above that table), without core or
+  required wording, and with more than one item. Every group keeps its id, so ticked groups in saved links still match.
+- **D25.3 Regenerated files.** The 12 programs were re-parsed from the cached pages (`--offline`); `read_on` keeps the
+  date the pages were read. `computer-science-bioengineering-bs.yaml` also picked up an earlier parser fix ("Select 15
+  hours of technical elective credit" is now an hours rule). Files whose only change was the date were left alone. A
+  test now fails if any source file contains a control character.
+

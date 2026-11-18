@@ -1,5 +1,5 @@
 # Instrumental Music, BMUS (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/faa/instrumental-music-bmus/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/faa/instrumental-music-bmus/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -9,7 +9,7 @@ college: College of Fine and Applied Arts
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/faa/instrumental-music-bmus/
 read_on: '2026-11-16'
-generated: '2026-11-16'
+generated: '2026-11-17'
 total_hours: 120
 notes:
 - 'Minimum hours required for graduation: 120 hours.'
@@ -224,7 +224,9 @@ groups:
   id: instrumental-music-options-20
 - name: Instrumental Music Options
   section: Instrumental Music Options
-  rule: all
+  rule: manual
+  notes:
+  - The catalog lists these courses under Instrumental Music Options; see the catalog page for the rule.
   courses:
   - MUSC 454
   - MUS 199
@@ -238,7 +240,9 @@ groups:
   id: instrumental-music-options-22
 - name: Instrumental Music Options
   section: Instrumental Music Options
-  rule: all
+  rule: manual
+  notes:
+  - The catalog lists these courses under Instrumental Music Options; see the catalog page for the rule.
   courses:
   - MUSC 455
   - MUSC 456
@@ -253,7 +257,9 @@ groups:
   id: instrumental-music-options-24
 - name: Instrumental Music Options
   section: Instrumental Music Options
-  rule: all
+  rule: manual
+  notes:
+  - The catalog lists these courses under Instrumental Music Options; see the catalog page for the rule.
   courses:
   - MUSC 450
   id: instrumental-music-options-25

@@ -10,6 +10,13 @@ history).
 
 ## [Unreleased]
 
+### Fixed
+
+- Degree checklist: course lists the catalog presents as a choice are no longer counted as all required. 23 lists in
+  12 programs were affected, among them Political Science's concentration course lists, Speech and Hearing Science's
+  "(Select one)" requirements and the Fine & Applied Arts online options. They now show the courses with the catalog's
+  heading and a checkbox.
+
 ## [0.10.0] - 2026-11-18
 
 ### Added
