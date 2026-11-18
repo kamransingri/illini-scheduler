@@ -25,7 +25,11 @@ export type DegreeGroup = {
   notes: string[];
 };
 
-export type DcRule = { allow: boolean; within?: string; between?: [string, string]; quote: string; source: string };
+/**
+ * A double-counting rule. `approved_for` narrows it to courses approved for one of those gen-ed categories plus another
+ * one (campus policy lets an ACP or QR II course count for both of its categories); without the course it never applies.
+ */
+export type DcRule = { allow: boolean; within?: string; between?: [string, string]; approved_for?: string[]; quote: string; source: string };
 
 export type DegreeCourse = {
   t: string;
@@ -109,14 +113,21 @@ export function accepts(g: DegreeGroup, c: string, deg: Degree): boolean {
   return g.from.some((s) => selectorMatches(s, c, deg.courses[c]));
 }
 
+/** Does a rule's `approved_for` (if any) cover this course: approved for a listed category and at least one other? */
+function approvedFor(r: DcRule, course: DegreeCourse | undefined): boolean {
+  if (!r.approved_for) return true;
+  const cats = new Set(course?.g ?? []);
+  return cats.size >= 2 && r.approved_for.some((x) => cats.has(x));
+}
+
 /** May one course count toward both groups? From `not_with` and the program's quoted rules; "unclear" otherwise. */
-export function canShare(a: DegreeGroup, b: DegreeGroup, rules: DcRule[]): Verdict {
+export function canShare(a: DegreeGroup, b: DegreeGroup, rules: DcRule[], course?: DegreeCourse): Verdict {
   if (a.not_with.includes(b.id) || b.not_with.includes(a.id))
     return { allow: false, rule: null, why: `"${(a.not_with.includes(b.id) ? a : b).name}" asks for courses in addition to "${(a.not_with.includes(b.id) ? b : a).name}"` };
   const tags = (g: DegreeGroup) => [g.kind, ...(g.exclusive ? [g.exclusive] : [])];
   for (const r of rules) {
     if (r.within && a.exclusive === r.within && b.exclusive === r.within) return { allow: r.allow, rule: r, why: r.quote };
-    if (r.between) {
+    if (r.between && approvedFor(r, course)) {
       const [x, y] = r.between;
       if ((tags(a).includes(x) && tags(b).includes(y)) || (tags(a).includes(y) && tags(b).includes(x))) return { allow: r.allow, rule: r, why: r.quote };
     }
@@ -152,7 +163,7 @@ export function evaluate(deg: Degree, mine: MyCourse[], ticked: string[] = []): 
 
   const tryUse = (g: DegreeGroup, c: string, blocked: Blocked[]): boolean => {
     for (const other of usedBy.get(c) ?? []) {
-      const v = canShare(byId.get(other)!, g, deg.double_counting);
+      const v = canShare(byId.get(other)!, g, deg.double_counting, deg.courses[c]);
       if (v.allow !== true) {
         blocked.push({ code: c, other, verdict: v });
         return false;
@@ -286,7 +297,7 @@ export type DoubleMark = { group: DegreeGroup; verdict: Verdict };
 export function alsoCounts(c: string, from: DegreeGroup, open: GroupResult[], deg: Degree): DoubleMark[] {
   return open
     .filter((r) => r.group.id !== from.id && r.status !== "done" && r.status !== "in_progress" && r.group.rule !== "manual" && accepts(r.group, c, deg))
-    .map((r) => ({ group: r.group, verdict: canShare(from, r.group, deg.double_counting) }));
+    .map((r) => ({ group: r.group, verdict: canShare(from, r.group, deg.double_counting, deg.courses[c]) }));
 }
 
 const CODE_IN_TEXT = /\b([A-Z]{2,5})\s?(\d{3})\b/g;
