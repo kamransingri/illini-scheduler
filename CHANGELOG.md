@@ -10,10 +10,10 @@ history).
 
 ## [Unreleased]
 
-### Added
+### Changed
 
-- Course pages: "Suggest a note" opens a short form with the course filled in. Once a maintainer approves a note, it
-  shows on the course page word for word.
+- Course pages: "Took this course?" sends students to rate their professor on Rate My Professors, choosing the course,
+  instead of the "Suggest a note" link that needed a GitHub account.
 
 ### Fixed
 

@@ -42,7 +42,7 @@ Formula: [docs/DECISIONS.md](docs/DECISIONS.md) D13.18.
 | [Teachers Ranked as Excellent](https://github.com/wadefagen/datasets/tree/main/teachers-ranked-as-excellent) | Instructor badges | Fall 2020 to Summer 2025, instructors only |
 | [Grade disparity view](https://waf.web.engr.illinois.edu/discovery/grade_disparity_between_sections_at_uiuc/) | Design reference for the instructor comparison | Recomputed from the GPA dataset |
 | Rate My Professors (unofficial GraphQL) | Ratings, tags, snippets | Optional; cached 7 days; the site works without it |
-| Student notes (`data/notes/*.yaml`) | Exam and grading notes | Curated from "Suggest a note" GitHub issues |
+| Student notes (`data/notes/*.yaml`) | Exam and grading notes | Added by a maintainer, each with a source (students review courses on Rate My Professors) |
 | [Academic Catalog](https://catalog.illinois.edu/) | Degree requirements (`data/degrees/*.yaml`) | All 171 undergraduate programs, 2026-2027 |
 | [CITL AP credit tables](https://citl.illinois.edu/current-cutoff-scores) | Courses each AP score gives (`data/ap-credit/*.yaml`) | Students entering 2024-2025 to 2026-2027, copied by hand |
 

@@ -41,11 +41,12 @@ test("course with no GPA data says so", async ({ page }) => {
   await expect(page.getByText("No grade data", { exact: true })).toBeVisible();
 });
 
-test("Suggest a note opens the Student note form with the course filled in", async ({ page }) => {
+test("Took this course? sends students to Rate My Professors, not to GitHub", async ({ page }) => {
   await page.goto("./course/CS/124/");
-  const href = await page.getByRole("link", { name: /Suggest a note/ }).getAttribute("href");
-  const url = new URL(href!);
-  expect(url.pathname).toMatch(/\/issues\/new$/);
-  expect(url.searchParams.get("template")).toBe("student-note.yml");
-  expect(url.searchParams.get("course")).toBe("CS 124");
+  const block = page.getByTestId("review-block");
+  await expect(block).toContainText("Rate them on RMP");
+  await expect(block).toContainText("Pick CS 124 as the course");
+  await block.getByRole("link", { name: "Professors" }).click();
+  await expect(page).toHaveURL(/#professors$/);
+  await expect(page.locator('a[href*="/issues/new"]')).toHaveCount(0);
 });
