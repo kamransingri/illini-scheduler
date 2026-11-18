@@ -1,0 +1,39 @@
+# Weekly check that CITL's AP credit tables still match the snapshots taken when data/ap-credit/*.yaml were last
+# checked by hand, and that CITL hasn't published a new year (pipeline/citl_watch.py, issue #23). On a change it opens
+# one issue with the diff; it never edits the YAML.
+name: CITL AP credit check
+on:
+  schedule:
+    - cron: "41 14 * * 1" # Mondays
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: { python-version: "3.11", cache: pip }
+      - run: pip install -r requirements.txt
+      - name: Compare CITL's pages with the snapshots
+        id: check
+        run: |
+          set +e
+          python -m pipeline.citl_watch --issue issue.md
+          code=$?
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          [ "$code" -eq 0 ] || [ "$code" -eq 10 ] # 10 = changed; anything else is an error and fails the job
+      - name: Open an issue (unless one is already open)
+        if: steps.check.outputs.code == '10'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TITLE: "CITL's AP credit tables changed"
+        run: |
+          open=$(gh issue list --state open --search "\"$TITLE\" in:title" --json number --jq 'length')
+          if [ "$open" != "0" ]; then echo "An open issue already covers this."; exit 0; fi
+          gh issue create --title "$TITLE" --label degree-planner --label maintenance --body-file issue.md

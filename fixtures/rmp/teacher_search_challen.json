@@ -1,0 +1,168 @@
+{
+ "data": {
+  "newSearch": {
+   "teachers": {
+    "edges": [
+     {
+      "node": {
+       "avgDifficulty": 3.6,
+       "avgRating": 3.1,
+       "department": "Computer Science",
+       "firstName": "Geoffrey",
+       "id": "VGVhY2hlci0yMzI3Njgw",
+       "lastName": "Challen",
+       "legacyId": 2327680,
+       "numRatings": 211,
+       "ratings": {
+        "edges": [
+         {
+          "node": {
+           "class": "CS124",
+           "comment": "Don't let these other ratings scare you, it's easy. I only recommend taking this course if you have a somewhat experienced background in basic coding, otherwise it could be a little difficult. There's daily online lessons, weekly CBTF quizzes, and an easy claude project ($80 claude pro required) where all you have to do is prompt and make an app.",
+           "date": "2026-10-29 04:51:05 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS124",
+           "comment": "Actual class was easy (got a 99% with minimal effort--though I had Java background) but barely learned stuff. They want you to \"utilize AI\" for the project but it's actually just Claude coding an app for you and your only contribution is putting in prompts. I liked Geoffrey's online lectures--he explains well. But CS124 isn't a well-designed class.",
+           "date": "2026-10-24 23:00:41 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS124",
+           "comment": "You are required to purchase Claude Code (100$). There isn't any flexibility in the class. You also never interact with him (except in videos) and he doesn't teach at all. He isn't in discussion except the first one when he actively went on a rant about how AI is the future when a student expressed disinterest in using AI.",
+           "date": "2026-10-18 16:57:13 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS124",
+           "comment": "I took this class last semester and from what I remember is that this professor is not accommodating whatsoever to anyone. He is a professor but is not actively teaching anyone anything. He isn't in discussion, treats his students like they are lesser than him, and is not understanding at all! Thank goodness my semester with him is over. Good luck!",
+           "date": "2026-10-10 18:59:16 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS124",
+           "comment": "You are required to purchase Claude Code for the project and the professor states that it is necessary for success and NO other AI model will suffice, DESPITE codex being free for students at the time of writing this review. The professor is minimally involved in the course and contributes nothing towards student success.",
+           "date": "2026-10-07 03:36:22 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS124",
+           "comment": "Unpleasant experience, made me want to give up CS",
+           "date": "2026-10-06 03:17:09 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS124",
+           "comment": "If youre not a CS major and have a choice between taking this class and CS 101, PLEASE take 101. I was told 124 was easier. There is no way that is true",
+           "date": "2026-06-05 18:29:32 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS124",
+           "comment": "Explain things really well",
+           "date": "2026-06-03 22:49:57 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS124",
+           "comment": "why are we vibe coding in an intro level coding class? Got the feeling he would rather be giving ted talks about all the wonderful amazing benefits of AI rather than teaching. Though it's hard to rate him, as I only saw him in discussion maybe twice and never heard him speak a single word.",
+           "date": "2026-05-12 20:37:05 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS124",
+           "comment": "You will see the professor once at the start and never again. All the \"lectures\" are pre-recorded videos online, and the only help comes from fellow students who are \"tutors\". He specifically does not want you to email him and is very condescending in his response. Rely heavily on AI usage and requires you to pay for ClaudeAI premium yourself.",
+           "date": "2026-05-10 22:21:32 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS124",
+           "comment": "The class was chill enough until the final MP, which I think should be renamed to the \"Geoffrey Challenge\" because of how hard it was. Weekly quizzes, online work 5 days a week that can take 5 minutes to an hour depending on the assignment, overall not bad besides the final project which I think is like universally hated here.",
+           "date": "2026-05-10 00:23:16 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS124",
+           "comment": "Good teacher but the videos provided to self teach in this class are way to long and kinda boring, everything else about this course is good and fairly easy ",
+           "date": "2026-05-06 18:18:33 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS124",
+           "comment": "Extremely inorganized course. Adding extra tasks before deadline. Never show up in classes. Getting confused about a question in an actual quiz? Congratulations! He doesn't have office hours and his TA cannot pull out the quiz for you. ",
+           "date": "2026-05-04 21:06:47 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS124",
+           "comment": "The instructions for the tasks are unclear. He added a new task for the final project only a week before the due date, and couldn't give a clear instruction on how the gradebook works.",
+           "date": "2026-04-30 03:08:59 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS124",
+           "comment": "Clear lectures, fair exams.",
+           "date": "2026-04-28 05:06:44 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS124",
+           "comment": "Never show up in anywhere",
+           "date": "2026-04-26 02:51:19 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS124",
+           "comment": "\"effort logging\", with claude code. Hard to take this university seriously anymore. ",
+           "date": "2026-04-13 08:09:36 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS124",
+           "comment": "Dislike him and his teaching style. Makes little to no acceptions for anything. Would NEVER take again. Attendance is now mandatory. He forces you to only use Claude code 4 the MP. You have to be ON TOP of your work every week - grades start plummeting quickly especially for the homeworks and quizzes which is a hefty amount of your grade. ",
+           "date": "2026-04-06 18:37:08 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS124",
+           "comment": "It is surprising to incoming freshmen that it is online and self-paced. I, for one, liked it. The website is well organized, quizzes had practice which were almost identical. MPs weren't super hard; online office hours get overcrowded. Heard the class has changed massively recently, though. Proficiency testing out of this class is not a bad idea",
+           "date": "2026-03-30 03:40:01 +0000 UTC"
+          }
+         },
+         {
+          "node": {
+           "class": "CS124",
+           "comment": "Daily lessons were pretty good, MP was not designed super well",
+           "date": "2026-03-28 23:37:04 +0000 UTC"
+          }
+         }
+        ]
+       },
+       "teacherRatingTags": [],
+       "wouldTakeAgainPercent": 54.717
+      }
+     }
+    ]
+   }
+  }
+ }
+}

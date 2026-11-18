@@ -23,7 +23,7 @@ make serve     # http://localhost:4173
 | --- | --- |
 | **Course search** (`/`) | Find a course by code in any spelling (`cs124`, `CS 124`), title, nickname (`calc 2`), professor or **CRN** (a CRN opens the course page on that exact section). The home page also shows what just opened and where you left off. |
 | **Course page** (`/course/CS/124/`) | One row per professor teaching the term: GPA in this course and how far above or below the course average they grade, grade distribution, RMP quality / difficulty / would-take-again with rating counts, Teachers Ranked as Excellent, lectures taught and how many are open. A row opens to that professor's sections, reviews, tags and exam notes; "Compare" shows a sortable table. Then sections (CRN to copy, times, rooms, seat status, final exam, links to live seats and Self-Service), the offering pattern and next-term prediction, course GPA over time and what changed. |
-| **Gen-ed finder** (`/geneds/`) | Courses that count for every gen-ed category you pick, ranked by the best pick score (or GPA, % A, RMP, open lectures). Only courses with an open section show unless you turn that off. |
+| **Gen-ed finder** (`/geneds/`) | Courses that count for every gen-ed category you pick, ranked by the best pick score (or GPA, % A, RMP, open lectures). Only courses with an open section show unless you turn that off. Marks which courses fit the start time, end time and days off set in the schedule builder, and can hide the rest. |
 | **Degree checklist** (`/degree/`) | Your finished, transfer and in-progress courses checked against any of the 171 undergraduate programs in the 2026-2027 catalog (find yours by typing part of its name, an acronym such as CS or MCB, or its college); each requirement shows as done, in progress, partly done or open, with the best options for what's left. Add your AP exams and scores and it fills in the courses they're expected to give, from CITL's table for the year you started. Kept in your browser and the link, never on a server. |
 | **Just opened** (`/opened/`) | Sections that just went from closed to open, newest first, updated while the page is open: when it was found, whether it's still open, the CRN to copy, a button that adds that exact section to your schedule, and an optional browser notification. |
 | **Schedule builder** (`/schedule/`) | Every conflict-free combination of your courses (lecture plus its linked discussion or lab), ranked by what you care about. **Must-haves** are never broken: earliest start, latest end, days off, a lunch break, open sections only, special sections, blocked times. **What matters to you** ranks the rest: expected GPA, professor ratings, open sections, days off, gaps, early or late classes (you pick the times) and rushed walks, from Off to High, with one-click presets. Weekly calendar, a table comparing the top schedules, CRN copy, `.ics` download, share links and final-exam clash warnings. |
@@ -42,7 +42,7 @@ Formula: [docs/DECISIONS.md](docs/DECISIONS.md) D13.18.
 | [Teachers Ranked as Excellent](https://github.com/wadefagen/datasets/tree/main/teachers-ranked-as-excellent) | Instructor badges | Fall 2020 to Summer 2025, instructors only |
 | [Grade disparity view](https://waf.web.engr.illinois.edu/discovery/grade_disparity_between_sections_at_uiuc/) | Design reference for the instructor comparison | Recomputed from the GPA dataset |
 | Rate My Professors (unofficial GraphQL) | Ratings, tags, snippets | Optional; cached 7 days; the site works without it |
-| Student notes (`data/notes/*.yaml`) | Exam and grading notes | Curated from "Suggest a note" GitHub issues |
+| Student notes (`data/notes/*.yaml`) | Exam and grading notes | Added by a maintainer, each with a source (students review courses on Rate My Professors) |
 | [Academic Catalog](https://catalog.illinois.edu/) | Degree requirements (`data/degrees/*.yaml`) | All 171 undergraduate programs, 2026-2027 |
 | [CITL AP credit tables](https://citl.illinois.edu/current-cutoff-scores) | Courses each AP score gives (`data/ap-credit/*.yaml`) | Students entering 2024-2025 to 2026-2027, copied by hand |
 
@@ -121,6 +121,6 @@ Details: [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## More docs
 
-Everything else is in [`docs/`](docs/README.md): what the site can't do yet, what we'd like to build next (including
-student reviews and reading Reddit for course and professor feedback), every judgment call, the design system, the
-degree data format, the build log and before/after screenshots.
+Everything else is in [`docs/`](docs/README.md): what the site can't do yet, every judgment call, the design system,
+the degree and AP credit data formats and before/after screenshots. What we'd like to build next (student reviews,
+Reddit feedback, seat alerts, better degree planning) is tracked in [GitHub issues](https://github.com/kamransingri/illini-scheduler/issues).

@@ -1,7 +1,8 @@
 # Student notes
 
-One YAML file per course, e.g. `cs-124.yaml`. Only add notes that a student actually submitted (via the
-"Suggest a note" GitHub issue link on a course page). Schema:
+One YAML file per course, e.g. `cs-124.yaml`. Students don't submit notes here: the course page sends them to Rate My
+Professors to review a course (through their professor). A maintainer may add a note that has a checkable `source`;
+never one written from memory. Schema:
 
 ```yaml
 course: CS 124
