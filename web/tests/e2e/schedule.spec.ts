@@ -107,6 +107,7 @@ test("Best professor: the top schedule takes the lecture of the course page's be
   const pick = page.getByTestId("schedule-sections").getByTestId("prof-pick").first();
   await expect(pick).toHaveAttribute("data-best", "true");
   await expect(pick).toContainText(`Best pick, ${bestScore}`);
+  await expect(page.getByTestId("schedule-sections").getByTestId("prof-pick")).toHaveCount(1); // on the lecture only, not its lab
   expect((await pick.getAttribute("title"))!.startsWith(`${bestName}: best-pick score ${bestScore} of 100`)).toBe(true);
 });
 
