@@ -10,8 +10,13 @@ history).
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-11-18
+
 ### Added
 
+- Schedule builder: "Sections to watch" (#27). When a schedule needs sections that were Closed at the last check, it
+  lists them with their CRNs and links to Self-Service for waitlists and to Just opened, which now starts filtered to
+  your schedule's courses from that link (`/opened/?mine=1`).
 - A Versions page (`/versions/`) lists every version and what changed in it, from CHANGELOG.md. The footer names the
   site's version and date and links the three before it and the full list.
 - Gen-ed finder: it uses the start time, end time and days off you set in the schedule builder (#30). Each course is
@@ -166,7 +171,8 @@ history).
 - A partial Rate My Professors error no longer stops `make data`.
 - RSS feeds are written as UTF-8.
 
-[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.4.0...v0.5.0
