@@ -1,17 +1,17 @@
 {
- "built_at": "2026-11-18T05:43:11+00:00",
+ "built_at": "2026-11-18T17:40:13+00:00",
  "current_term": "2026-fa",
  "next_term": "2027-sp",
  "terms": {
   "2026-fa": {
    "label": "Fall 2026",
    "source": "course-explorer-web + web availability",
-   "checked_at": "2026-11-17T17:56:52+00:00"
+   "checked_at": "2026-11-18T16:18:00+00:00"
   },
   "2027-sp": {
    "label": "Spring 2027",
    "source": "course-explorer-web + web availability",
-   "checked_at": "2026-11-17T15:41:53+00:00"
+   "checked_at": "2026-11-18T14:39:10+00:00"
   }
  },
  "gpa": {
@@ -75,12 +75,12 @@
    "rmp_pct": 38.6
   },
   "ACES": {
-   "gpa_matched": 3,
-   "names": 6,
-   "gpa_pct": 50.0,
-   "primary_matched": 3,
-   "primary_names": 6,
-   "primary_gpa_pct": 50.0,
+   "gpa_matched": 2,
+   "names": 5,
+   "gpa_pct": 40.0,
+   "primary_matched": 2,
+   "primary_names": 5,
+   "primary_gpa_pct": 40.0,
    "rmp_matched": 0,
    "rmp_pct": 0.0
   },
@@ -91,8 +91,8 @@
    "primary_matched": 22,
    "primary_names": 23,
    "primary_gpa_pct": 95.7,
-   "rmp_matched": 18,
-   "rmp_pct": 78.3
+   "rmp_matched": 19,
+   "rmp_pct": 82.6
   },
   "AE": {
    "gpa_matched": 30,
@@ -241,8 +241,8 @@
    "primary_matched": 17,
    "primary_names": 21,
    "primary_gpa_pct": 81.0,
-   "rmp_matched": 17,
-   "rmp_pct": 81.0
+   "rmp_matched": 18,
+   "rmp_pct": 85.7
   },
   "ARTE": {
    "gpa_matched": 3,
@@ -585,14 +585,14 @@
    "rmp_pct": 67.9
   },
   "CPSC": {
-   "gpa_matched": 21,
-   "names": 32,
-   "gpa_pct": 65.6,
-   "primary_matched": 21,
-   "primary_names": 31,
-   "primary_gpa_pct": 67.7,
+   "gpa_matched": 22,
+   "names": 39,
+   "gpa_pct": 56.4,
+   "primary_matched": 22,
+   "primary_names": 38,
+   "primary_gpa_pct": 57.9,
    "rmp_matched": 16,
-   "rmp_pct": 50.0
+   "rmp_pct": 41.0
   },
   "CS": {
    "gpa_matched": 133,
@@ -645,24 +645,24 @@
    "rmp_pct": 7.7
   },
   "DTX": {
-   "gpa_matched": 3,
-   "names": 6,
-   "gpa_pct": 50.0,
-   "primary_matched": 3,
-   "primary_names": 6,
-   "primary_gpa_pct": 50.0,
+   "gpa_matched": 4,
+   "names": 7,
+   "gpa_pct": 57.1,
+   "primary_matched": 4,
+   "primary_names": 7,
+   "primary_gpa_pct": 57.1,
    "rmp_matched": 0,
    "rmp_pct": 0.0
   },
   "EALC": {
-   "gpa_matched": 19,
+   "gpa_matched": 17,
    "names": 26,
-   "gpa_pct": 73.1,
+   "gpa_pct": 65.4,
    "primary_matched": 14,
    "primary_names": 19,
    "primary_gpa_pct": 73.7,
-   "rmp_matched": 16,
-   "rmp_pct": 61.5
+   "rmp_matched": 15,
+   "rmp_pct": 57.7
   },
   "ECE": {
    "gpa_matched": 98,
@@ -1015,14 +1015,14 @@
    "rmp_pct": 100.0
   },
   "HIST": {
-   "gpa_matched": 43,
-   "names": 55,
-   "gpa_pct": 78.2,
+   "gpa_matched": 45,
+   "names": 59,
+   "gpa_pct": 76.3,
    "primary_matched": 34,
    "primary_names": 40,
    "primary_gpa_pct": 85.0,
-   "rmp_matched": 27,
-   "rmp_pct": 49.1
+   "rmp_matched": 29,
+   "rmp_pct": 49.2
   },
   "HK": {
    "gpa_matched": 88,
@@ -1501,8 +1501,8 @@
    "primary_matched": 36,
    "primary_names": 50,
    "primary_gpa_pct": 72.0,
-   "rmp_matched": 29,
-   "rmp_pct": 58.0
+   "rmp_matched": 30,
+   "rmp_pct": 60.0
   },
   "PLPA": {
    "gpa_matched": 3,
@@ -1651,8 +1651,8 @@
    "primary_matched": 3,
    "primary_names": 4,
    "primary_gpa_pct": 75.0,
-   "rmp_matched": 1,
-   "rmp_pct": 25.0
+   "rmp_matched": 2,
+   "rmp_pct": 50.0
   },
   "SCAN": {
    "gpa_matched": 1,
@@ -2080,10 +2080,10 @@
   },
   "campus_gpa": 3.522,
   "rmp": {
-   "quality": 3.632,
+   "quality": 3.634,
    "difficulty": 2.959,
-   "would_take_again": 64.428,
-   "n_instructors": 2738
+   "would_take_again": 64.476,
+   "n_instructors": 2741
   }
  }
 }
