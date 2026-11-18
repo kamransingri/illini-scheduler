@@ -71,6 +71,15 @@ describe("prefs in the URL", () => {
     expect(p.daysOff).toBe(16);
     expect(p.weights).toEqual({ ...DEFAULT_PREFS.weights, gpa: 3, rmp: 0, early: 0, daysOff: 0, compact: 0, walking: 0 });
   });
+  it("8-digit weights from before Best professor keep its default; 9 digits carry it (#49)", () => {
+    expect(prefsFromParams(new URLSearchParams("w=30000000")).weights).toEqual({ ...DEFAULT_PREFS.weights, gpa: 3, rmp: 0, early: 0, daysOff: 0, compact: 0, walking: 0, late: 0, open: 0 });
+    const p = { ...DEFAULT_PREFS, weights: { ...DEFAULT_PREFS.weights, prof: 0 } };
+    const params = new URLSearchParams();
+    prefsToParams(p, params);
+    expect(params.get("w")).toMatch(/^\d{9}$/);
+    expect(prefsFromParams(params).weights.prof).toBe(0);
+    expect(prefsFromParams(new URLSearchParams("w=3000000009")).weights).toEqual(DEFAULT_PREFS.weights); // 10 digits: ignored
+  });
   it("defaults add nothing", () => {
     const params = new URLSearchParams();
     prefsToParams(DEFAULT_PREFS, params);

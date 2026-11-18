@@ -92,3 +92,28 @@ test("sections to watch: a schedule that needs closed sections lists them and li
   await expect(watched).toContainText("STAT 107");
   await expect(watched).toContainText(/checked/); // its course file has loaded (through the route above)
 });
+
+test("Best professor: the top schedule takes the lecture of the course page's best pick (#49)", async ({ page }) => {
+  // the course page's best pick for STAT 107 next term
+  await page.goto("./course/STAT/107/");
+  const firstRow = page.getByTestId("prof-row").first();
+  await expect(firstRow).toContainText(/Best pick \d+/);
+  const bestName = (await firstRow.getByRole("button").first().textContent())!.trim();
+  const bestScore = (await firstRow.getByText(/Best pick \d+/).first().textContent())!.match(/\d+/)![0];
+  // only "Best professor" on (weights: gpa, rmp, early, daysOff, compact, walking, late, open, prof)
+  await page.goto("./schedule/?c=STAT107&t=2027-sp&w=000000003");
+  await expect(page.getByRole("slider", { name: "Best professor" })).toHaveValue("3");
+  await page.getByRole("button", { name: "Generate schedules" }).click();
+  const pick = page.getByTestId("schedule-sections").getByTestId("prof-pick").first();
+  await expect(pick).toHaveAttribute("data-best", "true");
+  await expect(pick).toContainText(`Best pick, ${bestScore}`);
+  await expect(page.getByTestId("schedule-sections").getByTestId("prof-pick")).toHaveCount(1); // on the lecture only, not its lab
+  expect((await pick.getAttribute("title"))!.startsWith(`${bestName}: best-pick score ${bestScore} of 100`)).toBe(true);
+});
+
+test("the Best professors preset turns the priority up, and an old 8-digit link keeps it at its default", async ({ page }) => {
+  await page.goto("./schedule/?c=STAT107&t=2027-sp&w=21101101");
+  await expect(page.getByRole("slider", { name: "Best professor" })).toHaveValue("2");
+  await page.getByRole("button", { name: "Best professors" }).click();
+  await expect(page.getByRole("slider", { name: "Best professor" })).toHaveValue("3");
+});

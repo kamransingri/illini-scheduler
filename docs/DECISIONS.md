@@ -744,15 +744,35 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D24.3 Not done here.** The Fall 2027 bump itself waits for March 2027, so #33 stays open. Repo size: `.git` is
   well under the ~200 MB the issue set as the point to move `data/availability/*.json` to a separate branch.
 
+## Best professor in the schedule builder (2026-11-18, issue #49)
+
+- **D25.1 The same score as the course page.** Each lecture option gets its professor's best-pick score for the chosen
+  term (`rankProfs` in `web/lib/rank.ts`: course GPA, the professor's GPA difference, RMP and open seats, small samples
+  shrunk, with the student's own score weights). The builder's "Best pick" is therefore always the professor the course
+  page ranks first. A lecture with two scored professors takes the higher score; one with none counts as average (0.5),
+  not as zero, so an unrated new lecturer isn't pushed to the bottom.
+- **D25.2 A priority, not a rule.** "Best professor" sits with the other priorities (default Medium, 2). It is the
+  average score of the schedule's scored lectures, on the same 0-1 scale as the rest. It overlaps Higher expected GPA
+  and Better-rated professors on purpose: those stay for students who care about one part only. A "Best professors"
+  starting point sets it to High.
+- **D25.3 Same-time sections.** Sections with identical times and campus area are merged into one choice; the one
+  shown is now the one with the best professor too (when the priority is on), and the others stay listed as
+  same-time alternatives.
+- **D25.4 Search bound.** The branch-and-bound needs an optimistic estimate for a partial schedule. An average is never
+  above the larger of the average so far and the best score still available, so that is the bound; a unit test
+  compares the top schedule with an exhaustive search on 300 random carts.
+- **D25.5 Links.** Weights are written as digits; Best professor is the ninth. Links with 8 digits (before this) keep
+  its default.
+
 ## Choice lists in imported degree data (2026-11-18)
 
-- **D25.1 The bug.** `catalog_import.py` meant to keep a list under a heading like "Urbanism (select one)" or "Course
+- **D26.1 The bug.** `catalog_import.py` meant to keep a list under a heading like "Urbanism (select one)" or "Course
   List" from becoming "take all of these" (D13.28), but its word-boundary pattern held two backspace characters where
-  `` was meant, so it never matched. 23 such lists in 12 programs were imported as required: Political Science's
+  `\b` was meant, so it never matched. 23 such lists in 12 programs were imported as required: Political Science's
   five concentration course lists (16 to 28 courses each), Speech and Hearing Science's three "(Select one)"
   requirements, the Fine & Applied Arts online options, Instrumental Music's per-option lists, Materials Science's
   per-area lists and others. They are now `manual` groups with the catalog's heading as the note.
-- **D25.2 Not every "elective" heading.** Simply fixing the pattern would also have demoted 15 correct lists:
+- **D26.2 Not every "elective" heading.** Simply fixing the pattern would also have demoted 15 correct lists:
   "… Major Core Requirements and Electives" heads the required core in five business programs and Integrative
   Biology; "Introductory Economics Elective" holds one item (ECON 102 or ECON 103) that is exactly one requirement;
   and a heading also named the next table below it (NPRE + Data Science's required CHEM/MATH table sat under
@@ -760,7 +780,7 @@ Every judgment call made during the autonomous build, newest phase last.
   even for the further tables under one heading ("Instrumental Music Options" has one table per option); "elective"
   counts only on the list's own heading (an area row, or the page heading right above that table), without core or
   required wording, and with more than one item. Every group keeps its id, so ticked groups in saved links still match.
-- **D25.3 Regenerated files.** The 12 programs were re-parsed from the cached pages (`--offline`); `read_on` keeps the
+- **D26.3 Regenerated files.** The 12 programs were re-parsed from the cached pages (`--offline`); `read_on` keeps the
   date the pages were read. `computer-science-bioengineering-bs.yaml` also picked up an earlier parser fix ("Select 15
   hours of technical elective credit" is now an hours rule). Files whose only change was the date were left alone. A
   test now fails if any source file contains a control character.
