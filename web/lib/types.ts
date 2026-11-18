@@ -140,7 +140,8 @@ export type GenedRow = {
   statusKnown: boolean;
   best: { key: string; name: string; gpa: number; students: number } | null;
   rmp: number | null;
-  opts: [number, number, number][]; // [earliest start, day mask, all-online]
+  /** each way to take the course: [earliest start, latest end, day mask, flags] (pipeline/export.py bundle_opts) */
+  opts: [number, number, number, number][];
   profs?: import("./rank").DegreeProf[]; // next-term lecturers' best-pick score inputs
 };
 

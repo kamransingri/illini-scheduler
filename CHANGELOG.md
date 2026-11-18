@@ -10,6 +10,13 @@ history).
 
 ## [Unreleased]
 
+### Added
+
+- Gen-ed finder: it uses the start time, end time and days off you set in the schedule builder (#30). Each course is
+  marked "Fits your times" or says why not ("Outside your times", "Only special sections", "No open section"), and
+  "Only courses that fit them" hides the rest. Once you've added courses, "Plan them in the schedule builder" opens
+  the builder with them and your must-haves.
+
 ### Changed
 
 - Course pages: "Took this course?" sends students to rate their professor on Rate My Professors, choosing the course,
