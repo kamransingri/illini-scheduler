@@ -98,6 +98,7 @@ Course Explorer ───> pipeline/live_seats.py every ~10 min ─> live.json o
 | `pages.yml` | Every push to `main`, nightly 09:00 UTC, manual | `make data`, lint, type checks, unit tests, static build with the right `BASE_PATH`, Playwright against the build, then deploys `web/out`. Commits the refreshed data summaries only if everything passed |
 | `availability.yml` | Daily 04:17 UTC | Reads every course page of the next and current term (~1 request per second, oldest first) for seat status, section rows and final exams; commits `data/availability/*.json` for the nightly build |
 | `live-seats.yml` | Every 10 minutes (every 30 overnight) | Re-reads the busiest next-term courses and those on `data/watch.txt` for ~6 minutes and force-pushes `live.json` to the single-commit `live-seats` branch; the Just opened page and the home page poll it |
+| `term-watch.yml` | Mondays | Checks whether Course Explorer has published a term after `NEXT_TERM` (`python -m pipeline.term_watch`) and opens one issue with the rollover checklist (#33) |
 | `ci.yml` | Every push and pull request | Lint and unit tests (`test`); version files, changelog and branch name (`versions`) |
 | `release.yml` | A new version reaching `main` | Tags that commit `vX.Y.Z` and publishes the GitHub release from CHANGELOG.md |
 | `branch-cleanup.yml` | A pull request merged, manual | Deletes the merged branch; a manual run deletes older merged branches |
