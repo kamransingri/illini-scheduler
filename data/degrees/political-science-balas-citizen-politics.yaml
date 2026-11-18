@@ -1,5 +1,5 @@
 # Political Science: Citizen Politics, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/las/political-science-balas/citizen-politics/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/las/political-science-balas/citizen-politics/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -9,7 +9,7 @@ college: College of Liberal Arts and Sciences
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/las/political-science-balas/citizen-politics/
 read_on: '2026-11-16'
-generated: '2026-11-16'
+generated: '2026-11-17'
 total_hours: 120
 notes:
 - 'Minimum hours required for graduation: 120 hours.'
@@ -46,7 +46,9 @@ groups:
   id: citizen-politics-concentration-requireme-3
 - name: Citizen Politics Course List
   section: Citizen Politics Concentration Requirements
-  rule: all
+  rule: manual
+  notes:
+  - The catalog lists these courses under Citizen Politics Course List; see the catalog page for the rule.
   courses:
   - PS 101
   - PS 201

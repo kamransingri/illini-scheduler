@@ -1,5 +1,5 @@
 # Fine and Applied Arts, BA (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/faa/fine-applied-arts-ba/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/faa/fine-applied-arts-ba/ on 2026-11-17 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -9,7 +9,7 @@ college: College of Fine and Applied Arts
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/faa/fine-applied-arts-ba/
 read_on: '2026-11-16'
-generated: '2026-11-16'
+generated: '2026-11-17'
 total_hours: 120
 notes:
 - 'Minimum hours required for graduation: 120 hours.'
@@ -148,7 +148,9 @@ groups:
   id: major-requirements-12
 - name: Performing Arts online course options
   section: Sample Online Course Options
-  rule: all
+  rule: manual
+  notes:
+  - The catalog lists these courses under Performing Arts online course options; see the catalog page for the rule.
   courses:
   - THEA 101
   - THEA 110
@@ -163,7 +165,9 @@ groups:
   id: performing-arts-online-course-options-13
 - name: Fine Arts online course options
   section: Sample Online Course Options
-  rule: all
+  rule: manual
+  notes:
+  - The catalog lists these courses under Fine Arts online course options; see the catalog page for the rule.
   courses:
   - ART 100
   - ART 140
@@ -180,7 +184,9 @@ groups:
   id: fine-arts-online-course-options-14
 - name: Interdisciplinary Arts online course options
   section: Sample Online Course Options
-  rule: all
+  rule: manual
+  notes:
+  - The catalog lists these courses under Interdisciplinary Arts online course options; see the catalog page for the rule.
   courses:
   - FAA 180
   - FAA 201
@@ -194,7 +200,9 @@ groups:
   id: interdisciplinary-arts-online-course-opt-15
 - name: Environmental Arts online course options
   section: Sample Online Course Options
-  rule: all
+  rule: manual
+  notes:
+  - The catalog lists these courses under Environmental Arts online course options; see the catalog page for the rule.
   courses:
   - ARCH 211
   - LA 222

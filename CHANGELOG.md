@@ -10,12 +10,21 @@ history).
 
 ## [Unreleased]
 
+## [0.11.0] - 2026-11-18
+
 ### Added
 
 - Schedule builder: a **Best professor** priority (Medium by default). Each lecture is scored with the course page's
   best-pick score, so schedules prefer the lecture taught by the course's best professor, and of two sections at the
   same time the better professor's is the one picked. Results label the lecture's professor score and "Best pick".
   A "Best professors" starting point turns it to High (#49).
+
+### Fixed
+
+- Degree checklist: course lists the catalog presents as a choice are no longer counted as all required. 23 lists in
+  12 programs were affected, among them Political Science's concentration course lists, Speech and Hearing Science's
+  "(Select one)" requirements and the Fine & Applied Arts online options. They now show the courses with the catalog's
+  heading and a checkbox.
 
 ## [0.10.0] - 2026-11-18
 
@@ -203,7 +212,8 @@ history).
 - A partial Rate My Professors error no longer stops `make data`.
 - RSS feeds are written as UTF-8.
 
-[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.10.0...HEAD
+[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.11.0...HEAD
+[0.11.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.7.0...v0.8.0
