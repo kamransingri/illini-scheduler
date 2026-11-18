@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/Badge";
 import DataRow from "@/components/ui/DataRow";
 import Expandable from "@/components/ui/Expandable";
 import Icon from "@/components/ui/Icon";
+import Info from "@/components/ui/Info";
 import Stat from "@/components/ui/Stat";
 import { courseParams, getCourse, getMeta } from "@/lib/data";
 import { cisUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, termLabel, termRange } from "@/lib/format";
@@ -51,6 +52,15 @@ export default async function CoursePage({ params }: Props) {
             {course.subject} {course.number}
           </span>
           {course.subject_name ? <span>, {course.subject_name}</span> : null}
+          {course.formerly?.map((f) => (
+            <span key={f.code} className="inline-flex items-center" data-testid="formerly">
+              . Formerly {f.code}
+              {f.until ? ` (until ${termLabel(f.until)})` : ""}
+              <Info label={`Why ${course.subject} ${course.number} was ${f.code}`}>
+                Renumbered: grades, offering history and changes before the new number are counted here and marked &ldquo;as {f.code}&rdquo;. Source: {f.source}
+              </Info>
+            </span>
+          ))}
         </p>
         <div className="mt-1 flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
           <h1 className="max-w-3xl font-display text-2xl font-bold text-heading">{course.title}</h1>
@@ -121,7 +131,7 @@ export default async function CoursePage({ params }: Props) {
         <dl className="divide-y divide-line">
           <DataRow
             label="When it's offered"
-            source={`Course Explorer schedules, the last 8 fall and spring terms (${termRange(regularWindow[0], regularWindow[regularWindow.length - 1])}) plus summers.${course.pattern ? ` ${course.pattern.reason}.` : ""}`}
+            source={`Course Explorer schedules, the last 8 fall and spring terms (${termRange(regularWindow[0], regularWindow[regularWindow.length - 1])}) plus summers${course.formerly?.length ? `, including terms as ${course.formerly.map((f) => f.code).join(" and ")}` : ""}.${course.pattern ? ` ${course.pattern.reason}.` : ""}`}
           >
             {course.pattern ? (
               <>

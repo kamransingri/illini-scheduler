@@ -46,8 +46,10 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
   schedule than Course Explorer lists won't match. A term the Registrar hasn't published gets estimated dates, and the
   builder and every exported event say so.
 - **Search by CRN** covers the next and the current term only.
-- **Renumbered courses aren't linked.** The data has no link between an old number and its new one (D4.6), so a
-  course's history stops at the renumbering.
+- **Only the renumberings in `data/renumbered.csv` are linked** (33 in 2026-11, including the 2026-2027 French,
+  German, Italian, Spanish and Scandinavian sequences). Each needs a source, so a renumbering the catalog doesn't
+  state stays unlinked and that course's history stops at the change. My courses and the degree checklist don't
+  translate old numbers: a student who took SPAN 200 adds it as SPAN 210 by hand (D23.4).
 
 ## GPA data
 

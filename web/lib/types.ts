@@ -47,7 +47,8 @@ export type GpaBlock = {
   last_term: string;
   recent_terms: string[];
   pct: Pct;
-  by_term: { term: string; gpa: number | null; students: number; pct: Pct }[];
+  /** `as`: the course's old number in that term, when it was renumbered since (#29) */
+  by_term: { term: string; gpa: number | null; students: number; pct: Pct; as?: string }[];
 };
 
 export type InstructorGpa = {
@@ -111,7 +112,9 @@ export type Course = {
   geneds: { codes: string[]; categories: string[] };
   gpa: GpaBlock | null;
   pattern: { label: string; target: string; likelihood: string; reason: string } | null;
-  history: { term: string; n_sections: number; online_share: number | null; instructors: string[] }[];
+  history: { term: string; n_sections: number; online_share: number | null; instructors: string[]; as?: string }[];
+  /** old numbers this course had (data/renumbered.csv): code, last term the data has under it, source */
+  formerly?: { code: string; until: string | null; source: string }[];
   terms: Record<string, TermBlock>;
   instructors: Record<string, Instructor>;
   changes: Change[];
@@ -121,7 +124,8 @@ export type Course = {
   seat_events?: SeatEvent[];
 };
 
-export type SearchCourse = { s: string; n: string; t: string; c: string; g: string[]; gpa: number | null; nx: number; cu: number };
+/** `f`: the course's old numbers ("FR 103"), so searching an old number finds it (#29). */
+export type SearchCourse = { s: string; n: string; t: string; c: string; g: string[]; gpa: number | null; nx: number; cu: number; f?: string[] };
 export type SearchInstructor = { name: string; k: string; c: string[] };
 export type SearchIndex = { courses: SearchCourse[]; instructors: SearchInstructor[] };
 

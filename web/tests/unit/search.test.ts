@@ -23,6 +23,20 @@ describe("parseCode", () => {
 });
 
 describe("search", () => {
+  it("an old number finds the renumbered course (#29), also from a subject that no longer has courses", () => {
+    const idx: SearchIndex = {
+      ...index,
+      courses: [
+        ...index.courses,
+        { s: "SPAN", n: "210", t: "Readings in Hispanic Texts", c: "3", g: [], gpa: null, nx: 1, cu: 1, f: ["SPAN 200"] },
+        { s: "SPAN", n: "201", t: "Intermediate Spanish", c: "4", g: [], gpa: null, nx: 1, cu: 1 },
+        { s: "ES", n: "470", t: "Fuel Cells & Hydrogen Sources", c: "3", g: [], gpa: null, nx: 1, cu: 1, f: ["NPRE 470"] },
+      ],
+    };
+    expect(search(idx, "span 200")[0]).toMatchObject({ kind: "course", course: { s: "SPAN", n: "210" } });
+    expect(search(idx, "SPAN 201")[0]).toMatchObject({ course: { n: "201" } }); // a real code still wins
+    expect(search(idx, "npre470")[0]).toMatchObject({ course: { s: "ES", n: "470" } });
+  });
   it("exact code is first", () => {
     expect(search(index, "cs124")[0]).toMatchObject({ kind: "course", course: { s: "CS", n: "124" } });
     expect(search(index, "CS 124")[0]).toMatchObject({ kind: "course", course: { n: "124" } });
