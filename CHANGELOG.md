@@ -10,6 +10,23 @@ history).
 
 ## [Unreleased]
 
+### Added
+
+- Degree checklist: every concentration with requirements of its own is a program you can pick, 120 in all, such as
+  "Psychology: Cognitive Neuroscience, BSLAS". Psychology's main page only names its concentrations, so its course
+  requirements were missing before.
+
+### Changed
+
+- Degree checklist: Computer Science, Psychology, Economics, Mechanical Engineering, Finance and Accountancy were
+  checked by hand against the catalog (#17). CS counts technical electives (18 hours), the team-project course and the
+  science elective, and its eight focus areas are one requirement instead of eight tick boxes. Economics counts its
+  required courses, 11 hours of advanced ECON and its math. Finance counts its 400-level FIN hours. Mechanical
+  Engineering counts its MechSE electives.
+- Catalog importer: "(choose one)" in a heading, "one course chosen from", advisory comments, rules above a named
+  list, and headings with hours but no list are read correctly. 59 programs have fewer tick boxes and more counted
+  rules.
+
 ## [0.12.1] - 2026-11-18
 
 ### Fixed

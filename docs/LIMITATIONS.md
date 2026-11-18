@@ -103,12 +103,17 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
 ## Degree planner
 
 - **Not an official degree audit.** Use DARS and your advisor for that.
-- **Imported automatically.** 170 of the 171 programs were read by `pipeline/catalog_import.py` from the 2026-2027
-  catalog and haven't been checked by hand. Only Finance + Data Science, BS was checked line by line.
-- **Prose rules aren't checked.** Requirements the catalog states in words (technical electives, focus areas,
-  concentrations) show the catalog's wording and a checkbox you tick yourself.
-- **Missing courses.** 288 course codes in 71 programs aren't offered in the terms the site loads (old or rarely
-  taught courses). They show greyed out, without a link.
+- **Mostly imported automatically.** 291 majors and concentrations were read by `pipeline/catalog_import.py` from the
+  2026-2027 catalog. Seven were checked by hand, line by line, against their catalog pages: Computer Science,
+  Psychology (its main page; the ten concentrations are imported), Economics, Mechanical Engineering, Finance,
+  Accountancy, and Finance + Data Science. The others say they were read automatically.
+- **Prose rules aren't checked.** Requirements the catalog states in words (advanced electives, CS focus areas,
+  supporting course work) show the catalog's wording and a checkbox you tick yourself. Where the catalog is precise,
+  hand-checked majors count them instead (CS technical electives: 18 hours of CS 397 and 400-level courses, minus the
+  core).
+- **Missing courses.** About 260 course codes in about 130 programs aren't offered in the terms the site loads. Of
+  these, about 215 are in the 2026-2027 course catalog but rarely taught (often graduate courses), and about 40 aren't
+  in it at all: retired or renumbered courses that program pages still list. They show greyed out, without a link.
 - **Scope.** Undergraduate majors (with their concentrations) and minors in the 2026-2027 catalog only. No certificates,
   graduate programs or earlier catalog years.
 - **Major and minor overlap.** A course counts toward both your major and your minor on the checklist. Some minors and

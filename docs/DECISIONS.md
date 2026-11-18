@@ -864,3 +864,48 @@ Every judgment call made during the autonomous build, newest phase last.
   override can fix. The rest have no primary source that settles them: "Wang, Y" in MATH 220 could be Yi or Ying Wang,
   both of whom taught MATH, and the department's pages don't say. `data/name_overrides.csv` gained a `source` column,
   and the loader refuses a row without one.
+
+## Hand-checking the largest majors (2026-11-18, issue #17)
+
+- **D30.1 Checked by hand.** Computer Science, Psychology, Economics, Mechanical Engineering, Finance and Accountancy
+  were compared line by line with their 2026-2027 catalog pages. Each file says so in its header, with the URL and the
+  date, and has no `generated` key, so the importer leaves it alone. Where the catalog is precise, prose became rules:
+  CS technical electives are 18 hours of CS 397 and 400-level courses (not CS 400-403 or 491, not the core; CS 397 and
+  CS 499 capped at 6 each, since the schema can't cap them together), the team-project course is one of a list and may
+  also count as a technical elective (a `within` rule quoting the catalog), and the science elective is one natural
+  science gen-ed in addition to those used for the gen-ed (`not_with: [nat]`), without ASTR 100, PHYS 101/102 and
+  CHEM 101. Economics: 11 hours of 300-/400-level ECON beyond the core, without ECON 398/399. Mechanical Engineering:
+  6 hours of 400-level ME/TAM except ME 470. Finance: 12 hours of 400-level FIN except FIN 494/495, with FIN 490 capped
+  at 3, plus one more FIN course at the 200 level or above. Rules the catalog states in words stay tick boxes.
+- **D30.2 Focus areas are one requirement.** The CS focus areas ("at least three ... from a single focus area") were
+  eight tick boxes, so the checklist could never be complete. They are one requirement now, with each area's courses
+  in its notes.
+- **D30.3 Importer fixes, found while checking.** Each has a test on a saved catalog page (`fixtures/catalog/`):
+  - A comment that only advises ("Highly recommended, optional 1 credit hour course, CS 100") is a note. It used to
+    turn the required list around it (CS 210 or CS 211) into a tick box.
+  - A rule right above a named list that points at it ("... chosen from the list below", then "Team Project Course
+    List:") is that list's rule, not an extra empty tick box.
+  - "(choose one)", "(choose 2)" in a heading is a counted choice, and spans the sub-lists under it ("Psychological
+    Science Breadth, Group 1 (choose one):" over two lists). "One course chosen from" and "chosen from one of the
+    following" pick one. "... chosen from the departmentally approved list below" with hours in its row is an hours
+    rule.
+  - A heading with hours and no list ("Additional Advanced (300- or 400-level) PSYC or BCOG Courses", 6 hours) is kept
+    as a tick box; it was dropped. One course under a colon heading is required, not a choice.
+  - A rule heading names its own group instead of inheriting the heading above ("MechSE electives ..." was filed under
+    "Statistics elective").
+- **D30.4 Tried and dropped.** Two broader rules made things worse and were reverted. Treating a short "Heading:"
+  comment as a heading made choice lists required ("Theory:", "Methods:" in African American Studies). Letting only
+  rules that say "below" or "following" govern later lists made "At least one Theory and one Methods course beyond the
+  core" stop applying. Across all programs, a list newly marked required was reviewed by name; only CS's orientation
+  and one Materials Science list (whose labs are "recommended, optional") changed, both correctly.
+- **D30.5 Concentrations are programs.** 37 programs have concentration pages; 120 of those pages have requirements of
+  their own (Psychology's ten hold its 28-29 concentration hours, which the main page only names). Each is imported as
+  a program ("Psychology: Cognitive Neuroscience, BSLAS"), and the main page is kept so saved links still open. Pages
+  with a requirements tab but no course tables (three Interdisciplinary Health Sciences concentrations, Music
+  Composition) are skipped.
+- **D30.6 Unknown course codes.** The live data lists 258 distinct codes (433 uses in 128 programs) that aren't in the
+  loaded terms. Checked against the 2026-2027 course catalog: 216 are real courses that just aren't offered in those
+  terms (often graduate or irregular), and 42 aren't in the catalog at all (retired or renumbered, still listed on
+  program pages; GEOG is now GGIS). None is an importer typo: codes come from the catalog's own course links. The
+  count therefore stays about the same; they're shown greyed out.
+
