@@ -73,10 +73,20 @@ double_counting:
     quote: "...no single course can fulfill multiple Cultural Studies categories."
     source: https://gened.illinois.edu/requirements/
   - allow: true
+    between: [gened, gened]
+    approved_for: [ACP, QR2]          # only a course approved for one of these and another category
+    quote: "Individual courses will be approved to satisfy only one General Education requirement except as follows. ..."
+    source: https://gened.illinois.edu/faculty-staff/details-criteria/
+  - allow: true
     between: [program, gened]         # kinds or exclusive-set names
     quote: "Some Gen Ed requirements may be met by courses required and/or electives in the program."
     source: https://catalog.illinois.edu/...
 ```
+
+`approved_for` (gen-ed codes, with `between` only) narrows a rule to courses approved for one of those categories and
+at least one more; it's how the campus exception for Advanced Composition and Quantitative Reasoning II is written
+(DECISIONS.md D32). An advisor's answer is a rule too: put their role and the date in `quote` and a written policy URL,
+if they give one, in `source`.
 
 ## Importing every program
 

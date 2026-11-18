@@ -52,6 +52,10 @@ GENED_SOURCE = "https://catalog.illinois.edu/general-information/degree-general-
 GENED_RULES_SOURCE = "https://gened.illinois.edu/requirements/"
 CS_QUOTE = ("These courses may fulfill other curricular requirements, but no single course can fulfill multiple "
             "Cultural Studies categories.")
+GENED_POLICY_SOURCE = "https://gened.illinois.edu/faculty-staff/details-criteria/"
+TWO_CATEGORIES_QUOTE = ("Individual courses will be approved to satisfy only one General Education requirement "
+                        "except as follows. Exceptions are the Advanced Composition, Quantitative Reasoning II, and "
+                        "the Cultural Studies requirements.")
 PROGRAM_GENED_QUOTE = "Some Gen Ed requirements may be met by courses required and/or electives in the program."
 COMP1 = ["RHET 105", "RHET 101 + RHET 102", "CMN 111 + CMN 112", "ESL 115", "ESL 111 + ESL 112"]
 CODE_RE = re.compile(r"\b([A-Z]{2,5})\s+(\d{3})\b")
@@ -451,6 +455,9 @@ def parse_program(page: str | bytes, url: str, read_on: str) -> dict:
         {"allow": False, "within": "cultural-studies", "quote": CS_QUOTE, "source": GENED_RULES_SOURCE},
         {"allow": True, "between": ["cultural-studies", "gened"],
          "quote": "These courses may fulfill other curricular requirements", "source": GENED_RULES_SOURCE}]
+    if any(x in ("gened:ACP", "gened:QR2") for g in groups if g.get("kind") == "gened" for x in g.get("from", [])):
+        rules.append({"allow": True, "between": ["gened", "gened"], "approved_for": ["ACP", "QR2"],
+                      "quote": TWO_CATEGORIES_QUOTE, "source": GENED_POLICY_SOURCE})
     if has_quote:
         rules.append({"allow": True, "between": ["program", "gened"], "quote": PROGRAM_GENED_QUOTE, "source": url})
     if not any(g.get("exclusive") for g in groups):

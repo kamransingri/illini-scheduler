@@ -61,6 +61,55 @@ describe("double counting", () => {
     expect(canShare(g("ds"), g("other-program"), DEG.double_counting).allow).toBe("unclear"); // two program groups
     expect(canShare(g("fin-req"), g("fin-400"), DEG.double_counting).allow).toBe(false); // "four additional"
   });
+
+  // #18: campus policy (EP.17.74 1.8) approves a course for two gen-ed categories only when one is ACP or QR II
+  const TWO_CATS = {
+    allow: true, between: ["gened", "gened"] as [string, string], approved_for: ["ACP", "QR2"],
+    quote: "Individual courses will be approved to satisfy only one General Education requirement except as follows. Exceptions are the Advanced Composition, Quantitative Reasoning II, and the Cultural Studies requirements.",
+    source: "https://gened.illinois.edu/faculty-staff/details-criteria/",
+  };
+  const GE: Degree = {
+    ...DEG,
+    double_counting: [...DEG.double_counting.slice(0, 2), TWO_CATS, DEG.double_counting[2]],
+    groups: [...DEG.groups, group({ id: "acp", kind: "gened", rule: "hours", hours: 3, from: ["gened:ACP"] })],
+    courses: {
+      ...DEG.courses,
+      "HIST 140": c("Western Civ to 1660", 3, ["ACP", "HP"]),
+      "PHIL 103": c("Logic and Reasoning", 3, ["HP", "QR2"]),
+      "CMN 199": c("Special Topics", 3, ["HP", "SS"]), // sections approved differently; the course-level record shows both
+      "ENGL 360": c("Writing", 3, ["ACP"]),
+    },
+  };
+  const ge = (id: string) => GE.groups.find((x) => x.id === id)!;
+
+  it("an ACP or QR II course counts for its other gen-ed category too, quoting the policy", () => {
+    const acpHum = canShare(ge("acp"), ge("hum"), GE.double_counting, GE.courses["HIST 140"]);
+    expect(acpHum.allow).toBe(true);
+    expect(acpHum.rule?.source).toBe("https://gened.illinois.edu/faculty-staff/details-criteria/");
+    expect(canShare(ge("hum"), ge("qr"), GE.double_counting, GE.courses["PHIL 103"]).allow).toBe(true);
+  });
+
+  it("two categories the policy doesn't let one course combine stay unclear, and so does a call without the course", () => {
+    expect(canShare(ge("hum"), ge("sbs"), GE.double_counting, GE.courses["CMN 199"]).allow).toBe("unclear");
+    expect(canShare(ge("acp"), ge("hum"), GE.double_counting).allow).toBe("unclear");
+    expect(canShare(ge("acp"), ge("hum"), GE.double_counting, GE.courses["ENGL 360"]).allow).toBe("unclear"); // only one category
+    // the Cultural Studies rules still come first
+    expect(canShare(ge("nw"), ge("us"), GE.double_counting, GE.courses["HIST 100"]).allow).toBe(false);
+  });
+
+  it("evaluate: HIST 140 fills Advanced Composition and Humanities; CMN 199 counts once", () => {
+    const r = evaluate(GE, mine("HIST140,PHIL103,CMN199"));
+    const res = (id: string) => r.results.find((x) => x.group.id === id)!;
+    expect(res("acp").status).toBe("done");
+    expect(res("acp").used.map((u) => u.code)).toEqual(["HIST 140"]);
+    expect(res("hum").used.map((u) => u.code).sort()).toEqual(["HIST 140", "PHIL 103"]);
+    expect(res("hum").status).toBe("done");
+    expect(res("qr").used.map((u) => u.code)).toEqual(["PHIL 103"]); // QR II, counted for Humanities too
+    expect(res("sbs").used.map((u) => u.code)).toEqual(["CMN 199"]);
+    const alone = evaluate(GE, mine("CMN199")).results.find((x) => x.group.id === "hum")!;
+    expect(alone.used).toEqual([]);
+    expect(alone.blocked).toContainEqual(expect.objectContaining({ code: "CMN 199", other: "sbs", verdict: expect.objectContaining({ allow: "unclear" }) }));
+  });
 });
 
 describe("evaluate", () => {

@@ -32,6 +32,14 @@ test("a shared checklist: done groups fold away, AP credit counts, gen-eds doubl
   await expect(page.getByText(/^Also counts for /).first()).toBeVisible();
 });
 
+test("an Advanced Composition course also counts for its other gen-ed category, as campus policy allows (#18)", async ({ page }) => {
+  await page.goto("./degree/?p=finance-data-science&m=HIST140"); // ACP, Historical & Philosophical and Western
+  await expect(req(page, "acp")).toHaveAttribute("data-status", "done");
+  await expect(req(page, "hum")).toHaveAttribute("data-status", "partial");
+  await expect(req(page, "hum")).toContainText("HIST 140");
+  await expect(req(page, "hum")).not.toContainText("isn't counted twice");
+});
+
 test("the language requirement is ticked by hand", async ({ page }) => {
   await page.goto("./degree/?p=finance-data-science");
   const lang = req(page, "language");
