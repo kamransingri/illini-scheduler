@@ -1,5 +1,5 @@
 # English: Topics in English, BALAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/las/english-balas/english-topics/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/las/english-balas/english-topics/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: 'English: Topics in English, BALAS'
 college: College of Liberal Arts and Sciences
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/las/english-balas/english-topics/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 120
 notes:
 - 'Minimum hours required for graduation: 120 hours.'
@@ -141,26 +141,18 @@ groups:
   notes:
   - 'Catalog total: 9 hours.'
   id: core-courses-11
-- name: Cluster Courses
-  section: Major Requirements
-  rule: manual
-  notes:
-  - 'Catalog total: 12 hours.'
-  - 'Four courses in one of the following clusters, selected from approved lists maintained by the English Department:'
-  - Literature and Science
-  - Media Cultures
-  - Race, Indigeneity, Gender, and Sexuality
-  id: cluster-courses-12
 - name: Capstone Course
   section: Major Requirements
   rule: manual
   notes:
   - 'Catalog total: 3 hours.'
+  - 'Four courses in one of the following clusters, selected from approved lists maintained by the English Department:'
+  - Literature and Science
   - Media Cultures
   - Race, Indigeneity, Gender, and Sexuality
   courses:
   - ENGL 400
-  id: capstone-course-13
+  id: capstone-course-12
 - name: Elective Coursework
   section: Major Requirements
   rule: manual
@@ -170,4 +162,4 @@ groups:
     Writing, Creative Writing, and English)
   - 'One course in Difference and Diaspora. This requirement can be fulfilled by taking an appropriately focused course from
     among ENGL 350: Writing about Literature, Text, and Culture; the cluster courses; or the elective coursework.'
-  id: elective-coursework-14
+  id: elective-coursework-13

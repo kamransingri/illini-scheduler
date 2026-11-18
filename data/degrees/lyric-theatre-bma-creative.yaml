@@ -1,0 +1,265 @@
+# Lyric Theatre: Creative, BMA (College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/faa/lyric-theatre-bma/creative/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: lyric-theatre-bma-creative
+program: 'Lyric Theatre: Creative, BMA'
+college: College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/faa/lyric-theatre-bma/creative/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 129
+notes:
+- 'Minimum hours required for graduation: 129 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/faa/lyric-theatre-bma/creative/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+  notes:
+  - fulfilled by MUS 313, MUS 314
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation to Fine Arts and Music
+  section: Music Core
+  rule: all
+  courses:
+  - FAA 101
+  - MUS 100
+  id: orientation-to-fine-arts-and-music-11
+- name: Music Theory and Musicianship
+  section: Music Core
+  rule: all
+  courses:
+  - MUS 101
+  - MUS 102
+  - MUS 201
+  - MUS 202
+  - MUS 107
+  - MUS 108
+  - MUS 207
+  - MUS 208
+  id: music-theory-and-musicianship-12
+- name: Musicology
+  section: Music Core
+  rule: all
+  courses:
+  - MUS 110
+  - MUS 313
+  - MUS 314
+  id: musicology-13
+- name: Keyboard Studies
+  section: Music Core
+  rule: manual
+  notes:
+  - All students must demonstrate keyboard competency by proficiency examination when they matriculate or by enrolling in
+    MUS 172 and/or MUS 173.
+  courses:
+  - MUS 172
+  - MUS 173
+  id: keyboard-studies-14
+- name: Vocal Studies
+  section: Lyric Theatre Core
+  rule: all
+  courses:
+  - MUSC 105
+  - MUSC 406
+  id: vocal-studies-15
+- name: Vocal Studies
+  section: Lyric Theatre Core
+  rule: manual
+  notes:
+  - Choral Ensemble (MUSC 460-MUSC 465)
+  courses:
+  - MUSC 468
+  - MUS 121
+  - MUS 125
+  - MUS 422
+  - MUS 472
+  id: vocal-studies-16
+- name: Language
+  section: Lyric Theatre Core
+  rule: manual
+  notes:
+  - Choral Ensemble (MUSC 460-MUSC 465)
+  courses:
+  - ITAL 101
+  id: language-17
+- name: Dance
+  section: Lyric Theatre Core
+  rule: manual
+  notes:
+  - Choral Ensemble (MUSC 460-MUSC 465)
+  courses:
+  - - DANC 116
+    - DANC 216
+  - DANC 209
+  id: dance-18
+- name: Theatre-Acting
+  section: Lyric Theatre Core
+  rule: manual
+  notes:
+  - Choral Ensemble (MUSC 460-MUSC 465)
+  courses:
+  - THEA 100
+  - THEA 170
+  - THEA 175
+  id: theatre-acting-19
+- name: 'Somatics: Choose one course'
+  section: Lyric Theatre Core
+  rule: manual
+  notes:
+  - 'Catalog total: 1 hours.'
+  - Choral Ensemble (MUSC 460-MUSC 465)
+  courses:
+  - DANC 245
+  - DANC 301
+  - DANC 401
+  - DANC 402
+  id: somatics-choose-one-course-20
+- name: Suggested Electives for the Creative Concentration
+  section: Creative Concentration
+  rule: manual
+  notes:
+  - 'Catalog total: 12 hours.'
+  - 12 minimum required hours
+  courses:
+  - MUS 106
+  - MUS 206
+  - MUS 209
+  - MUS 404
+  - MUS 406
+  - MUS 426
+  - MUS 446
+  - MUS 469
+  - MUS 471
+  - MUSC 470
+  - MUSC 471
+  - DANC 259
+  - DANC 262
+  - DANC 424
+  - THEA 211
+  - THEA 212
+  - THEA 220
+  - THEA 410
+  - THEA 411
+  - THEA 412
+  - THEA 453
+  - THEA 454
+  - THEA 455
+  id: suggested-electives-for-the-creative-con-21
+- name: Suggested Electives for the Creative Concentration
+  section: Creative Concentration
+  rule: manual
+  notes:
+  - Other courses, with Lyric Theatre faculty approval
+  id: suggested-electives-for-the-creative-con-22

@@ -1,0 +1,222 @@
+# Mathematics & Computer Science, BSLAS (College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/las/mathematics-bslas/teaching-mathematics/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: mathematics-bslas-teaching-mathematics
+program: Mathematics & Computer Science, BSLAS
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/las/mathematics-bslas/teaching-mathematics/
+read_on: '2026-11-18'
+generated: '2026-11-18'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/las/mathematics-bslas/teaching-mathematics/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by EDUC 202
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+  notes:
+  - fulfilled by EDUC 202 and any other course approved as Humanities & the Arts
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by EPSY 201 any other course approved as Social & Behavioral Sciences
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+  notes:
+  - fulfilled by EDUC 201
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+- id: gened-10
+  name: fullfilled by MATH 220 or MATH 221, MATH 231, MATH 241
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - fullfilled by MATH 220 or MATH 221, MATH 231, MATH 241
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English, or completion
+    of the third semester in two different languages other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Foundation Courses
+  section: Major Requirements
+  rule: manual
+  notes:
+  - The following courses must be completed or in progress when students apply to the Secondary Education minor.
+  courses:
+  - - MATH 220
+    - MATH 221
+  - MATH 231
+  - MATH 241
+  id: foundation-courses-12
+- name: Foundation Courses
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Three advanced mathematics courses, including
+  courses:
+  - MATH 347
+  id: foundation-courses-13
+- name: Required Core Courses
+  section: Major Requirements
+  rule: manual
+  notes:
+  - The following courses must be completed or in progress when students apply to the Secondary Education minor.
+  - Three advanced mathematics courses, including
+  courses:
+  - MATH 416
+  - - MATH 417
+    - MATH 427
+  - - MATH 424
+    - MATH 444
+    - MATH 447
+  - - MATH 461
+    - STAT 400
+  - - CS 101
+    - CS 124
+    - CS 125
+  id: required-core-courses-14
+- name: Required Core Courses
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Teacher Education Minor in Secondary School Teaching
+  id: required-core-courses-15
+- name: Mathematics Teaching Courses
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Three advanced mathematics courses, including
+  - Teacher Education Minor in Secondary School Teaching
+  courses:
+  - - MATH 402
+    - MATH 403
+  - MATH 453
+  id: mathematics-teaching-courses-16
+- name: Mathematics Teaching Courses
+  section: Major Requirements
+  rule: manual
+  notes:
+  - One additional 400-level or approved 500-level mathematics course (Courses awarded S/U grades may not be used to fill
+    this requirement.)
+  id: mathematics-teaching-courses-17
+- name: Professional Education Required Courses
+  section: Requirements for the Teacher Education in Secondary School Teaching Minor
+  rule: all
+  courses:
+  - EDUC 201
+  - EDUC 202
+  - CI 401
+  - CI 403
+  - CI 404
+  - CI 473
+  - EPSY 201
+  - EPSY 485
+  - SPED 405
+  - EDPR 442
+  id: professional-education-required-courses-18

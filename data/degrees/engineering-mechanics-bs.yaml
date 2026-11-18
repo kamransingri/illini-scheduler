@@ -1,5 +1,5 @@
 # Engineering Mechanics, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/engineering/engineering-mechanics-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/engineering-mechanics-bs/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Engineering Mechanics, BS
 college: The Grainger College of Engineering
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/engineering/engineering-mechanics-bs/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 128
 notes:
 - 'Minimum hours required for graduation: 128 hours.'
@@ -180,7 +180,7 @@ groups:
   - TAM 445
   - TAM 470
   id: engineering-mechanics-technical-core-13
-- name: Secondary Field Option Electives
+- name: Biomechanics
   section: Secondary Field Option Electives
   rule: manual
   notes:
@@ -193,17 +193,12 @@ groups:
     in the Engineering Mechanics curriculum. This can include 500-level courses, if the student has the adequate preparation,
     for any of the secondary field elective courses. Each student must formally declare their choice of secondary field with
     a Mechanical Science and Engineering Undergraduate Programs Office advisor using a Secondary Field Options form.
-  id: secondary-field-option-electives-14
-- name: Biomechanics
-  section: Secondary Field Option Electives
-  rule: manual
-  notes:
   - Required Courses
   courses:
   - MCB 150
   - MCB 151
   - TAM 461
-  id: biomechanics-15
+  id: biomechanics-14
 - name: Biomechanics
   section: Secondary Field Option Electives
   rule: manual
@@ -217,7 +212,7 @@ groups:
   - ME 483
   - BIOP 401
   - TAM 497
-  id: biomechanics-16
+  id: biomechanics-15
 - name: Computational Mechanics
   section: Secondary Field Option Electives
   rule: manual
@@ -226,7 +221,7 @@ groups:
   courses:
   - CS 357
   - ME 471
-  id: computational-mechanics-17
+  id: computational-mechanics-16
 - name: Computational Mechanics
   section: Secondary Field Option Electives
   rule: manual
@@ -236,7 +231,7 @@ groups:
   - CS 450
   - ME 412
   - TAM 497
-  id: computational-mechanics-18
+  id: computational-mechanics-17
 - name: Engineering Science and Applied Mathematics
   section: Secondary Field Option Electives
   rule: manual
@@ -245,7 +240,7 @@ groups:
   courses:
   - - MATH 446
     - MATH 448
-  id: engineering-science-and-applied-mathemat-19
+  id: engineering-science-and-applied-mathemat-18
 - name: Engineering Science and Applied Mathematics
   section: Secondary Field Option Electives
   rule: manual
@@ -261,7 +256,7 @@ groups:
   - ECE 473
   - PHYS 402
   - TAM 497
-  id: engineering-science-and-applied-mathemat-20
+  id: engineering-science-and-applied-mathemat-19
 - name: Experimental Mechanics
   section: Secondary Field Option Electives
   rule: manual
@@ -270,7 +265,7 @@ groups:
   courses:
   - TAM 456
   - ECE 206
-  id: experimental-mechanics-21
+  id: experimental-mechanics-20
 - name: Experimental Mechanics
   section: Secondary Field Option Electives
   rule: manual
@@ -282,7 +277,7 @@ groups:
   - ME 360
   - PHYS 402
   - TAM 497
-  id: experimental-mechanics-22
+  id: experimental-mechanics-21
 - name: Fluid Mechanics
   section: Secondary Field Option Electives
   rule: manual
@@ -291,7 +286,7 @@ groups:
   courses:
   - TAM 435
   - ME 410
-  id: fluid-mechanics-23
+  id: fluid-mechanics-22
 - name: Fluid Mechanics
   section: Secondary Field Option Electives
   rule: manual
@@ -304,7 +299,7 @@ groups:
   - ECE 473
   - ME 412
   - TAM 497
-  id: fluid-mechanics-24
+  id: fluid-mechanics-23
 - name: Mechanics of Materials
   section: Secondary Field Option Electives
   rule: manual
@@ -313,7 +308,7 @@ groups:
   courses:
   - TAM 424
   - TAM 428
-  id: mechanics-of-materials-25
+  id: mechanics-of-materials-24
 - name: Mechanics of Materials
   section: Secondary Field Option Electives
   rule: manual
@@ -326,7 +321,7 @@ groups:
   - MSE 489
   - NPRE 330
   - TAM 497
-  id: mechanics-of-materials-26
+  id: mechanics-of-materials-25
 - name: Solid Mechanics
   section: Secondary Field Option Electives
   rule: manual
@@ -335,7 +330,7 @@ groups:
   courses:
   - TAM 424
   - TAM 451
-  id: solid-mechanics-27
+  id: solid-mechanics-26
 - name: Solid Mechanics
   section: Secondary Field Option Electives
   rule: manual
@@ -348,11 +343,11 @@ groups:
   - CS 357
   - ECE 473
   - TAM 497
-  id: solid-mechanics-28
+  id: solid-mechanics-27
 - name: Free Electives
   section: Free Electives
   rule: manual
   notes:
   - Additional course work, subject to the Grainger College of Engineering restrictions to Free Electives, so that there are
     at least 128 credit hours earned toward the degree.
-  id: free-electives-29
+  id: free-electives-28

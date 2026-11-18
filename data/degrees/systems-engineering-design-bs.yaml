@@ -1,5 +1,5 @@
 # Systems Engineering and Design, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/engineering/systems-engineering-design-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/systems-engineering-design-bs/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Systems Engineering and Design, BS
 college: The Grainger College of Engineering
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/engineering/systems-engineering-design-bs/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 128
 notes:
 - 'Minimum hours required for graduation: 128 hours.'
@@ -188,17 +188,12 @@ groups:
   - TAM 251
   - TAM 335
   id: systems-engineering-and-design-technical-14
-- name: Secondary Field Option Electives
+- name: Automotive Engineering
   section: Secondary Field Option Electives
   rule: manual
   notes:
   - Students must select one Secondary Field Option from the list below or they may petition to create their own Secondary
     Field Option (SFO). Courses from these lists may only be used to fulfill one curricular requirement.
-  id: secondary-field-option-electives-15
-- name: Automotive Engineering
-  section: Secondary Field Option Electives
-  rule: manual
-  notes:
   - 'Dynamics/Controls Focus - complete at least 1 course from this list:'
   courses:
   - ECE 470
@@ -206,7 +201,7 @@ groups:
   - ME 460
   - TAM 412
   - TAM 416
-  id: automotive-engineering-16
+  id: automotive-engineering-15
 - name: Automotive Engineering
   section: Secondary Field Option Electives
   rule: manual
@@ -217,7 +212,7 @@ groups:
   - ECE 464
   - ME 400
   - ME 403
-  id: automotive-engineering-17
+  id: automotive-engineering-16
 - name: Automotive Engineering
   section: Secondary Field Option Electives
   rule: manual
@@ -233,7 +228,7 @@ groups:
   - SE 400
   - SE 422
   - SE 497
-  id: automotive-engineering-18
+  id: automotive-engineering-17
 - name: Autonomous Systems and Robotics
   section: Secondary Field Option Electives
   rule: manual
@@ -255,7 +250,7 @@ groups:
   - SE 420
   - SE 422
   - SE 423
-  id: autonomous-systems-and-robotics-19
+  id: autonomous-systems-and-robotics-18
 - name: Bioengineering
   section: Secondary Field Option Electives
   rule: manual
@@ -279,7 +274,7 @@ groups:
   - MCB 402
   - MCB 450
   - SE 400
-  id: bioengineering-20
+  id: bioengineering-19
 - name: Business Systems Integration & Consulting
   section: Secondary Field Option Electives
   rule: manual
@@ -287,7 +282,7 @@ groups:
   - 'Core Requirement:'
   courses:
   - SE 400
-  id: business-systems-integration-consulting-21
+  id: business-systems-integration-consulting-20
 - name: Business Systems Integration & Consulting
   section: Secondary Field Option Electives
   rule: manual
@@ -297,7 +292,7 @@ groups:
   - BADM 352
   - BADM 353
   - IE 405
-  id: business-systems-integration-consulting-22
+  id: business-systems-integration-consulting-21
 - name: Business Systems Integration & Consulting
   section: Secondary Field Option Electives
   rule: manual
@@ -319,7 +314,7 @@ groups:
   - FIN 221
   - FIN 300
   - IE 420
-  id: business-systems-integration-consulting-23
+  id: business-systems-integration-consulting-22
 - name: Civil Engineering Structures
   section: Secondary Field Option Electives
   rule: manual
@@ -334,7 +329,7 @@ groups:
   - CEE 463
   - CEE 465
   - SE 400
-  id: civil-engineering-structures-24
+  id: civil-engineering-structures-23
 - name: Computer Science
   section: Secondary Field Option Electives
   rule: manual
@@ -343,7 +338,7 @@ groups:
   courses:
   - CS 173
   - CS 225
-  id: computer-science-25
+  id: computer-science-24
 - name: Computer Science
   section: Secondary Field Option Electives
   rule: manual
@@ -354,7 +349,7 @@ groups:
   - CS 411
   - CS 425
   - CS 438
-  id: computer-science-26
+  id: computer-science-25
 - name: Computer Science
   section: Secondary Field Option Electives
   rule: manual
@@ -362,7 +357,7 @@ groups:
   - All 200-, 300-, and 400-level CS courses excluding CS 210, CS 211, CS 397, CS 398, and CS seminar and senior project courses.
   courses:
   - SE 400
-  id: computer-science-27
+  id: computer-science-26
 - name: Construction
   section: Secondary Field Option Electives
   rule: manual
@@ -382,7 +377,7 @@ groups:
   - CEE 465
   - ME 330
   - SE 400
-  id: construction-28
+  id: construction-27
 - name: Control Systems
   section: Secondary Field Option Electives
   rule: manual
@@ -405,7 +400,7 @@ groups:
   - SE 420
   - SE 422
   - SE 423
-  id: control-systems-29
+  id: control-systems-28
 - name: Digital Prototyping
   section: Secondary Field Option Electives
   rule: manual
@@ -423,7 +418,7 @@ groups:
   - SE 413
   - SE 423
   - TAM 470
-  id: digital-prototyping-30
+  id: digital-prototyping-29
 - name: Engineering Administration
   section: Secondary Field Option Electives
   rule: manual
@@ -431,7 +426,7 @@ groups:
   - 'Core Requirement:'
   courses:
   - SE 400
-  id: engineering-administration-31
+  id: engineering-administration-30
 - name: Engineering Administration
   section: Secondary Field Option Electives
   rule: manual
@@ -461,7 +456,7 @@ groups:
   - IE 445
   - PS 321
   - SE 411
-  id: engineering-administration-32
+  id: engineering-administration-31
 - name: Engineering Marketing
   section: Secondary Field Option Electives
   rule: manual
@@ -469,7 +464,7 @@ groups:
   - 'Core Requirement:'
   courses:
   - SE 400
-  id: engineering-marketing-33
+  id: engineering-marketing-32
 - name: Engineering Marketing
   section: Secondary Field Option Electives
   rule: manual
@@ -493,7 +488,7 @@ groups:
   - BTW 250
   - BTW 261
   - PSYC 245
-  id: engineering-marketing-34
+  id: engineering-marketing-33
 - name: Environmental Quality
   section: Secondary Field Option Electives
   rule: manual
@@ -513,7 +508,7 @@ groups:
   - NRES 419
   - NRES 472
   - SE 400
-  id: environmental-quality-35
+  id: environmental-quality-34
 - name: Manufacturing Engineering
   section: Secondary Field Option Electives
   rule: manual
@@ -529,13 +524,13 @@ groups:
   - SE 420
   - SE 422
   - SE 423
-  id: manufacturing-engineering-36
+  id: manufacturing-engineering-35
 - name: Manufacturing Engineering
   section: Secondary Field Option Electives
   rule: manual
   notes:
   - Any courses from Digital Prototyping and Control Systems Secondary Field Option.
-  id: manufacturing-engineering-37
+  id: manufacturing-engineering-36
 - name: Nondestructive Testing and Evaluation
   section: Secondary Field Option Electives
   rule: manual
@@ -543,7 +538,7 @@ groups:
   - 'Core Requirement:'
   courses:
   - SE 412
-  id: nondestructive-testing-and-evaluation-38
+  id: nondestructive-testing-and-evaluation-37
 - name: Nondestructive Testing and Evaluation
   section: Secondary Field Option Electives
   rule: manual
@@ -562,7 +557,7 @@ groups:
   - SE 400
   - TAM 412
   - TAM 456
-  id: nondestructive-testing-and-evaluation-39
+  id: nondestructive-testing-and-evaluation-38
 - name: Operations Research
   section: Secondary Field Option Electives
   rule: manual
@@ -581,7 +576,7 @@ groups:
   - ME 451
   - SE 400
   - SE 411
-  id: operations-research-40
+  id: operations-research-39
 - name: Rehabilitation Engineering
   section: Secondary Field Option Electives
   rule: manual
@@ -596,7 +591,7 @@ groups:
   - MCB 250
   - MCB 251
   - SE 400
-  id: rehabilitation-engineering-41
+  id: rehabilitation-engineering-40
 - name: Theoretical and Applied Mechanics
   section: Secondary Field Option Electives
   rule: manual
@@ -614,31 +609,35 @@ groups:
   - TAM 445
   - TAM 451
   - TAM 456
-  id: theoretical-and-applied-mechanics-42
-- name: Technical Electives
+  id: theoretical-and-applied-mechanics-41
+- name: Design elective selected from the departmentally approved list of Design Electives below
   section: Technical Electives
-  rule: manual
-  notes:
-  - 'Design elective selected from the departmentally approved list of Design Electives below:'
+  rule: hours
+  hours: 3
   courses:
   - SE 410
   - SE 420
   - SE 423
   - SE 413
-  id: technical-electives-43
-- name: Technical Electives
-  section: Technical Electives
-  rule: manual
   notes:
-  - 'Engineering science elective selected from the departmentally approved list of Engineering Science Electives below:'
+  - Select 3 hours from the list below.
+  - 'Design elective selected from the departmentally approved list of Design Electives below:'
+  id: design-elective-selected-from-the-depart-42
+- name: Engineering science elective selected from the departmentally approved list of Engineering Science Electives below
+  section: Technical Electives
+  rule: hours
+  hours: 3
   courses:
   - ME 200
   - MSE 280
-  id: technical-electives-44
+  notes:
+  - Select 3 hours from the list below.
+  - 'Engineering science elective selected from the departmentally approved list of Engineering Science Electives below:'
+  id: engineering-science-elective-selected-fr-43
 - name: Free Electives
   section: Free Electives
   rule: manual
   notes:
   - Additional course work, subject to the Grainger College of Engineering restrictions to Free Electives, so that there are
     at least 128 credit hours earned toward the degree.
-  id: free-electives-45
+  id: free-electives-44

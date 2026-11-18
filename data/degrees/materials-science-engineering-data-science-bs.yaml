@@ -1,5 +1,5 @@
 # Materials Science & Engineering + Data Science, BS (The Grainger College of Engineering), 2026-2027 Academic Catalog.
-# Generated from https://catalog.illinois.edu/undergraduate/engineering/materials-science-engineering-data-science-bs/ on 2026-11-16 by pipeline/catalog_import.py: course lists,
+# Generated from https://catalog.illinois.edu/undergraduate/engineering/materials-science-engineering-data-science-bs/ on 2026-11-18 by pipeline/catalog_import.py: course lists,
 # alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
 # groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
 # changes.
@@ -8,8 +8,8 @@ program: Materials Science & Engineering + Data Science, BS
 college: The Grainger College of Engineering
 catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/engineering/materials-science-engineering-data-science-bs/
-read_on: '2026-11-16'
-generated: '2026-11-16'
+read_on: '2026-11-18'
+generated: '2026-11-18'
 total_hours: 128
 notes:
 - 'Minimum hours required for graduation: 128 hours.'
@@ -138,33 +138,15 @@ groups:
   rule: all
   courses:
   - ENG 100
-  id: orientation-and-professional-development-11
-- name: Orientation and Professional Development
-  section: Orientation and Professional Development
-  rule: manual
   notes:
   - Recommended, optional 1 credit course, MSE 183 Introductory MatSE Laboratory. Credit hour counts toward free electives.
-  id: orientation-and-professional-development-12
+  id: orientation-and-professional-development-11
 - name: Foundational Mathematics and Science
   section: Foundational Mathematics and Science
   rule: all
   courses:
   - CHEM 102
-  id: foundational-mathematics-and-science-13
-- name: Foundational Mathematics and Science
-  section: Foundational Mathematics and Science
-  rule: manual
-  notes:
-  - Recommended, optional 1 credit course, CHEM 103 General Chemistry Lab I. Credit hour counts toward free electives.
-  courses:
   - CHEM 104
-  id: foundational-mathematics-and-science-14
-- name: Foundational Mathematics and Science
-  section: Foundational Mathematics and Science
-  rule: manual
-  notes:
-  - Recommended, optional 1 credit course, CHEM 105 General Chemistry Lab II. Credit hour counts toward free electives.
-  courses:
   - MATH 221
   - MATH 231
   - MATH 241
@@ -173,7 +155,10 @@ groups:
   - PHYS 211
   - PHYS 212
   - PHYS 214
-  id: foundational-mathematics-and-science-15
+  notes:
+  - Recommended, optional 1 credit course, CHEM 103 General Chemistry Lab I. Credit hour counts toward free electives.
+  - Recommended, optional 1 credit course, CHEM 105 General Chemistry Lab II. Credit hour counts toward free electives.
+  id: foundational-mathematics-and-science-12
 - name: Materials Science and Engineering with Data Science Technical Core
   section: Materials Science and Engineering with Data Science Technical Core
   rule: all
@@ -197,19 +182,19 @@ groups:
   - IS 477
   - MSE 494
   - MSE 495
-  id: materials-science-and-engineering-with-d-16
+  id: materials-science-and-engineering-with-d-13
 - name: Technical Electives
   section: Technical Electives
   rule: all
   courses:
   - MSE 404
-  id: technical-electives-17
+  id: technical-electives-14
 - name: Technical Electives
   section: Technical Electives
   rule: manual
   notes:
   - Topical lecture courses. See Topical Lecture list below.
-  id: technical-electives-18
+  id: technical-electives-15
 - name: Topical Lectures
   section: Topical Lectures
   rule: manual
@@ -221,7 +206,7 @@ groups:
   - MSE 450
   - MSE 470
   - ECE 340
-  id: topical-lectures-19
+  id: topical-lectures-16
 - name: Topical Lectures
   section: Topical Lectures
   rule: manual
@@ -281,7 +266,7 @@ groups:
   - SE 412
   - TAM 451
   - TAM 456
-  id: topical-lectures-20
+  id: topical-lectures-17
 - name: Topical Lectures
   section: Topical Lectures
   rule: manual
@@ -295,11 +280,11 @@ groups:
   - PHYS 485
   - PHYS 486
   - PHYS 487
-  id: topical-lectures-21
+  id: topical-lectures-18
 - name: Free Electives
   section: Free Electives
   rule: manual
   notes:
   - Additional course work, subject to the Grainger College of Engineering restrictions to Free Electives, so that there are
     at least 128 credit hours earned toward the degree.
-  id: free-electives-22
+  id: free-electives-19
