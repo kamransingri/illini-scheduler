@@ -158,6 +158,7 @@ export default function SearchBox({
                   cols={withCart ? COLS : COLS_NO_CART}
                   badges={
                     <>
+                      {h.course.f?.map((f) => <Badge key={f}>Formerly {f}</Badge>)}
                       {h.course.c && <Badge>{h.course.c} credit hours</Badge>}
                       {h.course.g.map((g) => (
                         <Badge key={g}>{GENED_NAMES[g] ?? g}</Badge>

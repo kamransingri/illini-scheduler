@@ -119,6 +119,7 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D4.5 Prerequisite summaries** say "now lists CS 413", not "now requires", because most UIUC prerequisite
   lists are alternatives ("One of CS 173, CS 413, ...").
 - **D4.6 Renumbering** isn't detected; there's no structured link between old and new numbers in the data. Known gap.
+  Linked by hand since #29 (D23).
 
 ## Phase 5 — Exam and grading format
 
@@ -673,6 +674,34 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D21.2 No waitlist numbers.** The site knows only open or closed (LIMITATIONS "Open or closed only"), so the list
   says that and links to Self-Service. It links to Just opened with `?mine=1`, which turns on "Only my schedule's
   courses". Watching a section so the live job checks it more often is #15.
+
+## Renumbered courses (2026-11-18, issue #29)
+
+- **D23.1 A file of links, each with a source.** `data/renumbered.csv`: old code, new code, the first term the data has
+  under the new number, and a quote from Course Explorer or the catalog (or CITL's AP tables, which changed codes for
+  the same exam and score). `python -m pipeline.renumbered --suggest` lists candidates from Course Explorer text
+  ("formerly", "Credit is not given for both", old and new as alternatives in a prerequisite); none is added
+  automatically. Kept: an explicit "formerly", or one of the other statements with the same title and the new number
+  starting right after the old one (at most one regular term between). Left out: title changes (except SPAN 141 →
+  SPAN 203, named in #29), many-to-one merges (the SPED 44x courses, SOC 500/501), topics courses, longer gaps, and
+  pairs taught at the same time (ECON 528 / FIN 574 was a cross-listing, not a renumbering). A new code can have one old
+  code, and a link can't chain. 33 links.
+- **D23.2 One rename, early.** The GPA rows of the old code before the change are rewritten to the new code before
+  anything aggregates (`renumbered.apply_gpa` in `run.py`), and the offerings stage maps section and catalog rows the
+  same way. So whole-course GPA, GPA by term, each professor's GPA in the course, instructor matching, the offering
+  pattern and the change timeline all see one course. The old code's rows from the change on stay under the old code,
+  since a number can be reused. No term is counted twice: a pytest splits real fixture data at a renumbering and checks
+  that merging gives the original terms and students exactly. On the 2026-11-16 data, SOCW 296 shows SOCW 300's 22 GPA
+  terms, and SPAN 210's offering pattern is "Every fall and spring" instead of looking new.
+- **D23.3 What the page shows.** Under the course code: "Formerly SPAN 200 (until Spring 2026)", with the source in the
+  (i). Rows from before the change are marked "as SPAN 200" in Grades over time, and What changed says "Renumbered:
+  SPAN 200 is now SPAN 210" in the first term under the new number (it's also the term's biggest change). When the
+  two compared catalog entries straddle a renumbering, codes renumbered in between are compared in the new numbers, so
+  a prerequisite that only changed number isn't reported. The old URL redirects from the 404 page using
+  `renumbered.json` (an old number that still has its own page keeps it), and searching the old number finds the new
+  course, labelled "Formerly SPAN 200".
+- **D23.4 Not done.** My courses and the degree checklist don't translate old numbers, so SPAN 200 in My courses
+  doesn't count for a requirement that lists SPAN 210. CITL's AP tables already use each year's numbers.
 
 ## Watching sections (2026-11-18, issue #15)
 

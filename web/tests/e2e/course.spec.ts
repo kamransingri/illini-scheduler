@@ -50,3 +50,15 @@ test("Took this course? sends students to Rate My Professors, not to GitHub", as
   await expect(page).toHaveURL(/#professors$/);
   await expect(page.locator('a[href*="/issues/new"]')).toHaveCount(0);
 });
+
+test("a renumbered course: the old URL and the old number lead to it, and it says what it was (#29)", async ({ page }) => {
+  await page.goto("./course/SPAN/200/");
+  await expect(page).toHaveURL(/\/course\/SPAN\/210\/$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Readings in Hispanic Texts");
+  await expect(page.getByTestId("formerly")).toContainText("Formerly SPAN 200");
+  await page.goto("./");
+  await page.getByLabel(/Search courses/).fill("span 200");
+  const first = page.getByRole("listbox").locator("li").first();
+  await expect(first).toContainText("SPAN 210");
+  await expect(first).toContainText("Formerly SPAN 200");
+});
