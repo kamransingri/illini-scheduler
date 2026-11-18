@@ -1,6 +1,7 @@
 // Build-time data access (server components only). Reads the JSON written by `make data`.
 import fs from "node:fs";
 import path from "node:path";
+import { parseChangelog, type Release } from "./changelog";
 import type { DegreeIndex } from "./degree";
 import type { Course, Meta, SearchIndex } from "./types";
 
@@ -10,6 +11,12 @@ function readJson<T>(rel: string): T | null {
   const p = path.join(DATA_DIR, rel);
   if (!fs.existsSync(p)) return null;
   return JSON.parse(fs.readFileSync(p, "utf8")) as T;
+}
+
+/** Every release in the repo's CHANGELOG.md (one folder up from web/), newest first. */
+export function getReleases(): Release[] {
+  const p = path.join(process.cwd(), "..", "CHANGELOG.md");
+  return fs.existsSync(p) ? parseChangelog(fs.readFileSync(p, "utf8")) : [];
 }
 
 export function getMeta(): Meta | null {
