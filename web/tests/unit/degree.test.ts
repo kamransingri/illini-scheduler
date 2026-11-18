@@ -168,6 +168,7 @@ describe("my courses encoding", () => {
       courses: [{ s: "STAT", n: "107", status: "done" }],
       ticked: ["language"],
       ap: [],
+      ib: [],
       year: "",
       declined: [],
     });

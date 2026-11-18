@@ -10,6 +10,18 @@ history).
 
 ## [Unreleased]
 
+## [0.12.0] - 2026-11-18
+
+### Added
+
+- Degree checklist: **IB credit**. Add IB exams with their level (Higher or Standard) and score, next to AP exams, and
+  the checklist fills in the courses CITL's 2026-2027 table gives, merged with AP credit. Six slips in CITL's table are
+  corrected and noted. The weekly CITL check now watches the IB rows too. For dual and transfer credit the checklist
+  points to Transferology (#25).
+- **Summer courses** page: classes you can take over the summer, with filters for gen-ed, session, online or on
+  campus, and classes that ran every recent summer. Until Summer 2027 is published it shows Summer 2026's 656 classes
+  and says so (#35).
+
 ## [0.11.0] - 2026-11-18
 
 ### Added
@@ -212,7 +224,8 @@ history).
 - A partial Rate My Professors error no longer stops `make data`.
 - RSS feeds are written as UTF-8.
 
-[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.11.0...HEAD
+[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.12.0...HEAD
+[0.12.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.8.0...v0.9.0

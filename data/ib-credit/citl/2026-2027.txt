@@ -1,0 +1,282 @@
+ANTHROPOLOGY | HL | 4, 5 | ANTH 1-- | 3 | ANTH 103 or ANTH 230 | 
+ANTHROPOLOGY | HL | 6, 7 | ANTH 230 | 3 | ANTH 270 | 
+ANTHROPOLOGY | SL | 4, 5 | ANTH 1-- | 3 | ANTH 103 | 
+ANTHROPOLOGY | SL | 6, 7 | ANTH 103 | 3 | ANTH 230 | Cultural Studies - Non-West; Social & Beh Sci - Soc Sci
+ARABIC B AB INITIO | SL | 4, 5 | ARAB 201 | 5 | ARAB 202 | Language Other Than English: Level 1
+ARABIC B AB INITIO | SL | 6, 7 | ARAB 201, 202 | 5 + 5 = 10 | ARAB 403 | Language Other Than English: Level 1
+ARABIC B | HL | 4, 5 | ARAB 405 | 3 | ARAB 406 | 
+ARABIC B | HL | 6, 7 | ARAB 405, 406 | 3 + 3 = 6 | ARAB 407 | 
+ARABIC B | SL | 4, 5 | ARAB 403 | 3 | ARAB 404 | Language Other Than English: Level 3
+ARABIC B | SL | 6,7 | ARAB 403, 404 | 4 + 4 = 8 | ARAB 405 | Language Other Than English: Level 3 & 4
+ART HISTORY | SL | 4, 5 | ARTH 1-- | 1 |  | 
+ART HISTORY | SL | 6, 7 | ARTH 1-- | 3 |  | 
+ASTRONOMY | SL | 4 | ASTR 1-- | 2 |  | 
+ASTRONOMY | SL | 5 | ASTR 100 | 3 |  | Nat Sci & Tech - Phys Sciences
+ASTRONOMY | SL | 6, 7 | ASTR 121, 122 | 3 + 3 = 6 |  | Nat Sci & Tech - Phys Sciences; Quantitative Reasoning II (ASTR 121) Nat Sci & Tech - Phys Sciences; Quantitative Reasoning II (ASTR 122)
+BIOLOGY | HL | 4, 5 | IB 100, 104 | 3 + 4 = 7 |  | Nat Sci & Tech - Life Sciences (IB 100) Nat Sci & Tech - Life Sciences (IB 104)
+BIOLOGY | HL | 6, 7 | IB 150, 151; MCB 150, 151 | 4+1+4+1=10 | Consult with your advisor to determine which biology course you should enroll in, as it will depend on your major and your educational goals. | Nat Sci & Tech - Life Sciences (IB 150) Nat Sci & Tech - Life Sciences (MCB 150)
+BIOLOGY | SL | 4, 5 | IB 100 | 3 |  | Nat Sci & Tech - Life Sciences
+BIOLOGY | SL | 6, 7 | IB 100, 104 | 3 + 4 = 7 |  | Nat Sci & Tech - Life Sciences (IB 100) Nat Sci & Tech - Life Sciences (IB 104)
+BRAZILIAN SOCIAL STUDIES | SL | 4, 5, 6, 7 | PORT 404 | 3 |  | 
+BUSINESS MANAGEMENT | HL | 4, 5, 6, 7 | BADM 2-- | 3 |  | 
+BUSINESS MANAGEMENT | SL | 4, 5, 6, 7 | BADM 1-- | 3 |  | 
+CATALAN A: LITERATURE | HL | 4, 5, 6, 7 | CATL 401 | 3 | CATL 402 | 
+CATALAN A: LITERATURE | SL | 4, 5, 6, 7 | CATL 401 | 3 | CATL 402 | 
+CHEMISTRY | HL | 4 | CHEM 1-- | 3 | CHEM 101 or CHEM 102, depending on Chemistry Placement Test score | 
+CHEMISTRY | HL | 5 | CHEM 102 | 3 | CHEM 104, Consult with your advisor to determine which Chemistry course you should enroll in | Nat Sci & Tech - Phys Sciences
+CHEMISTRY | HL | 6, 7 | CHEM 102, 104 | 3 + 3 = 6 | Consult with your advisor to determine which Chemistry course you should enroll in | Nat Sci & Tech - Phys Sciences (CHEM 102) Nat Sci & Tech - Phys Sciences (CHEM 104)
+CHEMISTRY | SL | 4, 5 | CHEM 1-- | 3 | CHEM 101 or CHEM 102, depending on Chemistry Placement Test score | 
+CHEMISTRY | SL | 6, 7 | CHEM 102 | 3 | CHEM 104, Consult with your advisor to determine which Chemistry course you should enroll in | Nat Sci & Tech - Phys Sciences
+CHINESE B - CATONESE | HL | 4, 5, 6, 7 | HUM 1-- | 3 |  | 
+CHINESE B - CATONESE | SL | 4, 5, 6, 7 | HUM 1-- | 3 |  | 
+CHINESE B - CATONESE | SL | 4, 5, 6, 7 | HUM 1-- | 3 |  | 
+CHINESE B - MADARIN | HL | 4 | CHIN 305 | 5 | CHIN 306 | 
+CHINESE B - MADARIN | HL | 5 | CHIN 305, 306 | 5 + 5 = 10 | CHIN 440 | 
+CHINESE B - MADARIN | HL | 6 | CHIN 305, 306, 440 | 5 + 5 + 3 = 13 | CHIN 441 | 
+CHINESE B - MADARIN | HL | 7 | CHIN 305, 306, 440, 441 | 5 + 5 + 3 + 3 = 16 | Consult with the Director of the Chinese Program for a course recommendation | 
+CHINESE B - MADARIN | SL ab initio | 4,5 | CHIN 201 | 5 | CHIN 202 | Language Other Than English: Level 1
+CHINESE B - MADARIN | SL ab initio | 6, 7 | CHIN 201 AND 202 | 5 | CHIN 305 | Language Other Than English: Level 1 & 2
+CHINESE B - MADARIN | SL | 4, 5 | CHIN 203 | 5 | CHIN 204 | Language Other Than English: Level 3
+CHINESE B - MADARIN | SL | 6,7 | CHIN 203 AND 204 | 5+5=10 | CHIN 305 | Language Other Than English: Level 3 & 4
+CLASSICAL GREEK & ROMAN STUDIES | SL | 4, 5, 6, 7 | CLCV 1-- | 3 | Any 100-level or 200-level CLCV course | 
+CLASSICS - GREEK | HL | 4, 5 | GRK 101, 102 | 4 + 4 = 8 | GRK 201 | Language Other Than English: Levels 1 & 2
+CLASSICS - GREEK | HL | 6, 7 | GRK 101, 102, 201 | 4 + 4 + 4 = 12 | GRK 202 | Language Other Than English: Levels 1, 2 & 3
+CLASSICS - GREEK | SL | 4, 5 | GRK 1-- | 4 | GRK 101; Consult with the Classics Dept if you wish to register for a more advanced class. | 
+CLASSICS - GREEK | SL | 6, 7 | GRK 101, 102 | 4 + 4 = 8 | GRK 201 | Language Other Than English: Levels 1 & 2
+CLASSICS - LATIN | HL | 4, 5 | LAT 201, 202 | 4 + 4 = 8 | LAT 401 or LAT 460 | Language Other Than English: Level 3 & 4
+CLASSICS - LATIN | HL | 6, 7 | LAT 201, 202, 401 | 4 + 4 + 3 = 11 | LAT 411, LAT 460, or LAT 491 | Language Other Than English: Level 3 & 4
+CLASSICS - LATIN | SL | 4, 5 | LAT 201 | 4 | LAT 202 | Language Other Than English: Level 3
+CLASSICS - LATIN | SL | 6, 7 | LAT 201, 202 | 4 + 4 = 8 | LAT 401 | Language Other Than English: Level 3 & 4
+COMPUTER SCIENCE | HL | 4 | CS 1-- | 1 |  | 
+COMPUTER SCIENCE | HL | 5 | CS 1-- | 2 |  | 
+COMPUTER SCIENCE | HL | 6, 7 | CS 101 | 3 |  | Quantitative Reasoning II
+COMPUTER SCIENCE | SL | 4 | CS 1-- | 1 |  | 
+COMPUTER SCIENCE | SL | 5 | CS 1-- | 2 |  | 
+COMPUTER SCIENCE | SL | 6, 7 | CS 105 | 3 |  | Quantitative Reasoning I
+DANCE | HL | 4, 5, 6, 7 | DANC 1-- | 3 |  | 
+DANCE | SL | 4, 5, 6, 7 | DANC 1-- | 3 |  | 
+DESIGN TECHNOLOGY | HL | 4, 5, 6, 7 | BADM 2-- | 3 |  | 
+DESIGN TECHNOLOGY | SL | 4, 5, 6, 7 | BADM 1-- | 3 |  | 
+DIGITAL SOCIETY | HL | 4, 5, 6, 7 | IS 101 | 3 |  | Social & Beh Sci - Soc Sci
+DIGITAL SOCIETY | SL | 4, 5, 6, 7 | IS 101 | 3 |  | Social & Beh Sci - Soc Sci
+ECONOMICS | HL | 4, 5 | ECON 1-- | 3 | You may take the ECON 102 or the ECON 103 departmental proficiency exam. | 
+ECONOMICS | HL | 6, 7 | ECON 102, 103 | 3 + 3 = 6 |  | Social & Beh Sci - Soc Sci (ECON 102) Social & Beh Sci - Soc Sci (ECON 103)
+ECONOMICS | SL | 4, 5 | ECON 1-- | 3 | You may take the ECON 102 or the ECON 103 departmental proficiency exam. | 
+ECONOMICS | SL | 6, 7 | ECON 102, 103 | 3 + 3 = 6 |  | Social & Beh Sci - Soc Sci (ECON 102) Social & Beh Sci - Soc Sci (ECON 103)
+ENGLISH A: LANGUAGE & LITERATURE | HL | 4, 5 | RHET 1--; ENGL 1-- | 3 + 3 = 6 |  | 
+ENGLISH A: LANGUAGE & LITERATURE | HL | 6, 7 | RHET 105; ENGL 1-- | 4 + 3 = 7 | You have fulfilled the Composition I requirement. | Composition I
+ENGLISH A: LANGUAGE & LITERATURE | SL | 4, 5 | RHET 1-- | 3 |  | 
+ENGLISH A: LANGUAGE & LITERATURE | SL | 6, 7 | RHET 105 | 4 | You have fulfilled the Composition I requirement. | Composition I
+ENGLISH A: LIT & PERFORMANCE | SL | 4, 5 | THEA 1-- | 3 |  | 
+ENGLISH A: LIT & PERFORMANCE | SL | 6, 7 | THEA 101 | 3 |  | Humanities - Lit & Arts
+ENGLISH A: LITERATURE | HL | 4,5 | ENGL 1-- | 3 |  | 
+ENGLISH A: LITERATURE | HL | 6, 7 | ENGL 1-- | 3 |  | 
+ENGLISH A: LITERATURE | SL | 4, 5 | ENGL 1-- | 3 |  | 
+ENGLISH A: LITERATURE | SL | 6, 7 | ENGL 1-- | 3 |  | 
+ENGLISH B AB INITIO | SL | 4, 5, 6, 7 | HUM 1-- | 1 |  | 
+ENGLISH B | HL | 4, 5, 6, 7 | HUM 1-- | 1 |  | 
+ENGLISH B | SL | 4, 5, 6, 7 | HUM 1-- | 1 |  | 
+ENVIRON SYSTEMS & SOCIETIES | HL | 4 | NRES 100 | 3 |  | Nat Sci & Tech - Phys Sciences
+ENVIRON SYSTEMS & SOCIETIES | HL | 5 | NRES 100, 219 | 3 + 3 = 6 |  | Nat Sci & Tech - Phys Sciences (NRES 100)
+ENVIRON SYSTEMS & SOCIETIES | HL | 6, 7 | NRES 100, 219, 287 | 3 + 3+ 3 = 9 |  | Nat Sci & Tech - Phys Sciences (NRES 100); Cultural Studies - Western (NRES 287)
+ENVIRON SYSTEMS & SOCIETIES | SL | 4 | NRES 1-- | 3 |  | Nat Sci & Tech - Phys Sciences
+ENVIRON SYSTEMS & SOCIETIES | SL | 5 | NRES 100 | 3 |  | Nat Sci & Tech - Phys Sciences (NRES 100)
+ENVIRON SYSTEMS & SOCIETIES | SL | 6, 7 | NRES 100, 219 | 3 + 3 = 6 |  | Nat Sci & Tech - Phys Sciences (NRES 100)
+FILM | HL | 4, 5 | ENGL 1-- | 3 |  | 
+FILM | HL | 6, 7 | ENGL 104 | 3 |  | Humanities - Lit & Arts
+FILM | SL | 4, 5 | ENGL 1-- | 3 |  | 
+FILM | SL | 6, 7 | ENGL 104 | 3 |  | Humanities - Lit & Arts
+FOOD SCIENCE & TECHNOLOGY | SL | 4, 5 | FSHN 1-- | 1 |  | 
+FOOD SCIENCE & TECHNOLOGY | SL | 6, 7 | FSHN 1-- | 3 |  | 
+FRENCH A: LANGUAGE & LITERATURE | HL | 4, 5 | FR 2-- | 2 | FR 205 or FR 207 | 
+FRENCH A: LANGUAGE & LITERATURE | HL | 6, 7 | FR 207 | 3 | FR 211 or FR 212 | 
+FRENCH A: LANGUAGE & LITERATURE | SL | 4, 5 | FR 2-- | 2 | Placed into FR 207 | 
+FRENCH A: LANGUAGE & LITERATURE | SL | 6, 7 | FR 2-- | 3 | FR 207 | 
+FRENCH A: LIT & PERFORMANCE | SL | NA | Only available on request | NA |  | 
+FRENCH A: LITERATURE | HL | 4, 5 | FR 2-- | 2 | FR 211 or FR 212, or consult with the French Dept for a course recommendation | 
+FRENCH A: LITERATURE | HL | 6,7 | FR 211 | 3 | FR 212, or consult with the French Dept for a course recommendation | 
+FRENCH A: LITERATURE | SL | 4, 5 | FR 2-- | 2 | FR 211 or FR 212 | 
+FRENCH A: LITERATURE | SL | 6, 7 | FR 2-- | 3 | FR 211 or FR 212 | 
+FRENCH B AB INITIO | SL | 4 | FR 1-- | 2 | Take the UIUC French Placement Test. | 
+FRENCH B AB INITIO | SL | 5 | FR 1-- | 3 | Take the UIUC French Placement Test. | 
+FRENCH B AB INITIO | SL | 6, 7 | FR 102 | 4 | FR 203 | Language Other Than English: Level 2
+FRENCH B | HL | 4, 5 | FR 1-- | 4 | Take the UIUC French Placement Test. | 
+FRENCH B | HL | 6 | FR 203, 204 | 4 + 4 = 8 | FR 205 or FR 207 | Language Other Than English: Level 3 & 4
+FRENCH B | HL | 7 | FR 203, 204 | 4 + 4 = 8 | FR 205 or FR 207 | Language Other Than English: Level 3 & 4
+FRENCH B | SL | 4 | FR 1-- | 2 | Take the UIUC French Placement Test. | 
+FRENCH B | SL | 5 | FR 1-- | 3 | Take the UIUC French Placement Test. | 
+FRENCH B | SL | 6, 7 | FR 203 | 4 | FR 204 | Language Other Than English: Level 3
+GEOGRAPHY | HL | 4, 5 | GGIS 106 | 3 | GGIS 210 | Cultural Studies - Non-West; Social & Beh Sci - Soc Sci
+GEOGRAPHY | HL | 6, 7 | GGIS 106, 1-- | 3 + 3 = 6 | GGIS 210 | Cultural Studies - Non-West; Social & Beh Sci - Soc Sci
+GEOGRAPHY | SL | 4, 5 | GGIS 1-- | 3 | GGIS 101 or GGIS 103 | 
+GEOGRAPHY | SL | 6, 7 | GGIS 101 | 3 | GGIS 103 | Cultural Studies - Non-West; Social & Beh Sci - Soc Sci
+GERMAN A: LANGUAGE & LITERATURE | HL | 4, 5, 6, 7 | HUM 1-- | 3 |  | 
+GERMAN A: LANGUAGE & LITERATURE | SL | 4, 5, 6, 7 | HUM 1-- | 3 |  | 
+GERMAN A: LITERATURE | HL | 4, 5, 6, 7 | HUM 1-- | 3 |  | 
+GERMAN A: LITERATURE | SL | 4, 5, 6, 7 | HUM 1-- | 3 |  | 
+GERMAN B AB INITIO | SL | 4 | GER 1-- | 2 | GER 101, or take the UIUC German Placement Test. | 
+GERMAN B AB INITIO | SL | 5 | GER 1-- | 3 | GER 102, or take the UIUC German Placement Test. | 
+GERMAN B AB INITIO | SL | 6, 7 | GER 102 | 4 | GER 203 | Language Other Than English: Level 2
+GERMAN B | HL | 4, 5 | GER 203 | 4 | GER 204 | Language Other Than English: Level 3
+GERMAN B | HL | 6, 7 | GER 203, 204 | 4 + 4 = 8 | GER 211 | Language Other Than English: Level 3 & 4
+GERMAN B | SL | 4, 5 | GER 102 | 4 | GER 203 | Language Other Than English: Level 2
+GERMAN B | SL | 6, 7 | GER 203 | 4 | GER 204 | Language Other Than English: Level 3
+GLOBAL POLITICS | HL | 4 | PS 1-- | 1 |  | 
+GLOBAL POLITICS | HL | 5 | PS 1-- | 2 |  | 
+GLOBAL POLITICS | HL | 6, 7 | PS 180 | 3 |  | 
+GLOBAL POLITICS | SL | 4 | PS 1-- | 1 |  | 
+GLOBAL POLITICS | SL | 5 | PS 1-- | 2 |  | 
+GLOBAL POLITICS | SL | 6, 7 | PS 180 | 3 |  | 
+HEBREW B | SL | 4, 5 | HEBR 201 | 5 | HEBR 202 | Language Other Than English: Level 1
+HEBREW B | SL | 6 | HEBR 201, 202 | 5 + 5 = 10 | HEBR 403 | Language Other Than English: Level 1 & 2
+HEBREW B | SL | 7 | HEBR 201, 202, 403 | 5 + 5 + 5 = 15 | HEBR 404 | Language Other Than English: Level 1 & 2 & 3
+HINDI A: LITERATURE | HL | 4, 5, 6, 7 | HNDI 408 | 3 | Consult with the Director of the Hindi Program for a course recommendation. | 
+HINDI A: LITERATURE | SL | 4, 5, 6, 6 | HNDI 408 | 3 | Consult with the Director of the Hindi Program for a course recommendation. | 
+HINDI B: LITERATURE | HL | 4, 5, 6, 7 | HNDI 403, 404 | 4 + 4 = 8 | HNDI 405, or consult with the Director of the Hindi Program for a course recommendation. | Language Other Than English: Level 3 & 4
+HINDI B: LITERATURE | SL | 4, 5, 6, 7 | HNDI 403, 404 | 4 | HNDI 404 | Language Other Than English: Level 3 & 4
+HISTORY - AFRICA | HL | 4 | HIST 1-- | 2 |  | 
+HISTORY - AFRICA | HL | 5 | HIST 1-- | 3 |  | 
+HISTORY - AFRICA | HL | 6, 7 | HIST 2-- | 3 |  | 
+HISTORY - AMERICAS | HL | 4 | HIST 1-- | 2 |  | 
+HISTORY - AMERICAS | HL | 5 | HIST 1-- | 3 |  | 
+HISTORY - AMERICAS | HL | 6, 7 | HIST 2-- | 3 |  | 
+HISTORY - ASIA & OCEANIA | HL | 4 | HIST 1-- | 2 |  | 
+HISTORY - ASIA & OCEANIA | HL | 5 | HIST 1-- | 3 |  | 
+HISTORY - ASIA & OCEANIA | HL | 6, 7 | HIST 2-- | 3 |  | 
+HISTORY - EUROPE | HL | 4 | HIST 1-- | 2 |  | 
+HISTORY - EUROPE | HL | 5 | HIST 1-- | 3 |  | 
+HISTORY - EUROPE | HL | 6, 7 | HIST 2-- | 3 |  | 
+HISTORY | HL | 4 | HIST 1-- | 2 |  | 
+HISTORY | HL | 5 | HIST 1-- | 3 |  | 
+HISTORY | HL | 6, 7 | HIST 2-- | 3 |  | 
+HISTORY | SL | 4 | HIST 1-- | 2 |  | 
+HISTORY | SL | 5 | HIST 1-- | 3 |  | 
+HISTORY | SL | 6, 7 | HIST 2-- | 3 |  | 
+INFORMATION TECHNOLOGY | HL | 4, 5, 6, 7 | IS 101 | 3 |  | Social & Beh Sci - Soc Sci
+INFORMATION TECHNOLOGY | SL | 4, 5, 6, 7 | IS 101 | 3 |  | Social & Beh Sci - Soc Sci
+ITALIAN A: LANGUAGE & LITERATURE | HL | 4,5 | ITAL 2-- | 2 | Please meet with Laura Callegari Hill to discuss opportunities for higher course placement and possibly additional proficiency credit. | 
+ITALIAN A: LANGUAGE & LITERATURE | HL | 6, 7 | ITAL 2-- | 3 | ITAL 310 | 
+ITALIAN A: LANGUAGE & LITERATURE | SL | 4,5 | ITAL 2-- | 2 | Please meet with Laura Callegari Hill to discuss opportunities for higher course placement and possibly additional proficiency credit. | 
+ITALIAN A: LANGUAGE & LITERATURE | SL | 6, 7 | ITAL 2-- | 3 | ITAL 220 | 
+ITALIAN A: LITERATURE | HL | 4,5 | ITAL 2-- | 2 | Please meet with Professor Eleonora Stoppino to discuss course enrollment options. | 
+ITALIAN A: LITERATURE | HL | 6, 7 | ITAL 200 | 3 | Please meet with Professor Eleonora Stoppino to discuss course enrollment options. | 
+ITALIAN A: LITERATURE | SL | 4,5 | ITAL 2-- | 2 | Please meet with Professor Eleonora Stoppino to discuss course enrollment options. | 
+ITALIAN A: LITERATURE | SL | 6, 7 | ITAL 200 | 3 | Please meet with Professor Eleonora Stoppino to discuss course enrollment options. | 
+ITALIAN B AB INITIO | SL | 4 | ITAL 1-- | 2 | Please meet with Laura Callegari Hill to discuss opportunities for higher course placement and possibly additional proficiency credit. | 
+ITALIAN B AB INITIO | SL | 5 | ITAL 1-- | 3 | Please meet with Laura Callegari Hill to discuss opportunities for higher course placement and possibly additional proficiency credit. | 
+ITALIAN B AB INITIO | SL | 6, 7 | ITAL 102 | 4 | Please meet with Laura Callegari Hill to discuss opportunities for higher course placement and possibly additional proficiency credit. | Language Other Than English: Level 2
+ITALIAN B | HL | 4, 5 | ITAL 1-- | 4 | Please meet with Laura Callegari Hill to discuss opportunities for higher course placement and possibly additional proficiency credit. | 
+ITALIAN B | HL | 6, 7 | ITAL 203, 204 | 4 + 4 = 8 | ITAL 210 | Language Other Than English: Level 3 & 4
+ITALIAN B | SL | 4 | ITAL 1-- | 2 | Please meet with Laura Callegari Hill to discuss opportunities for higher course placement and possibly additional proficiency credit. | 
+ITALIAN B | SL | 5 | ITAL 1-- | 3 | Please meet with Laura Callegari Hill to discuss opportunities for higher course placement and possibly additional proficiency credit. | 
+ITALIAN B | SL | 6, 7 | ITAL 203 | 4 | ITAL 204 | Language Other Than English: Level 3
+JAPANESE A: LANGUAGE & LITERATURE | HL | 4 | JAPN 4-- | 2 | JAPN 440 | 
+JAPANESE A: LANGUAGE & LITERATURE | HL | 5 | JAPN 4-- | 3 | JAPN 440 | 
+JAPANESE A: LANGUAGE & LITERATURE | HL | 6, 7 | JAPN 440, 441 | 3 + 3 = 6 | Consult with the Director of the Japanese Program for a course recommendation. | 
+JAPANESE A: LANGUAGE & LITERATURE | SL | 4 | JAPN 3-- | 2 | JAPN 305 | 
+JAPANESE A: LANGUAGE & LITERATURE | SL | 5 | JAPN 3-- | 3 | JAPN 305 | 
+JAPANESE A: LANGUAGE & LITERATURE | SL | 6, 7 | JAPN 305 | 5 | JAPN 306 | 
+JAPANESE A: LITERATURE | HL | 4 | JAPN 4-- | 2 | Consult with the Director of the Japanese Program for a course recommendation. | 
+JAPANESE A: LITERATURE | HL | 5 | JAPN 4-- | 3 | Consult with the Director of the Japanese Program for a course recommendation. | 
+JAPANESE A: LITERATURE | HL | 6, 7 | JAPN 490 | 3 | Consult with the Director of the Japanese Program for a course recommendation. | 
+JAPANESE A: LITERATURE | SL | 4 | JAPN 4-- | 2 | Consult with the Director of the Japanese Program for a course recommendation. | 
+JAPANESE A: LITERATURE | SL | 5 | JAPN 4-- | 3 | Consult with the Director of the Japanese Program for a course recommendation. | 
+JAPANESE A: LITERATURE | SL | 6, 7 | JAPN 490 | 3 | Consult with the Director of the Japanese Program for a course recommendation. | 
+JAPANESE B AB INITIO | SL | 4 | JAPN 2-- | 3 | JAPN 201 | 
+JAPANESE B AB INITIO | SL | 5 | JAPN 2-- | 4 | JAPN 201 | 
+JAPANESE B AB INITIO | SL | 6, 7 | JAPN 201 | 5 | JAPN 202 | Language Other Than English: Level 1
+JAPANESE B | HL | 4, 5 | JAPN 201, 202 | 5 + 5 = 10 | JAPN 203 | Language Other Than English: Level 1 & 2
+JAPANESE B | HL | 6, 7 | JAPN 203, 204 | 5 + 5 = 10 | JAPN 305 | Language Other Than English: Level 3 & 4
+JAPANESE B | SL | 4, 5 | JAPN 201 | 5 | JAPN 202 | Language Other Than English: Level 1
+JAPANESE B | SL | 6, 7 | JAPN 201, 202 | 5 + 5 = 10 | JAPN 203 | Language Other Than English: Level 1 & 2
+KOREAN A: LANGUAGE & LITERATURE | HL | 4 | KOR 4-- | 2 | KOR 440, or take the UIUC Korean Placement Test | 
+KOREAN A: LANGUAGE & LITERATURE | HL | 5 | KOR 4-- | 3 | KOR 440, or take the UIUC Korean Placement Test | 
+KOREAN A: LANGUAGE & LITERATURE | HL | 6, 7 | KOR 440, 441 | 3 + 3 = 6 | Consult with the Director of the Korean Program for a course recommendation. | 
+KOREAN A: LANGUAGE & LITERATURE | SL | 4 | KOR 2-- | 2 | KOR 242, or take the UIUC Korean Placement Test | 
+KOREAN A: LANGUAGE & LITERATURE | SL | 5 | KOR 2-- | 3 | KOR 242, or take the UIUC Korean Placement Test | 
+KOREAN A: LANGUAGE & LITERATURE | SL | 6, 7 | KOR 242 | 4 | KOR 440, or take the UIUC Korean Placement Test | 
+KOREAN A: LITERATURE | HL | 4 | KOR 4-- | 2 | Consult with the Director of the Korean Program for a course recommendation. | 
+KOREAN A: LITERATURE | HL | 5 | KOR 4-- | 3 | Consult with the Director of the Korean Program for a course recommendation. | 
+KOREAN A: LITERATURE | HL | 6, 7 | KOR 4-- | 6 | Consult with the Director of the Korean Program for a course recommendation. | 
+KOREAN A: LITERATURE | SL | 4 | KOR 4-- | 2 | Consult with the Director of the Korean Program for a course recommendation. | 
+KOREAN A: LITERATURE | SL | 5, 6, 7 | KOR 4-- | 3 | Consult with the Director of the Korean Program for a course recommendation. | 
+KOREAN B | HL | 4, 5 | KOR 201, 202 | 5 + 5 = 10 | KOR 203, or take the UIUC Korean Placement Test | Language Other Than English: Level 1 & 2
+KOREAN B | HL | 6, 7 | KOR 203, 204 | 5 + 5 = 10 | KOR 305, or take the UIUC Korean Placement Test | Language Other Than English: Level 3 & 4
+KOREAN B | SL | 4, 5 | KOR 201 | 5 | KOR 202, or take the UIUC Korean Placement Test | Language Other Than English: Level 1
+KOREAN B | SL | 6, 7 | KOR 201, 202 | 5 + 5 = 10 | KOR 203, or take the UIUC Korean Placement Test | Language Other Than English: Level 1 & 2
+MATH: ANALYSIS & APPROACHES | HL | 4, 5 | MATH 115, STAT 100 | 3 + 3 = 6 | MATH 220 (not MATH 221) if your ALEKS PPL score qualifies you for MATH 220; otherwise, follow your ALEKS PPL placement | Quantitative Reasoning I (MATH 115) Quantitative Reasoning I (STAT 100)
+MATH: ANALYSIS & APPROACHES | HL | 6, 7 | MATH 220, STAT 100 | 5 + 3 = 8 | Placed into MATH 231 | Quantitative Reasoning I (MATH 220) Quantitative Reasoning I (STAT 100)
+MATH: ANALYSIS & APPROACHES | SL | 4 | STAT 100 | 3 | Follow your ALEKS PPL placement | Quantitative Reasoning I
+MATH: ANALYSIS & APPROACHES | SL | 5 | MATH 112, STAT 100 | 3 + 3 = 6 | Either MATH 115 or MATH 220, as determined by your score on the ALEKS PPL Math Placement Test | Quantitative Reasoning I (STAT 100)
+MATH: ANALYSIS & APPROACHES | SL | 6, 7 | MATH 115, STAT 100 | 3 + 3 = 6 | MATH 220 if your ALEKS PPL score qualifies you for MATH 220; otherwise, follow your ALEKS PPL placement | Quantitative Reasoning I (MATH 115) Quantitative Reasoning I (STAT 100)
+MATH: APPLICATION & INTERPRETATION | HL | 4, 5 | MATH 181; MATH 124; STAT 100 | 3 + 3 + 3 = 9 | Take the ALEKS PPL Math Placement Test. | Quantitative Reasoning I (MATH 181) Quantitative Reasoning I (MATH 124) Quantitative Reasoning I (STAT 100)
+MATH: APPLICATION & INTERPRETATION | HL | 6, 7 | MATH 181; MATH 124; STAT 100 | 3 + 3 + 3 = 9 | Take the ALEKS PPL Math Placement Test. | Quantitative Reasoning I (MATH 181) Quantitative Reasoning I (MATH 124) Quantitative Reasoning I (STAT 100)
+MATH: APPLICATION & INTERPRETATION | SL | 4 | MATH 181, STAT 100 | 3 + 3 = 6 | Take the ALEKS PPL Math Placement Test. | Quantitative Reasoning I (MATH 181) Quantitative Reasoning I (STAT 100)
+MATH: APPLICATION & INTERPRETATION | SL | 5 | MATH 181, STAT 100 | 3 + 3 = 6 | Take the ALEKS PPL Math Placement Test. | Quantitative Reasoning I (MATH 181) Quantitative Reasoning I (STAT 100)
+MATH: APPLICATION & INTERPRETATION | SL | 6, 7 | MATH 181, STAT 100 | 3 + 3 = 6 | Take the ALEKS PPL Math Placement Test. | Quantitative Reasoning I (MATH 181) Quantitative Reasoning I (STAT 100)
+MODERN GREEK A: LANGUAGE & LITERATURE | HL | 4, 5, 6, 7 | GRKM 1-- | 3 |  | 
+MODERN GREEK A: LANGUAGE & LITERATURE | SL | 4, 5, 6, 7 | GRKM 1-- | 3 |  | 
+MODERN GREEK A: LITERATURE | HL | 4, 5, 6, 7 | GRKM 1-- | 3 |  | 
+MODERN GREEK A: LITERATURE | SL | 4, 5, 6, 7 | GRKM 1-- | 3 |  | 
+MUSIC - GROUP PERFORMANCE | SL | 4, 5, 6, 7 | MUSC 1-- | 1 | You may take the Music Theory and/or the Musicianship proficiency exam for further proficiency credit, if you wish | 
+MUSIC - SOLO PERFORMANCE | SL | 4, 5, 6, 7 | MUSC 1-- | 1 | You may take the Music Theory and/or the Musicianship proficiency exam for further proficiency credit, if you wish | 
+MUSIC CREATING | SL | 4, 5, 6, 7 | MUS 1-- | 2 | You may take the Music Theory and/or the Musicianship proficiency exam for further proficiency credit, if you wish | 
+MUSIC | HL | 4, 5, 6, 7 | MUS 1-- | 2 | You may take the Music Theory and/or the Musicianship proficiency exam for further proficiency credit, if you wish | 
+PHILOSOPHY | HL | 4, 5 | HUM 1-- | 3 |  | 
+PHILOSOPHY | HL | 6, 7 | PHIL 1-- | 3 |  | 
+PHILOSOPHY | SL | 4, 5 | HUM 1-- | 3 |  | 
+PHILOSOPHY | SL | 6, 7 | PHIL 1-- | 3 |  | 
+PHYSICS | HL | 4 | PHYS 1-- | 4 | You may take the departmental proficiency exam that corresponds to your program. | 
+PHYSICS | HL | 5 | PHYS 1-- | 5 | You may take the departmental proficiency exam that corresponds to your program. | 
+PHYSICS | HL | 6, 7 | PHYS 101, 102 | 5 + 5 = 10 | Consult with your advisor. | Nat Sci & Tech - Phys Sciences; Quantitative Reasoning II (PHYS 101) Nat Sci & Tech - Phys Sciences; Quantitative Reasoning II (PHYS 102)
+PHYSICS | SL | 4, 5, 6, 7 | PHYS 1-- | 3 | You may take the departmental proficiency exam that corresponds to your program. | 
+POLITICAL THOUGHT | SL | 4, 5, 6, 7 | PS 1-- | 3 |  | 
+PORTUGUESE A: LANGUAGE & LITERATURE | HL | 4, 5, 6, 7 | PORT 403 | 3 | Port 404 | Language Other Than English: Level 4
+PORTUGUESE A: LANGUAGE & LITERATURE | SL | 4, 5, 6, 7 | PORT 403 | 3 | Port 404 | Language Other Than English: Level 4
+PORTUGUESE A: LITERATURE | HL | 4, 5, 6, 7 | PORT 403 | 3 | Port 404 | Language Other Than English: Level 4
+PORTUGUESE A: LITERATURE | SL | 4, 5, 6, 7 | PORT 403 | 3 | Port 404 | Language Other Than English: Level 4
+PORTUGUESE B | HL | 4, 5 | PORT 400 | 4 | Port 401 | Language Other Than English: Level 1 & 2
+PORTUGUESE B | HL | 6, 7 | PORT 401 | 4 | Port 402 or Port 403 | Language Other Than English: Level 3
+PORTUGUESE B | SL | 4, 5 | PORT 400 | 4 | Port 401 | Language Other Than English: Level 1 & 2
+PORTUGUESE B | SL | 6, 7 | PORT 401 | 4 | Port 402 or Port 403 | Language Other Than English: Level 3
+PSYCHOLOGY | HL | 4, 5 | PSYC 1-- | 3 |  | 
+PSYCHOLOGY | HL | 6, 7 | PSYC 100 | 4 |  | Social & Beh Sci - Beh Sci
+PSYCHOLOGY | SL | 4, 5 | PSYC 1-- | 3 |  | 
+PSYCHOLOGY | SL | 6, 7 | PSYC 100 | 4 |  | Social & Beh Sci - Beh Sci
+RUSSIAN B AB INITIO | SL | 4, 5 | RUSS 1-- | 4 | RUSS 102, or take the UIUC Russian Placement Test | 
+RUSSIAN B AB INITIO | SL | 6, 7 | RUSS 102 | 4 | RUSS 201 | Language Other Than English: Level 2
+RUSSIAN B | HL | 4, 5 | RUSS 201 | 4 | Russ 202 | Language Other Than English: Level 3
+RUSSIAN B | HL | 6, 7 | RUSS 201, 202 | 4 + 4 = 8 | Russ 301 or 200-level course other than Russ 201 or Russ 202 | Language Other Than English: Level 3 & 4
+RUSSIAN B | SL | 4, 5 | RUSS 102 | 4 | Russ 201 | Language Other Than English: Level 2
+RUSSIAN B | SL | 6, 7 | RUSS 201 | 4 | Russ 202 | Language Other Than English: Level 3
+SPANISH A: LANGUAGE & LITERATURE | HL | 4, 5 | SPAN 210 | 3 | SPAN 214 | 
+SPANISH A: LANGUAGE & LITERATURE | HL | 6 | SPAN 210 | 3 | Consult with the Spanish Dept for a course recommendation. | 
+SPANISH A: LANGUAGE & LITERATURE | HL | 7 | SPAN 210, 214 | 3 + 3 = 6 | Consult with the Spanish Dept for a course recommendation. | 
+SPANISH A: LANGUAGE & LITERATURE | SL | 4, 5 | SPAN 201 | 4 | SPAN 203 or 205 | Language Other Than English: Level 3
+SPANISH A: LANGUAGE & LITERATURE | SL | 6, 7 | SPAN 203 | 4 | SPAN 210, 212, 214, 218, 228, or 232 | Language Other Than English: Level 4
+SPANISH A: LITERATURE | HL | 4, 5 | SPAN 210 | 3 | SPAN 214 | 
+SPANISH A: LITERATURE | HL | 6 | SPAN 210 | 3 | Consult with the Spanish Dept for a course recommendation. | 
+SPANISH A: LITERATURE | HL | 7 | SPAN 210, 214 | 3 + 3 = 6 | Consult with the Spanish Dept for a course recommendation. | 
+SPANISH A: LITERATURE | SL | 4, 5 | SPAN 201 | 4 | SPAN 203 | Language Other Than English: Level 3
+SPANISH A: LITERATURE | SL | 6, 7 | SPAN 203 | 4 | SPAN 210, 212, 214, 218, 228, or 232 | Language Other Than English: Level 4
+SPANISH B AB INITIO | SL | 4, 5 | SPAN 101 | 4 | SPAN 102 | 
+SPANISH B AB INITIO | SL | 6, 7 | SPAN 122 | 4 | SPAN 201 | Language Other Than English: Level 1 & 2
+SPANISH B | HL | 4, 5 | SPAN 201 | 4 | SPAN 203 or 205 | Language Other Than English: Level 3
+SPANISH B | HL | 6, 7 | SPAN 201, 203 | 4 + 4 = 8 | SPAN 210, 212, 214, 218, 228, or 232 | Language Other Than English: Level 3 and 4
+SPANISH B | SL | 4, 5 | SPAN 122 | 4 | SPAN 201 | Language Other Than English: Level 1 & 2
+SPANISH B | SL | 6, 7 | SPAN 201 | 4 | SPAN 203 or 205 | Language Other Than English: Level 3
+SPORTS, EXERCISE & HEALTH SCIENCE | HL | 4, 5, 6, 7 | HK 1-- | 3 |  | 
+SPORTS, EXERCISE & HEALTH SCIENCE | SL | 4, 5, 6, 7 | HK 1-- | 3 |  | 
+SWEDISH B | HL | 4, 5 | SCAN 203 | 4 | SCAN 204 | Language Other Than English: Level 3
+SWEDISH B | HL | 6, 7 | SCAN 203, 204 | 4 + 4 = 8 | Consult with the Director of the Scandinavian Program for a 200-level course recommendation. | Language Other Than English: Level 3 & 4
+SWEDISH B | SL | 4, 5 | SCAN 102 | 4 | SCAN 203 | Language Other Than English: Level 2
+SWEDISH B | SL | 6, 7 | SCAN 203 | 4 | SCAN 204 | Language Other Than English: Level 3
+THEATRE | HL | 4, 5 | THEA 1-- | 3 |  | 
+THEATRE | HL | 6, 7 | THEA 101 | 3 |  | Humanities - Lit & Arts
+THEATRE | SL | 4, 5, 6, 7 | THEA 1-- | 3 |  | 
+VISUAL ARTS | HL | 4, 5 | ART 1-- | 3 |  | 
+VISUAL ARTS | HL | 6, 7 | ART 100 | 3 |  | Humanities - Lit & Arts
+VISUAL ARTS | SL | 4, 5 | ART 1-- | 3 |  | 
+VISUAL ARTS | SL | 6, 7 | ART 100 | 3 |  | Humanities - Lit & Arts
+WORLD RELIGIONS | SL | 4 | HUM 1-- | 3 |  | 
+WORLD RELIGIONS | SL | 5, 6, 7 | REL 110 | 3 |  | Humanities - Hist & Phil; Cultural Studies - Non-West

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { apCredit, creditCourses, decodeAp, encodeAp, isGrainger, pickYear, subOptions, type ApExam, type ApRow, type ApTable, type ApYear } from "@/lib/apcredit";
+import { allCredits, apCredit, creditCourses, decodeAp, decodeIb, encodeAp, encodeIb, ibCredit, isGrainger, pickIbYear, pickYear, subOptions, type ApExam, type ApRow, type ApTable, type ApYear } from "@/lib/apcredit";
 import { evaluate, hoursSoFar, parseHours, selectorMatches, type Degree, type DegreeCourse, type DegreeGroup } from "@/lib/degree";
 import { decodeState, EMPTY, encodeState, stateFromParams, stateToParams, type MyState } from "@/lib/mycourses";
 
@@ -202,5 +202,67 @@ describe("My courses state with AP scores", () => {
     const params = new URLSearchParams("y=2025&d=MATH220");
     stateToParams({ ...EMPTY, year: "2025", declined: ["MATH 220"] }, params);
     expect(params.toString()).toBe("");
+  });
+});
+
+// A slice of the 2026-2027 IB table (data/ib-credit/2026-2027.yaml)
+const IB26: ApYear = {
+  ...Y26,
+  exams: [
+    {
+      ...exam("ANTH", "Anthropology", [
+        row({ level: "HL", scores: [4, 5], credit: [["ANTH 1--", 3]], message: "ANTH 103 or ANTH 230" }),
+        row({ level: "HL", scores: [6, 7], credit: [["ANTH 230", 3]], message: "ANTH 270" }),
+        row({ level: "SL", scores: [4, 5], credit: [["ANTH 1--", 3]], message: "ANTH 103" }),
+        row({ level: "SL", scores: [6, 7], credit: [["ANTH 103", 3]], message: "ANTH 230" }),
+      ]),
+      levels: ["HL", "SL"],
+    },
+    { ...exam("ENGLAL", "English A: Literature", [row({ level: "HL", scores: [5, 6, 7], credit: [["RHET 105", 4], ["ENGL 1--", 3]] })]), levels: ["HL"] },
+  ],
+};
+
+describe("IB credit", () => {
+  it("picks the row for the level and the score", () => {
+    const sum = ibCredit(IB26, decodeIb("ANTH-SL-6"));
+    expect(sum.results[0].label).toBe("IB Anthropology SL, 6");
+    expect(sum.credits).toEqual([{ code: "ANTH 103", hours: 3, elective: false, from: ["IB Anthropology SL, 6"] }]);
+    expect(ibCredit(IB26, decodeIb("ANTH-HL-6")).credits.map((c) => c.code)).toEqual(["ANTH 230"]);
+    // a 3, a level the exam doesn't have, or an exam not in the table gives nothing
+    for (const s of ["ANTH-HL-3", "ENGLAL-SL-7", "PHYS-HL-7"]) expect(ibCredit(IB26, decodeIb(s)).credits).toEqual([]);
+    expect(ibCredit(IB26, decodeIb("PHYS-HL-7")).results[0].exam).toBeUndefined();
+  });
+
+  it("merges with AP credit: the same course counts once, elective credit adds up", () => {
+    const ap = apCredit(Y26, decodeAp("ENGLANG-5,ENGLIT-3"), false);
+    const ib = ibCredit(IB26, decodeIb("ENGLAL-HL-6"));
+    const all = allCredits(ap, ib);
+    expect(all.find((c) => c.code === "RHET 105")).toEqual({ code: "RHET 105", hours: 4, elective: false, from: ["AP English Language and Composition, 5", "IB English A: Literature HL, 6"] });
+    expect(all.find((c) => c.code === "ENGL 1--")?.hours).toBe(3);
+    expect(allCredits(null, ib)).toEqual(ib.credits);
+  });
+
+  it("uses the IB table of the AP table's year, or none", () => {
+    const table: ApTable = { years: [IB26] };
+    expect(pickIbYear(table, Y26)).toBe(IB26);
+    expect(pickIbYear(table, { ...Y26, id: "2025" })).toBeNull();
+    expect(pickIbYear(table, null)).toBe(IB26);
+  });
+
+  it("encodes one score per exam and drops what doesn't parse", () => {
+    expect(decodeIb("anth-hl-6,ANTH-SL-7,ECON-XL-5,MATH-HL-8,,PHYS-HL-4")).toEqual([
+      { exam: "ANTH", level: "SL", score: 7 },
+      { exam: "PHYS", level: "HL", score: 4 },
+    ]);
+    expect(encodeIb(decodeIb("ANTH-HL-6,MATHAA-SL-5"))).toBe("ANTH-HL-6,MATHAA-SL-5");
+  });
+
+  it("IB scores go in the link and in storage; year and declined credit come along", () => {
+    const st: MyState = { ...EMPTY, ib: decodeIb("ANTH-HL-6"), year: "2026", declined: ["ANTH 230"] };
+    const params = new URLSearchParams();
+    stateToParams(st, params);
+    expect(params.toString()).toBe("i=ANTH-HL-6&y=2026&d=ANTH230");
+    expect(stateFromParams(params)).toEqual(st);
+    expect(decodeState(encodeState(st))).toEqual(st);
   });
 });

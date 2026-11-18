@@ -785,3 +785,49 @@ Every judgment call made during the autonomous build, newest phase last.
   hours of technical elective credit" is now an hours rule). Files whose only change was the date were left alone. A
   test now fails if any source file contains a control character.
 
+
+## IB credit in the degree checklist (2026-11-18, issue #25)
+
+- **D27.1 Source and years.** CITL's cutoff score tool (the source of the 2026-2027 AP table) also holds the IB rows,
+  with a Level column (HL or SL) and one row per score band. Only **2026-2027** is copied: the tool's 2025-2026 IB rows
+  have no level column, so a subject's Higher and Standard Level rows can't be told apart, and the older IB page is
+  prose with several scores and courses per line. `data/ib-credit/2026-2027.yaml` was converted from the tool's data
+  with a one-off script and then checked row by row against it; the six rows corrected are listed in AP-CREDIT.md.
+- **D27.2 Same file format, two differences.** IB scores run 1 to 7, and every row names its level. IB rows have no
+  subscore, college or other-exam conditions, and the validator refuses them. The overlap check runs per level, so an
+  HL row and an SL row for the same score are fine. Exam ids are ours and stable (`ECON`, `MATHAA`, `SPANB`), because
+  links store them. Subject names are ours too: the tool writes them in capitals with typos ("CHINESE B - MADARIN").
+  Mandarin ab initio, which the tool files under Chinese B with the level "SL ab initio", is its own exam.
+- **D27.3 No diploma rule.** CITL gives credit per exam; its pages say Illinois "recognizes the value of the IB Diploma
+  Programme" but list no credit for the diploma itself, so there's nothing to model.
+- **D27.4 One starting year for both.** The checklist's "Starting term at Illinois" picks the AP and the IB table. A
+  starting year with no IB table copied keeps the student's IB scores (so they can be removed) and says so, with a link
+  to CITL. IB and AP credit merge: the same course from both counts once, elective credit adds up. Links carry
+  `i=ECON-HL-6`.
+- **D27.5 Watched like AP.** `citl_watch` compares the tool's IB rows with `data/ib-credit/citl/2026-2027.txt` every
+  Monday. A year in the tool older than the newest file isn't reported as new, because 2025-2026 is left out on
+  purpose; a newer one (2027-2028) is.
+- **D27.6 Transfer and dual credit: not tabulated.** Illinois publishes its transfer course equivalencies through
+  Transferology (the Registrar's "Transfer Credits to Illinois" page), which needs an account to search and has no
+  public table to copy, and the equivalencies run to hundreds of colleges. So the site doesn't work them out: the
+  checklist links to Transferology and the student adds the Illinois course as "AP, IB or transfer credit", as before.
+
+## Summer courses (2026-11-18, issue #35)
+
+- **D28.1 Which summer.** The newest summer term loaded (`HISTORY_TERMS`). Course Explorer publishes a summer around
+  March, so until then that is last summer's, and the page says so; each class shows how many of the last three
+  summers it ran in, since most run every year. Once the next summer is loaded and is still ahead of the current term,
+  the page presents it as the coming schedule. The term-watch issue for a new summer now asks for that one line.
+- **D28.2 Classes only.** A course is listed when a primary section meets as a class: not only independent study,
+  internships, research, study abroad, travel or packaged sections. Secondary sections (discussions, labs) aren't
+  counted. Summer 2026: 656 classes, 416 of them undergraduate, 447 online only.
+- **D28.3 Sessions.** Course Explorer's summer part-of-term codes, read from one Summer 2026 section page each
+  (2026-11-18): S1 is Session I (May 18 to Jun 12), S2 Session II (Jun 15 to Aug 6), S2A and S2B its halves, S18 the
+  first 8 weeks, A and B the first and second 6 weeks, and 1, SF and LF the full 12 weeks. Labels give lengths and
+  rough starts ("from mid-May"), not dates, because the dates move each year.
+- **D28.4 Not in the schedule builder, no winter.** The builder plans the next fall or spring term with live seats and
+  the Registrar's dates; a summer term would need all of that. The page links to the course page when the course runs
+  in the current or next term, and to Course Explorer otherwise. Winter session has no open data source (the issue's
+  own comment), so it isn't listed.
+- **D28.5 Six pages in the header.** The sixth link didn't fit a 1024px header, so between 1024 and 1279px the header
+  links show without icons and with less padding.

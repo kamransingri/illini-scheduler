@@ -1,8 +1,13 @@
-"""AP credit: validate data/ap-credit/*.yaml and export web/public/data/ap-credit.json.
+"""AP and IB credit: validate data/ap-credit/*.yaml and data/ib-credit/*.yaml, export web/public/data/ap-credit.json
+and ib-credit.json.
 
 One file per entering year, copied by hand from CITL's tables (docs/AP-CREDIT.md). Schema problems stop the build;
 credited course codes the loaded Course Explorer terms don't know are reported, not fatal, because older years
 credit courses that were renumbered since (FR 103 became FR 203 for 2026-2027).
+
+IB files have the same shape with two differences (issue #25): scores run 1 to 7, and every row names the exam's
+level, HL (Higher Level) or SL (Standard Level), because the two levels give different credit. IB rows don't use AP's
+subscore, college or other-exam conditions.
 
     python -m pipeline.ap_credit      # validate every file and list unknown codes (uses data/illini.db if built)
 """
@@ -15,6 +20,7 @@ import json
 import re
 import sqlite3
 import sys
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
@@ -23,6 +29,7 @@ import yaml
 from .config import DATA
 
 AP_DIR = DATA / "ap-credit"
+IB_DIR = DATA / "ib-credit"
 
 COURSE_RE = re.compile(r"^[A-Z]{2,5} \d{3}$")
 ELECTIVE_RE = re.compile(r"^[A-Z]{2,5} [1-4]--$")  # elective credit in a subject at a level: "MATH 1--"
@@ -32,6 +39,25 @@ TOP_KEYS = {"year", "entering", "source", "read_on", "notes", "exams"}
 EXAM_KEYS = {"id", "name", "sub", "notes", "rows"}
 ROW_KEYS = {"scores", "sub", "college", "with", "credit", "message", "fix"}
 COLLEGES = {"grainger", "other"}
+LEVELS = ("HL", "SL")
+
+
+@dataclass(frozen=True)
+class Kind:
+    """What sets AP and IB files apart."""
+
+    name: str
+    directory: Path
+    out_file: str
+    max_score: int
+    exam_keys: frozenset[str]
+    row_keys: frozenset[str]
+    levels: tuple[str, ...] = ()  # every row names one of these; () = rows have no level
+
+
+AP = Kind("AP", AP_DIR, "ap-credit.json", 5, frozenset(EXAM_KEYS), frozenset(ROW_KEYS))
+IB = Kind("IB", IB_DIR, "ib-credit.json", 7, frozenset(EXAM_KEYS - {"sub"}),
+          frozenset({"level", "scores", "credit", "message", "fix"}), LEVELS)
 
 
 class ApCreditError(ValueError):
@@ -47,7 +73,7 @@ def _str_list(v: Any) -> bool:
     return isinstance(v, list) and all(isinstance(x, str) and x.strip() for x in v)
 
 
-def validate(doc: Any, name: str) -> dict:
+def validate(doc: Any, name: str, kind: Kind = AP) -> dict:
     """Check one year's file and return it in the exported shape. Raises ApCreditError listing every problem."""
     errs: list[str] = []
     if not isinstance(doc, dict):
@@ -82,7 +108,7 @@ def validate(doc: Any, name: str) -> dict:
             continue
         where = f"exam '{e.get('id', i)}'"
         for k in e:
-            if k not in EXAM_KEYS:
+            if k not in kind.exam_keys:
                 errs.append(f"{where}: unknown key '{k}'")
         if not EXAM_ID_RE.match(str(e.get("id", ""))):
             errs.append(f"{where}: 'id' must be 2-10 capital letters or digits, starting with a letter")
@@ -103,10 +129,12 @@ def validate(doc: Any, name: str) -> dict:
                 errs.append(f"{rw}: not a mapping")
                 continue
             for k in r:
-                if k not in ROW_KEYS:
+                if k not in kind.row_keys:
                     errs.append(f"{rw}: unknown key '{k}'")
-            if not _int_list(r.get("scores"), 1, 5):
-                errs.append(f"{rw}: 'scores' must list AP scores 1 to 5")
+            if not _int_list(r.get("scores"), 1, kind.max_score):
+                errs.append(f"{rw}: 'scores' must list {kind.name} scores 1 to {kind.max_score}")
+            if kind.levels and r.get("level") not in kind.levels:
+                errs.append(f"{rw}: 'level' must be one of {list(kind.levels)}")
             if "sub" in r:
                 if not _int_list(r["sub"], 0, 5):
                     errs.append(f"{rw}: 'sub' must list subscores 0 (none) to 5")
@@ -133,14 +161,18 @@ def validate(doc: Any, name: str) -> dict:
             for k in ("message", "fix"):
                 if k in r and not (isinstance(r[k], str) and r[k].strip()):
                     errs.append(f"{rw}: '{k}' must be text")
-            out_rows.append({
-                "scores": r.get("scores"), "sub": r.get("sub"), "college": r.get("college"), "with": w,
-                "credit": [[str(c), h] for c, h in credit.items()],
-                "message": r.get("message"), "fix": r.get("fix"),
-            })
-        errs += [f"{where}: {p}" for p in overlaps(out_rows)]
-        out_exams.append({"id": e.get("id"), "name": e.get("name"), "sub": e.get("sub"),
-                          "notes": list(e.get("notes") or []), "rows": out_rows})
+            row = {"scores": r.get("scores"), "sub": r.get("sub"), "college": r.get("college"), "with": w,
+                   "credit": [[str(c), h] for c, h in credit.items()],
+                   "message": r.get("message"), "fix": r.get("fix")}
+            if kind.levels:
+                row = {"level": r.get("level"), **row}
+            out_rows.append(row)
+        errs += [f"{where}: {p}" for p in overlaps(out_rows, kind)]
+        exam = {"id": e.get("id"), "name": e.get("name"), "sub": e.get("sub"),
+                "notes": list(e.get("notes") or []), "rows": out_rows}
+        if kind.levels:  # the levels this exam has rows for, in LEVELS order
+            exam["levels"] = [lv for lv in kind.levels if any(x.get("level") == lv for x in out_rows)]
+        out_exams.append(exam)
 
     if errs:
         raise ApCreditError(f"{name}:\n  - " + "\n  - ".join(errs))
@@ -150,22 +182,26 @@ def validate(doc: Any, name: str) -> dict:
             "exams": sorted(out_exams, key=lambda x: str(x["name"]))}
 
 
-def overlaps(rows: list[dict]) -> list[str]:
-    """Every combination of score, subscore, college and other exams' scores must match at most one row."""
+def overlaps(rows: list[dict], kind: Kind = AP) -> list[str]:
+    """Every combination of level, score, subscore, college and other exams' scores must match at most one row."""
     probs: list[str] = []
     others = sorted({x for r in rows if isinstance(r.get("with"), dict) for x in r["with"]})
-    for score, sub, college in itertools.product(range(1, 6), range(0, 6), sorted(COLLEGES)):
+    levels: tuple[str | None, ...] = kind.levels or (None,)
+    for level, score, sub, college in itertools.product(levels, range(1, kind.max_score + 1), range(0, 6),
+                                                        sorted(COLLEGES)):
         for other in itertools.product(range(0, 6), repeat=len(others)):
             given = dict(zip(others, other, strict=True))
-            hits = [i for i, r in enumerate(rows) if row_matches(r, score, sub, college, given)]
+            hits = [i for i, r in enumerate(rows) if row_matches(r, score, sub, college, given, level)]
             msg = f"rows {', '.join(str(i + 1) for i in hits)} both apply to a score of {score}"
             if len(hits) > 1 and msg not in probs:
                 probs.append(msg)
     return probs
 
 
-def row_matches(r: dict, score: int, sub: int, college: str, other: dict[str, int]) -> bool:
+def row_matches(r: dict, score: int, sub: int, college: str, other: dict[str, int], level: str | None = None) -> bool:
     if not isinstance(r.get("scores"), list) or score not in r["scores"]:
+        return False
+    if r.get("level") and r["level"] != level:
         return False
     if isinstance(r.get("sub"), list) and sub not in r["sub"]:
         return False
@@ -175,9 +211,10 @@ def row_matches(r: dict, score: int, sub: int, college: str, other: dict[str, in
     return not isinstance(w, dict) or all(other.get(x, 0) in (v or []) for x, v in w.items())
 
 
-def load_all(directory: Path = AP_DIR) -> list[dict]:
+def load_all(directory: Path | None = None, kind: Kind = AP) -> list[dict]:
     """Every year's table, newest first."""
-    years = [validate(yaml.safe_load(p.read_text(encoding="utf-8")), p.name) for p in sorted(directory.glob("*.yaml"))]
+    paths = sorted((directory or kind.directory).glob("*.yaml"))
+    years = [validate(yaml.safe_load(p.read_text(encoding="utf-8")), p.name, kind) for p in paths]
     return sorted(years, key=lambda y: y["id"], reverse=True)
 
 
@@ -185,38 +222,42 @@ def credited_codes(year: dict) -> set[str]:
     return {c for e in year["exams"] for r in e["rows"] for c, _ in r["credit"] if COURSE_RE.match(c)}
 
 
-def export(conn: sqlite3.Connection, out_dir: Path, directory: Path = AP_DIR) -> str:
-    """Write ap-credit.json: {"years": [...]}, newest first, each with the credited codes this build doesn't know."""
+def export(conn: sqlite3.Connection, out_dir: Path, directory: Path | None = None, kind: Kind = AP) -> str:
+    """Write ap-credit.json (ib-credit.json for IB): {"years": [...]}, newest first, each with the credited codes this
+    build doesn't know."""
     from .degrees import catalog_from_db
 
-    years = load_all(directory)
+    years = load_all(directory, kind)
     known = set(catalog_from_db(conn))
     for y in years:
         y["unknown"] = sorted(credited_codes(y) - known)
-    (out_dir / "ap-credit.json").write_text(json.dumps({"years": years}, separators=(",", ":")), encoding="utf-8")
-    return f"{len(years)} AP credit table(s)"
+    (out_dir / kind.out_file).write_text(json.dumps({"years": years}, separators=(",", ":")), encoding="utf-8")
+    return f"{len(years)} {kind.name} credit table(s)"
 
 
 def main() -> int:
     from .config import DB_PATH
 
     try:
-        years = load_all()
+        tables = [(kind, load_all(kind=kind)) for kind in (AP, IB)]
     except ApCreditError as e:
         print(e, file=sys.stderr)
         return 1
+    known: set[str] | None = None
     if DB_PATH.exists():
         from .degrees import catalog_from_db
 
         conn = sqlite3.connect(DB_PATH)
         known = set(catalog_from_db(conn))
         conn.close()
+    for kind, years in tables:
+        if known is None:
+            print(f"{kind.name}: {len(years)} file(s) valid (run `make data` first to check course codes)")
+            continue
         for y in years:
             unknown = sorted(credited_codes(y) - known)
-            print(f"{y['label']}: {len(y['exams'])} exams, credited codes not in the loaded terms: "
+            print(f"{kind.name} {y['label']}: {len(y['exams'])} exams, credited codes not in the loaded terms: "
                   f"{', '.join(unknown) or 'none'}")
-    else:
-        print(f"{len(years)} file(s) valid (run `make data` first to check course codes)")
     return 0
 
 

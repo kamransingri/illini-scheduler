@@ -74,6 +74,15 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
 - **RMP ratings are self-selected.** The people who rate are not a random sample, which is why the best pick score
   pulls ratings with few reviews toward an average.
 
+## Summer courses
+
+- **Last summer's classes until the next is published.** Course Explorer lists a summer around March, so until then
+  the page shows the newest summer it has (Summer 2026 in November 2026), says so, and shows how many of the last three
+  summers each class ran in. A class can still be dropped or added for the coming summer.
+- **Classes only, no seats.** Independent study, internships, research and study abroad aren't listed. Summer sections
+  aren't in the schedule builder or the seat checks; confirm sections in Course Explorer and Self-Service.
+- **No winter session.** There's no open source for winter courses.
+
 ## Gen-ed finder and schedule builder
 
 - **The gen-ed finder checks only start time, end time and days off** from the schedule builder's must-haves. Blocked
@@ -102,10 +111,12 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
 - **Major and minor overlap.** A course counts toward both your major and your minor on the checklist. Some minors and
   colleges limit that overlap; the minor's catalog page says so, and the checklist doesn't check it.
 - **You enter your courses by hand.** There's no transcript or DARS import, because those sit behind a NetID.
-- **AP credit is an estimate.** The courses come from CITL's AP table for the year you started (2024-2025, 2025-2026
-  or 2026-2027 only), copied by hand, with a few slips on CITL's pages corrected (docs/AP-CREDIT.md). The real credit
-  shows on DARS once your scores reach the university. IB scores, dual credit and transfer credit aren't worked out;
-  add those courses yourself as "AP or transfer credit". Elective credit such as `MATH 1--` counts toward your hours,
+- **AP and IB credit are estimates.** The courses come from CITL's tables for the year you started (AP: 2024-2025,
+  2025-2026 or 2026-2027; IB: 2026-2027 only, because CITL's earlier IB tables don't separate Higher and Standard
+  Level), copied by hand, with a few slips in CITL's tables corrected (docs/AP-CREDIT.md). The real credit shows on DARS
+  once your scores reach the university. Dual credit and transfer credit aren't worked out: Illinois's equivalencies
+  are in Transferology, which needs an account, so look your courses up there and add the Illinois course yourself as
+  "AP, IB or transfer credit". Elective credit such as `MATH 1--` counts toward your hours,
   and toward a requirement only when it takes every course at that level in that subject.
 - **Prerequisites** are shown as catalog text, not checked against your courses.
 - **Double counting** is allowed only where the catalog or the gen-ed rules say so in quotable words. Anything else

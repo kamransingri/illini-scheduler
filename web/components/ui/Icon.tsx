@@ -27,6 +27,7 @@ const PATHS = {
   sliders: "M2.5 4.5h11M2.5 11.5h11M5.5 3v3M10.5 10v3",
   refresh: "M13.5 8A5.5 5.5 0 1 1 11.9 4.1M13.5 2v3.25h-3.25",
   bell: "M4 11V7a4 4 0 0 1 8 0v4l1.5 1.5h-11zM6.75 14.25h2.5",
+  sun: "M8 10.75a2.75 2.75 0 1 0 0-5.5 2.75 2.75 0 0 0 0 5.5zM8 1.5v1.25M8 13.25v1.25M1.5 8h1.25M13.25 8h1.25M3.4 3.4l.9.9M11.7 11.7l.9.9M3.4 12.6l.9-.9M11.7 4.3l.9-.9",
 } as const;
 
 export type IconName = keyof typeof PATHS;

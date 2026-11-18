@@ -1,0 +1,1389 @@
+# IB credit for students entering Illinois in Summer 2026, Fall 2026 or Spring 2027.
+# Copied from CITL's cutoff score tool (year 2026-2027, exam type IB, every test selected) and checked row by row.
+# Format and rules: docs/AP-CREDIT.md ("IB credit"). Placement messages are word for word; a `fix` says where we
+# corrected the tool's row and quotes it. Subject names are ours (CITL writes them in capitals, with typos).
+year: 2026-2027
+entering: Summer 2026, Fall 2026 or Spring 2027
+source: https://citl.illinois.edu/current-cutoff-scores
+read_on: 2026-11-18
+notes:
+  - Only scores resulting in credit are shown. Illinois gives credit for IB scores of 4, 5, 6 and 7, whether Higher
+    Level or Standard Level.
+  - Course numbers listed as 1-- or 2-- are elective credit in that subject. Students can apply elective credit towards
+    their graduation requirements; ask your academic advisor how it can best be used in your program.
+  - If your IB results and a placement exam give different placement messages, you may follow the higher one. Discuss
+    your options with your academic advisor.
+  - Policies get reviewed every year and may change. To see IB credit in your academic record, run a new DARS report.
+exams:
+  - id: ANTH
+    name: Anthropology
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {ANTH 1--: 3}
+        message: ANTH 103 or ANTH 230
+      - level: HL
+        scores: [6, 7]
+        credit: {ANTH 230: 3}
+        message: ANTH 270
+      - level: SL
+        scores: [4, 5]
+        credit: {ANTH 1--: 3}
+        message: ANTH 103
+      - level: SL
+        scores: [6, 7]
+        credit: {ANTH 103: 3}
+        message: ANTH 230
+
+  - id: ARABB
+    name: Arabic B
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {ARAB 405: 3}
+        message: ARAB 406
+      - level: HL
+        scores: [6, 7]
+        credit: {ARAB 405: 3, ARAB 406: 3}
+        message: ARAB 407
+      - level: SL
+        scores: [4, 5]
+        credit: {ARAB 403: 3}
+        message: ARAB 404
+      - level: SL
+        scores: [6, 7]
+        credit: {ARAB 403: 4, ARAB 404: 4}
+        message: ARAB 405
+
+  - id: ARABBAI
+    name: Arabic B ab initio
+    rows:
+      - level: SL
+        scores: [4, 5]
+        credit: {ARAB 201: 5}
+        message: ARAB 202
+      - level: SL
+        scores: [6, 7]
+        credit: {ARAB 201: 5, ARAB 202: 5}
+        message: ARAB 403
+
+  - id: ARTHIST
+    name: Art History
+    rows:
+      - level: SL
+        scores: [4, 5]
+        credit: {ARTH 1--: 1}
+      - level: SL
+        scores: [6, 7]
+        credit: {ARTH 1--: 3}
+
+  - id: ASTRO
+    name: Astronomy
+    rows:
+      - level: SL
+        scores: [4]
+        credit: {ASTR 1--: 2}
+      - level: SL
+        scores: [5]
+        credit: {ASTR 100: 3}
+      - level: SL
+        scores: [6, 7]
+        credit: {ASTR 121: 3, ASTR 122: 3}
+
+  - id: BIO
+    name: Biology
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {IB 100: 3, IB 104: 4}
+      - level: HL
+        scores: [6, 7]
+        credit: {IB 150: 4, IB 151: 1, MCB 150: 4, MCB 151: 1}
+        message: Consult with your advisor to determine which biology course you should enroll in, as it will depend on your major and your educational goals.
+      - level: SL
+        scores: [4, 5]
+        credit: {IB 100: 3}
+      - level: SL
+        scores: [6, 7]
+        credit: {IB 100: 3, IB 104: 4}
+
+  - id: BRAZSS
+    name: Brazilian Social Studies
+    rows:
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {PORT 404: 3}
+
+  - id: BUSMGT
+    name: Business Management
+    rows:
+      - level: HL
+        scores: [4, 5, 6, 7]
+        credit: {BADM 2--: 3}
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {BADM 1--: 3}
+
+  - id: CATAAL
+    name: "Catalan A: Literature"
+    rows:
+      - level: HL
+        scores: [4, 5, 6, 7]
+        credit: {CATL 401: 3}
+        message: CATL 402
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {CATL 401: 3}
+        message: CATL 402
+
+  - id: CHEM
+    name: Chemistry
+    rows:
+      - level: HL
+        scores: [4]
+        credit: {CHEM 1--: 3}
+        message: CHEM 101 or CHEM 102, depending on Chemistry Placement Test score
+      - level: HL
+        scores: [5]
+        credit: {CHEM 102: 3}
+        message: CHEM 104, Consult with your advisor to determine which Chemistry course you should enroll in
+      - level: HL
+        scores: [6, 7]
+        credit: {CHEM 102: 3, CHEM 104: 3}
+        message: Consult with your advisor to determine which Chemistry course you should enroll in
+      - level: SL
+        scores: [4, 5]
+        credit: {CHEM 1--: 3}
+        message: CHEM 101 or CHEM 102, depending on Chemistry Placement Test score
+      - level: SL
+        scores: [6, 7]
+        credit: {CHEM 102: 3}
+        message: CHEM 104, Consult with your advisor to determine which Chemistry course you should enroll in
+
+  - id: CHINBCAN
+    name: "Chinese B: Cantonese"
+    rows:
+      - level: HL
+        scores: [4, 5, 6, 7]
+        credit: {HUM 1--: 3}
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {HUM 1--: 3}
+        fix: The tool lists this Standard Level row twice.
+
+  - id: CHINBMAN
+    name: "Chinese B: Mandarin"
+    rows:
+      - level: HL
+        scores: [4]
+        credit: {CHIN 305: 5}
+        message: CHIN 306
+      - level: HL
+        scores: [5]
+        credit: {CHIN 305: 5, CHIN 306: 5}
+        message: CHIN 440
+      - level: HL
+        scores: [6]
+        credit: {CHIN 305: 5, CHIN 306: 5, CHIN 440: 3}
+        message: CHIN 441
+      - level: HL
+        scores: [7]
+        credit: {CHIN 305: 5, CHIN 306: 5, CHIN 440: 3, CHIN 441: 3}
+        message: Consult with the Director of the Chinese Program for a course recommendation
+      - level: SL
+        scores: [4, 5]
+        credit: {CHIN 203: 5}
+        message: CHIN 204
+      - level: SL
+        scores: [6, 7]
+        credit: {CHIN 203: 5, CHIN 204: 5}
+        message: CHIN 305
+
+  - id: CHINBAI
+    name: "Chinese B ab initio: Mandarin"
+    notes:
+      - CITL lists this exam under Chinese B (Mandarin) with the level "SL ab initio".
+    rows:
+      - level: SL
+        scores: [4, 5]
+        credit: {CHIN 201: 5}
+        message: CHIN 202
+      - level: SL
+        scores: [6, 7]
+        credit: {CHIN 201: 5, CHIN 202: 5}
+        message: CHIN 305
+        fix: 'The tool gives "5" hours for "CHIN 201 AND 202"; both are 5-hour courses, as CHIN 203 and 204 are 5 + 5 in
+          the Standard Level row.'
+
+  - id: CLASSGRS
+    name: Classical Greek and Roman Studies
+    rows:
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {CLCV 1--: 3}
+        message: Any 100-level or 200-level CLCV course
+
+  - id: GREEK
+    name: "Classics: Greek"
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {GRK 101: 4, GRK 102: 4}
+        message: GRK 201
+      - level: HL
+        scores: [6, 7]
+        credit: {GRK 101: 4, GRK 102: 4, GRK 201: 4}
+        message: GRK 202
+      - level: SL
+        scores: [4, 5]
+        credit: {GRK 1--: 4}
+        message: GRK 101; Consult with the Classics Dept if you wish to register for a more advanced class.
+      - level: SL
+        scores: [6, 7]
+        credit: {GRK 101: 4, GRK 102: 4}
+        message: GRK 201
+
+  - id: LATIN
+    name: "Classics: Latin"
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {LAT 201: 4, LAT 202: 4}
+        message: LAT 401 or LAT 460
+      - level: HL
+        scores: [6, 7]
+        credit: {LAT 201: 4, LAT 202: 4, LAT 401: 3}
+        message: LAT 411, LAT 460, or LAT 491
+      - level: SL
+        scores: [4, 5]
+        credit: {LAT 201: 4}
+        message: LAT 202
+      - level: SL
+        scores: [6, 7]
+        credit: {LAT 201: 4, LAT 202: 4}
+        message: LAT 401
+
+  - id: CS
+    name: Computer Science
+    rows:
+      - level: HL
+        scores: [4]
+        credit: {CS 1--: 1}
+      - level: HL
+        scores: [5]
+        credit: {CS 1--: 2}
+      - level: HL
+        scores: [6, 7]
+        credit: {CS 101: 3}
+      - level: SL
+        scores: [4]
+        credit: {CS 1--: 1}
+      - level: SL
+        scores: [5]
+        credit: {CS 1--: 2}
+      - level: SL
+        scores: [6, 7]
+        credit: {CS 105: 3}
+
+  - id: DANCE
+    name: Dance
+    rows:
+      - level: HL
+        scores: [4, 5, 6, 7]
+        credit: {DANC 1--: 3}
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {DANC 1--: 3}
+
+  - id: DESTECH
+    name: Design Technology
+    rows:
+      - level: HL
+        scores: [4, 5, 6, 7]
+        credit: {BADM 2--: 3}
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {BADM 1--: 3}
+
+  - id: DIGSOC
+    name: Digital Society
+    rows:
+      - level: HL
+        scores: [4, 5, 6, 7]
+        credit: {IS 101: 3}
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {IS 101: 3}
+
+  - id: ECON
+    name: Economics
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {ECON 1--: 3}
+        message: You may take the ECON 102 or the ECON 103 departmental proficiency exam.
+      - level: HL
+        scores: [6, 7]
+        credit: {ECON 102: 3, ECON 103: 3}
+      - level: SL
+        scores: [4, 5]
+        credit: {ECON 1--: 3}
+        message: You may take the ECON 102 or the ECON 103 departmental proficiency exam.
+      - level: SL
+        scores: [6, 7]
+        credit: {ECON 102: 3, ECON 103: 3}
+
+  - id: ENGLALL
+    name: "English A: Language and Literature"
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {RHET 1--: 3, ENGL 1--: 3}
+      - level: HL
+        scores: [6, 7]
+        credit: {RHET 105: 4, ENGL 1--: 3}
+        message: You have fulfilled the Composition I requirement.
+      - level: SL
+        scores: [4, 5]
+        credit: {RHET 1--: 3}
+      - level: SL
+        scores: [6, 7]
+        credit: {RHET 105: 4}
+        message: You have fulfilled the Composition I requirement.
+
+  - id: ENGLAL
+    name: "English A: Literature"
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {ENGL 1--: 3}
+      - level: HL
+        scores: [6, 7]
+        credit: {ENGL 1--: 3}
+      - level: SL
+        scores: [4, 5]
+        credit: {ENGL 1--: 3}
+      - level: SL
+        scores: [6, 7]
+        credit: {ENGL 1--: 3}
+
+  - id: ENGLALP
+    name: "English A: Literature and Performance"
+    rows:
+      - level: SL
+        scores: [4, 5]
+        credit: {THEA 1--: 3}
+      - level: SL
+        scores: [6, 7]
+        credit: {THEA 101: 3}
+
+  - id: ENGLB
+    name: English B
+    rows:
+      - level: HL
+        scores: [4, 5, 6, 7]
+        credit: {HUM 1--: 1}
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {HUM 1--: 1}
+
+  - id: ENGLBAI
+    name: English B ab initio
+    rows:
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {HUM 1--: 1}
+
+  - id: ESS
+    name: Environmental Systems and Societies
+    rows:
+      - level: HL
+        scores: [4]
+        credit: {NRES 100: 3}
+      - level: HL
+        scores: [5]
+        credit: {NRES 100: 3, NRES 219: 3}
+      - level: HL
+        scores: [6, 7]
+        credit: {NRES 100: 3, NRES 219: 3, NRES 287: 3}
+      - level: SL
+        scores: [4]
+        credit: {NRES 1--: 3}
+      - level: SL
+        scores: [5]
+        credit: {NRES 100: 3}
+      - level: SL
+        scores: [6, 7]
+        credit: {NRES 100: 3, NRES 219: 3}
+
+  - id: FILM
+    name: Film
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {ENGL 1--: 3}
+      - level: HL
+        scores: [6, 7]
+        credit: {ENGL 104: 3}
+      - level: SL
+        scores: [4, 5]
+        credit: {ENGL 1--: 3}
+      - level: SL
+        scores: [6, 7]
+        credit: {ENGL 104: 3}
+
+  - id: FOODSCI
+    name: Food Science and Technology
+    rows:
+      - level: SL
+        scores: [4, 5]
+        credit: {FSHN 1--: 1}
+      - level: SL
+        scores: [6, 7]
+        credit: {FSHN 1--: 3}
+
+  - id: FRENALL
+    name: "French A: Language and Literature"
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {FR 2--: 2}
+        message: FR 205 or FR 207
+      - level: HL
+        scores: [6, 7]
+        credit: {FR 207: 3}
+        message: FR 211 or FR 212
+      - level: SL
+        scores: [4, 5]
+        credit: {FR 2--: 2}
+        message: Placed into FR 207
+      - level: SL
+        scores: [6, 7]
+        credit: {FR 2--: 3}
+        message: FR 207
+
+  - id: FRENAL
+    name: "French A: Literature"
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {FR 2--: 2}
+        message: FR 211 or FR 212, or consult with the French Dept for a course recommendation
+      - level: HL
+        scores: [6, 7]
+        credit: {FR 211: 3}
+        message: FR 212, or consult with the French Dept for a course recommendation
+      - level: SL
+        scores: [4, 5]
+        credit: {FR 2--: 2}
+        message: FR 211 or FR 212
+      - level: SL
+        scores: [6, 7]
+        credit: {FR 2--: 3}
+        message: FR 211 or FR 212
+
+  - id: FRENALP
+    name: "French A: Literature and Performance"
+    rows:
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {}
+        message: Only available on request
+        fix: The tool's row has score "NA", course credit "Only available on request" and credit hours "NA".
+
+  - id: FRENB
+    name: French B
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {FR 1--: 4}
+        message: Take the UIUC French Placement Test.
+      - level: HL
+        scores: [6]
+        credit: {FR 203: 4, FR 204: 4}
+        message: FR 205 or FR 207
+      - level: HL
+        scores: [7]
+        credit: {FR 203: 4, FR 204: 4}
+        message: FR 205 or FR 207
+      - level: SL
+        scores: [4]
+        credit: {FR 1--: 2}
+        message: Take the UIUC French Placement Test.
+      - level: SL
+        scores: [5]
+        credit: {FR 1--: 3}
+        message: Take the UIUC French Placement Test.
+      - level: SL
+        scores: [6, 7]
+        credit: {FR 203: 4}
+        message: FR 204
+
+  - id: FRENBAI
+    name: French B ab initio
+    rows:
+      - level: SL
+        scores: [4]
+        credit: {FR 1--: 2}
+        message: Take the UIUC French Placement Test.
+      - level: SL
+        scores: [5]
+        credit: {FR 1--: 3}
+        message: Take the UIUC French Placement Test.
+      - level: SL
+        scores: [6, 7]
+        credit: {FR 102: 4}
+        message: FR 203
+
+  - id: GEOG
+    name: Geography
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {GGIS 106: 3}
+        message: GGIS 210
+      - level: HL
+        scores: [6, 7]
+        credit: {GGIS 106: 3, GGIS 1--: 3}
+        message: GGIS 210
+      - level: SL
+        scores: [4, 5]
+        credit: {GGIS 1--: 3}
+        message: GGIS 101 or GGIS 103
+      - level: SL
+        scores: [6, 7]
+        credit: {GGIS 101: 3}
+        message: GGIS 103
+
+  - id: GERMALL
+    name: "German A: Language and Literature"
+    rows:
+      - level: HL
+        scores: [4, 5, 6, 7]
+        credit: {HUM 1--: 3}
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {HUM 1--: 3}
+
+  - id: GERMAL
+    name: "German A: Literature"
+    rows:
+      - level: HL
+        scores: [4, 5, 6, 7]
+        credit: {HUM 1--: 3}
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {HUM 1--: 3}
+
+  - id: GERMB
+    name: German B
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {GER 203: 4}
+        message: GER 204
+      - level: HL
+        scores: [6, 7]
+        credit: {GER 203: 4, GER 204: 4}
+        message: GER 211
+      - level: SL
+        scores: [4, 5]
+        credit: {GER 102: 4}
+        message: GER 203
+      - level: SL
+        scores: [6, 7]
+        credit: {GER 203: 4}
+        message: GER 204
+
+  - id: GERMBAI
+    name: German B ab initio
+    rows:
+      - level: SL
+        scores: [4]
+        credit: {GER 1--: 2}
+        message: GER 101, or take the UIUC German Placement Test.
+      - level: SL
+        scores: [5]
+        credit: {GER 1--: 3}
+        message: GER 102, or take the UIUC German Placement Test.
+      - level: SL
+        scores: [6, 7]
+        credit: {GER 102: 4}
+        message: GER 203
+
+  - id: GLOBPOL
+    name: Global Politics
+    rows:
+      - level: HL
+        scores: [4]
+        credit: {PS 1--: 1}
+      - level: HL
+        scores: [5]
+        credit: {PS 1--: 2}
+      - level: HL
+        scores: [6, 7]
+        credit: {PS 180: 3}
+      - level: SL
+        scores: [4]
+        credit: {PS 1--: 1}
+      - level: SL
+        scores: [5]
+        credit: {PS 1--: 2}
+      - level: SL
+        scores: [6, 7]
+        credit: {PS 180: 3}
+
+  - id: HEBRB
+    name: Hebrew B
+    rows:
+      - level: SL
+        scores: [4, 5]
+        credit: {HEBR 201: 5}
+        message: HEBR 202
+      - level: SL
+        scores: [6]
+        credit: {HEBR 201: 5, HEBR 202: 5}
+        message: HEBR 403
+      - level: SL
+        scores: [7]
+        credit: {HEBR 201: 5, HEBR 202: 5, HEBR 403: 5}
+        message: HEBR 404
+
+  - id: HINDAL
+    name: "Hindi A: Literature"
+    rows:
+      - level: HL
+        scores: [4, 5, 6, 7]
+        credit: {HNDI 408: 3}
+        message: Consult with the Director of the Hindi Program for a course recommendation.
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {HNDI 408: 3}
+        message: Consult with the Director of the Hindi Program for a course recommendation.
+        fix: The tool's scores read "4, 5, 6, 6"; we use 4 to 7, as the Higher Level row.
+
+  - id: HINDBL
+    name: "Hindi B: Literature"
+    rows:
+      - level: HL
+        scores: [4, 5, 6, 7]
+        credit: {HNDI 403: 4, HNDI 404: 4}
+        message: HNDI 405, or consult with the Director of the Hindi Program for a course recommendation.
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {HNDI 403: 4}
+        message: HNDI 404
+        fix: 'The tool credits "HNDI 403, 404" at "4" hours and places into HNDI 404, so we credit HNDI 403 only (4 hours,
+          as in the catalog).'
+
+  - id: HIST
+    name: History
+    rows:
+      - level: HL
+        scores: [4]
+        credit: {HIST 1--: 2}
+      - level: HL
+        scores: [5]
+        credit: {HIST 1--: 3}
+      - level: HL
+        scores: [6, 7]
+        credit: {HIST 2--: 3}
+      - level: SL
+        scores: [4]
+        credit: {HIST 1--: 2}
+      - level: SL
+        scores: [5]
+        credit: {HIST 1--: 3}
+      - level: SL
+        scores: [6, 7]
+        credit: {HIST 2--: 3}
+
+  - id: HISTAFR
+    name: "History: Africa"
+    rows:
+      - level: HL
+        scores: [4]
+        credit: {HIST 1--: 2}
+      - level: HL
+        scores: [5]
+        credit: {HIST 1--: 3}
+      - level: HL
+        scores: [6, 7]
+        credit: {HIST 2--: 3}
+
+  - id: HISTAMER
+    name: "History: Americas"
+    rows:
+      - level: HL
+        scores: [4]
+        credit: {HIST 1--: 2}
+      - level: HL
+        scores: [5]
+        credit: {HIST 1--: 3}
+      - level: HL
+        scores: [6, 7]
+        credit: {HIST 2--: 3}
+
+  - id: HISTASIA
+    name: "History: Asia and Oceania"
+    rows:
+      - level: HL
+        scores: [4]
+        credit: {HIST 1--: 2}
+      - level: HL
+        scores: [5]
+        credit: {HIST 1--: 3}
+      - level: HL
+        scores: [6, 7]
+        credit: {HIST 2--: 3}
+
+  - id: HISTEUR
+    name: "History: Europe"
+    rows:
+      - level: HL
+        scores: [4]
+        credit: {HIST 1--: 2}
+      - level: HL
+        scores: [5]
+        credit: {HIST 1--: 3}
+      - level: HL
+        scores: [6, 7]
+        credit: {HIST 2--: 3}
+
+  - id: INFOTECH
+    name: Information Technology
+    rows:
+      - level: HL
+        scores: [4, 5, 6, 7]
+        credit: {IS 101: 3}
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {IS 101: 3}
+
+  - id: ITALALL
+    name: "Italian A: Language and Literature"
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {ITAL 2--: 2}
+        message: Please meet with Laura Callegari Hill to discuss opportunities for higher course placement and possibly additional proficiency credit.
+      - level: HL
+        scores: [6, 7]
+        credit: {ITAL 2--: 3}
+        message: ITAL 310
+      - level: SL
+        scores: [4, 5]
+        credit: {ITAL 2--: 2}
+        message: Please meet with Laura Callegari Hill to discuss opportunities for higher course placement and possibly additional proficiency credit.
+      - level: SL
+        scores: [6, 7]
+        credit: {ITAL 2--: 3}
+        message: ITAL 220
+
+  - id: ITALAL
+    name: "Italian A: Literature"
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {ITAL 2--: 2}
+        message: Please meet with Professor Eleonora Stoppino to discuss course enrollment options.
+      - level: HL
+        scores: [6, 7]
+        credit: {ITAL 200: 3}
+        message: Please meet with Professor Eleonora Stoppino to discuss course enrollment options.
+      - level: SL
+        scores: [4, 5]
+        credit: {ITAL 2--: 2}
+        message: Please meet with Professor Eleonora Stoppino to discuss course enrollment options.
+      - level: SL
+        scores: [6, 7]
+        credit: {ITAL 200: 3}
+        message: Please meet with Professor Eleonora Stoppino to discuss course enrollment options.
+
+  - id: ITALB
+    name: Italian B
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {ITAL 1--: 4}
+        message: Please meet with Laura Callegari Hill to discuss opportunities for higher course placement and possibly additional proficiency credit.
+      - level: HL
+        scores: [6, 7]
+        credit: {ITAL 203: 4, ITAL 204: 4}
+        message: ITAL 210
+      - level: SL
+        scores: [4]
+        credit: {ITAL 1--: 2}
+        message: Please meet with Laura Callegari Hill to discuss opportunities for higher course placement and possibly additional proficiency credit.
+      - level: SL
+        scores: [5]
+        credit: {ITAL 1--: 3}
+        message: Please meet with Laura Callegari Hill to discuss opportunities for higher course placement and possibly additional proficiency credit.
+      - level: SL
+        scores: [6, 7]
+        credit: {ITAL 203: 4}
+        message: ITAL 204
+
+  - id: ITALBAI
+    name: Italian B ab initio
+    rows:
+      - level: SL
+        scores: [4]
+        credit: {ITAL 1--: 2}
+        message: Please meet with Laura Callegari Hill to discuss opportunities for higher course placement and possibly additional proficiency credit.
+      - level: SL
+        scores: [5]
+        credit: {ITAL 1--: 3}
+        message: Please meet with Laura Callegari Hill to discuss opportunities for higher course placement and possibly additional proficiency credit.
+      - level: SL
+        scores: [6, 7]
+        credit: {ITAL 102: 4}
+        message: Please meet with Laura Callegari Hill to discuss opportunities for higher course placement and possibly additional proficiency credit.
+
+  - id: JAPNALL
+    name: "Japanese A: Language and Literature"
+    rows:
+      - level: HL
+        scores: [4]
+        credit: {JAPN 4--: 2}
+        message: JAPN 440
+      - level: HL
+        scores: [5]
+        credit: {JAPN 4--: 3}
+        message: JAPN 440
+      - level: HL
+        scores: [6, 7]
+        credit: {JAPN 440: 3, JAPN 441: 3}
+        message: Consult with the Director of the Japanese Program for a course recommendation.
+      - level: SL
+        scores: [4]
+        credit: {JAPN 3--: 2}
+        message: JAPN 305
+      - level: SL
+        scores: [5]
+        credit: {JAPN 3--: 3}
+        message: JAPN 305
+      - level: SL
+        scores: [6, 7]
+        credit: {JAPN 305: 5}
+        message: JAPN 306
+
+  - id: JAPNAL
+    name: "Japanese A: Literature"
+    rows:
+      - level: HL
+        scores: [4]
+        credit: {JAPN 4--: 2}
+        message: Consult with the Director of the Japanese Program for a course recommendation.
+      - level: HL
+        scores: [5]
+        credit: {JAPN 4--: 3}
+        message: Consult with the Director of the Japanese Program for a course recommendation.
+      - level: HL
+        scores: [6, 7]
+        credit: {JAPN 490: 3}
+        message: Consult with the Director of the Japanese Program for a course recommendation.
+      - level: SL
+        scores: [4]
+        credit: {JAPN 4--: 2}
+        message: Consult with the Director of the Japanese Program for a course recommendation.
+      - level: SL
+        scores: [5]
+        credit: {JAPN 4--: 3}
+        message: Consult with the Director of the Japanese Program for a course recommendation.
+      - level: SL
+        scores: [6, 7]
+        credit: {JAPN 490: 3}
+        message: Consult with the Director of the Japanese Program for a course recommendation.
+
+  - id: JAPNB
+    name: Japanese B
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {JAPN 201: 5, JAPN 202: 5}
+        message: JAPN 203
+      - level: HL
+        scores: [6, 7]
+        credit: {JAPN 203: 5, JAPN 204: 5}
+        message: JAPN 305
+      - level: SL
+        scores: [4, 5]
+        credit: {JAPN 201: 5}
+        message: JAPN 202
+      - level: SL
+        scores: [6, 7]
+        credit: {JAPN 201: 5, JAPN 202: 5}
+        message: JAPN 203
+
+  - id: JAPNBAI
+    name: Japanese B ab initio
+    rows:
+      - level: SL
+        scores: [4]
+        credit: {JAPN 2--: 3}
+        message: JAPN 201
+      - level: SL
+        scores: [5]
+        credit: {JAPN 2--: 4}
+        message: JAPN 201
+      - level: SL
+        scores: [6, 7]
+        credit: {JAPN 201: 5}
+        message: JAPN 202
+
+  - id: KOREALL
+    name: "Korean A: Language and Literature"
+    rows:
+      - level: HL
+        scores: [4]
+        credit: {KOR 4--: 2}
+        message: KOR 440, or take the UIUC Korean Placement Test
+      - level: HL
+        scores: [5]
+        credit: {KOR 4--: 3}
+        message: KOR 440, or take the UIUC Korean Placement Test
+      - level: HL
+        scores: [6, 7]
+        credit: {KOR 440: 3, KOR 441: 3}
+        message: Consult with the Director of the Korean Program for a course recommendation.
+      - level: SL
+        scores: [4]
+        credit: {KOR 2--: 2}
+        message: KOR 242, or take the UIUC Korean Placement Test
+      - level: SL
+        scores: [5]
+        credit: {KOR 2--: 3}
+        message: KOR 242, or take the UIUC Korean Placement Test
+      - level: SL
+        scores: [6, 7]
+        credit: {KOR 242: 4}
+        message: KOR 440, or take the UIUC Korean Placement Test
+
+  - id: KOREAL
+    name: "Korean A: Literature"
+    rows:
+      - level: HL
+        scores: [4]
+        credit: {KOR 4--: 2}
+        message: Consult with the Director of the Korean Program for a course recommendation.
+      - level: HL
+        scores: [5]
+        credit: {KOR 4--: 3}
+        message: Consult with the Director of the Korean Program for a course recommendation.
+      - level: HL
+        scores: [6, 7]
+        credit: {KOR 4--: 6}
+        message: Consult with the Director of the Korean Program for a course recommendation.
+      - level: SL
+        scores: [4]
+        credit: {KOR 4--: 2}
+        message: Consult with the Director of the Korean Program for a course recommendation.
+      - level: SL
+        scores: [5, 6, 7]
+        credit: {KOR 4--: 3}
+        message: Consult with the Director of the Korean Program for a course recommendation.
+
+  - id: KOREB
+    name: Korean B
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {KOR 201: 5, KOR 202: 5}
+        message: KOR 203, or take the UIUC Korean Placement Test
+      - level: HL
+        scores: [6, 7]
+        credit: {KOR 203: 5, KOR 204: 5}
+        message: KOR 305, or take the UIUC Korean Placement Test
+      - level: SL
+        scores: [4, 5]
+        credit: {KOR 201: 5}
+        message: KOR 202, or take the UIUC Korean Placement Test
+      - level: SL
+        scores: [6, 7]
+        credit: {KOR 201: 5, KOR 202: 5}
+        message: KOR 203, or take the UIUC Korean Placement Test
+
+  - id: MATHAA
+    name: "Mathematics: Analysis and Approaches"
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {MATH 115: 3, STAT 100: 3}
+        message: MATH 220 (not MATH 221) if your ALEKS PPL score qualifies you for MATH 220; otherwise, follow your ALEKS PPL placement
+      - level: HL
+        scores: [6, 7]
+        credit: {MATH 220: 5, STAT 100: 3}
+        message: Placed into MATH 231
+      - level: SL
+        scores: [4]
+        credit: {STAT 100: 3}
+        message: Follow your ALEKS PPL placement
+      - level: SL
+        scores: [5]
+        credit: {MATH 112: 3, STAT 100: 3}
+        message: Either MATH 115 or MATH 220, as determined by your score on the ALEKS PPL Math Placement Test
+      - level: SL
+        scores: [6, 7]
+        credit: {MATH 115: 3, STAT 100: 3}
+        message: MATH 220 if your ALEKS PPL score qualifies you for MATH 220; otherwise, follow your ALEKS PPL placement
+
+  - id: MATHAI
+    name: "Mathematics: Application and Interpretation"
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {MATH 181: 3, MATH 124: 3, STAT 100: 3}
+        message: Take the ALEKS PPL Math Placement Test.
+      - level: HL
+        scores: [6, 7]
+        credit: {MATH 181: 3, MATH 124: 3, STAT 100: 3}
+        message: Take the ALEKS PPL Math Placement Test.
+      - level: SL
+        scores: [4]
+        credit: {MATH 181: 3, STAT 100: 3}
+        message: Take the ALEKS PPL Math Placement Test.
+      - level: SL
+        scores: [5]
+        credit: {MATH 181: 3, STAT 100: 3}
+        message: Take the ALEKS PPL Math Placement Test.
+      - level: SL
+        scores: [6, 7]
+        credit: {MATH 181: 3, STAT 100: 3}
+        message: Take the ALEKS PPL Math Placement Test.
+
+  - id: MGRKALL
+    name: "Modern Greek A: Language and Literature"
+    rows:
+      - level: HL
+        scores: [4, 5, 6, 7]
+        credit: {GRKM 1--: 3}
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {GRKM 1--: 3}
+
+  - id: MGRKAL
+    name: "Modern Greek A: Literature"
+    rows:
+      - level: HL
+        scores: [4, 5, 6, 7]
+        credit: {GRKM 1--: 3}
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {GRKM 1--: 3}
+
+  - id: MUSIC
+    name: Music
+    rows:
+      - level: HL
+        scores: [4, 5, 6, 7]
+        credit: {MUS 1--: 2}
+        message: You may take the Music Theory and/or the Musicianship proficiency exam for further proficiency credit, if you wish
+
+  - id: MUSICCR
+    name: Music Creating
+    rows:
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {MUS 1--: 2}
+        message: You may take the Music Theory and/or the Musicianship proficiency exam for further proficiency credit, if you wish
+
+  - id: MUSICGP
+    name: "Music: Group Performance"
+    rows:
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {MUSC 1--: 1}
+        message: You may take the Music Theory and/or the Musicianship proficiency exam for further proficiency credit, if you wish
+
+  - id: MUSICSP
+    name: "Music: Solo Performance"
+    rows:
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {MUSC 1--: 1}
+        message: You may take the Music Theory and/or the Musicianship proficiency exam for further proficiency credit, if you wish
+
+  - id: PHIL
+    name: Philosophy
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {HUM 1--: 3}
+      - level: HL
+        scores: [6, 7]
+        credit: {PHIL 1--: 3}
+      - level: SL
+        scores: [4, 5]
+        credit: {HUM 1--: 3}
+      - level: SL
+        scores: [6, 7]
+        credit: {PHIL 1--: 3}
+
+  - id: PHYS
+    name: Physics
+    rows:
+      - level: HL
+        scores: [4]
+        credit: {PHYS 1--: 4}
+        message: You may take the departmental proficiency exam that corresponds to your program.
+      - level: HL
+        scores: [5]
+        credit: {PHYS 1--: 5}
+        message: You may take the departmental proficiency exam that corresponds to your program.
+      - level: HL
+        scores: [6, 7]
+        credit: {PHYS 101: 5, PHYS 102: 5}
+        message: Consult with your advisor.
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {PHYS 1--: 3}
+        message: You may take the departmental proficiency exam that corresponds to your program.
+
+  - id: POLTHOUGHT
+    name: Political Thought
+    rows:
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {PS 1--: 3}
+
+  - id: PORTALL
+    name: "Portuguese A: Language and Literature"
+    rows:
+      - level: HL
+        scores: [4, 5, 6, 7]
+        credit: {PORT 403: 3}
+        message: Port 404
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {PORT 403: 3}
+        message: Port 404
+
+  - id: PORTAL
+    name: "Portuguese A: Literature"
+    rows:
+      - level: HL
+        scores: [4, 5, 6, 7]
+        credit: {PORT 403: 3}
+        message: Port 404
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {PORT 403: 3}
+        message: Port 404
+
+  - id: PORTB
+    name: Portuguese B
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {PORT 400: 4}
+        message: Port 401
+      - level: HL
+        scores: [6, 7]
+        credit: {PORT 401: 4}
+        message: Port 402 or Port 403
+      - level: SL
+        scores: [4, 5]
+        credit: {PORT 400: 4}
+        message: Port 401
+      - level: SL
+        scores: [6, 7]
+        credit: {PORT 401: 4}
+        message: Port 402 or Port 403
+
+  - id: PSYCH
+    name: Psychology
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {PSYC 1--: 3}
+      - level: HL
+        scores: [6, 7]
+        credit: {PSYC 100: 4}
+      - level: SL
+        scores: [4, 5]
+        credit: {PSYC 1--: 3}
+      - level: SL
+        scores: [6, 7]
+        credit: {PSYC 100: 4}
+
+  - id: RUSSB
+    name: Russian B
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {RUSS 201: 4}
+        message: Russ 202
+      - level: HL
+        scores: [6, 7]
+        credit: {RUSS 201: 4, RUSS 202: 4}
+        message: Russ 301 or 200-level course other than Russ 201 or Russ 202
+      - level: SL
+        scores: [4, 5]
+        credit: {RUSS 102: 4}
+        message: Russ 201
+      - level: SL
+        scores: [6, 7]
+        credit: {RUSS 201: 4}
+        message: Russ 202
+
+  - id: RUSSBAI
+    name: Russian B ab initio
+    rows:
+      - level: SL
+        scores: [4, 5]
+        credit: {RUSS 1--: 4}
+        message: RUSS 102, or take the UIUC Russian Placement Test
+      - level: SL
+        scores: [6, 7]
+        credit: {RUSS 102: 4}
+        message: RUSS 201
+
+  - id: SPANALL
+    name: "Spanish A: Language and Literature"
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {SPAN 210: 3}
+        message: SPAN 214
+      - level: HL
+        scores: [6]
+        credit: {SPAN 210: 3}
+        message: Consult with the Spanish Dept for a course recommendation.
+      - level: HL
+        scores: [7]
+        credit: {SPAN 210: 3, SPAN 214: 3}
+        message: Consult with the Spanish Dept for a course recommendation.
+      - level: SL
+        scores: [4, 5]
+        credit: {SPAN 201: 4}
+        message: SPAN 203 or 205
+      - level: SL
+        scores: [6, 7]
+        credit: {SPAN 203: 4}
+        message: SPAN 210, 212, 214, 218, 228, or 232
+
+  - id: SPANAL
+    name: "Spanish A: Literature"
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {SPAN 210: 3}
+        message: SPAN 214
+      - level: HL
+        scores: [6]
+        credit: {SPAN 210: 3}
+        message: Consult with the Spanish Dept for a course recommendation.
+      - level: HL
+        scores: [7]
+        credit: {SPAN 210: 3, SPAN 214: 3}
+        message: Consult with the Spanish Dept for a course recommendation.
+      - level: SL
+        scores: [4, 5]
+        credit: {SPAN 201: 4}
+        message: SPAN 203
+      - level: SL
+        scores: [6, 7]
+        credit: {SPAN 203: 4}
+        message: SPAN 210, 212, 214, 218, 228, or 232
+
+  - id: SPANB
+    name: Spanish B
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {SPAN 201: 4}
+        message: SPAN 203 or 205
+      - level: HL
+        scores: [6, 7]
+        credit: {SPAN 201: 4, SPAN 203: 4}
+        message: SPAN 210, 212, 214, 218, 228, or 232
+      - level: SL
+        scores: [4, 5]
+        credit: {SPAN 122: 4}
+        message: SPAN 201
+      - level: SL
+        scores: [6, 7]
+        credit: {SPAN 201: 4}
+        message: SPAN 203 or 205
+
+  - id: SPANBAI
+    name: Spanish B ab initio
+    rows:
+      - level: SL
+        scores: [4, 5]
+        credit: {SPAN 101: 4}
+        message: SPAN 102
+      - level: SL
+        scores: [6, 7]
+        credit: {SPAN 122: 4}
+        message: SPAN 201
+
+  - id: SEHS
+    name: Sports, Exercise and Health Science
+    rows:
+      - level: HL
+        scores: [4, 5, 6, 7]
+        credit: {HK 1--: 3}
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {HK 1--: 3}
+
+  - id: SWEDB
+    name: Swedish B
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {SCAN 203: 4}
+        message: SCAN 204
+      - level: HL
+        scores: [6, 7]
+        credit: {SCAN 203: 4, SCAN 204: 4}
+        message: Consult with the Director of the Scandinavian Program for a 200-level course recommendation.
+      - level: SL
+        scores: [4, 5]
+        credit: {SCAN 102: 4}
+        message: SCAN 203
+      - level: SL
+        scores: [6, 7]
+        credit: {SCAN 203: 4}
+        message: SCAN 204
+
+  - id: THEATRE
+    name: Theatre
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {THEA 1--: 3}
+      - level: HL
+        scores: [6, 7]
+        credit: {THEA 101: 3}
+      - level: SL
+        scores: [4, 5, 6, 7]
+        credit: {THEA 1--: 3}
+
+  - id: VISART
+    name: Visual Arts
+    rows:
+      - level: HL
+        scores: [4, 5]
+        credit: {ART 1--: 3}
+      - level: HL
+        scores: [6, 7]
+        credit: {ART 100: 3}
+      - level: SL
+        scores: [4, 5]
+        credit: {ART 1--: 3}
+      - level: SL
+        scores: [6, 7]
+        credit: {ART 100: 3}
+
+  - id: WORLDREL
+    name: World Religions
+    rows:
+      - level: SL
+        scores: [4]
+        credit: {HUM 1--: 3}
+      - level: SL
+        scores: [5, 6, 7]
+        credit: {REL 110: 3}

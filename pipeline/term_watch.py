@@ -107,10 +107,13 @@ def issue_body(new: list[str], current_term: str, next_term: str) -> str:
         ]
     else:
         lines += [
-            "Only a summer or winter term is new. The site doesn't load those as a term to plan (#35), so there's "
-            "nothing to roll over yet: the regular rollover comes with the next fall or spring term, and this check "
-            "opens another issue then.",
+            "Only a summer or winter term is new, so there's nothing to roll over yet: the regular rollover comes "
+            "with the next fall or spring term, and this check opens another issue then.",
         ]
+        summers = [t for t in new if t.endswith("-su")]
+        lines += [""] if summers else []
+        lines += [f"- [ ] `pipeline/fetch.py`: add `\"{t}\"` to `HISTORY_TERMS`, so the Summer courses page shows "
+                  f"{term_label(t)} instead of last summer (#35)" for t in summers]
     return "\n".join(lines) + "\n"
 
 

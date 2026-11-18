@@ -73,12 +73,12 @@ test("a shared link: Grainger programs get Grainger's Calculus rows, and the sta
   await expect(fr).toContainText("FR 203");
   // the year's general notes, word for word, follow the year
   const notes = page.getByTestId("ap-year-notes");
-  await expect(notes).toContainText("CITL's notes for 2026-2027");
+  await expect(notes).toContainText("CITL's AP notes for 2026-2027");
   await expect(notes).toContainText("To see AP credit in your academic record, run a new DARS report.");
   await page.getByLabel("Starting term at Illinois").selectOption({ label: "Summer 2025, Fall 2025 or Spring 2026" });
   await expect(fr).toContainText("FR 103");
   await expect(page).toHaveURL(/y=2025/);
-  await expect(notes).toContainText("CITL's notes for 2025-2026");
+  await expect(notes).toContainText("CITL's AP notes for 2025-2026");
   await expect(notes).toContainText("The credit policies in effect when you first enrolled at Illinois are the ones that apply to you.");
 });
 
@@ -89,4 +89,28 @@ test("375px: the AP panel doesn't make the page scroll sideways", async ({ page 
   await expect(page.getByTestId("degree-progress")).toBeVisible();
   const [sw, iw] = await page.evaluate(() => [document.documentElement.scrollWidth, window.innerWidth]);
   expect(sw).toBeLessThanOrEqual(iw);
+});
+
+test("IB scores: the level picks the row, the credit counts like AP credit, and older starting years have no IB table", async ({ page }) => {
+  await page.goto("./degree/?p=finance-data-science");
+  await expect(exam(page)).toBeEnabled();
+  await page.getByRole("group", { name: "Exam type" }).getByRole("button", { name: "IB" }).click();
+  const ib = page.getByRole("combobox", { name: "IB exam", exact: true });
+  await ib.selectOption({ label: "Mathematics: Analysis and Approaches" });
+  await score(page).selectOption("6");
+  await expect(addExam(page)).toBeDisabled(); // needs a level
+  await page.getByRole("combobox", { name: "Level" }).selectOption("HL");
+  await addExam(page).click();
+  const math = panel(page).locator('[data-kind="IB"][data-exam="MATHAA"]');
+  await expect(math).toContainText("IB Mathematics: Analysis and Approaches HL, 6");
+  await expect(math).toContainText("MATH 220");
+  await expect(math).toContainText("Placed into MATH 231");
+  await expect(page).toHaveURL(/i=MATHAA-HL-6/);
+  await expect(req(page, "calculus")).toHaveAttribute("data-status", "done");
+  await expect(page.getByTestId("ib-year-notes")).toContainText("CITL's IB notes for 2026-2027");
+
+  // a shared link keeps the IB score; a student who started in 2025 gets no IB table yet
+  await page.goto("./degree/?p=finance-data-science&i=MATHAA-HL-6&y=2025");
+  await expect(panel(page).locator('[data-kind="IB"][data-exam="MATHAA"]')).toContainText("No IB table here for students starting in Summer 2025");
+  await expect(req(page, "calculus")).toHaveAttribute("data-status", "open");
 });
