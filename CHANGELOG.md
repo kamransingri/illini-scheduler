@@ -5,15 +5,40 @@ Every release of the site and the data pipeline, newest first. The format follow
 CONTRIBUTING.md says what counts as a major, minor or patch change. Add a line under **Unreleased** in the same pull
 request as the change. `make release V=minor` (or `patch`) turns Unreleased into the next version, and the release
 workflow tags it and publishes the GitHub release once it reaches `main`. Before 0.2.0-beta.1 the version was 0.1.0:
-the first build, phases 0 to 12, recorded in docs/PROGRESS.md.
+the first build, phases 0 to 12 (its build log, docs/PROGRESS.md, was removed after 0.6.0 and is in git
+history).
 
 ## [Unreleased]
+
+### Added
+
+- Gen-ed finder: it uses the start time, end time and days off you set in the schedule builder (#30). Each course is
+  marked "Fits your times" or says why not ("Outside your times", "Only special sections", "No open section"), and
+  "Only courses that fit them" hides the rest. Once you've added courses, "Plan them in the schedule builder" opens
+  the builder with them and your must-haves.
+
+### Changed
+
+- Course pages: "Took this course?" sends students to rate their professor on Rate My Professors, choosing the course,
+  instead of the "Suggest a note" link that needed a GitHub account.
 
 ### Fixed
 
 - Calendar export (.ics): dates now come from the Registrar's Fall 2026 and Spring 2027 academic calendars, with the
   source and read date in every event. Labor Day (September 7, 2026) is now skipped; before, Monday classes showed up
   on it. The builder names the breaks it skips.
+- Rate My Professors on course pages: professors who teach this term but not next, and past instructors, are now
+  looked up too. MATH 221's Kim Whittlesey (104 ratings) showed "No RMP match" because she isn't teaching in Spring
+  2027. Course pages now show RMP for past instructors as well.
+- Rate My Professors matching: nicknames ("Bob" for Robert), a middle name RMP lists first and one-letter spelling
+  differences now match when the reviews or department back it up; every subject a professor teaches counts, not just
+  the first; reviews for a professor's own courses settle which of several same-named people it is.
+- A profile only shows on courses it fits: MATH 221's "J. Anderson" was showing the reviews of an Education
+  professor with the same name in Course Explorer.
+- Course pages show up to 6 RMP reviews per professor, the ones written for that course first (it was 3, from any
+  course).
+
+## [0.7.0] - 2026-11-17
 
 ### Added
 
@@ -23,6 +48,10 @@ the first build, phases 0 to 12, recorded in docs/PROGRESS.md.
   carried in the share link (`mn=`).
 - Degree checklist: a college filter under the major and minor boxes ("Gies Business (6)", "LAS (52)"…) narrows the
   list to one college, and typing then searches only that college.
+- Course pages: a "Rate them on RMP" link next to each matched professor's Rate My Professors page, and "Be the first
+  to rate" on professors RMP knows but nobody has rated yet. Both open RMP's own rating form; the site posts nothing.
+- Degree checklist: completed courses in My courses link to that course's professors, so you can rate yours.
+- Degree checklist: CITL's general notes for the AP table you picked, word for word, under your expected AP credit.
 
 ### Changed
 
@@ -30,6 +59,9 @@ the first build, phases 0 to 12, recorded in docs/PROGRESS.md.
   type straight away instead of scrolling the full list.
 - Catalog importer: a "Select two of the following:" header row becomes a "choose 2" rule instead of a tick box, and
   requirement files can say `type: minor`.
+- The backlog is now GitHub issues (#9 to #34), labelled by area (`degree-planner`, `seats`, `rmp`, `needs-backend`,
+  `needs-human`…); docs/IDEAS.md and docs/PROGRESS.md were removed (both are in git history). `.gitignore` also covers
+  virtualenvs, logs, editor folders and OS files.
 
 ## [0.6.0] - 2026-11-17
 
@@ -132,7 +164,8 @@ the first build, phases 0 to 12, recorded in docs/PROGRESS.md.
 - A partial Rate My Professors error no longer stops `make data`.
 - RSS feeds are written as UTF-8.
 
-[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.3.0...v0.4.0

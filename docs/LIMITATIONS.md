@@ -1,7 +1,7 @@
 # Limitations
 
 What Illini Scheduler can't do, or does only approximately, as of v0.6.0 (2026-11-17). Each item says where the gap
-comes from. For future plans, see [IDEAS.md](IDEAS.md).
+comes from. For future plans, see the [GitHub issues](https://github.com/kamransingri/illini-scheduler/issues).
 
 ## The site itself
 
@@ -25,7 +25,7 @@ comes from. For future plans, see [IDEAS.md](IDEAS.md).
 - **A seat can be gone already.** Openings in popular courses can fill within minutes. Copy the CRN and confirm in
   Self-Service.
 - **Notifications only while the page is open.** "Notify me" uses the browser's notifications for changes that arrive
-  while the tab is open; there are no email or phone alerts (that needs a backend, IDEAS.md 3).
+  while the tab is open; there are no email or phone alerts (that needs a backend, [#16](https://github.com/kamransingri/illini-scheduler/issues/16)).
 
 ## Course and seat data
 
@@ -49,23 +49,28 @@ comes from. For future plans, see [IDEAS.md](IDEAS.md).
   history.
 - **Name matching.** Course Explorer and the GPA dataset write names differently ("Gonzalez, D"). When a match is
   ambiguous the site leaves it unmatched rather than guess: 3,863 names are logged in `data/unmatched.csv`, mostly
-  TAs. When last measured, about 80% of lecture instructors were matched (CS 83%, MATH 86%, STAT 79%; PROGRESS.md).
+  TAs. When last measured, about 80% of lecture instructors were matched (CS 83%, MATH 86%, STAT 79%; [#12](https://github.com/kamransingri/illini-scheduler/issues/12)).
 
 ## Rate My Professors
 
-- **No official API.** The pipeline uses the same queries the RMP website uses, rate limited and cached for 7 days. If
-  RMP changes them, ratings stop updating until the pipeline is fixed.
-- **Coverage.** About 1,230 instructors have a match so far. New lookups are capped at 20 minutes per nightly run, so
-  coverage grows over several nights. Instructors without a match show a search link.
-- **Matching is by name and department.** Some professors will be missed, as Daniel Gonzalez (listed on RMP as
-  "Gonzalez Cedre") was until v0.3.0.
+- **No official API.** The pipeline uses the same queries the RMP website uses, rate limited and cached (asked again
+  after 7 days, used for up to 90). If RMP changes them, ratings stop updating until the pipeline is fixed.
+- **Coverage.** Every professor a course page shows is looked up, next term's first. New lookups are capped at 20
+  minutes per nightly run, so coverage keeps growing over several nights (DECISIONS D18.6). Instructors without a
+  match show a search link.
+- **Matching is by name, department and reviews.** Nicknames, middle names and one-letter spelling slips match only
+  when the department or the reviews back them up, so some professors will still be missed, and a profile shows only
+  on courses whose subject it fits.
+- **Reviews.** Only a professor's 20 newest RMP ratings are read; a course page shows up to 6, that course's first. A
+  professor with many newer reviews for other courses may show none for this one.
 - **RMP ratings are self-selected.** The people who rate are not a random sample, which is why the best pick score
   pulls ratings with few reviews toward an average.
 
 ## Gen-ed finder and schedule builder
 
-- **The gen-ed finder has no time filters** since v0.4.0: add courses to the schedule builder and set start times,
-  days off and the rest there (DECISIONS D14.5).
+- **The gen-ed finder checks only start time, end time and days off** from the schedule builder's must-haves. Blocked
+  times and the lunch break are applied once the course is in the builder (DECISIONS D20.2). The times come from this
+  browser, so a shared link with "Only courses that fit them" filters by the reader's own times.
 - **The lunch break rule is fixed** at 45 free minutes between 11am and 2pm on each day with class.
 - **Expected GPA** in the builder uses each section's instructor GPA for that course, else the course average; it is
   a guide, not a prediction.

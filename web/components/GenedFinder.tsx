@@ -1,9 +1,25 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { applyFilters, DEFAULT_FILTERS, DEFAULT_SORT, filtersFromQuery, filtersToQuery, GENED_GROUPS, openCount, type Filters, type SortKey } from "@/lib/geneds";
+import { onCartChange, readCart } from "@/lib/cart";
+import {
+  applyFilters,
+  DEFAULT_FILTERS,
+  DEFAULT_SORT,
+  filtersFromQuery,
+  filtersToQuery,
+  GENED_GROUPS,
+  hasTimeRules,
+  openCount,
+  timesFit,
+  type Filters,
+  type Fit,
+  type SortKey,
+} from "@/lib/geneds";
 import { courseHref, dataUrl, fmtGpa, fmtInt, fmtPct, GENED_NAMES, GENED_SHORT, termLabel } from "@/lib/format";
+import { loadPrefs, onPrefsChange, timeRulesSummary } from "@/lib/prefs";
 import { rankCourse } from "@/lib/rank";
+import type { Prefs } from "@/lib/schedule";
 import type { ScorePriors } from "@/lib/score";
 import type { GenedRow } from "@/lib/types";
 import { useWeights } from "@/lib/weights";
@@ -14,6 +30,8 @@ import Info from "./ui/Info";
 import WeightsControl from "./WeightsControl";
 
 const PAGE = 50;
+// Why a course doesn't fit the schedule builder's must-haves (lib/geneds.ts timesFit)
+const NO_FIT: Record<Exclude<Fit, "fits">, string> = { times: "Outside your times", special: "Only special sections", closed: "No open section" };
 // Table cells: hairline row and column dividers (the first column has no left rule).
 const TH = "border-l border-line px-2.5 py-2 align-bottom font-semibold first:border-l-0";
 const TD = "border-l border-line px-2.5 py-2.5 first:border-l-0";
@@ -27,6 +45,8 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
   const [limit, setLimit] = useState(PAGE);
   const [restored, setRestored] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
+  const [rules, setRules] = useState<Prefs | null>(null); // the schedule builder's saved must-haves
+  const [inSchedule, setInSchedule] = useState(0);
 
   // Filters live in the URL so Back, reload and shared links keep them.
   useEffect(() => {
@@ -41,6 +61,18 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
     window.history.replaceState(null, "", `${window.location.pathname}${q ? `?${q}` : ""}`);
   }, [f, sort, restored]);
 
+  // Times and days off come from the schedule builder (D14.5), and follow it when it's open in another tab.
+  useEffect(() => {
+    setRules(loadPrefs());
+    return onPrefsChange(() => setRules(loadPrefs()));
+  }, []);
+  useEffect(() => {
+    const sync = () => setInSchedule(readCart().length);
+    sync();
+    return onCartChange(sync);
+  }, []);
+  const timed = hasTimeRules(rules) ? rules : null;
+
   useEffect(() => {
     fetch(dataUrl("geneds.json"))
       .then((r) => {
@@ -53,7 +85,7 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
 
   // Best-pick score per course: course GPA with its best next-term professor (lib/rank.ts), with the student's weights.
   const ranked = useMemo(() => new Map((rows ?? []).map((r) => [`${r.s} ${r.n}`, rankCourse(`${r.s} ${r.n}`, { gpa: r.gpa, gn: r.gpaN, nSec: r.nSec, nOpen: r.nOpen, known: r.statusKnown, profs: r.profs }, priors, weights)])), [rows, priors, weights]);
-  const result = useMemo(() => (rows ? applyFilters(rows, f, sort, (r) => ranked.get(`${r.s} ${r.n}`)?.score?.score ?? null) : []), [rows, f, sort, ranked]);
+  const result = useMemo(() => (rows ? applyFilters(rows, f, sort, (r) => ranked.get(`${r.s} ${r.n}`)?.score?.score ?? null, timed) : []), [rows, f, sort, ranked, timed]);
   const statusKnown = rows?.some((r) => r.statusKnown) ?? false;
   const set = <K extends keyof Filters>(k: K, v: Filters[K]) => {
     setF((old) => ({ ...old, [k]: v }));
@@ -113,13 +145,26 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
             {check(statusKnown ? `Only courses with an open section in ${termLabel(nextTerm)}` : `Only courses offered in ${termLabel(nextTerm)}`, f.openNext, (v) => set("openNext", v))}
             {check("Only GPA from 200+ students", f.minStudents === 200, (v) => set("minStudents", v ? 200 : 0))}
           </div>
-          <p className="mt-2 text-sm text-muted">
-            Times and days are set in the{" "}
-            <Link href="/schedule/" className="text-action underline">
-              schedule builder
-            </Link>
-            .
-          </p>
+        </fieldset>
+        <fieldset data-testid="gened-times">
+          <legend className="font-semibold text-heading">Your times</legend>
+          {timed ? (
+            <>
+              <p className="mt-1 text-sm">From the schedule builder: {timeRulesSummary(timed).join(", ")}.</p>
+              <div className="mt-1">{check("Only courses that fit them", f.fits, (v) => set("fits", v))}</div>
+              <Link href="/schedule/" className="mt-1 inline-block text-sm text-action underline">
+                Change them in the schedule builder
+              </Link>
+            </>
+          ) : (
+            <p className="mt-1 text-sm text-muted">
+              Set a start time, end time or days off in the{" "}
+              <Link href="/schedule/" className="text-action underline">
+                schedule builder
+              </Link>{" "}
+              to see which gen-eds fit them.
+            </p>
+          )}
         </fieldset>
         <label className="block">
           <span className="font-semibold text-heading">Credit hours</span>
@@ -175,6 +220,17 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
           </label>
         </div>
         <WeightsControl className="mb-3" />
+        {inSchedule > 0 && (
+          <p className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 rounded border border-line bg-panel px-3 py-2" data-testid="gened-handoff">
+            <span className="tnum">
+              {inSchedule} course{inSchedule === 1 ? "" : "s"} in your schedule.
+            </span>
+            <Link href="/schedule/" className="inline-flex items-center gap-1 font-semibold text-action hover:underline">
+              Plan {inSchedule === 1 ? "it" : "them"} in the schedule builder
+              <Icon name="chevronRight" />
+            </Link>
+          </p>
+        )}
         {error && (
           <p className="flex items-start gap-2 rounded border border-line p-3" role="alert">
             <Icon name="alert" className="mt-1 text-down" />
@@ -230,8 +286,15 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
                   const rk = ranked.get(`${r.s} ${r.n}`);
                   const sc = rk?.score;
                   const bp = rk?.best;
+                  const fit = timed && r.nSec > 0 ? timesFit(r, timed) : null;
                   return (
-                    <tr key={r.s + r.n} className="border-t border-line align-top even:bg-panel/50" data-gpa={r.gpa ?? ""} data-codes={r.codes.join(" ")}>
+                    <tr
+                      key={r.s + r.n}
+                      className="border-t border-line align-top even:bg-panel/50"
+                      data-gpa={r.gpa ?? ""}
+                      data-codes={r.codes.join(" ")}
+                      data-fit={fit ?? undefined}
+                    >
                       <th scope="row" className={`${TD} min-w-[11rem] font-normal`}>
                         <Link href={courseHref(r.s, r.n)} className="group">
                           <span className="font-semibold text-action group-hover:underline">
@@ -239,6 +302,13 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
                           </span>{" "}
                           <span className="group-hover:underline">{r.t}</span>
                         </Link>
+                        {fit === "fits" && (
+                          <span className="mt-1 flex items-center gap-1 text-sm text-up">
+                            <Icon name="check" />
+                            Fits your times
+                          </span>
+                        )}
+                        {fit && fit !== "fits" && <span className="mt-1 block text-sm text-muted">{NO_FIT[fit]}</span>}
                       </th>
                       <td className={TD}>
                         <ul className="flex flex-col items-start gap-1" aria-label={`${r.s} ${r.n} counts for`}>

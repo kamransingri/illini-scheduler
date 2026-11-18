@@ -22,6 +22,7 @@ from typing import Any
 from .config import WEB_DATA
 from .fetch import CURRENT_TERM, NEXT_TERM
 from .names import parse_name, term_order
+from .rmp import course_code, fits_subject
 
 REPO_URL = "https://github.com/kamransingri/illini-scheduler"
 SITE_URL = os.environ.get("SITE_URL", "https://kamransingri.github.io/illini-scheduler")
@@ -32,6 +33,7 @@ LIVE_URL = os.environ.get(
 RECENT_EVENT_DAYS = 7  # "Just opened" page window
 ONLINE_TYPES = {"ONL", "OLC", "OLD", "OD", "OLB"}
 MAX_BUNDLES = 400
+REVIEWS_PER_COURSE = 6  # RMP snippets per professor on a course page, that course's first (D18.4)
 
 
 def r3(x: float | None) -> float | None:
@@ -57,11 +59,24 @@ def status_open(status: str) -> bool | None:
     return "open" in s
 
 
-def bundles(sections: list[dict]) -> list[list[dict]]:
-    """Valid section bundles (lecture + its linked discussion/lab...). Mirrors web/lib/schedule.ts."""
+def _clash(a: dict, b: dict) -> bool:
+    """Two meetings overlap: a shared day, overlapping times and parts of term that overlap (first-half "A" and
+    second-half "B" never do). Untimed meetings never clash. Mirrors meetingsConflict in web/lib/schedule.ts."""
+    if a["s"] is None or a["e"] is None or b["s"] is None or b["e"] is None or not a["d"] & b["d"]:
+        return False
+    if {a["part"], b["part"]} == {"A", "B"}:
+        return False
+    return bool(a["s"] < b["e"] and b["s"] < a["e"])
+
+
+def bundles(sections: list[dict], include_special: bool = True) -> list[list[dict]]:
+    """Valid section bundles (lecture + its linked discussion/lab...) whose meetings don't clash with each other.
+    Without `include_special`, sections flagged special (D9.3) are left out, as the schedule builder does by default.
+    Mirrors buildBundles in web/lib/schedule.ts; fixtures/bundle-parity.json holds cases both copies check."""
     groups: dict[str, list[dict]] = defaultdict(list)
     for s in sections:
-        groups[s["group"]].append(s)
+        if include_special or not s.get("special"):
+            groups[s["group"]].append(s)
     out: list[list[dict]] = []
     for secs in groups.values():
         by_comp: dict[str, list[dict]] = defaultdict(list)
@@ -70,24 +85,35 @@ def bundles(sections: list[dict]) -> list[list[dict]]:
         if "primary" not in by_comp:
             continue
         for combo in itertools.product(*by_comp.values()):
+            mtgs = [{**m, "part": s.get("part") or "1"} for s in combo for m in s["meetings"]]
+            if any(_clash(a, b) for a, b in itertools.combinations(mtgs, 2)):
+                continue
             out.append(list(combo))
             if len(out) >= MAX_BUNDLES:
                 return out
     return out
 
 
-def bundle_opts(bs: list[list[dict]]) -> list[list[int]]:
-    """[[earliest start minute (-1 if none), union day mask, all-online 0/1]] - deduplicated."""
-    seen = set()
-    for b in bs:
-        starts = [m["s"] for s in b for m in s["meetings"] if m["s"] is not None]
-        days = 0
-        for s in b:
-            for m in s["meetings"]:
+OPT_CLOSED, OPT_WITH_SPECIAL, OPT_BY_DEFAULT = 1, 2, 4
+
+
+def bundle_opts(sections: list[dict]) -> list[list[int]]:
+    """The distinct ways to take a course, for the gen-ed finder's check against the schedule builder's must-haves
+    (fitsTimes in web/lib/geneds.ts): [earliest start, latest end, day mask, flags] over the bundle's timed meetings,
+    [-1, -1, 0, flags] when none is timed. Flags: 1 = a section was Closed at the last check, 2 = the builder makes
+    this bundle when special sections are allowed, 4 = it makes it by default (special sections left out)."""
+    seen: dict[tuple[int, int, int, int], int] = {}
+    for flag, include in ((OPT_WITH_SPECIAL, True), (OPT_BY_DEFAULT, False)):
+        for b in bundles(sections, include_special=include):
+            timed = [m for s in b for m in s["meetings"] if m["s"] is not None]
+            days = 0
+            for m in timed:
                 days |= m["d"]
-        online = int(all(m["s"] is None for s in b for m in s["meetings"]))
-        seen.add((min(starts) if starts else -1, days, online))
-    return [list(x) for x in sorted(seen)]
+            closed = int(any("closed" in (s.get("status") or "").lower() for s in b))
+            key = (min((m["s"] for m in timed), default=-1),
+                   max((m["e"] for m in timed if m["e"] is not None), default=-1), days, closed)
+            seen[key] = seen.get(key, 0) | flag
+    return [[st, en, d, closed | fl] for (st, en, d, closed), fl in sorted(seen.items())]
 
 
 def load_profile(js: str | None) -> dict | None:
@@ -138,15 +164,22 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
         p = parse_name(fallback)
         return p.display if p else fallback or key
 
-    def rmp_block(key: str) -> dict | None:
+    def rmp_block(key: str, subject: str, number: str = "") -> dict | None:
+        """The instructor's RMP profile as a page for `subject` shows it, or None when the profile doesn't fit that
+        subject (rmp.fits_subject). With `number`, that course's reviews come first, REVIEWS_PER_COURSE at most."""
         rid = people.get(key, {}).get("rmp_id")
         if not rid or rid not in rmp:
             return None
         t = rmp[rid]
+        reviews = json.loads(t["reviews_json"] or "[]")
+        if not fits_subject(subject, t["department"] or "", reviews):
+            return None
+        here = f"{subject}{number}"
+        reviews = sorted(reviews, key=lambda r: course_code(r.get("course", "")) != here)[:REVIEWS_PER_COURSE]
         return {"id": rid, "url": f"https://www.ratemyprofessors.com/professor/{rid}", "rating": t["avg_rating"],
                 "difficulty": t["avg_difficulty"], "would_take_again": t["would_take_again_pct"],
                 "num_ratings": t["num_ratings"], "tags": json.loads(t["top_tags"] or "[]"),
-                "reviews": json.loads(t["reviews_json"] or "[]"), "fetched_at": t["fetched_at"]}
+                "reviews": reviews, "fetched_at": t["fetched_at"]}
 
     # ---- per-course gathering ---------------------------------------------------------------------------
     courses: dict[tuple[str, str], dict[str, dict]] = defaultdict(dict)
@@ -267,7 +300,7 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
                 "name": display(k, raw_for.get(k) or (gi or {}).get("raw", "")),
                 "teaching": sorted(inst_keys.get(k, set()), key=term_order),
                 "gpa": {kk: vv for kk, vv in gi.items() if kk != "raw"} if gi else None,
-                "rmp": rmp_block(k) if k in inst_keys else None,
+                "rmp": rmp_block(k, subj, num),
                 "exam": exam.get(key, {}).get(k),
                 "tre": json.loads(people.get(k, {}).get("excellent_terms") or "[]")[:6],
                 "in_gpa_dataset": k in people and k in gpa_inst.get(key, {}),
@@ -308,7 +341,8 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
         (d / f"{num}.json").write_text(json.dumps(doc, separators=(",", ":")))
         n_files += 1
         nxt = term_blocks.get(NEXT_TERM)
-        summaries[f"{subj} {num}"] = course_summary(g, nxt, rec, gpa_inst.get(key, {}), display, rmp_block, raw_for)
+        summaries[f"{subj} {num}"] = course_summary(g, nxt, rec, gpa_inst.get(key, {}), display,
+                                                    lambda k, s=subj: rmp_block(k, s), raw_for)
         search_courses.append({
             "s": subj, "n": num, "t": title, "c": rec.get("credit_hours", "").replace(" hours.", ""),
             "g": codes, "gpa": r3(g["recent_avg_gpa"] if g and g["recent_avg_gpa"] is not None else
@@ -319,13 +353,12 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
         if codes and ((nxt and nxt["sections"]) or gen):
             nxt = nxt or {"sections": [], "n_primary": 0, "n_open": None, "status_known": False}
             secs = [s for s in nxt["sections"] if s["status_code"] != "P"]
-            bs = bundles(secs)
             best = None
             for k in teach_next_course(nxt):
                 gi = gpa_inst.get(key, {}).get(k)
                 if gi and gi["students"] >= 60 and (best is None or (gi["recent"] or gi["avg"]) > best["gpa"]):
                     best = {"key": k, "name": display(k), "gpa": gi["recent"] or gi["avg"], "students": gi["students"]}
-            rmp_best = max((b["rating"] for k in teach_next_course(nxt) if (b := rmp_block(k)) and b["rating"]),
+            rmp_best = max((b["rating"] for k in teach_next_course(nxt) if (b := rmp_block(k, subj)) and b["rating"]),
                            default=None)
             gened_rows.append({
                 "s": subj, "n": num, "t": title, "codes": codes, "cats": cats,
@@ -333,7 +366,7 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
                 "gpa": r3(g["recent_avg_gpa"]) if g else None, "gpaN": g["recent_students"] if g else 0,
                 "pctA": r3(g["pct_A"]) if g else None,
                 "nSec": nxt["n_primary"], "nOpen": nxt["n_open"], "statusKnown": nxt["status_known"],
-                "best": best, "rmp": rmp_best, "opts": bundle_opts(bs),
+                "best": best, "rmp": rmp_best, "opts": bundle_opts(secs),
                 "profs": summaries[f"{subj} {num}"]["profs"],  # best-pick score inputs (web/lib/rank.ts)
             })
 

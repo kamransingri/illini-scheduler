@@ -122,6 +122,15 @@ test("the major picker searches all majors by name, acronym and college", async 
   await expect(page).not.toHaveURL(/p=computer-science-bs/);
 });
 
+test("finished courses link to their professors, so students can rate them", async ({ page }) => {
+  await page.goto("./degree/?p=finance-data-science&m=STAT107,CS124~p");
+  const mine = page.getByTestId("my-courses");
+  await expect(mine.getByRole("link", { name: "STAT 107" })).toHaveAttribute("href", /\/course\/STAT\/107\/#professors$/);
+  await expect(mine).toContainText("CS 124");
+  await expect(mine.getByRole("link", { name: "CS 124" })).toHaveCount(0); // in progress, not finished
+  await expect(page.getByTestId("rate-hint")).toBeVisible();
+});
+
 test("the college filter narrows the major list without scrolling", async ({ page }) => {
   await page.goto("./degree/");
   const major = page.getByRole("combobox", { name: "Major", exact: true });

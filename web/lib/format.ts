@@ -126,6 +126,11 @@ export function courseHref(subject: string, number: string): string {
   return `/course/${subject}/${number}/`;
 }
 
+/** RMP's "add a rating" page for a matched professor. It takes RMP's numeric (legacy) id; anything else gets the profile page. */
+export function rmpRateUrl(rmp: { id: string; url: string }): string {
+  return /^\d+$/.test(rmp.id) ? `https://www.ratemyprofessors.com/add/professor-rating/${rmp.id}` : rmp.url;
+}
+
 export function cisUrl(term: string, subject: string, number: string, crn?: string): string {
   const [y, s] = term.split("-");
   const season = { sp: "spring", su: "summer", fa: "fall", wi: "winter" }[s] ?? s;

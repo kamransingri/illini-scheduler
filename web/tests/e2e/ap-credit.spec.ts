@@ -71,9 +71,15 @@ test("a shared link: Grainger programs get Grainger's Calculus rows, and the sta
   // 2026-2027 renumbered French: a 3 gives FR 203; a student who started in 2025 gets FR 103
   const fr = panel(page).locator('[data-exam="FR"]');
   await expect(fr).toContainText("FR 203");
+  // the year's general notes, word for word, follow the year
+  const notes = page.getByTestId("ap-year-notes");
+  await expect(notes).toContainText("CITL's notes for 2026-2027");
+  await expect(notes).toContainText("To see AP credit in your academic record, run a new DARS report.");
   await page.getByLabel("Starting term at Illinois").selectOption({ label: "Summer 2025, Fall 2025 or Spring 2026" });
   await expect(fr).toContainText("FR 103");
   await expect(page).toHaveURL(/y=2025/);
+  await expect(notes).toContainText("CITL's notes for 2025-2026");
+  await expect(notes).toContainText("The credit policies in effect when you first enrolled at Illinois are the ones that apply to you.");
 });
 
 test("375px: the AP panel doesn't make the page scroll sideways", async ({ page }) => {

@@ -59,9 +59,9 @@ Every judgment call made during the autonomous build, newest phase last.
   decodes line by line.
 - **D1.9 Handmade XML fixtures.** `fixtures/course-explorer/HANDMADE_*.xml` are generated from the real CSV slice
   in the documented XML layout so the XML parser is tested offline; a test asserts the XML and CSV parsers agree.
+  Replaced by real saved responses on 2026-11-17 (fixtures/README.md, #32).
 
 ## Phase 2 — GPA and grade disparity
-
 - **D2.1 Real columns** of `gpa/uiuc-gpa-dataset.csv`: Year, Term, YearTerm, Subject, Number, Course Title,
   Sched Type, A+, A, A-, B+, B, B-, C+, C, C-, D+, D, D-, F, W, Students, Primary Instructor. 110,326 rows,
   terms 2005-fa to 2026-su (upstream updated 2026-10-29). `Students` = graded students (W not included).
@@ -93,8 +93,9 @@ Every judgment call made during the autonomous build, newest phase last.
   discussions/labs can never match. The report shows both "all names" and "names on primary (lecture) sections".
 - **D3.5 RMP.** Implemented per spec (school id from RMP's own search, exact last name + compatible first name +
   plausible department, two-person initial collisions are not guessed, 2 concurrent / 0.5 s delay, 7-day cache,
-  3 snippets ≤ 200 chars). The host is blocked here, so `meta.rmp_status = unavailable` and the UI links to RMP's
-  search page. Tests use HANDMADE fixtures with invented placeholder values.
+  3 snippets ≤ 200 chars; who is looked up, the cache and the matching changed in D18). The host is blocked here, so `meta.rmp_status = unavailable` and the UI links to RMP's
+  search page. Tests used HANDMADE fixtures with invented placeholder values until 2026-11-17; now real
+  saved answers (fixtures/README.md), which showed that RMP sends no rating tags any more.
 - **D3.6 Teachers Ranked as Excellent.** Instructor-role rows since Fall 2020 are joined on (last name, course
   number, compatible initial) among instructors who taught that number; only unique matches get a badge.
 
@@ -479,7 +480,7 @@ Every judgment call made during the autonomous build, newest phase last.
   section, so the earlier detection wins and open → closed → open stays three events. Each row says when the change was
   found and the section's latest known status ("Still open (4 min ago)", "Now closed"). If `live.json` is missing or
   older than 45 minutes, the page says "Daily" and explains, rather than calling stale data live. "New" marks and the
-  optional browser notification only cover changes that arrive while the page is open (no push backend; IDEAS.md 3).
+  optional browser notification only cover changes that arrive while the page is open (no push backend; [#16](https://github.com/kamransingri/illini-scheduler/issues/16)).
 - **D14.5 Gen-ed finder keeps to picking courses.** The time filters (no 8am, no Friday, online only) are gone: times
   and days belong to the schedule builder, which applies them to whole weeks. "Only courses with an open section" is on
   by default (`?nx=0` turns it off); old links with `e`, `nf` or `on` still open, without those filters. The pipeline
@@ -550,7 +551,7 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D15.7 Merge commits.** Pull requests are merged with merge commits, as #1 to #5 were, so each branch's commits stay
   visible and a release tag sits on a commit that was actually deployed.
 
-## v0.6.0 (2026-11-17, AP credit from CITL, IDEAS.md 5)
+## v0.6.0 (2026-11-17, AP credit from CITL)
 
 - **D16.1 Copied by hand, three years.** CITL's 2026-2027 table only appears in a page that needs filters clicked,
   and the older pages have slips (docs/AP-CREDIT.md lists each correction). About 40 exams change once a year, so
@@ -589,3 +590,76 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D16.11 Loaded on demand.** The three tables are 57 KB of JSON, fetched by the degree page rather than built into
   it. While a list with AP scores waits for the file, the checklist shows "Loading requirements…" instead of a
   checklist that changes a moment later.
+
+## v0.7.0 (2026-11-17, issues #9 and #24)
+
+- **D17.1 Rating link.** RMP has no posting API, so the site links to RMP's own form,
+  `ratemyprofessors.com/add/professor-rating/<id>`, using the numeric id the pipeline already stores (all 4,475 matched
+  professor entries in the 2026-11-17 build have one). An id in any other shape falls back to the profile page. New
+  ratings reach the site through the nightly RMP job. Same tab, like every other external link on the site.
+- **D17.2 Where it shows.** In the open professor panel next to the profile link, and in the row itself only for
+  professors on RMP with no ratings yet (606 entries), where the row has room because it has no numbers to show.
+- **D17.3 My courses.** My courses keeps no term or professor (D13.14), so "after the term ends" can't be known.
+  Completed courses link to their course page's professor list (`#professors`) with one line inviting a rating; AP
+  and in-progress courses don't.
+- **D17.4 AP year notes.** Each year file's top-level `notes` (AP-CREDIT.md, until now shown nowhere) are listed word
+  for word under the expected AP credit for the chosen year. The footer no longer paraphrases the elective-credit note.
+
+## RMP coverage and matching (2026-11-17, issues #8, #11, #13)
+
+- **D18.1 Who is looked up.** Everyone a course page shows, not only next term's teachers: next term's (most primary
+  sections first), then this term's, then past instructors (latest term taught, then students graded). Kim Whittlesey
+  taught MATH 221 in Fall 2026 but not Spring 2027, so she was never looked up and MATH 221 said "No RMP match" over
+  her 104 ratings (#8). Course pages show RMP for past instructors too; before, only current and next-term teachers
+  got it.
+- **D18.2 Cache.** An answer is asked again after 7 days when the run's 20-minute budget reaches it, and used for up to
+  90 days. Before, an answer older than 7 days that the budget didn't reach was dropped, so coverage stopped growing
+  once the lookups needed more than one night. If RMP stops answering mid-run, older answers are used for the rest of
+  the run; the status is "unavailable" only when nothing at all could be read.
+- **D18.3 Matching.** The department check passes if it fits any subject the professor teaches (it used the
+  alphabetically first). A nickname from a fixed list ("Bob" for Robert), a middle name RMP lists first ("Robert Lee
+  Deville" for Lee DeVille) or a one-letter spelling difference (Elisabeth/Elizabeth, RMP's "Micheal") counts only
+  with stronger evidence: a review for one of their subjects, or a department from the subject list. When the name
+  fits several people, a review for one of the professor's own courses decides; without one an initial alone is still
+  not guessed. A surname that fills RMP's 20 results ("Lee") is searched again with the first name. On the cached
+  answers, the 37 new matches with a loose name fit were checked by hand and are all the same person; the 2 matches
+  that changed both moved from an empty duplicate profile to the one with reviews.
+- **D18.4 A profile only shows on subjects it fits (#13).** Course Explorer prints "Anderson, J" for James Anderson
+  (Education, EPOL 552) and for a different J. Anderson who teaches MATH 221 and 231; both got one key, so MATH 221
+  showed his AFRO 310 and EPS 310 reviews. Export now shows a profile on a course page only when its department is
+  plausible for that subject or one of its reviews is for a course in it (`rmp.fits_subject`).
+- **D18.5 Reviews (#11).** The client keeps all 20 ratings a search returns (each still cut to 200 characters); a course
+  page gets 6 per professor, that course's first. Older ratings for a course aren't fetched: that would take a request
+  per professor and course.
+- **D18.6 Measured.** Re-running this step on the 2026-11-16 database with cached answers only (no new requests): 1,867
+  instructors matched instead of 1,263, no match lost; professor entries on course pages with RMP 4,475 → 7,834 of
+  25,775 (17% → 30%), entries with a review written for that course 739 → 2,169. The rest come as the nightly runs
+  reach names never searched before (about 4,600 surnames at roughly 1,000 a night).
+
+## Course reviews go to RMP (2026-11-17)
+
+- **D19.1 No GitHub route for reviews.** "Suggest a note" opened a GitHub issue, which most students can't or won't do.
+  The course page now asks students who took the course to rate their professor on Rate My Professors and pick the
+  course there; those reviews come back through the nightly RMP job (D18). The issue form and intake planned in #31
+  were dropped. `data/notes/` stays for notes a maintainer adds with a source.
+
+## Gen-ed finder reads the builder's times (2026-11-17, issue #30)
+
+- **D20.1 One set of times.** The gen-ed finder doesn't get its own time filters back (D14.5). It reads the schedule
+  builder's saved must-haves (start time, end time, days off) from browser storage and marks each course "Fits your
+  times", "Outside your times", "Only special sections" or "No open section". "Only courses that fit them" (`fit=1`)
+  hides the rest. The times are always the viewer's own, so a shared `fit=1` link filters by the reader's times, and
+  does nothing for a reader who hasn't set any. A builder open in another tab updates the finder as the times change.
+- **D20.2 Same answer as the builder.** "Fits" means the builder would keep at least one way to take the course under
+  those must-haves, so a student who adds it finds a schedule. `opts` in `geneds.json` is now
+  `[earliest start, latest end, day mask, flags]` for each distinct bundle, counting timed meetings only (as `hardOk`
+  does). The flags say whether a section was Closed (for "Open sections only") and whether the builder makes the
+  bundle by default or only with special sections allowed. Blocked times and the lunch break aren't checked: they need
+  every meeting, and lunch depends on the other courses.
+- **D20.3 The Python bundle rule caught up.** `export.bundles` now drops bundles whose meetings clash with each other
+  (first- and second-half sections never clash) and can leave special sections out, as `buildBundles` does.
+  `fixtures/bundle-parity.json` has a case for each, so the parity test (D13.22) covers them.
+- **D20.4 Hand-off.** Courses still go to the builder one by one with "Add". Once any are in the schedule, a "Plan
+  them in the schedule builder" link above the results opens the builder, which already has the courses and the
+  must-haves. Sending the whole filtered list wouldn't work, because the builder schedules every course in its list
+  together.

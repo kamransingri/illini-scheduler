@@ -1,5 +1,6 @@
 // Builder rules/weights <-> URL params and localStorage, so share links reproduce the same schedules.
 // Only what differs from DEFAULT_PREFS is written. Links from before v0.4.0 (nf=1, 6-digit weights) still open.
+import { fmtTime } from "./format";
 import { DEFAULT_PREFS, type Prefs } from "./schedule";
 
 const KEY = "illini-scheduler:prefs:v1";
@@ -58,6 +59,32 @@ export function savePrefs(p: Prefs): void {
   } catch {
     /* ignore */
   }
+}
+
+/** Calls `fn` when the saved rules change in another tab (the schedule builder open next to the gen-ed finder). */
+export function onPrefsChange(fn: () => void): () => void {
+  const h = (e: StorageEvent) => {
+    if (e.key === KEY || e.key === null) fn();
+  };
+  window.addEventListener("storage", h);
+  return () => window.removeEventListener("storage", h);
+}
+
+const DAY_NAMES: [number, string][] = [
+  [1, "Mon"],
+  [2, "Tue"],
+  [4, "Wed"],
+  [8, "Thu"],
+  [16, "Fri"],
+];
+
+/** The start time, end time and days off in plain words: "start 10:00am or later", "done by 5:00pm", "Mon, Fri off". */
+export function timeRulesSummary(p: Pick<Prefs, "earliest" | "latest" | "daysOff">): string[] {
+  const out: string[] = [];
+  if (p.earliest !== null) out.push(`start ${fmtTime(p.earliest)} or later`);
+  if (p.latest !== null) out.push(`done by ${fmtTime(p.latest)}`);
+  if (p.daysOff) out.push(`${DAY_NAMES.filter(([b]) => p.daysOff & b).map(([, n]) => n).join(", ")} off`);
+  return out;
 }
 
 export function loadPrefs(): Prefs | null {

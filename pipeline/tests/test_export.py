@@ -20,7 +20,16 @@ def test_bundles_respect_groups():
             _sec("3", "primary", "B", 10, 700, 750), _sec("4", "DIS", "B", 16, 480, 530)]
     bs = bundles(secs)
     assert sorted(tuple(s["crn"] for s in b) for b in bs) == [("1", "2"), ("3", "4")]
-    assert bundle_opts(bs) == [[480, 26, 0], [540, 14, 0]]
+    # [earliest start, latest end, days, flags]; 4 = the builder makes it by default, 2 = with special sections too
+    assert bundle_opts(secs) == [[480, 750, 26, 6], [540, 650, 14, 6]]
+
+
+def test_bundle_opts_flags_closed_special_and_untimed_sections():
+    """What the gen-ed finder's "fits your times" check needs to agree with the schedule builder."""
+    secs = [{**_sec("1", "primary", "A", 10, 600, 650), "status": "Closed"},
+            {**_sec("2", "primary", "B", 16, 480, 530), "special": "Unusual section code"},
+            {**_sec("3", "primary", "C", 0, None, None), "status": "Open"}]
+    assert bundle_opts(secs) == [[-1, -1, 0, 6], [480, 530, 16, 2], [600, 650, 10, 7]]
 
 
 def test_export_end_to_end(tmp_path):
@@ -86,5 +95,33 @@ def test_bundles_match_the_shared_parity_cases():
     """The web app has its own copy of this rule (web/lib/schedule.ts); both check fixtures/bundle-parity.json."""
     cases = json.loads((FIXTURES / "bundle-parity.json").read_text(encoding="utf-8"))["cases"]
     for case in cases:
-        got = sorted(sorted(s["crn"] for s in b) for b in bundles(case["sections"]))
+        got = sorted(sorted(s["crn"] for s in b) for b in bundles(case["sections"], case.get("include_special", True)))
         assert got == sorted(sorted(b) for b in case["bundles"]), case["name"]
+
+
+def test_rmp_on_course_pages(tmp_path):
+    """Course pages show RMP for past instructors too, this course's reviews first (6 at most), and never a profile
+    that doesn't fit the course's subject (#13: an Education professor's reviews on MATH 221)."""
+    conn = db.connect(tmp_path / "t.db")
+    for term in ("2026-fa", "2027-sp"):
+        c, s = course_explorer.parse_catalog_csv(FIXTURES / "course-catalog" / f"{term}.csv")
+        course_explorer.store(conn, term, c, s, "wade-course-catalog", "2026-10-30T00:00:00-05:00")
+    df = gpa.load_gpa_csv(FIXTURES / "gpa" / "uiuc-gpa-dataset.csv")
+    res = gpa.compute(df)
+    gpa.store(conn, res)
+    instructors.run(conn, df, False, tmp_path / "x.csv", tmp_path / "u.csv", tmp_path / "rmp")
+    reviews = ([{"text": f"220 #{i}", "course": "MATH220", "date": f"2026-0{i + 1}-01"} for i in range(5)]
+               + [{"text": f"221 #{i}", "course": "MATH 221", "date": f"2025-0{i + 1}-01"} for i in range(3)])
+    rows = [("209729", "Kim", "Whittlesey", "Mathematics", reviews, "whittlesey|kim"),
+            ("475290", "James", "Anderson", "Education", [{"text": "x", "course": "AFRO310", "date": ""}],
+             "petrickova|sarka")]
+    for rid, first, last, dept, revs, key in rows:
+        conn.execute("INSERT INTO rmp VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+                     (rid, first, last, dept, 4.5, 3.0, 90.0, 104, "[]", json.dumps(revs), "2026-11-16T00:00:00+00:00"))
+        conn.execute("UPDATE instructors SET rmp_id=? WHERE instructor_key=?", (rid, key))
+    export.run(conn, tmp_path / "out")
+    math = json.loads((tmp_path / "out" / "course" / "MATH" / "221.json").read_text())
+    kim = math["instructors"]["whittlesey|kim"]
+    assert not kim["teaching"]  # grade history only: before, past instructors got no RMP at all
+    assert [r["text"] for r in kim["rmp"]["reviews"]] == ["221 #0", "221 #1", "221 #2", "220 #0", "220 #1", "220 #2"]
+    assert math["instructors"]["petrickova|sarka"]["rmp"] is None
