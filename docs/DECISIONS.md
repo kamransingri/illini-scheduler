@@ -673,3 +673,28 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D21.2 No waitlist numbers.** The site knows only open or closed (LIMITATIONS "Open or closed only"), so the list
   says that and links to Self-Service. It links to Just opened with `?mine=1`, which turns on "Only my schedule's
   courses". Watching a section so the live job checks it more often is #15.
+
+## Watching sections (2026-11-18, issue #15)
+
+- **D22.1 Two halves, no backend.** #15 offered (a) a watch list people add to by pull request, (b) a small endpoint,
+  or (c) watching in the browser only. This does (c) for students and the job's half of (a) for maintainers; (b)
+  waits for the push backend (#16). D19.1 dropped GitHub routes for students, so the site doesn't send students to
+  open issues or pull requests to have a course watched.
+- **D22.2 In the browser.** "Watch" on each section row of a course page (current and next term) and in the schedule
+  builder's Sections to watch. The list (`web/lib/watch.ts`) is kept like the cart and My courses: localStorage, and
+  a share link `/opened/?w=2027-sp.CS124.AL1.31152,...`. Each entry stores term, course, section code and CRN, so Just
+  opened can show it without downloading the 1.1 MB CRN index. Up to 40 sections, which keeps a link around 1 KB. A
+  shared link adds to the reader's list only when they press "Watch them too" (as D9.2: a link never replaces a list).
+- **D22.3 On Just opened.** "Sections you watch" lists each watched section with its latest status and when it was
+  checked: the newer of the course page's daily status and the seat feed, moved forward to the time the live job last
+  re-read the course when it logged no change there. `live.json` now carries `read` (when each course was last
+  re-read in the 48-hour window, about 16 KB for 400 courses, on a 175 KB file) and `watched` for that. "Only
+  sections I watch" (`?watch=1`) filters the changes, so "Notify me" can cover only those, and watched rows in the
+  list say "Watching". The live-status line said "N courses watched" for the courses re-read; it now says "re-checked"
+  so "watch" means one thing.
+- **D22.4 In the job.** `data/watch.txt` lists courses or CRNs (a CRN stands for its course, since one page read has
+  every section), optionally with a term. They're re-read first on every run, busy or not, up to 30 per term
+  (`MAX_WATCHED`); the log names entries left out or not offered. They come on top of the 60 busiest, so a full list
+  stretches the rotation of the other 340 from about 20 to about 30 minutes (three runs of ~240), which the tests
+  check. For Spring 2027, 1,144 courses qualify as busy and the job considers 400, so the list is for quiet courses
+  that matter, not a way to cover the long tail.

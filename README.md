@@ -83,7 +83,7 @@ Course Explorer ───> pipeline/live_seats.py every ~10 min ─> live.json o
 | `PAGES_LIMIT=50 make build` | Quick build with only 50 course pages (plus the reference courses) |
 | `make e2e` | Playwright against the static build (`npx playwright test --workers=1` on a laptop) |
 | `python -m pipeline.availability --minutes 30` | The daily seat crawl, by hand |
-| `python -m pipeline.live_seats --state s.json --out out/ --minutes 2` | One round of the live seat check, by hand |
+| `python -m pipeline.live_seats --state s.json --out out/ --minutes 2` | One round of the live seat check, by hand (reads the watch list, `data/watch.txt`) |
 | `python -m pipeline.degrees` | Validate `data/degrees/*.yaml` and list course codes the loaded data doesn't know |
 | `python -m pipeline.catalog_import` | Import every undergraduate program's requirements from the Academic Catalog |
 | `python -m pipeline.ap_credit` | Validate `data/ap-credit/*.yaml` (CITL's AP credit tables) and list credited codes the loaded data doesn't know |
@@ -96,7 +96,7 @@ Course Explorer ───> pipeline/live_seats.py every ~10 min ─> live.json o
 | --- | --- | --- |
 | `pages.yml` | Every push to `main`, nightly 09:00 UTC, manual | `make data`, lint, type checks, unit tests, static build with the right `BASE_PATH`, Playwright against the build, then deploys `web/out`. Commits the refreshed data summaries only if everything passed |
 | `availability.yml` | Daily 04:17 UTC | Reads every course page of the next and current term (~1 request per second, oldest first) for seat status, section rows and final exams; commits `data/availability/*.json` for the nightly build |
-| `live-seats.yml` | Every 10 minutes (every 30 overnight) | Re-reads the busiest next-term courses for ~6 minutes and force-pushes `live.json` to the single-commit `live-seats` branch; the Just opened page and the home page poll it |
+| `live-seats.yml` | Every 10 minutes (every 30 overnight) | Re-reads the busiest next-term courses and those on `data/watch.txt` for ~6 minutes and force-pushes `live.json` to the single-commit `live-seats` branch; the Just opened page and the home page poll it |
 | `ci.yml` | Every push and pull request | Lint and unit tests (`test`); version files, changelog and branch name (`versions`) |
 | `release.yml` | A new version reaching `main` | Tags that commit `vX.Y.Z` and publishes the GitHub release from CHANGELOG.md |
 | `branch-cleanup.yml` | A pull request merged, manual | Deletes the merged branch; a manual run deletes older merged branches |

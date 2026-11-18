@@ -5,11 +5,13 @@ import { onCartChange, readCart } from "@/lib/cart";
 import { courseHref, fmtDate, SELF_SERVICE_URL, seatVerb, termLabel } from "@/lib/format";
 import { currentStatus, fmtSince, POLL_MS, useNow, useSeatFeed } from "@/lib/live";
 import type { SeatEvent } from "@/lib/types";
+import { decodeWatch, isWatched, MAX_WATCH, mergeWatch, onWatchChange, readWatch, watchKey, writeWatch, type Watched } from "@/lib/watch";
 import AddToCart from "./AddToCart";
 import CopyButton from "./CopyButton";
-import { SeatStatus, seatKind } from "./ui/Badge";
+import { Badge, SeatStatus, seatKind } from "./ui/Badge";
 import Icon from "./ui/Icon";
 import Info from "./ui/Info";
+import WatchedSections from "./WatchedSections";
 
 const evKey = (e: SeatEvent) => e.term + e.crn + e.at;
 
@@ -24,7 +26,7 @@ export function Freshness({ isLive, updated, checked, polledAt, now, dailyAt }: 
         </span>
         <span>
           Busy courses re-checked every ~10 minutes. Last update {fmtSince(updated, now)}
-          {checked ? `, ${checked.toLocaleString()} courses watched` : ""}.
+          {checked ? `, ${checked.toLocaleString()} courses re-checked in the last two days` : ""}.
         </span>
         {polledAt && <span className="text-sm text-muted">This page refreshes itself every {POLL_MS / 60000} minutes.</span>}
       </span>
@@ -48,18 +50,34 @@ export default function JustOpened({ nextTerm, currentTerm, liveUrl, dailyAt }: 
   const [all, setAll] = useState(false);
   const [mine, setMine] = useState(false);
   const [cart, setCart] = useState<string[]>([]);
+  const [onlyWatched, setOnlyWatched] = useState(false);
+  const [watched, setWatched] = useState<Watched[]>([]);
+  const [shared, setShared] = useState<Watched[]>([]);
   const [notify, setNotify] = useState(false);
   const [notifyErr, setNotifyErr] = useState<string | null>(null);
   const known = useRef<Set<string> | null>(null);
   const [fresh, setFresh] = useState<Set<string>>(new Set());
 
   useEffect(() => {
-    // ?mine=1 (the schedule builder's "Sections to watch") starts with only the schedule's courses
-    if (new URLSearchParams(window.location.search).get("mine") === "1") setMine(true);
+    // ?mine=1 (the schedule builder's "Sections to watch") starts with only the schedule's courses; ?watch=1 with only
+    // the watched sections; ?w= is someone's shared watch list
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("mine") === "1") setMine(true);
+    if (params.get("watch") === "1") setOnlyWatched(true);
+    setShared(decodeWatch(params.get("w")));
     const sync = () => setCart(readCart().map((c) => `${c.s} ${c.n}`));
+    const syncWatch = () => setWatched(readWatch());
     sync();
-    return onCartChange(sync);
+    syncWatch();
+    const offCart = onCartChange(sync);
+    const offWatch = onWatchChange(syncWatch);
+    return () => {
+      offCart();
+      offWatch();
+    };
   }, []);
+  const watchSet = useMemo(() => new Set(watched.map((w) => watchKey(w.t, w.crn))), [watched]);
+  const newShared = shared.filter((w) => !isWatched(watched, w.t, w.crn));
 
   const rows = useMemo(() => {
     const subj = subject.trim().toUpperCase().replace(/\s+/g, " ");
@@ -68,9 +86,10 @@ export default function JustOpened({ nextTerm, currentTerm, liveUrl, dailyAt }: 
         e.term === term &&
         (all || seatVerb(e.old, e.new) === "opened") &&
         (!subj || `${e.s} ${e.n}`.startsWith(subj) || e.s.startsWith(subj)) &&
-        (!mine || cart.includes(`${e.s} ${e.n}`)),
+        (!mine || cart.includes(`${e.s} ${e.n}`)) &&
+        (!onlyWatched || watchSet.has(watchKey(e.term, e.crn))),
     );
-  }, [feed.events, subject, term, all, mine, cart]);
+  }, [feed.events, subject, term, all, mine, cart, onlyWatched, watchSet]);
   const status = useMemo(() => currentStatus(feed.events ?? [], feed.live), [feed.events, feed.live]);
 
   // Openings that arrive while the page is open: mark them "New", count them in the tab title, and notify if asked.
@@ -120,6 +139,30 @@ export default function JustOpened({ nextTerm, currentTerm, liveUrl, dailyAt }: 
       <div className="mb-4 rounded bg-panel p-3">
         <Freshness isLive={feed.isLive} updated={feed.live?.updated} checked={feed.live?.checked[term]} polledAt={feed.polledAt} now={now} dailyAt={dailyAt} />
       </div>
+      {newShared.length > 0 && (
+        <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 rounded border border-action bg-action-tint p-3" role="status" data-testid="shared-watch">
+          <span>
+            This link shares {newShared.length === 1 ? "a watched section" : `${newShared.length} watched sections`}:{" "}
+            {newShared
+              .slice(0, 6)
+              .map((w) => `${w.s} ${w.n} ${w.code}`)
+              .join(", ")}
+            {newShared.length > 6 && ` and ${newShared.length - 6} more`}.
+          </span>
+          {watched.length < MAX_WATCH ? (
+            <button
+              type="button"
+              className="rounded border border-action bg-action px-3 font-semibold leading-9 text-white hover:bg-action-dark"
+              onClick={() => writeWatch(mergeWatch(watched, shared))}
+            >
+              Watch {newShared.length === 1 ? "it" : "them"} too
+            </button>
+          ) : (
+            <span className="text-muted">Your list is full ({MAX_WATCH} sections).</span>
+          )}
+        </div>
+      )}
+      {watched.length > 0 && <WatchedSections items={watched} events={feed.events} live={feed.live} now={now} nextTerm={nextTerm} />}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-3 border-b border-line pb-4">
         <select className="rounded border border-line bg-white px-2 py-1.5" value={term} onChange={(e) => setTerm(e.target.value)} aria-label="Term">
           {[nextTerm, currentTerm]
@@ -141,6 +184,12 @@ export default function JustOpened({ nextTerm, currentTerm, liveUrl, dailyAt }: 
           <input type="checkbox" className="size-4 accent-action" checked={mine} onChange={(e) => setMine(e.target.checked)} />
           Only my schedule&apos;s courses{cart.length ? ` (${cart.length})` : ""}
         </label>
+        {(watched.length > 0 || onlyWatched) && (
+          <label className="inline-flex items-center gap-2">
+            <input type="checkbox" className="size-4 accent-action" checked={onlyWatched} onChange={(e) => setOnlyWatched(e.target.checked)} />
+            Only sections I watch ({watched.length})
+          </label>
+        )}
         <label className="inline-flex items-center gap-2">
           <input type="checkbox" className="size-4 accent-action" checked={all} onChange={(e) => setAll(e.target.checked)} />
           Show closings too
@@ -168,7 +217,9 @@ export default function JustOpened({ nextTerm, currentTerm, liveUrl, dailyAt }: 
       {feed.events && !rows.length && (
         <p className="mt-4 text-muted">
           Nothing {all ? "changed" : "opened"} recently{subject ? ` in ${subject.toUpperCase()}` : ""}
-          {mine ? " in your schedule's courses" : ""}.
+          {mine ? " in your schedule's courses" : ""}
+          {onlyWatched ? " in the sections you watch" : ""}.
+          {onlyWatched && !watched.length && " You aren't watching any sections yet: press Watch next to a section on its course page, or under Sections to watch in the schedule builder."}
         </p>
       )}
       <ul data-testid="opened-list">
@@ -190,6 +241,11 @@ export default function JustOpened({ nextTerm, currentTerm, liveUrl, dailyAt }: 
                   <span className="group-hover:underline">{e.t}</span>
                 </Link>
                 {isNew && <span className="ml-2 rounded bg-navy px-1.5 text-sm font-semibold leading-6 text-white">New</span>}
+                {watchSet.has(watchKey(e.term, e.crn)) && (
+                  <Badge icon="bell" className="ml-2">
+                    Watching
+                  </Badge>
+                )}
               </div>
               <span className="flex flex-wrap items-center gap-1.5">
                 <span className="font-semibold">

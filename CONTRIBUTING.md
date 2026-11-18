@@ -19,7 +19,7 @@ Work branch types:
 | `fix/` | A bug: `fix/gened-chip-wrap` |
 | `docs/` | Docs only |
 | `chore/` | Tooling, CI, dependencies, refactors nobody sees |
-| `data/` | Hand-kept data: `data/degrees/*.yaml`, `data/name_overrides.csv`, `data/notes/` |
+| `data/` | Hand-kept data: `data/degrees/*.yaml`, `data/name_overrides.csv`, `data/notes/`, `data/watch.txt` |
 | `hotfix/` | An urgent fix to the live site, released as a patch straight away |
 | `release/` | Only a version bump, when it isn't part of a feature branch |
 
