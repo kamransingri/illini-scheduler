@@ -55,9 +55,12 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
 
 - **Through Summer 2026.** "Recent" GPA means Fall 2022 to Spring 2026. A new professor or new course has no grade
   history.
-- **Name matching.** Course Explorer and the GPA dataset write names differently ("Gonzalez, D"). When a match is
-  ambiguous the site leaves it unmatched rather than guess: 3,863 names are logged in `data/unmatched.csv`, mostly
-  TAs. When last measured, about 80% of lecture instructors were matched (CS 83%, MATH 86%, STAT 79%; [#12](https://github.com/kamransingri/illini-scheduler/issues/12)).
+- **Name matching.** Course Explorer writes only a last name and an initial ("Gonzalez, D"), so the site works out who
+  that is from the GPA dataset: the course's past teachers, the catalog's cross-listed twins and sections that meet
+  together. When that stays ambiguous the name is left unmatched rather than guessed, and logged in
+  `data/unmatched.csv` (mostly TAs). In November 2026, 86% of CS, 91% of MATH and 87% of STAT lecture instructors were
+  matched (`python -m pipeline.names --report`, [#12](https://github.com/kamransingri/illini-scheduler/issues/12)).
+  Most of the rest have no grade history at all, such as new instructors and seminars.
 
 ## Rate My Professors
 

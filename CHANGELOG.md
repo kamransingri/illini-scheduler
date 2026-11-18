@@ -10,6 +10,17 @@ history).
 
 ## [Unreleased]
 
+## [0.12.1] - 2026-11-18
+
+### Fixed
+
+- Course pages: more professors show their grade history and ratings. A course listed under two subjects (MATH 464
+  is STAT 410) or meeting with another (CS 498 and NPRE 498) now finds its professor from either, and a name is
+  matched using every course it teaches, not only the first. Lecture instructors matched: CS 86%, MATH 91%, STAT 87%,
+  up from 83%, 86% and 79% (#12).
+- Two professors who share a Course Explorer name in one subject, such as "Li, H" in History, are no longer shown as
+  one person.
+
 ## [0.12.0] - 2026-11-18
 
 ### Added
@@ -224,7 +235,8 @@ history).
 - A partial Rate My Professors error no longer stops `make data`.
 - RSS feeds are written as UTF-8.
 
-[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.12.0...HEAD
+[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.12.1...HEAD
+[0.12.1]: https://github.com/kamransingri/illini-scheduler/compare/v0.12.0...v0.12.1
 [0.12.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.9.0...v0.10.0

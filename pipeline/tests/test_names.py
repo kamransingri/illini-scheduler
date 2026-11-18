@@ -1,6 +1,15 @@
 import pytest
 
-from pipeline.names import InstructorMatcher, compatible, instructor_key, parse_name, term_order
+from pipeline.names import (
+    InstructorMatcher,
+    alias_key,
+    compatible,
+    cross_listings,
+    instructor_key,
+    load_overrides,
+    parse_name,
+    term_order,
+)
 
 
 def k(raw):
@@ -114,3 +123,85 @@ def test_write_unmatched(tmp_path):
     m.match("Lee, S", "STAT", "410", "2027-sp")
     m.match("Lee, S", "STAT", "410", "2027-sp")
     assert m.write_unmatched(tmp_path / "u.csv") == 1
+
+
+# ---- #12: cross-listings, every course of a name, two people under one name -------------------------------------
+
+def test_cross_listings_from_the_catalog():
+    x = cross_listings([("MATH", "464", "Probability theory. Same as STAT 410. 4 hours."),
+                        ("ASRM", "401", "Same as STAT 408 and FIN 408."), ("CS", "124", "No twin.")])
+    assert x[("MATH", "464")] == [("STAT", "410")] and x[("STAT", "410")] == [("MATH", "464")]
+    assert x[("ASRM", "401")] == [("FIN", "408"), ("STAT", "408")] and ("CS", "124") not in x
+
+
+def _cross_matcher():
+    m = InstructorMatcher()
+    m.add("Stepanov, Alexei G", "STAT", "410", "2011-su")  # the same person spelled two ways over the years
+    m.add("Stepanov, Alexey G", "STAT", "410", "2026-sp")
+    m.add("Stepanov, Anna", "CHEM", "102", "2025-fa")
+    return m
+
+
+def test_a_cross_listed_twin_picks_who_taught_it_most_recently():
+    m = _cross_matcher()
+    assert m.match("Stepanov, A", "MATH", "464")[1] == "unmatched"  # three Stepanov, A across subjects
+    assert m.match("Stepanov, A", "MATH", "464", cross=[("STAT", "410")]) == ("stepanov|alexey", "cross-listed")
+    assert m.match("Stepanov, A", "MATH", "465", cross=[("STAT", "999")])[1] == "unmatched"
+
+
+def test_every_course_of_a_name_counts_not_only_the_first():
+    m = InstructorMatcher()
+    m.add("Wang, Shiyu", "STAT", "200", "2014-fa")
+    m.add("Wang, Shulei", "STAT", "428", "2026-sp")
+    # STAT 578: neither taught it; STAT 428: only Shulei did, so both courses are Shulei's
+    got = m.match_courses("Wang, S", "STAT", [("578", "2026-fa"), ("428", "2027-sp")])
+    assert got == {"578": ("wang|shulei", "recent-course"), "428": ("wang|shulei", "recent-course")}
+    assert m.unmatched == []
+
+
+def test_one_name_two_people_links_each_course_on_its_own():
+    m = InstructorMatcher()
+    m.add("Li, Hanping", "HIST", "100", "2022-fa")
+    m.add("Li, Hanping", "HIST", "120", "2021-fa")
+    m.add("Li, Haiyi", "HIST", "120", "2025-sp")
+    got = m.match_courses("Li, H", "HIST", [("120", "2027-sp"), ("100", "2026-fa"), ("495", "2027-sp")])
+    assert got["120"] == ("li|haiyi", "recent-course") and got["100"] == ("li|hanping", "recent-course")
+    assert got["495"] == (None, "ambiguous")  # can't tell which of the two
+    assert [u["number"] for u in m.unmatched] == ["495"] and "different people" in m.unmatched[0]["reason"]
+
+
+def test_course_only_evidence_does_not_spread_to_the_names_other_courses():
+    m = InstructorMatcher()
+    m.add("Williams, Craig A", "CLCV", "240", "2025-sp")
+    m.add("Williams, Cynthia A", "LAW", "603", "2025-sp")
+    got = m.match_courses("Williams, C", "GWS", [("240", "2027-sp"), ("202", "2027-sp")],
+                          {("GWS", "240"): [("CLCV", "240")]})
+    assert got["240"] == ("williams|craig", "cross-listed")
+    assert got["202"] == (None, "unmatched")  # GWS 202 says nothing about who teaches it
+
+
+def test_unlog_and_alias_lookup():
+    m = InstructorMatcher()
+    m.match("Nobody, Q", "CS", "100", "2027-sp")
+    m.unlog("Nobody, Q", "CS", "100")
+    assert m.unmatched == []
+    aliases = {("Li, H", "HIST", "120"): "li|haiyi", ("Li, H", "HIST", ""): "li|hanping"}
+    assert alias_key(aliases, "Li, H", "HIST", "120") == "li|haiyi"
+    assert alias_key(aliases, "Li, H", "HIST", "100") == "li|hanping"
+    assert alias_key(aliases, "Li, H", "EALC", "120") is None
+
+
+def test_overrides_must_cite_a_source(tmp_path):
+    p = tmp_path / "o.csv"
+    p.write_text('subject,raw_name,instructor_key,source\n# comment,,,\n'
+                 'STAT,"Lee, S",lee|sara,"dept page (read 2026-11-18)"\n', encoding="utf-8")
+    assert load_overrides(p) == {("STAT", "Lee, S"): "lee|sara"}
+    p.write_text('subject,raw_name,instructor_key,source\nSTAT,"Lee, S",lee|sara,\n', encoding="utf-8")
+    with pytest.raises(ValueError, match="without a source: STAT Lee, S"):
+        load_overrides(p)
+
+
+def test_the_real_overrides_file_loads():
+    from pipeline.config import DATA
+
+    load_overrides(DATA / "name_overrides.csv")
