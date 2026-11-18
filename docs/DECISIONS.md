@@ -727,3 +727,20 @@ Every judgment call made during the autonomous build, newest phase last.
   stretches the rotation of the other 340 from about 20 to about 30 minutes (three runs of ~240), which the tests
   check. For Spring 2027, 1,144 courses qualify as busy and the job considers 400, so the list is for quiet courses
   that matter, not a way to cover the long tail.
+
+## New-term check (2026-11-18, issue #33)
+
+- **D24.1 Published, not listed.** `pipeline/term_watch.py` reads Course Explorer's schedule index for the two newest
+  calendar years, then the page of each term after `NEXT_TERM`. The index lists terms long before they exist: on
+  2026-11-18 it already had Summer and Fall 2027, whose pages were 404, while Spring 2027's page listed 188 subjects.
+  So a term counts only when its page lists at least one subject. At most five requests a week, with the project's
+  User-Agent and patient retries on HTTP 202.
+- **D24.2 An issue, not an automatic bump.** `term-watch.yml` runs on Mondays and opens one issue per new term
+  ("Course Explorer lists a new term: Fall 2027") with the rollover checklist: `fetch.py` terms, the Registrar's dates
+  in `web/lib/terms.ts`, the GPA dataset, the AP table, the catalog year, `data/watch.txt` and `data/renumbered.csv`,
+  and a release. The rollover touches data checked by hand, so a person does it. An open issue with the same title
+  stops a duplicate; a summer term gets its own issue saying there's nothing to roll over yet (#35), and the fall term
+  after it still gets one.
+- **D24.3 Not done here.** The Fall 2027 bump itself waits for March 2027, so #33 stays open. Repo size: `.git` is
+  well under the ~200 MB the issue set as the point to move `data/availability/*.json` to a separate branch.
+
