@@ -909,3 +909,27 @@ Every judgment call made during the autonomous build, newest phase last.
   program pages; GEOG is now GGIS). None is an importer typo: codes come from the catalog's own course links. The
   count therefore stays about the same; they're shown greyed out.
 
+
+## r/UIUC signal, built but not switched on (2026-11-18, issue #14)
+
+- **D31.1 Blocked on Reddit, not on code.** Reddit's Data API now issues OAuth tokens only to apps it approves under
+  the Responsible Builder Policy (late 2025), and its Data API Terms limit use to the approved use case. Only the
+  repository owner can apply. So `pipeline/reddit.py` and a weekly workflow are built and tested offline, and the
+  workflow does nothing until the secrets exist (docs/REDDIT.md has the application text). No other source:
+  unauthenticated requests and third-party copies of Reddit aren't allowed by those terms.
+- **D31.2 Narrow attribution.** A course needs a code, a one-course nickname from the site's own `ALIASES`
+  (web/lib/search.ts, read by the pipeline so the two never disagree), or a bare number in a one-subject thread. A
+  professor needs that course: only its teachers' surnames are looked for, short surnames only when capitalized, and
+  a shared surname matches nobody. Missing a comment costs less than pinning it on the wrong professor.
+- **D31.3 No quote, no number.** Claude Haiku 5.5 through Message Batches (half price, no rush) with a JSON schema;
+  every field needs a quote found word for word in the comment, or it's dropped (D5.1). The comment is passed as
+  data, and the system prompt says to ignore instructions in it.
+- **D31.4 Counting.** One comment per author per course per thread; a 2-year half-life and a small upvote weight;
+  shrinkage toward the course mean with k = 5 comments (the RMP prior, D13.18, uses 10 ratings; Reddit comments are
+  fewer and longer); a rating from 3 comments up.
+- **D31.5 No usernames, deletions honoured.** Authors become a salted hash before anything is written (needed only to
+  count one author once); every run asks Reddit which cached items were deleted or removed and drops them; nothing
+  raw is committed or published.
+- **D31.6 Nothing on the site yet.** The course-page column comes after the labelled check (about 200 comments from
+  CS 124, MATH 221, STAT 107 and RHET 105: field agreement, and correlation with RMP and GPA), in its own pull request,
+  because the check decides which fields are good enough to show. Issue #14 stays open until then.

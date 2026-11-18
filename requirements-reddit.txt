@@ -1,0 +1,2 @@
+# Only for .github/workflows/reddit.yml (pipeline/reddit.py extract): the Claude API SDK. Not needed to build the site.
+anthropic>=1.13

@@ -90,6 +90,7 @@ Course Explorer ───> pipeline/live_seats.py every ~10 min ─> live.json o
 | `python -m pipeline.catalog_import` | Import every undergraduate program's requirements from the Academic Catalog |
 | `python -m pipeline.ap_credit` | Validate `data/ap-credit/*.yaml` and `data/ib-credit/*.yaml` (CITL's AP and IB credit tables) and list credited codes the loaded data doesn't know |
 | `python -m pipeline.summer` | What the Summer courses page would show from the loaded data |
+| `python -m pipeline.reddit collect\|extract\|aggregate\|sample\|agreement\|status` | The r/UIUC signal (#14), not switched on yet: needs Reddit API access ([docs/REDDIT.md](docs/REDDIT.md)) |
 | `python -m pipeline.names --report [--subjects CS,MATH,STAT]` | How many of next term's instructors link to their grade history, per subject, and the lecture names that don't |
 | `python -m pipeline.renumbered [--suggest]` | Check `data/renumbered.csv` (old course number → new), or list candidate links from Course Explorer text to review |
 | `make version` | Check that the version files agree and CHANGELOG.md covers the version |
