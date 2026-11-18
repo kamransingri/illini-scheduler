@@ -3,7 +3,8 @@ import { Source_Sans_3 } from "next/font/google";
 import Link from "next/link";
 import Logo from "@/components/Logo";
 import SiteNav from "@/components/SiteNav";
-import { getMeta } from "@/lib/data";
+import { getReleases } from "@/lib/data";
+import { fmtDate } from "@/lib/format";
 import { NAV } from "@/lib/nav";
 import pkg from "../package.json";
 import "./globals.css";
@@ -20,7 +21,10 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const repo = getMeta()?.repo_url;
+  // The footer names the live version and links the ones before it to the Versions page (CHANGELOG.md).
+  const released = getReleases().filter((r) => r.version !== "Unreleased");
+  const current = released.find((r) => r.version === pkg.version);
+  const earlier = released.filter((r) => r.version !== pkg.version && !r.version.includes("-")).slice(0, 3);
   return (
     <html lang="en" className={sourceSans.variable}>
       <body className="flex min-h-screen flex-col font-sans antialiased">
@@ -39,17 +43,33 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 Unofficial and not affiliated with the University of Illinois. Data comes from public sources and can be out of date: confirm sections,
                 seats and restrictions in Self-Service before registering.
               </p>
-              <p className="mt-3" data-testid="site-version">
-                Version {pkg.version}
-                {repo && (
-                  <>
-                    .{" "}
-                    <a className="underline hover:text-orange" href={`${repo}/releases/tag/v${pkg.version}`}>
-                      What&apos;s new
-                    </a>
-                  </>
-                )}
-              </p>
+              <div className="mt-3" data-testid="site-version">
+                <p>
+                  <Link className="font-semibold underline-offset-2 hover:text-orange hover:underline" href={`/versions/#v${pkg.version}`}>
+                    Version {pkg.version}
+                  </Link>
+                  {current?.date && <>, {fmtDate(current.date)}</>}
+                </p>
+                <p>
+                  {earlier.length > 0 && (
+                    <>
+                      Earlier:{" "}
+                      {earlier.map((r, i) => (
+                        <span key={r.version}>
+                          {i > 0 && ", "}
+                          <Link className="underline underline-offset-2 hover:text-orange" href={`/versions/#v${r.version}`}>
+                            {r.version}
+                          </Link>
+                        </span>
+                      ))}
+                      .{" "}
+                    </>
+                  )}
+                  <Link className="underline underline-offset-2 hover:text-orange" href="/versions/">
+                    All versions
+                  </Link>
+                </p>
+              </div>
             </div>
             <nav aria-label="Footer">
               <p className="font-semibold">Pages</p>
