@@ -176,6 +176,12 @@ def compute(df: pd.DataFrame, window_start: str = WINDOW_START) -> GpaResult:
     return GpaResult(courses, cterms, instructors, sorted(recent, key=term_order), (all_terms[0], all_terms[-1]))
 
 
+def matcher_frame(as_taught: pd.DataFrame, renumbered: pd.DataFrame) -> pd.DataFrame:
+    """GPA rows for matching names: both under the course number they were taught as and under the renumbered one.
+    Kyu Jung Kim's NPRE 470 grades count as ES 470 since the renumbering (#29), but he still taught in NPRE."""
+    return pd.concat([as_taught, renumbered], ignore_index=True)
+
+
 def build_matcher(df: pd.DataFrame, overrides: dict[tuple[str, str], str] | None = None) -> InstructorMatcher:
     m = InstructorMatcher(overrides)
     for subj, num, term, name in df[["Subject", "Number", "YearTerm", "Primary Instructor"]].itertuples(index=False):

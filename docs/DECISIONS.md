@@ -831,3 +831,36 @@ Every judgment call made during the autonomous build, newest phase last.
   own comment), so it isn't listed.
 - **D28.5 Six pages in the header.** The sixth link didn't fit a 1024px header, so between 1024 and 1279px the header
   links show without icons and with less padding.
+
+## Instructor name matching (2026-11-18, issue #12)
+
+- **D29.1 Measured first.** `python -m pipeline.names --report [--subjects CS,MATH,STAT]` prints, per subject, how
+  many of next term's lecture (primary section) names link to a GPA-dataset identity, and lists the unlinked ones with
+  the reason. On the 2026-11-16 build: CS 83.1% to **85.6%** (137 of 160), MATH 85.7% to **91.4%** (64 of 70), STAT
+  78.9% to **86.8%** (33 of 38); all subjects 67.8% to 69.3%. No previously linked name changed person.
+- **D29.2 Every course, not the first.** A name was matched once per subject using whichever course came first, so
+  "Wang, S" in STAT failed on STAT 578 (taught by neither STAT Wang S before) although Shulei Wang is the only one who
+  taught STAT 428. Each course is now tried, and the name links when the courses that resolve agree.
+- **D29.3 Cross-listed twins.** The catalog's "Same as STAT 410." links MATH 464 to STAT 410, and the GPA dataset
+  often records a cross-listed course under one subject only. When the name has no candidate in its subject, or
+  several, the one candidate who taught the course or a twin most recently wins ("cross-listed"): MATH 463 = STAT
+  400 (Hyoeun Lee), MATH 357 = CS 357 (Mariana Silva), STAT 551 = MATH 561 (Soobin Cho).
+- **D29.4 Sections that meet together.** Course Explorer lists one class under several courses: CS 498 "Applied
+  Large Language Models" meets with NPRE 498, on the same days, at the same time, in the same room, under the same
+  name. An unlinked name there takes the identity it has in the others when that is one person ("meets-with").
+  Sections with no time or no room don't count.
+- **D29.5 One name, two people.** When a name's courses resolve to different people, it is two people in that
+  subject: "Li, H" in HIST is Haiyi Li in HIST 120 and Hanping Li in HIST 100; "Sethi, S" in BADM and "Li, Y" in SE
+  likewise. Before, the first course's person was shown on every course. `instructor_aliases` now has a `number`
+  (blank = every course under that name in the subject), and the export and exam notes look a course up first.
+- **D29.6 Course-only evidence stays on its course.** A cross-listed or meets-with match says who teaches that one
+  course: GWS 240 is CLCV 240, which Craig Williams teaches, but that says nothing about the "Williams, C" who
+  teaches GWS 202. Only in-subject evidence (one candidate, the course's most recent teacher, an override, a unique
+  name across the dataset) spreads to a name's other courses.
+- **D29.7 Who taught where, before renumbering.** The renumbering of #29 moved Kyu Jung Kim's NPRE 470 grades to ES
+  470, so the matcher no longer knew him as an NPRE instructor. It now indexes GPA rows under both numbers.
+- **D29.8 No overrides added.** Course Explorer gives initials only (`firstName="C"` in its XML), and of the lecture
+  names still unlinked most have no grade history anywhere (new instructors, seminars, special topics), which no
+  override can fix. The rest have no primary source that settles them: "Wang, Y" in MATH 220 could be Yi or Ying Wang,
+  both of whom taught MATH, and the department's pages don't say. `data/name_overrides.csv` gained a `source` column,
+  and the loader refuses a row without one.
