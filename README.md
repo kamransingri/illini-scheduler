@@ -87,6 +87,7 @@ Course Explorer ───> pipeline/live_seats.py every ~10 min ─> live.json o
 | `python -m pipeline.degrees` | Validate `data/degrees/*.yaml` and list course codes the loaded data doesn't know |
 | `python -m pipeline.catalog_import` | Import every undergraduate program's requirements from the Academic Catalog |
 | `python -m pipeline.ap_credit` | Validate `data/ap-credit/*.yaml` (CITL's AP credit tables) and list credited codes the loaded data doesn't know |
+| `python -m pipeline.renumbered [--suggest]` | Check `data/renumbered.csv` (old course number → new), or list candidate links from Course Explorer text to review |
 | `make version` | Check that the version files agree and CHANGELOG.md covers the version |
 | `make release V=minor` | Next version (`major`, `minor`, `patch` or `0.6.0-beta.1`) in every version file, and Unreleased in CHANGELOG.md becomes that version |
 

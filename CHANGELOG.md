@@ -10,6 +10,14 @@ history).
 
 ## [Unreleased]
 
+### Added
+
+- Renumbered courses carry their history (#29). 33 renumberings are linked, among them the 2026-2027 French, German,
+  Italian, Spanish and Scandinavian sequences (FR 103 → FR 203, SPAN 200 → SPAN 210, …), SOCW 300 → SOCW 296 and the
+  actuarial courses that moved from MATH to ASRM. The new course page says "Formerly …" with the source, and includes
+  the old number's grades, offering pattern and changes, marked "as …". The old URL opens the new page, and searching
+  the old number finds it.
+
 ## [0.9.0] - 2026-11-18
 
 ### Added

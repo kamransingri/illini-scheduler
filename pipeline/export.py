@@ -22,6 +22,7 @@ from typing import Any
 from .config import WEB_DATA
 from .fetch import CURRENT_TERM, NEXT_TERM
 from .names import parse_name, term_order
+from .renumbered import Renamer
 from .rmp import course_code, fits_subject
 
 REPO_URL = "https://github.com/kamransingri/illini-scheduler"
@@ -123,7 +124,9 @@ def load_profile(js: str | None) -> dict | None:
     return p if any(v["value"] != "unknown" for v in p.values()) else None
 
 
-def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
+def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA, rename: Renamer | None = None) -> str:
+    """`rename`: the renumbered courses the earlier stages merged (#29), to label old terms and redirect old pages."""
+    rn = rename or Renamer(())
     conn.row_factory = sqlite3.Row
     if out_dir.exists():
         shutil.rmtree(out_dir)
@@ -188,8 +191,10 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
     gpa_course = {(r["subject"], r["number"]): dict(r) for r in conn.execute("SELECT * FROM gpa_course")}
     gpa_terms: dict[tuple[str, str], list[dict]] = defaultdict(list)
     for r in conn.execute("SELECT * FROM gpa_course_term"):
+        was = rn.former(r["subject"], r["number"], r["term"])
         gpa_terms[(r["subject"], r["number"])].append(
-            {"term": r["term"], "gpa": r3(r["avg_gpa"]), "students": r["students"], "pct": pct(r)})
+            {"term": r["term"], "gpa": r3(r["avg_gpa"]), "students": r["students"], "pct": pct(r),
+             **({"as": was} if was else {})})
     gpa_inst: dict[tuple[str, str], dict[str, dict]] = defaultdict(dict)
     for r in conn.execute("SELECT * FROM gpa_instructor_course"):
         gpa_inst[(r["subject"], r["number"])][r["instructor_key"]] = {
@@ -200,9 +205,11 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
     patterns = {(r["subject"], r["number"]): dict(r) for r in conn.execute("SELECT * FROM offering_pattern")}
     offerings: dict[tuple[str, str], list[dict]] = defaultdict(list)
     for r in conn.execute("SELECT * FROM offerings"):
+        was = rn.former(r["subject"], r["number"], r["term"])
         offerings[(r["subject"], r["number"])].append(
             {"term": r["term"], "n_sections": r["n_sections"], "online_share": r3(r["online_share"]),
-             "instructors": [p.strip() for p in (r["instructors"] or "").split(";") if p.strip()]})
+             "instructors": [p.strip() for p in (r["instructors"] or "").split(";") if p.strip()],
+             **({"as": was} if was else {})})
     changes: dict[tuple[str, str], list[dict]] = defaultdict(list)
     for r in conn.execute("SELECT * FROM course_changes"):
         changes[(r["subject"], r["number"])].append({"term": r["term"], "field": r["field"], "summary": r["summary"]})
@@ -252,6 +259,15 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
             flag_special(secs)
 
     keys = {k for k, ts in courses.items() if any(t in ts for t in live_terms)}
+
+    def formerly(key: tuple[str, str]) -> list[dict]:
+        """A renumbered course's old number, with the last term the data has under it (#29)."""
+        out = []
+        for x in rn.by_new.get(key, []):
+            seen = [o["term"] for o in offerings.get(key, []) if o.get("as") == x.old_code]
+            seen += [t["term"] for t in gpa_terms.get(key, []) if t.get("as") == x.old_code]
+            out.append({"code": x.old_code, "until": max(seen, key=term_order) if seen else None, "source": x.source})
+        return out
     keys |= {k for k, g in gpa_course.items() if g["recent_avg_gpa"] is not None}
     search_courses, gened_rows = [], []
     summaries: dict[str, dict] = {}  # per-course facts for the degree checklist (degrees.export)
@@ -308,8 +324,9 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
         pat = patterns.get(key)
         ch = sorted(changes.get(key, []), key=lambda c: (term_order(c["term"]), c["field"]), reverse=True)
         recent_ch = [c for c in ch if c["term"] in live_terms]
-        biggest = next((c for c in recent_ch if c["field"] in ("prereq_text", "credit_hours", "title", "gened_codes",
-                                                                 "delivery")), recent_ch[0] if recent_ch else None)
+        biggest = next((c for c in recent_ch if c["field"] == "number"), None) or next(
+            (c for c in recent_ch if c["field"] in ("prereq_text", "credit_hours", "title", "gened_codes", "delivery")),
+            recent_ch[0] if recent_ch else None)
         gpa_block = None
         if g:
             gpa_block = {
@@ -335,6 +352,7 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
             "exam_course": exam.get(key, {}).get("*"),
             "notes": notes.get(key, []),
             "seat_events": seat_events.get(key, [])[:40],
+            "formerly": formerly(key),
         }
         d = out_dir / "course" / subj
         d.mkdir(exist_ok=True)
@@ -349,6 +367,7 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
                                   (g["avg_gpa"] if g else None)),
             "nx": int(bool(nxt and nxt["sections"])),
             "cu": int(bool(term_blocks.get(CURRENT_TERM, {}).get("sections"))),
+            **({"f": [f["code"] for f in doc["formerly"]]} if doc["formerly"] else {}),
         })
         if codes and ((nxt and nxt["sections"]) or gen):
             nxt = nxt or {"sections": [], "n_primary": 0, "n_open": None, "status_known": False}
@@ -375,6 +394,9 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA) -> str:
     (out_dir / "search.json").write_text(json.dumps({"courses": search_courses, "instructors": inst_index},
                                                     separators=(",", ":")))
     (out_dir / "geneds.json").write_text(json.dumps(gened_rows, separators=(",", ":")))
+    # old course URLs -> the renumbered course's page, for the 404 page (an old number with its own page keeps it)
+    redirects = {x.old_code: x.new_code for x in rn.links if x.old not in keys and x.new in keys}
+    (out_dir / "renumbered.json").write_text(json.dumps(redirects, separators=(",", ":")))
     (out_dir / "crns.json").write_text(json.dumps(crn_index(sections, keys, live_terms), separators=(",", ":")))
     titles = {(c["s"], c["n"]): c["t"] for c in search_courses}
     write_seat_feeds(out_dir, all_events, titles)

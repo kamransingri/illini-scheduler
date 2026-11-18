@@ -37,7 +37,8 @@ export function courseParams(): { subject: string; number: string }[] {
   const all = getSearchIndex().courses.map((c) => ({ subject: c.s, number: c.n }));
   const limit = Number(process.env.PAGES_LIMIT ?? 0);
   if (!limit) return all;
-  const ref = new Set(["CS 124", "MATH 221", "STAT 107", "RHET 105", "MATH 231", "STAT 200", "CS 225", "CS 128"]);
+  // SPAN 210 was SPAN 200 (data/renumbered.csv): the e2e test for old URLs needs its page
+  const ref = new Set(["CS 124", "MATH 221", "STAT 107", "RHET 105", "MATH 231", "STAT 200", "CS 225", "CS 128", "SPAN 210"]);
   return all.filter((c, i) => i < limit || ref.has(`${c.subject} ${c.number}`));
 }
 
