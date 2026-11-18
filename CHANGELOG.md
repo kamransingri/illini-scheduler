@@ -12,6 +12,9 @@ history).
 
 ### Added
 
+- Schedule builder: "Sections to watch" (#27). When a schedule needs sections that were Closed at the last check, it
+  lists them with their CRNs and links to Self-Service for waitlists and to Just opened, which now starts filtered to
+  your schedule's courses from that link (`/opened/?mine=1`).
 - A Versions page (`/versions/`) lists every version and what changed in it, from CHANGELOG.md. The footer names the
   site's version and date and links the three before it and the full list.
 - Gen-ed finder: it uses the start time, end time and days off you set in the schedule builder (#30). Each course is
