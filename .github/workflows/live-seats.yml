@@ -1,7 +1,7 @@
 # Near-real-time seat changes for the "Just opened" page. Every 10 minutes (every 30 while the daily crawl runs and
-# overnight), re-read the busiest next-term courses for ~6 minutes and force-push live.json + state.json to the
-# single-commit `live-seats` branch. The page polls live.json from raw.githubusercontent.com, so no site rebuild is
-# needed. pipeline/live_seats.py has the details.
+# overnight), re-read the busiest next-term courses and those on data/watch.txt for ~6 minutes and force-push
+# live.json + state.json to the single-commit `live-seats` branch. The page polls live.json from
+# raw.githubusercontent.com, so no site rebuild is needed. pipeline/live_seats.py has the details.
 name: Live seats
 on:
   schedule:

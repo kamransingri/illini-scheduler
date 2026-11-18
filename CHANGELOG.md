@@ -10,6 +10,21 @@ history).
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-11-18
+
+### Added
+
+- Watch a section (#15). Course pages have a Watch button on every section row for the current and next term, and so
+  does the schedule builder's "Sections to watch". Just opened lists the sections you watch at the top with their
+  latest status and when they were checked, "Only sections I watch" shows only their changes (so "Notify me" covers
+  only them), and "Copy link to this list" shares the list. Your list stays in your browser.
+- The live seat check re-reads the courses on a watch list kept in the repo (`data/watch.txt`) on every run, even when
+  they're quiet.
+
+### Changed
+
+- Just opened's live status line says how many courses were re-checked, instead of "watched".
+
 ## [0.8.0] - 2026-11-18
 
 ### Added
@@ -171,7 +186,8 @@ history).
 - A partial Rate My Professors error no longer stops `make data`.
 - RSS feeds are written as UTF-8.
 
-[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.5.0...v0.6.0

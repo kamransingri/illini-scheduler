@@ -52,6 +52,70 @@ def test_hot_courses_skip_quiet_ones_and_rotate():
     assert len(live_seats.hot_courses(daily, live, NOW, 1)) == 1
 
 
+def test_load_watch_reads_courses_crns_and_terms():
+    daily = daily_file()
+    text = """
+    # comment line
+    cs124            # a course, any term
+    2026-fa 22223    # a CRN: BIG 101
+    2027-sp ART 100  # another term: skipped
+    MATH 999         # not offered
+    CS 124           # repeated: kept once
+    """
+    courses, unknown = live_seats.load_watch(text, "2026-fa", daily)
+    assert courses == ["CS 124", "BIG 101"]
+    assert unknown == ["MATH 999"]
+    assert live_seats.load_watch(text, "2027-sp", daily)[0] == ["CS 124", "ART 100"]
+    assert live_seats.load_watch("", "2026-fa", daily) == ([], [])
+    # the shipped file has only comments
+    assert live_seats.load_watch(live_seats.WATCH_FILE.read_text(encoding="utf-8"), "2026-fa", daily) == ([], [])
+
+
+def test_watched_courses_are_always_picked():
+    daily = daily_file()
+    live = live_seats.term_state({"terms": {}}, "2026-fa")
+    # ART 100 is quiet (all open, nothing moving), so only the watch list gets it re-read
+    hot = live_seats.hot_courses(daily, live, NOW, 10, watched=["ART 100"])
+    assert hot[0] == "ART 100" and hot.count("ART 100") == 1
+    live["courses"]["ART 100"] = NOW  # just re-read: still first, unlike the rotation
+    assert live_seats.hot_courses(daily, live, NOW, 10, always=0, watched=["ART 100"])[0] == "ART 100"
+    # a watched course that's busy anyway isn't counted twice
+    hot = live_seats.hot_courses(daily, live, NOW, 10, watched=["BIG 101"])
+    assert hot.count("BIG 101") == 1 and hot[0] == "BIG 101"
+    # a course the term doesn't have is ignored
+    assert "NOPE 101" not in live_seats.hot_courses(daily, live, NOW, 10, watched=["NOPE 101"])
+
+
+def busy_term(n_busy: int, n_quiet: int) -> dict:
+    """A daily file with `n_busy` courses that each have a closed section and `n_quiet` all-open ones."""
+    rows, sections = {}, {}
+    for i in range(n_busy + n_quiet):
+        course, crn = (f"BUSY {100 + i}", f"{10000 + i}") if i < n_busy else (f"QUIET {100 + i}", f"{50000 + i}")
+        rows[course] = {"title": "", "sections": [{"crn": crn, "code": "A"}]}
+        sections[crn] = ["Closed" if i < n_busy else "Open", "2026-11-10T04:30:00+00:00", ""]
+    return {"rows": rows, "sections": sections, "events": []}
+
+
+def test_watch_list_stays_in_budget_and_the_rotation_still_covers_the_rest():
+    """With a full watch list of quiet courses, every run re-reads all of them, and the top 400 busy courses are each
+    re-read within 3 runs of ~240 courses (6 minutes at 1.5 s), about 30 minutes."""
+    daily = busy_term(600, 100)
+    live = live_seats.term_state({"terms": {}}, "2026-fa")
+    watched = [f"QUIET {100 + 600 + i}" for i in range(live_seats.MAX_WATCHED + 10)]  # 10 over the limit
+    per_run = 6 * 60 / 1.5
+    top = set(live_seats.hot_courses(daily, live, NOW, 400)[:400])
+    read: set[str] = set()
+    for run in range(3):
+        at = f"2026-11-17T12:{10 * run:02d}:00+00:00"
+        picked = live_seats.hot_courses(daily, live, at, 400, watched=watched)[: int(per_run)]
+        assert picked[: live_seats.MAX_WATCHED] == watched[: live_seats.MAX_WATCHED]  # every run, first
+        assert not set(watched[live_seats.MAX_WATCHED:]) & set(picked)  # over the limit: left out
+        for c in picked:
+            live["courses"][c] = at
+        read |= set(picked)
+    assert top <= read
+
+
 def test_check_records_a_change_once():
     daily = daily_file()
     state = {"terms": {}}
@@ -67,6 +131,11 @@ def test_check_records_a_change_once():
     live_seats.check("2026-fa", ["CS 124"], daily, live, titles, 1e12, 0, FakeClient({"/CS/124": 200}),
                      lambda *_: None)
     assert len(live["events"]) == 1
+    # the page learns when each course was re-read (a watched section with no change is still fresh) and the watch list
+    live["watched"] = ["CS 124"]
+    view = live_seats.public_view(state, NOW)
+    assert view["read"]["2026-fa"]["CS 124"] == live["courses"]["CS 124"]
+    assert view["watched"] == {"2026-fa": ["CS 124"]}
 
 
 def test_stops_after_pushback_and_publishes_small_file(tmp_path):

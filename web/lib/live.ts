@@ -12,6 +12,10 @@ export type LiveFile = {
   checked: Record<string, number>;
   events: SeatEvent[];
   seen: Record<string, Record<string, [string, string]>>;
+  /** when each course was last re-read, by term ("CS 124" -> time); absent in files from before v0.9.0 */
+  read?: Record<string, Record<string, string>>;
+  /** courses on data/watch.txt, re-read every run */
+  watched?: Record<string, string[]>;
 };
 
 export const POLL_MS = 120_000;
