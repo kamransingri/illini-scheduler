@@ -81,6 +81,7 @@ def test_fall_published_asks_for_the_rollover():
 def test_summer_alone_says_there_is_nothing_to_roll_over_yet():
     body = term_watch.issue_body(["2027-su"], "2026-fa", "2027-sp")
     assert "Summer 2027" in body and "nothing to roll over yet" in body and "CURRENT_TERM" not in body
+    assert 'add `"2027-su"` to `HISTORY_TERMS`' in body and "Summer courses page" in body  # #35
     # a later fall gets a different title, so it opens its own issue even while the summer one is open
     assert term_watch.issue_title(["2027-su"]) != term_watch.issue_title(["2027-su", "2027-fa"])
 

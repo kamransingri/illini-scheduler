@@ -1,4 +1,4 @@
-# AP credit
+# AP and IB credit
 
 The degree checklist turns a student's AP exams and scores into the Illinois courses they're expected to give, using
 the table CITL (the Center for Innovation in Teaching & Learning) publishes for each entering year. One YAML file per
@@ -84,18 +84,60 @@ What isn't copied: the gen-ed column. A credited course carries the gen-eds the 
 which is what DARS applies. (The pages sometimes disagree with the course: 2026-2027 lists CS 101 as Quantitative
 Reasoning I, while the course is QR II.)
 
+## IB credit
+
+IB (International Baccalaureate) credit works the same way, from `data/ib-credit/<year>.yaml` to
+`web/public/data/ib-credit.json` (issue #25, DECISIONS D27). Only **2026-2027** is copied: it comes from the same
+cutoff score tool (year 2026-2027, exam type IB), whose IB rows have a level and one row per score band. The tool's
+2025-2026 IB rows have no level, so Higher and Standard Level can't be told apart, and older years are prose pages.
+
+The file has the AP shape with these differences:
+
+```yaml
+exams:
+  - id: ECON                          # ours, stable: links store it
+    name: Economics                   # ours; the tool writes names in capitals, with typos
+    rows:
+      - level: HL                     # required on every row: HL (Higher Level) or SL (Standard Level)
+        scores: [6, 7]                # IB scores 1 to 7
+        credit: {ECON 102: 3, ECON 103: 3}
+        message: ...                  # word for word, as for AP
+```
+
+No `sub`, `college` or `with`. Two rows overlap only when they have the same level and share a score. There's no
+diploma rule: CITL lists credit per exam only.
+
+Corrections made to the tool's 2026-2027 IB rows:
+
+| Exam | Tool says | We use |
+| --- | --- | --- |
+| Chinese B: Mandarin, SL ab initio | filed under Chinese B with the level "SL ab initio" | its own exam, Chinese B ab initio: Mandarin (SL) |
+| Chinese B ab initio: Mandarin, 6 or 7 | hours "5" for "CHIN 201 AND 202" | 5 each (both are 5-hour courses, as CHIN 203 and 204 are 5 + 5) |
+| Chinese B: Cantonese, SL | the same row twice | once |
+| Hindi A: Literature, SL | scores "4, 5, 6, 6" | 4 to 7, as the HL row |
+| Hindi B: Literature, SL | "HNDI 403, 404" at "4" hours, placing into HNDI 404 | HNDI 403 only (4 hours) |
+| French A: Literature and Performance, SL | score "NA", credit "Only available on request" | scores 4 to 7, no credit, that message |
+
+`citl_watch` checks the tool's IB rows every Monday against `data/ib-credit/citl/2026-2027.txt`, in the same issue
+as AP.
+
+**Transfer and dual credit** aren't tabulated (D27.6): Illinois's equivalencies are in Transferology, which needs an
+account. The checklist links to it, and the student adds the Illinois course as "AP, IB or transfer credit".
+
 ## How the checklist uses it
 
-- **Input.** "Add an AP exam" under My courses: the starting term (newest by default), an exam and a score, plus the
-  subscore when that score depends on one (Calculus BC 3: the AB subscore, with "no subscore"; Music Theory 4 and 5:
-  the aural subscore). The English Literature rows read the English Language score already in the list.
+- **Input.** "Add an AP or IB exam" under My courses: the starting term (newest by default; it picks the AP and the
+  IB table), AP or IB, an exam and a score, plus the subscore when an AP score depends on one (Calculus BC 3: the AB
+  subscore, with "no subscore"; Music Theory 4 and 5: the aural subscore) or the level for IB (asked only when the
+  subject has both). The English Literature rows read the English Language score already in the list.
 - **College.** Calculus AB and BC have separate Grainger rows; the college comes from the chosen program. With no
   program, the other rows are used and the panel says so.
-- **Stored as scores, not courses.** The link carries `a=CALCBC-3-4,CHEM-5` (exam, score, subscore), `y=2025` (the
-  entering year, left out for the newest) and `d=MATH220` (credit switched off). The courses are worked out from the
+- **Stored as scores, not courses.** The link carries `a=CALCBC-3-4,CHEM-5` (exam, score, subscore),
+  `i=ECON-HL-6` (IB exam, level, score), `y=2025` (the entering year, left out for the newest) and `d=MATH220` (credit
+  switched off). The courses are worked out from the
   table each time, so fixing a table fixes old links too.
-- **Counting.** Credited courses count like "AP or transfer credit" (completed), at CITL's hours, with an "AP credit"
-  tag. The same course from two exams counts once; elective credit in one subject from two exams adds up. Elective
+- **Counting.** Credited courses count like "AP, IB or transfer credit" (completed), at CITL's hours, with an "AP
+  credit" or "IB credit" tag. The same course from two exams (AP or IB) counts once; elective credit in one subject from two exams adds up. Elective
   credit (`MATH 1--`) counts toward the hours line and toward a rule that takes every number at that level
   (`FIN 400-499` takes `FIN 4--`); nowhere else. A course the student also listed themselves keeps their entry.
 - **Shown.** Each exam with its courses (each can be unticked, for students who'd rather take the course), CITL's

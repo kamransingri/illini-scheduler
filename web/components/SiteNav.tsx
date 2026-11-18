@@ -27,10 +27,13 @@ export default function SiteNav() {
         className={
           mobile
             ? `flex items-center gap-3 px-4 py-3 ${cur ? "bg-white/10 font-semibold shadow-[inset_4px_0_0_var(--color-orange)]" : "hover:bg-white/5"}`
-            : `flex h-full items-center gap-2 px-4 whitespace-nowrap ${cur ? "bg-white/10 font-semibold shadow-[inset_0_-4px_0_var(--color-orange)]" : "hover:bg-white/5 hover:underline"}`
+            : `flex h-full items-center gap-2 px-3 whitespace-nowrap xl:px-4 ${cur ? "bg-white/10 font-semibold shadow-[inset_0_-4px_0_var(--color-orange)]" : "hover:bg-white/5 hover:underline"}`
         }
       >
-        <Icon name={n.icon} className={cur ? "text-white" : "text-white/70"} />
+        {/* six labels fit a 1024px header only without their icons; the icons come back at 1280px */}
+        <span className={mobile ? "contents" : "hidden xl:contents"}>
+          <Icon name={n.icon} className={cur ? "text-white" : "text-white/70"} />
+        </span>
         {n.label}
         {n.href === "/schedule/" && <CartCount />}
       </Link>
