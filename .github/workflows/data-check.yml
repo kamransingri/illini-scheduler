@@ -1,0 +1,34 @@
+# Quarterly check of every data source (pipeline/data_watch.py, issue #71): how old each one is on the live site, what
+# needs a look (Wade's GPA data two semesters behind, a file the nightly job didn't pick up, term dates still
+# estimated...) and the review checklist. Opens one "Data check: <Month Year>" issue; it never changes data itself.
+name: Quarterly data check
+on:
+  schedule:
+    - cron: "17 15 10 1,4,7,10 *" # the 10th of January, April, July and October
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with: { python-version: "3.11", cache: pip }
+      - run: pip install -r requirements.txt
+      - name: How old is each source?
+        env:
+          GITHUB_TOKEN: ${{ github.token }} # only for reading when Wade's files last changed (GitHub API)
+        run: python -m pipeline.data_watch --issue issue.md --title title.txt
+      - name: Open the issue (unless this quarter's is already open)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE=$(cat title.txt)
+          open=$(gh issue list --state open --search "\"$TITLE\" in:title" --json title --jq "map(select(.title == \"$TITLE\")) | length")
+          if [ "$open" != "0" ]; then echo "An open issue already covers this quarter."; exit 0; fi
+          gh issue create --title "$TITLE" --label maintenance --label data-pipeline --body-file issue.md
