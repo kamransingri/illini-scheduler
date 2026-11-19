@@ -21,6 +21,7 @@ How to use the data:
 
 - [Data API](https://raw.githubusercontent.com/kamransingri/illini-scheduler/main/docs/API.md): every file and field, units, and refresh times
 - [Limitations](https://raw.githubusercontent.com/kamransingri/illini-scheduler/main/docs/LIMITATIONS.md): what the data gets wrong or leaves out
+- [MCP server](https://github.com/kamransingri/illini-scheduler/blob/main/mcp/README.md): tools for AI apps to search courses, read sections, find gen-eds and build schedules from this data
 
 ## Data
 
@@ -36,7 +37,7 @@ How to use the data:
 ## Pages
 
 - [Course page](https://kamransingri.github.io/illini-scheduler/course/CS/124/): /course/<SUBJECT>/<NUMBER>/ for any course
-- [Schedule builder](https://kamransingri.github.io/illini-scheduler/schedule/): builds conflict-free weeks from a list of courses
+- [Schedule builder](https://kamransingri.github.io/illini-scheduler/schedule/): builds conflict-free weeks from a list of courses. `?t=2027-sp&c=CS124,MATH231&i=0` opens the top schedule for those courses; the MCP server's build_schedules gives a link like it for each schedule
 - [Degree checklist](https://kamransingri.github.io/illini-scheduler/degree/): a major or minor's requirements, checked against courses taken
 
 ## Optional
