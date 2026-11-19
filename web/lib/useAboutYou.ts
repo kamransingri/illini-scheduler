@@ -17,13 +17,13 @@ const loadIndex = () =>
 
 export function useAboutYou(): { me: AboutYou; about: LevelStanding; setAbout: (k: keyof LevelStanding, v: string) => void } {
   const [about, setAboutState] = useState<LevelStanding>({ level: "", standing: "" });
-  const [mine, setMine] = useState({ program: "", minor: "" });
+  const [mine, setMine] = useState({ program: "", minors: "" });
   const [programs, setPrograms] = useState<DegreeIndex | null>(null);
   useEffect(() => {
     setAboutState(readAboutYou());
     const read = () => {
       const m = readMine();
-      setMine({ program: m.program, minor: m.minor });
+      setMine({ program: m.program, minors: m.minors.join(",") });
     };
     read();
     const onStorage = (e: StorageEvent) => {
@@ -37,12 +37,12 @@ export function useAboutYou(): { me: AboutYou; about: LevelStanding; setAbout: (
     };
   }, []);
   useEffect(() => {
-    if ((mine.program || mine.minor) && !programs) loadIndex().then(setPrograms);
-  }, [mine.program, mine.minor, programs]);
+    if ((mine.program || mine.minors) && !programs) loadIndex().then(setPrograms);
+  }, [mine.program, mine.minors, programs]);
   const me = useMemo<AboutYou>(() => {
     const prog = programs?.find((p) => p.id === mine.program);
-    const minor = programs?.find((p) => p.id === mine.minor);
-    return { ...NOBODY, ...about, program: prog ? { name: prog.program, college: prog.college } : null, minor: minor ? { name: minor.program } : null };
+    const minors = (mine.minors ? mine.minors.split(",") : []).flatMap((id) => programs?.filter((p) => p.id === id).map((p) => ({ name: p.program })) ?? []);
+    return { ...NOBODY, ...about, program: prog ? { name: prog.program, college: prog.college } : null, minors };
   }, [about, mine, programs]);
   const setAbout = (k: keyof LevelStanding, v: string) =>
     setAboutState((a) => {

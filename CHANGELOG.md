@@ -10,6 +10,12 @@ history).
 
 ## [Unreleased]
 
+### Added
+
+- Up to three minors in the degree checklist (#111). Each one gets its own checklist and tick boxes under the major,
+  and the share link carries all of them (`mn=` takes a list). A course that counts toward two of your minors is
+  pointed out, since the catalog doesn't give a rule for that. Links and saved lists with one minor open as before.
+
 ## [0.14.0] - 2026-11-19
 
 ### Changed
