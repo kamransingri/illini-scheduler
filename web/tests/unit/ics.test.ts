@@ -77,3 +77,28 @@ describe(".ics export uses the Registrar's calendar", () => {
     }
   });
 });
+
+describe(".ics export can include final exams (#85)", () => {
+  const withFinal = (): Schedule => {
+    const s = schedule("1");
+    (s.bundles[0].sections[0] as Section).fx = [
+      ["2026-12-14", 810, 990, "Combined"],
+      ["2026-12-15", 480, 660, "Conflict"], // the make-up slot, not the exam
+    ];
+    return s;
+  };
+  it("adds each final as a one-off event when asked, and only then", () => {
+    const evs = occurrences(buildIcs(withFinal(), "2026-fa", "Fall 2026", new Date("2026-11-17T00:00:00Z"), { finals: true }));
+    const finals = evs.filter((e) => e.summary === "MATH 221 final exam");
+    expect(finals).toHaveLength(1);
+    expect(finals[0].dates).toEqual(["2026-12-14"]);
+    expect(finals[0].description).toContain("Course Explorer's final exam schedule (Combined)");
+    expect(buildIcs(withFinal(), "2026-fa", "Fall 2026", new Date("2026-11-17T00:00:00Z"), { finals: true })).toContain("DTSTART;TZID=America/Chicago:20261214T133000");
+    expect(occurrences(buildIcs(withFinal(), "2026-fa", "Fall 2026")).some((e) => e.summary.includes("final"))).toBe(false);
+  });
+  it("escapes semicolons in text (RFC 5545 §3.3.11)", () => {
+    const s = schedule("1");
+    (s.bundles[0].sections[0] as Section).instructors_raw = ["Smith; J", "Lee, K"];
+    expect(buildIcs(s, "2026-fa", "Fall 2026").replace(/\r\n /g, "")).toContain("Instructor: Smith\\; J\\; Lee\\, K");
+  });
+});
