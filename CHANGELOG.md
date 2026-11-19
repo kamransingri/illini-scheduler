@@ -10,6 +10,8 @@ history).
 
 ## [Unreleased]
 
+## [0.14.1] - 2026-11-19
+
 ### Changed
 
 - "New plan" in the schedule builder starts blank: no courses and the default must-haves and priorities. Duplicate
@@ -338,7 +340,8 @@ history).
 - A partial Rate My Professors error no longer stops `make data`.
 - RSS feeds are written as UTF-8.
 
-[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.14.0...HEAD
+[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.14.1...HEAD
+[0.14.1]: https://github.com/kamransingri/illini-scheduler/compare/v0.14.0...v0.14.1
 [0.14.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.13.1...v0.14.0
 [0.13.1]: https://github.com/kamransingri/illini-scheduler/compare/v0.13.0...v0.13.1
 [0.13.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.12.1...v0.13.0
