@@ -36,16 +36,22 @@ test("an impossible lock is explained and the schedule is marked incomplete", as
   await expect(dis).toHaveValue("");
 });
 
-test("opening a share link doesn't overwrite your own list", async ({ page }) => {
+test("opening a share link doesn't overwrite your own plan: it opens as a new one (#117)", async ({ page }) => {
   await page.goto("./schedule/?c=PHYS211,CHEM102&t=2027-sp");
   await expect(page.getByTestId("cart").locator("li")).toHaveCount(2);
   await page.goto("./schedule/?c=CS124,STAT200&t=2027-sp&e=540");
-  await expect(page.getByText("You opened a shared course list")).toBeVisible();
+  await expect(page.getByTestId("plan-notice")).toContainText("it's a new plan, “Shared plan”");
+  await expect(page.getByRole("button", { name: /^Shared plan/ })).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByTestId("schedule-result")).toBeVisible(); // rules in the link -> auto-generated
   await expect(page.getByLabel("No classes before")).toHaveValue("540");
-  await page.getByRole("button", { name: "Back to my list" }).click();
+  await page.getByRole("button", { name: "Back to Plan A" }).click();
   await expect(page.getByTestId("cart")).toContainText("PHYS 211");
   await expect(page.getByTestId("cart")).not.toContainText("CS 124");
+  await expect(page.getByLabel("No classes before")).toHaveValue("");
+  // the shared plan is kept, with its own rules
+  await page.getByRole("button", { name: /^Shared plan/ }).click();
+  await expect(page.getByTestId("cart")).toContainText("CS 124");
+  await expect(page.getByLabel("No classes before")).toHaveValue("540");
 });
 
 test("rules survive reload", async ({ page }) => {

@@ -4,7 +4,8 @@
 import { fmtTime } from "./format";
 import { DEFAULT_PREFS, type Prefs } from "./schedule";
 
-const KEY = "illini-scheduler:prefs:v1";
+/** The active plan's must-haves and priorities (lib/plans.ts keeps the other plans). */
+export const PREFS_KEY = "illini-scheduler:prefs:v1";
 const W_ORDER: (keyof Prefs["weights"])[] = ["gpa", "rmp", "early", "daysOff", "compact", "walking", "late", "open", "prof"];
 const PARAMS = ["e", "l", "do", "nf", "lu", "lf", "lt", "lm", "oo", "sp", "eo", "b", "w", "se", "sl"];
 
@@ -31,6 +32,13 @@ export function prefsToParams(p: Prefs, params: URLSearchParams): void {
   if (p.softLate !== DEFAULT_PREFS.softLate) params.set("sl", String(p.softLate));
   const w = W_ORDER.map((k) => p.weights[k]).join("");
   if (w !== W_ORDER.map((k) => DEFAULT_PREFS.weights[k]).join("")) params.set("w", w);
+}
+
+/** Saved or linked rules in one canonical form ("" for the defaults), to tell whether two plans have the same rules. */
+export function normPrefs(raw: string | null | undefined): string {
+  const params = new URLSearchParams();
+  prefsToParams(prefsFromParams(new URLSearchParams(raw ?? "")), params);
+  return params.toString();
 }
 
 export function hasPrefParams(params: URLSearchParams): boolean {
@@ -66,7 +74,7 @@ export function savePrefs(p: Prefs): void {
   try {
     const params = new URLSearchParams();
     prefsToParams(p, params);
-    window.localStorage.setItem(KEY, params.toString());
+    window.localStorage.setItem(PREFS_KEY, params.toString());
   } catch {
     /* ignore */
   }
@@ -75,7 +83,7 @@ export function savePrefs(p: Prefs): void {
 /** Calls `fn` when the saved rules change in another tab (the schedule builder open next to the gen-ed finder). */
 export function onPrefsChange(fn: () => void): () => void {
   const h = (e: StorageEvent) => {
-    if (e.key === KEY || e.key === null) fn();
+    if (e.key === PREFS_KEY || e.key === null) fn();
   };
   window.addEventListener("storage", h);
   return () => window.removeEventListener("storage", h);
@@ -100,7 +108,7 @@ export function timeRulesSummary(p: Pick<Prefs, "earliest" | "latest" | "daysOff
 
 export function loadPrefs(): Prefs | null {
   try {
-    const raw = window.localStorage.getItem(KEY);
+    const raw = window.localStorage.getItem(PREFS_KEY);
     return raw === null ? null : prefsFromParams(new URLSearchParams(raw));
   } catch {
     return null;

@@ -35,7 +35,8 @@ test("CS 124 + MATH 221 + RHET 105 + STAT 107, no 8am: no schedule has an 8am cl
   }
   // export: .ics download works
   const [dl] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Download .ics" }).click()]);
-  expect(dl.suggestedFilename()).toBe("illini-schedule-2027-sp.ics");
+  // the edited link opened as a new plan, "Shared plan" (#117), and each plan's calendar file has its name (#118)
+  expect(dl.suggestedFilename()).toBe("illini-schedule-2027-sp-shared-plan.ics");
   await expect(page.locator("body")).not.toContainText(/NaN|undefined/);
   expect(errors).toEqual([]);
 });
