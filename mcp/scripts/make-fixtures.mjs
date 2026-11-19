@@ -5,7 +5,7 @@ import path from "node:path";
 
 const root = (process.argv[2] ?? "https://kamransingri.github.io/illini-scheduler/data").replace(/\/+$/, "");
 const out = path.join(import.meta.dirname, "..", "test", "fixtures", "data");
-const COURSES = ["CS 124", "STAT 100", "ADV 250"]; // ADV 250 was ADV 283 (renumbered)
+const COURSES = ["CS 124", "STAT 100", "ADV 250", "MATH 231", "PSYC 100"]; // ADV 250 was ADV 283 (renumbered); MATH 231 and PSYC 100 for build_schedules
 const SEARCH_EXTRA = new Set(["MATH 220", "MATH 221", "MATH 231", "PSYC 100", "ADV 250", "THEA 175"]);
 const keepGened = (codes) => codes.includes("QR1") || (codes.includes("NW") && codes.includes("LA"));
 

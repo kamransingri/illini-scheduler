@@ -7,6 +7,7 @@ local server. Try asking:
 - "Find me a 3-credit Humanities gen-ed that's also Non-Western, with a high GPA and open seats next term."
 - "Which CS 124 lectures are open for Spring 2027, and who teaches them?"
 - "Compare the professors for STAT 100 by GPA and Rate My Professors."
+- "Build me a Spring 2027 schedule with CS 124, MATH 231 and RHET 105: nothing before 10am, Fridays off, and a lunch break."
 
 It's read-only. It reads the site's public JSON ([docs/API.md](../docs/API.md)) from GitHub Pages, the same files the
 site loads in your browser, and never registers you for anything or changes anything. The data is unofficial and can be
@@ -20,8 +21,11 @@ out of date, so check sections, seats and restrictions in Course Explorer and Se
 | `search_courses` | Courses by code, nickname or title words, subject, gen-ed, credit hours, average GPA and term; professors by name |
 | `get_course` | One course: description, prerequisites, gen-eds, GPA, when it's offered, and every section of a term (CRN, times, room, instructors, seats, restrictions, finals) with each professor's GPA and Rate My Professors ratings |
 | `find_geneds` | The site's gen-ed finder: courses that count for the gen-eds you name, ranked by the site's best-pick score |
+| `build_schedules` | The site's schedule builder: the top conflict-free schedules for a list of courses, with locked CRNs, must-haves (earliest start, latest end, days off, lunch break, blocked times, open sections only) and what matters to you. Each schedule has its CRNs, sections, warnings and a link that opens it in the builder; when nothing fits, it says why |
 
-Every answer includes the term it covers and when the data was built (`data.built_at`).
+Every answer includes the term it covers and when the data was built (`data.built_at`). `build_schedules` ranks the
+way the site does for someone who just opened it: default best-pick weights, and no About you, so restrictions are
+only checked once the student opens the link.
 
 ## Set it up
 
@@ -75,8 +79,8 @@ Files are cached in memory for 30 minutes. The site rebuilds once a night.
 
 ## Working on it
 
-- `src/tools.ts` builds each tool's answer from the JSON. The search, the gen-ed filters and the best-pick score are
-  imported from `web/lib`, so the server always ranks things the way the site does.
+- `src/tools.ts` builds each tool's answer from the JSON. The search, the gen-ed filters, the best-pick score and the
+  schedule generator are imported from `web/lib`, so the server always ranks things the way the site does.
 - `src/server.ts` registers the tools and their descriptions with the MCP SDK. `src/data.ts` reads and caches the
   files.
 - `npm test` builds `dist/index.js` and runs Vitest against the saved data in `test/fixtures/data`, including a run of

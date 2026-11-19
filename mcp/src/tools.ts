@@ -1,9 +1,15 @@
 // What each MCP tool answers, as pure functions of the site's JSON (docs/API.md). The search, gen-ed filters and the
 // best-pick score are the site's own code in web/lib, so an AI app gets the same answers as the site.
+import { encodeCart, type CartItem } from "../../web/lib/cart";
+import { fmtCredits, hourWarnings, totalHours } from "../../web/lib/credits";
+import { examConflicts, finalsSummary } from "../../web/lib/finals";
 import { applyFilters, DEFAULT_FILTERS, filtersToQuery, GENED_GROUPS, type Filters, type SortKey } from "../../web/lib/geneds";
 import { cisUrl, daysStr, fmtTime, GENED_NAMES, termLabel, termRange } from "../../web/lib/format";
+import { courseInput, type InputContext } from "../../web/lib/inputs";
+import { prefsFromParams, prefsToParams, PRESETS, timeRulesSummary } from "../../web/lib/prefs";
 import { rankCourse } from "../../web/lib/rank";
-import { parseRestrictions } from "../../web/lib/restrictions";
+import { NOBODY, parseRestrictions } from "../../web/lib/restrictions";
+import { bundleOpen, clashingPairs, DEFAULT_PREFS, explainEmpty, generate, locksToBlame, summaryLine, warnings, type Prefs, type Schedule } from "../../web/lib/schedule";
 import { DEFAULT_WEIGHTS } from "../../web/lib/score";
 import { search } from "../../web/lib/search";
 import { TERM_DATES } from "../../web/lib/terms";
@@ -298,5 +304,248 @@ export function findGeneds(rows: GenedRow[], meta: Meta, site: string, a: GenedA
     ...(cats.length ? {} : { gened_finder_url: `${site}/geneds/${filtersToQuery(f, sort) ? `?${filtersToQuery(f, sort)}` : ""}` }),
     ...(unknownGeneds(wanted).length ? { warning: `Unknown gen-ed codes: ${unknownGeneds(wanted).join(", ")}. Known: ${GENED_HELP}` } : {}),
     data: data(meta, meta.next_term),
+  };
+}
+
+// ---- build_schedules --------------------------------------------------------------------------------------------
+
+export type Weights = Partial<
+  Record<"gpa" | "best_professor" | "professor_ratings" | "open_seats" | "more_days_off" | "fewer_gaps" | "avoid_early" | "avoid_late" | "short_walks", number>
+>;
+
+export type BuildArgs = {
+  courses: string[];
+  term?: string;
+  locked_crns?: string[];
+  no_classes_before?: string;
+  done_by?: string;
+  days_off?: string[];
+  lunch_break?: boolean | { from?: string; to?: string; minutes?: number };
+  blocked_times?: { days: string; from: string; to: string }[];
+  open_sections_only?: boolean;
+  include_special_sections?: boolean;
+  what_matters?: Weights & { preset?: string; too_early_before?: string; too_late_after?: string };
+  limit?: number;
+};
+
+/** A course of the request as read from the data, after following a renumbering. */
+export type Loaded = { course: Course; renumbered?: string };
+
+/** build_schedules' names for the site's "What matters to you" sliders (Prefs.weights). */
+const WEIGHT_KEYS: [keyof Weights, keyof Prefs["weights"]][] = [
+  ["gpa", "gpa"],
+  ["best_professor", "prof"],
+  ["professor_ratings", "rmp"],
+  ["open_seats", "open"],
+  ["more_days_off", "daysOff"],
+  ["fewer_gaps", "compact"],
+  ["avoid_early", "early"],
+  ["avoid_late", "late"],
+  ["short_walks", "walking"],
+];
+export const PRESET_IDS = PRESETS.map((p) => p.id) as [string, ...string[]];
+export const PRESET_HELP = PRESETS.map((p) => `'${p.id}' (${p.label})`).join(", ");
+
+/** "10am", "9:30 am", "2pm", "14:30" as minutes after midnight. Without am/pm, 1 to 6 o'clock is the afternoon. */
+export function parseClock(v: string): number | null {
+  const m = /^\s*(\d{1,2})(?::(\d{2}))?\s*(?:([ap])\.?\s*m?\.?)?\s*$/i.exec(v);
+  if (!m) return null;
+  let h = Number(m[1]);
+  const min = Number(m[2] ?? 0);
+  const ap = m[3]?.toLowerCase();
+  if (min > 59 || h > 24 || (ap && (h < 1 || h > 12))) return null;
+  if (ap === "p" && h < 12) h += 12;
+  else if (ap === "a" && h === 12) h = 0;
+  else if (!ap && h >= 1 && h <= 6) h += 12;
+  const t = h * 60 + min;
+  return t <= 1440 ? t : null;
+}
+
+const DAY_NAMES: [RegExp, number][] = [
+  [/^mo(n(day)?)?$/i, 1],
+  [/^tu(e(s(day)?)?)?$/i, 2],
+  [/^we(d(nesday)?)?$/i, 4],
+  [/^th(u(r(s(day)?)?)?)?$/i, 8],
+  [/^fr(i(day)?)?$/i, 16],
+];
+const LETTERS: Record<string, number> = { M: 1, T: 2, W: 4, R: 8, F: 16 };
+
+/** "F", "Fri", "Friday", "MWF", "TR" (R is Thursday) as a day mask (M=1 ... F=16); null when it isn't weekdays. */
+export function parseDays(v: string): number | null {
+  const t = v.trim();
+  for (const [re, bit] of DAY_NAMES) if (re.test(t)) return bit;
+  if (!/^[MTWRF]+$/i.test(t)) return null;
+  return [...t.toUpperCase()].reduce((m, l) => m | LETTERS[l], 0);
+}
+
+/** The must-haves in plain words. */
+function mustWords(p: Prefs): string[] {
+  const out = timeRulesSummary(p);
+  if (p.lunch) out.push(`a ${p.lunchMin}-minute lunch break between ${fmtTime(p.lunchFrom)} and ${fmtTime(p.lunchTo)} on every day with class`);
+  for (const b of p.blocked) out.push(`no class ${daysStr(b.d)} ${fmtTime(b.s)}-${fmtTime(b.e)}`);
+  if (p.openOnly) out.push("open sections only");
+  if (p.includeSpecial) out.push("special sections allowed");
+  return out;
+}
+
+/** The request's must-haves and priorities as the site's Prefs, and what couldn't be read. */
+export function prefsOf(a: BuildArgs): { prefs: Prefs; problems: string[] } {
+  const problems: string[] = [];
+  const clock = (v: string | undefined, what: string): number | null => {
+    if (v === undefined || v === "") return null;
+    const t = parseClock(v);
+    if (t === null) problems.push(`${what}: '${v}' isn't a time like '10am', '2:30pm' or '14:30', so it's ignored.`);
+    return t;
+  };
+  const p: Prefs = { ...DEFAULT_PREFS, weights: { ...DEFAULT_PREFS.weights }, blocked: [] };
+  p.earliest = clock(a.no_classes_before, "no_classes_before");
+  p.latest = clock(a.done_by, "done_by");
+  for (const d of a.days_off ?? []) {
+    const m = parseDays(d);
+    if (m === null) problems.push(`days_off: '${d}' isn't a weekday (M, T, W, R for Thursday, F, or a day name), so it's ignored.`);
+    else p.daysOff |= m;
+  }
+  if (a.lunch_break) {
+    p.lunch = true;
+    if (typeof a.lunch_break === "object") {
+      p.lunchFrom = clock(a.lunch_break.from, "lunch_break.from") ?? p.lunchFrom;
+      p.lunchTo = clock(a.lunch_break.to, "lunch_break.to") ?? p.lunchTo;
+      p.lunchMin = a.lunch_break.minutes ?? p.lunchMin;
+    }
+  }
+  for (const b of a.blocked_times ?? []) {
+    const d = parseDays(b.days);
+    const s = clock(b.from, "blocked_times.from");
+    const e = clock(b.to, "blocked_times.to");
+    if (d === null) problems.push(`blocked_times: '${b.days}' isn't weekdays like 'TR' or 'MWF', so that blocked time is ignored.`);
+    else if (s !== null && e !== null && e > s) p.blocked.push({ d, s, e });
+    else if (s !== null && e !== null) problems.push(`blocked_times: ${b.from} to ${b.to} ends before it starts, so it's ignored.`);
+  }
+  p.openOnly = a.open_sections_only ?? false;
+  p.includeSpecial = a.include_special_sections ?? false;
+  const w = a.what_matters ?? {};
+  const preset = w.preset ? PRESETS.find((x) => x.id === w.preset) : undefined;
+  if (preset) p.weights = { ...preset.weights };
+  for (const [k, key] of WEIGHT_KEYS) {
+    const v = w[k];
+    if (v !== undefined) p.weights[key] = Math.min(3, Math.max(0, Math.round(v)));
+  }
+  p.softEarly = clock(w.too_early_before, "what_matters.too_early_before") ?? p.softEarly;
+  p.softLate = clock(w.too_late_after, "what_matters.too_late_after") ?? p.softLate;
+  // the site's own round trip, so the link carries exactly what's ranked here (a lunch window too short for its
+  // break falls back to the default, as on the site)
+  const params = new URLSearchParams();
+  prefsToParams(p, params);
+  const prefs = prefsFromParams(params);
+  if (p.lunch && (prefs.lunchFrom !== p.lunchFrom || prefs.lunchTo !== p.lunchTo || prefs.lunchMin !== p.lunchMin))
+    problems.push("lunch_break: the window can't hold the break, so the site's default is used: 45 minutes free between 11am and 2pm.");
+  return { prefs, problems };
+}
+
+/** The builder's link to schedule `i` of these courses and rules: the cart, term, must-have and schedule parameters. */
+export function scheduleLink(site: string, term: string, items: CartItem[], prefs: Prefs, i: number): string {
+  const u = new URLSearchParams();
+  u.set("t", term);
+  u.set("c", encodeCart(items));
+  prefsToParams(prefs, u);
+  u.set("i", String(i));
+  return `${site}/schedule/?${u}`;
+}
+
+function scheduleSection(course: Course, b: Schedule["bundles"][number], s: Section, statusKnown: boolean) {
+  const prof = b.prof && s.component === "primary" && s.instructors.includes(b.prof.key) ? b.prof : null;
+  return {
+    course: b.course,
+    crn: s.crn,
+    section: s.code,
+    type: s.type_name || s.type,
+    meets: s.meetings.map((m) => ({
+      days: daysStr(m.d) || null,
+      time: m.s === null ? "no set time (online or arranged)" : `${fmtTime(m.s)}-${fmtTime(m.e)}`,
+      where: [m.b, m.r].filter(Boolean).join(" ") || null,
+    })),
+    instructors: s.instructors.map((k, i) => course.instructors[k]?.name ?? s.instructors_raw[i] ?? k),
+    seats: statusKnown ? s.status || "unknown" : "not published yet",
+    ...(prof ? { professor_best_pick_score: prof.score } : {}),
+  };
+}
+
+/**
+ * The schedule builder for an AI app (#100): the site's own generator, ranking and "why nothing fits", so the top
+ * schedule is the one the site shows for the same courses and rules. `missing` says which courses weren't found.
+ */
+export function buildSchedules(found: Loaded[], missing: string[], meta: Meta, site: string, a: BuildArgs) {
+  const problems = [...missing];
+  let term = a.term ?? meta.next_term;
+  if (!/^\d{4}-(sp|su|fa|wi)$/.test(term)) {
+    problems.push(`term: '${term}' isn't a term id like '${meta.next_term}', so ${termLabel(meta.next_term)} is used.`);
+    term = meta.next_term;
+  }
+  const label = termLabel(term);
+  const { prefs, problems: ruleProblems } = prefsOf(a);
+  problems.push(...ruleProblems);
+  const items: CartItem[] = found.map((f) => ({ s: f.course.subject, n: f.course.number, locked: [] }));
+  for (const crn of a.locked_crns ?? []) {
+    const i = found.findIndex((f) => f.course.terms[term]?.sections.some((s) => s.crn === crn));
+    if (i < 0) problems.push(`locked_crns: ${crn} isn't a section of ${items.map((x) => `${x.s} ${x.n}`).join(", ")} in ${label}, so it isn't locked.`);
+    else if (!items[i].locked.includes(crn)) items[i].locked.push(crn);
+  }
+  // a student who just opened the site: the default best-pick weights and About you not filled in
+  const ctx: InputContext = { rmpPrior: meta.score_priors?.rmp.quality ?? null, priors: meta.score_priors ?? null, weights: DEFAULT_WEIGHTS, me: NOBODY };
+  const inputs = found.map((f, i) => courseInput(`${items[i].s} ${items[i].n}`, f.course, items[i].locked, term, ctx));
+  const res = generate(inputs, term, prefs);
+  const limit = Math.min(Math.max(a.limit ?? 3, 1), 10);
+  const offeredNote = new Set(warnings(inputs, term, null, label)); // "X is not offered": cannot_schedule says it
+  const schedules = res.schedules.slice(0, limit).map((s, i) => {
+    const counted = inputs.filter((x) => s.bundles.some((b) => b.course === x.key));
+    const hours = totalHours(counted.map((x) => x.course.credit_range));
+    const variable = counted.filter((x) => x.course.credit_range[0] && x.course.credit_range[0] !== x.course.credit_range[1]).map((x) => x.key);
+    const notes = [...hourWarnings(hours, counted.length, term, label, variable, true).map((h) => h.text), ...warnings(inputs, term, s, label).filter((x) => !offeredNote.has(x))];
+    return {
+      rank: i + 1,
+      summary: summaryLine(s.stats, fmtTime),
+      expected_gpa: gpa(s.stats.expectedGpa),
+      credit_hours: fmtCredits(hours),
+      days_off: s.stats.daysOff,
+      first_class_starts: s.stats.earliest === null ? null : fmtTime(s.stats.earliest),
+      last_class_ends: s.stats.latest === null ? null : fmtTime(s.stats.latest),
+      gaps_minutes_a_week: s.stats.gapMinutes,
+      rushed_walks: s.stats.backToBackFar,
+      open_now: `${s.bundles.filter((b) => bundleOpen(b)).length} of ${s.bundles.length}`,
+      finals: finalsSummary(s),
+      ...(examConflicts(s).some((c) => c.kind !== "exactly-24h") ? { exam_conflict: true } : {}),
+      crns: s.bundles.flatMap((b) => b.crns),
+      sections: s.bundles.flatMap((b) => {
+        const inp = inputs.find((x) => x.key === b.course)!;
+        return b.sections.map((x) => scheduleSection(inp.course, b, x, Boolean(inp.course.terms[term]?.status_known)));
+      }),
+      ...(notes.length ? { warnings: notes } : {}),
+      open_on_site: scheduleLink(site, term, items, prefs, i),
+    };
+  });
+  const cannot = res.emptyCourses.map((k) => ({ course: k, why: explainEmpty(inputs.find((x) => x.key === k)!, term, prefs) }));
+  let none: string[] | null = null;
+  if (!res.schedules.length && inputs.length > res.emptyCourses.length) {
+    none = clashingPairs(inputs, term, prefs).map((c) => `${c.text}.`);
+    const blame = locksToBlame(inputs, term, prefs);
+    if (blame.each.length) none.push(`The locked sections are what rule every schedule out: unlocking ${blame.each.join(" or ")} lets schedules fit again.`);
+    else if (blame.all) none.push("The locked sections together rule every schedule out: no single unlock is enough, but unlocking all of them lets schedules fit again.");
+    if (!none.length) none.push(`Every pair of courses can fit, but not all of them at once${prefs.lunch ? " with a lunch break" : ""}. Try removing a must-have or a course.`);
+  }
+  const renumbered = found.flatMap((f) => (f.renumbered ? [f.renumbered] : []));
+  return {
+    term: label,
+    courses: inputs.map((x) => ({ code: x.key, ...(x.locked.length ? { locked_crns: x.locked } : {}) })),
+    ...(renumbered.length ? { renumbered } : {}),
+    must_haves: mustWords(prefs),
+    schedules_that_fit: res.total,
+    ...(res.truncated ? { search_stopped_early: true } : {}),
+    shown: schedules.length,
+    schedules,
+    ...(cannot.length ? { cannot_schedule: cannot } : {}),
+    ...(none ? { why_no_schedule: none } : {}),
+    ...(problems.length ? { warnings: problems } : {}),
+    check_before_registering: "Open a schedule's open_on_site link to see it in the site's schedule builder, where seats are live and restrictions are checked against About you.",
+    data: data(meta, term),
   };
 }
