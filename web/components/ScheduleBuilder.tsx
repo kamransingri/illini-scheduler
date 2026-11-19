@@ -4,6 +4,7 @@ import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react"
 import { decodeCart, encodeCart, onCartChange, readCart, writeCart, type CartItem } from "@/lib/cart";
 import { courseHref, dataUrl, daysStr, fmtGpa, fmtTime, SELF_SERVICE_URL, termLabel } from "@/lib/format";
 import { fmtCredits, hourWarnings, totalHours } from "@/lib/credits";
+import { examConflicts, examDay, examTime, finalsByDay, finalsOf, finalsPending, finalsSummary, STUDENT_CODE_EXAMS } from "@/lib/finals";
 import { buildIcs } from "@/lib/ics";
 import { hasPrefParams, loadPrefs, prefsFromParams, prefsToParams, PRESETS, savePrefs, timeRulesSummary } from "@/lib/prefs";
 import {
@@ -146,6 +147,8 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
   const [shared, setShared] = useState<{ mine: CartItem[] } | null>(null);
   const [blockForm, setBlockForm] = useState({ days: 0, s: "17:00", e: "19:00" });
   const [icsError, setIcsError] = useState<string | null>(null);
+  const [view, setView] = useState<"week" | "finals">("week");
+  const [icsFinals, setIcsFinals] = useState(true);
   const [panels, setPanels] = useState({ must: true, soft: true });
   const autoRun = useRef<number | null>(null); // schedule index to open once a shared link's courses load
   const keepOpen = useRef<string | null>(null); // after a lock from the results, the CRNs of the schedule to stay on
@@ -872,7 +875,32 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                   </div>
                 ))}
               </dl>
-              <WeekCalendar schedule={sched} colorOf={colorOf} blocked={prefs.blocked} daysOff={prefs.daysOff} />
+              <div role="tablist" aria-label="Calendar view" className="flex gap-1 border-b border-line">
+                {(
+                  [
+                    ["week", "Week", "calendar"],
+                    ["finals", "Finals week", "clock"],
+                  ] as const
+                ).map(([v, label, icon]) => (
+                  <button
+                    key={v}
+                    type="button"
+                    role="tab"
+                    aria-selected={view === v}
+                    onClick={() => setView(v)}
+                    className={`-mb-px inline-flex items-center gap-1.5 border-b-2 px-3 py-1.5 font-semibold ${view === v ? "border-action text-action" : "border-transparent text-muted hover:text-action"}`}
+                  >
+                    <Icon name={icon} />
+                    {label}
+                    {v === "finals" && examConflicts(sched).some((c) => c.kind !== "exactly-24h") && <Icon name="alert" className="text-heading" />}
+                  </button>
+                ))}
+              </div>
+              {view === "week" ? (
+                <WeekCalendar schedule={sched} colorOf={colorOf} blocked={prefs.blocked} daysOff={prefs.daysOff} />
+              ) : (
+                <FinalsWeek schedule={sched} colorOf={colorOf} termName={termLabel(term)} />
+              )}
               <ul className="border-t border-line" data-testid="schedule-sections">
                 {sched.bundles.flatMap((b) =>
                   b.sections.map((s) => (
@@ -936,7 +964,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                   onClick={() => {
                     try {
                       setIcsError(null);
-                      const ics = buildIcs(sched, term, termLabel(term));
+                      const ics = buildIcs(sched, term, termLabel(term), new Date(), { finals: icsFinals });
                       const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
                       const a = document.createElement("a");
                       a.href = url;
@@ -951,6 +979,12 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                   <Icon name="calendar" className="text-muted" />
                   Download .ics
                 </button>
+                {finalsOf(sched).length > 0 && (
+                  <label className="inline-flex items-center gap-1.5 text-sm">
+                    <input type="checkbox" checked={icsFinals} onChange={(e) => setIcsFinals(e.target.checked)} />
+                    Include final exams in the .ics
+                  </label>
+                )}
                 <ShareButton />
                 <a href={SELF_SERVICE_URL} className="inline-flex items-center gap-1.5 rounded bg-action px-3 font-semibold leading-9 text-white hover:bg-action-dark" rel="noopener">
                   Register in Self-Service
@@ -1010,7 +1044,7 @@ function CompareTop({ schedules, idx, onPick }: { schedules: Schedule[]; idx: nu
         <table className="w-full min-w-[40rem] border-collapse text-left text-sm">
           <thead className="bg-panel text-heading">
             <tr>
-              {["#", "Expected GPA", "Days off", "Earliest", "Latest", "Gaps a week", "Open now", "Different sections from #1"].map((h) => (
+              {["#", "Expected GPA", "Days off", "Earliest", "Latest", "Gaps a week", "Open now", "Finals", "Different sections from #1"].map((h) => (
                 <th key={h} scope="col" className="px-2 py-1.5 font-semibold whitespace-nowrap">
                   {h}
                 </th>
@@ -1033,6 +1067,9 @@ function CompareTop({ schedules, idx, onPick }: { schedules: Schedule[]; idx: nu
                 <td className="px-2 py-1.5 tnum">
                   {s.bundles.filter((b) => bundleOpen(b)).length} of {s.bundles.length}
                 </td>
+                <td className="px-2 py-1.5 whitespace-nowrap" data-testid="compare-finals">
+                  {finalsSummary(s)}
+                </td>
                 <td className="px-2 py-1.5">{i === 0 ? <span className="text-muted">Top pick</span> : diffFromFirst(schedules[0], s)}</td>
               </tr>
             ))}
@@ -1045,6 +1082,72 @@ function CompareTop({ schedules, idx, onPick }: { schedules: Schedule[]; idx: nu
         </button>
       )}
     </section>
+  );
+}
+
+/** Finals week for one schedule (#85): each day's exams, the Student Code conflicts, and courses with no final listed. */
+function FinalsWeek({ schedule, colorOf, termName }: { schedule: Schedule; colorOf: (course: string) => string; termName: string }) {
+  const days = finalsByDay(schedule);
+  const conflicts = examConflicts(schedule);
+  const pending = finalsPending(schedule);
+  const inConflict = (crn: string, date: string, s: number) =>
+    conflicts.some((c) => c.kind !== "exactly-24h" && c.exams.some((x) => x.crn === crn && x.date === date && x.s === s));
+  if (!days.length)
+    return (
+      <p className="rounded border border-dashed border-line p-4 text-center" data-testid="finals-week">
+        No final exams are listed for {termName} yet. The Registrar usually publishes the final exam schedule around the middle of the
+        term; check back then.
+      </p>
+    );
+  return (
+    <div className="space-y-3" data-testid="finals-week">
+      {conflicts.length > 0 && (
+        <ul className="space-y-1 rounded bg-panel p-3" data-testid="exam-conflicts">
+          {conflicts.map((c) => (
+            <li key={c.text} className="flex items-start gap-2" data-kind={c.kind}>
+              <Icon name="alert" className="mt-1 shrink-0 text-heading" />
+              <span>
+                {c.text}{" "}
+                <a href={STUDENT_CODE_EXAMS} target="_blank" rel="noreferrer" className="text-action underline">
+                  Student Code § 3-201
+                </a>
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+      <ol className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+        {days.map((d) => (
+          <li key={d.date} className="rounded border border-line p-2" data-date={d.date}>
+            <h4 className="font-semibold text-heading">
+              {examDay(d)}
+              {d.exams.length > 1 && <span className="font-normal text-muted"> · {d.exams.length} finals</span>}
+            </h4>
+            <ul className="mt-1 space-y-1">
+              {d.exams.map((x) => (
+                <li
+                  key={`${x.crn}-${x.s}`}
+                  className={`course-swatch border-l-4 pl-2 ${colorOf(x.course)} ${inConflict(x.crn, x.date, x.s) ? "font-semibold" : ""}`}
+                  data-conflict={inConflict(x.crn, x.date, x.s) || undefined}
+                >
+                  <span className="block">
+                    {x.course} <span className="text-sm text-muted">{x.code}</span>
+                    {inConflict(x.crn, x.date, x.s) && <Icon name="alert" className="ml-1 inline text-heading" />}
+                  </span>
+                  <span className="block text-sm tnum">{examTime(x)}</span>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ol>
+      {pending.length > 0 && (
+        <p className="text-sm text-muted">
+          No final listed for {pending.join(", ")}: not scheduled yet, scheduled by the department, or no final. Check the syllabus.
+        </p>
+      )}
+      <p className="text-sm text-muted">From Course Explorer&apos;s final exam schedule. Times and rooms can change; check the course page before finals week.</p>
+    </div>
   );
 }
 
