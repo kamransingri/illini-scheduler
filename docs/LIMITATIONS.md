@@ -94,6 +94,9 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
 - **The lunch break rule is fixed** at 45 free minutes between 11am and 2pm on each day with class.
 - **Expected GPA** in the builder uses each section's instructor GPA for that course, else the course average; it is
   a guide, not a prediction.
+- **Credit-hour warnings** use the campus undergraduate limits (18 hours in fall and spring, 12 for full-time). Your
+  college may add its own rules, graduate limits differ, and a variable-credit course counts as a range until you pick
+  its hours in Self-Service.
 
 ## Best pick score
 

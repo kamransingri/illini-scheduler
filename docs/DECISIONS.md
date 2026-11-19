@@ -989,3 +989,19 @@ Every judgment call made during the autonomous build, newest phase last.
   January fall grades are pending; in April the next fall is published and CITL posts next year's AP table; in July
   spring grades and the new catalog arrive; in October the next spring is published. Like term-watch and citl-watch,
   it opens one issue (none if this quarter's is still open) and changes nothing itself.
+
+## Credit-hour warnings (2026-11-19, issue #82)
+
+- **D35.1 The Registrar's limits, linked.** "Maximum & Minimum Enrollment Levels" (registrar.illinois.edu, read
+  2026-11-18): undergraduates may take 18 hours in fall or spring, 9 in summer and one class in winter without
+  overload approval ("consult your college office"); 12 or more hours is full-time (also Student Code § 3-301).
+  `web/lib/credits.ts` holds these with the URL; every warning links to it rather than restating college-specific
+  rules, which some colleges add.
+- **D35.2 Hours are a range.** A variable-credit course ("1 TO 4 hours.") adds its least and most, so a schedule
+  shows "15–18". A range that crosses a limit says so and names the course that decides it, instead of picking a
+  number. A course with no hours listed counts as 3, as the builder already did.
+- **D35.3 Over warns at once, under waits.** Over 18 shows as soon as the cart passes it. Under 12 waits for a
+  generated schedule, because a cart being filled passes through 6 and 9 hours on its way to 15. The cart shows a
+  running total. Summer and winter state no full-time number (it depends on the program and aid), so they only check
+  the cap. This replaces the old plain "more than 18 needs approval" line, which counted the most hours of every
+  course and had no source.

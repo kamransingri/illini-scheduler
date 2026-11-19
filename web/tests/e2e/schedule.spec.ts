@@ -173,3 +173,24 @@ test("lunch break: the window and length can be changed and go into the share li
   await expect(page.getByLabel("Lunch break length")).toHaveValue("60");
   await expect(page.getByLabel("Lunch window starts")).toHaveValue("690");
 });
+
+test("credit hours: a running total, the 18-hour overload warning, and under 12 once a schedule is built (#82)", async ({ page }) => {
+  await page.goto("./schedule/?c=CS124,CS128,CS225,RHET105,STAT107&t=2027-sp");
+  const total = page.getByTestId("cart-hours");
+  await expect(total).toContainText("Total: 18 credit hours in Spring 2027");
+  await expect(page.getByTestId("hour-warning")).toHaveCount(0); // 18 is the limit, not over it
+
+  await page.goto("./schedule/?c=CS124,CS128,CS225,RHET105,STAT107,MATH231&t=2027-sp");
+  await expect(total).toContainText("Total: 21 credit hours");
+  const over = page.locator('[data-testid="hour-warning"][data-kind="over"]');
+  await expect(over).toContainText("over the 18-hour limit for Spring 2027, so your college office has to approve an overload");
+  await expect(over.getByRole("link", { name: "Registrar's limits" })).toHaveAttribute("href", /registrar\.illinois\.edu\/registration\/registration-process\/max-min-enrollment-levels/);
+
+  // a light cart says nothing until a schedule is built, then flags full-time
+  await page.goto("./schedule/?c=CS124,STAT200&t=2027-sp");
+  await expect(total).toContainText("Total: 6 credit hours");
+  await expect(page.getByTestId("hour-warning")).toHaveCount(0);
+  await page.getByRole("button", { name: "Generate schedules" }).click();
+  await expect(page.locator('[data-testid="hour-warning"][data-kind="under"]')).toContainText("6 credit hours: under 12, so you wouldn't be full-time");
+  await expect(page.getByTestId("schedule-stats")).toContainText("Credit hours");
+});

@@ -650,8 +650,7 @@ export function warnings(inputs: CourseInput[], term: string, schedule: Schedule
     const block = inp.course.terms[term];
     if (!block || !block.sections.length) out.push(`${inp.key} is not offered in ${termLabel}.`);
   }
-  const credits = inputs.filter((i) => i.course.terms[term]?.sections.length).reduce((a, i) => a + i.credits, 0);
-  if (credits > 18) out.push(`${credits} credit hours: more than 18 needs approval from your college.`);
+  // credit-hour limits are lib/credits.ts hourWarnings, shown with a link to the Registrar's rule
   if (schedule) {
     for (const b of schedule.bundles)
       for (const s of b.sections) {
