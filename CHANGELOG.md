@@ -10,7 +10,15 @@ history).
 
 ## [Unreleased]
 
+## [0.13.0] - 2026-11-19
+
 ### Added
+
+- Schedule builder: each section of a schedule has a Lock button. A locked section stays in every schedule and the
+  other courses are built around it, and the schedule on screen stays open (#67). When a lock is why nothing fits, the
+  builder names the locked section and offers to unlock it; a locked section that breaks a must-have is named with the
+  rule it breaks ("starts at 10:00am, before 10:30am").
+- Schedule builder: the lunch break can be changed, 30 to 90 minutes anywhere from 10:00am to 3:30pm (#56).
 
 - Degree checklist: every concentration with requirements of its own is a program you can pick, 120 in all, such as
   "Psychology: Cognitive Neuroscience, BSLAS". Psychology's main page only names its concentrations, so its course
@@ -256,7 +264,8 @@ history).
 - A partial Rate My Professors error no longer stops `make data`.
 - RSS feeds are written as UTF-8.
 
-[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.12.1...HEAD
+[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.13.0...HEAD
+[0.13.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.12.1...v0.13.0
 [0.12.1]: https://github.com/kamransingri/illini-scheduler/compare/v0.12.0...v0.12.1
 [0.12.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.10.0...v0.11.0
