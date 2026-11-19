@@ -1,7 +1,9 @@
 # Contributing
 
 How changes get from a laptop to the live site: branches, commits, pull requests, versions and releases. Setup and
-commands are in the [README](README.md); the docs index is [docs/README.md](docs/README.md).
+commands are in the [README](README.md); the docs index is [docs/README.md](docs/README.md). How to write an issue
+or a pull request (titles, the shape of each kind of issue, labels, milestones, assignees) is in
+[docs/ISSUES-AND-PRS.md](docs/ISSUES-AND-PRS.md).
 
 ## Branches
 
@@ -45,7 +47,8 @@ conflicts on your branch, never on `main`. Rebase only a branch nobody else has 
 
 ## Pull requests
 
-1. Open one against `main`. The template asks for what changed, how it was checked and the changelog line.
+1. Open one against `main`. The template asks for the issues it closes, what changed in a few bullets and a one-line
+   test summary ([docs/ISSUES-AND-PRS.md](docs/ISSUES-AND-PRS.md#pull-requests)).
 2. CI runs two checks, and both must pass:
    - `test`: lint, type checks and unit tests
    - `versions`: version files agree, CHANGELOG covers the version, the version only goes up, and the branch name follows the convention
@@ -75,6 +78,10 @@ Never edit the version files by hand. `make release` keeps them in step, and CI 
 [CHANGELOG.md](CHANGELOG.md) lists what changed in each version, for the people using the site. Add your line under
 **Unreleased** in the same pull request as the change, under Added, Changed, Fixed or Removed. Leave out changes nobody
 will notice. CI warns, without failing, when code changed but the changelog didn't.
+
+The exported JSON is a public API ([docs/API.md](docs/API.md)). A new field needs a row there, or the tests fail.
+Renaming or removing a field, or changing what it means, also raises `DATA_FORMAT` in `pipeline/export.py` and gets a
+line under **Changed** or **Removed**.
 
 ## Releasing
 

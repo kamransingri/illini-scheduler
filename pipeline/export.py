@@ -35,6 +35,9 @@ RECENT_EVENT_DAYS = 7  # "Just opened" page window
 ONLINE_TYPES = {"ONL", "OLC", "OLD", "OD", "OLB"}
 MAX_BUNDLES = 400
 REVIEWS_PER_COURSE = 6  # RMP snippets per professor on a course page, that course's first (D18.4)
+# meta.json format_version (docs/API.md): raise it when an exported field is renamed or removed, or changes meaning or
+# units, and say so in the CHANGELOG. New fields don't change it.
+DATA_FORMAT = 1
 
 
 def r3(x: float | None) -> float | None:
@@ -401,6 +404,7 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA, rename: Renamer | No
     titles = {(c["s"], c["n"]): c["t"] for c in search_courses}
     write_seat_feeds(out_dir, all_events, titles)
     meta = {
+        "format_version": DATA_FORMAT,
         "built_at": meta_rows.get("built_at"), "current_term": CURRENT_TERM, "next_term": NEXT_TERM,
         "terms": {t: {k: terms[t][k] for k in ("label", "source", "checked_at")} for t in live_terms},
         "gpa": {"window": meta_rows.get("gpa_window", "").split(","), "recent": recent_terms,

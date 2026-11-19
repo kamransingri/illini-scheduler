@@ -1,16 +1,15 @@
-## What changes
+<!-- Title: "Area: what changes (#N)". Keep this short; the diff has the details. docs/ISSUES-AND-PRS.md -->
 
-<!-- What someone using the site (or working on the code) will notice, and why. Screenshots for anything visual. -->
+Closes #
 
-## How it was checked
+- <!-- What students (or whoever works on the code) will notice, in a few bullets. Screenshots at desktop and 375px for anything visual. -->
 
-<!-- Tests run, pages looked at (desktop and 375px), data checked. -->
+**Tests:** <!-- One line: what you ran and what you looked at. -->
 
-## Checklist
+<!-- **Different from the issue:** only if you changed the plan, and why. -->
 
 - [ ] Branch is `type/short-name` (feature, fix, docs, chore, data, hotfix, release)
-- [ ] `make lint` and `make test` pass
-- [ ] Playwright passes for the pages this touches (`cd web && npx playwright test <spec> --workers=1`)
-- [ ] CHANGELOG.md has a line under **Unreleased** if people will notice the change
-- [ ] If this ships a release: `make release V=…` and a "Release X.Y.Z" commit (CONTRIBUTING.md, Releasing)
-- [ ] README and docs updated where behaviour changed (LIMITATIONS, DECISIONS)
+- [ ] `make lint` and `make test` pass, and Playwright for the pages this touches (`--workers=1`)
+- [ ] CHANGELOG.md line under **Unreleased** if people will notice
+- [ ] Docs updated where behaviour changed (LIMITATIONS, DECISIONS, API.md for new data fields)
+- [ ] If this ships a release: `make release V=…` and a "Release X.Y.Z" commit
