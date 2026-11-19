@@ -47,9 +47,9 @@ describe("MCP server", () => {
   });
   afterAll(() => client.close());
 
-  it("lists four read-only tools with descriptions", async () => {
+  it("lists five read-only tools with descriptions", async () => {
     const { tools } = await client.listTools();
-    expect(tools.map((t) => t.name)).toEqual(["term_info", "search_courses", "get_course", "find_geneds"]);
+    expect(tools.map((t) => t.name)).toEqual(["term_info", "search_courses", "get_course", "find_geneds", "build_schedules"]);
     for (const t of tools) {
       expect(t.description!.length).toBeGreaterThan(150);
       expect(t.annotations).toMatchObject({ readOnlyHint: true, destructiveHint: false });
@@ -63,6 +63,20 @@ describe("MCP server", () => {
     expect(json(await client.callTool({ name: "search_courses", arguments: { query: "cs 124", limit: 1 } })).courses[0].code).toBe("CS 124");
     expect(json(await client.callTool({ name: "get_course", arguments: { course: "STAT100" } })).code).toBe("STAT 100");
     expect(json(await client.callTool({ name: "find_geneds", arguments: { gened: ["QR1"], limit: 2 } })).courses).toHaveLength(2);
+    const built = json(await client.callTool({ name: "build_schedules", arguments: { courses: ["cs124", "STAT 100"], no_classes_before: "10am", limit: 2 } }));
+    expect(built.schedules).toHaveLength(2);
+    expect(built.schedules[0].open_on_site).toMatch(/\/schedule\/\?t=2027-sp&c=CS124%2CSTAT100&e=600&i=0$/);
+  });
+
+  it("builds schedules for a renumbered course and leaves out codes it can't find", async () => {
+    const r = json(await client.callTool({ name: "build_schedules", arguments: { courses: ["ADV 283", "CS 999", "intro to cs"] } }));
+    expect(r.renumbered).toEqual(["ADV 283 is now ADV 250"]);
+    expect(r.courses).toEqual([{ code: "ADV 250" }]);
+    expect(r.warnings).toHaveLength(2);
+    const none = await client.callTool({ name: "build_schedules", arguments: { courses: ["CS 999"] } });
+    expect(none.isError).toBe(true);
+    const bad = await client.callTool({ name: "build_schedules", arguments: { courses: ["CS 124"], locked_crns: ["123"] } });
+    expect(bad.isError).toBe(true); // not a CRN: the schema rejects it
   });
 
   it("follows a renumbered course to its new number", async () => {
@@ -96,7 +110,7 @@ describe.runIf(existsSync(path.join(import.meta.dirname, "..", "dist", "index.js
     });
     const client = new Client({ name: "stdio-test", version: "0" });
     await client.connect(transport);
-    expect((await client.listTools()).tools).toHaveLength(4);
+    expect((await client.listTools()).tools).toHaveLength(5);
     expect(json(await client.callTool({ name: "get_course", arguments: { course: "CS 124", lectures_only: true } })).sections).toHaveLength(3);
     await client.close();
   });

@@ -1,4 +1,4 @@
-// The MCP server: four read-only tools over Illini Scheduler's public data (#99). Nothing is written anywhere and no
+// The MCP server: five read-only tools over Illini Scheduler's public data (#99). Nothing is written anywhere and no
 // student data is sent: each call reads the site's JSON (cached) and answers from it.
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
@@ -6,7 +6,7 @@ import { z } from "zod";
 import { parseCode } from "../../web/lib/search";
 import type { Course, GenedRow, Meta, SearchIndex } from "../../web/lib/types";
 import { NotFound, type DataSource } from "./data";
-import { CHECK_NOTE, findGeneds, GENED_HELP, getCourse, searchCourses, termInfo } from "./tools";
+import { buildSchedules, CHECK_NOTE, findGeneds, GENED_HELP, getCourse, PRESET_HELP, PRESET_IDS, searchCourses, termInfo, type Loaded } from "./tools";
 
 const READ_ONLY = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: true } as const;
 
@@ -27,13 +27,28 @@ async function guarded(src: DataSource, run: () => Promise<CallToolResult>): Pro
   }
 }
 
+/** A course by code, following a renumbering (renumbered.json); null when the data doesn't have it. */
+async function readCourse(src: DataSource, code: { subject: string; number: string }): Promise<{ course: Course; renamed: string | null } | null> {
+  try {
+    return { course: await src.read<Course>(`course/${code.subject}/${code.number}.json`), renamed: null };
+  } catch (e) {
+    if (!(e instanceof NotFound)) throw e;
+    const moved = (await src.read<Record<string, string>>("renumbered.json").catch(() => ({}) as Record<string, string>))[`${code.subject} ${code.number}`];
+    if (!moved) return null;
+    const [s, n] = moved.split(" ");
+    return { course: await src.read<Course>(`course/${s}/${n}.json`), renamed: `${code.subject} ${code.number} is now ${moved}` };
+  }
+}
+
+const clock = z.string().describe("A time like '10am', '2:30pm' or '14:30'");
+
 export function createServer(src: DataSource, version = "0.1.0"): McpServer {
   const server = new McpServer(
     { name: "illini-scheduler", title: "Illini Scheduler", version },
     {
       instructions:
         "Course data for the University of Illinois Urbana-Champaign (UIUC) from Illini Scheduler, an unofficial planner. " +
-        "Call term_info first to learn the current and next term. Answer from the tools, not from memory, and say which term and build date an answer comes from (each result's `data`). " +
+        "Call term_info first to learn the current and next term. To plan a week of classes, use build_schedules and give the student each schedule's open_on_site link. Answer from the tools, not from memory, and say which term and build date an answer comes from (each result's `data`). " +
         "Times are local Central time; days are M T W R F (R is Thursday). " +
         `${CHECK_NOTE} Link the course page (url) so the student can check it there.`,
     },
@@ -100,20 +115,9 @@ export function createServer(src: DataSource, version = "0.1.0"): McpServer {
       guarded(src, async () => {
         const code = parseCode(args.course);
         if (!code) return fail(`'${args.course}' isn't a course code. Use a code like 'CS 124', or search_courses.`);
-        const meta = await src.read<Meta>("meta.json");
-        let renamed: string | null = null;
-        let course: Course;
-        try {
-          course = await src.read<Course>(`course/${code.subject}/${code.number}.json`);
-        } catch (e) {
-          if (!(e instanceof NotFound)) throw e;
-          const moved = (await src.read<Record<string, string>>("renumbered.json").catch(() => ({}) as Record<string, string>))[`${code.subject} ${code.number}`];
-          if (!moved) return fail(`No course ${code.subject} ${code.number} in the data (it isn't offered this term or next and has no recent grades). Use search_courses.`);
-          const [s, n] = moved.split(" ");
-          course = await src.read<Course>(`course/${s}/${n}.json`);
-          renamed = `${code.subject} ${code.number} is now ${moved}`;
-        }
-        return ok({ ...(renamed ? { renumbered: renamed } : {}), ...getCourse(course, meta, src.site, args) });
+        const [meta, found] = await Promise.all([src.read<Meta>("meta.json"), readCourse(src, code)]);
+        if (!found) return fail(`No course ${code.subject} ${code.number} in the data (it isn't offered this term or next and has no recent grades). Use search_courses.`);
+        return ok({ ...(found.renamed ? { renumbered: found.renamed } : {}), ...getCourse(found.course, meta, src.site, args) });
       }),
   );
 
@@ -141,6 +145,76 @@ export function createServer(src: DataSource, version = "0.1.0"): McpServer {
       guarded(src, async () => {
         const [rows, meta] = await Promise.all([src.read<GenedRow[]>("geneds.json"), src.read<Meta>("meta.json")]);
         return ok(findGeneds(rows, meta, src.site, args));
+      }),
+  );
+
+  const weight = z.number().int().min(0).max(3).optional();
+  server.registerTool(
+    "build_schedules",
+    {
+      title: "Build schedules",
+      description:
+        "The site's schedule builder: every conflict-free combination of the courses' sections (each lecture with the discussion or lab linked to it) that keeps the must-haves, ranked by what matters to the student exactly as the site ranks them. " +
+        "Returns the top schedules (3 by default), each with a summary, expected GPA, credit hours, days off, first and last class, gaps, how many sections are open, finals, the CRNs to register with, every section's times, room, instructors and seats, warnings (closed or restricted sections, credit-hour limits, exam conflicts), and `open_on_site`: a link that opens that schedule in the site's builder. Give the student that link so they check the schedule there before registering. " +
+        "`cannot_schedule` says why a course has no section that fits, and `why_no_schedule` why no schedule fits at all (two courses that always overlap, a locked section, too many must-haves). " +
+        "Must-haves are hard rules: a schedule that breaks one is never shown. Priorities (what_matters) only change the order.",
+      inputSchema: {
+        courses: z.array(z.string()).min(1).max(10).describe("Course codes, e.g. ['CS 124', 'MATH 231', 'RHET 105']"),
+        term: z.string().optional().describe("Term id like '2027-sp' (from term_info). Default: next term"),
+        locked_crns: z
+          .array(z.string().regex(/^\d{5}$/))
+          .optional()
+          .describe("CRNs of sections that must be in every schedule (a lecture, discussion or lab the student already chose)"),
+        no_classes_before: clock.optional().describe("No class may start before this, e.g. '10am' (no 8am classes: '9am')"),
+        done_by: clock.optional().describe("No class may end after this, e.g. '5pm'"),
+        days_off: z.array(z.string()).optional().describe("Weekdays to keep free: 'M', 'T', 'W', 'R' (Thursday), 'F' or day names"),
+        lunch_break: z
+          .union([z.boolean(), z.object({ from: clock.optional(), to: clock.optional(), minutes: z.number().int().min(5).max(240).optional() })])
+          .optional()
+          .describe("A lunch break on every day with class. true: at least 45 minutes free between 11am and 2pm; or set the window and length"),
+        blocked_times: z
+          .array(z.object({ days: z.string().describe("e.g. 'TR' or 'MWF'"), from: clock, to: clock }))
+          .optional()
+          .describe("Times with no class, like work or practice: [{days: 'TR', from: '5pm', to: '7pm'}]"),
+        open_sections_only: z.boolean().optional().describe("Skip sections that were Closed at the last seat check (locked ones are kept). Default false"),
+        include_special_sections: z.boolean().optional().describe("Allow sections that look reserved for a program (odd codes, notes). Default false"),
+        what_matters: z
+          .object({
+            preset: z.enum(PRESET_IDS).optional().describe(`A starting point: ${PRESET_HELP}. The numbers below change it`),
+            gpa: weight.describe("Higher expected GPA, 0 (off) to 3 (high). Default 2"),
+            best_professor: weight.describe("Each lecture taught by the course's best-pick professor. Default 2"),
+            professor_ratings: weight.describe("Better Rate My Professors ratings. Default 1"),
+            open_seats: weight.describe("Sections open right now. Default 1"),
+            more_days_off: weight.describe("More weekdays without class. Default 1"),
+            fewer_gaps: weight.describe("Fewer gaps between classes. Default 1"),
+            avoid_early: weight.describe("Avoid classes before too_early_before. Default 1"),
+            avoid_late: weight.describe("Avoid classes after too_late_after. Default 0"),
+            short_walks: weight.describe("Avoid rushed walks across campus between back-to-back classes. Default 1"),
+            too_early_before: clock.optional().describe("Default '10am'"),
+            too_late_after: clock.optional().describe("Default '5pm'"),
+          })
+          .optional()
+          .describe("What matters to the student, used to rank the schedules that fit"),
+        limit: z.number().int().min(1).max(10).optional().describe("How many top schedules to return. Default 3"),
+      },
+      annotations: READ_ONLY,
+    },
+    async (args) =>
+      guarded(src, async () => {
+        const meta = await src.read<Meta>("meta.json");
+        const codes = args.courses.map((raw) => ({ raw, code: parseCode(raw) }));
+        const read = await Promise.all(codes.map(({ code }) => (code ? readCourse(src, code) : null)));
+        const found: Loaded[] = [];
+        const missing: string[] = [];
+        codes.forEach(({ raw, code }, i) => {
+          const r = read[i];
+          if (!code) missing.push(`courses: '${raw}' isn't a course code, so it's left out. Use search_courses to find the code.`);
+          else if (!r) missing.push(`courses: there's no ${code.subject} ${code.number} in the data, so it's left out. Use search_courses.`);
+          else if (!found.some((f) => f.course.subject === r.course.subject && f.course.number === r.course.number))
+            found.push({ course: r.course, ...(r.renamed ? { renumbered: r.renamed } : {}) });
+        });
+        if (!found.length) return fail(`None of the courses could be read. ${missing.join(" ")}`);
+        return ok(buildSchedules(found, missing, meta, src.site, args));
       }),
   );
 
