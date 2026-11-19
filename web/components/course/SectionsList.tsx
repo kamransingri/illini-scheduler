@@ -2,7 +2,9 @@
 import { useEffect, useState } from "react";
 import type { Course, TermBlock } from "@/lib/types";
 import { cisUrl, daysStr, fmtAgo, fmtDate, fmtTime, SELF_SERVICE_URL, termLabel } from "@/lib/format";
+import { eligibility } from "@/lib/restrictions";
 import { groupSections } from "@/lib/sections";
+import { useAboutYou } from "@/lib/useAboutYou";
 import CopyButton from "../CopyButton";
 import WatchButton from "../WatchButton";
 import { Badge, SeatStatus } from "../ui/Badge";
@@ -28,6 +30,7 @@ export default function SectionsList({
   /** The current or next term, which Just opened follows: each row gets a Watch button (#15). */
   watchable?: boolean;
 }) {
+  const { me } = useAboutYou();
   const groups = groupSections(block.sections);
   const flat = groups.flatMap((g) => g.sections);
   const focusAt = focusCrn ? flat.findIndex((s) => s.crn === focusCrn) : -1;
@@ -97,6 +100,7 @@ export default function SectionsList({
                             special
                           </Badge>
                         )}
+                        <SectionRestriction text={s.text} status={s.status} me={me} />
                       </span>
                     </span>
                     <span className="col-span-2 tnum md:col-span-1">
@@ -178,5 +182,19 @@ export default function SectionsList({
         </button>
       )}
     </div>
+  );
+}
+
+/** Whether this student can take a restricted section (#81), from About you; the full text is in the row's notes. */
+function SectionRestriction({ text, status, me }: { text: string; status: string; me: import("@/lib/restrictions").AboutYou }) {
+  const e = eligibility(text, status, me);
+  if (e.status === "open") return null;
+  const label = e.status === "no" ? "not for you" : e.status === "maybe" ? "may be restricted" : "restricted: you qualify";
+  return (
+    <span data-testid="restriction" data-status={e.status}>
+      <Badge icon={e.status === "ok" ? "check" : "alert"} title={e.because.join(" ")}>
+        {label}
+      </Badge>
+    </span>
   );
 }

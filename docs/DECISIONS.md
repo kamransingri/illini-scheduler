@@ -1052,3 +1052,26 @@ Every judgment call made during the autonomous build, newest phase last.
   backups and flags a chosen section that has closed since ("CS 225 AL1 just closed", with its backup), but doesn't
   regenerate the schedules, which would move them under a student mid-registration.
 
+## Section restrictions and About you (2026-11-19, issues #78 to #81)
+
+- **D38.1 Parsed in the browser, from text already exported.** Every section's `text` already carries Course
+  Explorer's restriction sentences, so `web/lib/restrictions.ts` reads them where they're used; #79 suggested a
+  pipeline step and an exported field, which would have added size and a second copy of the same text. Spring 2027
+  and Fall 2026 have 15,641 such sentences; 82% were read at first and the Banner program codes (`NDEG:`, `MCS:`,
+  `BSW:`) bring it to 87% (13,563). The rest are cohorts and dated rules, kept as "maybe".
+- **D38.2 Three answers, and only a clear mismatch is a no.** Level, class standing, first-time-freshman, graduate
+  or non-degree programs, colleges, and majors or minors by name can say "no". A department only says "ok" when it
+  shares a word with the major, else "maybe". Unknown groups in "Restricted to" are "maybe"; in "Not intended for"
+  they don't flag the section (most students aren't ESL-placed). Every sentence must pass, and the one that fails is
+  quoted as the reason.
+- **D38.3 Matching Banner's names to the catalog's.** Banner abbreviates ("Materials Sci & Engr", "Electrical &
+  Computer Eng", "CS and blended CS majors"); names are compared word by word with a short alias list (CS, DS, Engr,
+  Sci, Mgmt...) and prefix matching, so "Computer Science" fits "Computer Science + Economics, BSLAS". A wrong "no"
+  would hide a section, so the builder's must-have can be turned off (`eo=0` in the link) and a lock always wins.
+- **D38.4 About you.** Level and class standing are saved in the browser (`illini-scheduler:about-you:v1`); the
+  major and minor are the degree checklist's (`lib/mycourses.ts`), named and given a college from
+  `degrees/index.json`, so changing them in one place changes both. None of it is put in share links: a friend's
+  restrictions differ.
+- **D38.5 Not done.** The gen-ed finder's "hide sections I can't take" (#81): it works from `geneds.json`, which has
+  no sections, and adding them would make that file much larger. Course pages and the builder have the check.
+

@@ -30,6 +30,8 @@ export type CourseInput = {
   rmpPrior?: number | null;
   /** each professor's best-pick score for this course and term (lib/rank.ts rankProfs), by instructor key */
   profScores?: Record<string, number | null>;
+  /** CRNs whose restriction clearly excludes the student (lib/restrictions.ts), skipped when `eligibleOnly` is on */
+  cannot?: string[];
 };
 
 /** Must-haves (hard rules: a schedule breaking one is never shown) and what matters to you (weights 0-3). */
@@ -44,6 +46,7 @@ export type Prefs = {
   lunchMin: number; // the shortest free stretch that counts as lunch
   openOnly: boolean; // hard: skip sections that were Closed at the last check (locked ones are kept)
   includeSpecial: boolean; // allow sections flagged as restricted / special-program
+  eligibleOnly: boolean; // hard: skip sections whose restriction clearly excludes the student (About you, #81; locked ones are kept)
   softEarly: number; // "too early": a class starting before this counts against `early` (minutes)
   softLate: number; // "too late": a class ending after this counts against `late` (minutes)
   weights: { gpa: number; rmp: number; early: number; late: number; daysOff: number; compact: number; walking: number; open: number; prof: number };
@@ -63,6 +66,7 @@ export const DEFAULT_PREFS: Prefs = {
   lunchMin: LUNCH.min,
   openOnly: false,
   includeSpecial: false,
+  eligibleOnly: true,
   softEarly: 600,
   softLate: 1020,
   weights: { gpa: 2, rmp: 1, early: 1, late: 0, daysOff: 1, compact: 1, walking: 1, open: 1, prof: 2 },
@@ -200,7 +204,8 @@ export function prepareBundles(input: CourseInput, term: string, prefs: Prefs): 
   const raw = buildBundles(block.sections, input.key, prefs.includeSpecial, input.locked).filter(
     (b) =>
       input.locked.every((crn) => !block.sections.some((s) => s.crn === crn) || b.some((s) => s.crn === crn)) &&
-      (!prefs.openOnly || b.every((s) => !isClosed(s) || input.locked.includes(s.crn))),
+      (!prefs.openOnly || b.every((s) => !isClosed(s) || input.locked.includes(s.crn))) &&
+      (!prefs.eligibleOnly || b.every((s) => !input.cannot?.includes(s.crn) || input.locked.includes(s.crn))),
   );
   const byKey = new Map<string, Bundle>();
   for (const secs of raw) {
@@ -548,6 +553,8 @@ export function explainEmpty(input: CourseInput, term: string, prefs: Prefs): st
   if (!visible.length) return "only special/restricted-looking sections are left (tick “Include special sections” to allow them)";
   const open = prefs.openOnly ? visible.filter((b) => b.every((s) => !isClosed(s) || locked.includes(s.crn))) : visible;
   if (!open.length) return "every section was Closed at the last check (turn off “Open sections only” to plan around a waitlist)";
+  const eligible = prefs.eligibleOnly ? open.filter((b) => b.every((s) => !input.cannot?.includes(s.crn) || locked.includes(s.crn))) : open;
+  if (!eligible.length) return "every section is restricted to students you aren't, going by About you (turn off “Only sections I can register for” to see them anyway)";
   for (const crn of locked) {
     const s = block.sections.find((x) => x.crn === crn)!;
     const why = brokenRule(sectionMeetings(s, input.key), prefs);
@@ -645,7 +652,17 @@ export function summaryLine(st: ScheduleStats, fmt: (m: number | null) => string
 // Warnings
 // ---------------------------------------------------------------------------------------------------------
 
-export function warnings(inputs: CourseInput[], term: string, schedule: Schedule | null, termLabel: string): string[] {
+/**
+ * `restriction` (#81) words a section's restriction for this student: a string to show, null for nothing to say,
+ * undefined to fall back to the plain "is Restricted" line.
+ */
+export function warnings(
+  inputs: CourseInput[],
+  term: string,
+  schedule: Schedule | null,
+  termLabel: string,
+  restriction?: (course: string, s: Section) => string | null | undefined,
+): string[] {
   const out: string[] = [];
   for (const inp of inputs) {
     const block = inp.course.terms[term];
@@ -656,7 +673,10 @@ export function warnings(inputs: CourseInput[], term: string, schedule: Schedule
     for (const b of schedule.bundles)
       for (const s of b.sections) {
         if (/closed/i.test(s.status)) out.push(`${b.course} ${s.code} (CRN ${s.crn}) was Closed at the last snapshot.`);
-        else if (/restricted/i.test(s.status)) out.push(`${b.course} ${s.code} (CRN ${s.crn}) is Restricted: check who can register.`);
+        const note = restriction?.(b.course, s);
+        if (note) out.push(note);
+        else if (note === undefined && /restricted/i.test(s.status) && !/closed/i.test(s.status))
+          out.push(`${b.course} ${s.code} (CRN ${s.crn}) is Restricted: check who can register.`);
       }
     out.push(...examConflicts(schedule).map((c) => c.text));
   }
