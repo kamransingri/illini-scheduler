@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { decodeCart, encodeCart, onCartChange, readCart, writeCart, type CartItem } from "@/lib/cart";
 import { courseHref, dataUrl, daysStr, fmtGpa, fmtTime, SELF_SERVICE_URL, termLabel } from "@/lib/format";
+import { fmtCredits, hourWarnings, totalHours } from "@/lib/credits";
 import { buildIcs } from "@/lib/ics";
 import { hasPrefParams, loadPrefs, prefsFromParams, prefsToParams, PRESETS, savePrefs, timeRulesSummary } from "@/lib/prefs";
 import {
@@ -278,6 +279,19 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
   const colorOf = useCallback((course: string) => COURSE_COLORS[Math.max(0, cart.findIndex((c) => `${c.s} ${c.n}` === course)) % COURSE_COLORS.length], [cart]);
   const sched = result?.schedules[idx] ?? null;
   const warns = warnings(inputs, term, sched, termLabel(term));
+  // credit hours (#82): the generated schedule's courses once there is one, else what's in the cart and offered this term
+  const offered = inputs.filter((i) => i.course.terms[term]?.sections.length);
+  const counted = sched ? offered.filter((i) => sched.bundles.some((b) => b.course === i.key)) : offered;
+  const hoursRange = totalHours(counted.map((i) => i.course.credit_range));
+  const cartHours = totalHours(offered.map((i) => i.course.credit_range));
+  const hourWarns = hourWarnings(
+    hoursRange,
+    counted.length,
+    term,
+    termLabel(term),
+    counted.filter((i) => i.course.credit_range[0] && i.course.credit_range[0] !== i.course.credit_range[1]).map((i) => i.key),
+    !!sched,
+  );
   const updateItem = (s: string, n: string, f: (c: CartItem) => CartItem) => writeCart(cart.map((c) => (c.s === s && c.n === n ? f(c) : c)));
   const remove = (s: string, n: string) => writeCart(cart.filter((c) => !(c.s === s && c.n === n)));
   const itemOf = (course: string) => cart.find((c) => `${c.s} ${c.n}` === course);
@@ -306,7 +320,6 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
   const preset = PRESETS.find((p) => wKeys.every((k) => p.weights[k] === prefs.weights[k]));
   const softChanged = wKeys.some((k) => prefs.weights[k] !== DEFAULT_PREFS.weights[k]) || prefs.softEarly !== DEFAULT_PREFS.softEarly || prefs.softLate !== DEFAULT_PREFS.softLate;
   const mustDefault = must.length === 0;
-  const creditsOf = (s: Schedule) => s.bundles.reduce((a, b) => a + (inputs.find((x) => x.key === b.course)?.credits ?? 0), 0);
 
   const weightRow = (k: W, label: React.ReactNode, ariaLabel: string, disabled = false, note?: string) => (
     <div key={k} className={`grid grid-cols-[minmax(0,1fr)_6.5rem_3.75rem] items-center gap-x-2 ${disabled ? "opacity-50" : ""}`}>
@@ -474,6 +487,11 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                 );
               })}
             </ul>
+            {offered.length > 0 && (
+              <p className="mt-2 text-sm text-muted" data-testid="cart-hours">
+                Total: <span className="font-semibold text-heading tnum">{fmtCredits(cartHours)}</span> credit hours in {termLabel(term)}
+              </p>
+            )}
           </section>
 
           <Panel title="Must-haves" summary={mustDefault ? "None set: any time, any day." : must.join(", ")} open={panels.must} onToggle={() => setPanels((p) => ({ ...p, must: !p.must }))} testId="must-haves">
@@ -724,8 +742,19 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
               </button>
             </span>
           </div>
-          {warns.length > 0 && (
+          {warns.length + hourWarns.length > 0 && (
             <ul className="space-y-1 rounded bg-panel p-3" data-testid="warnings">
+              {hourWarns.map((w) => (
+                <li key={w.kind} className="flex items-start gap-2" data-testid="hour-warning" data-kind={w.kind}>
+                  <Icon name="alert" className="mt-1 shrink-0 text-heading" />
+                  <span>
+                    {w.text}{" "}
+                    <a href={w.href} target="_blank" rel="noreferrer" className="text-action underline">
+                      Registrar&apos;s limits
+                    </a>
+                  </span>
+                </li>
+              ))}
               {warns.map((w) => (
                 <li key={w} className="flex items-start gap-2">
                   <Icon name="alert" className="mt-1 text-heading" />
@@ -830,7 +859,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                 {(
                   [
                     ["Expected GPA", sched.stats.expectedGpa === null ? "–" : fmtGpa(sched.stats.expectedGpa)],
-                    ["Credit hours", String(creditsOf(sched))],
+                    ["Credit hours", fmtCredits(hoursRange)],
                     ["Days off", sched.stats.daysOff.length ? sched.stats.daysOff.join(", ") : "none"],
                     ["Day span", sched.stats.earliest === null ? "–" : `${fmtTime(sched.stats.earliest)}–${fmtTime(sched.stats.latest)}`.replace(/:00/g, "")],
                     ["Gaps a week", fmtHours(sched.stats.gapMinutes)],
