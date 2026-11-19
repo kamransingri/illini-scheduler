@@ -6,7 +6,7 @@ import { DEFAULT_PREFS, type Prefs } from "./schedule";
 
 const KEY = "illini-scheduler:prefs:v1";
 const W_ORDER: (keyof Prefs["weights"])[] = ["gpa", "rmp", "early", "daysOff", "compact", "walking", "late", "open", "prof"];
-const PARAMS = ["e", "l", "do", "nf", "lu", "lf", "lt", "lm", "oo", "sp", "b", "w", "se", "sl"];
+const PARAMS = ["e", "l", "do", "nf", "lu", "lf", "lt", "lm", "oo", "sp", "eo", "b", "w", "se", "sl"];
 
 const minutes = (v: string | null, lo = 0, hi = 1440): number | null => {
   if (v === null || v === "" || !/^\d+$/.test(v)) return null;
@@ -25,6 +25,7 @@ export function prefsToParams(p: Prefs, params: URLSearchParams): void {
   if (p.lunchMin !== DEFAULT_PREFS.lunchMin) params.set("lm", String(p.lunchMin));
   if (p.openOnly) params.set("oo", "1");
   if (p.includeSpecial) params.set("sp", "1");
+  if (!p.eligibleOnly) params.set("eo", "0");
   if (p.blocked.length) params.set("b", p.blocked.map((b) => `${b.d}-${b.s}-${b.e}`).join("."));
   if (p.softEarly !== DEFAULT_PREFS.softEarly) params.set("se", String(p.softEarly));
   if (p.softLate !== DEFAULT_PREFS.softLate) params.set("sl", String(p.softLate));
@@ -49,6 +50,7 @@ export function prefsFromParams(params: URLSearchParams): Prefs {
   if (lt - lf >= lm) Object.assign(p, { lunchFrom: lf, lunchTo: lt, lunchMin: lm });
   p.openOnly = params.get("oo") === "1";
   p.includeSpecial = params.get("sp") === "1";
+  p.eligibleOnly = params.get("eo") !== "0";
   p.softEarly = minutes(params.get("se"), 0, 1439) ?? DEFAULT_PREFS.softEarly;
   p.softLate = minutes(params.get("sl"), 1, 1440) ?? DEFAULT_PREFS.softLate;
   for (const part of (params.get("b") ?? "").split(".")) {
