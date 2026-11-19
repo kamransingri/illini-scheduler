@@ -208,6 +208,11 @@ export type LinkOutcome =
   | { kind: "filled" }
   /** the link is another saved plan, which is now active */
   | { kind: "switched"; plan: Plan }
+  /**
+   * the link has the courses of `plan` (now active) with other must-haves or priorities: they're shown without being
+   * saved, and the student picks whether they replace the plan's, become a new plan, or are dropped
+   */
+  | { kind: "rules"; plan: Plan }
   /** the link opened as a new plan; `from` was active before */
   | { kind: "created"; plan: Plan; from: Plan }
   /** there are MAX_PLANS already: the link is shown without being saved */
@@ -228,6 +233,12 @@ export function openLink(cart: CartItem[], linkPrefs: string | null, name: strin
   if (other) {
     switchPlan(other.id, store);
     return { kind: "switched", plan: other };
+  }
+  // the same courses as one of your plans with other rules: open that plan and ask (the open plan first)
+  const sameCourses = enc ? [active, ...p.plans].find((x) => x.cart === enc) : undefined;
+  if (sameCourses) {
+    if (sameCourses.id !== active.id) switchPlan(sameCourses.id, store);
+    return { kind: "rules", plan: sameCourses };
   }
   const named = name && cleanName(name) ? cleanName(name) : null;
   if (!active.cart) {

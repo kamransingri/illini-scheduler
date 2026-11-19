@@ -16,6 +16,16 @@ history).
   and the share link carries all of them (`mn=` takes a list). A course that counts toward two of your minors is
   pointed out, since the catalog doesn't give a rule for that. Links and saved lists with one minor open as before.
 
+## [0.14.1] - 2026-11-19
+
+### Changed
+
+- "New plan" in the schedule builder starts blank: no courses and the default must-haves and priorities. Duplicate
+  still copies a plan with everything in it.
+- A link with the same courses as one of your plans but other must-haves or priorities no longer opens as a new plan.
+  The builder opens your plan with the link's rules, doesn't save them, and asks whether to use them in your plan,
+  save them as a new plan, or keep yours.
+
 ## [0.14.0] - 2026-11-19
 
 ### Changed
@@ -336,7 +346,8 @@ history).
 - A partial Rate My Professors error no longer stops `make data`.
 - RSS feeds are written as UTF-8.
 
-[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.14.0...HEAD
+[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.14.1...HEAD
+[0.14.1]: https://github.com/kamransingri/illini-scheduler/compare/v0.14.0...v0.14.1
 [0.14.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.13.1...v0.14.0
 [0.13.1]: https://github.com/kamransingri/illini-scheduler/compare/v0.13.0...v0.13.1
 [0.13.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.12.1...v0.13.0

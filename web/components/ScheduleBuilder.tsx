@@ -188,7 +188,8 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
   const [auto, setAuto] = useState(false); // after the first run, results follow every change
   const [idx, setIdx] = useState(0);
   const [ready, setReady] = useState(false);
-  const [shared, setShared] = useState<{ mine: CartItem[] } | null>(null);
+  // a link shown without being saved: past MAX_PLANS (`mine` is your list), or your plan's courses with other rules
+  const [shared, setShared] = useState<{ mine: CartItem[]; rules?: { plan: string; name: string | null } } | null>(null);
   const [blockForm, setBlockForm] = useState({ days: 0, s: "17:00", e: "19:00" });
   const [icsError, setIcsError] = useState<string | null>(null);
   const [view, setView] = useState<"week" | "finals">("week");
@@ -207,7 +208,8 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
   activeId.current = plan?.id ?? null;
 
   // Initial state. A share link never overwrites a saved plan (#117): it's one of your plans, fills an empty one, or
-  // opens as a new plan. Only past MAX_PLANS is it shown without being saved, and you choose what happens to it.
+  // opens as a new plan. With your plan's courses but other rules, or past MAX_PLANS, it's shown without being saved
+  // and you choose what happens to it (D40.2).
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const t = params.get("t");
@@ -217,6 +219,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
       const fromUrl = decodeCart(params.get("c"));
       const out = openLink(fromUrl, linkRules, params.get("pn"));
       if (out.kind === "full") setShared({ mine: readCart() });
+      else if (out.kind === "rules") setShared({ mine: readCart(), rules: { plan: out.plan.name, name: params.get("pn") } });
       else if (out.kind === "created") setNotice({ kind: "created", name: out.plan.name, id: out.plan.id, from: out.from });
       else if (out.kind === "switched") setNotice({ kind: "switched", name: out.plan.name });
       setCart(out.kind === "full" ? fromUrl : readCart());
@@ -230,7 +233,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
     if (!window.matchMedia("(min-width: 1024px)").matches) setPanels({ must: false, soft: false, about: false });
     setReady(true);
     const offCart = onCartChange(() => {
-      setShared(null);
+      setShared((s) => (s?.rules ? s : null)); // the link's rules wait for an answer; a shared list is now yours
       setCart(readCart());
       setPlans(readPlans());
     });
@@ -497,8 +500,8 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
           onSwitch={(id) => switchTo(id)}
           onNew={(copy) => {
             setNotice(null);
-            // a new plan starts with no courses and the same must-haves and priorities (D40.3)
-            if (createPlan(copy ? { copyOf: plan.id } : { prefs: prefsParams(prefs) })) afterSwitch(false);
+            // a new plan starts blank: no courses and the default must-haves and priorities; Duplicate copies (D40.3)
+            if (createPlan(copy ? { copyOf: plan.id } : {})) afterSwitch(false);
           }}
           onRename={(name) => setPlans(renamePlan(plan.id, name))}
           onDelete={() => {
@@ -551,7 +554,42 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
           )}
         </div>
       )}
-      {shared && (
+      {shared?.rules && plan && (
+        <div className="rounded bg-panel p-4" role="status" data-testid="link-rules">
+          <p>
+            This link has the same courses as your plan &ldquo;{plan.name}&rdquo; with different must-haves or priorities. They&apos;re used below but
+            aren&apos;t saved until you choose.
+          </p>
+          <p className="mt-1 text-sm text-muted">
+            The link&apos;s must-haves: {must.join(", ") || "none"}. {plan.name}&apos;s: {mustSummary(loadPrefs() ?? DEFAULT_PREFS).join(", ") || "none"}.
+          </p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            <button className="rounded bg-action px-3 py-1.5 font-semibold text-white hover:bg-action-dark" onClick={() => setShared(null)}>
+              Use them in {plan.name}
+            </button>
+            <button
+              className="rounded border border-action bg-white px-3 py-1.5 font-semibold text-action hover:bg-action-tint disabled:border-line disabled:text-muted"
+              disabled={!plans || plans.plans.length >= MAX_PLANS}
+              title={plans && plans.plans.length >= MAX_PLANS ? `${MAX_PLANS} plans is the most this browser keeps` : undefined}
+              onClick={() => {
+                if (createPlan({ name: shared.rules?.name ?? "Shared plan", cart: encodeCart(cart), prefs: prefsParams(prefs) })) afterSwitch(true);
+              }}
+            >
+              Save as a new plan
+            </button>
+            <button
+              className="rounded border border-action bg-white px-3 py-1.5 font-semibold text-action hover:bg-action-tint"
+              onClick={() => {
+                setPrefs(loadPrefs() ?? DEFAULT_PREFS);
+                setShared(null);
+              }}
+            >
+              Keep {plan.name}&apos;s
+            </button>
+          </div>
+        </div>
+      )}
+      {shared && !shared.rules && (
         <div className="rounded bg-panel p-4" role="status">
           You opened a shared schedule. You already have {MAX_PLANS} plans, the most this browser keeps, so it isn&apos;t saved as a new plan.
           <div className="mt-2 flex flex-wrap gap-2">
@@ -1278,7 +1316,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                       const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
                       const a = document.createElement("a");
                       a.href = url;
-                      a.download = icsFileName(term, shared ? null : (plan?.name ?? null));
+                      a.download = icsFileName(term, shared && !shared.rules ? null : (plan?.name ?? null));
                       a.click();
                       setTimeout(() => URL.revokeObjectURL(url), 1000);
                     } catch (e) {
@@ -1635,7 +1673,7 @@ function PlanBar({
         </div>
       </div>
       <div className="flex flex-wrap gap-1.5">
-        <button type="button" className={btn} disabled={full} title={full ? fullNote : "A plan with no courses yet and the same must-haves"} onClick={() => onNew(false)}>
+        <button type="button" className={btn} disabled={full} title={full ? fullNote : "An empty plan: no courses, and the default must-haves and priorities"} onClick={() => onNew(false)}>
           <Icon name="plus" />
           New plan
         </button>
