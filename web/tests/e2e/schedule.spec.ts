@@ -117,3 +117,59 @@ test("the Best professors preset turns the priority up, and an old 8-digit link 
   await page.getByRole("button", { name: "Best professors" }).click();
   await expect(page.getByRole("slider", { name: "Best professor" })).toHaveValue("3");
 });
+
+test("lock a section from the results: the same schedule stays open and every schedule keeps it (#67)", async ({ page }) => {
+  await page.goto("./schedule/?c=CS124,STAT107&t=2027-sp");
+  await expect(page.getByTestId("cart").locator("li")).toHaveCount(2);
+  await page.getByRole("button", { name: "Generate schedules" }).click();
+  await expect(page.getByTestId("schedule-result")).toBeVisible();
+  await page.getByRole("button", { name: "Next schedule" }).click();
+  const rows = page.getByTestId("schedule-sections").locator("li");
+  const ranked = page.getByText(/ranked from/);
+  const before = { rows: await rows.allTextContents(), ranked: (await ranked.textContent())! };
+  const lock = page.getByRole("button", { name: /^Lock STAT 107 L\d$/ });
+  const name = (await lock.getAttribute("aria-label"))!;
+  const locked = page.getByRole("button", { name, exact: true });
+  await lock.click();
+  await expect(locked).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByLabel("Lock Lecture for STAT 107")).not.toHaveValue("");
+  await expect(page).toHaveURL(/STAT107%21\d{5}/);
+  await expect(ranked).not.toHaveText(before.ranked); // regenerated: fewer combinations
+  expect(await rows.allTextContents()).toEqual(before.rows);
+  const prev = page.getByRole("button", { name: "Previous schedule" });
+  while (await prev.isEnabled()) await prev.click();
+  const n = Math.min(5, Number((await page.getByText(/Schedule \d+ of \d+/).textContent())!.match(/of (\d+)/)![1]));
+  for (let i = 0; i < n; i++) {
+    await expect(locked).toHaveAttribute("aria-pressed", "true");
+    if (i < n - 1) await page.getByRole("button", { name: "Next schedule" }).click();
+  }
+  await locked.click();
+  await expect(locked).toHaveAttribute("aria-pressed", "false");
+  await expect(page).not.toHaveURL(/STAT107%21/);
+});
+
+test("a locked section that breaks a must-have is named with the rule it breaks (#67)", async ({ page }) => {
+  await page.goto("./schedule/?c=STAT107&t=2027-sp");
+  await expect(page.getByTestId("cart").locator("li")).toHaveCount(1);
+  const lecture = page.getByLabel("Lock Lecture for STAT 107");
+  await lecture.selectOption((await lecture.locator("option", { hasText: /^L1 LEC/ }).getAttribute("value"))!);
+  await page.getByLabel("No classes before").selectOption("630");
+  await page.getByRole("button", { name: "Generate schedules" }).click();
+  await expect(page.getByTestId("missing")).toContainText("your locked L1 LEC");
+  await expect(page.getByTestId("missing")).toContainText("before 10:30am");
+});
+
+test("lunch break: the window and length can be changed and go into the share link (#56)", async ({ page }) => {
+  await page.goto("./schedule/?c=STAT107&t=2027-sp");
+  await page.getByLabel("Keep a lunch break").check();
+  await page.getByLabel("Lunch break length").selectOption("60");
+  await page.getByLabel("Lunch window starts").selectOption("690");
+  await expect(page).toHaveURL(/lm=60/);
+  await expect(page).toHaveURL(/lf=690/);
+  // the window can't end before the break fits
+  const ends = await page.getByLabel("Lunch window ends").locator("option").evaluateAll((os) => os.map((o) => Number((o as HTMLOptionElement).value)));
+  expect(Math.min(...ends)).toBeGreaterThanOrEqual(750);
+  await page.reload();
+  await expect(page.getByLabel("Lunch break length")).toHaveValue("60");
+  await expect(page.getByLabel("Lunch window starts")).toHaveValue("690");
+});
