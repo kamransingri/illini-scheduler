@@ -12,6 +12,12 @@ history).
 
 ### Added
 
+- Schedule builder: a backup for every section of your schedule, for when a section fills during registration (#74,
+  #75, #76, #77). Each section shows the best other section of that course that still fits the rest of your week and
+  your must-haves, with its CRN, seat status and why it's the backup ("same time, same professor"); more are a click
+  away. "Use this instead" swaps it in (as a lock, so it goes into the share link) and keeps the rest of the schedule.
+  While the page is open, a chosen section the live seat feed sees close is flagged with its backup. When nothing
+  fits, it says why: closed, clashes with another course, or which must-have it breaks.
 - Schedule builder: a Finals week view and exam-conflict check (#83, #84, #85). Each schedule's finals are shown by
   day. The builder warns when finals overlap or when three or more start within 24 hours, which the Student Code
   counts as an exam conflict. The warning names the course expected to offer the conflict exam and says to contact

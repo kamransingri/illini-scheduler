@@ -121,7 +121,7 @@ export function backToBack(a: Pick<Mtg, "d" | "s" | "e" | "part">, b: Pick<Mtg, 
 // Bundles
 // ---------------------------------------------------------------------------------------------------------
 
-function sectionMeetings(s: Section, course: string): Mtg[] {
+export function sectionMeetings(s: Section, course: string): Mtg[] {
   return s.meetings.map((m) => ({ d: m.d, s: m.s, e: m.e, part: s.part || "1", b: m.b, crn: s.crn, course }));
 }
 
@@ -159,7 +159,7 @@ export function isValidBundle(bundle: Section[], sections: Section[]): boolean {
   return needed.size === comps.size;
 }
 
-function instructorStats(course: Course, secs: Section[], rmpPrior: number | null = null): { gpa: number | null; rmp: number | null } {
+export function instructorStats(course: Course, secs: Section[], rmpPrior: number | null = null): { gpa: number | null; rmp: number | null } {
   let gpa: number | null = null;
   let rmp: number | null = null;
   for (const s of secs) {
