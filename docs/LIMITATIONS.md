@@ -11,8 +11,9 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
   progress and schedule live in your browser's storage (and in the share link), so they don't sync between devices
   and are lost if you clear site data.
 - **Rebuilt once a day.** The site rebuilds nightly at 09:00 UTC from data read daily at 04:17 UTC. Course pages,
-  the gen-ed finder and the schedule builder show seat status from that daily read. Only the Just opened page and the
-  home page's Just opened panel are fresher (next section).
+  the gen-ed finder and the schedule builder show seat status from that daily read. The Just opened page, the home
+  page's Just opened panel and the schedule builder's backups are fresher (next section): a chosen section the live
+  feed sees close is flagged with its backup, but the schedules themselves aren't rebuilt from the live feed.
 
 ## Seat changes ("Just opened")
 

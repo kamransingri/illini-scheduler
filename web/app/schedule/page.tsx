@@ -18,7 +18,7 @@ export default function SchedulePage() {
           sections of the term never conflict with each other.
         </Info>
       </p>
-      <ScheduleBuilder meta={{ next_term: meta.next_term, current_term: meta.current_term, rmpAvailable: !meta.rmp_status.startsWith("unavailable"), rmpPrior: meta.score_priors?.rmp.quality ?? null, scorePriors: meta.score_priors ?? null }} />
+      <ScheduleBuilder meta={{ next_term: meta.next_term, current_term: meta.current_term, rmpAvailable: !meta.rmp_status.startsWith("unavailable"), rmpPrior: meta.score_priors?.rmp.quality ?? null, scorePriors: meta.score_priors ?? null, liveUrl: meta.live_url, checkedAt: Object.fromEntries(Object.entries(meta.terms).map(([t, v]) => [t, v.checked_at])) }} />
     </div>
   );
 }
