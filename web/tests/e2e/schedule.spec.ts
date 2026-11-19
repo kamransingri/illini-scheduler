@@ -194,3 +194,55 @@ test("credit hours: a running total, the 18-hour overload warning, and under 12 
   await expect(page.locator('[data-testid="hour-warning"][data-kind="under"]')).toContainText("6 credit hours: under 12, so you wouldn't be full-time");
   await expect(page.getByTestId("schedule-stats")).toContainText("Credit hours");
 });
+
+test("finals week: three finals in 24 hours is flagged with the Student Code rule, in the table and the .ics (#83)", async ({ page }) => {
+  // Spring finals aren't published until mid-term, so give each course a final on the same Monday
+  const finals: Record<string, [string, number, number, string][]> = {
+    "CS/124": [["2027-05-10", 480, 660, "Combined"], ["2027-05-12", 480, 660, "Conflict"]],
+    "STAT/107": [["2027-05-10", 810, 990, "Non Combined"]],
+    "RHET/105": [["2027-05-10", 1140, 1320, "Combined"]],
+  };
+  for (const [path, fx] of Object.entries(finals))
+    await page.route(`**/data/course/${path}.json`, async (route) => {
+      const course = await (await route.fetch()).json();
+      for (const s of course.terms["2027-sp"].sections) s.fx = fx;
+      await route.fulfill({ json: course });
+    });
+  await page.goto("./schedule/?c=CS124,STAT107,RHET105&t=2027-sp");
+  await expect(page.getByTestId("cart").locator("li")).toHaveCount(3);
+  await page.getByRole("button", { name: "Generate schedules" }).click();
+  await expect(page.getByTestId("warnings")).toContainText("Three finals within 24 hours: CS 124 (Mon, May 10, 8:00am), STAT 107 (Mon, May 10, 1:30pm) and RHET 105 (Mon, May 10, 7:00pm).");
+
+  await page.getByRole("tab", { name: "Finals week" }).click();
+  const fw = page.getByTestId("finals-week");
+  await expect(fw.locator('[data-date="2027-05-10"]')).toContainText("3 finals");
+  const conflict = page.getByTestId("exam-conflicts").locator('[data-kind="three-in-24h"]');
+  await expect(conflict).toContainText("CS 124 or RHET 105, whichever has more students, offers it"); // combined exams rank below STAT 107's
+  await expect(conflict.getByRole("link", { name: "Student Code § 3-201" })).toHaveAttribute("href", "https://studentcode.illinois.edu/article3/part2/3-201");
+  await expect(fw.locator("[data-conflict]")).toHaveCount(3);
+  await expect(page.getByTestId("compare-finals").first()).toHaveText("1 conflict");
+
+  // the .ics carries the finals unless the box is unticked
+  const box = page.getByLabel("Include final exams in the .ics");
+  await expect(box).toBeChecked();
+  const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Download .ics" }).click()]);
+  const text = await (await import("node:fs/promises")).readFile((await download.path())!, "utf8");
+  expect(text).toContain("SUMMARY:CS 124 final exam");
+  expect(text).toContain("DTSTART;TZID=America/Chicago:20270510T190000");
+
+  await page.getByRole("tab", { name: "Week", exact: true }).click();
+  await expect(fw).toBeHidden();
+});
+
+test("finals week before the Registrar publishes finals says so (#85)", async ({ page }) => {
+  await page.route("**/data/course/STAT/200.json", async (route) => {
+    const course = await (await route.fetch()).json();
+    for (const s of course.terms["2027-sp"].sections) delete s.fx;
+    await route.fulfill({ json: course });
+  });
+  await page.goto("./schedule/?c=STAT200&t=2027-sp");
+  await page.getByRole("button", { name: "Generate schedules" }).click();
+  await page.getByRole("tab", { name: "Finals week" }).click();
+  await expect(page.getByTestId("finals-week")).toContainText("No final exams are listed for Spring 2027 yet");
+  await expect(page.getByLabel("Include final exams in the .ics")).toHaveCount(0);
+});

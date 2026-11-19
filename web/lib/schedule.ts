@@ -2,6 +2,7 @@
 import type { Course, Section } from "./types";
 import { areaOf } from "./campus";
 import { K_RMP_RATINGS, shrink } from "./score";
+import { examConflicts } from "./finals";
 
 export type Mtg = { d: number; s: number | null; e: number | null; part: string; b: string; crn: string; course: string };
 
@@ -657,41 +658,8 @@ export function warnings(inputs: CourseInput[], term: string, schedule: Schedule
         if (/closed/i.test(s.status)) out.push(`${b.course} ${s.code} (CRN ${s.crn}) was Closed at the last snapshot.`);
         else if (/restricted/i.test(s.status)) out.push(`${b.course} ${s.code} (CRN ${s.crn}) is Restricted: check who can register.`);
       }
-    out.push(...finalClashes(schedule));
+    out.push(...examConflicts(schedule).map((c) => c.text));
   }
   return out;
 }
 
-export type FinalExam = { course: string; code: string; date: string; s: number; e: number };
-
-/** Each course's main final exam(s) in a schedule (the "Conflict" rows are the make-up slot, not the exam). */
-export function finalsOf(schedule: Schedule): FinalExam[] {
-  const out: FinalExam[] = [];
-  for (const b of schedule.bundles)
-    for (const sec of b.sections)
-      for (const [date, s, e, type] of sec.fx ?? [])
-        if (!/conflict/i.test(type) && s !== null && e !== null && !out.some((x) => x.course === b.course && x.date === date && x.s === s))
-          out.push({ course: b.course, code: sec.code, date, s, e });
-  return out;
-}
-
-const examDay = (x: FinalExam) => new Date(`${x.date}T12:00:00Z`).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "UTC" });
-const clock = (m: number) => `${Math.floor(m / 60) % 12 || 12}:${String(m % 60).padStart(2, "0")}${m < 720 ? "am" : "pm"}`;
-const examTime = (x: FinalExam) => `${clock(x.s)}–${clock(x.e)}`;
-
-/** Warnings for two courses whose final exams overlap on the same day (Course Explorer's final-exam schedule). */
-export function finalClashes(schedule: Schedule): string[] {
-  const exams = finalsOf(schedule);
-  const out: string[] = [];
-  for (let i = 0; i < exams.length; i++)
-    for (let j = i + 1; j < exams.length; j++) {
-      const a = exams[i];
-      const b = exams[j];
-      if (a.course === b.course || a.date !== b.date || !(a.s < b.e && b.s < a.e)) continue;
-      out.push(
-        `Final exams overlap: ${a.course} (${examDay(a)}, ${examTime(a)}) and ${b.course} (${examTime(b)}). ` +
-          `Ask about a conflict exam (Course Explorer lists the times on each course page).`,
-      );
-    }
-  return out;
-}

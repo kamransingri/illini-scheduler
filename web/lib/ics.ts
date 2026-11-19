@@ -1,5 +1,6 @@
 // iCalendar export with weekly recurrences (RFC 5545), America/Chicago time zone.
 import type { Schedule } from "./schedule";
+import { finalsOf } from "./finals";
 import { breakNames, TERM_DATES } from "./terms";
 
 const BYDAY: [number, string, number][] = [
@@ -13,7 +14,7 @@ const BYDAY: [number, string, number][] = [
 ];
 
 function esc(s: string): string {
-  return s.replace(/\\/g, "\\\\").replace(/;/g, "\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n");
+  return s.replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n");
 }
 
 /** Fold lines longer than 75 octets (RFC 5545 §3.1). */
@@ -75,7 +76,8 @@ const VTIMEZONE = [
   "END:VTIMEZONE",
 ];
 
-export function buildIcs(schedule: Schedule, term: string, termLabel: string, now = new Date()): string {
+/** `finals`: also add each course's final exam (Course Explorer's final-exam schedule) as a one-off event. */
+export function buildIcs(schedule: Schedule, term: string, termLabel: string, now = new Date(), opts: { finals?: boolean } = {}): string {
   const dates = TERM_DATES[term];
   if (!dates) throw new Error(`No instruction dates for ${term}`);
   const stamp = `${ymd(now)}T${pad(now.getUTCHours())}${pad(now.getUTCMinutes())}${pad(now.getUTCSeconds())}Z`;
@@ -120,6 +122,23 @@ export function buildIcs(schedule: Schedule, term: string, termLabel: string, no
           "END:VEVENT",
         );
       });
+    }
+  }
+  if (opts.finals) {
+    const t = (min: number) => `${pad(Math.floor(min / 60))}${pad(min % 60)}00`;
+    for (const x of finalsOf(schedule)) {
+      n++;
+      const day = x.date.replace(/-/g, "");
+      lines.push(
+        "BEGIN:VEVENT",
+        `UID:${term}-${x.crn}-final-${day}@illini-scheduler`,
+        `DTSTAMP:${stamp}`,
+        `DTSTART;TZID=America/Chicago:${day}T${t(x.s)}`,
+        `DTEND;TZID=America/Chicago:${day}T${t(x.e)}`,
+        `SUMMARY:${esc(`${x.course} final exam`)}`,
+        `DESCRIPTION:${esc(`Final exam for ${x.course} ${x.code} (CRN ${x.crn}), from Course Explorer's final exam schedule (${x.type}). Rooms and times can change: check the course page or your instructor.`)}`,
+        "END:VEVENT",
+      );
     }
   }
   lines.push("END:VCALENDAR");

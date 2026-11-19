@@ -13,13 +13,9 @@ import {
   hasLunch,
   locksToBlame,
   sectionsToWatch,
-  finalClashes,
-  finalsOf,
   isValidBundle,
   meetingsConflict,
-  type Bundle,
   type CourseInput,
-  type Schedule,
 } from "@/lib/schedule";
 import type { Course, Section } from "@/lib/types";
 
@@ -398,25 +394,6 @@ describe("explanations", () => {
   it("a lecture nobody has scored counts as average, not as zero", () => {
     const c = { ...twoProfs(false), profScores: { strong: 40 } }; // "weak" has no score
     expect(generate([c], "2027-sp", profOnly).schedules[0].bundles[0].sections[0].code).toBe("A");
-  });
-});
-
-describe("final exams", () => {
-  const withFinals = (course: string, fx: Section["fx"]): Bundle => ({
-    course, sections: [{ ...sec("AL1", "primary", "A"), fx }], meetings: [], crns: [], gpa: null, rmp: null, prof: null, alternatives: [],
-  });
-  const sched = (...bundles: Bundle[]): Schedule => ({ bundles, score: 0, stats: {} as Schedule["stats"] });
-
-  it("warns when two courses' finals overlap on the same day", () => {
-    const w = finalClashes(sched(withFinals("MATH 221", [["2026-12-14", 810, 990, "Combined"], ["2026-12-15", 480, 660, "Conflict"]]), withFinals("CS 124", [["2026-12-14", 900, 1080, "Combined"]])));
-    expect(w).toHaveLength(1);
-    expect(w[0]).toMatch(/^Final exams overlap: MATH 221 \(Mon, Dec 14, 1:30pm–4:30pm\) and CS 124 \(3:00pm–6:00pm\)\./);
-  });
-  it("different days, back-to-back times and make-up ('Conflict') slots don't count", () => {
-    expect(finalClashes(sched(withFinals("A 1", [["2026-12-14", 480, 660, "Combined"]]), withFinals("B 2", [["2026-12-15", 480, 660, "Combined"]])))).toEqual([]);
-    expect(finalClashes(sched(withFinals("A 1", [["2026-12-14", 480, 660, "Combined"]]), withFinals("B 2", [["2026-12-14", 660, 840, "Combined"]])))).toEqual([]);
-    expect(finalClashes(sched(withFinals("A 1", [["2026-12-14", 480, 660, "Combined"]]), withFinals("B 2", [["2026-12-14", 480, 660, "Conflict"]])))).toEqual([]);
-    expect(finalsOf(sched(withFinals("A 1", undefined)))).toEqual([]);
   });
 });
 
