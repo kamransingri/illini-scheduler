@@ -61,6 +61,15 @@ describe("who can register (#81)", () => {
     expect(eligibility("Not intended for ESL-placed students.", "Open", finSoph).status).toBe("ok");
   });
 
+  it("any of your minors counts when the section names minors", () => {
+    const dance = "Restricted to Dance or Dance and Kinesiology major(s) or minor(s).";
+    const two = me({ ...finSoph, minors: [{ name: "History Minor" }, { name: "Dance Minor" }] });
+    expect(eligibility(dance, "Open (Restricted)", two).status).toBe("ok");
+    expect(eligibility(dance, "Open (Restricted)", me({ ...finSoph, minors: [{ name: "History Minor" }] })).status).toBe("no");
+    // a majors-only section isn't opened by a minor
+    expect(eligibility("Restricted to Dance major(s).", "Open (Restricted)", two).status).toBe("no");
+  });
+
   it("class standing and level", () => {
     const jrsr = "Restricted to students with Junior or Senior class standing.";
     expect(eligibility(jrsr, "Open (Restricted)", csJunior).status).toBe("ok");
