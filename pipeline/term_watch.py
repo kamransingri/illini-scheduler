@@ -112,7 +112,7 @@ def issue_body(new: list[str], current_term: str, next_term: str) -> str:
         ]
         summers = [t for t in new if t.endswith("-su")]
         lines += [""] if summers else []
-        lines += [f"- [ ] `pipeline/fetch.py`: add `\"{t}\"` to `HISTORY_TERMS`, so the Summer courses page shows "
+        lines += [f"- [ ] `pipeline/fetch.py`: add `\"{t}\"` to `HISTORY_TERMS`, so the site's summer classes show "
                   f"{term_label(t)} instead of last summer (#35)" for t in summers]
     return "\n".join(lines) + "\n"
 

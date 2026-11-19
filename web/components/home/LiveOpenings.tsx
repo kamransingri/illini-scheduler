@@ -23,7 +23,7 @@ export default function LiveOpenings({ nextTerm, liveUrl }: { nextTerm: string; 
     return [...by.values()];
   }, [feed.events, nextTerm]);
   return (
-    <section aria-labelledby="live-h" className="rounded bg-panel p-4" data-testid="home-live">
+    <section aria-labelledby="live-h" className="rounded border-2 border-action p-4" data-testid="home-live">
       <div className="flex items-center justify-between gap-2">
         <h2 id="live-h" className="flex items-center gap-2 text-lg font-semibold text-heading">
           <Icon name="bolt" className="text-action" />

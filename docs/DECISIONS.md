@@ -1075,3 +1075,19 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D38.5 Not done.** The gen-ed finder's "hide sections I can't take" (#81): it works from `geneds.json`, which has
   no sections, and adding them would make that file much larger. Course pages and the builder have the check.
 
+## Summer everywhere and a simpler home page (2026-11-19, issues #121 to #124)
+
+- **D39.1 The home page is the search.** It had the search, four build numbers, a grid of the other pages, your saved
+  courses, "How it works" and a data line. Everything below the search went: the header already names every page and
+  the builder shows your courses. What's left is the search with often-searched courses and the Just opened box,
+  which now has no fill and a 2px `action` border so it reads as one box beside the search.
+- **D39.2 Summer is a term, not a page.** The Summer courses page (#35, D28) became the gen-ed finder's Summer view
+  (`?term=summer`), next to next term's gen-eds behind a two-button switch. It keeps the old page's filters, defaults to
+  gen-eds only, and "Any course" still lists every class. Course pages get a Summer line in "Before you register" from
+  `summer.json`, read once at build time. The search loads `summer.json` on the first keystroke, like `crns.json`
+  for CRNs, marks courses that run in summer, and also finds summer classes that have no page (no fall or spring section
+  this term or next), which open Course Explorer. The schedule builder's search leaves summer out: it plans next term
+  (D28.4).
+- **D39.3 Five tabs, and old links still work.** `/summer/` is a static page that redirects in the browser to the
+  Summer view with the same filters; a link without a gen-ed asks for every class, as the old page showed. With five
+  tabs the header fits its icons at 1024px (measured: about 100px to spare), so D28.5's no-icons band is gone.

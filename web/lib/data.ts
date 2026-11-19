@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { parseChangelog, type Release } from "./changelog";
 import type { DegreeIndex } from "./degree";
+import type { SummerData, SummerRow } from "./summer";
 import type { Course, Meta, SearchIndex } from "./types";
 
 const DATA_DIR = path.join(process.cwd(), "public", "data");
@@ -40,6 +41,17 @@ export function courseParams(): { subject: string; number: string }[] {
   // SPAN 210 was SPAN 200 (data/renumbered.csv): the e2e test for old URLs needs its page
   const ref = new Set(["CS 124", "MATH 221", "STAT 107", "RHET 105", "MATH 231", "STAT 200", "CS 225", "CS 128", "SPAN 210"]);
   return all.filter((c, i) => i < limit || ref.has(`${c.subject} ${c.number}`));
+}
+
+let summer: { data: SummerData; by: Map<string, SummerRow> } | null | undefined;
+
+/** The newest summer's classes (summer.json), read once per build; null when no summer is loaded. */
+export function getSummer(): { data: SummerData; by: Map<string, SummerRow> } | null {
+  if (summer === undefined) {
+    const data = readJson<SummerData>("summer.json");
+    summer = data ? { data, by: new Map(data.courses.map((r) => [`${r.s} ${r.n}`, r])) } : null;
+  }
+  return summer;
 }
 
 export function getDegreeIndex(): DegreeIndex {

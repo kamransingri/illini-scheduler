@@ -39,6 +39,8 @@ def test_the_newest_summer_lists_its_classes(tmp_path):
     assert stat["sess"] == ["full", "S2A"] and stat["online"] == "all" and stat["ran"] == 1
     assert stat["cr"] == [3.0, 4.0] and stat["gpa"] == 3.21 and stat["page"] is False
 
+    # a course with recent grades has a course file even when it isn't offered this term or next
+    assert summer.build(conn, ("2026-fa", "2027-sp"), {("ECON", "102"), ("STAT", "100")})["courses"][1]["page"] is True  # type: ignore[index]
     assert summer.export(conn, tmp_path, ("2026-fa", "2027-sp")) == "2 Summer 2026 classes"
     assert json.loads((tmp_path / "summer.json").read_text(encoding="utf-8"))["courses"][1]["s"] == "STAT"
 

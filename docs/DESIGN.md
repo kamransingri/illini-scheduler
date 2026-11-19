@@ -185,13 +185,10 @@ the navy header and footer) and the wordmark "**Illini** Scheduler" (bold, then 
 
 ### Home page
 
-Top to bottom: the page title and the search box (codes, titles, professors, CRNs) with often-searched courses as
-outlined chips; four build numbers on a ruled strip (course pages, courses offered next term, gen-eds, professors
-teaching) with tabular figures; the live Just opened panel on the right (the page's one `panel` surface: one row per
-course, CRN to copy, a "Live" badge in the seat-status Open colours only when the feed is fresh). Then the four other
-pages as a two-column ruled grid, each with its icon on an `action-tint` square, its name, the question it answers and
-what it does; a quiet `panel` line with your saved courses; and "How it works" as three numbered steps under a navy
-rule. No cards around the tools, no hero image, no gradients.
+The page title, the search box (codes, titles, professors, CRNs) with often-searched courses as outlined chips, and
+the live Just opened box on the right: no fill, a 2px `action` border, one row per course, CRN to copy, a "Live"
+badge in the seat-status Open colours only when the feed is fresh. Nothing else: every other page is in the header
+(DECISIONS D39.1). No hero image, no gradients.
 
 ### Shared pieces added
 
@@ -204,6 +201,6 @@ rule. No cards around the tools, no hero image, no gradients.
 | `JustOpened` `Freshness` | "Live" or "Daily" and how old the data is, in words |
 | `ProgramPicker` (v0.5.0) | A searchable list for one choice among many: type to filter (best match first, college underneath), or browse everything grouped under sticky headings. Same input style as the other fields, a chevron to say it opens, the current choice ticked |
 
-The schedule builder's left column uses the same pattern as the home page's "How it works": each block (Your courses,
+The schedule builder's left column uses numbered blocks under a navy rule: each block (Your courses,
 Must-haves, What matters to you) sits under a 4px navy rule, and the two rule blocks fold with a one-line summary of
 what's set. Sliders always show their level in words (Off / Low / Medium / High) next to the track.

@@ -1,23 +1,24 @@
 import type { Metadata } from "next";
-import SummerFinder from "@/components/SummerFinder";
-import Info from "@/components/ui/Info";
+import Link from "next/link";
+import SummerRedirect from "@/components/SummerRedirect";
+import { DEFAULT_SUMMER, summerHref } from "@/lib/summer";
 
-export const metadata: Metadata = { title: "Summer courses" };
+export const metadata: Metadata = { title: "Summer courses", robots: { index: false } };
 
+// The Summer courses page became the gen-ed finder's Summer view (#124). Old links and bookmarks land on the same
+// classes: the redirect carries their filters over (lib/summer.ts summerRedirect).
 export default function SummerPage() {
   return (
     <div>
-      <h1 className="font-display text-2xl font-bold text-heading">Summer courses</h1>
-      <p className="mt-2 mb-6 inline-flex max-w-3xl flex-wrap items-center">
-        Classes you can take over the summer, online or on campus: catch up, get ahead, or fit in a gen-ed. Session I runs four weeks from mid-May and Session II
-        eight weeks from mid-June; some classes run all summer.
-        <Info label="Where the summer data comes from">
-          Course Explorer&apos;s summer schedules, through Wade Fagen-Ulmschneider&apos;s course-catalog mirror (the newest summer published, and the two before it
-          for &quot;Summers&quot;). Independent study, internships, research and study abroad aren&apos;t listed. GPA is the recent average from the UIUC GPA
-          dataset, over every term.
-        </Info>
+      <SummerRedirect />
+      <h1 className="font-display text-2xl font-bold text-heading">Summer courses have moved</h1>
+      <p className="mt-2">
+        Summer classes are now in the{" "}
+        <Link href={summerHref({ ...DEFAULT_SUMMER, gened: "all" })} className="font-semibold text-action underline">
+          gen-ed finder&apos;s Summer view
+        </Link>
+        , on each course page and in the search.
       </p>
-      <SummerFinder />
     </div>
   );
 }
