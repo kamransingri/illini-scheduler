@@ -5,7 +5,9 @@ import { decodeCart, encodeCart, onCartChange, readCart, writeCart, type CartIte
 import { courseHref, dataUrl, daysStr, fmtGpa, fmtTime, SELF_SERVICE_URL, termLabel } from "@/lib/format";
 import { fmtCredits, hourWarnings, totalHours } from "@/lib/credits";
 import { examConflicts, examDay, examTime, finalsByDay, finalsOf, finalsPending, finalsSummary, STUDENT_CODE_EXAMS } from "@/lib/finals";
+import { backupsFor, type Backup, type SectionBackups } from "@/lib/backups";
 import { buildIcs } from "@/lib/ics";
+import { currentStatus, fmtSince, useNow, useSeatFeed } from "@/lib/live";
 import { hasPrefParams, loadPrefs, prefsFromParams, prefsToParams, PRESETS, savePrefs, timeRulesSummary } from "@/lib/prefs";
 import {
   bundleOpen,
@@ -38,7 +40,16 @@ import SearchBox from "./SearchBox";
 import WatchButton from "./WatchButton";
 import WeekCalendar, { COURSE_COLORS } from "./WeekCalendar";
 
-type MetaLite = { next_term: string; current_term: string; rmpAvailable: boolean; rmpPrior?: number | null; scorePriors?: ScorePriors | null };
+type MetaLite = {
+  next_term: string;
+  current_term: string;
+  rmpAvailable: boolean;
+  rmpPrior?: number | null;
+  scorePriors?: ScorePriors | null;
+  /** live seat feed (#77) and when each term's section data was read, so only newer live statuses override it */
+  liveUrl?: string;
+  checkedAt?: Record<string, string>;
+};
 type W = keyof Prefs["weights"];
 
 const COMPONENT_NAMES: Record<string, string> = { primary: "Lecture", DIS: "Discussion", LAB: "Lab", LBD: "Lab-discussion", Q: "Quiz", OD: "Online discussion", OLB: "Online lab", PR: "Practice" };
@@ -148,6 +159,8 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
   const [blockForm, setBlockForm] = useState({ days: 0, s: "17:00", e: "19:00" });
   const [icsError, setIcsError] = useState<string | null>(null);
   const [view, setView] = useState<"week" | "finals">("week");
+  const feed = useSeatFeed(meta.liveUrl);
+  const now = useNow();
   const [icsFinals, setIcsFinals] = useState(true);
   const [panels, setPanels] = useState({ must: true, soft: true });
   const autoRun = useRef<number | null>(null); // schedule index to open once a shared link's courses load
@@ -282,6 +295,30 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
   const colorOf = useCallback((course: string) => COURSE_COLORS[Math.max(0, cart.findIndex((c) => `${c.s} ${c.n}` === course)) % COURSE_COLORS.length], [cart]);
   const sched = result?.schedules[idx] ?? null;
   const warns = warnings(inputs, term, sched, termLabel(term));
+  // live seat statuses newer than this term's section data (#77): a section that closes during registration shows
+  // as closed and its backup moves up, without regenerating the schedules under the student's feet
+  const nEvents = feed.events?.length ?? 0;
+  const live = useMemo(() => {
+    const since = meta.checkedAt?.[term] ?? "";
+    const m = new Map<string, [string, string]>();
+    for (const [k, v] of currentStatus(feed.events ?? [], feed.live)) if (k.startsWith(`${term}|`) && v[1] > since) m.set(k.slice(term.length + 1), v);
+    return m;
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- feed.events is rebuilt every render; its length and live.json decide
+  }, [nEvents, feed.live, term, meta.checkedAt]);
+  const backups = useMemo(
+    () => (sched ? backupsFor(sched, inputs, term, prefs, { statusOf: (crn) => live.get(crn)?.[0] }) : []),
+    [sched, inputs, term, prefs, live],
+  );
+  const justClosed = sched
+    ? sched.bundles.flatMap((b) => b.sections.filter((s) => /closed/i.test(live.get(s.crn)?.[0] ?? "") && !/closed/i.test(s.status)).map((s) => ({ course: b.course, s })))
+    : [];
+  /** Swap a backup in (#76): lock its sections, and stay on the schedule that has it with everything else unchanged. */
+  const swapBackup = (course: string, bk: Backup) => {
+    const it = itemOf(course);
+    if (!it || !sched) return;
+    keepOpen.current = crnKey({ ...sched, bundles: sched.bundles.map((b) => (b.course === course ? bk.bundle : b)) });
+    updateItem(it.s, it.n, (c) => ({ ...c, locked: bk.bundle.crns }));
+  };
   // credit hours (#82): the generated schedule's courses once there is one, else what's in the cart and offered this term
   const offered = inputs.filter((i) => i.course.terms[term]?.sections.length);
   const counted = sched ? offered.filter((i) => sched.bundles.some((b) => b.course === i.key)) : offered;
@@ -901,6 +938,34 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
               ) : (
                 <FinalsWeek schedule={sched} colorOf={colorOf} termName={termLabel(term)} />
               )}
+              {justClosed.length > 0 && (
+                <ul className="space-y-1 rounded border-2 border-heading p-3" data-testid="just-closed" role="status">
+                  {justClosed.map(({ course, s }) => {
+                    const bk = backups.find((x) => x.section.crn === s.crn)?.backups[0];
+                    return (
+                      <li key={s.crn} className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                        <Icon name="alert" className="text-heading" />
+                        <strong>
+                          {course} {s.code} just closed
+                        </strong>
+                        <span className="text-sm text-muted">(checked {fmtSince(live.get(s.crn)![1], now)})</span>
+                        {bk ? (
+                          <>
+                            <span>
+                              Backup: {bk.changed.map((x) => x.code).join(" + ")}, CRN {bk.changed.map((x) => x.crn).join(", ")}
+                            </span>
+                            <button type="button" className="font-semibold text-action underline" onClick={() => swapBackup(course, bk)}>
+                              Use the backup
+                            </button>
+                          </>
+                        ) : (
+                          <span>{backups.find((x) => x.section.crn === s.crn)?.none ?? "No backup fits."}</span>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
               <ul className="border-t border-line" data-testid="schedule-sections">
                 {sched.bundles.flatMap((b) =>
                   b.sections.map((s) => (
@@ -933,6 +998,12 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                           <Badge icon="alert">Special section: {s.special}</Badge>
                         </span>
                       )}
+                      <BackupLine
+                        info={backups.find((x) => x.section.crn === s.crn)}
+                        live={live}
+                        now={now}
+                        onUse={(bk) => swapBackup(b.course, bk)}
+                      />
                     </li>
                   )),
                 )}
@@ -1082,6 +1153,58 @@ function CompareTop({ schedules, idx, onPick }: { schedules: Schedule[]; idx: nu
         </button>
       )}
     </section>
+  );
+}
+
+/** The backup under one section of the shown schedule (#76): its first choice inline, the others behind "more". */
+function BackupLine({ info, live, now, onUse }: { info: SectionBackups | undefined; live: Map<string, [string, string]>; now: number; onUse: (bk: Backup) => void }) {
+  if (!info) return null;
+  const desc = (bk: Backup) => {
+    const times = bk.changed
+      .flatMap((x) => x.meetings.map((m) => (m.s === null ? "no set time" : `${daysStr(m.d)} ${fmtTime(m.s)}–${fmtTime(m.e)}`)))
+      .join("; ");
+    const why = [bk.sameTime ? "same time" : null, bk.sameProf ? "same professor" : null].filter(Boolean).join(", ");
+    return { times, why };
+  };
+  const row = (bk: Backup, first: boolean) => {
+    const { times, why } = desc(bk);
+    const status = (x: Section) => live.get(x.crn)?.[0] ?? x.status;
+    return (
+      <span className="flex flex-wrap items-center gap-x-2 gap-y-1" data-testid={first ? "backup" : "backup-more"}>
+        {first && <span className="font-semibold text-heading">Backup:</span>}
+        <span>
+          {bk.changed.map((x) => `${x.code} ${x.type}`).join(" + ")} <span className="tnum">{times}</span>
+        </span>
+        {bk.changed.map((x) => (
+          <CopyButton key={x.crn} text={x.crn} />
+        ))}
+        {bk.changed.map((x) => status(x) && <SeatStatus key={`st-${x.crn}`} status={status(x)} />)}
+        {bk.changed.some((x) => live.has(x.crn)) && <span className="text-sm text-muted">checked {fmtSince(live.get(bk.changed.find((x) => live.has(x.crn))!.crn)![1], now)}</span>}
+        {why && <span className="text-sm text-muted">{why}</span>}
+        <button type="button" className="font-semibold text-action underline" onClick={() => onUse(bk)} aria-label={`Use ${bk.changed.map((x) => x.code).join(" + ")} instead of ${info.section.code} for ${info.course}`}>
+          Use this instead
+        </button>
+      </span>
+    );
+  };
+  if (!info.backups.length)
+    return (
+      <span className="w-full text-sm text-muted" data-testid="no-backup">
+        {info.none}
+      </span>
+    );
+  return (
+    <div className="w-full border-l-2 border-line pl-3 text-sm">
+      {row(info.backups[0], true)}
+      {info.backups.length > 1 && (
+        <details>
+          <summary className="cursor-pointer text-action">
+            {info.backups.length - 1} more backup{info.backups.length > 2 ? "s" : ""}
+          </summary>
+          <div className="mt-1 space-y-1">{info.backups.slice(1).map((bk) => <div key={bk.bundle.crns.join()}>{row(bk, false)}</div>)}</div>
+        </details>
+      )}
+    </div>
   );
 }
 
