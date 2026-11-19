@@ -34,7 +34,7 @@ export default function SummerFinder() {
   useEffect(() => {
     if (!restored) return;
     const q = summerToQuery(f);
-    window.history.replaceState(null, "", `${window.location.pathname}${q ? `?${q}` : ""}`);
+    window.history.replaceState(null, "", `${window.location.pathname}?term=summer${q ? `&${q}` : ""}`);
   }, [f, restored]);
 
   const recent = data?.recent.length ?? 0;
@@ -88,9 +88,9 @@ export default function SummerFinder() {
         </label>
         <label className="block">
           <span className="text-sm text-muted">Gen-ed</span>
-          <select className="mt-0.5 w-full rounded border border-line bg-white px-2 py-1.5" value={f.gened} onChange={(e) => set("gened", e.target.value)}>
-            <option value="">Any course</option>
+          <select aria-label="Gen-ed" className="mt-0.5 w-full rounded border border-line bg-white px-2 py-1.5" value={f.gened} onChange={(e) => set("gened", e.target.value)}>
             <option value="any">Any gen-ed</option>
+            <option value="all">Any course (not only gen-eds)</option>
             {GENED_GROUPS.map((g) => (
               <optgroup key={g.cat} label={g.label}>
                 {g.codes.map((c) => (
@@ -104,7 +104,7 @@ export default function SummerFinder() {
         </label>
         <label className="block">
           <span className="text-sm text-muted">Session</span>
-          <select className="mt-0.5 w-full rounded border border-line bg-white px-2 py-1.5" value={f.session} onChange={(e) => set("session", e.target.value)}>
+          <select aria-label="Session" className="mt-0.5 w-full rounded border border-line bg-white px-2 py-1.5" value={f.session} onChange={(e) => set("session", e.target.value)}>
             <option value="">Any session</option>
             {Object.entries(SESSION_LABEL).map(([k, v]) => (
               <option key={k} value={k}>

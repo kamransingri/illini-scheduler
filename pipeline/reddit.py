@@ -313,8 +313,8 @@ def load_context(conn: sqlite3.Connection, aliases: dict[str, list[str]] | None 
 
 def search_queries(conn: sqlite3.Connection, ctx: Context) -> list[str]:
     """Next term's undergraduate classes, most lecture sections first, in their two common spellings; then each of
-    their instructors' surnames with the subject. Independent study, research and the like are left out, as on the
-    Summer courses page."""
+    their instructors' surnames with the subject. Independent study, research and the like are left out, as in the
+    summer classes (pipeline/summer.py)."""
     from .fetch import NEXT_TERM
     from .summer import NOT_A_CLASS
 
