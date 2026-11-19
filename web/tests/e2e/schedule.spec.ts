@@ -303,3 +303,46 @@ test("375px: backup lines don't make the schedule scroll sideways", async ({ pag
   const [sw, iw] = await page.evaluate(() => [document.documentElement.scrollWidth, window.innerWidth]);
   expect(sw).toBeLessThanOrEqual(iw);
 });
+
+test("restrictions: About you decides which sections are left out, and the reason is Course Explorer's own words (#78)", async ({ page }) => {
+  // a junior Finance major; CS 124 AL1 is restricted to CS majors, AL2 is not intended for them
+  await page.addInitScript(() => {
+    if (!localStorage.getItem("illini-scheduler:mycourses:v1")) localStorage.setItem("illini-scheduler:mycourses:v1", JSON.stringify({ c: "", p: "finance-bs", n: "", x: [] }));
+  });
+  await page.goto("./schedule/?c=CS124&t=2027-sp");
+  await expect(page.getByTestId("cart").locator("li")).toHaveCount(1);
+  const about = page.getByTestId("about-you");
+  await about.getByRole("button", { name: /About you/ }).click();
+  await expect(about.getByTestId("about-major")).toContainText("Finance, BS (Gies College of Business)");
+  await page.getByLabel("Student level").selectOption("undergrad");
+  await page.getByLabel("Class standing").selectOption("junior");
+  await page.getByRole("button", { name: "Generate schedules" }).click();
+  const rows = page.getByTestId("schedule-sections").locator("li");
+  await expect(rows.first()).toBeVisible();
+  // the CS-majors lecture is never picked; the one for non-majors is, and it counts as yours
+  await expect(rows.filter({ hasText: "AL1" })).toHaveCount(0);
+  await expect(rows.filter({ hasText: "AL2" }).getByTestId("restriction")).toHaveAttribute("data-status", "ok");
+  // turning the must-have off brings AL1 back, flagged with its reason
+  await page.getByLabel("Only sections I can register for").uncheck();
+  await expect(page).toHaveURL(/eo=0/);
+  const lec = page.getByLabel("Lock Lecture for CS 124");
+  await lec.selectOption({ label: (await lec.locator("option", { hasText: "AL1" }).first().textContent())!.trim() });
+  await expect(page.getByTestId("warnings")).toContainText("is locked, but its restriction leaves you out: Restricted to CS and blended CS majors students.");
+  await expect(rows.filter({ hasText: "AL1" }).getByTestId("restriction")).toHaveAttribute("data-status", "no");
+  // About you stays in this browser: not in the share link
+  await expect(page).not.toHaveURL(/junior|finance/);
+});
+
+test("restrictions on the course page follow About you (#81)", async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem("illini-scheduler:mycourses:v1", JSON.stringify({ c: "", p: "computer-science-bs", n: "", x: [] }));
+    localStorage.setItem("illini-scheduler:about-you:v1", JSON.stringify({ level: "undergrad", standing: "sophomore" }));
+  });
+  await page.goto("./course/CS/124/");
+  const rows = page.locator('[id^="crn-"]');
+  await expect(rows.first()).toBeVisible(); // the course file has loaded
+  const forMajors = rows.filter({ hasText: "Restricted to CS and blended CS majors" }).first();
+  const notForMajors = rows.filter({ hasText: "Not intended for CS and blended CS majors" }).first();
+  await expect(notForMajors.getByTestId("restriction")).toHaveAttribute("data-status", "no"); // CS 124 has a non-majors lecture every term
+  if (await forMajors.count()) await expect(forMajors.getByTestId("restriction")).toHaveAttribute("data-status", "ok");
+});

@@ -98,6 +98,13 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
 - **The lunch break rule is fixed** at 45 free minutes between 11am and 2pm on each day with class.
 - **Expected GPA** in the builder uses each section's instructor GPA for that course, else the course average; it is
   a guide, not a prediction.
+- **Restrictions** are read from each section's "Restricted to ..." and "Not intended for ..." sentences in Course
+  Explorer and checked against About you (level, class standing, and the major and minor picked in the degree
+  checklist). About 87% of those sentences are read: level, class standing, majors and minors, colleges, departments
+  and graduate or non-degree programs. Program cohorts (James Scholars, Merit, living-learning communities, ESL
+  placement), sections that open to more students on a date, and Banner's own names for majors that differ from the
+  catalog's are shown as "may be restricted" with the text. A department is never a "no", since a major's department
+  can't be told from its name. Self-Service has the final word.
 - **Credit-hour warnings** use the campus undergraduate limits (18 hours in fall and spring, 12 for full-time). Your
   college may add its own rules, graduate limits differ, and a variable-credit course counts as a range until you pick
   its hours in Self-Service.
