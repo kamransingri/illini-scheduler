@@ -1101,13 +1101,15 @@ Every judgment call made during the autonomous build, newest phase last.
   other page had to change. The first visit moves the old cart and must-haves into "Plan A". At most 10 plans.
 - **D40.2 A share link never overwrites a plan.** A link is the open plan (same courses, and the same rules if it
   carries rules), another saved plan (which opens, with a note), fills the open plan if it has no courses, or opens as
-  a new plan named by its `pn` parameter or "Shared plan", with "Back to Plan A" and "Don't keep it". The same courses
-  with other rules is a new plan. Past 10 plans the link is shown unsaved and the student picks: replace the open plan
-  or go back. This replaces "Use this list / Back to my list": a plan you didn't want is easier to undo than a list
-  you replaced.
-- **D40.3 New, Duplicate, Delete.** "New plan" has no courses and the open plan's must-haves and priorities, since
-  work hours or "no 8am" belong to the student, not the plan; Duplicate copies everything. Delete has Undo instead of
-  a confirm dialog, and the last plan can't be deleted. A plan's name goes in its link (`pn`, left out for "Plan A")
+  a new plan named by its `pn` parameter or "Shared plan", with "Back to Plan A" and "Don't keep it". A link with one
+  of your plans' courses but other must-haves or priorities opens that plan with the link's rules, unsaved, and asks:
+  use them in the plan, save them as a new plan, or keep the plan's (0.14.0 made a new plan without asking, which
+  filled the list with copies of the same courses). Past 10 plans a link is shown unsaved and the student picks:
+  replace the open plan or go back. This replaces "Use this list / Back to my list": a plan you didn't want is easier
+  to undo than a list you replaced.
+- **D40.3 New, Duplicate, Delete.** "New plan" is blank: no courses and the default must-haves and priorities, so it
+  never carries rules the student forgot they set (0.14.0 kept the open plan's). Duplicate copies everything,
+  including the must-haves. Delete has Undo instead of a confirm dialog, and the last plan can't be deleted. A plan's name goes in its link (`pn`, left out for "Plan A")
   and in its `.ics` file name.
 - **D40.4 Comparing plans uses each plan's own rules.** The compare view generates each plan's schedules with that
   plan's must-haves and priorities and shows its best one in a column, with the top-schedules table's numbers. What

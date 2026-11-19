@@ -10,6 +10,14 @@ history).
 
 ## [Unreleased]
 
+### Changed
+
+- "New plan" in the schedule builder starts blank: no courses and the default must-haves and priorities. Duplicate
+  still copies a plan with everything in it.
+- A link with the same courses as one of your plans but other must-haves or priorities no longer opens as a new plan.
+  The builder opens your plan with the link's rules, doesn't save them, and asks whether to use them in your plan,
+  save them as a new plan, or keep yours.
+
 ## [0.14.0] - 2026-11-19
 
 ### Changed
