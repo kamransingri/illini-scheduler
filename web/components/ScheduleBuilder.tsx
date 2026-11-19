@@ -750,10 +750,10 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
             </div>
             <p className="text-sm" data-testid="about-major">
               <span className="font-semibold text-heading">Major:</span> {me.program ? `${me.program.name} (${me.program.college})` : "not picked"}
-              {me.minor && (
+              {me.minors.length > 0 && (
                 <>
                   {"; "}
-                  <span className="font-semibold text-heading">minor:</span> {me.minor.name}
+                  <span className="font-semibold text-heading">{me.minors.length === 1 ? "minor" : "minors"}:</span> {me.minors.map((m) => m.name).join(", ")}
                 </>
               )}
               .{" "}

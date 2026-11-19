@@ -96,9 +96,10 @@ export type AboutYou = {
   standing: Standing | "";
   /** the major picked in the degree checklist, with its catalog college */
   program: { name: string; college: string } | null;
-  minor: { name: string } | null;
+  /** the minors picked in the degree checklist */
+  minors: { name: string }[];
 };
-export const NOBODY: AboutYou = { level: "", standing: "", program: null, minor: null };
+export const NOBODY: AboutYou = { level: "", standing: "", program: null, minors: [] };
 
 const STOP = new Set(["and", "of", "the", "in", "for", "a", "bs", "ba", "bslas", "balas", "bfa", "bmus", "bmed", "bsed", "minor", "major", "majors", "program", "students", "dept"]);
 const ALIAS: Record<string, string[]> = {
@@ -166,8 +167,8 @@ function judge(c: Clause, me: AboutYou): V {
       return fit ? "ok" : "no";
     }
     case "major": {
-      if (!me.program && !me.minor) return "maybe";
-      const mine = [me.program?.name, /minor/i.test(c.text) ? me.minor?.name : undefined].filter((x): x is string => !!x);
+      if (!me.program && !me.minors.length) return "maybe";
+      const mine = [me.program?.name, ...(/minor/i.test(c.text) ? me.minors.map((m) => m.name) : [])].filter((x): x is string => !!x);
       if (c.names!.some((n) => mine.some((m) => nameFits(n, m)))) return "ok";
       // a concentration we can't see from the program name alone
       return /concentration/i.test(c.text) ? "maybe" : "no";
