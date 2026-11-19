@@ -37,7 +37,10 @@ export type Prefs = {
   latest: number | null; // hard: no meeting may end after this (minutes)
   daysOff: number; // hard: weekdays to keep free (bit mask, M=1 ... F=16)
   blocked: { d: number; s: number; e: number }[]; // hard: work, practice
-  lunch: boolean; // hard: a 45-minute break between 11am and 2pm on every day with class
+  lunch: boolean; // hard: a break of lunchMin minutes between lunchFrom and lunchTo on every day with class
+  lunchFrom: number; // the lunch window (minutes), 11am-2pm unless the student changes it (#56)
+  lunchTo: number;
+  lunchMin: number; // the shortest free stretch that counts as lunch
   openOnly: boolean; // hard: skip sections that were Closed at the last check (locked ones are kept)
   includeSpecial: boolean; // allow sections flagged as restricted / special-program
   softEarly: number; // "too early": a class starting before this counts against `early` (minutes)
@@ -45,12 +48,18 @@ export type Prefs = {
   weights: { gpa: number; rmp: number; early: number; late: number; daysOff: number; compact: number; walking: number; open: number; prof: number };
 };
 
+/** The default lunch window and the shortest break that counts as lunch. */
+export const LUNCH = { from: 660, to: 840, min: 45 };
+
 export const DEFAULT_PREFS: Prefs = {
   earliest: null,
   latest: null,
   daysOff: 0,
   blocked: [],
   lunch: false,
+  lunchFrom: LUNCH.from,
+  lunchTo: LUNCH.to,
+  lunchMin: LUNCH.min,
   openOnly: false,
   includeSpecial: false,
   softEarly: 600,
@@ -58,8 +67,10 @@ export const DEFAULT_PREFS: Prefs = {
   weights: { gpa: 2, rmp: 1, early: 1, late: 0, daysOff: 1, compact: 1, walking: 1, open: 1, prof: 2 },
 };
 
-/** Lunch window and the shortest break that counts as lunch. */
-export const LUNCH = { from: 660, to: 840, min: 45 };
+export type LunchWindow = { from: number; to: number; min: number };
+
+/** The student's lunch window. */
+export const lunchOf = (p: Pick<Prefs, "lunchFrom" | "lunchTo" | "lunchMin">): LunchWindow => ({ from: p.lunchFrom, to: p.lunchTo, min: p.lunchMin });
 
 /** Closed at the last check (Course Explorer's status; "Open (Restricted)" isn't closed). */
 export function isClosed(s: Section): boolean {
@@ -228,16 +239,22 @@ function bundleValue(b: Bundle, prefs: Prefs): number {
   );
 }
 
-function hardOk(meetings: Mtg[], prefs: Prefs): boolean {
+/** The first must-have these meetings break, in words ("it starts at 8:00am, before 9:00am"), or null. A course's own
+ * meetings that leave no lunch break can't get one back from other courses, so the lunch break is checked here too. */
+export function brokenRule(meetings: Pick<Mtg, "d" | "s" | "e" | "part">[], prefs: Prefs): string | null {
   for (const m of meetings) {
-    if (m.s === null) continue;
-    if (prefs.earliest !== null && m.s < prefs.earliest) return false;
-    if (prefs.latest !== null && m.e !== null && m.e > prefs.latest) return false;
-    if (prefs.daysOff & m.d) return false;
-    for (const bl of prefs.blocked) if (meetingsConflict(m, { d: bl.d, s: bl.s, e: bl.e, part: "1" })) return false;
+    if (m.s === null || m.e === null) continue;
+    if (prefs.earliest !== null && m.s < prefs.earliest) return `it starts at ${hhmm(m.s)}, before ${hhmm(prefs.earliest)}`;
+    if (prefs.latest !== null && m.e > prefs.latest) return `it ends at ${hhmm(m.e)}, after ${hhmm(prefs.latest)}`;
+    if (prefs.daysOff & m.d) return `it meets on ${dayLetters(prefs.daysOff & m.d)}, a day you keep free`;
+    for (const bl of prefs.blocked)
+      if (meetingsConflict(m, { d: bl.d, s: bl.s, e: bl.e, part: "1" })) return `it overlaps your blocked time ${dayLetters(bl.d)} ${hhmm(bl.s)}–${hhmm(bl.e)}`;
   }
-  return true;
+  if (prefs.lunch && !hasLunch(meetings, lunchOf(prefs))) return `it leaves no ${prefs.lunchMin}-minute lunch break between ${hhmm(prefs.lunchFrom)} and ${hhmm(prefs.lunchTo)}`;
+  return null;
 }
+
+const hardOk = (meetings: Mtg[], prefs: Prefs) => brokenRule(meetings, prefs) === null;
 
 // ---------------------------------------------------------------------------------------------------------
 // Generator
@@ -321,18 +338,18 @@ export function scoreSchedule(st: ScheduleStats, bundles: Bundle[], prefs: Prefs
   );
 }
 
-/** True when every day with a timed class keeps a free stretch of LUNCH.min minutes inside the lunch window. */
-export function hasLunch(meetings: Pick<Mtg, "d" | "s" | "e">[]): boolean {
+/** True when every day with a timed class keeps a free stretch of `win.min` minutes inside the lunch window. */
+export function hasLunch(meetings: Pick<Mtg, "d" | "s" | "e">[], win: LunchWindow = LUNCH): boolean {
   for (const [bit] of DAY_NAMES) {
     if (!meetings.some((m) => m.s !== null && m.d & bit)) continue;
-    const day = meetings.filter((m) => m.s !== null && m.e !== null && m.d & bit && m.s < LUNCH.to && m.e > LUNCH.from).sort((a, b) => a.s! - b.s!);
-    let free = LUNCH.from;
+    const day = meetings.filter((m) => m.s !== null && m.e !== null && m.d & bit && m.s < win.to && m.e > win.from).sort((a, b) => a.s! - b.s!);
+    let free = win.from;
     let ok = false;
     for (const m of day) {
-      if (m.s! - free >= LUNCH.min) ok = true;
+      if (m.s! - free >= win.min) ok = true;
       free = Math.max(free, m.e!);
     }
-    if (!ok && LUNCH.to - free < LUNCH.min) return false;
+    if (!ok && win.to - free < win.min) return false;
   }
   return true;
 }
@@ -357,10 +374,12 @@ function farPairs(a: Mtg[], b: Mtg[]): number {
  * optimistic bound for a partial schedule (days used, early days and rushed walks only grow; GPA/RMP use each
  * remaining course's best bundle; compactness is assumed perfect), so branches that can't beat the current
  * top `limit` are pruned. `budgetMs` is a safety net: if hit, the best schedules found so far are returned.
+ * `firstOnly` stops at the first schedule that fits: enough to ask whether any does.
  */
-export function generate(inputs: CourseInput[], term: string, prefs: Prefs, limit = 50, budgetMs = 1500): GenerateResult {
+export function generate(inputs: CourseInput[], term: string, prefs: Prefs, limit = 50, budgetMs = 1500, firstOnly = false): GenerateResult {
   const t0 = Date.now();
   const w = prefs.weights;
+  const lunch = lunchOf(prefs);
   const prepared = inputs.map((inp) => ({ inp, bundles: prepareBundles(inp, term, prefs) }));
   const emptyCourses = prepared.filter((p) => !p.bundles.length).map((p) => p.inp.key);
   const active = prepared.filter((p) => p.bundles.length).sort((a, b) => a.bundles.length - b.bundles.length);
@@ -447,13 +466,13 @@ export function generate(inputs: CourseInput[], term: string, prefs: Prefs, limi
   };
 
   const rec = (i: number, days: number, early: number, late: number, open: number, far: number, gW: number, gS: number, rN: number, rS: number, pN: number, pS: number) => {
-    if (truncated) return;
+    if (truncated || (firstOnly && total)) return;
     if (++nodes % 2048 === 0 && Date.now() - t0 > budgetMs) {
       truncated = true;
       return;
     }
     if (i === levels.length) {
-      if (prefs.lunch && !hasLunch(chosen.flatMap((c) => c.timed))) return;
+      if (prefs.lunch && !hasLunch(chosen.flatMap((c) => c.timed), lunch)) return;
       total++;
       // cheap exact score; build the full stats object only for schedules that make the top list
       const gpa = gW ? Math.max(0, Math.min(1, (gS / gW - 2) / 2)) : 0.5;
@@ -504,7 +523,7 @@ export function generate(inputs: CourseInput[], term: string, prefs: Prefs, limi
       rec(i + 1, days | n.days, early | n.early, late | n.late, open + n.open, far + addFar, ngW, ngS, nrN, nrS, npN, npS);
       chosen.pop();
       idx.pop();
-      if (truncated) return;
+      if (truncated || (firstOnly && total)) return;
     }
   };
   if (levels.length) rec(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -528,25 +547,69 @@ export function explainEmpty(input: CourseInput, term: string, prefs: Prefs): st
   if (!visible.length) return "only special/restricted-looking sections are left (tick “Include special sections” to allow them)";
   const open = prefs.openOnly ? visible.filter((b) => b.every((s) => !isClosed(s) || locked.includes(s.crn))) : visible;
   if (!open.length) return "every section was Closed at the last check (turn off “Open sections only” to plan around a waitlist)";
-  return "every section breaks one of your must-haves (start or end time, days off, or a blocked time)";
+  for (const crn of locked) {
+    const s = block.sections.find((x) => x.crn === crn)!;
+    const why = brokenRule(sectionMeetings(s, input.key), prefs);
+    if (why) return `your locked ${s.code} ${s.type} (${sectionTimes(s)}) breaks a must-have: ${why}`;
+  }
+  if (locked.length) return `every combination with your locked ${lockedCodes(input, block.sections)} breaks one of your must-haves (start or end time, days off, a blocked time or the lunch break)`;
+  return "every section breaks one of your must-haves (start or end time, days off, a blocked time or the lunch break)";
 }
 
-/** Pairs of courses that can never be scheduled together under the current rules. */
-export function clashingPairs(inputs: CourseInput[], term: string, prefs: Prefs): string[] {
-  const prepared = inputs.map((inp) => ({ key: inp.key, bundles: prepareBundles(inp, term, prefs) })).filter((p) => p.bundles.length);
-  const out: string[] = [];
+/** "MWF 11:00am–11:50am" for a section's timed meetings, "no set time" when it has none. */
+function sectionTimes(s: Section): string {
+  const t = s.meetings.filter((m) => m.s !== null && m.e !== null).map((m) => `${dayLetters(m.d)} ${hhmm(m.s!)}–${hhmm(m.e!)}`);
+  return t.length ? t.join(", ") : "no set time";
+}
+
+/** The locked sections of a course that are offered in the term, by code ("AL1 + AD3"). */
+function lockedSections(input: CourseInput, sections: Section[]): Section[] {
+  return sections.filter((s) => input.locked.includes(s.crn));
+}
+const lockedCodes = (input: CourseInput, sections: Section[]) => lockedSections(input, sections).map((s) => s.code).join(" + ");
+
+export type Clash = { a: string; b: string; text: string; locked: boolean };
+
+/** Pairs of courses that can never be scheduled together under the current rules. A course with locked sections is
+ * described by them ("your locked STAT 107 AL1 (MWF 11:00am–11:50am)"), since they are what can't move. */
+export function clashingPairs(inputs: CourseInput[], term: string, prefs: Prefs): Clash[] {
+  const prepared = inputs
+    .map((inp) => ({ inp, locked: lockedSections(inp, inp.course.terms[term]?.sections ?? []), bundles: prepareBundles(inp, term, prefs) }))
+    .filter((p) => p.bundles.length);
+  const out: Clash[] = [];
+  const label = (p: (typeof prepared)[number], first: boolean) => {
+    if (p.locked.length) return `${first ? "Your" : "your"} locked ${p.inp.key} ${p.locked.map((s) => s.code).join(" + ")} (${p.locked.map(sectionTimes).join("; ")})`;
+    const times = [...new Set(p.bundles.flatMap((b) => b.meetings.filter((m) => m.s !== null).map((m) => `${dayLetters(m.d)} ${hhmm(m.s!)}–${hhmm(m.e!)}`)))];
+    return `${p.inp.key} (${times.slice(0, 2).join(", ")})`;
+  };
   for (let i = 0; i < prepared.length; i++)
     for (let j = i + 1; j < prepared.length; j++) {
-      const ok = prepared[i].bundles.some((a) =>
-        prepared[j].bundles.some((b) => !a.meetings.some((m) => b.meetings.some((n) => meetingsConflict(m, n)))),
-      );
-      if (!ok) {
-        const times = (bs: Bundle[]) =>
-          [...new Set(bs.flatMap((b) => b.meetings.filter((m) => m.s !== null).map((m) => `${dayLetters(m.d)} ${hhmm(m.s!)}–${hhmm(m.e!)}`)))].slice(0, 2).join(", ");
-        out.push(`${prepared[i].key} (${times(prepared[i].bundles)}) always overlaps ${prepared[j].key} (${times(prepared[j].bundles)})`);
-      }
+      const ok = prepared[i].bundles.some((a) => prepared[j].bundles.some((b) => !a.meetings.some((m) => b.meetings.some((n) => meetingsConflict(m, n)))));
+      if (ok) continue;
+      const [a, b] = prepared[j].locked.length && !prepared[i].locked.length ? [prepared[j], prepared[i]] : [prepared[i], prepared[j]];
+      const verb = b.locked.length ? "overlaps" : "overlaps every section of";
+      out.push({
+        a: a.inp.key,
+        b: b.inp.key,
+        text: a.locked.length ? `${label(a, true)} ${verb} ${b.locked.length ? label(b, false) : `${b.inp.key} that fits your must-haves`}` : `${label(a, true)} always overlaps ${label(b, false)}`,
+        locked: !!(a.locked.length || b.locked.length),
+      });
     }
   return out;
+}
+
+export type LockBlame = { each: string[]; all: boolean };
+
+/**
+ * When no schedule fits: the courses whose locked sections are the reason, found by trying again without them (#67).
+ * `each`: unlocking any one of these courses gives at least one schedule. `all`: no single unlock is enough, but
+ * unlocking every course does. Both empty: the locks aren't the problem (or nothing is locked).
+ */
+export function locksToBlame(inputs: CourseInput[], term: string, prefs: Prefs, budgetMs = 300): LockBlame {
+  const lockedKeys = inputs.filter((i) => lockedSections(i, i.course.terms[term]?.sections ?? []).length).map((i) => i.key);
+  const fits = (unlock: string[]) => generate(inputs.map((i) => (unlock.includes(i.key) ? { ...i, locked: [] } : i)), term, prefs, 1, budgetMs, true).total > 0;
+  const each = lockedKeys.filter((k) => fits([k]));
+  return { each, all: !each.length && lockedKeys.length > 1 && fits(lockedKeys) };
 }
 
 function dayLetters(mask: number): string {

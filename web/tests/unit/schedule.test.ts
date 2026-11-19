@@ -11,6 +11,7 @@ import {
   DEFAULT_PREFS,
   generate,
   hasLunch,
+  locksToBlame,
   sectionsToWatch,
   finalClashes,
   finalsOf,
@@ -227,7 +228,7 @@ describe("explanations", () => {
   it("names two courses that always overlap", () => {
     const a = mk("261", [fixed("A", "primary", "*", T | R, 660, 740)]);
     const b = mk("200", [fixed("L1", "primary", "*", T | R, 660, 740)]);
-    expect(clashingPairs([a, b], "2027-sp", DEFAULT_PREFS)[0]).toMatch(/X 261 .* always overlaps X 200/);
+    expect(clashingPairs([a, b], "2027-sp", DEFAULT_PREFS)[0].text).toMatch(/X 261 .* always overlaps X 200/);
   });
   it("explains invalid locked combinations", () => {
     const c = mk("231", [fixed("AL1", "primary", "A", M, 600, 650), fixed("AD1", "DIS", "A", T, 600, 650), fixed("CL1", "primary", "C", M, 700, 750), fixed("CD1", "DIS", "C", T, 700, 750)]);
@@ -286,6 +287,71 @@ describe("explanations", () => {
     const b = mk("155", [fixed("B", "primary", "*", M, 780, 840), fixed("C", "primary", "*", M, 900, 950)]);
     const res = generate([a, b], "2027-sp", { ...DEFAULT_PREFS, lunch: true });
     expect(res.schedules.map((x) => x.bundles[1].sections[0].code)).toEqual(["C"]);
+  });
+  it("lunch break with the student's own window and length (#56)", () => {
+    const day = [{ d: M, s: 660, e: 710 }, { d: M, s: 760, e: 840 }]; // 11:50-12:40 free: 50 minutes
+    expect(hasLunch(day)).toBe(true);
+    expect(hasLunch(day, { from: 660, to: 840, min: 60 })).toBe(false);
+    expect(hasLunch(day, { from: 720, to: 900, min: 60 })).toBe(true); // 2:00-3:00 free
+    const a = mk("156", [fixed("A", "primary", "*", M, 660, 710)]);
+    const b = mk("157", [fixed("B", "primary", "*", M, 760, 840), fixed("C", "primary", "*", M, 900, 950)]);
+    expect(generate([a, b], "2027-sp", { ...DEFAULT_PREFS, lunch: true }).schedules).toHaveLength(2);
+    const hour = generate([a, b], "2027-sp", { ...DEFAULT_PREFS, lunch: true, lunchMin: 60 });
+    expect(hour.schedules.map((x) => x.bundles[1].sections[0].code)).toEqual(["C"]);
+  });
+  it("a course whose own sections leave no lunch break says so", () => {
+    const long = mk("158", [fixed("A", "primary", "*", T, 630, 830)]); // 10:30am-1:50pm
+    const p = { ...DEFAULT_PREFS, lunch: true };
+    expect(generate([long], "2027-sp", p).emptyCourses).toEqual(["X 158"]);
+    expect(explainEmpty(long, "2027-sp", p)).toMatch(/lunch break/);
+    long.locked = [long.course.terms["2027-sp"].sections[0].crn];
+    expect(explainEmpty(long, "2027-sp", p)).toBe(
+      "your locked A LEC (T 10:30am–1:50pm) breaks a must-have: it leaves no 45-minute lunch break between 11:00am and 2:00pm",
+    );
+  });
+  it("names the must-have a locked section breaks (#67)", () => {
+    const c = mk("159", [fixed("AL1", "primary", "*", M | W | F, 480, 530), fixed("AL2", "primary", "*", M | W | F, 600, 650)]);
+    c.locked = [c.course.terms["2027-sp"].sections[0].crn];
+    const p = { ...DEFAULT_PREFS, earliest: 540 };
+    expect(generate([c], "2027-sp", p).emptyCourses).toEqual(["X 159"]);
+    expect(explainEmpty(c, "2027-sp", p)).toBe("your locked AL1 LEC (MWF 8:00am–8:50am) breaks a must-have: it starts at 8:00am, before 9:00am");
+    expect(explainEmpty(c, "2027-sp", { ...DEFAULT_PREFS, daysOff: F })).toMatch(/it meets on F, a day you keep free/);
+  });
+  it("when a lock rules every schedule out, says which one and that unlocking it helps (#67)", () => {
+    const stat = mk("107", [fixed("L1", "primary", "*", M | W | F, 600, 650), fixed("L2", "primary", "*", M | W | F, 660, 710)]);
+    const cs = mk("124", [fixed("AL1", "primary", "*", M | W | F, 660, 710)]);
+    stat.locked = [stat.course.terms["2027-sp"].sections[1].crn]; // the 11am lecture, when CS 124's only lecture is
+    expect(generate([stat, cs], "2027-sp", DEFAULT_PREFS).schedules).toEqual([]);
+    const [clash] = clashingPairs([stat, cs], "2027-sp", DEFAULT_PREFS);
+    expect(clash).toEqual({
+      a: "X 107",
+      b: "X 124",
+      locked: true,
+      text: "Your locked X 107 L2 (MWF 11:00am–11:50am) overlaps every section of X 124 that fits your must-haves",
+    });
+    expect(locksToBlame([stat, cs], "2027-sp", DEFAULT_PREFS)).toEqual({ each: ["X 107"], all: false });
+    stat.locked = [];
+    expect(generate([stat, cs], "2027-sp", DEFAULT_PREFS).schedules).toHaveLength(1);
+    expect(locksToBlame([stat, cs], "2027-sp", DEFAULT_PREFS)).toEqual({ each: [], all: false });
+  });
+  it("locks that only rule schedules out together: no single unlock helps, unlocking all does", () => {
+    const a = mk("201", [fixed("A10", "primary", "*", M, 600, 650), fixed("A11", "primary", "*", M, 660, 710)]);
+    const b = mk("202", [fixed("B10", "primary", "*", M, 600, 650), fixed("B11", "primary", "*", M, 660, 710)]);
+    const c = mk("203", [fixed("C10", "primary", "*", M, 600, 650), fixed("C12", "primary", "*", M, 720, 770)]);
+    a.locked = [a.course.terms["2027-sp"].sections[1].crn];
+    b.locked = [b.course.terms["2027-sp"].sections[1].crn];
+    c.locked = [c.course.terms["2027-sp"].sections[0].crn];
+    expect(generate([a, b, c], "2027-sp", DEFAULT_PREFS).schedules).toEqual([]);
+    expect(clashingPairs([a, b, c], "2027-sp", DEFAULT_PREFS).map((x) => x.text)).toEqual([
+      "Your locked X 201 A11 (M 11:00am–11:50am) overlaps your locked X 202 B11 (M 11:00am–11:50am)",
+    ]);
+    expect(locksToBlame([a, b, c], "2027-sp", DEFAULT_PREFS)).toEqual({ each: [], all: true });
+  });
+  it("firstOnly stops at the first schedule that fits", () => {
+    const a = mk("204", [fixed("A", "primary", "*", M, 600, 650), fixed("B", "primary", "*", T, 600, 650)]);
+    const b = mk("205", [fixed("C", "primary", "*", W, 600, 650), fixed("D", "primary", "*", R, 600, 650)]);
+    expect(generate([a, b], "2027-sp", DEFAULT_PREFS).total).toBe(4);
+    expect(generate([a, b], "2027-sp", DEFAULT_PREFS, 50, 1500, true).total).toBe(1);
   });
   it("RMP ratings from a few students are pulled toward the UIUC average when a prior is given", () => {
     const c = mk("300", [

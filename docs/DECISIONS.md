@@ -955,3 +955,19 @@ Every judgment call made during the autonomous build, newest phase last.
   same course are still unclear: 374 course-and-pair cases in Grainger programs, 20 in LAS, 6 in FAA, and they need
   the advisors #18 names. Finance, BS's "One additional ... Finance course" gets `not_with: [business-core]` by the
   D13.11 reading of "additional", so FIN 221 doesn't count twice; it was the only Gies case.
+
+## Locks from the results and the lunch window (2026-11-18, issues #67 and #56)
+
+- **D33.1 Lock from the schedule you're looking at.** Each section of a shown schedule has a Lock toggle that writes
+  the same `!CRN` lock as the course list's menus (D8.6, D9.4: it replaces a lock of the same component). The schedule
+  on screen stays open: a schedule in the top 50 of a larger set is still in the top 50 of a smaller one containing it.
+- **D33.2 Saying when a lock is the reason.** A locked section that breaks a must-have is named with the rule it
+  breaks. A clash describes a locked course by its locked sections ("Your locked STAT 107 L2 (MWF 11:00am–11:50am)
+  overlaps every section of CS 124 that fits your must-haves"). When nothing fits, the builder tries again without
+  each course's locks, stopping at the first schedule that fits (300 ms each), and offers Unlock for every course whose
+  unlock helps; if only unlocking all of them helps, it says that, and if none helps, it says unlocking won't.
+- **D33.3 Lunch window.** 30 to 90 minutes, a window starting 10:00am-1:30pm and ending 12:00pm-3:30pm, in half hours.
+  The menus offer only combinations where the break fits the window; a link with one that doesn't falls back to
+  11am-2pm and 45 minutes. `lf`, `lt` and `lm` go into links only when they differ from that. A section choice whose
+  own meetings leave no lunch break is dropped before the search, since other courses can only take time away, so a
+  course that never allows lunch is named instead of "nothing fits".
