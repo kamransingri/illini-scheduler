@@ -204,6 +204,43 @@ test("a minor's tick boxes are kept apart from the major's", async ({ page }) =>
   const more = page.getByTestId("minor-checklist").locator('[data-group^="more-requirements"]');
   await more.getByLabel("I've met this requirement").check();
   await expect(more).toHaveAttribute("data-status", "done");
-  await expect(page).toHaveURL(/x=mn--more-requirements/);
+  await expect(page).toHaveURL(/x=history-minor--more-requirements/);
   await expect(req(page, "language")).toHaveAttribute("data-status", "open"); // the major's boxes are untouched
+});
+
+test("a link from before #111, with one minor and its old ticks, opens as it did", async ({ page }) => {
+  await page.goto("./degree/?p=finance-data-science&mn=history-minor&x=mn--more-requirements-2");
+  const more = page.getByTestId("minor-checklist").locator('[data-group^="more-requirements"]');
+  await expect(more).toHaveAttribute("data-status", "done");
+  await expect(page).toHaveURL(/x=history-minor--more-requirements/);
+});
+
+test("two minors: each gets its own checklist and ticks, and the link brings both back", async ({ page }) => {
+  await page.goto("./degree/?p=computer-science-bs&m=FSHN220");
+  await page.getByRole("combobox", { name: /Minor/ }).fill("nutrition");
+  await page.getByRole("option", { name: /^Human Nutrition Minor/ }).click();
+  const another = page.getByRole("combobox", { name: /Another minor/ });
+  await another.fill("history");
+  // a minor you've picked isn't offered again
+  await expect(page.getByRole("option", { name: /^Human Nutrition Minor/ })).toHaveCount(0);
+  await page.getByRole("option", { name: /^History Minor/ }).click();
+  await expect(page).toHaveURL(/mn=nutrition-minor%2Chistory-minor|mn=nutrition-minor,history-minor/);
+  const nutrition = page.locator('[data-testid="minor-checklist"][data-minor="nutrition-minor"]');
+  const history = page.locator('[data-testid="minor-checklist"][data-minor="history-minor"]');
+  await expect(nutrition.getByRole("heading", { name: /Human Nutrition Minor/ })).toBeVisible();
+  await expect(history.getByRole("heading", { name: /History Minor/ })).toBeVisible();
+  await history.locator('[data-group^="more-requirements"]').getByLabel("I've met this requirement").check();
+  await expect(page).toHaveURL(/x=history-minor--more-requirements/);
+  await expect(page.getByRole("combobox", { name: "Third minor" })).toHaveCount(0);
+
+  await page.reload();
+  await expect(nutrition.locator('[data-group^="required-courses"]')).toContainText("FSHN 220");
+  await expect(history.locator('[data-group^="more-requirements"]')).toHaveAttribute("data-status", "done");
+  await expect(page.getByRole("combobox", { name: "Second minor" })).toHaveValue("History Minor");
+
+  // removing the first moves the second up, with its ticks
+  await page.getByRole("button", { name: "Remove Human Nutrition Minor" }).click();
+  await expect(page.getByTestId("minor-checklist")).toHaveCount(1);
+  await expect(page).toHaveURL(/mn=history-minor(&|$)/);
+  await expect(history.locator('[data-group^="more-requirements"]')).toHaveAttribute("data-status", "done");
 });

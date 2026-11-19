@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { accepts, alsoCounts, canShare, evaluate, hydrate, needText, options, prereqNote, rankCourse, type Degree, type DegreeCourse, type DegreeGroup } from "@/lib/degree";
-import { decodeCourses, decodeState, encodeCourses, encodeState, stateFromParams, stateToParams, type MyCourse } from "@/lib/mycourses";
+import { decodeCourses, decodeState, encodeCourses, encodeState, MAX_MINORS, stateFromParams, stateToParams, ticksOf, type MyCourse } from "@/lib/mycourses";
 import { DEFAULT_WEIGHTS } from "@/lib/score";
 
 function group(p: Partial<DegreeGroup> & { id: string }): DegreeGroup {
@@ -213,7 +213,7 @@ describe("my courses encoding", () => {
     expect(encodeCourses(list)).toBe("STAT107,MATH220~c,CS124~p");
     expect(stateFromParams(new URLSearchParams("p=finance-data-science&m=STAT107&x=language,<bad>"))).toEqual({
       program: "finance-data-science",
-      minor: "",
+      minors: [],
       courses: [{ s: "STAT", n: "107", status: "done" }],
       ticked: ["language"],
       ap: [],
@@ -225,15 +225,45 @@ describe("my courses encoding", () => {
   });
 
   it("carries an optional minor and its ticked groups in the link and in storage", () => {
-    const st = stateFromParams(new URLSearchParams("p=computer-science-bs&mn=nutrition-minor&x=language,mn--electives"))!;
-    expect(st).toMatchObject({ program: "computer-science-bs", minor: "nutrition-minor", ticked: ["language", "mn--electives"] });
-    expect(stateFromParams(new URLSearchParams("mn=nutrition-minor"))).toMatchObject({ program: "", minor: "nutrition-minor" });
-    expect(stateFromParams(new URLSearchParams("p=x&mn=<bad>"))!.minor).toBe("");
+    const st = stateFromParams(new URLSearchParams("p=computer-science-bs&mn=nutrition-minor&x=language,nutrition-minor--electives"))!;
+    expect(st).toMatchObject({ program: "computer-science-bs", minors: ["nutrition-minor"], ticked: ["language", "nutrition-minor--electives"] });
+    expect(stateFromParams(new URLSearchParams("mn=nutrition-minor"))).toMatchObject({ program: "", minors: ["nutrition-minor"] });
+    expect(stateFromParams(new URLSearchParams("p=x&mn=<bad>"))!.minors).toEqual([]);
     const params = new URLSearchParams("mn=old-minor");
-    stateToParams({ ...st, minor: "" }, params);
+    stateToParams({ ...st, minors: [] }, params);
     expect(params.has("mn")).toBe(false); // removing the minor drops it from the link
     expect(decodeState(encodeState(st))).toEqual(st);
-    expect(decodeState(JSON.stringify({ c: "STAT107", p: "finance-data-science", x: [] })).minor).toBe(""); // lists saved before minors
+    expect(decodeState(JSON.stringify({ c: "STAT107", p: "finance-data-science", x: [] })).minors).toEqual([]); // lists saved before minors
+  });
+
+  it("opens one-minor links and saved lists from before #111 unchanged", () => {
+    // the old tick format, "mn--<group>", belongs to the one minor
+    const old = stateFromParams(new URLSearchParams("p=computer-science-bs&mn=nutrition-minor&x=language,mn--electives"))!;
+    expect(old).toMatchObject({ minors: ["nutrition-minor"], ticked: ["language", "nutrition-minor--electives"] });
+    expect(ticksOf(old.ticked)).toEqual(["language"]);
+    expect(ticksOf(old.ticked, "nutrition-minor")).toEqual(["electives"]);
+    const saved = decodeState(JSON.stringify({ c: "FSHN220", p: "computer-science-bs", n: "nutrition-minor", x: ["language", "mn--electives"] }));
+    expect(saved).toMatchObject({ minors: ["nutrition-minor"], ticked: ["language", "nutrition-minor--electives"] });
+    // an old minor tick with no minor picked is dropped, not given to the major
+    expect(stateFromParams(new URLSearchParams("p=x&x=language,mn--electives"))!.ticked).toEqual(["language"]);
+  });
+
+  it("two minors round-trip, each with its own ticks", () => {
+    const st = stateFromParams(new URLSearchParams("p=finance-data-science&mn=history-minor,nutrition-minor&x=language,history-minor--more,nutrition-minor--more"))!;
+    expect(st.minors).toEqual(["history-minor", "nutrition-minor"]);
+    expect(ticksOf(st.ticked, "history-minor")).toEqual(["more"]);
+    expect(ticksOf(st.ticked, "nutrition-minor")).toEqual(["more"]);
+    expect(ticksOf(st.ticked)).toEqual(["language"]);
+    const params = new URLSearchParams();
+    stateToParams(st, params);
+    expect(params.get("mn")).toBe("history-minor,nutrition-minor");
+    expect(stateFromParams(params)).toEqual(st);
+    expect(decodeState(encodeState(st))).toEqual(st);
+    // duplicates, junk and a fourth minor are dropped; ticks of a minor that isn't picked go with it
+    const messy = stateFromParams(new URLSearchParams(`mn=a-minor,a-minor,b--minor,b-minor,c-minor,d-minor&x=d-minor--x,c-minor--y`))!;
+    expect(messy.minors).toEqual(["a-minor", "b-minor", "c-minor"]);
+    expect(messy.minors.length).toBe(MAX_MINORS);
+    expect(messy.ticked).toEqual(["c-minor--y"]);
   });
 });
 
