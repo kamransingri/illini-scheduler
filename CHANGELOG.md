@@ -10,8 +10,12 @@ history).
 
 ## [Unreleased]
 
+## [0.14.0] - 2026-11-19
+
 ### Changed
 
+- Opening a shared schedule link never replaces your own courses: it opens as a new plan, or as your own plan when
+  it's one of yours.
 - Summer classes are part of the site instead of a separate tab (#121, #122, #123, #124). The gen-ed finder has a
   Summer view with the old page's filters (gen-ed, session, online or on campus, ran every summer). Course pages say
   when a course runs in summer, and the search marks summer courses and finds summer classes that have no page here.
@@ -22,6 +26,15 @@ history).
 
 ### Added
 
+- Named schedules in the schedule builder (#26, #117, #118, #119). Keep up to 10 plans, like "Plan A" and "Plan B if
+  CS 225 fills", each with its own courses, locks, must-haves, share link and .ics file. Create, duplicate, rename
+  and delete them (with Undo) above the builder; your current courses and must-haves become Plan A. **Compare plans**
+  puts each plan's best schedule side by side with the same numbers as the top-schedules table and says what's
+  different ("CS 225 at 2pm TR, Fridays off"); open any plan from there.
+- The MCP server builds schedules (#100). `build_schedules` takes a list of courses, locked CRNs, must-haves (earliest
+  start, latest end, days off, lunch break, blocked times, open sections only) and what matters to you, and returns
+  the top schedules with their CRNs, the way the site ranks them, or why nothing fits. Each schedule comes with a link
+  that opens it in the schedule builder.
 - An MCP server for your own AI app (#99). Add `mcp/` to Claude Desktop, Claude Code or another MCP client and ask
   about UIUC courses. It can search courses, show a course's sections with CRNs, seats, restrictions and professors'
   GPAs and ratings, find gen-eds ranked the way the site ranks them, and give the term dates. Answers come from the
@@ -317,7 +330,8 @@ history).
 - A partial Rate My Professors error no longer stops `make data`.
 - RSS feeds are written as UTF-8.
 
-[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.13.1...HEAD
+[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.14.0...HEAD
+[0.14.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.13.1...v0.14.0
 [0.13.1]: https://github.com/kamransingri/illini-scheduler/compare/v0.13.0...v0.13.1
 [0.13.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.12.1...v0.13.0
 [0.12.1]: https://github.com/kamransingri/illini-scheduler/compare/v0.12.0...v0.12.1

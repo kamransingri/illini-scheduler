@@ -1091,3 +1091,31 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D39.3 Five tabs, and old links still work.** `/summer/` is a static page that redirects in the browser to the
   Summer view with the same filters; a link without a gen-ed asks for every class, as the old page showed. With five
   tabs the header fits its icons at 1024px (measured: about 100px to spare), so D28.5's no-icons band is gone.
+
+## Named schedules and build_schedules (2026-11-19, issues #117 to #119 and #100)
+
+- **D40.1 The open plan stays in the old keys.** The cart (`illini-scheduler:cart:v1`) and must-haves
+  (`illini-scheduler:prefs:v1`) are read by the header's count, course pages, the gen-ed finder and Just opened. They
+  stay the open plan's, and `illini-scheduler:plans:v1` (`lib/plans.ts`) keeps the list: each plan's name, courses and
+  must-haves, and which one is open. Switching saves the open plan and moves the other one into the old keys, so no
+  other page had to change. The first visit moves the old cart and must-haves into "Plan A". At most 10 plans.
+- **D40.2 A share link never overwrites a plan.** A link is the open plan (same courses, and the same rules if it
+  carries rules), another saved plan (which opens, with a note), fills the open plan if it has no courses, or opens as
+  a new plan named by its `pn` parameter or "Shared plan", with "Back to Plan A" and "Don't keep it". The same courses
+  with other rules is a new plan. Past 10 plans the link is shown unsaved and the student picks: replace the open plan
+  or go back. This replaces "Use this list / Back to my list": a plan you didn't want is easier to undo than a list
+  you replaced.
+- **D40.3 New, Duplicate, Delete.** "New plan" has no courses and the open plan's must-haves and priorities, since
+  work hours or "no 8am" belong to the student, not the plan; Duplicate copies everything. Delete has Undo instead of
+  a confirm dialog, and the last plan can't be deleted. A plan's name goes in its link (`pn`, left out for "Plan A")
+  and in its `.ics` file name.
+- **D40.4 Comparing plans uses each plan's own rules.** The compare view generates each plan's schedules with that
+  plan's must-haves and priorities and shows its best one in a column, with the top-schedules table's numbers. What
+  differs is measured against the open plan: courses added or left out, a class at another time, days off gained or
+  lost. Picking a plan there opens it and shows its schedules.
+- **D40.5 build_schedules is the builder.** The MCP tool (#100) builds each course's input with the builder's own
+  `courseInput` (`lib/inputs.ts`: best-pick scores and restrictions), then runs `generate`, `explainEmpty`,
+  `clashingPairs` and `locksToBlame`. It answers for a student who just opened the site: default best-pick weights and
+  no About you. Its must-haves go through the site's URL round trip (`prefsToParams`, `prefsFromParams`) before
+  ranking, so each schedule's `open_on_site` link (term, cart, must-haves and `i`, the schedule's place in the list)
+  opens that schedule. The builder now generates on opening a link with `i` even when the rules are the defaults.

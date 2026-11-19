@@ -2,8 +2,9 @@
 
 export type CartItem = { s: string; n: string; locked: string[] };
 
-const KEY = "illini-scheduler:cart:v1";
-const EVENT = "illini-cart-change";
+/** The active plan's courses (lib/plans.ts keeps the other plans). */
+export const CART_KEY = "illini-scheduler:cart:v1";
+export const CART_EVENT = "illini-cart-change";
 
 export function encodeCart(items: CartItem[]): string {
   return items.map((i) => `${i.s}${i.n}${i.locked.length ? "!" + i.locked.join("!") : ""}`).join(",");
@@ -24,7 +25,7 @@ export function decodeCart(param: string | null | undefined): CartItem[] {
 
 export function readCart(): CartItem[] {
   try {
-    const raw = window.localStorage.getItem(KEY);
+    const raw = window.localStorage.getItem(CART_KEY);
     return raw ? decodeCart(raw) : [];
   } catch {
     return [];
@@ -33,11 +34,11 @@ export function readCart(): CartItem[] {
 
 export function writeCart(items: CartItem[]): void {
   try {
-    window.localStorage.setItem(KEY, encodeCart(items));
+    window.localStorage.setItem(CART_KEY, encodeCart(items));
   } catch {
     /* storage unavailable: cart still lives in the URL */
   }
-  window.dispatchEvent(new Event(EVENT));
+  window.dispatchEvent(new Event(CART_EVENT));
 }
 
 /** Add a course; with `lock`, also pin that section (a CRN found by search), replacing the course's other locks. */
@@ -65,10 +66,10 @@ export function inCart(s: string, n: string): boolean {
 }
 
 export function onCartChange(fn: () => void): () => void {
-  window.addEventListener(EVENT, fn);
+  window.addEventListener(CART_EVENT, fn);
   window.addEventListener("storage", fn);
   return () => {
-    window.removeEventListener(EVENT, fn);
+    window.removeEventListener(CART_EVENT, fn);
     window.removeEventListener("storage", fn);
   };
 }

@@ -1,8 +1,14 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
+import { decodeCart } from "../../web/lib/cart";
+import { courseInput } from "../../web/lib/inputs";
+import { prefsFromParams } from "../../web/lib/prefs";
+import { NOBODY } from "../../web/lib/restrictions";
+import { DEFAULT_PREFS, generate, type Prefs } from "../../web/lib/schedule";
+import { DEFAULT_WEIGHTS } from "../../web/lib/score";
 import type { Course, GenedRow, Meta, SearchIndex } from "../../web/lib/types";
-import { creditRange, findGeneds, genedsMatch, getCourse, pickTerm, searchCourses, termInfo } from "../src/tools";
+import { buildSchedules, creditRange, findGeneds, genedsMatch, getCourse, parseClock, parseDays, pickTerm, prefsOf, searchCourses, termInfo, type BuildArgs } from "../src/tools";
 
 const DATA = path.join(import.meta.dirname, "fixtures", "data");
 const read = <T>(f: string): T => JSON.parse(readFileSync(path.join(DATA, f), "utf8")) as T;
@@ -164,5 +170,110 @@ describe("find_geneds", () => {
   it("falls back to GPA when the build has no score priors", () => {
     const r = findGeneds(geneds, { ...meta, score_priors: null }, SITE, { gened: ["QR1"] });
     expect(r.ranked_by).toBe("recent average GPA");
+  });
+});
+
+describe("build_schedules (#100)", () => {
+  const course = (code: string) => read<Course>(`course/${code.replace(" ", "/")}.json`);
+  const build = (codes: string[], a: Omit<BuildArgs, "courses"> = {}) => buildSchedules(codes.map((c) => ({ course: course(c) })), [], meta, SITE, { courses: codes, ...a });
+  const ctx = { rmpPrior: meta.score_priors?.rmp.quality ?? null, priors: meta.score_priors ?? null, weights: DEFAULT_WEIGHTS, me: NOBODY };
+  /** The schedule builder on the site for these courses, locks and rules, run with the builder's own code. */
+  const site = (cart: string, prefs: Prefs, term = meta.next_term) =>
+    generate(
+      decodeCart(cart).map((c) => courseInput(`${c.s} ${c.n}`, course(`${c.s} ${c.n}`), c.locked, term, ctx)),
+      term,
+      prefs,
+    ).schedules;
+  const crns = (s: { bundles: { crns: string[] }[] }) => s.bundles.flatMap((b) => b.crns);
+  const crnOf = (code: string, section: string) => course(code).terms[meta.next_term].sections.find((s) => s.code === section)!.crn;
+
+  it("reads times and days the way people write them", () => {
+    expect(["10am", "10:30 AM", "2pm", "2:30 p.m.", "14:30", "5:00", "12pm", "12am", "9"].map(parseClock)).toEqual([600, 630, 840, 870, 870, 1020, 720, 0, 540]);
+    expect(["25:00", "10:75", "13pm", "noon", ""].map(parseClock)).toEqual([null, null, null, null, null]);
+    expect(["F", "Fri", "friday", "MWF", "tr", "Th", "Thursday", "Tue", "weekend"].map(parseDays)).toEqual([16, 16, 16, 21, 10, 8, 8, 2, null]);
+  });
+
+  it("turns must-haves and priorities into the site's rules", () => {
+    const { prefs, problems } = prefsOf({
+      courses: [],
+      no_classes_before: "10am",
+      done_by: "5pm",
+      days_off: ["F", "Monday"],
+      lunch_break: { from: "11:30am", to: "1:30pm", minutes: 60 },
+      blocked_times: [{ days: "TR", from: "5pm", to: "7pm" }],
+      open_sections_only: true,
+      what_matters: { preset: "sleep", gpa: 3, too_early_before: "11am" },
+    });
+    expect(problems).toEqual([]);
+    expect(prefs).toEqual({
+      ...DEFAULT_PREFS,
+      earliest: 600,
+      latest: 1020,
+      daysOff: 17,
+      lunch: true,
+      lunchFrom: 690,
+      lunchTo: 810,
+      lunchMin: 60,
+      blocked: [{ d: 10, s: 1020, e: 1140 }],
+      openOnly: true,
+      softEarly: 660,
+      weights: { gpa: 3, rmp: 1, early: 3, late: 0, daysOff: 1, compact: 1, walking: 1, open: 1, prof: 1 },
+    });
+    const bad = prefsOf({ courses: [], no_classes_before: "noon", days_off: ["Sat"], lunch_break: { from: "1pm", to: "1:15pm", minutes: 45 } });
+    expect(bad.problems).toHaveLength(3);
+    expect(bad.prefs.lunchFrom).toBe(DEFAULT_PREFS.lunchFrom); // a window that can't hold the break: the site's default
+  });
+
+  // three sample carts: the top schedules and their order are the site's, and each link reproduces its schedule
+  const samples: [string, string[], Omit<BuildArgs, "courses">, Prefs][] = [
+    ["defaults", ["CS 124", "STAT 100"], {}, DEFAULT_PREFS],
+    ["no class before 10am, a lunch break", ["CS 124", "STAT 100", "MATH 231"], { no_classes_before: "10am", lunch_break: true }, { ...DEFAULT_PREFS, earliest: 600, lunch: true }],
+    [
+      "open sections only, Sleep in",
+      ["PSYC 100", "MATH 231", "ADV 250", "CS 124"],
+      { open_sections_only: true, what_matters: { preset: "sleep" } },
+      { ...DEFAULT_PREFS, openOnly: true, weights: { gpa: 1, rmp: 1, early: 3, late: 0, daysOff: 1, compact: 1, walking: 1, open: 1, prof: 1 } },
+    ],
+  ];
+  for (const [name, codes, args, prefs] of samples)
+    it(`same schedules as the site: ${name}`, () => {
+      const r = build(codes, { ...args, limit: 5 });
+      const expected = site(codes.map((c) => c.replace(" ", "")).join(","), prefs);
+      expect(r.schedules.length).toBeGreaterThan(1);
+      expect(r.schedules.map((s) => s.crns)).toEqual(expected.slice(0, 5).map(crns));
+      r.schedules.forEach((s, i) => {
+        const u = new URL(s.open_on_site);
+        expect(u.origin + u.pathname).toBe(`${SITE}/schedule/`);
+        expect(u.searchParams.get("i")).toBe(String(i));
+        const fromLink = site(u.searchParams.get("c")!, prefsFromParams(u.searchParams), u.searchParams.get("t")!);
+        expect(crns(fromLink[i])).toEqual(s.crns);
+      });
+      expect(r.schedules[0]).toMatchObject({ rank: 1, summary: expect.stringContaining("Expected GPA") });
+      expect(r.schedules[0].sections.length).toBe(r.schedules[0].crns.length);
+    });
+
+  it("keeps locked sections in every schedule and goes into the link", () => {
+    const lec = crnOf("MATH 231", "CL2");
+    const r = build(["MATH 231", "STAT 100"], { locked_crns: [lec, "99999"] });
+    expect(r.schedules.every((s) => s.crns.includes(lec))).toBe(true);
+    expect(r.courses[0]).toEqual({ code: "MATH 231", locked_crns: [lec] });
+    expect(new URL(r.schedules[0].open_on_site).searchParams.get("c")).toBe(`MATH231!${lec},STAT100`);
+    expect(r.warnings).toEqual([expect.stringMatching(/^locked_crns: 99999 isn't a section of MATH 231, STAT 100 in Spring 2027/)]);
+  });
+
+  it("says why nothing fits", () => {
+    const clash = build(["PSYC 100", "MATH 231"], { locked_crns: [crnOf("PSYC 100", "C4"), crnOf("MATH 231", "AD@")] });
+    expect(clash.schedules).toEqual([]);
+    expect(clash.why_no_schedule!.join(" ")).toMatch(/locked PSYC 100 C4 .* overlaps your locked MATH 231 AD@/);
+    const busy = build(["CS 124", "PSYC 100"], { days_off: ["M", "W", "F"], no_classes_before: "6pm" });
+    expect(busy.cannot_schedule!.map((c) => c.course)).toContain("PSYC 100");
+    expect(busy.cannot_schedule!.find((c) => c.course === "PSYC 100")!.why).toMatch(/must-haves/);
+  });
+
+  it("reports the term, the build and arguments it couldn't use", () => {
+    const r = build(["STAT 100"], { term: "spring", done_by: "after lunch" });
+    expect(r.term).toBe("Spring 2027");
+    expect(r.data.built_at).toBe(meta.built_at);
+    expect(r.warnings).toHaveLength(2);
   });
 });

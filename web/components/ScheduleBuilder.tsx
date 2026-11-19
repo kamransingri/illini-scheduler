@@ -10,6 +10,25 @@ import { buildIcs } from "@/lib/ics";
 import { eligibility, type AboutYou, type Eligibility, type Level, type Standing } from "@/lib/restrictions";
 import { useAboutYou } from "@/lib/useAboutYou";
 import { currentStatus, fmtSince, useNow, useSeatFeed } from "@/lib/live";
+import { courseInput, profScoresFor, type InputContext } from "@/lib/inputs";
+import {
+  activePlan,
+  createPlan,
+  deletePlan,
+  icsFileName,
+  MAX_NAME,
+  MAX_PLANS,
+  onPlansChange,
+  openLink,
+  planDifferences,
+  readPlans,
+  renamePlan,
+  restorePlan,
+  switchPlan,
+  type Deleted,
+  type Plan,
+  type Plans,
+} from "@/lib/plans";
 import { hasPrefParams, loadPrefs, prefsFromParams, prefsToParams, PRESETS, savePrefs, timeRulesSummary } from "@/lib/prefs";
 import {
   bundleOpen,
@@ -28,9 +47,7 @@ import {
   type Prefs,
   type Schedule,
 } from "@/lib/schedule";
-import { rankProfs } from "@/lib/rank";
 import type { ScorePriors } from "@/lib/score";
-import { professorsFor } from "@/lib/sections";
 import { breakNames, TERM_DATES } from "@/lib/terms";
 import { useWeights } from "@/lib/weights";
 import type { Course, Section } from "@/lib/types";
@@ -97,8 +114,14 @@ function sectionLabel(s: Section): string {
   return `${s.code} ${s.type}, ${t}, CRN ${s.crn}${st}${s.special ? ", special" : ""}`;
 }
 
-function sameCart(a: CartItem[], b: CartItem[]): boolean {
-  return encodeCart(a) === encodeCart(b);
+/** A notice under the plan switcher: a share link that opened as a new plan or as one of yours, or a delete to undo. */
+type Notice = { kind: "created"; name: string; id: string; from: Plan } | { kind: "switched"; name: string } | { kind: "deleted"; deleted: Deleted };
+
+/** The rules as their share-link parameters ("" for the defaults). */
+function prefsParams(p: Prefs): string {
+  const u = new URLSearchParams();
+  prefsToParams(p, u);
+  return u.toString();
 }
 
 function fmtHours(min: number): string {
@@ -176,36 +199,58 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
   const { me, about, setAbout: setAboutField } = useAboutYou(); // #80
   const autoRun = useRef<number | null>(null); // schedule index to open once a shared link's courses load
   const keepOpen = useRef<string | null>(null); // after a lock from the results, the CRNs of the schedule to stay on
+  const [plans, setPlans] = useState<Plans | null>(null); // named schedules (#117)
+  const [notice, setNotice] = useState<Notice | null>(null);
+  const [comparing, setComparing] = useState(false);
+  const activeId = useRef<string | null>(null);
+  const plan = plans ? activePlan(plans) : null;
+  activeId.current = plan?.id ?? null;
 
-  // Initial state: a shared link (URL) shows its list; it only replaces your saved list if you say so.
+  // Initial state. A share link never overwrites a saved plan (#117): it's one of your plans, fills an empty one, or
+  // opens as a new plan. Only past MAX_PLANS is it shown without being saved, and you choose what happens to it.
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const t = params.get("t");
     if (t && /^\d{4}-(sp|su|fa|wi)$/.test(t)) setTerm(t);
-    const mine = readCart();
+    const linkRules = hasPrefParams(params) ? params.toString() : null;
     if (params.has("c")) {
       const fromUrl = decodeCart(params.get("c"));
-      if (mine.length && fromUrl.length && !sameCart(mine, fromUrl)) setShared({ mine });
-      else writeCart(fromUrl);
-      setCart(fromUrl);
-    } else setCart(mine);
-    if (hasPrefParams(params)) {
-      setPrefs(prefsFromParams(params));
-      if (params.has("c")) autoRun.current = Math.max(0, Number(params.get("i") ?? 0) || 0);
-    } else {
-      const saved = loadPrefs();
-      if (saved) setPrefs(saved);
-    }
+      const out = openLink(fromUrl, linkRules, params.get("pn"));
+      if (out.kind === "full") setShared({ mine: readCart() });
+      else if (out.kind === "created") setNotice({ kind: "created", name: out.plan.name, id: out.plan.id, from: out.from });
+      else if (out.kind === "switched") setNotice({ kind: "switched", name: out.plan.name });
+      setCart(out.kind === "full" ? fromUrl : readCart());
+      // a link with rules, or to one schedule of the list (`i`, as build_schedules in the MCP server gives), opens it
+      if (linkRules !== null || params.has("i")) autoRun.current = Math.max(0, Number(params.get("i") ?? 0) || 0);
+    } else setCart(readCart());
+    if (linkRules !== null) setPrefs(prefsFromParams(params));
+    else setPrefs(loadPrefs() ?? DEFAULT_PREFS);
+    setPlans(readPlans());
     // On a phone the rules fold away so the results are closer; they stay open on a wide screen.
     if (!window.matchMedia("(min-width: 1024px)").matches) setPanels({ must: false, soft: false, about: false });
     setReady(true);
-    return onCartChange(() => {
+    const offCart = onCartChange(() => {
       setShared(null);
       setCart(readCart());
+      setPlans(readPlans());
     });
+    // another tab switched plans: follow it, so this tab doesn't write one plan's rules into another
+    const offPlans = onPlansChange(() => {
+      const p = readPlans();
+      setPlans(p);
+      if (activeId.current && p.active !== activeId.current) {
+        setCart(readCart());
+        setPrefs(loadPrefs() ?? DEFAULT_PREFS);
+        setResult(null);
+      }
+    });
+    return () => {
+      offCart();
+      offPlans();
+    };
   }, []);
 
-  // Keep the URL shareable (courses + term + rules + which schedule) and remember rules locally.
+  // Keep the URL shareable (courses + term + rules + which schedule + the plan's name) and remember rules locally.
   useEffect(() => {
     if (!ready) return;
     const url = new URL(window.location.href);
@@ -215,9 +260,34 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
     prefsToParams(prefs, url.searchParams);
     if (result && idx > 0) url.searchParams.set("i", String(idx));
     else url.searchParams.delete("i");
+    if (!shared) {
+      if (plan && plan.name !== "Plan A") url.searchParams.set("pn", plan.name);
+      else url.searchParams.delete("pn");
+    }
     window.history.replaceState(null, "", url.toString());
     if (!shared) savePrefs(prefs);
-  }, [cart, term, prefs, ready, idx, result, shared]);
+  }, [cart, term, prefs, ready, idx, result, shared, plan]);
+
+  /** After the active plan changed: show its courses and rules, and its schedules when `show` (or results were on). */
+  const afterSwitch = (show: boolean) => {
+    setShared(null);
+    setResult(null);
+    setBlame(null);
+    setIdx(0);
+    keepOpen.current = null;
+    lastRun.current = null;
+    setCart(readCart());
+    setPrefs(loadPrefs() ?? DEFAULT_PREFS);
+    setPlans(readPlans());
+    autoRun.current = show || auto ? 0 : null;
+    if (!show && !auto) setAuto(false);
+  };
+  const switchTo = (id: string, show = false) => {
+    if (id === plan?.id) return;
+    setNotice(null);
+    switchPlan(id);
+    afterSwitch(show);
+  };
 
   // Load course data for the cart.
   useEffect(() => {
@@ -240,15 +310,15 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
 
   // Each lecturer's best-pick score for the chosen term, exactly as the course page ranks them (#49).
   const scoreWeights = useWeights();
+  const ctx = useMemo<InputContext>(() => ({ rmpPrior: meta.rmpPrior ?? null, priors: meta.scorePriors ?? null, weights: scoreWeights, me }), [meta.rmpPrior, meta.scorePriors, scoreWeights, me]);
   const profRanks = useMemo(() => {
     const out: Record<string, { scores: Record<string, number | null>; best: string | null }> = {};
-    if (!meta.scorePriors) return out;
     for (const [key, course] of Object.entries(courses)) {
-      const ranked = rankProfs(course, professorsFor(course, term).profs, meta.scorePriors, scoreWeights);
-      out[key] = { scores: Object.fromEntries(ranked.map((p) => [p.key, p.score.score])), best: ranked.find((p) => p.score.score !== null)?.key ?? null };
+      const r = profScoresFor(course, term, ctx.priors, ctx.weights);
+      if (r) out[key] = r;
     }
     return out;
-  }, [courses, term, meta.scorePriors, scoreWeights]);
+  }, [courses, term, ctx]);
   /** Each section's eligibility for this student (#81), by CRN, for the courses in the cart. */
   const elig = useMemo(() => {
     const m = new Map<string, Eligibility>();
@@ -261,11 +331,9 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
         .filter((c) => courses[`${c.s} ${c.n}`])
         .map((c) => {
           const key = `${c.s} ${c.n}`;
-          const course = courses[key];
-          const cannot = (course.terms[term]?.sections ?? []).filter((x) => elig.get(x.crn)?.status === "no").map((x) => x.crn);
-          return { key, course, credits: course.credit_range[1] || 3, locked: c.locked, rmpPrior: meta.rmpPrior ?? null, profScores: profRanks[key]?.scores, cannot };
+          return courseInput(key, courses[key], c.locked, term, ctx, profRanks[key]?.scores);
         }),
-    [cart, courses, meta.rmpPrior, profRanks, term, elig],
+    [cart, courses, profRanks, term, ctx],
   );
   const loaded = inputs.length + loadErrors.length >= cart.length;
 
@@ -420,9 +488,72 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
 
   return (
     <div className="space-y-6">
+      {plans && plan && (
+        <PlanBar
+          plans={plans}
+          plan={plan}
+          comparing={comparing}
+          onCompare={() => setComparing((c) => !c)}
+          onSwitch={(id) => switchTo(id)}
+          onNew={(copy) => {
+            setNotice(null);
+            // a new plan starts with no courses and the same must-haves and priorities (D40.3)
+            if (createPlan(copy ? { copyOf: plan.id } : { prefs: prefsParams(prefs) })) afterSwitch(false);
+          }}
+          onRename={(name) => setPlans(renamePlan(plan.id, name))}
+          onDelete={() => {
+            const r = deletePlan(plan.id);
+            if (!r) return;
+            afterSwitch(false);
+            setNotice({ kind: "deleted", deleted: r.deleted });
+          }}
+        />
+      )}
+      {notice && (
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded bg-panel p-3" role="status" data-testid="plan-notice">
+          {notice.kind === "created" && (
+            <>
+              <span>
+                You opened a shared schedule, so it&apos;s a new plan, &ldquo;{notice.name}&rdquo;. Your other plans are unchanged.
+              </span>
+              <button type="button" className="font-semibold text-action underline" onClick={() => switchTo(notice.from.id)}>
+                Back to {notice.from.name}
+              </button>
+              <button
+                type="button"
+                className="font-semibold text-action underline"
+                onClick={() => {
+                  deletePlan(notice.id);
+                  setNotice(null);
+                  if (readPlans().active !== notice.from.id) switchPlan(notice.from.id);
+                  afterSwitch(false);
+                }}
+              >
+                Don&apos;t keep it
+              </button>
+            </>
+          )}
+          {notice.kind === "switched" && <span>This link is your plan &ldquo;{notice.name}&rdquo;, so that plan is open.</span>}
+          {notice.kind === "deleted" && (
+            <>
+              <span>Deleted &ldquo;{notice.deleted.plan.name}&rdquo;.</span>
+              <button
+                type="button"
+                className="font-semibold text-action underline"
+                onClick={() => {
+                  if (restorePlan(notice.deleted)) afterSwitch(false);
+                  setNotice(null);
+                }}
+              >
+                Undo
+              </button>
+            </>
+          )}
+        </div>
+      )}
       {shared && (
         <div className="rounded bg-panel p-4" role="status">
-          You opened a shared course list. Your own saved list ({shared.mine.map((c) => `${c.s} ${c.n}`).join(", ")}) is untouched.
+          You opened a shared schedule. You already have {MAX_PLANS} plans, the most this browser keeps, so it isn&apos;t saved as a new plan.
           <div className="mt-2 flex flex-wrap gap-2">
             <button
               className="rounded bg-action px-3 py-1.5 font-semibold text-white hover:bg-action-dark"
@@ -431,20 +562,36 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                 setShared(null);
               }}
             >
-              Use this list
+              Replace {plan ? `“${plan.name}”` : "my plan"} with it
             </button>
             <button
               className="rounded border border-action bg-white px-3 py-1.5 font-semibold text-action hover:bg-action-tint"
               onClick={() => {
                 setCart(shared.mine);
+                setPrefs(loadPrefs() ?? DEFAULT_PREFS);
                 setShared(null);
                 setResult(null);
               }}
             >
-              Back to my list
+              Back to my plan
             </button>
           </div>
         </div>
+      )}
+      {comparing && plans && plans.plans.length > 1 && (
+        <PlanCompare
+          term={term}
+          ctx={ctx}
+          activeId={plans.active}
+          live={{ cart: encodeCart(cart), prefs: prefsParams(prefs), names: plans.plans.map((p) => `${p.id}:${p.name}`).join() }}
+          onPick={(id) => {
+            setComparing(false);
+            if (id === plan?.id) {
+              if (!result && inputs.length) run(0);
+            } else switchTo(id, true);
+          }}
+          onClose={() => setComparing(false)}
+        />
       )}
       <div className="grid gap-8 lg:grid-cols-[23rem_minmax(0,1fr)]">
         {/* ---------------- left: courses, must-haves, priorities ---------------- */}
@@ -1131,7 +1278,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                       const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
                       const a = document.createElement("a");
                       a.href = url;
-                      a.download = `illini-schedule-${term}.ics`;
+                      a.download = icsFileName(term, shared ? null : (plan?.name ?? null));
                       a.click();
                       setTimeout(() => URL.revokeObjectURL(url), 1000);
                     } catch (e) {
@@ -1427,6 +1574,319 @@ function WatchList({ schedule, term, openWeight }: { schedule: Schedule; term: s
         are listed at the top of Just opened with their latest status, and the page can notify you when one opens.
         {openWeight < 3 && " To rank schedules that need fewer closed sections first, raise “Sections open right now” under What matters to you."}
       </p>
+    </section>
+  );
+}
+
+/** The plan switcher (#118). Each plan keeps its own courses, locks and must-haves, so its own share link and .ics. */
+function PlanBar({
+  plans,
+  plan,
+  comparing,
+  onCompare,
+  onSwitch,
+  onNew,
+  onRename,
+  onDelete,
+}: {
+  plans: Plans;
+  plan: Plan;
+  comparing: boolean;
+  onCompare: () => void;
+  onSwitch: (id: string) => void;
+  onNew: (copy: boolean) => void;
+  onRename: (name: string) => void;
+  onDelete: () => void;
+}) {
+  const [renaming, setRenaming] = useState<string | null>(null);
+  useEffect(() => setRenaming(null), [plan.id]);
+  const full = plans.plans.length >= MAX_PLANS;
+  const fullNote = `${MAX_PLANS} plans is the most this browser keeps: delete one first`;
+  const count = (p: Plan) => (p.cart ? p.cart.split(",").length : 0);
+  const btn =
+    "inline-flex items-center gap-1 rounded border border-line bg-white px-2 text-sm leading-8 font-semibold text-action hover:border-action disabled:text-muted disabled:hover:border-line";
+  return (
+    <section aria-labelledby="plans-h" className="space-y-2" data-testid="plans">
+      <div className="flex flex-wrap items-center gap-2">
+        <h2 id="plans-h" className="font-semibold text-heading">
+          Your plans
+        </h2>
+        <div role="group" aria-label="Open a plan" className="flex flex-wrap gap-1.5">
+          {plans.plans.map((p) => {
+            const on = p.id === plan.id;
+            return (
+              <button
+                key={p.id}
+                type="button"
+                aria-pressed={on}
+                onClick={() => onSwitch(p.id)}
+                className={`max-w-full truncate rounded border px-2.5 leading-8 font-semibold ${on ? "border-action bg-action text-white" : "border-line bg-white text-action hover:border-action"}`}
+              >
+                {p.name}
+                <span className={`ml-1.5 text-sm font-normal tnum ${on ? "text-white" : "text-muted"}`} aria-hidden>
+                  {count(p)}
+                </span>
+                <span className="sr-only">
+                  , {count(p)} course{count(p) === 1 ? "" : "s"}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      <div className="flex flex-wrap gap-1.5">
+        <button type="button" className={btn} disabled={full} title={full ? fullNote : "A plan with no courses yet and the same must-haves"} onClick={() => onNew(false)}>
+          <Icon name="plus" />
+          New plan
+        </button>
+        <button
+          type="button"
+          className={btn}
+          disabled={full}
+          title={full ? fullNote : "A copy to change, like “Plan B if CS 225 fills”"}
+          aria-label={`Duplicate ${plan.name}`}
+          onClick={() => onNew(true)}
+        >
+          <Icon name="copy" />
+          Duplicate
+        </button>
+        <button type="button" className={btn} aria-label={`Rename ${plan.name}`} onClick={() => setRenaming(plan.name)}>
+          Rename
+        </button>
+        <button type="button" className={btn} disabled={plans.plans.length < 2} aria-label={`Delete ${plan.name}`} onClick={onDelete}>
+          <Icon name="x" />
+          Delete
+        </button>
+        {plans.plans.length > 1 && (
+          <button type="button" className={`${btn} ${comparing ? "border-action bg-action-tint" : ""}`} aria-pressed={comparing} onClick={onCompare}>
+            <Icon name="table" />
+            Compare plans
+          </button>
+        )}
+      </div>
+      {renaming !== null && (
+        <form
+          className="flex flex-wrap items-end gap-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            onRename(renaming);
+            setRenaming(null);
+          }}
+        >
+          <label className="block">
+            <span className="text-sm font-semibold text-heading">New name for {plan.name}</span>
+            <input
+              autoFocus
+              value={renaming}
+              maxLength={MAX_NAME}
+              placeholder="Plan B if CS 225 fills"
+              onChange={(e) => setRenaming(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") setRenaming(null);
+              }}
+              className="mt-1 block w-72 max-w-full rounded border border-line bg-white px-2 py-1.5"
+            />
+          </label>
+          <button type="submit" className="rounded bg-action px-3 leading-9 font-semibold text-white hover:bg-action-dark disabled:opacity-50" disabled={!renaming.trim()}>
+            Save
+          </button>
+          <button type="button" className="leading-9 font-semibold text-action underline" onClick={() => setRenaming(null)}>
+            Cancel
+          </button>
+        </form>
+      )}
+    </section>
+  );
+}
+
+type PlanBest = { plan: Plan; courses: string[]; best: Schedule | null; hours: [number, number]; note: string | null };
+
+/** "MWF 2:00pm" for the first timed meeting of a course's sections (an online lecture's discussion still has a time). */
+const briefTime = (secs: Section[]) => {
+  const m = secs.flatMap((s) => s.meetings).find((x) => x.s !== null);
+  return m ? `${daysStr(m.d)} ${fmtTime(m.s)}` : "no set time";
+};
+
+/**
+ * Each plan's best schedule side by side (#119), each ranked by that plan's own must-haves and priorities, with what it
+ * does differently from the plan that's open. The open plan comes from the builder as it is now (`live`).
+ */
+function PlanCompare({
+  activeId,
+  live,
+  term,
+  ctx,
+  onPick,
+  onClose,
+}: {
+  activeId: string;
+  live: { cart: string; prefs: string; names: string };
+  term: string;
+  ctx: InputContext;
+  onPick: (id: string) => void;
+  onClose: () => void;
+}) {
+  const id = useId();
+  const [rows, setRows] = useState<PlanBest[] | null>(null);
+  useEffect(() => {
+    let alive = true;
+    setRows(null);
+    const list = readPlans().plans.map((p) => (p.id === activeId ? { ...p, cart: live.cart, prefs: live.prefs } : p));
+    (async () => {
+      const out: PlanBest[] = [];
+      for (const p of list) {
+        const items = decodeCart(p.cart);
+        const got = await Promise.allSettled(items.map((c) => loadCourse(c.s, c.n)));
+        await new Promise((r) => setTimeout(r, 0)); // one plan at a time, so the page stays responsive
+        if (!alive) return;
+        const inputs = items.flatMap((c, i) => {
+          const r = got[i];
+          return r.status === "fulfilled" ? [courseInput(`${c.s} ${c.n}`, r.value, c.locked, term, ctx)] : [];
+        });
+        const prefs = prefsFromParams(new URLSearchParams(p.prefs ?? ""));
+        const res = inputs.length ? generate(inputs, term, prefs) : null;
+        const best = res?.schedules[0] ?? null;
+        const counted = inputs.filter((i) => i.course.terms[term]?.sections.length && (!best || best.bundles.some((b) => b.course === i.key)));
+        const left = res?.emptyCourses ?? [];
+        out.push({
+          plan: p,
+          courses: items.map((c) => `${c.s} ${c.n}`),
+          best,
+          hours: totalHours(counted.map((i) => i.course.credit_range)),
+          note: !items.length
+            ? "No courses yet."
+            : !best
+              ? "No schedule fits this plan's courses and must-haves."
+              : left.length
+                ? `Leaves out ${left.join(", ")}: ${explainEmpty(inputs.find((x) => x.key === left[0])!, term, prefs)}.`
+                : null,
+        });
+      }
+      setRows(out);
+    })();
+    return () => {
+      alive = false;
+    };
+  }, [activeId, live.cart, live.prefs, live.names, term, ctx]);
+  const open = rows?.find((r) => r.plan.id === activeId);
+  const metrics = (r: PlanBest): Record<string, string> =>
+    r.best
+      ? {
+          gpa: r.best.stats.expectedGpa === null ? "–" : fmtGpa(r.best.stats.expectedGpa),
+          hours: fmtCredits(r.hours),
+          off: r.best.stats.daysOff.join(", ") || "none",
+          span: r.best.stats.earliest === null ? "–" : `${fmtTime(r.best.stats.earliest)}–${fmtTime(r.best.stats.latest)}`.replace(/:00/g, ""),
+          gaps: fmtHours(r.best.stats.gapMinutes),
+          open: `${r.best.bundles.filter((b) => bundleOpen(b)).length} of ${r.best.bundles.length}`,
+          finals: finalsSummary(r.best),
+        }
+      : {};
+  const ROWS: [string, string][] = [
+    ["gpa", "Expected GPA"],
+    ["hours", "Credit hours"],
+    ["off", "Days off"],
+    ["span", "Day span"],
+    ["gaps", "Gaps a week"],
+    ["open", "Open now"],
+    ["finals", "Finals"],
+  ];
+  const cell = "px-2 py-1.5 align-top";
+  return (
+    <section aria-labelledby={id} className="space-y-2 border-t-4 border-navy pt-3" data-testid="plan-compare">
+      <div className="flex items-center justify-between gap-2">
+        <h2 id={id} className="font-display text-xl font-bold text-heading">
+          Compare your plans
+        </h2>
+        <button type="button" onClick={onClose} aria-label="Close the comparison" className="inline-flex size-8 items-center justify-center rounded text-muted hover:bg-panel hover:text-action">
+          <Icon name="x" />
+        </button>
+      </div>
+      <p className="text-sm text-muted">
+        The best schedule of each plan for {termLabel(term)}, ranked by that plan&apos;s own must-haves and priorities. Values in bold differ from the plan
+        that&apos;s open.
+      </p>
+      {!rows ? (
+        <p role="status">Building each plan&apos;s best schedule…</p>
+      ) : (
+        <div className="overflow-x-auto rounded border border-line" role="region" aria-labelledby={id} tabIndex={0}>
+          <table className="w-full min-w-[36rem] border-collapse text-left text-sm">
+            <thead className="bg-panel text-heading">
+              <tr>
+                <td className={cell} />
+                {rows.map((r) => (
+                  <th key={r.plan.id} scope="col" className={cell} data-plan={r.plan.name}>
+                    <span className="block font-semibold">{r.plan.name}</span>
+                    {r.plan.id === activeId ? (
+                      <span className="font-normal text-muted">Open now</span>
+                    ) : (
+                      <button type="button" className="font-semibold text-action underline" onClick={() => onPick(r.plan.id)}>
+                        Open {r.plan.name}
+                      </button>
+                    )}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-t border-line">
+                <th scope="row" className={`${cell} font-semibold whitespace-nowrap text-heading`}>
+                  Courses
+                </th>
+                {rows.map((r) => (
+                  <td key={r.plan.id} className={cell}>
+                    {r.courses.join(", ") || "none"}
+                  </td>
+                ))}
+              </tr>
+              {ROWS.map(([k, label]) => (
+                <tr key={k} className="border-t border-line">
+                  <th scope="row" className={`${cell} font-semibold whitespace-nowrap text-heading`}>
+                    {label}
+                  </th>
+                  {rows.map((r) => {
+                    const v = metrics(r)[k];
+                    const differs = !!open?.best && r !== open && v !== undefined && v !== metrics(open)[k];
+                    return (
+                      <td key={r.plan.id} className={`${cell} tnum ${differs ? "font-semibold text-heading" : ""}`} data-differs={differs || undefined}>
+                        {v ?? "–"}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+              <tr className="border-t border-line">
+                <th scope="row" className={`${cell} font-semibold whitespace-nowrap text-heading`}>
+                  Sections
+                </th>
+                {rows.map((r) => (
+                  <td key={r.plan.id} className={cell}>
+                    {r.best && (
+                      <ul className="space-y-0.5">
+                        {r.best.bundles.map((b) => (
+                          <li key={b.course}>
+                            {b.course} {b.sections.map((s) => s.code).join(" + ")} <span className="text-muted tnum">{briefTime(b.sections)}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    {r.note && <p className={r.best ? "mt-1 text-muted" : ""}>{r.note}</p>}
+                  </td>
+                ))}
+              </tr>
+              <tr className="border-t border-line">
+                <th scope="row" className={`${cell} font-semibold text-heading`}>
+                  Different from the open plan
+                </th>
+                {rows.map((r) => (
+                  <td key={r.plan.id} className={`${cell} font-semibold text-heading`} data-testid="plan-diff">
+                    {r === open ? <span className="font-normal text-muted">This is the open plan</span> : r.best && open?.best ? planDifferences(open.best, r.best).join(", ") || "Same schedule" : "–"}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )}
     </section>
   );
 }
