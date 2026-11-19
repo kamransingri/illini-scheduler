@@ -65,8 +65,11 @@ def class_courses(conn: sqlite3.Connection, term: str) -> dict[tuple[str, str], 
     return out
 
 
-def build(conn: sqlite3.Connection, live_terms: tuple[str, ...] = ()) -> dict | None:
-    """The newest summer's classes, or None when no summer is loaded. `live_terms`: terms with course pages."""
+def build(conn: sqlite3.Connection, live_terms: tuple[str, ...] = (),
+          pages: set[tuple[str, str]] | None = None) -> dict | None:
+    """The newest summer's classes, or None when no summer is loaded. `live_terms`: the current and next term.
+    `pages`: the courses export.run writes a course file for (offered in a live term, or with recent grades);
+    without it, a course has a page when it has sections in a live term."""
     from .degrees import catalog_from_db
     from .export import r3
 
@@ -80,8 +83,9 @@ def build(conn: sqlite3.Connection, live_terms: tuple[str, ...] = ()) -> dict | 
     catalog = catalog_from_db(conn)
     gpa = {(r["subject"], r["number"]): r for r in conn.execute(
         "SELECT subject, number, recent_avg_gpa, recent_students FROM gpa_course")}
-    pages = {(r[0], r[1]) for t in live_terms for r in conn.execute(
-        "SELECT DISTINCT subject, number FROM sections WHERE term = ?", (t,))}
+    if pages is None:
+        pages = {(r[0], r[1]) for t in live_terms for r in conn.execute(
+            "SELECT DISTINCT subject, number FROM sections WHERE term = ?", (t,))}
     rows = []
     for (s, n), ss in sorted(secs.items(), key=lambda kv: (kv[0][0], kv[0][1])):
         c = catalog.get(f"{s} {n}")
@@ -105,8 +109,9 @@ def build(conn: sqlite3.Connection, live_terms: tuple[str, ...] = ()) -> dict | 
     }
 
 
-def export(conn: sqlite3.Connection, out_dir: Path, live_terms: tuple[str, ...] = ()) -> str:
-    data = build(conn, live_terms)
+def export(conn: sqlite3.Connection, out_dir: Path, live_terms: tuple[str, ...] = (),
+           pages: set[tuple[str, str]] | None = None) -> str:
+    data = build(conn, live_terms, pages)
     if data is None:
         return "no summer term loaded"
     (out_dir / "summer.json").write_text(json.dumps(data, separators=(",", ":")), encoding="utf-8")

@@ -317,7 +317,8 @@ The gen-ed finder: every course with a gen-ed code that has sections next term o
 
 ### `data/summer.json`
 
-The newest summer's classes (the Summer courses page). Not written when no summer term is loaded.
+The newest summer's classes (the gen-ed finder's Summer view, the Summer line on course pages and the search). Not
+written when no summer term is loaded.
 
 | Field | Type | Meaning |
 | --- | --- | --- |
@@ -337,7 +338,7 @@ The newest summer's classes (the Summer courses page). Not written when no summe
 | `courses[].sess` | string[] | Sessions: `S1` Session I (4 weeks from mid-May), `S2` Session II (8 weeks from mid-June), `full` (12 weeks), `S18`, `A`, `S2A`, `S2B`, `B`, `other` |
 | `courses[].ran` | number | How many of `recent` it ran in |
 | `courses[].gpa` | number \| null | Recent average GPA over all terms |
-| `courses[].page` | boolean | Has a course file (offered this term or next) |
+| `courses[].page` | boolean | Has a course file (offered this term or next, or with recent grades) |
 
 ### `data/crns.json`
 

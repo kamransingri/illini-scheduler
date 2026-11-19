@@ -10,6 +10,16 @@ history).
 
 ## [Unreleased]
 
+### Changed
+
+- Summer classes are part of the site instead of a separate tab (#121, #122, #123, #124). The gen-ed finder has a
+  Summer view with the old page's filters (gen-ed, session, online or on campus, ran every summer). Course pages say
+  when a course runs in summer, and the search marks summer courses and finds summer classes that have no page here.
+  Old /summer/ links open the same classes in the gen-ed finder. The header has five tabs, with their icons from
+  1024px up.
+- A simpler home page: the search, often-searched courses and Just opened, which now has a blue outline instead of
+  a grey fill. The page grid, build numbers and "How it works" are gone; every page is in the header.
+
 ### Added
 
 - An MCP server for your own AI app (#99). Add `mcp/` to Claude Desktop, Claude Code or another MCP client and ask

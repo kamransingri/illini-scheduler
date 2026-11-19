@@ -1,5 +1,6 @@
-// Summer courses (#35): the newest summer's classes from web/public/data/summer.json (pipeline/summer.py), and the
-// page's filters. Pure functions, so they're unit tested.
+// Summer courses (#35, #121): the newest summer's classes from web/public/data/summer.json (pipeline/summer.py). They
+// show on course pages, in the search and in the gen-ed finder's Summer view; /summer/ redirects there. Pure
+// functions, so they're unit tested.
 
 /** One course's classes in the summer shown. */
 export type SummerRow = {
@@ -42,8 +43,9 @@ export const SESSION_SHORT: Record<string, string> = {
   other: "Dates vary",
 };
 
+/** `gened`: "any" (the default, in the gen-ed finder) any gen-ed, "all" every class, or one gen-ed code. */
 export type SummerFilters = { q: string; gened: string; session: string; online: boolean; campus: boolean; every: boolean; undergrad: boolean };
-export const DEFAULT_SUMMER: SummerFilters = { q: "", gened: "", session: "", online: false, campus: false, every: false, undergrad: true };
+export const DEFAULT_SUMMER: SummerFilters = { q: "", gened: "any", session: "", online: false, campus: false, every: false, undergrad: true };
 
 /** "cs 1", "CS124", "algorithms": subject and number, or words of the title. */
 export function matchesQuery(r: SummerRow, q: string): boolean {
@@ -56,7 +58,7 @@ export function matchesQuery(r: SummerRow, q: string): boolean {
 
 export function summerMatches(r: SummerRow, f: SummerFilters, recent: number): boolean {
   if (f.undergrad && Number(r.n) >= 500) return false;
-  if (f.gened && !r.codes.includes(f.gened) && !(f.gened === "any" && r.codes.length)) return false;
+  if (f.gened === "any" ? !r.codes.length : f.gened !== "all" && !r.codes.includes(f.gened)) return false;
   if (f.session && !r.sess.includes(f.session)) return false;
   if (f.online && r.online === "none") return false;
   if (f.campus && r.online === "all") return false;
@@ -72,7 +74,7 @@ export function filterSummer(rows: SummerRow[], f: SummerFilters, recent: number
 export function summerToQuery(f: SummerFilters): string {
   const p = new URLSearchParams();
   if (f.q.trim()) p.set("q", f.q.trim());
-  if (f.gened) p.set("gened", f.gened);
+  if (f.gened !== DEFAULT_SUMMER.gened) p.set("gened", f.gened);
   if (f.session) p.set("session", f.session);
   if (f.online) p.set("online", "1");
   if (f.campus) p.set("campus", "1");
@@ -87,11 +89,38 @@ export function summerFromQuery(q: string): SummerFilters {
   const gened = p.get("gened") ?? "";
   return {
     q: p.get("q") ?? "",
-    gened: /^[A-Z0-9]{2,5}$|^any$/.test(gened) ? gened : "",
+    gened: /^[A-Z0-9]{2,5}$|^any$|^all$/.test(gened) ? gened : DEFAULT_SUMMER.gened,
     session: session in SESSION_LABEL ? session : "",
     online: p.get("online") === "1",
     campus: p.get("campus") === "1",
     every: p.get("every") === "1",
     undergrad: p.get("grad") !== "1",
   };
+}
+
+/** The gen-ed finder's Summer view with these filters: `?term=summer&...`. */
+export function summerHref(f: SummerFilters): string {
+  const q = summerToQuery(f);
+  return `/geneds/?term=summer${q ? `&${q}` : ""}`;
+}
+
+/**
+ * An old /summer/ link (#124) -> the gen-ed finder's Summer view with the same filters. The Summer courses page listed
+ * every class unless a gen-ed was picked, so a link without one asks for every class.
+ */
+export function summerRedirect(search: string): string {
+  const old = new URLSearchParams(search);
+  const f = summerFromQuery(search);
+  return summerHref(old.get("gened") ? f : { ...f, gened: "all" });
+}
+
+const WHERE: Record<SummerRow["online"], string> = { all: "online", some: "online or on campus", none: "on campus" };
+
+/** The course page's Summer line: "Summer 2027: Session II, online. Ran in 3 of the last 3 summers." */
+export function summerLine(r: SummerRow, d: Pick<SummerData, "label" | "recent" | "upcoming" | "next_label">): string {
+  const sessions = r.sess.map((x) => SESSION_SHORT[x] ?? x).join(", ");
+  const ran = d.recent.length > 1 ? ` in ${r.ran} of the last ${d.recent.length} summers` : "";
+  return d.upcoming
+    ? `${d.label}: ${sessions}, ${WHERE[r.online]}.${ran ? ` Ran${ran}.` : ""}`
+    : `Ran in ${d.label} (${sessions}, ${WHERE[r.online]})${ran ? `, and${ran}` : ""}. ${d.next_label}'s schedule isn't out yet.`;
 }

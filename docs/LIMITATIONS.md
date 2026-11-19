@@ -84,10 +84,12 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
 ## Summer courses
 
 - **Last summer's classes until the next is published.** Course Explorer lists a summer around March, so until then
-  the page shows the newest summer it has (Summer 2026 in November 2026), says so, and shows how many of the last three
+  the gen-ed finder's Summer view, course pages and the search show the newest summer it has (Summer 2026 in November 2026), says so, and shows how many of the last three
   summers each class ran in. A class can still be dropped or added for the coming summer.
 - **Classes only, no seats.** Independent study, internships, research and study abroad aren't listed. Summer sections
-  aren't in the schedule builder or the seat checks; confirm sections in Course Explorer and Self-Service.
+  aren't in the schedule builder or the seat checks; confirm sections in Course Explorer and Self-Service. A summer
+  class with no fall or spring section in the current or next term has no course page here, so the search sends it to
+  Course Explorer.
 - **No winter session.** There's no open source for winter courses.
 
 ## Gen-ed finder and schedule builder
