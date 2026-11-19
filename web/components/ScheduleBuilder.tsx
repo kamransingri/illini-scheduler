@@ -7,6 +7,8 @@ import { fmtCredits, hourWarnings, totalHours } from "@/lib/credits";
 import { examConflicts, examDay, examTime, finalsByDay, finalsOf, finalsPending, finalsSummary, STUDENT_CODE_EXAMS } from "@/lib/finals";
 import { backupsFor, type Backup, type SectionBackups } from "@/lib/backups";
 import { buildIcs } from "@/lib/ics";
+import { eligibility, type AboutYou, type Eligibility, type Level, type Standing } from "@/lib/restrictions";
+import { useAboutYou } from "@/lib/useAboutYou";
 import { currentStatus, fmtSince, useNow, useSeatFeed } from "@/lib/live";
 import { hasPrefParams, loadPrefs, prefsFromParams, prefsToParams, PRESETS, savePrefs, timeRulesSummary } from "@/lib/prefs";
 import {
@@ -114,12 +116,20 @@ const crnKey = (s: Schedule) => s.bundles.flatMap((b) => b.crns).sort().join(","
 
 const lunchIsDefault = (p: Prefs) => p.lunchFrom === LUNCH.from && p.lunchTo === LUNCH.to && p.lunchMin === LUNCH.min;
 
+/** "Junior, undergraduate, Computer Science, BS" for the collapsed About you panel. */
+function aboutSummary(me: AboutYou): string {
+  const cap = (x: string) => x.charAt(0).toUpperCase() + x.slice(1);
+  const level = me.level === "undergrad" ? "undergraduate" : me.level;
+  return [me.standing ? cap(me.standing) : "", me.standing === "graduate" ? "" : level, me.program?.name ?? ""].filter(Boolean).join(", ");
+}
+
 /** Plain-words list of the must-haves that are on, for a collapsed panel. */
 function mustSummary(p: Prefs): string[] {
   const out = timeRulesSummary(p);
   if (p.lunch) out.push(lunchIsDefault(p) ? "lunch break" : `${p.lunchMin}-minute lunch ${fmtTime(p.lunchFrom)}–${fmtTime(p.lunchTo)}`);
   if (p.openOnly) out.push("open sections only");
   if (p.includeSpecial) out.push("special sections allowed");
+  if (!p.eligibleOnly) out.push("restricted sections allowed");
   if (p.blocked.length) out.push(`${p.blocked.length} blocked time${p.blocked.length > 1 ? "s" : ""}`);
   return out;
 }
@@ -162,7 +172,8 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
   const feed = useSeatFeed(meta.liveUrl);
   const now = useNow();
   const [icsFinals, setIcsFinals] = useState(true);
-  const [panels, setPanels] = useState({ must: true, soft: true });
+  const [panels, setPanels] = useState({ must: true, soft: true, about: false });
+  const { me, about, setAbout: setAboutField } = useAboutYou(); // #80
   const autoRun = useRef<number | null>(null); // schedule index to open once a shared link's courses load
   const keepOpen = useRef<string | null>(null); // after a lock from the results, the CRNs of the schedule to stay on
 
@@ -186,7 +197,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
       if (saved) setPrefs(saved);
     }
     // On a phone the rules fold away so the results are closer; they stay open on a wide screen.
-    if (!window.matchMedia("(min-width: 1024px)").matches) setPanels({ must: false, soft: false });
+    if (!window.matchMedia("(min-width: 1024px)").matches) setPanels({ must: false, soft: false, about: false });
     setReady(true);
     return onCartChange(() => {
       setShared(null);
@@ -238,6 +249,12 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
     }
     return out;
   }, [courses, term, meta.scorePriors, scoreWeights]);
+  /** Each section's eligibility for this student (#81), by CRN, for the courses in the cart. */
+  const elig = useMemo(() => {
+    const m = new Map<string, Eligibility>();
+    for (const c of Object.values(courses)) for (const x of c.terms[term]?.sections ?? []) m.set(x.crn, eligibility(x.text, x.status, me));
+    return m;
+  }, [courses, term, me]);
   const inputs: CourseInput[] = useMemo(
     () =>
       cart
@@ -245,9 +262,10 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
         .map((c) => {
           const key = `${c.s} ${c.n}`;
           const course = courses[key];
-          return { key, course, credits: course.credit_range[1] || 3, locked: c.locked, rmpPrior: meta.rmpPrior ?? null, profScores: profRanks[key]?.scores };
+          const cannot = (course.terms[term]?.sections ?? []).filter((x) => elig.get(x.crn)?.status === "no").map((x) => x.crn);
+          return { key, course, credits: course.credit_range[1] || 3, locked: c.locked, rmpPrior: meta.rmpPrior ?? null, profScores: profRanks[key]?.scores, cannot };
         }),
-    [cart, courses, meta.rmpPrior, profRanks],
+    [cart, courses, meta.rmpPrior, profRanks, term, elig],
   );
   const loaded = inputs.length + loadErrors.length >= cart.length;
 
@@ -294,7 +312,15 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
 
   const colorOf = useCallback((course: string) => COURSE_COLORS[Math.max(0, cart.findIndex((c) => `${c.s} ${c.n}` === course)) % COURSE_COLORS.length], [cart]);
   const sched = result?.schedules[idx] ?? null;
-  const warns = warnings(inputs, term, sched, termLabel(term));
+  const warns = warnings(inputs, term, sched, termLabel(term), (course, s) => {
+    const e = elig.get(s.crn);
+    if (!e) return undefined;
+    if (e.status === "open") return /restricted/i.test(s.status) ? undefined : null;
+    if (e.status === "ok") return null;
+    const locked = cart.find((c) => `${c.s} ${c.n}` === course)?.locked.includes(s.crn); // itemOf is declared below
+    if (e.status === "no") return `${course} ${s.code} (CRN ${s.crn}) ${locked ? "is locked, but its restriction leaves you out" : "is restricted to students you aren't"}: ${e.because.join(" ")}`;
+    return `${course} ${s.code} (CRN ${s.crn}) may be restricted: ${e.because.join(" ")}${aboutSummary(me) ? "" : " Fill in About you to check."}`;
+  });
   // live seat statuses newer than this term's section data (#77): a section that closes during registration shows
   // as closed and its backup moves up, without regenerating the schedules under the student's feet
   const nEvents = feed.events?.length ?? 0;
@@ -473,6 +499,14 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                             {block?.status_known && prim.length > 0 ? `, ${openPrim} of ${prim.length} lectures open` : ""}
                           </span>
                         )}
+                        {course && block && prim.length > 0 && prim.every((x) => elig.get(x.crn)?.status === "no") && (
+                          <span className="mt-0.5 flex items-start gap-1 text-sm font-semibold" data-testid="cart-restricted">
+                            <Icon name="alert" className="mt-1 shrink-0" />
+                            <span>
+                              Every lecture is restricted to students you aren&apos;t: {elig.get(prim[0].crn)!.because[0]}
+                            </span>
+                          </span>
+                        )}
                         {course && (!block || !block.sections.length) && (
                           <span className="mt-0.5 flex items-center gap-1 text-sm font-semibold">
                             <Icon name="alert" />
@@ -533,6 +567,54 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
               </p>
             )}
           </section>
+
+          <Panel
+            title="About you"
+            summary={aboutSummary(me) || "Not set: restrictions show as “may be restricted”."}
+            open={panels.about}
+            onToggle={() => setPanels((p) => ({ ...p, about: !p.about }))}
+            testId="about-you"
+          >
+            <p className="text-sm text-muted">
+              Used to check each section&apos;s restrictions (&ldquo;Restricted to Junior or Senior class standing&rdquo;, &ldquo;Restricted to CS majors&rdquo;). Kept in
+              this browser only, and not put in share links.
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              <label className="block">
+                <span className="text-sm font-semibold text-heading">You are</span>
+                <select className="mt-1 block w-full rounded border border-line bg-white px-2 py-1.5" value={about.level} onChange={(e) => setAboutField("level", e.target.value as Level | "")} aria-label="Student level">
+                  <option value="">Not set</option>
+                  <option value="undergrad">An undergraduate</option>
+                  <option value="graduate">A graduate student</option>
+                  <option value="professional">In a professional program</option>
+                </select>
+              </label>
+              <label className="block">
+                <span className="text-sm font-semibold text-heading">Class standing in {termLabel(term)}</span>
+                <select className="mt-1 block w-full rounded border border-line bg-white px-2 py-1.5" value={about.standing} onChange={(e) => setAboutField("standing", e.target.value as Standing | "")} aria-label="Class standing">
+                  <option value="">Not set</option>
+                  <option value="freshman">Freshman</option>
+                  <option value="sophomore">Sophomore</option>
+                  <option value="junior">Junior</option>
+                  <option value="senior">Senior</option>
+                  <option value="graduate">Graduate</option>
+                </select>
+              </label>
+            </div>
+            <p className="text-sm" data-testid="about-major">
+              <span className="font-semibold text-heading">Major:</span> {me.program ? `${me.program.name} (${me.program.college})` : "not picked"}
+              {me.minor && (
+                <>
+                  {"; "}
+                  <span className="font-semibold text-heading">minor:</span> {me.minor.name}
+                </>
+              )}
+              .{" "}
+              <Link href="/degree/" className="text-action underline">
+                {me.program ? "Change it in the degree checklist" : "Pick it in the degree checklist"}
+              </Link>
+            </p>
+          </Panel>
 
           <Panel title="Must-haves" summary={mustDefault ? "None set: any time, any day." : must.join(", ")} open={panels.must} onToggle={() => setPanels((p) => ({ ...p, must: !p.must }))} testId="must-haves">
             <p className="text-sm text-muted">A schedule that breaks one of these is never shown.</p>
@@ -623,6 +705,15 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                 <span>
                   Open sections only
                   <span className="block text-sm text-muted">Skip sections that were Closed at the last check (sections you lock are kept)</span>
+                </span>
+              </label>
+              <label className="flex items-start gap-2">
+                <input type="checkbox" className="mt-1 size-4 accent-action" checked={prefs.eligibleOnly} onChange={(e) => set("eligibleOnly", e.target.checked)} />
+                <span>
+                  Only sections I can register for
+                  <span className="block text-sm text-muted">
+                    Skip sections whose restrictions clearly leave you out, going by About you (sections you lock are kept). Unclear ones stay and are marked.
+                  </span>
                 </span>
               </label>
               <div className="flex items-start gap-1">
@@ -989,6 +1080,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                       </button>
                       <span className="min-w-[9rem] flex-1 tnum">{s.meetings.map((m) => (m.s === null ? "No set time" : `${daysStr(m.d)} ${fmtTime(m.s)}–${fmtTime(m.e)}`)).join("; ")}</span>
                       {s.status && <SeatStatus status={s.status} />}
+                      <RestrictionBadge e={elig.get(s.crn)} />
                       <span className="text-sm text-muted">{s.instructors_raw.join("; ") || "TBA"}</span>
                       {b.prof && s.component === "primary" && s.instructors.includes(b.prof.key) && (
                         <ProfBadge name={inputs.find((x) => x.key === b.course)?.course.instructors[b.prof.key]?.name ?? ""} score={b.prof.score} best={profRanks[b.course]?.best === b.prof.key} />
@@ -1153,6 +1245,17 @@ function CompareTop({ schedules, idx, onPick }: { schedules: Schedule[]; idx: nu
         </button>
       )}
     </section>
+  );
+}
+
+/** A section's restriction for this student (#81): left out, unclear, or restricted to students like them. */
+function RestrictionBadge({ e }: { e: Eligibility | undefined }) {
+  if (!e || e.status === "open") return null;
+  const label = e.status === "no" ? "Not for you" : e.status === "maybe" ? "May be restricted" : "Restricted: you qualify";
+  return (
+    <span data-testid="restriction" data-status={e.status} title={e.because.join(" ")}>
+      <Badge icon={e.status === "ok" ? "check" : "alert"}>{label}</Badge>
+    </span>
   );
 }
 

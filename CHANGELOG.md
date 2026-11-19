@@ -12,6 +12,13 @@ history).
 
 ### Added
 
+- Restriction check (#78, #79, #80, #81). A new "About you" panel in the schedule builder takes your level and class
+  standing; your major and minor come from the degree checklist. Each section's "Restricted to ..." and "Not intended
+  for ..." sentences are checked against it. The builder skips sections that clearly leave you out (the new must-have
+  "Only sections I can register for", on by default; sections you lock are kept). A locked one gets a warning in
+  Course Explorer's words, and every restricted section is marked "Not for you", "May be restricted" or "Restricted:
+  you qualify", on course pages too. A course where every lecture leaves you out says so in the cart. About you stays
+  in your browser and isn't put in share links.
 - Schedule builder: a backup for every section of your schedule, for when a section fills during registration (#74,
   #75, #76, #77). Each section shows the best other section of that course that still fits the rest of your week and
   your must-haves, with its CRN, seat status and why it's the backup ("same time, same professor"); more are a click

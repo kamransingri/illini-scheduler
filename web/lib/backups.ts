@@ -89,6 +89,7 @@ export function backupsFor(schedule: Schedule, inputs: CourseInput[], term: stri
       const b = makeBundle(input, secs);
       let why: string | null = null;
       if (secs.some((s) => closed(s, opts.statusOf))) why = "closed";
+      else if (prefs.eligibleOnly && secs.some((s) => input.cannot?.includes(s.crn))) why = "restricted";
       else {
         const rule = brokenRule(b.meetings, prefs);
         if (rule) why = `rule:${rule}`;
@@ -129,6 +130,8 @@ function noneReason(course: string, section: Section, whys: string[]): string {
   if (nClash) parts.push(`${nClash} ${nClash === 1 ? "clashes" : "clash"} with ${list(clashes)}`);
   const rules = whys.filter((w) => w.startsWith("rule:"));
   if (rules.length) parts.push(`${rules.length} break${rules.length === 1 ? "s" : ""} a must-have (${rules[0].slice(5)})`);
+  const restricted = whys.filter((w) => w === "restricted").length;
+  if (restricted) parts.push(`${restricted} ${restricted === 1 ? "is" : "are"} restricted to students you aren't`);
   const lunch = whys.filter((w) => w === "lunch").length;
   if (lunch) parts.push(`${lunch} leave${lunch === 1 ? "s" : ""} no lunch break`);
   return `No backup for ${course} ${section.code}: of the other options, ${list(parts)}.`;
