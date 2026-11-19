@@ -1030,3 +1030,25 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D36.6 Not done.** A "What matters to you" weight against schedules with exam conflicts (#84 left it optional):
   students choose sections by lecture time, and finals are often unknown at registration.
 
+## Registration backups (2026-11-19, issues #74 to #77)
+
+- **D37.1 A backup per section, not per course.** `web/lib/backups.ts` takes each section of the shown schedule and
+  finds bundles of that course without it. If a discussion fills, the best backup keeps the lecture and changes the
+  discussion; if a lecture fills, it needs another lecture and that lecture's linked sections. Backups that change
+  fewer sections come first, then the schedule's score with the backup (the same "What matters to you" score as the
+  builder), then same time first. Three per section; the first is shown and the others are behind "more".
+- **D37.2 What a backup must do.** Keep every must-have (`brokenRule`), not clash with the other courses, keep the
+  lunch break with them when one is required, and not be Closed, even when "Open sections only" is off: a closed
+  backup is no help at registration. When none fits, the reason counts the other options by why they fail (closed,
+  clashes with a named course, the first broken must-have, no lunch break).
+- **D37.3 Locks don't stop backups.** #75 suggested no backups for locked sections; but a locked section can fill
+  too, and swapping a backup in is itself a lock (D37.4), after which the old section should show as its backup. So
+  every section gets backups.
+- **D37.4 A swap is a lock.** "Use this instead" locks the backup's sections for that course and keeps the schedule
+  with every other course unchanged on screen (the lock-from-results mechanism, D33.1). Locks are already in the
+  cart, the share link and localStorage, so a swap needs no new state and survives reloads and links.
+- **D37.5 Live statuses, read only.** While the builder is open it reads the same live feed as Just opened. A live
+  status counts only when it is newer than the term's section data (`meta.terms[term].checked_at`). It removes closed
+  backups and flags a chosen section that has closed since ("CS 225 AL1 just closed", with its backup), but doesn't
+  regenerate the schedules, which would move them under a student mid-registration.
+

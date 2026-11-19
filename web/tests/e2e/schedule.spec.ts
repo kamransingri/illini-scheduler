@@ -246,3 +246,60 @@ test("finals week before the Registrar publishes finals says so (#85)", async ({
   await expect(page.getByTestId("finals-week")).toContainText("No final exams are listed for Spring 2027 yet");
   await expect(page.getByLabel("Include final exams in the .ics")).toHaveCount(0);
 });
+
+test("registration backups: each section has a backup with its CRN, and one click swaps it in (#74)", async ({ page }) => {
+  await page.goto("./schedule/?c=CS124,RHET105&t=2027-sp");
+  await expect(page.getByTestId("cart").locator("li")).toHaveCount(2);
+  await page.getByRole("button", { name: "Generate schedules" }).click();
+  const rows = page.getByTestId("schedule-sections").locator("li");
+  await expect(rows.first()).toBeVisible();
+  // the first RHET 105 row has a backup line with a CRN to copy
+  const statRow = rows.filter({ hasText: "RHET 105" }).first();
+  const backup = statRow.getByTestId("backup");
+  await expect(backup).toContainText("Backup:");
+  const before = (await statRow.locator("span.w-24").nth(1).textContent())!.trim();
+  const swap = backup.getByRole("button", { name: /^Use .* instead of / });
+  const label = (await swap.getAttribute("aria-label"))!;
+  const newCode = /^Use (.+?) instead of /.exec(label)![1];
+  await swap.click();
+  // the schedule now has the backup, locked into the share link, and the old section is offered as a backup
+  const statRow2 = page.getByTestId("schedule-sections").locator("li").filter({ hasText: "RHET 105" }).first();
+  await expect(statRow2).toContainText(newCode.split(" + ")[0]);
+  await expect(page).toHaveURL(/RHET105(!|%21)\d{5}/);
+  // the swap is a lock, so it survives a reload and goes into the share link
+  await page.reload();
+  await page.getByRole("button", { name: "Generate schedules" }).click();
+  await expect(page.getByTestId("schedule-sections").locator("li").filter({ hasText: "RHET 105" }).first()).toContainText(newCode.split(" + ")[0]);
+  expect(before).not.toBe("");
+});
+
+test("a chosen section that closes during registration is flagged with its backup, from the live feed (#77)", async ({ page }) => {
+  let closedCrn: string | null = null;
+  await page.route("https://raw.githubusercontent.com/**", (r) =>
+    r.fulfill({
+      json: { updated: new Date().toISOString(), window_hours: 1, checked: {}, events: [], seen: closedCrn ? { "2027-sp": { [closedCrn]: ["Closed", new Date().toISOString()] } } : {} },
+    }),
+  );
+  await page.goto("./schedule/?c=CS124,RHET105&t=2027-sp");
+  await expect(page.getByTestId("cart").locator("li")).toHaveCount(2);
+  await page.getByRole("button", { name: "Generate schedules" }).click();
+  const statRow = page.getByTestId("schedule-sections").locator("li").filter({ hasText: "RHET 105" }).first();
+  await expect(statRow).toBeVisible();
+  closedCrn = /Copy (\d{5})/.exec((await statRow.getByRole("button", { name: /^Copy \d{5}$/ }).first().getAttribute("aria-label"))!)![1];
+  await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+  const banner = page.getByTestId("just-closed");
+  await expect(banner).toContainText(/RHET 105 \S+ just closed/);
+  await expect(banner).toContainText("Backup:");
+  await banner.getByRole("button", { name: "Use the backup" }).click();
+  await expect(page.getByTestId("schedule-sections").locator("li").filter({ hasText: "RHET 105" }).first()).not.toContainText(closedCrn);
+});
+
+test("375px: backup lines don't make the schedule scroll sideways", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 800 });
+  await page.goto("./schedule/?c=CS124,RHET105,CS128&t=2027-sp");
+  await expect(page.getByTestId("cart").locator("li")).toHaveCount(3);
+  await page.getByRole("button", { name: "Generate schedules" }).click();
+  await expect(page.getByTestId("backup").first()).toBeVisible();
+  const [sw, iw] = await page.evaluate(() => [document.documentElement.scrollWidth, window.innerWidth]);
+  expect(sw).toBeLessThanOrEqual(iw);
+});
