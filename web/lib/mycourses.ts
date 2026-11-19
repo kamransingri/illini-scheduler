@@ -6,12 +6,17 @@ export type CourseStatus = "done" | "credit" | "in_progress";
 /** `hours` and `ap` are set only on courses worked out from AP or IB scores (lib/apcredit.ts), never on the student's own. */
 export type MyCourse = { s: string; n: string; status: CourseStatus; hours?: number; ap?: string };
 /**
- * `program` is the major; `minor` is optional (""). `ticked` holds the major's hand-ticked group ids and the minor's as
- * MINOR_TICK + id ("mn--language"): group ids never contain "--", so the two can't collide.
+ * `program` is the major; `minors` are optional (up to MAX_MINORS). `ticked` holds the major's hand-ticked group ids and
+ * each minor's as minorTick(minor) + id ("history-minor--language"): group and program ids never contain "--", so none
+ * can collide. Lists and links from before #111 held one minor and wrote its ticks as "mn--language"; they're read as
+ * the first minor's.
  * `year`: the AP and IB tables' entering year ("2026" = 2026-2027; "" = the newest). `declined`: AP or IB credit switched off.
  */
-export type MyState = { courses: MyCourse[]; program: string; minor: string; ticked: string[]; ap: ApScore[]; ib: IbScore[]; year: string; declined: string[] };
-export const MINOR_TICK = "mn--";
+export type MyState = { courses: MyCourse[]; program: string; minors: string[]; ticked: string[]; ap: ApScore[]; ib: IbScore[]; year: string; declined: string[] };
+export const MAX_MINORS = 3;
+/** The prefix of a minor's tick ids. */
+export const minorTick = (minor: string) => `${minor}--`;
+const OLD_MINOR_TICK = "mn--";
 
 export const STATUS_LABEL: Record<CourseStatus, string> = {
   done: "Completed",
@@ -23,8 +28,39 @@ const KEY = "illini-scheduler:mycourses:v1";
 const EVENT = "illini-mycourses-change";
 const SUFFIX: Record<CourseStatus, string> = { done: "", credit: "~c", in_progress: "~p" };
 
-export const EMPTY: MyState = { courses: [], program: "", minor: "", ticked: [], ap: [], ib: [], year: "", declined: [] };
+export const EMPTY: MyState = { courses: [], program: "", minors: [], ticked: [], ap: [], ib: [], year: "", declined: [] };
 const SLUG = /^[a-z0-9-]*$/;
+const TICK = /^[a-z0-9-]+$/;
+
+/** "nutrition-minor,history-minor": program ids, deduplicated, at most MAX_MINORS. */
+function decodeMinors(param: unknown): string[] {
+  if (typeof param !== "string") return [];
+  const out: string[] = [];
+  for (const id of param.split(",")) if (id && /^[a-z0-9]+(-[a-z0-9]+)*$/.test(id) && !out.includes(id) && out.length < MAX_MINORS) out.push(id);
+  return out;
+}
+
+/** Tick ids, with the one-minor format ("mn--x") moved to the first minor, and a minor's ticks kept only while it's picked. */
+function decodeTicks(raw: unknown[], minors: string[]): string[] {
+  const out: string[] = [];
+  for (const t of raw) {
+    if (typeof t !== "string" || !TICK.test(t)) continue;
+    let id = t;
+    if (t.startsWith(OLD_MINOR_TICK)) {
+      if (!minors.length) continue;
+      id = minorTick(minors[0]) + t.slice(OLD_MINOR_TICK.length);
+    } else if (t.includes("--") && !minors.some((m) => t.startsWith(minorTick(m)))) continue;
+    if (!out.includes(id)) out.push(id);
+  }
+  return out;
+}
+
+/** The tick ids of one program: the major's when `minor` is "", else that minor's (without its prefix). */
+export function ticksOf(ticked: string[], minor = ""): string[] {
+  if (!minor) return ticked.filter((t) => !t.includes("--"));
+  const pre = minorTick(minor);
+  return ticked.filter((t) => t.startsWith(pre)).map((t) => t.slice(pre.length));
+}
 
 /** "STAT107,MATH220~c,CS124~p" (no suffix = completed, ~c = AP/transfer credit, ~p = in progress). */
 export function encodeCourses(items: MyCourse[]): string {
@@ -57,18 +93,19 @@ function decodeCodes(param: string | null | undefined): string[] {
 const cleanYear = (y: unknown) => (typeof y === "string" && /^\d{4}$/.test(y) ? y : "");
 
 export function encodeState(st: MyState): string {
-  return JSON.stringify({ c: encodeCourses(st.courses), p: st.program, n: st.minor, x: st.ticked, a: encodeAp(st.ap), i: encodeIb(st.ib), y: st.year, d: encodeCodes(st.declined) });
+  return JSON.stringify({ c: encodeCourses(st.courses), p: st.program, n: st.minors.join(","), x: st.ticked, a: encodeAp(st.ap), i: encodeIb(st.ib), y: st.year, d: encodeCodes(st.declined) });
 }
 
 export function decodeState(raw: string | null): MyState {
   if (!raw) return EMPTY;
   try {
     const o = JSON.parse(raw) as { c?: string; p?: string; n?: string; x?: unknown; a?: unknown; i?: unknown; y?: unknown; d?: unknown };
+    const minors = decodeMinors(o.n);
     return {
       courses: decodeCourses(o.c),
       program: typeof o.p === "string" && SLUG.test(o.p) ? o.p : "",
-      minor: typeof o.n === "string" && SLUG.test(o.n) ? o.n : "",
-      ticked: Array.isArray(o.x) ? o.x.filter((t): t is string => typeof t === "string" && /^[a-z0-9-]+$/.test(t)) : [],
+      minors,
+      ticked: Array.isArray(o.x) ? decodeTicks(o.x, minors) : [],
       ap: decodeAp(typeof o.a === "string" ? o.a : ""),
       ib: decodeIb(typeof o.i === "string" ? o.i : ""),
       year: cleanYear(o.y),
@@ -106,13 +143,13 @@ export function onMineChange(fn: () => void): () => void {
 }
 
 /**
- * URL params for a shareable checklist: ?p=<major>&mn=<minor>&m=<courses>&x=<ticked groups>&a=<AP scores>
+ * URL params for a shareable checklist: ?p=<major>&mn=<minor>,<minor>&m=<courses>&x=<ticked groups>&a=<AP scores>
  * &i=<IB scores>&y=<entering year>&d=<declined AP or IB credit>.
  */
 export function stateToParams(st: MyState, params: URLSearchParams): void {
   const put = (k: string, v: string) => (v ? params.set(k, v) : params.delete(k));
   put("p", st.program);
-  put("mn", st.minor);
+  put("mn", st.minors.join(","));
   put("m", encodeCourses(st.courses));
   put("x", st.ticked.join(","));
   put("a", encodeAp(st.ap));
@@ -127,12 +164,12 @@ const PARAMS = ["m", "p", "mn", "x", "a", "i", "y", "d"];
 export function stateFromParams(params: URLSearchParams): MyState | null {
   if (!PARAMS.some((k) => params.has(k))) return null;
   const p = params.get("p") ?? "";
-  const mn = params.get("mn") ?? "";
+  const minors = decodeMinors(params.get("mn"));
   return {
     courses: decodeCourses(params.get("m")),
     program: SLUG.test(p) ? p : "",
-    minor: SLUG.test(mn) ? mn : "",
-    ticked: (params.get("x") ?? "").split(",").filter((t) => /^[a-z0-9-]+$/.test(t)),
+    minors,
+    ticked: decodeTicks((params.get("x") ?? "").split(","), minors),
     ap: decodeAp(params.get("a")),
     ib: decodeIb(params.get("i")),
     year: cleanYear(params.get("y")),

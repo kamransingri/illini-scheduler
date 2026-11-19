@@ -1119,3 +1119,22 @@ Every judgment call made during the autonomous build, newest phase last.
   no About you. Its must-haves go through the site's URL round trip (`prefsToParams`, `prefsFromParams`) before
   ranking, so each schedule's `open_on_site` link (term, cart, must-haves and `i`, the schedule's place in the list)
   opens that schedule. The builder now generates on opening a link with `i` even when the rules are the defaults.
+
+## More than one minor (2026-11-19, issue #111)
+
+- **D41.1 A list, at most three.** `MyState.minors` (`lib/mycourses.ts`) replaces `minor`. The issue asked for a
+  second or third minor, and a cap keeps a hand-edited link from asking for 50 checklists. Storage keeps the `n` key
+  and the link keeps `mn=`, both now comma-separated lists, so a saved list or link with one minor reads the same.
+  Duplicates and ids that aren't program ids are dropped.
+- **D41.2 Tick ids name their minor.** A minor's hand ticks are `<minor id>--<group id>` (`minorTick`, `ticksOf`).
+  Program and group ids never contain `--`, so two minors can't collide with each other or with the major. The old
+  `mn--<group>` ticks belong to the first minor and are rewritten when they're read. A minor's ticks are dropped when
+  it's removed or swapped, as before, and ticks for a minor that isn't picked are dropped when a link is read.
+- **D41.3 Two minors sharing a course: rules unclear.** Each minor's checklist counts every course you have, as the
+  minor's did beside the major. When one course is counted by two of your minors, both checklists say so and send you
+  to your advisor (D13.11): no quoted rule says whether that's allowed. A few minors' pages do say it (for example
+  Landscape, World Literature and Hip-Hop: "distinct from credit earned for your major or another minor"); turning
+  those into limits is #112.
+- **D41.4 The pickers.** One picker per minor, then an empty "Another minor" picker until there are three. A minor
+  you've picked isn't offered again in the others. Removing a minor moves the ones after it up. About you (D38.4)
+  sends every minor's name to the restriction check, so "major(s) or minor(s)" sections accept any of them.
