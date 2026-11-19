@@ -2,9 +2,9 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { allCredits, apCredit, creditCourses, IB_LEVEL, ibCredit, isElective, isGrainger, pickIbYear, pickYear, subOptions, type ApSummary, type ApTable, type ApYear, type IbLevel } from "@/lib/apcredit";
-import { alsoCounts, evaluate, hoursSoFar, hydrate, needText, options, parseHours, prereqNote, rankCourse, type Degree, type DegreeCourse, type DegreeIndex, type GroupResult, type GroupStatus, type HoursSoFar, type Ranked } from "@/lib/degree";
+import { alsoCounts, evaluate, hoursSoFar, hydrate, needText, options, parseHours, prereqNote, rankCourse, type Degree, type DegreeCourse, type DegreeIndex, type Evaluation, type GroupResult, type GroupStatus, type HoursSoFar, type Ranked } from "@/lib/degree";
 import { courseHref, dataUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, termLabel } from "@/lib/format";
-import { EMPTY, MINOR_TICK, onMineChange, readMine, sameState, STATUS_LABEL, stateFromParams, stateToParams, writeMine, type CourseStatus, type MyState } from "@/lib/mycourses";
+import { EMPTY, MAX_MINORS, minorTick, onMineChange, readMine, sameState, STATUS_LABEL, stateFromParams, stateToParams, ticksOf, writeMine, type CourseStatus, type MyState } from "@/lib/mycourses";
 import type { ScorePriors } from "@/lib/score";
 import type { SearchIndex } from "@/lib/types";
 import { useWeights } from "@/lib/weights";
@@ -81,8 +81,8 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
   const [ready, setReady] = useState(false);
   const [deg, setDeg] = useState<Degree | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [minorDeg, setMinorDeg] = useState<Degree | null>(null);
-  const [minorError, setMinorError] = useState<string | null>(null);
+  const [minorDegs, setMinorDegs] = useState<Record<string, Degree>>({});
+  const [minorErrors, setMinorErrors] = useState<Record<string, string>>({});
   const majors = useMemo(() => programs.filter((p) => p.type !== "minor"), [programs]);
   const minors = useMemo(() => programs.filter((p) => p.type === "minor"), [programs]);
   const [index, setIndex] = useState<SearchIndex | null>(null);
@@ -136,14 +136,17 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
       .catch((e: Error) => setError(e.message));
   }, [st.program]);
 
+  // each minor's file loads once; removing a minor keeps it, so picking it again is instant
+  const minorKey = st.minors.join(",");
   useEffect(() => {
-    setMinorDeg(null);
-    setMinorError(null);
-    if (!st.minor) return;
-    loadDegree(st.minor)
-      .then(setMinorDeg)
-      .catch((e: Error) => setMinorError(e.message));
-  }, [st.minor]);
+    for (const id of minorKey ? minorKey.split(",") : []) {
+      if (minorDegs[id] || minorErrors[id]) continue;
+      loadDegree(id)
+        .then((d) => setMinorDegs((m) => ({ ...m, [id]: d })))
+        .catch((e: Error) => setMinorErrors((m) => ({ ...m, [id]: e.message })));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [minorKey]);
 
   // AP and IB scores become "credit" courses at CITL's hours; the college picks the Grainger rows for Calculus. Both use
   // the tables for the same entering year.
@@ -154,12 +157,15 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
   const ibSum = useMemo(() => (ibYear && st.ib.length ? ibCredit(ibYear, st.ib) : null), [ibYear, st.ib]);
   const allCourses = useMemo(() => [...st.courses, ...creditCourses(allCredits(apSum, ibSum), st.declined, st.courses)], [st.courses, st.declined, apSum, ibSum]);
   const apReady = (!st.ap.length || !!apTable || apError) && (!st.ib.length || (!!ibTable && !!apTable) || ibError || apError);
-  const majorTicks = useMemo(() => st.ticked.filter((t) => !t.startsWith(MINOR_TICK)), [st.ticked]);
-  const minorTicks = useMemo(() => st.ticked.filter((t) => t.startsWith(MINOR_TICK)).map((t) => t.slice(MINOR_TICK.length)), [st.ticked]);
+  const majorTicks = useMemo(() => ticksOf(st.ticked), [st.ticked]);
   const ev = useMemo(() => (deg && apReady ? evaluate(deg, allCourses, majorTicks) : null), [deg, apReady, allCourses, majorTicks]);
-  const minorEv = useMemo(() => (minorDeg && apReady ? evaluate(minorDeg, allCourses, minorTicks) : null), [minorDeg, apReady, allCourses, minorTicks]);
+  const minorEvs = useMemo(
+    () => new Map(st.minors.map((id) => [id, minorDegs[id] && apReady ? evaluate(minorDegs[id], allCourses, ticksOf(st.ticked, id)) : null])),
+    [st.minors, st.ticked, minorDegs, apReady, allCourses],
+  );
+  const minorOverlap = useMemo(() => sharedByMinors(minorEvs), [minorEvs]);
   const generatedOn = majors.find((p) => p.id === st.program)?.generated;
-  const minorGeneratedOn = minors.find((p) => p.id === st.minor)?.generated;
+  const nameOf = (id: string) => minors.find((p) => p.id === id)?.program ?? id;
   const taken = useMemo(() => new Set(allCourses.map((c) => `${c.s} ${c.n}`)), [allCourses]);
   const hours = useMemo(() => {
     if (!deg) return null;
@@ -214,23 +220,35 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
             noun={["major", "majors"]}
             hint="finance, CS, MCB"
           />
-          {minors.length > 0 && (
-            <ProgramPicker
-              programs={minors}
-              value={st.minor}
-              // a different minor starts with none of the old one's boxes ticked
-              onChange={(minor) => update({ ...st, minor, ticked: st.ticked.filter((t) => !t.startsWith(MINOR_TICK)) })}
-              label={
-                <>
-                  Minor <span className="font-normal text-muted">(optional)</span>
-                </>
-              }
-              idPrefix="minor"
-              noun={["minor", "minors"]}
-              hint="business, CS, music"
-              clearable
-            />
-          )}
+          {minors.length > 0 &&
+            [...st.minors, ...(st.minors.length < MAX_MINORS ? [""] : [])].map((id, k) => (
+              <ProgramPicker
+                key={`${k}-${id}`}
+                // a minor you've already picked isn't offered again
+                programs={minors.filter((p) => p.id === id || !st.minors.includes(p.id))}
+                value={id}
+                // a different minor starts with none of the old one's boxes ticked; removing one moves the next up
+                onChange={(next) => {
+                  const list = [...st.minors];
+                  if (next) list[k] = next;
+                  else list.splice(k, 1);
+                  update({ ...st, minors: list.filter((m, i) => m && list.indexOf(m) === i), ticked: id ? st.ticked.filter((t) => !t.startsWith(minorTick(id))) : st.ticked });
+                }}
+                label={
+                  id ? (
+                    MINOR_LABELS[k]
+                  ) : (
+                    <>
+                      {k ? "Another minor" : "Minor"} <span className="font-normal text-muted">(optional)</span>
+                    </>
+                  )
+                }
+                idPrefix={k ? `minor-${k + 1}` : "minor"}
+                noun={["minor", "minors"]}
+                hint="business, CS, music"
+                clearable
+              />
+            ))}
           <AddCourse st={st} update={update} deg={deg} index={index} />
           <ApForm st={st} update={update} table={apTable} ibTable={ibTable} error={apError || ibError} />
         </div>
@@ -244,7 +262,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
       </section>
 
       <section aria-label="Requirements" className="min-w-0">
-          {!st.program && <p className="text-muted">Choose a major{minors.length ? " (and a minor, if you have one)" : ""} to see its requirements.</p>}
+          {!st.program && <p className="text-muted">Choose a major{minors.length ? " (and your minors, if you have any)" : ""} to see its requirements.</p>}
           {error && (
             <p className="flex items-start gap-2" role="alert">
               <Icon name="alert" className="mt-1" />
@@ -266,30 +284,65 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
           {deg && ev && <Checklist deg={deg} results={ev.results} st={st} update={update} taken={taken} meta={meta} weights={weights} hours={hours} apHours={apHours} tickPrefix="" />}
       </section>
 
-      {st.minor && (
-        <section aria-label="Minor requirements" className="min-w-0 border-t-4 border-heading pt-6" data-testid="minor-checklist">
-          {minorError && (
-            <p className="flex items-start gap-2" role="alert">
-              <Icon name="alert" className="mt-1" />
-              Couldn&apos;t load the minor&apos;s requirements ({minorError}). Reload to try again.
+      {st.minors.map((id, k) => {
+        const minorDeg = minorDegs[id];
+        const minorEv = minorEvs.get(id);
+        const minorGeneratedOn = minors.find((p) => p.id === id)?.generated;
+        const overlap = [...minorOverlap].filter(([, ids]) => ids.includes(id)).map(([c, ids]) => ({ c, others: ids.filter((o) => o !== id) }));
+        return (
+          <section key={id} aria-label={`${nameOf(id)} requirements`} className="min-w-0 border-t-4 border-heading pt-6" data-testid="minor-checklist" data-minor={id}>
+            {minorErrors[id] && (
+              <p className="flex items-start gap-2" role="alert">
+                <Icon name="alert" className="mt-1" />
+                Couldn&apos;t load the minor&apos;s requirements ({minorErrors[id]}). Reload to try again.
+              </p>
+            )}
+            <p className="mb-4 flex max-w-3xl items-start gap-2 rounded bg-panel p-3">
+              <Icon name="info" className="mt-1 shrink-0 text-heading" />
+              <span>
+                {k === 0 && (
+                  <>
+                    Your courses count toward your major and your minor{st.minors.length > 1 ? "s" : ""} here. Some minors and colleges limit how many hours
+                    can count for both, or need some courses taken outside your major: the minor&apos;s catalog page says so. Most minors also need a form
+                    filed with your college.{" "}
+                  </>
+                )}
+                {minorGeneratedOn && <>This minor was read automatically from its catalog page on {fmtDate(minorGeneratedOn)}; check that page before you rely on it.</>}
+              </span>
             </p>
-          )}
-          <p className="mb-4 flex max-w-3xl items-start gap-2 rounded bg-panel p-3">
-            <Icon name="info" className="mt-1 shrink-0 text-heading" />
-            <span>
-              Your courses count toward your major and your minor here. Some minors and colleges limit how many hours can count for both, or need some
-              courses taken outside your major: the minor&apos;s catalog page says so. Most minors also need a form filed with your college.
-              {minorGeneratedOn && <> This minor was read automatically from its catalog page on {fmtDate(minorGeneratedOn)}; check that page before you rely on it.</>}
-            </span>
-          </p>
-          {!minorEv && !minorError && <p className="text-muted">Loading the minor&apos;s requirements…</p>}
-          {minorDeg && minorEv && (
-            <Checklist deg={minorDeg} results={minorEv.results} st={st} update={update} taken={taken} meta={meta} weights={weights} hours={null} apHours={0} tickPrefix={MINOR_TICK} />
-          )}
-        </section>
-      )}
+            {overlap.length > 0 && (
+              <p className="mb-4 flex max-w-3xl items-start gap-2 rounded bg-panel p-3" data-testid="minor-overlap">
+                <Icon name="alert" className="mt-1 shrink-0 text-heading" />
+                <span>
+                  {overlap.map((o, i) => (
+                    <span key={o.c}>
+                      {i > 0 && "; "}
+                      <strong>{o.c}</strong> also counts toward your {o.others.map(nameOf).join(" and ")}
+                    </span>
+                  ))}
+                  . The catalog doesn&apos;t give a rule we can read for one course counting toward two minors, so it&apos;s counted in both here: ask
+                  your advisor, and check each minor&apos;s page.
+                </span>
+              </p>
+            )}
+            {!minorEv && !minorErrors[id] && <p className="text-muted">Loading the minor&apos;s requirements…</p>}
+            {minorDeg && minorEv && (
+              <Checklist deg={minorDeg} results={minorEv.results} st={st} update={update} taken={taken} meta={meta} weights={weights} hours={null} apHours={0} tickPrefix={minorTick(id)} />
+            )}
+          </section>
+        );
+      })}
     </div>
   );
+}
+
+const MINOR_LABELS = ["Minor", "Second minor", "Third minor"];
+
+/** Courses that count toward two or more of the minors (with the minors' ids), in the order they're first used. */
+function sharedByMinors(evs: Map<string, Evaluation | null>): Map<string, string[]> {
+  const by = new Map<string, string[]>();
+  for (const [id, ev] of evs) for (const c of ev?.usedBy.keys() ?? []) by.set(c, [...(by.get(c) ?? []), id]);
+  return new Map([...by].filter(([, ids]) => ids.length > 1));
 }
 
 type MineProps = { st: MyState; update: (s: MyState) => void; deg: Degree | null; index: SearchIndex | null };
@@ -750,7 +803,7 @@ function Checklist({
   weights: ReturnType<typeof useWeights>;
   hours: HoursSoFar | null;
   apHours: number;
-  tickPrefix: string; // "" for the major, MINOR_TICK for the minor
+  tickPrefix: string; // "" for the major, minorTick(id) for a minor
 }) {
   const minor = deg.type === "minor";
   const counts = (s: GroupStatus) => results.filter((r) => r.status === s).length;
