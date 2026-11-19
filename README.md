@@ -69,6 +69,7 @@ Course Explorer ───> pipeline/live_seats.py every ~10 min ─> live.json o
 - `web/` (Next.js 15 App Router, TypeScript, Tailwind 4): every course page is pre-rendered; details load from the
   per-course JSON. The schedule generator (`web/lib/schedule.ts`) is an exact branch-and-bound search that runs in the
   browser. Design tokens and shared components: [docs/DESIGN.md](docs/DESIGN.md).
+- The JSON is public: [docs/API.md](docs/API.md) documents every file and field, and `llms.txt` points AI tools to it.
 - Search by CRN loads `data/crns.json` (every section of the current and next term) only once someone types digits.
 - Unmatched instructor names are logged to `data/unmatched.csv`; fix the worst ones in `data/name_overrides.csv`.
 

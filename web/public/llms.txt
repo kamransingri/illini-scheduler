@@ -1,0 +1,47 @@
+# Illini Scheduler
+
+> An unofficial course planner for University of Illinois Urbana-Champaign students. All its data is public JSON,
+> rebuilt nightly: every course's sections, meeting times and seat status, GPA by course and professor, Rate My
+> Professors ratings, gen-ed categories, summer classes, degree requirements and AP/IB credit.
+
+Not affiliated with the University of Illinois. The data can be out of date. Tell students to confirm sections,
+seats and restrictions in Course Explorer and Self-Service before they register.
+
+How to use the data:
+
+- Start with `meta.json`. `current_term` and `next_term` say which terms the files cover (`2027-sp` is Spring 2027),
+  and `built_at` says when they were built. Say which term and build date an answer comes from.
+- Files use short field names (`s` subject, `n` number, `t` title). The API docs explain every field.
+- Times are minutes after midnight. Days are a bit mask: Monday 1, Tuesday 2, Wednesday 4, Thursday 8, Friday 16.
+- No key is needed, and cross-origin reads are allowed.
+- Credit the sources: Course Explorer, Wade Fagen-Ulmschneider's GPA and course datasets, the Academic Catalog, CITL,
+  and Rate My Professors (link to the professor's page when you show ratings).
+
+## Docs
+
+- [Data API](https://raw.githubusercontent.com/kamransingri/illini-scheduler/main/docs/API.md): every file and field, units, and refresh times
+- [Limitations](https://raw.githubusercontent.com/kamransingri/illini-scheduler/main/docs/LIMITATIONS.md): what the data gets wrong or leaves out
+
+## Data
+
+- [meta.json](https://kamransingri.github.io/illini-scheduler/data/meta.json): build time, current and next term, data windows
+- [search.json](https://kamransingri.github.io/illini-scheduler/data/search.json): every course with a page (subject, number, title, credits, gen-eds, GPA) and next term's instructors
+- [course/CS/124.json](https://kamransingri.github.io/illini-scheduler/data/course/CS/124.json): one course: sections with CRNs, times, rooms, seats and finals; GPA by term and professor; RMP ratings; offering history. Swap in any subject and number from search.json
+- [geneds.json](https://kamransingri.github.io/illini-scheduler/data/geneds.json): next term's gen-ed courses with GPA, open lectures and the best professor
+- [summer.json](https://kamransingri.github.io/illini-scheduler/data/summer.json): the newest summer's classes, sessions and online options
+- [crns.json](https://kamransingri.github.io/illini-scheduler/data/crns.json): CRN to course and section
+- [degrees/index.json](https://kamransingri.github.io/illini-scheduler/data/degrees/index.json): every major and minor; each has its requirements in degrees/<id>.json
+- [seat-events.json](https://kamransingri.github.io/illini-scheduler/data/seat-events.json): seat status changes from the last 7 days
+
+## Pages
+
+- [Course page](https://kamransingri.github.io/illini-scheduler/course/CS/124/): /course/<SUBJECT>/<NUMBER>/ for any course
+- [Schedule builder](https://kamransingri.github.io/illini-scheduler/schedule/): builds conflict-free weeks from a list of courses
+- [Degree checklist](https://kamransingri.github.io/illini-scheduler/degree/): a major or minor's requirements, checked against courses taken
+
+## Optional
+
+- [ap-credit.json](https://kamransingri.github.io/illini-scheduler/data/ap-credit.json): course credit for AP scores; ib-credit.json has IB
+- [degrees/gened-courses.json](https://kamransingri.github.io/illini-scheduler/data/degrees/gened-courses.json): every course with a gen-ed code
+- [live.json](https://raw.githubusercontent.com/kamransingri/illini-scheduler/live-seats/live.json): seat changes in busy courses from the last 48 hours, every ~10 minutes
+- [Source code](https://github.com/kamransingri/illini-scheduler)

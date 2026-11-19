@@ -4,6 +4,7 @@ import httpx
 
 from pipeline import availability, live_seats
 from pipeline.config import FIXTURES
+from tools import api_docs
 
 PAGE = (FIXTURES / "course-explorer-web" / "2026-fa_CS124.html").read_bytes()
 NOW = "2026-11-17T12:00:00+00:00"
@@ -136,6 +137,7 @@ def test_check_records_a_change_once():
     view = live_seats.public_view(state, NOW)
     assert view["read"]["2026-fa"]["CS 124"] == live["courses"]["CS 124"]
     assert view["watched"] == {"2026-fa": ["CS 124"]}
+    assert api_docs.check("live.json", view) == set()  # docs/API.md covers the file
 
 
 def test_stops_after_pushback_and_publishes_small_file(tmp_path):

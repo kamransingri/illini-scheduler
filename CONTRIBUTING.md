@@ -76,6 +76,10 @@ Never edit the version files by hand. `make release` keeps them in step, and CI 
 **Unreleased** in the same pull request as the change, under Added, Changed, Fixed or Removed. Leave out changes nobody
 will notice. CI warns, without failing, when code changed but the changelog didn't.
 
+The exported JSON is a public API ([docs/API.md](docs/API.md)). A new field needs a row there, or the tests fail.
+Renaming or removing a field, or changing what it means, also raises `DATA_FORMAT` in `pipeline/export.py` and gets a
+line under **Changed** or **Removed**.
+
 ## Releasing
 
 1. On the branch that finishes the work (or a `release/0.5.0` branch from `main`):
