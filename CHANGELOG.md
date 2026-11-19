@@ -12,6 +12,11 @@ history).
 
 ### Added
 
+- Schedule builder: a Finals week view and exam-conflict check (#83, #84, #85). Each schedule's finals are shown by
+  day. The builder warns when finals overlap or when three or more start within 24 hours, which the Student Code
+  counts as an exam conflict. The warning names the course expected to offer the conflict exam and says to contact
+  the instructors by the last day of class. The comparison table has a Finals column, and the .ics can include the
+  finals.
 - Schedule builder: credit-hour warnings with a link to the Registrar's limits (#82). Over 18 hours in fall or spring
   (9 in summer, one class in winter) says your college office has to approve an overload; a schedule under 12 hours
   says it isn't full-time, which can matter for financial aid, scholarships, insurance and visas. Variable-credit

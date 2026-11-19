@@ -1005,3 +1005,28 @@ Every judgment call made during the autonomous build, newest phase last.
   running total. Summer and winter state no full-time number (it depends on the program and aid), so they only check
   the cap. This replaces the old plain "more than 18 needs approval" line, which counted the most hours of every
   course and had no source.
+
+## Finals week and exam conflicts (2026-11-19, issues #83, #84 and #85)
+
+- **D36.1 The Student Code's two kinds of conflict.** § 3-201(a)(8): two synchronous exams scheduled in overlapping
+  periods, or "three or more final exams with starting times all within a 24-hour window". The builder already
+  warned about overlaps; `web/lib/finals.ts` adds the three-in-24-hours rule and moves the finals code out of
+  `schedule.ts`. Each run of three or more starts under 24 hours apart is one conflict, so four finals in a day is
+  one warning that lists all four.
+- **D36.2 Exactly 24 hours is a question, not a verdict.** Registrar slots make Monday 8am to Tuesday 8am common;
+  whether that is "within" a 24-hour window could go either way, so it is shown as "ask your instructors whether
+  this counts" and isn't counted as a conflict in the comparison table.
+- **D36.3 Who offers the conflict exam.** § 3-201(a)(11) ranks Registrar "Non Combined" exams above "Combined" ones,
+  and the course with the lowest priority sets up the conflict exam; on a tie, the course with the most students.
+  Enrollment isn't in the data, so a tie says "whichever has more students". An exam type the rule doesn't name
+  gives no answer rather than a guess. "Extra Space" rows are a second room for the same exam and take that exam's
+  type.
+- **D36.4 Missing finals are said, not assumed.** A course with no final in Course Explorer's schedule (not published
+  yet, scheduled by the department, or none) is listed as such and can't be checked. Before the Registrar publishes a
+  term's finals, the Finals week view says so.
+- **D36.5 Finals in the .ics.** One-off events from the final-exam rows (not the "Conflict" make-up rows), on by
+  default when a schedule has finals, with a box to leave them out. The export's text escaping now escapes
+  semicolons, which RFC 5545 requires and the code meant to do (the regex replacement lost its backslash).
+- **D36.6 Not done.** A "What matters to you" weight against schedules with exam conflicts (#84 left it optional):
+  students choose sections by lecture time, and finals are often unknown at registration.
+
