@@ -10,6 +10,13 @@ history).
 
 ## [Unreleased]
 
+### Added
+
+- Schedule builder: credit-hour warnings with a link to the Registrar's limits (#82). Over 18 hours in fall or spring
+  (9 in summer, one class in winter) says your college office has to approve an overload; a schedule under 12 hours
+  says it isn't full-time, which can matter for financial aid, scholarships, insurance and visas. Variable-credit
+  courses count as a range ("15–18"), and the cart shows a running total.
+
 ## [0.13.1] - 2026-11-19
 
 ### Added
