@@ -11,12 +11,14 @@ import {
   DEFAULT_PREFS,
   explainEmpty,
   generate,
+  locksToBlame,
   LUNCH,
   sectionsToWatch,
   summaryLine,
   warnings,
   type CourseInput,
   type GenerateResult,
+  type LockBlame,
   type Prefs,
   type Schedule,
 } from "@/lib/schedule";
@@ -51,6 +53,9 @@ const START_TIMES = range(420, 720); // 7:00am - 12:00pm
 const END_TIMES = range(720, 1320); // 12:00pm - 10:00pm
 const SOFT_EARLY = range(480, 720, 60); // 8am - 12pm
 const SOFT_LATE = range(900, 1260, 60); // 3pm - 9pm
+const LUNCH_FROM = range(600, 810); // 10:00am - 1:30pm
+const LUNCH_TO = range(720, 930); // 12:00pm - 3:30pm
+const LUNCH_LENGTHS = [30, 45, 60, 75, 90];
 
 const courseCache = new Map<string, Promise<Course>>();
 function loadCourse(s: string, n: string): Promise<Course> {
@@ -88,10 +93,18 @@ function fmtHours(min: number): string {
   return h ? `${h} h${m ? ` ${m} min` : ""}` : `${m} min`;
 }
 
+/** The options of a select plus its current value (a shared link can carry a time between the listed steps). */
+const withCurrent = (opts: number[], cur: number) => (opts.includes(cur) ? opts : [...opts, cur].sort((a, b) => a - b));
+
+/** A schedule's sections as one string, to find the same schedule again after the list changes. */
+const crnKey = (s: Schedule) => s.bundles.flatMap((b) => b.crns).sort().join(",");
+
+const lunchIsDefault = (p: Prefs) => p.lunchFrom === LUNCH.from && p.lunchTo === LUNCH.to && p.lunchMin === LUNCH.min;
+
 /** Plain-words list of the must-haves that are on, for a collapsed panel. */
 function mustSummary(p: Prefs): string[] {
   const out = timeRulesSummary(p);
-  if (p.lunch) out.push("lunch break");
+  if (p.lunch) out.push(lunchIsDefault(p) ? "lunch break" : `${p.lunchMin}-minute lunch ${fmtTime(p.lunchFrom)}–${fmtTime(p.lunchTo)}`);
   if (p.openOnly) out.push("open sections only");
   if (p.includeSpecial) out.push("special sections allowed");
   if (p.blocked.length) out.push(`${p.blocked.length} blocked time${p.blocked.length > 1 ? "s" : ""}`);
@@ -124,6 +137,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
   const [loadErrors, setLoadErrors] = useState<string[]>([]);
   const [prefs, setPrefs] = useState<Prefs>(DEFAULT_PREFS);
   const [result, setResult] = useState<GenerateResult | null>(null);
+  const [blame, setBlame] = useState<LockBlame | null>(null); // when nothing fits: the locks that rule every schedule out
   const [busy, setBusy] = useState(false);
   const [auto, setAuto] = useState(false); // after the first run, results follow every change
   const [idx, setIdx] = useState(0);
@@ -133,6 +147,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
   const [icsError, setIcsError] = useState<string | null>(null);
   const [panels, setPanels] = useState({ must: true, soft: true });
   const autoRun = useRef<number | null>(null); // schedule index to open once a shared link's courses load
+  const keepOpen = useRef<string | null>(null); // after a lock from the results, the CRNs of the schedule to stay on
 
   // Initial state: a shared link (URL) shows its list; it only replaces your saved list if you say so.
   useEffect(() => {
@@ -228,7 +243,11 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
       setTimeout(() => {
         const r = generate(inputs, term, prefs);
         setResult(r);
-        setIdx(Math.min(openIndex, Math.max(0, r.schedules.length - 1)));
+        setBlame(r.schedules.length ? null : locksToBlame(inputs, term, prefs));
+        // locking a section of the schedule on screen keeps it on screen: it is still in the (smaller) top list
+        const kept = keepOpen.current === null ? -1 : r.schedules.findIndex((x) => crnKey(x) === keepOpen.current);
+        keepOpen.current = null;
+        setIdx(kept >= 0 ? kept : Math.min(openIndex, Math.max(0, r.schedules.length - 1)));
         setBusy(false);
       }, 10);
     },
@@ -261,11 +280,27 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
   const warns = warnings(inputs, term, sched, termLabel(term));
   const updateItem = (s: string, n: string, f: (c: CartItem) => CartItem) => writeCart(cart.map((c) => (c.s === s && c.n === n ? f(c) : c)));
   const remove = (s: string, n: string) => writeCart(cart.filter((c) => !(c.s === s && c.n === n)));
+  const itemOf = (course: string) => cart.find((c) => `${c.s} ${c.n}` === course);
+  const isLockedSec = (course: string, crn: string) => !!itemOf(course)?.locked.includes(crn);
+  /** Lock a section of the schedule on screen (#67): every schedule from now on has it. Unlocking frees it again. */
+  const toggleLock = (course: string, sec: Section) => {
+    const it = itemOf(course);
+    if (!it) return;
+    const block = courses[course]?.terms[term];
+    const sameComponent = (crn: string) => block?.sections.some((x) => x.crn === crn && x.component === sec.component) ?? false;
+    if (sched) keepOpen.current = crnKey(sched);
+    updateItem(it.s, it.n, (c) => ({ ...c, locked: c.locked.includes(sec.crn) ? c.locked.filter((x) => x !== sec.crn) : [...c.locked.filter((x) => !sameComponent(x)), sec.crn] }));
+  };
+  const unlockCourse = (course: string) => {
+    const it = itemOf(course);
+    if (it) updateItem(it.s, it.n, (c) => ({ ...c, locked: [] }));
+  };
   const set = <K extends keyof Prefs>(k: K, v: Prefs[K]) => setPrefs((p) => ({ ...p, [k]: v }));
   const setW = (k: W, v: number) => setPrefs((p) => ({ ...p, weights: { ...p.weights, [k]: v } }));
   const termOptions = [meta.next_term, meta.current_term].filter((t, i, a) => a.indexOf(t) === i);
   const missing = result ? result.emptyCourses.map((k) => ({ key: k, why: explainEmpty(inputs.find((x) => x.key === k)!, term, prefs) })) : [];
   const clashes = result && !result.schedules.length ? clashingPairs(inputs, term, prefs) : [];
+  const lockedCourses = inputs.filter((i) => i.locked.some((crn) => i.course.terms[term]?.sections.some((s) => s.crn === crn))).map((i) => i.key);
   const must = mustSummary(prefs);
   const wKeys = Object.keys(DEFAULT_PREFS.weights) as W[];
   const preset = PRESETS.find((p) => wKeys.every((k) => p.weights[k] === prefs.weights[k]));
@@ -497,15 +532,34 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
               </div>
             </fieldset>
             <div className="space-y-1.5">
-              <label className="flex items-start gap-2">
-                <input type="checkbox" className="mt-1 size-4 accent-action" checked={prefs.lunch} onChange={(e) => set("lunch", e.target.checked)} />
-                <span>
-                  Keep a lunch break
-                  <span className="block text-sm text-muted">
-                    At least {LUNCH.min} minutes free between {fmtTime(LUNCH.from)} and {fmtTime(LUNCH.to)} on every day with class
-                  </span>
-                </span>
-              </label>
+              <div className="flex items-start gap-2">
+                <input id="lunch-on" type="checkbox" className="mt-1 size-4 accent-action" checked={prefs.lunch} onChange={(e) => set("lunch", e.target.checked)} />
+                <div>
+                  <label htmlFor="lunch-on">Keep a lunch break</label>
+                  {prefs.lunch ? (
+                    // only combinations that can hold the break are offered, so the window is never shorter than the break
+                    <span className="flex flex-wrap items-center gap-1 text-sm text-muted" role="group" aria-label="Lunch break">
+                      At least
+                      <select className="rounded border border-line bg-white px-1 py-0.5 text-sm" value={prefs.lunchMin} onChange={(e) => set("lunchMin", Number(e.target.value))} aria-label="Lunch break length">
+                        {withCurrent(LUNCH_LENGTHS.filter((m) => m <= prefs.lunchTo - prefs.lunchFrom), prefs.lunchMin).map((m) => (
+                          <option key={m} value={m}>
+                            {m} min
+                          </option>
+                        ))}
+                      </select>
+                      free between
+                      {timeSelect(prefs.lunchFrom, withCurrent(LUNCH_FROM.filter((t) => t <= prefs.lunchTo - prefs.lunchMin), prefs.lunchFrom), (v) => set("lunchFrom", v), "Lunch window starts")}
+                      and
+                      {timeSelect(prefs.lunchTo, withCurrent(LUNCH_TO.filter((t) => t >= prefs.lunchFrom + prefs.lunchMin), prefs.lunchTo), (v) => set("lunchTo", v), "Lunch window ends")}
+                      on every day with class
+                    </span>
+                  ) : (
+                    <span className="block text-sm text-muted">
+                      At least {prefs.lunchMin} minutes free between {fmtTime(prefs.lunchFrom)} and {fmtTime(prefs.lunchTo)} on every day with class
+                    </span>
+                  )}
+                </div>
+              </div>
               <label className="flex items-start gap-2">
                 <input type="checkbox" className="mt-1 size-4 accent-action" checked={prefs.openOnly} onChange={(e) => set("openOnly", e.target.checked)} />
                 <span>
@@ -704,16 +758,40 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
           {result && !result.schedules.length && (
             <div className="rounded border-l-4 border-heading bg-panel p-3" role="alert" data-testid="no-schedule">
               <p className="font-semibold">No conflict-free schedule exists for these courses and must-haves.</p>
-              {clashes.length > 0 ? (
+              {clashes.length > 0 && (
                 <ul className="mt-1 list-disc pl-5">
                   {clashes.map((c) => (
-                    <li key={c}>{c}. Drop one of them or pick another course.</li>
+                    <li key={c.text}>
+                      {c.text}. {c.locked ? "Unlock a section, drop one of the courses or pick another." : "Drop one of them or pick another course."}
+                    </li>
                   ))}
                 </ul>
+              )}
+              {blame && (blame.each.length > 0 || blame.all) ? (
+                <div className="mt-2" data-testid="lock-blame">
+                  <p>
+                    {blame.each.length === 1
+                      ? `Your locked ${blame.each[0]} section is what rules every schedule out: unlock it and schedules fit again.`
+                      : blame.each.length > 1
+                        ? `Your locked sections are what rule every schedule out: unlocking ${blame.each.length === 2 ? `either ${blame.each.join(" or ")}` : `any one of ${blame.each.slice(0, -1).join(", ")} or ${blame.each.at(-1)}`} lets schedules fit again.`
+                        : "Your locked sections together rule every schedule out: no single unlock is enough, but unlocking all of them lets schedules fit again."}
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {(blame.each.length ? blame.each : lockedCourses).map((k) => (
+                      <button key={k} type="button" className="inline-flex items-center gap-1.5 rounded border border-action bg-white px-2.5 py-1 text-sm font-semibold text-action hover:bg-action-tint" onClick={() => unlockCourse(k)}>
+                        <Icon name="unlock" />
+                        Unlock {k}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               ) : (
-                <p className="mt-1">
-                  Every pair of courses can fit, but not all of them at once{prefs.lunch ? " with a lunch break" : ""}. Try removing a must-have, a locked section or a course.
-                </p>
+                clashes.length === 0 && (
+                  <p className="mt-1">
+                    Every pair of courses can fit, but not all of them at once{prefs.lunch ? " with a lunch break" : ""}.{" "}
+                    {lockedCourses.length ? "Unlocking sections wouldn't help on its own: try removing a must-have or a course." : "Try removing a must-have or a course."}
+                  </p>
+                )
               )}
             </div>
           )}
@@ -776,6 +854,17 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                         {s.code} {s.type}
                       </span>
                       <CopyButton text={s.crn} />
+                      <button
+                        type="button"
+                        aria-pressed={isLockedSec(b.course, s.crn)}
+                        aria-label={`Lock ${b.course} ${s.code}`}
+                        title={isLockedSec(b.course, s.crn) ? "Locked: every schedule keeps this section. Press again to unlock it." : "Keep this section in every schedule and build the others around it"}
+                        onClick={() => toggleLock(b.course, s)}
+                        className={`inline-flex items-center gap-1 rounded border px-2 text-sm leading-7 font-semibold ${isLockedSec(b.course, s.crn) ? "border-action bg-action text-white" : "border-line bg-white text-action hover:border-action"}`}
+                      >
+                        <Icon name={isLockedSec(b.course, s.crn) ? "lock" : "unlock"} />
+                        Lock
+                      </button>
                       <span className="min-w-[9rem] flex-1 tnum">{s.meetings.map((m) => (m.s === null ? "No set time" : `${daysStr(m.d)} ${fmtTime(m.s)}–${fmtTime(m.e)}`)).join("; ")}</span>
                       {s.status && <SeatStatus status={s.status} />}
                       <span className="text-sm text-muted">{s.instructors_raw.join("; ") || "TBA"}</span>

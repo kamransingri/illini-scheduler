@@ -54,6 +54,9 @@ describe("prefs in the URL", () => {
       latest: 1080,
       daysOff: 17,
       lunch: true,
+      lunchFrom: 690,
+      lunchTo: 810,
+      lunchMin: 60,
       openOnly: true,
       includeSpecial: true,
       softEarly: 540,
@@ -65,6 +68,11 @@ describe("prefs in the URL", () => {
     prefsToParams(p, params);
     expect(hasPrefParams(params)).toBe(true);
     expect(prefsFromParams(params)).toEqual(p);
+  });
+  it("a lunch window too short for its own break falls back to 11am-2pm, 45 minutes (#56)", () => {
+    const p = prefsFromParams(new URLSearchParams("lu=1&lf=720&lt=750&lm=60"));
+    expect([p.lunch, p.lunchFrom, p.lunchTo, p.lunchMin]).toEqual([true, 660, 840, 45]);
+    expect(prefsFromParams(new URLSearchParams("lm=60")).lunchMin).toBe(60);
   });
   it("links from before v0.4.0 still open: nf=1 is Friday off, 6-digit weights keep the new ones at default", () => {
     const p = prefsFromParams(new URLSearchParams("nf=1&w=300000"));
