@@ -6,7 +6,7 @@ import { DEFAULT_PREFS, type Prefs } from "./schedule";
 
 const KEY = "illini-scheduler:prefs:v1";
 const W_ORDER: (keyof Prefs["weights"])[] = ["gpa", "rmp", "early", "daysOff", "compact", "walking", "late", "open", "prof"];
-const PARAMS = ["e", "l", "do", "nf", "lu", "oo", "sp", "b", "w", "se", "sl"];
+const PARAMS = ["e", "l", "do", "nf", "lu", "lf", "lt", "lm", "oo", "sp", "b", "w", "se", "sl"];
 
 const minutes = (v: string | null, lo = 0, hi = 1440): number | null => {
   if (v === null || v === "" || !/^\d+$/.test(v)) return null;
@@ -20,6 +20,9 @@ export function prefsToParams(p: Prefs, params: URLSearchParams): void {
   if (p.latest !== null) params.set("l", String(p.latest));
   if (p.daysOff) params.set("do", String(p.daysOff));
   if (p.lunch) params.set("lu", "1");
+  if (p.lunchFrom !== DEFAULT_PREFS.lunchFrom) params.set("lf", String(p.lunchFrom));
+  if (p.lunchTo !== DEFAULT_PREFS.lunchTo) params.set("lt", String(p.lunchTo));
+  if (p.lunchMin !== DEFAULT_PREFS.lunchMin) params.set("lm", String(p.lunchMin));
   if (p.openOnly) params.set("oo", "1");
   if (p.includeSpecial) params.set("sp", "1");
   if (p.blocked.length) params.set("b", p.blocked.map((b) => `${b.d}-${b.s}-${b.e}`).join("."));
@@ -39,6 +42,11 @@ export function prefsFromParams(params: URLSearchParams): Prefs {
   p.latest = minutes(params.get("l"), 1, 1440);
   p.daysOff = (minutes(params.get("do"), 0, 31) ?? 0) | (params.get("nf") === "1" ? 16 : 0);
   p.lunch = params.get("lu") === "1";
+  // the lunch window (#56); one that can't hold its own break falls back to 11am-2pm, 45 minutes
+  const lf = minutes(params.get("lf"), 0, 1439) ?? DEFAULT_PREFS.lunchFrom;
+  const lt = minutes(params.get("lt"), 1, 1440) ?? DEFAULT_PREFS.lunchTo;
+  const lm = minutes(params.get("lm"), 5, 240) ?? DEFAULT_PREFS.lunchMin;
+  if (lt - lf >= lm) Object.assign(p, { lunchFrom: lf, lunchTo: lt, lunchMin: lm });
   p.openOnly = params.get("oo") === "1";
   p.includeSpecial = params.get("sp") === "1";
   p.softEarly = minutes(params.get("se"), 0, 1439) ?? DEFAULT_PREFS.softEarly;
