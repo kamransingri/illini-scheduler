@@ -150,6 +150,8 @@ export type GenedRow = {
 };
 
 export type Meta = {
+  /** data format version (docs/API.md); missing in older builds */
+  format_version?: number;
   built_at: string;
   current_term: string;
   next_term: string;
