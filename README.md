@@ -126,7 +126,8 @@ the page noted in the file; IB credit is the same in `data/ib-credit/`. Format, 
 Work happens on `type/short-name` branches (`feature/`, `fix/`, `docs/`, `chore/`, `data/`, `hotfix/`, `release/`)
 merged into `main` through pull requests; `main` is what's live. One version for the whole repo, changed only with
 `make release`; merging a new version tags it and publishes its release notes from [CHANGELOG.md](CHANGELOG.md).
-Details: [CONTRIBUTING.md](CONTRIBUTING.md).
+Details: [CONTRIBUTING.md](CONTRIBUTING.md). Writing an issue or a pull request:
+[docs/ISSUES-AND-PRS.md](docs/ISSUES-AND-PRS.md).
 
 ## More docs
 

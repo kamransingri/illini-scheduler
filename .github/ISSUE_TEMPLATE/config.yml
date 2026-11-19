@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: How to write an issue or a pull request
+    url: https://github.com/kamransingri/illini-scheduler/blob/main/docs/ISSUES-AND-PRS.md
+    about: Titles, the shape of each kind of issue, labels, milestones and pull requests.
