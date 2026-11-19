@@ -971,3 +971,21 @@ Every judgment call made during the autonomous build, newest phase last.
   11am-2pm and 45 minutes. `lf`, `lt` and `lm` go into links only when they differ from that. A section choice whose
   own meetings leave no lunch break is dropped before the search, since other courses can only take time away, so a
   course that never allows lunch is named instead of "nothing fits".
+
+## A quarterly data check (2026-11-19, issue #71)
+
+- **D34.1 Most data already refreshes itself; the gap was knowing.** Wade's GPA, gen-ed and Teachers Ranked as
+  Excellent files are downloaded every night, and the GPA "recent terms" window is worked out from the data, so a new
+  semester of grades appears the night after Wade publishes it. What was missing was a view of how old each source is
+  and a reminder for the hand-kept data (term dates, AP and IB tables, the catalog year, hand-checked majors).
+- **D34.2 What students see, not the repo.** `pipeline/data_watch.py` reads the live site's `data/meta.json`, since
+  `web/public/data` isn't committed and the live file is what matters. It also reads when Wade last changed each file
+  (GitHub API, one request a file; the Actions token goes only to the API), and the hand-kept files in the repo.
+- **D34.3 Statuses.** GPA data one semester behind the current term is "Waiting" for up to 270 days after Wade's last
+  change, because grades take a while. Two semesters, or a file Wade changed more than two days before the live copy,
+  is "Check". AP, IB and catalog tables older than the academic year (it starts in August) are "Check"; from April to
+  July, a current one is "Waiting" for next year's. Term dates still marked `estimated` are "Waiting".
+- **D34.4 Quarterly, as an issue.** The 10th of January, April, July and October lines up with the term cycle. In
+  January fall grades are pending; in April the next fall is published and CITL posts next year's AP table; in July
+  spring grades and the new catalog arrive; in October the next spring is published. Like term-watch and citl-watch,
+  it opens one issue (none if this quarter's is still open) and changes nothing itself.

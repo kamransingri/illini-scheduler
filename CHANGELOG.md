@@ -10,6 +10,16 @@ history).
 
 ## [Unreleased]
 
+## [0.13.1] - 2026-11-19
+
+### Added
+
+- A quarterly data check (#71). On the 10th of January, April, July and October, `data-check.yml` runs
+  `python -m pipeline.data_watch` and opens one issue. The issue has a table of how old each source is on the live
+  site, flags what needs a look, and lists the review checklist. Flagged: Wade's GPA data two semesters behind, a file
+  Wade changed that the site doesn't have, term dates still estimated, or an AP, IB or catalog year older than the
+  current one. Its first run flagged Wade's Teachers Ranked as Excellent list, unchanged since October 2025.
+
 ## [0.13.0] - 2026-11-19
 
 ### Added
@@ -264,7 +274,8 @@ history).
 - A partial Rate My Professors error no longer stops `make data`.
 - RSS feeds are written as UTF-8.
 
-[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.13.0...HEAD
+[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.13.1...HEAD
+[0.13.1]: https://github.com/kamransingri/illini-scheduler/compare/v0.13.0...v0.13.1
 [0.13.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.12.1...v0.13.0
 [0.12.1]: https://github.com/kamransingri/illini-scheduler/compare/v0.12.0...v0.12.1
 [0.12.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.11.0...v0.12.0
