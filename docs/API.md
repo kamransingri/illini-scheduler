@@ -3,7 +3,7 @@
 Everything Illini Scheduler shows comes from public JSON files that are rebuilt every night and served with the site.
 You can read them from scripts, notebooks or AI tools. You don't need a key, and GitHub Pages allows cross-origin
 reads (`Access-Control-Allow-Origin: *`). [`llms.txt`](../web/public/llms.txt) is the short version of this page for
-AI tools.
+AI tools. To use the data from an AI app without writing code, add the MCP server in [`mcp/`](../mcp/README.md).
 
 - **Base URL:** `https://kamransingri.github.io/illini-scheduler/data/`
 - **Rebuilt:** nightly at 09:00 UTC (`.github/workflows/pages.yml`). `meta.json` `built_at` says when. Seat status in

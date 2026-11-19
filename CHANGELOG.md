@@ -12,6 +12,10 @@ history).
 
 ### Added
 
+- An MCP server for your own AI app (#99). Add `mcp/` to Claude Desktop, Claude Code or another MCP client and ask
+  about UIUC courses. It can search courses, show a course's sections with CRNs, seats, restrictions and professors'
+  GPAs and ratings, find gen-eds ranked the way the site ranks them, and give the term dates. Answers come from the
+  site's data and say when it was built. Setup: mcp/README.md.
 - The data as an API for scripts and AI tools (#98). `llms.txt` at the site root says what the site covers and where
   the data files are. `docs/API.md` explains every file and field, its units and how often it's refreshed.
   `meta.json` has a `format_version` that goes up when a field is renamed or removed. A test fails when an exported
