@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import AddToCart from "@/components/AddToCart";
 import BestPick from "@/components/course/BestPick";
@@ -9,10 +10,11 @@ import Expandable from "@/components/ui/Expandable";
 import Icon from "@/components/ui/Icon";
 import Info from "@/components/ui/Info";
 import Stat from "@/components/ui/Stat";
-import { courseParams, getCourse, getMeta } from "@/lib/data";
+import { courseParams, getCourse, getMeta, getSummer } from "@/lib/data";
 import { cisUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, termLabel, termRange } from "@/lib/format";
 import { profInput } from "@/lib/rank";
 import { professorsFor, tally } from "@/lib/sections";
+import { DEFAULT_SUMMER, summerHref, summerLine } from "@/lib/summer";
 
 export const dynamicParams = false;
 
@@ -44,6 +46,8 @@ export default async function CoursePage({ params }: Props) {
   const t = next ? tally(next.sections) : null;
   const candidates = next ? professorsFor(course, meta.next_term).profs.map((p) => ({ key: p.key, name: p.ins.name, input: profInput(course, p) })) : [];
   const credits = course.credits.replace(" hours.", "");
+  const summer = getSummer();
+  const inSummer = summer?.by.get(`${course.subject} ${course.number}`);
   return (
     <article>
       <header className="pb-6">
@@ -145,6 +149,17 @@ export default async function CoursePage({ params }: Props) {
               "No recent offerings"
             )}
           </DataRow>
+          {summer && inSummer && (
+            <DataRow
+              label="Summer"
+              source={`Course Explorer's ${summer.data.label} schedule, and the summers ${summer.data.recent.map((t) => termLabel(t)).join(", ")}.`}
+            >
+              <span data-testid="summer-line">{summerLine(inSummer, summer.data)}</span>{" "}
+              <Link href={summerHref({ ...DEFAULT_SUMMER, gened: "all", q: course.subject })} className="text-action underline">
+                Every summer {course.subject} class
+              </Link>
+            </DataRow>
+          )}
           <DataRow
             label="Biggest recent change"
             source={course.biggest_change ? `Course Explorer catalog, compared term to term (${termLabel(course.biggest_change.term)}).` : undefined}

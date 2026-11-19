@@ -427,7 +427,7 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA, rename: Renamer | No
     ib = export_ap_credit(conn, out_dir, kind=IB)
     from .summer import export as export_summer
 
-    summer = export_summer(conn, out_dir, tuple(live_terms))
+    summer = export_summer(conn, out_dir, tuple(live_terms), keys)  # `page` means a course file was written
     return (f"{n_files} course files, {len(gened_rows)} gen-ed rows, {len(inst_index)} instructors, {deg}, {ap}, "
             f"{ib}, {summer} -> {out_dir}")
 
