@@ -12,6 +12,10 @@ history).
 
 ### Added
 
+- The data as an API for scripts and AI tools (#98). `llms.txt` at the site root says what the site covers and where
+  the data files are. `docs/API.md` explains every file and field, its units and how often it's refreshed.
+  `meta.json` has a `format_version` that goes up when a field is renamed or removed. A test fails when an exported
+  field isn't in API.md.
 - Restriction check (#78, #79, #80, #81). A new "About you" panel in the schedule builder takes your level and class
   standing; your major and minor come from the degree checklist. Each section's "Restricted to ..." and "Not intended
   for ..." sentences are checked against it. The builder skips sections that clearly leave you out (the new must-have

@@ -3,6 +3,7 @@ import json
 from pipeline import course_explorer, db, exam_format, export, gpa, instructors, offerings
 from pipeline.config import FIXTURES
 from pipeline.export import bundle_opts, bundles, credit_range
+from tools import api_docs
 
 
 def test_credit_range():
@@ -60,6 +61,8 @@ def test_export_end_to_end(tmp_path):
     crn, row = next((k, v) for k, v in crns["2027-sp"].items() if v[:2] == ["CS", "124"])
     assert len(crn) == 5 and row[2] in {s["code"] for s in cs["terms"]["2027-sp"]["sections"]}
     assert meta["live_url"].endswith("/live.json")
+    assert meta["format_version"] == export.DATA_FORMAT
+    assert api_docs.check_dir(tmp_path / "out") == []  # every exported field is in docs/API.md
 
 
 def test_score_priors():
