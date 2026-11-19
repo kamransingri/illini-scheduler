@@ -14,6 +14,7 @@ Start with **LIMITATIONS** (what to keep in mind when using the site). Planned w
 | [API.md](API.md) | Every public JSON file and field, units, refresh times and the data format version | Reading the data from code or an AI tool, or adding a field to the export |
 | [AP-CREDIT.md](AP-CREDIT.md) | The `data/ap-credit/*.yaml` and `data/ib-credit/*.yaml` formats, where CITL's tables are, and the corrections made to them | Adding next year's AP or IB table or fixing one |
 | [../CHANGELOG.md](../CHANGELOG.md) | What changed in each version, newest first | Seeing what a release brought |
+| [ISSUES-AND-PRS.md](ISSUES-AND-PRS.md) | How to write an issue (task, parent, data, bug) and a pull request: titles, templates, labels, milestones, assignees | Before opening your first issue or pull request |
 | [../CONTRIBUTING.md](../CONTRIBUTING.md) | Branches, commits, pull requests, versions and how a release is made | Before your first pull request or release |
 | [screenshots/](screenshots/) | `before/` (2026-11-16 baseline) and `after/` (v0.4.0) at desktop and phone width | Seeing the site without running it |
 
