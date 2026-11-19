@@ -70,6 +70,8 @@ Course Explorer ───> pipeline/live_seats.py every ~10 min ─> live.json o
   per-course JSON. The schedule generator (`web/lib/schedule.ts`) is an exact branch-and-bound search that runs in the
   browser. Design tokens and shared components: [docs/DESIGN.md](docs/DESIGN.md).
 - The JSON is public: [docs/API.md](docs/API.md) documents every file and field, and `llms.txt` points AI tools to it.
+  `mcp/` is an MCP server that answers from it in Claude Desktop, Claude Code and other AI apps
+  ([mcp/README.md](mcp/README.md)); it reuses the site's search and ranking code from `web/lib`.
 - Search by CRN loads `data/crns.json` (every section of the current and next term) only once someone types digits.
 - Unmatched instructor names are logged to `data/unmatched.csv`; fix the worst ones in `data/name_overrides.csv`.
 

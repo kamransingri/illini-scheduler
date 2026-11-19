@@ -4,12 +4,12 @@ SUBJECTS ?= all
 TERMS ?=
 SOURCE ?= auto
 
-.PHONY: help data data-quick fetch pipeline export test test-py test-web lint typecheck dev build e2e serve clean version release
+.PHONY: help data data-quick fetch pipeline export test test-py test-web test-mcp lint typecheck dev build e2e serve clean version release
 
 help:
 	@echo "make data        - download sources, build data/illini.db, export web/public/data"
 	@echo "make data-quick  - same, but only CS,MATH,STAT,RHET (fast)"
-	@echo "make test        - pytest + vitest"
+	@echo "make test        - pytest + vitest (web and the MCP server in mcp/)"
 	@echo "make lint        - ruff + mypy + eslint + tsc"
 	@echo "make dev         - Next.js dev server on :3000"
 	@echo "make build       - static export to web/out"
@@ -23,13 +23,16 @@ data:
 data-quick:
 	$(PY) -m pipeline.run --subjects CS,MATH,STAT,RHET
 
-test: test-py test-web
+test: test-py test-web test-mcp
 
 test-py:
 	$(PY) -m pytest -q
 
 test-web:
 	cd web && npm test --silent
+
+test-mcp:
+	cd mcp && npm test --silent
 
 lint: typecheck
 	ruff check pipeline tools
@@ -38,6 +41,7 @@ lint: typecheck
 typecheck:
 	mypy
 	cd web && npx tsc --noEmit
+	cd mcp && npx tsc --noEmit
 
 dev:
 	cd web && npm run dev
