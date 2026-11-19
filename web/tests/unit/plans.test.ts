@@ -125,8 +125,28 @@ describe("named schedules: share links (#117)", () => {
     const p = readPlans(s);
     expect(p.plans.find((x) => x.name === "Plan A")).toMatchObject({ cart: "PHYS211,CHEM102", prefs: "do=16" });
     expect(activePlan(p).name).toBe("Shared plan");
-    // the same cart with other must-haves is a different plan too, and the link's plan name is used
-    expect(openLink(cs, "e=600", "Plan A", s)).toMatchObject({ kind: "created", plan: { name: "Plan A (2)" } });
+    // the link's plan name is used, made unique
+    expect(openLink(decodeCart("MATH231"), null, "Plan A", s)).toMatchObject({ kind: "created", plan: { name: "Plan A (2)" } });
+  });
+
+  it("your plan's courses with other rules: that plan opens and nothing is saved until the student chooses", () => {
+    const s = store({ [CART_KEY]: "CS124,STAT200", [PREFS_KEY]: "e=540" });
+    expect(openLink(cs, "e=600&do=16", null, s)).toMatchObject({ kind: "rules", plan: { name: "Plan A" } });
+    expect(readPlans(s).plans).toHaveLength(1); // no new plan
+    expect(s.data.get(PREFS_KEY)).toBe("e=540"); // and Plan A's rules are untouched
+    // the same courses as a plan that isn't open: it opens first
+    createPlan({ cart: "PHYS211" }, s);
+    const out = openLink(cs, "lu=1", null, s);
+    expect(out).toMatchObject({ kind: "rules", plan: { name: "Plan A" } });
+    expect(activePlan(readPlans(s)).name).toBe("Plan A");
+    expect(s.data.get(PREFS_KEY)).toBe("e=540");
+  });
+
+  it("a new plan is blank: no courses and the default rules", () => {
+    const s = store({ [CART_KEY]: "CS124", [PREFS_KEY]: "e=540&do=16" });
+    readPlans(s);
+    expect(activePlan(createPlan({}, s)!)).toMatchObject({ name: "Plan B", cart: "", prefs: null });
+    expect(s.data.has(PREFS_KEY)).toBe(false);
   });
 
   it("past the cap, a link isn't saved", () => {

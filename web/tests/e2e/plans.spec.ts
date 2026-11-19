@@ -108,3 +108,36 @@ test("375px: the plan switcher and the comparison don't make the page scroll sid
   await page.keyboard.press("Enter");
   await expect(plan(page, /^Plan A/)).toHaveAttribute("aria-pressed", "true");
 });
+
+test("a link with your plan's courses but other must-haves asks before changing anything (D40.2)", async ({ page }) => {
+  await page.goto("./schedule/?c=CS124,STAT100&t=2027-sp&e=540");
+  await expect(page.getByLabel("No classes before")).toHaveValue("540");
+  // the same courses with another start time: shown, not saved, and no new plan
+  await page.goto("./schedule/?c=CS124,STAT100&t=2027-sp&e=600&pn=Late+start");
+  const ask = page.getByTestId("link-rules");
+  await expect(ask).toContainText("same courses as your plan “Plan A”");
+  await expect(page.getByLabel("No classes before")).toHaveValue("600");
+  await expect(page.getByRole("group", { name: "Open a plan" }).getByRole("button")).toHaveCount(1);
+  await ask.getByRole("button", { name: "Keep Plan A's" }).click();
+  await expect(ask).toHaveCount(0);
+  await expect(page.getByLabel("No classes before")).toHaveValue("540");
+
+  await page.goto("./schedule/?c=CS124,STAT100&t=2027-sp&e=600&pn=Late+start");
+  await page.getByTestId("link-rules").getByRole("button", { name: "Save as a new plan" }).click();
+  await expect(plan(page, /^Late start/)).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByLabel("No classes before")).toHaveValue("600");
+  await plan(page, /^Plan A/).click();
+  await expect(page.getByLabel("No classes before")).toHaveValue("540");
+
+  await page.goto("./schedule/?c=CS124,STAT100&t=2027-sp&e=660");
+  await page.getByTestId("link-rules").getByRole("button", { name: "Use them in Plan A" }).click();
+  await page.reload();
+  await expect(page.getByTestId("link-rules")).toHaveCount(0);
+  await expect(page.getByLabel("No classes before")).toHaveValue("660");
+
+  // New plan is blank: no courses and the default must-haves
+  await page.getByRole("button", { name: "New plan" }).click();
+  await expect(plan(page, /^Plan B/)).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByText("Your cart is empty")).toBeVisible();
+  await expect(page.getByLabel("No classes before")).toHaveValue("");
+});
