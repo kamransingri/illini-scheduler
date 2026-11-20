@@ -49,9 +49,17 @@ conflicts on your branch, never on `main`. Rebase only a branch nobody else has 
 
 1. Open one against `main`. The template asks for the issues it closes, what changed in a few bullets and a one-line
    test summary ([docs/ISSUES-AND-PRS.md](docs/ISSUES-AND-PRS.md#pull-requests)).
-2. CI runs two checks, and both must pass:
-   - `test`: lint, type checks and unit tests
+2. CI runs these checks, and all must pass:
+   - `test`: lint, type checks and unit tests (about 2 minutes)
    - `versions`: version files agree, CHANGELOG covers the version, the version only goes up, and the branch name follows the convention
+   - `e2e`: the Playwright suite against this branch's build, when it changes `web/`, `mcp/`, `pipeline/` or `data/`.
+     It exports this branch's data from the pipeline database the last deploy cached, so it fetches nothing; with no
+     database cached yet it's skipped with a notice. `pages.yml` runs the whole suite again after merge.
+
+   Before you push, `make test-quick` (or `python -m tools.quick_test`) runs only the unit tests for what changed since
+   `origin/main`: a changed module's own test file, and the Vitest tests that import a changed file. It takes seconds
+   where `make test` takes a minute or more, and keeps a laptop quiet; CI still runs everything. On a laptop, run
+   Playwright with `--workers=1`.
 3. Merge with **a merge commit** (the default; PRs #1 to #5 were merged this way), so each branch's history stays
    readable on `main`.
 4. The branch is deleted automatically (`branch-cleanup.yml`). GitHub keeps a "Restore branch" button on the pull

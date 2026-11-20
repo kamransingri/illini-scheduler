@@ -24,6 +24,8 @@ def main(argv: list[str] | None = None) -> int:
                     help="Course Explorer source for the current and next term (history always uses the CSV mirror)")
     ap.add_argument("--no-rmp", action="store_true", help="skip Rate My Professors")
     ap.add_argument("--skip-export", action="store_true")
+    ap.add_argument("--export-only", action="store_true",
+                    help="no fetching: export JSON from the data/illini.db already there (CI's pull request check)")
     ap.add_argument("--fixtures", action="store_true",
                     help="offline drill: build only from the committed fixtures/ (no network at all)")
     args = ap.parse_args(argv)
@@ -31,6 +33,18 @@ def main(argv: list[str] | None = None) -> int:
     terms = [t.strip() for t in args.terms.split(",") if t.strip()]
 
     from . import availability, course_explorer, exam_format, export, gpa, instructors, offerings, renumbered
+
+    if args.export_only:
+        from . import config
+
+        if not config.DB_PATH.exists():
+            log(f"no {config.DB_PATH}: run `make data` first")
+            return 1
+        conn = db.connect(config.DB_PATH)
+        log("export JSON from the existing database")
+        log(f"  {export.run(conn, config.WEB_DATA, rename=renumbered.Renamer(renumbered.load()))}")
+        conn.close()
+        return 0
 
     if args.fixtures:
         from .config import FIXTURES
