@@ -1,6 +1,6 @@
 # Slow, resumable seat-availability crawl (Open / Closed / Restricted per section) from the public Course Explorer
-# pages. ~1 request per second, oldest-checked courses first; results are committed to data/availability/ and picked up
-# by the nightly site build. Seat counts are only in Self-Service (NetID) and are never scraped.
+# pages. ~1 request per second, oldest-checked courses first; results are force-pushed to the one-commit `availability`
+# branch (tools/availability-files.sh, #180) and picked up by the nightly site build. Seat counts are only in Self-Service (NetID) and are never scraped.
 name: Seat availability
 on:
   schedule:
@@ -27,15 +27,12 @@ jobs:
       - uses: actions/setup-python@v7
         with: { python-version: "3.11", cache: pip }
       - run: pip install -r requirements.txt
+      - name: Previous files from the availability branch (the crawl resumes from them)
+        run: tools/availability-files.sh fetch
       - name: Crawl (next term first)
         run: python -m pipeline.availability --minutes "${{ inputs.minutes || '270' }}"
-      - name: Commit availability files
+      - name: Publish (one commit, force-pushed, so the branch never grows)
         if: always()
-        run: |
-          git config user.name "illini-scheduler-bot"
-          git config user.email "actions@users.noreply.github.com"
-          git add data/availability/*.json
-          git diff --cached --quiet && exit 0
-          git commit -m "data: seat availability $(date -u +%FT%H:%MZ)"
-          for i in 1 2 3; do git pull --rebase -q origin main && git push && exit 0; sleep 5; done
-          exit 1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: tools/availability-files.sh publish
