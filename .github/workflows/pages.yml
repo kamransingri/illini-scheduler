@@ -81,8 +81,9 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ steps.pw.outputs.v }}
-      - name: Install Chromium and its system libraries
-        run: cd web && npx playwright install --with-deps chromium
+      # The runner image already has Chrome's system libraries; apt only runs if Chromium can't start without it (#148)
+      - name: Install Chromium (and its system libraries if missing)
+        run: cd web && npx playwright install chromium && (node -e "require('@playwright/test').chromium.launch().then((b) => b.close())" || npx playwright install-deps chromium)
       - name: End-to-end tests against the build
         run: |
           cd web
@@ -153,7 +154,7 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ steps.pw.outputs.v }}
-      - run: cd web && npx playwright install --with-deps chromium
+      - run: cd web && npx playwright install chromium && (node -e "require('@playwright/test').chromium.launch().then((b) => b.close())" || npx playwright install-deps chromium)
       - name: Wait for the live site
         run: |
           url="${{ needs.deploy.outputs.page_url }}"
