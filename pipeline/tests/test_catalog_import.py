@@ -233,6 +233,21 @@ def test_an_unchanged_reimport_keeps_the_file_and_its_date(tmp_path):
     assert catalog_import.write(changed, tmp_path) is True
 
 
+def test_a_reimport_keeps_a_minors_hand_added_overlap_rule(tmp_path):
+    doc = {**parse("accountancy-bs", ACCY), "id": "test-minor", "type": "minor"}
+    assert catalog_import.write(doc, tmp_path) is True
+    path = tmp_path / "test-minor.yaml"
+    rule = {"distinct_hours": 6, "min_level": 300, "quote": "q", "source": "https://catalog.illinois.edu/x/"}
+    old = yaml.safe_load(path.read_text(encoding="utf-8"))
+    path.write_text(yaml.safe_dump({**old, "major_overlap": [rule]}, sort_keys=False), encoding="utf-8")
+    # the same page again: nothing to write; a changed page: rewritten, the rule kept
+    assert catalog_import.write({**doc, "read_on": "2026-12-01", "generated": "2026-12-01"}, tmp_path) is False
+    assert catalog_import.write({**doc, "total_hours": 21, "generated": "2026-12-01"}, tmp_path) is True
+    again = yaml.safe_load(path.read_text(encoding="utf-8"))
+    assert again["major_overlap"] == [rule] and again["total_hours"] == 21
+    assert list(again).index("major_overlap") < list(again).index("groups")
+
+
 def test_the_hand_checked_majors_are_protected_and_valid():
     from pipeline.config import DATA
 

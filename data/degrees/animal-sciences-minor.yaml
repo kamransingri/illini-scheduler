@@ -13,6 +13,18 @@ read_on: '2026-11-17'
 generated: '2026-11-17'
 notes: []
 double_counting: []
+major_overlap:
+- distinct_courses: 2
+  min_level: 300
+  from:
+  - ANSC 300-499
+  exclude:
+  - ANSC 398
+  - ANSC 499
+  minors_too: true
+  quote: Minimum two additional 300- or 400-level ANSC courses. These courses must be distinct from the student's major or
+    an additional minor. ANSC 398 and ANSC 499 do not count toward the minor.
+  source: https://catalog.illinois.edu/undergraduate/aces/minors/animal-sciences/
 groups:
 - name: Courses Required
   section: Degree Requirements
