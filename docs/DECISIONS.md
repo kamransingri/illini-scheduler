@@ -1140,3 +1140,21 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D41.4 The pickers.** One picker per minor, then an empty "Another minor" picker until there are three. A minor
   you've picked isn't offered again in the others. Removing a minor moves the ones after it up. About you (D38.4)
   sends every minor's name to the restriction check, so "major(s) or minor(s)" sections accept any of them.
+
+## Four-year plan, part 1 (2026-11-19, issue #114)
+
+- **D42.1 Only the terms ahead.** My courses keeps no terms (D17.3), so everything in it counts as already done and
+  the plan holds only future terms (`MyState.plan`, `lib/plan.ts`). A course can't be planned if it's in My courses,
+  or planned in two terms.
+- **D42.2 Which terms show.** The next term through the expected graduation term, springs and falls, plus summers when
+  "Summer terms" is ticked. Any other term that has courses also shows (one that has passed since the plan was made,
+  a summer, a term after graduation), so nothing in the plan is ever hidden. Graduation can be any spring or fall in
+  the next six years.
+- **D42.3 "Finished in".** The checklist is worked out again with each term's courses added in order, counting them
+  like in-progress courses; a requirement's term is the first one where it's met. Hand-ticked requirements can't be
+  predicted, so they get no term. Hours per term count variable-credit courses at their minimum, marked "+".
+- **D42.4 The link.** `g=<graduation term>`, `gs=1` for summers and `pl=2027-fa.CS225.MATH231_2028-sp.CS233`: "-", "."
+  and "_" need no escaping in a URL, so the link stays readable. At most 12 courses a term and 21 terms; anything
+  unreadable is dropped. Storage keeps the same three keys next to My courses. Old links and saved lists have none
+  and open with an empty plan. Moving courses between terms is #115, and the warnings (offering terms,
+  prerequisites, hours) are #116.

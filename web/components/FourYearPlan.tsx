@@ -145,7 +145,7 @@ function Term({
                   </Link>{" "}
                   <span className="text-sm text-muted">{titleOf(c)}</span>
                 </span>
-                <span className="text-sm text-muted tnum">{cr ? (cr[0] === cr[1] ? cr[0] : `${cr[0]}-${cr[1]}`) : "?"}</span>
+                <span className="text-sm whitespace-nowrap text-muted tnum">{cr ? (cr[0] === cr[1] ? cr[0] : `${cr[0]}-${cr[1]}`) : "?"}</span>
                 <button
                   type="button"
                   className="rounded p-1 text-muted hover:bg-white hover:text-ink"
