@@ -5,7 +5,7 @@ TERMS ?=
 SOURCE ?= auto
 PYTEST_ARGS ?=
 
-.PHONY: help data data-quick fetch pipeline export test test-quick test-py test-web test-mcp lint typecheck dev build e2e serve clean version release
+.PHONY: help availability-files data data-quick fetch pipeline export test test-quick test-py test-web test-mcp lint typecheck dev build e2e serve clean version release
 
 help:
 	@echo "make data        - download sources, build data/illini.db, export web/public/data"
@@ -20,10 +20,14 @@ help:
 	@echo "make version     - check the version files agree and CHANGELOG.md covers the version"
 	@echo "make release V=minor - next version (major|minor|patch|X.Y.Z-beta.N) in every file + CHANGELOG"
 
-data:
+# The seat availability files come from the `availability` branch; offline, the pipeline reads course pages instead
+availability-files:
+	-bash tools/availability-files.sh fetch
+
+data: availability-files
 	$(PY) -m pipeline.run --subjects $(SUBJECTS) --source $(SOURCE) $(if $(TERMS),--terms $(TERMS),)
 
-data-quick:
+data-quick: availability-files
 	$(PY) -m pipeline.run --subjects CS,MATH,STAT,RHET
 
 export:
