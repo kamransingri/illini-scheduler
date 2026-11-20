@@ -5,6 +5,25 @@ commands are in the [README](README.md); the docs index is [docs/README.md](docs
 or a pull request (titles, the shape of each kind of issue, labels, milestones, assignees) is in
 [docs/ISSUES-AND-PRS.md](docs/ISSUES-AND-PRS.md).
 
+## The flow
+
+```text
+main ─────────────●──────────────────────────────●── merge commit ──► deploy (pages.yml)
+                   \                            /                 └─► tag vX.Y.Z + GitHub release (release.yml),
+                    feature/x: commits ─► pull request                 when the branch bumped the version
+                                          ├─ checks: test, versions, e2e
+                                          └─ one approving review from someone else
+```
+
+1. Branch from the latest `main` as `type/short-name`.
+2. Commit, push and open a pull request. CI runs the checks, and GitHub asks the code owners for a review.
+3. Someone other than you approves it. A push after the approval dismisses it, so the approval always covers the
+   final diff.
+4. Merge it with a merge commit. `main` deploys, and if the branch ran `make release` the release workflow tags it.
+
+The bots (the nightly data refresh, the seat availability job, the release tags) don't go through pull requests:
+the ruleset lets GitHub Actions through (Repository settings, below).
+
 ## Branches
 
 | Branch | What it is | Who writes to it |
@@ -35,8 +54,15 @@ git push -u origin feature/program-search
 gh pr create --fill          # or open it on GitHub
 ```
 
-Keep branches short-lived. When `main` moves on, bring it in with `git fetch && git merge origin/main` and resolve
-conflicts on your branch, never on `main`. Rebase only a branch nobody else has pulled.
+Keep branches short-lived: a few days, a week at most. A bigger change goes in as several pull requests (the issue's
+sub-issues are a good split), each one leaving `main` working. A branch nobody has pushed to in two weeks should be
+finished, split or closed.
+
+**When `main` moves on,** bring it in with `git fetch && git merge origin/main` (GitHub's "Update branch" button does
+the same merge) and resolve conflicts on your branch, never on `main`. Rebase only a branch nobody else has pulled.
+After the merge, read CHANGELOG.md once: when `main` released a version while your branch was open, git can move your
+**Unreleased** lines into that version's section without a conflict. Move them back under **Unreleased**; a released
+section must match its GitHub release.
 
 ## Commits
 
@@ -60,9 +86,13 @@ conflicts on your branch, never on `main`. Rebase only a branch nobody else has 
    `origin/main`: a changed module's own test file, and the Vitest tests that import a changed file. It takes seconds
    where `make test` takes a minute or more, and keeps a laptop quiet; CI still runs everything. On a laptop, run
    Playwright with `--workers=1`.
-3. Merge with **a merge commit** (the default; PRs #1 to #5 were merged this way), so each branch's history stays
+3. **Review.** One approving review from someone other than the author, and the checks above passing. GitHub requests
+   reviewers from [`.github/CODEOWNERS`](.github/CODEOWNERS) by path: anyone with write access can approve, the code
+   owners are just asked first. A push after an approval dismisses it. Review for what the pull request says it does:
+   does it, are the tests real, does the CHANGELOG line read right for students.
+4. Merge with **a merge commit** (the default; PRs #1 to #5 were merged this way), so each branch's history stays
    readable on `main`.
-4. The branch is deleted automatically (`branch-cleanup.yml`). GitHub keeps a "Restore branch" button on the pull
+5. The branch is deleted automatically (`branch-cleanup.yml`). GitHub keeps a "Restore branch" button on the pull
    request. Locally: `git switch main && git pull --prune && git branch -d feature/program-search`.
 
 ## Versions
@@ -118,11 +148,16 @@ These need admin rights on the repository, so they're kept as files to apply rat
 - **Rulesets.** Settings, then Rules, Rulesets, New ruleset, Import a ruleset, once for each file in
   `.github/rulesets/`. From a terminal:
   `gh api -X POST repos/kamransingri/illini-scheduler/rulesets --input .github/rulesets/main.json`.
-  - `main.json`: `main` can't be deleted or force-pushed. Changes arrive through pull requests with `test` and
-    `versions` passing.
+  - `main.json`: `main` can't be deleted or force-pushed. Changes arrive through pull requests with `test`,
+    `versions` and `e2e` passing and one approving review, dismissed by a later push. (`e2e` passes when it has
+    nothing to test, so a docs change isn't held up.)
   - `version-tags.json`: `v*` tags can't be created, moved or deleted by hand.
   - Both let GitHub Actions (app id 15368) through, so the data jobs keep committing to `main` and the release workflow
     can tag. After importing, check that the next nightly `data: nightly refresh` commit still lands.
+  - The files are the source of truth: change a rule here first, then apply it. To update a ruleset that's already
+    on: `gh api repos/kamransingri/illini-scheduler/rulesets` lists them with their ids, then
+    `gh api -X PUT repos/kamransingri/illini-scheduler/rulesets/<id> --input .github/rulesets/main.json`.
+  - Until the owner imports them (#146), these rules are only written down: GitHub doesn't enforce them yet.
 - **Settings, General, Pull Requests:** keep "Allow merge commits" on and tick "Automatically delete head branches". The
   cleanup workflow then finds the branch already gone, which is fine.
 - **Settings, Actions, General:** workflow permissions "Read and write". The data jobs and the release workflow push
