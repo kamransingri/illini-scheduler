@@ -181,7 +181,9 @@ Closes #98.
 
 ### Review and merge
 
-- Both CI checks have to pass: `test` (lint, types, unit tests) and `versions` (version files, CHANGELOG, branch
-  name).
+- The CI checks have to pass: `test` (lint, types, unit tests), `versions` (version files, CHANGELOG, branch name)
+  and, when the change touches a page, `e2e` (Playwright against the branch's build).
+- One approving review from someone other than the author. GitHub asks the code owners (`.github/CODEOWNERS`) first;
+  a push after an approval dismisses it (CONTRIBUTING.md, Pull requests).
 - Merge with a merge commit. The branch is deleted automatically.
 - A pull request that ships a release also has a "Release X.Y.Z" commit (CONTRIBUTING.md, Releasing).
