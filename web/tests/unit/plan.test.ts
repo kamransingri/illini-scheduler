@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { Degree, DegreeCourse, DegreeGroup } from "@/lib/degree";
 import { decodeCourses, decodeState, EMPTY, encodeState, stateFromParams, stateToParams } from "@/lib/mycourses";
-import { addToTerm, decodePlan, EMPTY_PLAN, encodePlanTerms, finishTerms, gradOptions, moveToTerm, planTerms, plannedIn, removeFromPlan, termHours, termIndex, type Plan } from "@/lib/plan";
+import { addToTerm, decodePlan, EMPTY_PLAN, encodePlanTerms, finishTerms, gradOptions, moveToTerm, offeringWarning, planTerms, plannedIn, removeFromPlan, termHours, termIndex, usuallyOffered, type Plan } from "@/lib/plan";
 
 const PLAN: Plan = { grad: "2029-sp", summers: false, terms: { "2027-fa": ["CS 225", "MATH 231"], "2027-sp": ["CS 124"], "2028-sp": ["CS 233"] } };
 
@@ -115,5 +115,29 @@ describe("the term each requirement is finished in", () => {
   it("ignores a planned course that's already in My courses", () => {
     const plan: Plan = { grad: "2028-sp", summers: false, terms: { "2027-fa": ["CS 124"] } };
     expect(finishTerms(DEG, decodeCourses("CS124"), [], plan, ["2027-fa"]).get("intro")).toBeNull();
+  });
+});
+
+describe("terms a course doesn't usually run in (#116)", () => {
+  it("flags a fall-only course placed in spring, and a fall-and-spring course in summer", () => {
+    expect(usuallyOffered("f", "2027-fa")).toBe(true);
+    expect(usuallyOffered("f", "2028-sp")).toBe(false);
+    expect(offeringWarning("f", "2028-sp", "Spring 2028")).toBe("Usually runs in fall only, not in Spring 2028.");
+    expect(offeringWarning("f,s", "2028-su", "Summer 2028")).toBe("Usually runs in fall and spring only, not in Summer 2028.");
+    expect(offeringWarning("f,s,u", "2028-su", "Summer 2028")).toBeNull();
+    expect(offeringWarning("f,s", "2028-sp", "Spring 2028")).toBeNull();
+  });
+  it("follows odd and even years", () => {
+    expect(offeringWarning("fo", "2027-fa", "Fall 2027")).toBeNull();
+    expect(offeringWarning("fo", "2028-fa", "Fall 2028")).toBe("Usually runs in fall of odd years only, not in Fall 2028.");
+    expect(offeringWarning("se,u", "2028-sp", "Spring 2028")).toBeNull();
+    expect(offeringWarning("se,u", "2029-sp", "Spring 2029")).toBe("Usually runs in spring of even years and summer only, not in Spring 2029.");
+  });
+  it("says nothing when the pattern can't tell, and says when a course hasn't run lately", () => {
+    expect(usuallyOffered(undefined, "2028-sp")).toBeNull();
+    expect(usuallyOffered("i", "2028-sp")).toBeNull();
+    expect(usuallyOffered("i,u", "2028-su")).toBe(true);
+    expect(offeringWarning("f,i", "2028-sp", "Spring 2028")).toBeNull();
+    expect(offeringWarning("n", "2028-sp", "Spring 2028")).toBe("Not offered in the last four years.");
   });
 });

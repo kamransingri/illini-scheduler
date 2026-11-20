@@ -56,6 +56,8 @@ def test_export_end_to_end(tmp_path):
     assert meta["next_term"] == "2027-sp" and meta["rmp_status"].startswith("unavailable")
     search = json.loads((tmp_path / "out" / "search.json").read_text())
     assert {"s": "CS", "n": "124"}.items() <= next(c for c in search["courses"] if c["n"] == "124").items()
+    # when a course usually runs, for the four-year plan's warnings (#116): MATH 221 is fall only here
+    assert next(c for c in search["courses"] if (c["s"], c["n"]) == ("MATH", "221"))["o"] == "f"
     crns = json.loads((tmp_path / "out" / "crns.json").read_text())
     assert list(crns)[0] == "2027-sp"  # next term first
     crn, row = next((k, v) for k, v in crns["2027-sp"].items() if v[:2] == ["CS", "124"])
