@@ -2,6 +2,8 @@ name: Release
 # When a new version reaches main (a "Release X.Y.Z" commit from `make release`), tag that commit vX.Y.Z and publish
 # a GitHub release with its CHANGELOG section. Versions already tagged but without a release get one too.
 # Nothing happens if the version on main is already tagged and released. CONTRIBUTING.md has the whole process.
+# Each release also gets the MCP server's npm package (mcp/README.md), built from the tagged commit, and the package
+# goes to npm too once the repository has an NPM_TOKEN secret.
 on:
   push:
     branches: [main]
@@ -10,6 +12,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write # npm provenance: the package on npm says which commit and workflow built it
 
 concurrency:
   group: release
@@ -29,3 +32,34 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python -m tools.release publish --sha "$GITHUB_SHA"
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          registry-url: https://registry.npmjs.org
+      - name: Attach the MCP server package to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          v=$(python -m tools.release current)
+          if gh release view "v$v" --json assets --jq '.assets[].name' | grep -qx illini-scheduler-mcp.tgz; then
+            echo "v$v already has the MCP package"; exit 0
+          fi
+          git worktree add "$RUNNER_TEMP/release" "v$v"
+          cd "$RUNNER_TEMP/release/mcp"
+          npm ci --no-audit --no-fund
+          npm pack --silent
+          # A fixed name too, so releases/latest/download/illini-scheduler-mcp.tgz is always the newest
+          cp "illini-scheduler-mcp-$v.tgz" illini-scheduler-mcp.tgz
+          gh release upload "v$v" "illini-scheduler-mcp-$v.tgz" illini-scheduler-mcp.tgz --clobber
+      - name: Publish the MCP server to npm (skipped until there's an NPM_TOKEN secret)
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          [ -n "$NODE_AUTH_TOKEN" ] || { echo "No NPM_TOKEN secret, so not publishing to npm"; exit 0; }
+          v=$(python -m tools.release current)
+          if [ "$(npm view "illini-scheduler-mcp@$v" version 2>/dev/null)" = "$v" ]; then echo "$v is already on npm"; exit 0; fi
+          [ -d "$RUNNER_TEMP/release" ] || git worktree add "$RUNNER_TEMP/release" "v$v"
+          cd "$RUNNER_TEMP/release/mcp"
+          [ -d node_modules ] || npm ci --no-audit --no-fund
+          case "$v" in *-*) tag=next ;; *) tag=latest ;; esac
+          npm publish --access public --provenance --tag "$tag"
