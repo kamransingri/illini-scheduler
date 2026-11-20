@@ -1,0 +1,16 @@
+# Who GitHub asks to review a pull request, by path (CONTRIBUTING.md, Pull requests). The last matching line wins.
+# Any one approval from someone other than the author lets a pull request merge; these are the people asked first.
+
+*               @kamransingri @ishaanman7898
+
+# The data pipeline and the hand-kept data (degree files, notes, renamed courses, the watch list)
+/pipeline/      @kamransingri @ishaanman7898 @smyans
+/data/          @kamransingri @ishaanman7898 @smyans
+/fixtures/      @kamransingri @ishaanman7898 @smyans
+
+# The site and the MCP server
+/web/           @kamransingri @ishaanman7898
+/mcp/           @kamransingri @ishaanman7898
+
+# Workflows, rulesets and this file: changes here can change what CI and the bots are allowed to do
+/.github/       @kamransingri
