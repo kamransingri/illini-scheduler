@@ -6,6 +6,7 @@ import { currentStatus, fmtSince, type LiveFile } from "@/lib/live";
 import type { Course, SeatEvent } from "@/lib/types";
 import { encodeWatch, latestStatus, watchKey, type Watched } from "@/lib/watch";
 import CopyButton from "./CopyButton";
+import { AlertButton, AlertsBar, useSeatAlerts } from "./SeatAlerts";
 import { SeatStatus } from "./ui/Badge";
 import Info from "./ui/Info";
 import WatchButton from "./WatchButton";
@@ -31,6 +32,7 @@ export function watchLink(items: Watched[]): string {
 /** Just opened's list of watched sections (#15): latest status, when it was checked, and a link to share the list. */
 export default function WatchedSections({ items, events, live, now, nextTerm }: { items: Watched[]; events: SeatEvent[] | null; live: LiveFile | null; now: number; nextTerm: string }) {
   const id = useId();
+  const alerts = useSeatAlerts();
   const [data, setData] = useState<Map<string, Course | null>>(new Map());
   const wanted = useMemo(() => [...new Set(items.map((i) => `${i.s} ${i.n}`))], [items]);
   useEffect(() => {
@@ -57,6 +59,7 @@ export default function WatchedSections({ items, events, live, now, nextTerm }: 
         </Info>
         <span className="sm:ml-auto">{href && <CopyButton text={href} label="Copy link to this list" />}</span>
       </div>
+      <AlertsBar alerts={alerts} />
       <ul className="mt-2 border-t border-line">
         {items.map((i) => {
           const course = data.get(`${i.s} ${i.n}`);
@@ -89,6 +92,7 @@ export default function WatchedSections({ items, events, live, now, nextTerm }: 
               </span>
               <span className="flex items-center gap-2">
                 <CopyButton text={i.crn} />
+                <AlertButton item={i} alerts={alerts} />
                 <WatchButton item={i} />
               </span>
             </li>
