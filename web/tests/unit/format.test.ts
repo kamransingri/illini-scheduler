@@ -1,8 +1,15 @@
-import { describe, expect, it } from "vitest";
-import { cisUrl, daysStr, fmtDate, fmtDelta, fmtGpa, fmtTime, rmpRateUrl, termLabel, termOrder, treLabel } from "@/lib/format";
+import { describe, expect, it, vi } from "vitest";
+import { cisUrl, dataUrl, daysStr, fmtDate, fmtDelta, fmtGpa, fmtTime, rmpRateUrl, termLabel, termOrder, treLabel } from "@/lib/format";
 import { decodeCart, encodeCart } from "@/lib/cart";
 
 describe("format", () => {
+  it("data URLs: this site's /data, or NEXT_PUBLIC_DATA_URL on the Cloudflare build", () => {
+    vi.stubEnv("NEXT_PUBLIC_BASE_PATH", "/illini-scheduler");
+    expect(dataUrl("course/CS/124.json")).toBe("/illini-scheduler/data/course/CS/124.json");
+    vi.stubEnv("NEXT_PUBLIC_DATA_URL", "https://kamransingri.github.io/illini-scheduler/data");
+    expect(dataUrl("meta.json")).toBe("https://kamransingri.github.io/illini-scheduler/data/meta.json");
+    vi.unstubAllEnvs();
+  });
   it("RMP rating link: RMP's add-a-rating page for a numeric id, else the profile", () => {
     const url = "https://www.ratemyprofessors.com/professor/209729";
     expect(rmpRateUrl({ id: "209729", url })).toBe("https://www.ratemyprofessors.com/add/professor-rating/209729");

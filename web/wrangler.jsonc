@@ -1,0 +1,14 @@
+// Cloudflare Workers static assets: the site without data/ (docs/CLOUDFLARE.md). No Worker script, so it fits the free plan.
+// Build with `npm run cf:build`, then deploy with `npm run cf:deploy`.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "illini-scheduler",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./out",
+    // Next's static export writes /course/CS/124/index.html; /course/CS/124 redirects to the trailing slash
+    "html_handling": "auto-trailing-slash",
+    // Unknown paths get out/404.html, whose script fixes lower-case and renumbered course URLs
+    "not_found_handling": "404-page"
+  }
+}
