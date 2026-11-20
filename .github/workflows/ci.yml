@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
-        with: { python-version: "3.11" }
+        with: { python-version: "3.11", cache: pip }
       - uses: actions/setup-node@v7
         with:
           node-version: "22"
@@ -24,14 +24,92 @@ jobs:
             web/package-lock.json
             mcp/package-lock.json
       - run: pip install -r requirements.txt
-      - run: cd web && npm ci
-      - run: cd mcp && npm ci
+      - run: cd web && npm ci --prefer-offline
+      - run: cd mcp && npm ci --prefer-offline
       - name: Lint + typecheck
         run: make lint
       - name: Unit tests
         run: make test
+        env:
+          PYTEST_ARGS: -n auto # pytest-xdist on the runner's 4 cores (#148)
       - name: MCP package installs, starts with npx and answers every tool
         run: cd mcp && npm run smoke --silent
+
+  # Browser tests on pull requests (#148): this branch's export and site, built on the pipeline database of the last
+  # deploy (pages.yml caches it), so no fetching. Skipped for changes that can't affect a page; pages.yml runs the
+  # whole suite again after merge.
+  e2e:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with: { fetch-depth: 0 }
+      - name: Does this change a page?
+        id: pages
+        env:
+          BASE: origin/${{ github.base_ref }}
+        run: |
+          if git diff --name-only "$BASE"...HEAD | grep -qE '^(web/|mcp/|pipeline/|data/|\.github/workflows/ci\.yml)'; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::No change under web/, mcp/, pipeline/ or data/: no browser tests needed"
+          fi
+      - name: The last deploy's pipeline database
+        id: db
+        if: steps.pages.outputs.run == 'true'
+        uses: actions/cache/restore@v6
+        with:
+          path: data/illini.db
+          key: pipeline-db-none
+          restore-keys: pipeline-db-
+      - name: No database cached yet
+        if: steps.pages.outputs.run == 'true' && steps.db.outputs.cache-matched-key == ''
+        run: echo "::notice::No pipeline database from a deploy is cached yet (pages.yml saves one), so the browser tests are skipped"
+      - uses: actions/setup-python@v7
+        if: steps.db.outputs.cache-matched-key != ''
+        with: { python-version: "3.11", cache: pip }
+      - uses: actions/setup-node@v7
+        if: steps.db.outputs.cache-matched-key != ''
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: |
+            web/package-lock.json
+            mcp/package-lock.json
+      - name: Install, and export this branch's data from the database
+        if: steps.db.outputs.cache-matched-key != ''
+        run: |
+          pip install -r requirements.txt
+          (cd web && npm ci --prefer-offline)
+          (cd mcp && npm ci --prefer-offline && npm run build --silent) # mcp-link.spec.ts runs the built server
+          make export
+      - name: Next.js build cache
+        if: steps.db.outputs.cache-matched-key != ''
+        uses: actions/cache@v6
+        with:
+          path: web/.next/cache
+          key: next-${{ hashFiles('web/package-lock.json') }}-${{ github.sha }}
+          restore-keys: next-${{ hashFiles('web/package-lock.json') }}-
+      - name: Build the site
+        if: steps.db.outputs.cache-matched-key != ''
+        run: make build
+      - name: Playwright's version
+        id: pw
+        if: steps.db.outputs.cache-matched-key != ''
+        run: echo "v=$(node -p "require('./web/node_modules/@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+      - name: Playwright's browser (cached)
+        if: steps.db.outputs.cache-matched-key != ''
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.pw.outputs.v }}
+      - name: Install Chromium and its system libraries
+        if: steps.db.outputs.cache-matched-key != ''
+        run: cd web && npx playwright install --with-deps chromium
+      - name: Browser tests against the build
+        if: steps.db.outputs.cache-matched-key != ''
+        run: cd web && npx playwright test
 
   # Versions and branches (CONTRIBUTING.md). Only the standard library, so no installs.
   versions:

@@ -3,13 +3,16 @@ PY ?= python3
 SUBJECTS ?= all
 TERMS ?=
 SOURCE ?= auto
+PYTEST_ARGS ?=
 
-.PHONY: help data data-quick fetch pipeline export test test-py test-web test-mcp lint typecheck dev build e2e serve clean version release
+.PHONY: help data data-quick fetch pipeline export test test-quick test-py test-web test-mcp lint typecheck dev build e2e serve clean version release
 
 help:
 	@echo "make data        - download sources, build data/illini.db, export web/public/data"
 	@echo "make data-quick  - same, but only CS,MATH,STAT,RHET (fast)"
+	@echo "make export      - export web/public/data again from data/illini.db, without fetching"
 	@echo "make test        - pytest + vitest (web and the MCP server in mcp/)"
+	@echo "make test-quick  - only the unit tests for what changed since origin/main"
 	@echo "make lint        - ruff + mypy + eslint + tsc"
 	@echo "make dev         - Next.js dev server on :3000"
 	@echo "make build       - static export to web/out"
@@ -23,10 +26,17 @@ data:
 data-quick:
 	$(PY) -m pipeline.run --subjects CS,MATH,STAT,RHET
 
+export:
+	$(PY) -m pipeline.run --export-only
+
 test: test-py test-web test-mcp
 
+test-quick:
+	$(PY) -m tools.quick_test
+
+# CI runs pytest in parallel (PYTEST_ARGS="-n auto", pytest-xdist); on a laptop it runs on one core
 test-py:
-	$(PY) -m pytest -q
+	$(PY) -m pytest -q $(PYTEST_ARGS)
 
 test-web:
 	cd web && npm test --silent
