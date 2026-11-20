@@ -12,4 +12,5 @@ Closes #
 - [ ] `make lint` and `make test` pass, and Playwright for the pages this touches (`--workers=1`)
 - [ ] CHANGELOG.md line under **Unreleased** if people will notice
 - [ ] Docs updated where behaviour changed (LIMITATIONS, DECISIONS, API.md for new data fields)
+- [ ] If an AI tool wrote most of this, the description says so (docs/AI-USE.md)
 - [ ] If this ships a release: `make release V=…` and a "Release X.Y.Z" commit
