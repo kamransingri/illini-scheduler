@@ -1,7 +1,7 @@
 # Design
 
-How Illini Scheduler looks and why. Part 1 is the audit of the site as it was on 2026-11-16 (screenshots in
-`docs/screenshots/before/`). Part 2 is the direction the redesign follows. Part 3 lists the tokens and shared
+How Illini Scheduler looks and why. Part 1 is the audit of the site as it was on 2026-11-16 (its screenshots were removed
+from the repository in #181). Part 2 is the direction the redesign follows. Part 3 lists the tokens and shared
 components that implement it. Part 4 covers the logo, navigation and page structure added in v0.4.0.
 
 ## Part 1. Audit (before)
