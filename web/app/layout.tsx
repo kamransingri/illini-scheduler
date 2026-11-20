@@ -81,6 +81,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <Link className="underline-offset-2 hover:text-orange hover:underline" href="/ai/">
+                    Use it from your AI app
+                  </Link>
+                </li>
               </ul>
             </nav>
             <div className="sm:col-span-2 lg:col-span-1">

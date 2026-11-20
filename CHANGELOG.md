@@ -10,11 +10,17 @@ history).
 
 ## [Unreleased]
 
+## [0.15.0] - 2026-11-20
+
 ### Added
 
 - Up to three minors in the degree checklist (#111). Each one gets its own checklist and tick boxes under the major,
   and the share link carries all of them (`mn=` takes a list). A course that counts toward two of your minors is
   pointed out, since the catalog doesn't give a rule for that. Links and saved lists with one minor open as before.
+- The MCP server comes with every release (#101). Claude Code, Claude Desktop and other MCP apps start it with
+  `npx -y` and a link to the latest release, with no copy of the repository or build step. A new page, **Use it
+  from your AI app** (linked in the footer), has the setup, and mcp/README.md the full guide. The server has the
+  site's version, and CI installs the package into an empty folder and calls every tool before each merge.
 
 ## [0.14.1] - 2026-11-19
 
@@ -346,7 +352,8 @@ history).
 - A partial Rate My Professors error no longer stops `make data`.
 - RSS feeds are written as UTF-8.
 
-[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.14.1...HEAD
+[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.15.0...HEAD
+[0.15.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.14.1...v0.15.0
 [0.14.1]: https://github.com/kamransingri/illini-scheduler/compare/v0.14.0...v0.14.1
 [0.14.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.13.1...v0.14.0
 [0.13.1]: https://github.com/kamransingri/illini-scheduler/compare/v0.13.0...v0.13.1

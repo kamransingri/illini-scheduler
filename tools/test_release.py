@@ -8,7 +8,7 @@ import pytest
 from tools import release as r
 
 ROOT = Path(__file__).resolve().parent.parent
-FILES = [r.PACKAGE, r.LOCK, r.PYPROJECT, r.CHANGELOG]
+FILES = [r.PACKAGE, r.LOCK, r.MCP_PACKAGE, r.MCP_LOCK, r.PYPROJECT, r.CHANGELOG]
 
 LOG = """# Changelog
 
@@ -71,8 +71,10 @@ def test_bump_moves_every_file_and_the_changelog(repo: Path) -> None:
     new = r.bump("minor", repo, date="2026-11-18")
     assert str(new) == "0.5.0"
     assert set(r.read_versions(repo).values()) == {"0.5.0"}
-    lock = json.loads((repo / r.LOCK).read_text(encoding="utf-8"))
-    assert lock["version"] == lock["packages"][""]["version"] == "0.5.0"
+    for package, lockfile in ((r.PACKAGE, r.LOCK), (r.MCP_PACKAGE, r.MCP_LOCK)):
+        assert json.loads((repo / package).read_text(encoding="utf-8"))["version"] == "0.5.0"
+        lock = json.loads((repo / lockfile).read_text(encoding="utf-8"))
+        assert lock["version"] == lock["packages"][""]["version"] == "0.5.0"
     assert 'version = "0.5.0"' in (repo / r.PYPROJECT).read_text(encoding="utf-8")
     log = r.read_log(repo)
     sec = r.sections(log)
@@ -104,6 +106,10 @@ def test_check_catches_disagreeing_files_and_missing_sections(repo: Path) -> Non
     p = repo / r.PYPROJECT
     p.write_text(p.read_text(encoding="utf-8").replace('version = "0.4.0"', 'version = "0.4.1"'), encoding="utf-8")
     assert "disagree" in r.check(repo)[0]
+    r.write_version(r.Version.parse("0.4.0"), repo)
+    m = repo / r.MCP_PACKAGE  # the MCP server's package counts too
+    m.write_text(m.read_text(encoding="utf-8").replace('"version": "0.4.0"', '"version": "0.3.9"'), encoding="utf-8")
+    assert r.check(repo)[0].startswith("Version files disagree") and "mcp/package.json = 0.3.9" in r.check(repo)[0]
     r.write_version(r.Version.parse("0.4.2"), repo)
     assert r.check(repo) == ["CHANGELOG.md has no ## [0.4.2] section for the current version"]
     with pytest.raises(r.ReleaseError, match="Fix these first"):

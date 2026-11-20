@@ -29,25 +29,23 @@ only checked once the student opens the link.
 
 ## Set it up
 
-You need [Node.js](https://nodejs.org) 20 or newer and a copy of this repository.
+You need [Node.js](https://nodejs.org) 20 or newer. Every release of the site comes with the server as a package, and
+`npx` (part of Node.js) downloads and starts it, so there's nothing else to install. The link below always points to
+the newest release:
 
-```sh
-git clone https://github.com/kamransingri/illini-scheduler
-cd illini-scheduler/mcp
-npm ci
-npm run build        # writes dist/index.js
+```text
+https://github.com/kamransingri/illini-scheduler/releases/latest/download/illini-scheduler-mcp.tgz
 ```
-
-Then add it to your app, using the full path to `dist/index.js`.
 
 **Claude Code**
 
 ```sh
-claude mcp add illini-scheduler -- node /full/path/to/illini-scheduler/mcp/dist/index.js
+claude mcp add illini-scheduler -- npx -y https://github.com/kamransingri/illini-scheduler/releases/latest/download/illini-scheduler-mcp.tgz
 claude mcp get illini-scheduler     # should say "Connected"
 ```
 
-Add `--scope user` to have it in every project, not just the current folder.
+On Windows (not WSL), put `cmd /c` before `npx`. Add `--scope user` to have it in every project, not just the
+current folder.
 
 **Claude Desktop.** Open Settings, then Developer, then **Edit Config**. That opens `claude_desktop_config.json`:
 `%APPDATA%\Claude\` on Windows, `~/Library/Application Support/Claude/` on macOS. Add this and restart Claude Desktop:
@@ -56,18 +54,33 @@ Add `--scope user` to have it in every project, not just the current folder.
 {
   "mcpServers": {
     "illini-scheduler": {
-      "command": "node",
-      "args": ["/full/path/to/illini-scheduler/mcp/dist/index.js"]
+      "command": "npx",
+      "args": ["-y", "https://github.com/kamransingri/illini-scheduler/releases/latest/download/illini-scheduler-mcp.tgz"]
     }
   }
 }
 ```
 
-On Windows, write the path with forward slashes (`C:/Users/you/illini-scheduler/mcp/dist/index.js`) or doubled
-backslashes.
+**Other apps** (Cursor, VS Code, ...) take the same command, `npx -y` and the link, in their MCP settings. Apps that
+only accept a URL need the hosted server, which comes later (#102).
 
-**Other apps** (Cursor, VS Code, ...) take the same command, `node /full/path/to/mcp/dist/index.js`, in their MCP
-settings. Apps that only accept a URL need the hosted server, which comes later (#102).
+**A fixed version.** Each release on the [releases page](https://github.com/kamransingri/illini-scheduler/releases)
+also has `illini-scheduler-mcp-X.Y.Z.tgz`; use its link instead to stay on that version. npx keeps the copy it
+downloaded, so if the server misbehaves after the site changes, delete npx's folder (`~/.npm/_npx`, or
+`%LocalAppData%\npm-cache\_npx` on Windows) and restart your app to get the newest one.
+
+**From a copy of the repository**, to try changes before they're released:
+
+```sh
+git clone https://github.com/kamransingri/illini-scheduler
+cd illini-scheduler/mcp
+npm ci
+npm run build        # writes dist/index.js
+```
+
+Then use `node /full/path/to/illini-scheduler/mcp/dist/index.js` as the command instead of `npx -y` and the link.
+On Windows, write the path in Claude Desktop's config with forward slashes (`C:/Users/you/illini-scheduler/mcp/dist/index.js`)
+or doubled backslashes.
 
 ## Options
 
@@ -87,3 +100,8 @@ Files are cached in memory for 30 minutes. The site rebuilds once a night.
   the built server over stdio. `npx tsc --noEmit` type-checks. `make test` and `make lint` at the repo root run both.
 - `node scripts/make-fixtures.mjs` refreshes the saved data from the live site (or pass a folder). Do it when the data
   format changes (`format_version` in `meta.json`).
+- `npm run smoke` is the package as people get it: it packs it, installs it into an empty folder, starts it with
+  `npx` against the saved data and calls every tool once. CI runs it.
+- Releases: the package has the site's version (`tools.release` moves `package.json` with the rest) and is one file,
+  `dist/index.js`, with no dependencies to install. The Release workflow builds it from the tagged commit and attaches
+  it to the GitHub release; it also publishes it to npm once the repository has an `NPM_TOKEN` secret.
