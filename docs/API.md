@@ -122,6 +122,7 @@ The home page search. Short field names keep it small.
 | `courses[].nx` | 0 \| 1 | Has sections next term |
 | `courses[].cu` | 0 \| 1 | Has sections this term |
 | `courses[].f` | string[] | Old codes of a renumbered course (optional) |
+| `courses[].o` | string | When it usually runs, from the last four years: the seasons it runs in, comma-separated (`f` fall, `s` spring, `u` summer), `fo`/`fe`/`so`/`se` for a fall or spring in odd or even years only, `i` irregular, `n` not offered recently. `f,s` is every fall and spring (optional) |
 | `instructors[].name` | string | Display name |
 | `instructors[].k` | string | Instructor key |
 | `instructors[].c` | string[] | Courses they teach next term, `["CS 124"]` |

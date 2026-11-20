@@ -22,6 +22,7 @@ from typing import Any
 from .config import WEB_DATA
 from .fetch import CURRENT_TERM, NEXT_TERM
 from .names import alias_key, load_aliases, parse_name, term_order
+from .offerings import pattern_code
 from .renumbered import Renamer
 from .rmp import course_code, fits_subject
 
@@ -371,6 +372,7 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA, rename: Renamer | No
             "nx": int(bool(nxt and nxt["sections"])),
             "cu": int(bool(term_blocks.get(CURRENT_TERM, {}).get("sections"))),
             **({"f": [f["code"] for f in doc["formerly"]]} if doc["formerly"] else {}),
+            **({"o": pattern_code(pat["label"])} if pat else {}),  # when it usually runs (four-year plan, #116)
         })
         if codes and ((nxt and nxt["sections"]) or gen):
             nxt = nxt or {"sections": [], "n_primary": 0, "n_open": None, "status_known": False}

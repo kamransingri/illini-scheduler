@@ -155,3 +155,39 @@ export function finishTerms(deg: Degree, mine: MyCourse[], ticked: string[], pla
   for (const id of left) out.set(id, null);
   return out;
 }
+
+const SEASON_WORDS: Record<string, string> = {
+  f: "fall",
+  s: "spring",
+  u: "summer",
+  fo: "fall of odd years",
+  fe: "fall of even years",
+  so: "spring of odd years",
+  se: "spring of even years",
+};
+
+/**
+ * Does a course usually run in this term (#116)? From search.json's `o`, the pattern over the last four years
+ * (pipeline/offerings.py pattern_code). null when the pattern can't say: none known, or irregular.
+ */
+export function usuallyOffered(o: string | undefined, term: string): boolean | null {
+  if (!o) return null;
+  const codes = o.split(",");
+  if (codes.includes("n")) return false;
+  const [year, season] = term.split("-");
+  const s = season === "fa" ? "f" : season === "sp" ? "s" : season === "su" ? "u" : null;
+  if (!s) return null;
+  if (codes.includes(s)) return true;
+  const parity = codes.find((c) => c.length === 2 && c[0] === s);
+  if (parity) return (Number(year) % 2 === 1) === (parity[1] === "o");
+  return codes.includes("i") ? null : false;
+}
+
+/** The warning for a course placed in a term it doesn't usually run in, or null. */
+export function offeringWarning(o: string | undefined, term: string, termName: string): string | null {
+  if (usuallyOffered(o, term) !== false) return null;
+  const codes = o!.split(",");
+  if (codes.includes("n")) return "Not offered in the last four years.";
+  const when = codes.map((c) => SEASON_WORDS[c]).filter(Boolean);
+  return `Usually runs in ${when.join(" and ")} only, not in ${termName}.`;
+}
