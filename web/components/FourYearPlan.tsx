@@ -43,9 +43,12 @@ export default function FourYearPlan({ st, update, nextTerm, mine, lookup, title
   const id = useId();
   const [said, say] = useState("");
 
-  /** A course into a term, from the add box, a drop or the menu. Returns why it can't go there, or null. */
+  /**
+   * A course into a term, from the add box, a drop or the menu. Returns why it can't go there, or null. Only a typed
+   * code is checked against the course data (Term's add): a planned or dragged course is known to exist, and a move
+   * mustn't fail while that data is still loading.
+   */
   const place = (code: string, term: string): string | null => {
-    if (!titleOf(code)) return `${code} isn't in the course data this site has. Check the code.`;
     if (own.has(code)) return `${code} is already in My courses.`;
     const from = plannedIn(plan, code);
     if (from === term) return null;
@@ -151,6 +154,7 @@ function Term({
     const code = `${m[1].toUpperCase()} ${m[2]}`;
     const where = plannedIn(plan, code);
     if (where) return setMsg(`${code} is already in ${termLabel(where)}. Use its Move to menu to move it.`);
+    if (!titleOf(code)) return setMsg(`${code} isn't in the course data this site has. Check the code.`);
     const err = place(code, term);
     setMsg(err);
     if (!err) setText("");
