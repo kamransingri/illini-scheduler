@@ -88,6 +88,7 @@ Course Explorer ───> pipeline/live_seats.py every ~10 min ─> live.json o
 | `make build` / `make serve` | Static export to `web/out`, served on :4173 |
 | `PAGES_LIMIT=50 make build` | Quick build with only 50 course pages (plus the reference courses) |
 | `make e2e` | Playwright against the static build (`npx playwright test --workers=1` on a laptop) |
+| `make availability-files` | Fetch the daily crawl's `data/availability/*.json` from the `availability` branch (`make data` does this first) |
 | `python -m pipeline.availability --minutes 30` | The daily seat crawl, by hand |
 | `python -m pipeline.live_seats --state s.json --out out/ --minutes 2` | One round of the live seat check, by hand (reads the watch list, `data/watch.txt`) |
 | `python -m pipeline.degrees` | Validate `data/degrees/*.yaml` and list course codes the loaded data doesn't know |
@@ -105,7 +106,7 @@ Course Explorer ───> pipeline/live_seats.py every ~10 min ─> live.json o
 | Workflow | When | What |
 | --- | --- | --- |
 | `pages.yml` | Every push to `main`, nightly 09:00 UTC, manual | `make data`, lint, type checks, unit tests, static build with the right `BASE_PATH`, Playwright against the build, then deploys `web/out`. Commits the refreshed data summaries only if everything passed |
-| `availability.yml` | Daily 04:17 UTC | Reads every course page of the next and current term (~1 request per second, oldest first) for seat status, section rows and final exams; commits `data/availability/*.json` for the nightly build |
+| `availability.yml` | Daily 04:17 UTC | Reads every course page of the next and current term (~1 request per second, oldest first) for seat status, section rows and final exams; force-pushes `data/availability/*.json` to the one-commit `availability` branch for the nightly build |
 | `live-seats.yml` | Every 10 minutes (every 30 overnight) | Re-reads the busiest next-term courses and those on `data/watch.txt` for ~6 minutes and force-pushes `live.json` to the single-commit `live-seats` branch; the Just opened page and the home page poll it |
 | `term-watch.yml` | Mondays | Checks whether Course Explorer has published a term after `NEXT_TERM` (`python -m pipeline.term_watch`) and opens one issue with the rollover checklist (#33) |
 | `data-check.yml` | The 10th of January, April, July and October, manual | How old each data source is on the live site, from `data/meta.json`, when Wade last changed each file and the hand-kept files (`python -m pipeline.data_watch`); opens one "Data check" issue with what needs a look and the quarterly checklist (#71) |
