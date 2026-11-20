@@ -169,6 +169,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
   // coursework a minor needs distinct from the major (#112): the major's own requirements, and each other minor's
   const majorUses = useMemo(() => (ev ? programCourses(ev) : new Set<string>()), [ev]);
   const minorUses = useMemo(() => new Map([...minorEvs].map(([id, e]) => [id, e ? programCourses(e) : new Set<string>()])), [minorEvs]);
+  const patterns = useMemo(() => new Map(index?.courses.map((c) => [`${c.s} ${c.n}`, c.o]) ?? []), [index]);
   const indexHours = useMemo(() => new Map(index?.courses.map((c) => [`${c.s} ${c.n}`, parseHours(c.c)?.[0] ?? 0]) ?? []), [index]);
   const creditHours = (code: string) => allCourses.find((c) => `${c.s} ${c.n}` === code)?.hours ?? indexHours.get(code) ?? 0;
   const generatedOn = majors.find((p) => p.id === st.program)?.generated;
@@ -283,6 +284,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
         mine={allCourses}
         lookup={lookup}
         titleOf={(code) => titleIn(deg, index, code)}
+        patternOf={(code) => patterns.get(code)}
         totalHours={deg?.total_hours ?? null}
       />
 
