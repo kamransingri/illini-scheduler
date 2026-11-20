@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { allCredits, apCredit, creditCourses, IB_LEVEL, ibCredit, isElective, isGrainger, pickIbYear, pickYear, subOptions, type ApSummary, type ApTable, type ApYear, type IbLevel } from "@/lib/apcredit";
-import { alsoCounts, evaluate, hoursSoFar, hydrate, needText, options, parseHours, prereqNote, rankCourse, type Degree, type DegreeCourse, type DegreeIndex, type Evaluation, type GroupResult, type GroupStatus, type HoursSoFar, type Ranked } from "@/lib/degree";
+import { alsoCounts, evaluate, hoursSoFar, hydrate, needText, listedByHand, options, overlapChecks, parseHours, prereqNote, programCourses, rankCourse, type Degree, type DegreeCourse, type DegreeIndex, type Evaluation, type GroupResult, type GroupStatus, type HoursSoFar, type OverlapCheck, type Ranked } from "@/lib/degree";
 import { courseHref, dataUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, termLabel } from "@/lib/format";
 import { EMPTY, MAX_MINORS, minorTick, onMineChange, readMine, sameState, STATUS_LABEL, stateFromParams, stateToParams, ticksOf, writeMine, type CourseStatus, type MyState } from "@/lib/mycourses";
 import type { ScorePriors } from "@/lib/score";
@@ -164,6 +164,11 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
     [st.minors, st.ticked, minorDegs, apReady, allCourses],
   );
   const minorOverlap = useMemo(() => sharedByMinors(minorEvs), [minorEvs]);
+  // coursework a minor needs distinct from the major (#112): the major's own requirements, and each other minor's
+  const majorUses = useMemo(() => (ev ? programCourses(ev) : new Set<string>()), [ev]);
+  const minorUses = useMemo(() => new Map([...minorEvs].map(([id, e]) => [id, e ? programCourses(e) : new Set<string>()])), [minorEvs]);
+  const indexHours = useMemo(() => new Map(index?.courses.map((c) => [`${c.s} ${c.n}`, parseHours(c.c)?.[0] ?? 0]) ?? []), [index]);
+  const creditHours = (code: string) => allCourses.find((c) => `${c.s} ${c.n}` === code)?.hours ?? indexHours.get(code) ?? 0;
   const generatedOn = majors.find((p) => p.id === st.program)?.generated;
   const nameOf = (id: string) => minors.find((p) => p.id === id)?.program ?? id;
   const taken = useMemo(() => new Set(allCourses.map((c) => `${c.s} ${c.n}`)), [allCourses]);
@@ -289,6 +294,14 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
         const minorEv = minorEvs.get(id);
         const minorGeneratedOn = minors.find((p) => p.id === id)?.generated;
         const overlap = [...minorOverlap].filter(([, ids]) => ids.includes(id)).map(([c, ids]) => ({ c, others: ids.filter((o) => o !== id) }));
+        const otherIds = st.minors.filter((o) => o !== id);
+        const other = {
+          major: majorUses,
+          minors: new Set(otherIds.flatMap((o) => [...(minorUses.get(o) ?? [])])),
+          majorLists: deg ? listedByHand(deg) : new Set<string>(),
+          minorLists: new Set(otherIds.flatMap((o) => (minorDegs[o] ? [...listedByHand(minorDegs[o])] : []))),
+        };
+        const checks = minorDeg && minorEv ? overlapChecks(minorDeg, allCourses, other, creditHours) : [];
         return (
           <section key={id} aria-label={`${nameOf(id)} requirements`} className="min-w-0 border-t-4 border-heading pt-6" data-testid="minor-checklist" data-minor={id}>
             {minorErrors[id] && (
@@ -325,6 +338,9 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
                 </span>
               </p>
             )}
+            {checks.map((ck, i) => (
+              <OverlapNote key={i} ck={ck} hasMajor={!!ev} />
+            ))}
             {!minorEv && !minorErrors[id] && <p className="text-muted">Loading the minor&apos;s requirements…</p>}
             {minorDeg && minorEv && (
               <Checklist deg={minorDeg} results={minorEv.results} st={st} update={update} taken={taken} meta={meta} weights={weights} hours={null} apHours={0} tickPrefix={minorTick(id)} />
@@ -337,6 +353,51 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
 }
 
 const MINOR_LABELS = ["Minor", "Second minor", "Third minor"];
+
+const listOf = (codes: string[]) => (codes.length > 1 ? `${codes.slice(0, -1).join(", ")} and ${codes[codes.length - 1]}` : (codes[0] ?? ""));
+
+/** A minor's rule for coursework distinct from the major (#112), where the student stands on it, and the catalog's words. */
+function OverlapNote({ ck, hasMajor }: { ck: OverlapCheck; hasMajor: boolean }) {
+  const r = ck.rule;
+  const met = ck.have >= ck.need;
+  const level = r.min_level === 300 ? " (300- or 400-level)" : r.min_level === 400 ? " (400-level)" : r.min_level ? ` (${r.min_level}-level or above)` : "";
+  const what = `${ck.need} ${r.min_level && r.min_level >= 300 ? "advanced " : ""}${ck.unit === "hours" ? "hours" : "courses"}${level}`;
+  const away = r.minors_too ? "your major or another minor" : "your major";
+  const have = ck.unit === "hours" ? `${ck.have} hour${ck.have === 1 ? "" : "s"}` : `${ck.have} course${ck.have === 1 ? "" : "s"}`;
+  return (
+    <p className="mb-4 flex max-w-3xl items-start gap-2 rounded bg-panel p-3" data-testid="major-overlap" data-met={met}>
+      <Icon name={met ? "check" : "alert"} className="mt-1 shrink-0 text-heading" />
+      <span>
+        <strong>
+          At least {what} for the minor must not also count toward {away}.
+        </strong>{" "}
+        {!hasMajor
+          ? "Choose your major to check this."
+          : met
+            ? `Met: ${have} (${listOf(ck.distinct)}).`
+            : `${have[0].toUpperCase()}${have.slice(1)} so far${ck.distinct.length ? ` (${listOf(ck.distinct)})` : ""}.`}
+        {hasMajor && ck.maybe.length > 0 && (
+          <>
+            {" "}
+            {listOf(ck.maybe)} {ck.maybe.length === 1 ? "is" : "are"} also on a list for {away}, which you tick by hand: if you count{" "}
+            {ck.maybe.length === 1 ? "it there, it doesn't" : "them there, they don't"} count here.
+          </>
+        )}
+        {hasMajor && ck.shared.length > 0 && (
+          <>
+            {" "}
+            {listOf(ck.shared)} {ck.shared.length === 1 ? "counts" : "count"} toward {away} too, so {ck.shared.length === 1 ? "it doesn't" : "they don't"} count here
+            {met ? "." : ": this minor leans on courses your major already uses, so plan other advanced courses for it."}
+          </>
+        )}{" "}
+        <Info label="The catalog's words">
+          <span className="block">&ldquo;{r.quote}&rdquo;</span>
+          <span className="mt-1 block">Source: {r.source}</span>
+        </Info>
+      </span>
+    </p>
+  );
+}
 
 /** Courses that count toward two or more of the minors (with the minors' ids), in the order they're first used. */
 function sharedByMinors(evs: Map<string, Evaluation | null>): Map<string, string[]> {

@@ -18,6 +18,10 @@ history).
   site to the Home Screen first. The buttons appear once the alert server (#91) runs; until then Just opened works
   as before. docs/PUSH.md has the server's side.
 - The site can be added to a phone's Home Screen and opens there as an app of its own.
+- Minors whose catalog page asks for coursework distinct from the major say how much you have (#112). Eight minors
+  ask for six advanced hours (or two advanced courses) that don't also count toward the major, and most toward
+  another minor too. Their checklist shows the rule in the catalog's words, which of your courses count, which don't
+  because your major uses them, and flags a minor that leans on courses your major already uses.
 
 ## [0.15.0] - 2026-11-20
 
