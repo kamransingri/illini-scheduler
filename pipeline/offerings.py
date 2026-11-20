@@ -90,6 +90,21 @@ def label_pattern(offered: Iterable[str], window: Sequence[str], summers: Sequen
     return f"Irregular ({n} of the last {len(window)} fall/spring terms)" + suffix
 
 
+PATTERN_CODES = {
+    "Every fall and spring": "f,s", "Almost every fall and spring": "f,s", "Fall only": "f", "Spring only": "s",
+    "Fall, odd years": "fo", "Fall, even years": "fe", "Spring, odd years": "so", "Spring, even years": "se",
+    "Summer only": "u", "Not offered recently": "n",
+}
+
+
+def pattern_code(label: str) -> str:
+    """The pattern as search.json's short `o` (docs/API.md): the seasons it runs in ("f", "s", "u"), a fall or spring in
+    odd or even years only ("fo", "se"), "i" irregular, "n" not offered recently. "Fall only, plus summers" is "f,u"."""
+    base, plus, _ = label.partition(", plus summers")
+    code = "i" if base.startswith("Irregular") else PATTERN_CODES.get(base, "i")
+    return f"{code},u" if plus and code != "u" else code
+
+
 def predict(offered: Iterable[str], window: Sequence[str], target: str) -> tuple[str, str]:
     """High / Medium / Low that the course runs in `target`, with a reason a student can read."""
     off = set(offered)

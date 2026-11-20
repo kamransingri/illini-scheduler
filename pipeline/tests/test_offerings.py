@@ -83,3 +83,18 @@ def test_real_changed_and_stable_courses(tmp_path):
     stat = conn.execute("SELECT summary FROM course_changes WHERE subject='STAT' AND number='107' "
                         "AND field='description'").fetchall()
     assert any("Proficiency exams" in r[0] for r in stat)
+
+
+def test_pattern_codes_for_search_json():
+    code = offerings.pattern_code
+    assert code("Every fall and spring") == "f,s" == code("Almost every fall and spring")
+    assert code("Every fall and spring, plus summers") == "f,s,u"
+    assert code("Fall only") == "f" and code("Spring only, plus summers") == "s,u"
+    assert code("Fall, odd years") == "fo" and code("Spring, even years, plus summers") == "se,u"
+    assert code("Summer only") == "u" and code("Not offered recently") == "n"
+    assert code("Irregular (3 of the last 8 fall/spring terms)") == "i"
+    assert code("Irregular (3 of the last 8 fall/spring terms), plus summers") == "i,u"
+    # every label label_pattern can produce has a code
+    window = regular_window("2026-fa")
+    for offered in ([], window, window[::2], window[1::2], window[:3], ["2025-su"]):
+        assert code(label_pattern(offered, window)) in {"f,s", "f", "s", "fo", "fe", "so", "se", "u", "n", "i"}

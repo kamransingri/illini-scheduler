@@ -125,7 +125,8 @@ export type Course = {
 };
 
 /** `f`: the course's old numbers ("FR 103"), so searching an old number finds it (#29). */
-export type SearchCourse = { s: string; n: string; t: string; c: string; g: string[]; gpa: number | null; nx: number; cu: number; f?: string[] };
+/** `o`: when it usually runs (docs/API.md), read by the four-year plan's warnings (lib/plan.ts usuallyOffered). */
+export type SearchCourse = { s: string; n: string; t: string; c: string; g: string[]; gpa: number | null; nx: number; cu: number; f?: string[]; o?: string };
 export type SearchInstructor = { name: string; k: string; c: string[] };
 export type SearchIndex = { courses: SearchCourse[]; instructors: SearchInstructor[] };
 

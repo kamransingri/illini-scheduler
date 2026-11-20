@@ -1198,3 +1198,20 @@ Every judgment call made during the autonomous build, newest phase last.
   typo can't pull a course out of another term.
 - **D44.3 Search.** The site has no course search on the degree page, so "from search" is each term's own box: type a
   code to add it.
+
+## Four-year plan, part 3: warnings (2026-11-19, issue #116)
+
+- **D45.1 Offering patterns in search.json.** The plan holds courses outside the program's lists, so the pattern can't
+  come from the degree file, and fetching every planned course's own file is too heavy. search.json, which the
+  degree page already loads, gets `o`: the pattern course pages show, as short codes (`f,s` every fall and spring,
+  `fo` fall of odd years, `u` summer, `i` irregular, `n` not offered recently; `pipeline/offerings.py pattern_code`).
+  A new field, so `format_version` stays.
+- **D45.2 Only a clear "no".** A course is flagged only when its pattern says it doesn't run in that season (or that
+  year, for odd and even years), or that it hasn't run in four years. Irregular courses and courses without a pattern
+  get no warning: the pattern can't say.
+- **D45.3 Hours as in the builder.** Each term with courses is checked with the same limits as the schedule builder
+  (D35, `lib/credits.ts`): over 18 needs approval, under 12 isn't full-time, 9 in summer. Variable-credit courses are
+  named when they decide it.
+- **D45.4 Prerequisites wait for #21.** The plan can't tell whether a prerequisite is met until prerequisites are read
+  into rules (#21); the free-text check the checklist uses ("check prerequisites") would flag courses with "or"
+  alternatives wrongly. That warning is left for #21.
