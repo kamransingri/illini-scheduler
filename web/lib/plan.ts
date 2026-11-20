@@ -66,7 +66,16 @@ export function removeFromPlan(plan: Plan, code: string): Plan {
   return { ...plan, terms };
 }
 
-export const isEmptyPlan = (plan: Plan) => !plan.grad && !Object.keys(plan.terms).length;
+/** Put a course in a term: moved there if it's planned in another term, added at the end if it isn't planned yet. */
+export function moveToTerm(plan: Plan, code: string, term: string): Plan {
+  if (plan.terms[term]?.includes(code)) return plan;
+  return addToTerm(removeFromPlan(plan, code), term, code);
+}
+
+/** The drag-and-drop type for a course code (#115): course options and planned courses carry it, terms accept it. */
+export const COURSE_DRAG = "application/x-illini-course";
+
+export const isEmptyPlan =(plan: Plan) => !plan.grad && !Object.keys(plan.terms).length;
 
 /** "2027-fa.CS225.MATH231_2028-sp.CS233": terms in order, then their courses ("-", "." and "_" need no escaping in a URL). */
 export function encodePlanTerms(plan: Plan): string {
