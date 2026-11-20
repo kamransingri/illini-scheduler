@@ -216,7 +216,9 @@ def run(conn: sqlite3.Connection, gpa_df: pd.DataFrame, rmp_enabled: bool, tre_p
         last, students = gpa_recency.get(key, (0, 0))
         return (2, -last, -students, key)
 
-    client = RmpClient(rmp_cache, enabled=rmp_enabled, transport=rmp_transport)
+    # only tests pass a transport (a mock): no politeness delay for it, which saved ~10 s of pytest (#148)
+    client = RmpClient(rmp_cache, enabled=rmp_enabled, transport=rmp_transport,
+                       delay=0.5 if rmp_transport is None else 0.0)
     rmp_ok = rmp_enabled
     rmp_matched: dict[str, int] = defaultdict(int)
     rmp_rows: dict[str, str] = {}

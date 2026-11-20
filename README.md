@@ -80,7 +80,9 @@ Course Explorer ───> pipeline/live_seats.py every ~10 min ─> live.json o
 | --- | --- |
 | `make data` | Full pipeline (all subjects, 14 terms) |
 | `make data-quick` | Only CS, MATH, STAT, RHET |
+| `make export` | Export `web/public/data` again from `data/illini.db`, without fetching |
 | `make test` | pytest (pipeline) + Vitest (web logic) |
+| `make test-quick` | Only the unit tests for what changed since `origin/main` (`python -m tools.quick_test` without make) |
 | `make lint` | ruff, mypy, ESLint, tsc |
 | `make dev` | Next.js dev server on :3000 |
 | `make build` / `make serve` | Static export to `web/out`, served on :4173 |
@@ -107,7 +109,7 @@ Course Explorer ───> pipeline/live_seats.py every ~10 min ─> live.json o
 | `live-seats.yml` | Every 10 minutes (every 30 overnight) | Re-reads the busiest next-term courses and those on `data/watch.txt` for ~6 minutes and force-pushes `live.json` to the single-commit `live-seats` branch; the Just opened page and the home page poll it |
 | `term-watch.yml` | Mondays | Checks whether Course Explorer has published a term after `NEXT_TERM` (`python -m pipeline.term_watch`) and opens one issue with the rollover checklist (#33) |
 | `data-check.yml` | The 10th of January, April, July and October, manual | How old each data source is on the live site, from `data/meta.json`, when Wade last changed each file and the hand-kept files (`python -m pipeline.data_watch`); opens one "Data check" issue with what needs a look and the quarterly checklist (#71) |
-| `ci.yml` | Every push and pull request | Lint and unit tests (`test`); version files, changelog and branch name (`versions`) |
+| `ci.yml` | Every push and pull request | Lint and unit tests (`test`); version files, changelog and branch name (`versions`); on pull requests that touch a page, Playwright against this branch's build (`e2e`) |
 | `release.yml` | A new version reaching `main` | Tags that commit `vX.Y.Z` and publishes the GitHub release from CHANGELOG.md |
 | `branch-cleanup.yml` | A pull request merged, manual | Deletes the merged branch; a manual run deletes older merged branches |
 | `fetch-data.yml` | Manual | Fallback that refreshes `fixtures/` from the live sources |

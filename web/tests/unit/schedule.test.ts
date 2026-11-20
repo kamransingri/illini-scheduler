@@ -107,7 +107,7 @@ describe("generator properties", () => {
       }
     }
     expect(schedules).toBeGreaterThan(1000);
-  });
+  }, 30_000); // ~2 s on CI; a busy laptop can pass 5 s (#148)
 
   it("pruning never drops the best schedule when Best professor is on (300 random carts, top 1 vs all)", () => {
     for (let cart = 0; cart < 300; cart++) {
