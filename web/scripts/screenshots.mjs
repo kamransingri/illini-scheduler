@@ -1,6 +1,7 @@
-// Screenshots of the main pages at desktop and phone width, for design reviews and docs/screenshots.
-// Usage (with the static build served on :4173):  node scripts/screenshots.mjs ../docs/screenshots/after [extra paths...]
-// Each shot is the full page up to MAX_HEIGHT (desktop 4,000 px, phone 8,000 px): long lists don't need every row.
+// Screenshots of the main pages at desktop and phone width, for design reviews. Not committed (#181).
+// Usage (with the static build served on :4173):  node scripts/screenshots.mjs [out dir, default screenshots/] [extra paths...]
+// Each shot is the full page up to MAX_HEIGHT (desktop 2,000 px, phone 3,000 px): the top of a page is
+// enough to review.
 import { mkdirSync } from "node:fs";
 import path from "node:path";
 import { chromium } from "@playwright/test";
@@ -21,8 +22,8 @@ const pages = process.env.SHOT_ONLY ? extra : [
   ...extra,
 ];
 const widths = [
-  ["desktop", 1280, 900, 4000],
-  ["mobile", 375, 800, 8000],
+  ["desktop", 1280, 900, 2000],
+  ["mobile", 375, 800, 3000],
 ];
 
 mkdirSync(outDir, { recursive: true });
