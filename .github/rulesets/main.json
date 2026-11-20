@@ -1,5 +1,5 @@
 {
-  "name": "main: pull requests with passing CI",
+  "name": "main: pull requests with passing CI and one approving review",
   "target": "branch",
   "enforcement": "active",
   "conditions": { "ref_name": { "include": ["~DEFAULT_BRANCH"], "exclude": [] } },
@@ -10,8 +10,8 @@
     {
       "type": "pull_request",
       "parameters": {
-        "required_approving_review_count": 0,
-        "dismiss_stale_reviews_on_push": false,
+        "required_approving_review_count": 1,
+        "dismiss_stale_reviews_on_push": true,
         "require_code_owner_review": false,
         "require_last_push_approval": false,
         "required_review_thread_resolution": false
@@ -21,7 +21,7 @@
       "type": "required_status_checks",
       "parameters": {
         "strict_required_status_checks_policy": false,
-        "required_status_checks": [{ "context": "test" }, { "context": "versions" }]
+        "required_status_checks": [{ "context": "test" }, { "context": "versions" }, { "context": "e2e" }]
       }
     }
   ]
