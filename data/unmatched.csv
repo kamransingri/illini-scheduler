@@ -133,7 +133,6 @@ course-explorer,"Wamalwa, K",AFST,232,2027-sp,no candidate
 course-explorer,"Cholwe, C",AFST,233,2026-fa,no candidate
 course-explorer,"Maweu, D",AFST,406,2027-sp,no candidate
 course-explorer,"Harrison, F",AFST,420,2027-sp,no candidate
-course-explorer,"Johnson, M",AFST,599,2027-sp,6 global candidates
 course-explorer,"Roady, A",AGCM,220,2027-sp,no candidate
 course-explorer,"White, M",AGED,220,2026-fa,4 global candidates
 course-explorer,"Marzolino, T",AGED,420,2027-sp,no candidate
@@ -274,7 +273,6 @@ course-explorer,"Imani, S",ARCH,434,2026-fa,no candidate
 course-explorer,"Jang, K",ARCH,434,2026-fa,no candidate
 course-explorer,"Kwon, S",ARCH,434,2026-fa,2 global candidates
 course-explorer,"Asker, M",ARCH,473,2026-fa,no candidate
-course-explorer,"Dochow, C",ARCH,473,2026-fa,no candidate
 course-explorer,"Natke, P",ARCH,474,2027-sp,no candidate
 course-explorer,"Crespo Claudio, Y",ARCH,499,2027-sp,no candidate
 course-explorer,"Scovic, T",ARCH,518,2026-fa,no candidate
@@ -288,6 +286,7 @@ course-explorer,"Emami, N",ARCH,571,2026-fa,no candidate
 course-explorer,"Nazmeeva, A",ARCH,571,2027-sp,no candidate
 course-explorer,"Christopher, N",ARCH,572,2026-fa,no candidate
 course-explorer,"Bartumeus Ferre, S",ARCH,574,2026-fa,no candidate
+course-explorer,"Dochow, C",ARCH,574,2027-sp,no candidate
 course-explorer,"Murray, S",ARCH,575,2026-fa,no candidate
 course-explorer,"Chasco, D",ARCH,576,2027-sp,no candidate
 course-explorer,"Guthrie, J",ARCH,577,2026-fa,no candidate
@@ -1757,6 +1756,7 @@ course-explorer,"Anderson, H",HORT,344,2026-fa,no candidate
 course-explorer,"Santiago, J",HORT,499,2027-sp,no candidate
 course-explorer,"Lazarus, S",HT,510,2026-fa,no candidate
 course-explorer,"Zackery, F",IB,100,2026-fa,no candidate
+course-explorer,"Lipari, A",IB,103,2027-sp,no candidate
 course-explorer,"Murray, H",IB,103,2027-sp,no candidate
 course-explorer,"Coulter, A",IB,104,2026-fa,no candidate
 course-explorer,"Graves, B",IB,104,2026-fa,no candidate
@@ -1967,7 +1967,7 @@ course-explorer,"Rodrigues Bezerra Silva, E",IS,477,2026-fa,no candidate
 course-explorer,"Salami, M",IS,477,2026-fa,no candidate
 course-explorer,"Russell, S",IS,493,2026-fa,no candidate
 course-explorer,"Santiago, C",IS,497,2026-fa,no candidate
-course-explorer,"Intinarelli, K",IS,500,2027-sp,no candidate
+course-explorer,"Intinarelli, K",IS,500,2026-fa,no candidate
 course-explorer,"Shaw, T",IS,500,2027-sp,no candidate
 course-explorer,"Mathews, E",IS,501,2027-sp,no candidate
 course-explorer,"Chen, C",IS,504,2026-fa,4 global candidates
@@ -2426,7 +2426,8 @@ course-explorer,"Cui, H",MATH,463,2027-sp,no candidate
 course-explorer,"Jia, C",MATH,463,2027-sp,no candidate
 course-explorer,"Mandravelis, D",MATH,463,2027-sp,no candidate
 course-explorer,"Wei, R",MATH,463,2027-sp,no candidate
-course-explorer,"Balogh, J",MATH,580,2026-fa,no candidate
+course-explorer,"Li, X",MATH,545,2027-sp,"ambiguous: Li, Xiannan; Li, Xiaochun"
+course-explorer,"Balogh, J",MATH,581,2027-sp,no candidate
 course-explorer,"Henyon, H",MBA,553,2026-fa,no candidate
 course-explorer,"Park, Y",MBA,564,2027-sp,6 global candidates
 course-explorer,"Bradley, J",MBA,590,2027-sp,2 global candidates
@@ -3433,6 +3434,7 @@ course-explorer,"Su, Z",STAT,107,2026-fa,no candidate
 course-explorer,"Sun, E",STAT,107,2026-fa,no candidate
 course-explorer,"Tsiamalos, E",STAT,107,2026-fa,no candidate
 course-explorer,"Smith, A",STAT,199,2026-fa,5 global candidates
+course-explorer,"Villarreal, S",STAT,199,2027-sp,no candidate
 course-explorer,"Li, R",STAT,207,2026-fa,no candidate
 course-explorer,"Santra, D",STAT,207,2026-fa,no candidate
 course-explorer,"Switz, S",STAT,207,2026-fa,no candidate
@@ -3449,6 +3451,7 @@ course-explorer,"Wei, R",STAT,400,2026-fa,no candidate
 course-explorer,"Cheng, C",STAT,410,2027-sp,no candidate
 course-explorer,"Ellison, T",STAT,430,2027-sp,no candidate
 course-explorer,"Zheng, Y",STAT,430,2027-sp,3 global candidates
+course-explorer,"Bing, X",STAT,432,2027-sp,no candidate
 course-explorer,"Camargo Salamanca, S",STAT,587,2027-sp,no candidate
 course-explorer,"Maweu, D",SWAH,202,2027-sp,no candidate
 course-explorer,"Aich, S",TAM,210,2026-fa,no candidate
