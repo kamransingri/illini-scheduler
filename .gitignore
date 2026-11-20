@@ -9,6 +9,7 @@ __pycache__/
 data/raw/
 data/illini.db
 data/illini.db-*
+data/availability/
 # Web
 web/node_modules/
 web/.next/

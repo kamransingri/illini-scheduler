@@ -28,8 +28,9 @@ the ruleset lets GitHub Actions through (Repository settings, below).
 
 | Branch | What it is | Who writes to it |
 | --- | --- | --- |
-| `main` | What's live. Every push rebuilds and deploys the site (`pages.yml`). | Merged pull requests, plus the data jobs' own commits (`data: nightly refresh …`, `data: seat availability …`) and the release workflow's tags |
+| `main` | What's live. Every push rebuilds and deploys the site (`pages.yml`). | Merged pull requests, plus the nightly data job's own commits (`data: nightly refresh …`) and the release workflow's tags |
 | `live-seats` | One commit holding `live.json`, replaced every ~10 minutes by `live-seats.yml`. No code. | Only that workflow. Never branch from it or merge it |
+| `availability` | One commit holding `data/availability/*.json` (about 8.5 MB per term), replaced daily by `availability.yml`, so the files stay out of `main`'s history (#180). `make data` and the workflows fetch it with `tools/availability-files.sh fetch`. No code | Only that workflow. Never branch from it or merge it |
 | `type/short-name` | One piece of work, branched from the latest `main` | You |
 
 Work branch types:

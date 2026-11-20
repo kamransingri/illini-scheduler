@@ -33,6 +33,8 @@ jobs:
         run: |
           mkdir -p prev out
           if git fetch -q --depth=1 origin live-seats; then git show FETCH_HEAD:state.json > prev/state.json || true; fi
+      - name: The daily crawl's files from the availability branch
+        run: tools/availability-files.sh fetch
       - name: Re-read the busiest courses
         run: python -m pipeline.live_seats --state prev/state.json --out out --minutes "${{ inputs.minutes || '6' }}"
       - name: Publish (one commit, force-pushed, so the branch never grows)

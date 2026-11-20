@@ -2,7 +2,7 @@ name: Refresh data and deploy to GitHub Pages
 on:
   push:
     branches: [main]
-    paths-ignore: ["**.md", "screenshots/**", "data/availability/**"]
+    paths-ignore: ["**.md", "screenshots/**"]
   schedule:
     - cron: "0 9 * * *" # nightly, 09:00 UTC
   workflow_dispatch:
@@ -40,9 +40,11 @@ jobs:
           path: data/raw/rmp
           key: rmp-${{ github.run_id }}
           restore-keys: rmp-
+      - name: Seat availability files from the availability branch
+        run: tools/availability-files.sh fetch
       - name: Refresh data (Wade's datasets + Course Explorer mirror, seat availability files, RMP)
         # SOURCE=csv: the live Course Explorer feed answers bursts from GitHub with HTTP 202 (DECISIONS.md D11.3);
-        # seat status comes from data/availability/*.json, kept fresh by availability.yml.
+        # seat status comes from data/availability/*.json, kept fresh by availability.yml on the availability branch.
         run: make data SOURCE=csv
         env:
           AVAILABILITY_MODE: file
