@@ -15,6 +15,9 @@ AI tools. To use the data from an AI app without writing code, add the MCP serve
 - **Read-only, best effort.** This is a student project, not the University's system of record. Check anything that
   matters in [Course Explorer](https://courses.illinois.edu/) and Self-Service before you register.
   [LIMITATIONS.md](LIMITATIONS.md) lists what the data gets wrong.
+- **Terms:** reusing the data is fine with credit to the sources below; the site's
+  [terms of use](https://kamransingri.github.io/illini-scheduler/terms/) have the rest, and the
+  [AI use policy](AI-USE.md) covers AI tools.
 
 ## Where the data comes from
 

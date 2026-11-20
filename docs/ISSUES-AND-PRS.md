@@ -151,6 +151,7 @@ area.
   `cd web && npx playwright test <spec> --workers=1`.
 - Add a line under **Unreleased** in CHANGELOG.md if people will notice the change.
 - Update the docs where behaviour changed: LIMITATIONS, DECISIONS, and API.md for a new data field.
+- If an AI tool wrote most of it, say so in one line ([AI-USE.md](AI-USE.md)).
 
 ### Title
 
