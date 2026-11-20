@@ -7,7 +7,8 @@ export default defineConfig({
   testDir: "tests/e2e",
   timeout: 60_000,
   retries: 0,
-  workers: 2,
+  // GitHub's runners have 4 cores (#148); laptops stay at 2, or --workers=1 to keep the fan quiet
+  workers: process.env.CI ? 4 : 2,
   use: { baseURL, trace: "off" },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: process.env.E2E_BASE_URL
