@@ -5,7 +5,7 @@ import { allCredits, apCredit, creditCourses, IB_LEVEL, ibCredit, isElective, is
 import { alsoCounts, evaluate, hoursSoFar, hydrate, needText, listedByHand, options, overlapChecks, parseHours, prereqNote, programCourses, rankCourse, type Degree, type DegreeCourse, type DegreeIndex, type Evaluation, type GroupResult, type GroupStatus, type HoursSoFar, type OverlapCheck, type Ranked } from "@/lib/degree";
 import { courseHref, dataUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, termLabel } from "@/lib/format";
 import { EMPTY, MAX_MINORS, minorTick, onMineChange, readMine, sameState, STATUS_LABEL, stateFromParams, stateToParams, ticksOf, writeMine, type CourseStatus, type MyState } from "@/lib/mycourses";
-import { finishTerms, isEmptyPlan, planTerms, type FinishAt } from "@/lib/plan";
+import { COURSE_DRAG, finishTerms, isEmptyPlan, planTerms, type FinishAt } from "@/lib/plan";
 import type { ScorePriors } from "@/lib/score";
 import type { SearchIndex } from "@/lib/types";
 import { useWeights } from "@/lib/weights";
@@ -982,6 +982,8 @@ function Requirement({
   finishAt?: FinishAt;
 }) {
   const g = r.group;
+  // course options can be dragged into the four-year plan once it has terms (#115)
+  const plannable = planTerms(st.plan, meta.next_term).length > 0;
   const tick = tickPrefix + g.id;
   const finished = r.status === "done" || r.status === "in_progress";
   const [showAll, setShowAll] = useState(false);
@@ -1082,7 +1084,7 @@ function Requirement({
               />
               <ul>
                 {shown.map((x) => (
-                  <OptionRow key={x.code} x={x} r={r} results={results} deg={deg} taken={taken} nextTerm={meta.next_term} />
+                  <OptionRow key={x.code} x={x} r={r} results={results} deg={deg} taken={taken} nextTerm={meta.next_term} plannable={plannable} />
                 ))}
               </ul>
               {ranked.length > SHOW && (
@@ -1123,6 +1125,7 @@ function OptionRow({
   deg,
   taken,
   nextTerm,
+  plannable,
 }: {
   x: Ranked<DegreeCourse>;
   r: GroupResult;
@@ -1130,6 +1133,7 @@ function OptionRow({
   deg: Degree;
   taken: Set<string>;
   nextTerm: string;
+  plannable: boolean;
 }) {
   const [s, n] = x.code.split(" ");
   const c = x.course;
@@ -1146,6 +1150,15 @@ function OptionRow({
       title={c.t}
       cols={COLS}
       data-code={x.code}
+      {...(plannable && {
+        draggable: true,
+        style: { cursor: "grab" },
+        onDragStart: (e: React.DragEvent) => {
+          e.dataTransfer.setData(COURSE_DRAG, x.code);
+          e.dataTransfer.setData("text/plain", x.code);
+          e.dataTransfer.effectAllowed = "copyMove";
+        },
+      })}
       badges={
         <>
           {yes.length > 0 && (
