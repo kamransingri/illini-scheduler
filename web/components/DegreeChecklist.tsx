@@ -5,11 +5,13 @@ import { allCredits, apCredit, creditCourses, IB_LEVEL, ibCredit, isElective, is
 import { alsoCounts, evaluate, hoursSoFar, hydrate, needText, options, parseHours, prereqNote, rankCourse, type Degree, type DegreeCourse, type DegreeIndex, type Evaluation, type GroupResult, type GroupStatus, type HoursSoFar, type Ranked } from "@/lib/degree";
 import { courseHref, dataUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, termLabel } from "@/lib/format";
 import { EMPTY, MAX_MINORS, minorTick, onMineChange, readMine, sameState, STATUS_LABEL, stateFromParams, stateToParams, ticksOf, writeMine, type CourseStatus, type MyState } from "@/lib/mycourses";
+import { finishTerms, isEmptyPlan, planTerms, type FinishAt } from "@/lib/plan";
 import type { ScorePriors } from "@/lib/score";
 import type { SearchIndex } from "@/lib/types";
 import { useWeights } from "@/lib/weights";
 import AddToCart from "./AddToCart";
 import CopyButton from "./CopyButton";
+import FourYearPlan from "./FourYearPlan";
 import ScoreBreakdown from "./course/ScoreBreakdown";
 import ProgramPicker from "./ProgramPicker";
 import { loadIndex } from "./SearchBox";
@@ -97,7 +99,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
     const fromUrl = stateFromParams(new URLSearchParams(window.location.search));
     const saved = readMine();
     let start = fromUrl ?? saved;
-    if (fromUrl && (saved.courses.length || saved.ap.length || saved.ib.length) && !sameState(saved, fromUrl)) setShared(saved);
+    if (fromUrl && (saved.courses.length || saved.ap.length || saved.ib.length || !isEmptyPlan(saved.plan)) && !sameState(saved, fromUrl)) setShared(saved);
     else if (fromUrl) writeMine(fromUrl);
     if (!start.program && majors.length === 1) start = { ...start, program: majors[0].id };
     setSt(start);
@@ -167,11 +169,19 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
   const generatedOn = majors.find((p) => p.id === st.program)?.generated;
   const nameOf = (id: string) => minors.find((p) => p.id === id)?.program ?? id;
   const taken = useMemo(() => new Set(allCourses.map((c) => `${c.s} ${c.n}`)), [allCourses]);
-  const hours = useMemo(() => {
-    if (!deg) return null;
+  const lookup = useMemo(() => {
     const byCode = new Map(index?.courses.map((c) => [`${c.s} ${c.n}`, c.c]) ?? []);
-    return hoursSoFar(allCourses, (code) => deg.courses[code]?.cr ?? parseHours(byCode.get(code)));
-  }, [deg, index, allCourses]);
+    return (code: string) => deg?.courses[code]?.cr ?? parseHours(byCode.get(code));
+  }, [deg, index]);
+  const hours = useMemo(() => (deg ? hoursSoFar(allCourses, lookup) : null), [deg, allCourses, lookup]);
+  // the term each requirement gets finished in, once the plan has courses (#114)
+  const terms = useMemo(() => planTerms(st.plan, meta.next_term), [st.plan, meta.next_term]);
+  const planning = Object.keys(st.plan.terms).length > 0;
+  const finish = useMemo(() => (deg && apReady && planning ? finishTerms(deg, allCourses, majorTicks, st.plan, terms) : null), [deg, apReady, planning, allCourses, majorTicks, st.plan, terms]);
+  const minorFinish = useMemo(
+    () => new Map(st.minors.map((id) => [id, minorDegs[id] && apReady && planning ? finishTerms(minorDegs[id], allCourses, ticksOf(st.ticked, id), st.plan, terms) : null])),
+    [st.minors, st.ticked, minorDegs, apReady, planning, allCourses, st.plan, terms],
+  );
   const apHours = allCourses.reduce((t, c) => t + (c.hours ?? 0), 0);
 
   // Until the saved list (or the link's) has been read, hold the space instead of flashing an empty checklist.
@@ -261,6 +271,16 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
         />
       </section>
 
+      <FourYearPlan
+        st={st}
+        update={update}
+        nextTerm={meta.next_term}
+        mine={allCourses}
+        lookup={lookup}
+        titleOf={(code) => titleIn(deg, index, code)}
+        totalHours={deg?.total_hours ?? null}
+      />
+
       <section aria-label="Requirements" className="min-w-0">
           {!st.program && <p className="text-muted">Choose a major{minors.length ? " (and your minors, if you have any)" : ""} to see its requirements.</p>}
           {error && (
@@ -281,7 +301,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
             </p>
           )}
           {st.program && !ev && !error && <p className="min-h-screen text-muted">Loading requirements…</p>}
-          {deg && ev && <Checklist deg={deg} results={ev.results} st={st} update={update} taken={taken} meta={meta} weights={weights} hours={hours} apHours={apHours} tickPrefix="" />}
+          {deg && ev && <Checklist deg={deg} results={ev.results} st={st} update={update} taken={taken} meta={meta} weights={weights} hours={hours} apHours={apHours} tickPrefix="" finish={finish} />}
       </section>
 
       {st.minors.map((id, k) => {
@@ -327,7 +347,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
             )}
             {!minorEv && !minorErrors[id] && <p className="text-muted">Loading the minor&apos;s requirements…</p>}
             {minorDeg && minorEv && (
-              <Checklist deg={minorDeg} results={minorEv.results} st={st} update={update} taken={taken} meta={meta} weights={weights} hours={null} apHours={0} tickPrefix={minorTick(id)} />
+              <Checklist deg={minorDeg} results={minorEv.results} st={st} update={update} taken={taken} meta={meta} weights={weights} hours={null} apHours={0} tickPrefix={minorTick(id)} finish={minorFinish.get(id) ?? null} />
             )}
           </section>
         );
@@ -793,6 +813,7 @@ function Checklist({
   hours,
   apHours,
   tickPrefix,
+  finish,
 }: {
   deg: Degree;
   results: GroupResult[];
@@ -804,6 +825,7 @@ function Checklist({
   hours: HoursSoFar | null;
   apHours: number;
   tickPrefix: string; // "" for the major, minorTick(id) for a minor
+  finish: Map<string, FinishAt> | null; // the term the four-year plan finishes each requirement in
 }) {
   const minor = deg.type === "minor";
   const counts = (s: GroupStatus) => results.filter((r) => r.status === s).length;
@@ -866,7 +888,7 @@ function Checklist({
             {results
               .filter((r) => (r.group.section || "Requirements") === sec)
               .map((r) => (
-                <Requirement key={r.group.id} r={r} results={results} deg={deg} st={st} update={update} taken={taken} meta={meta} weights={weights} tickPrefix={tickPrefix} />
+                <Requirement key={r.group.id} r={r} results={results} deg={deg} st={st} update={update} taken={taken} meta={meta} weights={weights} tickPrefix={tickPrefix} finishAt={finish?.get(r.group.id)} />
               ))}
           </ul>
         </section>
@@ -885,6 +907,7 @@ function Requirement({
   meta,
   weights,
   tickPrefix,
+  finishAt,
 }: {
   r: GroupResult;
   results: GroupResult[];
@@ -895,6 +918,7 @@ function Requirement({
   meta: { next_term: string; score_priors: ScorePriors | null };
   weights: ReturnType<typeof useWeights>;
   tickPrefix: string;
+  finishAt?: FinishAt;
 }) {
   const g = r.group;
   const tick = tickPrefix + g.id;
@@ -921,6 +945,11 @@ function Requirement({
       <span className="text-lg font-semibold text-heading">{g.name}</span>
       {info}
       <span className="text-muted">{needText(r)}</span>
+      {!finished && finishAt !== undefined && finishAt !== "now" && (
+        <span className={`rounded px-1.5 text-sm font-semibold ${finishAt ? "bg-action-tint text-heading" : "bg-panel text-muted"}`} data-testid="finish-term">
+          {finishAt ? `Finished in ${termLabel(finishAt)} in your plan` : "Not finished in your plan"}
+        </span>
+      )}
     </div>
   );
   return (
