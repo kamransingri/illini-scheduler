@@ -220,6 +220,7 @@ describe("my courses encoding", () => {
       ib: [],
       year: "",
       declined: [],
+      plan: { grad: "", summers: false, terms: {} },
     });
     expect(stateFromParams(new URLSearchParams("q=1"))).toBeNull();
   });
