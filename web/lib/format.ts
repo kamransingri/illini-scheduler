@@ -118,8 +118,9 @@ export function basePath(): string {
   return process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 }
 
+/** A data file's URL. The Cloudflare build sets NEXT_PUBLIC_DATA_URL so data comes from GitHub Pages (docs/CLOUDFLARE.md). */
 export function dataUrl(path: string): string {
-  return `${basePath()}/data/${path}`;
+  return `${process.env.NEXT_PUBLIC_DATA_URL ?? `${basePath()}/data`}/${path}`;
 }
 
 export function courseHref(subject: string, number: string): string {
