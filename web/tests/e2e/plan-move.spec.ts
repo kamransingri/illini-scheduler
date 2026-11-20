@@ -55,3 +55,19 @@ test("375px: terms stack, the Move to menu works, nothing scrolls sideways", asy
   await expect(course(page, "2028-sp", "MATH 257")).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(375);
 });
+
+test("a move works before the course data has loaded", async ({ page }) => {
+  // hold the search index and the degree file back: moving a planned course mustn't need them (it once said
+  // "isn't in the course data" until they arrived, which the pull request check's busy runner caught)
+  let release = () => {};
+  const held = new Promise<void>((r) => (release = r));
+  await page.route(/\/data\/(search\.json|degrees\/finance-data-science\.json)$/, async (route) => {
+    await held;
+    await route.continue();
+  });
+  await page.goto(PLAN);
+  await page.getByLabel("Move IS 467 to another term").selectOption({ label: "Spring 2027" });
+  await expect(course(page, "2027-sp", "IS 467")).toBeVisible();
+  await expect(page.getByTestId("plan-term").getByRole("alert")).toHaveCount(0);
+  release();
+});
