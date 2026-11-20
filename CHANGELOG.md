@@ -18,6 +18,10 @@ history).
   site to the Home Screen first. The buttons appear once the alert server (#91) runs; until then Just opened works
   as before. docs/PUSH.md has the server's side.
 - The site can be added to a phone's Home Screen and opens there as an app of its own.
+- A four-year plan in the degree checklist (#114). Pick your expected graduation term and add the courses you still
+  need to each term ahead (summers if you want them). Each term shows its hours, and each requirement says the term
+  your plan finishes it in, or that it doesn't. My courses count as already done. The plan is saved in this browser
+  and in the share link; older links open as before.
 - Minors whose catalog page asks for coursework distinct from the major say how much you have (#112). Eight minors
   ask for six advanced hours (or two advanced courses) that don't also count toward the major, and most toward
   another minor too. Their checklist shows the rule in the catalog's words, which of your courses count, which don't
