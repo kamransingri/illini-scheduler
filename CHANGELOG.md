@@ -12,6 +12,9 @@ history).
 
 ### Added
 
+- A privacy page (#142), linked from the footer: what the site keeps in your browser (every storage key, listed by
+  what it holds), the little that leaves it (share links, and seat alerts once they're on), and a button that deletes
+  everything the site saved in this browser. No accounts, analytics, ads or trackers.
 - Seat alerts with the site closed, on the site's side (#90). **Alert me** on a watched section asks once for
   notification permission, subscribes this browser and sends the alert server only the push address and the
   section's term and CRN; **Stop all alerts** or no longer watching a section undoes it. iPhones are told to add the
