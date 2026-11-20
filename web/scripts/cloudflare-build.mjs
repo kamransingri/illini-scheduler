@@ -35,6 +35,9 @@ if (!fs.existsSync(OUT)) {
   process.exit(1);
 }
 fs.rmSync(path.join(OUT, "data"), { recursive: true, force: true });
+// Anyone who uses this site's /data/ URLs (the API, feeds, bookmarks) is sent to GitHub Pages' copy. Cloudflare reads
+// _redirects itself, so this needs no Worker.
+fs.writeFileSync(path.join(OUT, "_redirects"), `/data/* ${DATA_URL}/:splat 301\n`);
 
 let files = 0;
 const walk = (dir) => {

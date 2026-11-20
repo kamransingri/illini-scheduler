@@ -7,7 +7,7 @@ site's pages, on the free Workers plan, with static assets only and no Worker sc
 | --- | --- | --- |
 | URL | `https://kamransingri.github.io/illini-scheduler/` | `https://illini-scheduler.<account>.workers.dev/` (or a custom domain) |
 | Pages, scripts, `llms.txt`, `push.json` | Yes | Yes, at the root (no `/illini-scheduler` prefix) |
-| `data/` (course JSON, degrees, search…) | Yes | No: pages fetch it from GitHub Pages |
+| `data/` (course JSON, degrees, search, feeds…) | Yes | No: pages fetch it from GitHub Pages, and `/data/*` redirects there |
 
 ## Why data stays on GitHub
 
@@ -24,7 +24,7 @@ Data and pages come from the same nightly run, and the Cloudflare deploy waits u
 | File | What it does |
 | --- | --- |
 | `web/wrangler.jsonc` | The Worker's name, `out/` as its static assets, trailing-slash URLs, `404.html` for unknown paths |
-| `web/scripts/cloudflare-build.mjs` | Checks every course has its data file, builds with `BASE_PATH=""` and `DATA_URL`, deletes `out/data/`, and fails if `out/` has more than 19,000 files (`CF_MAX_FILES`) |
+| `web/scripts/cloudflare-build.mjs` | Checks every course has its data file, builds with `BASE_PATH=""` and `DATA_URL`, deletes `out/data/`, writes `out/_redirects` so `/data/*` URLs go to GitHub Pages (301, no Worker needed), and fails if `out/` has more than 19,000 files (`CF_MAX_FILES`) |
 | `.github/workflows/pages.yml` | After the GitHub Pages build: the Cloudflare build (step "Build for Cloudflare") and the `cloudflare` job that deploys it. Both are skipped until the `CLOUDFLARE_API_TOKEN` secret exists |
 
 ## First deploy from a laptop
