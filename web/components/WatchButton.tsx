@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { pruneAlerts } from "@/lib/push";
 import { isWatched, MAX_WATCH, onWatchChange, readWatch, toggleWatch, type Watched } from "@/lib/watch";
 import Icon from "./ui/Icon";
 
@@ -21,7 +22,10 @@ export default function WatchButton({ item }: { item: Watched }) {
   return (
     <button
       type="button"
-      onClick={() => toggleWatch(item)}
+      onClick={() => {
+        // no longer watched: its push alert stops too (#90); a failure here leaves it for Just opened to retry
+        if (!toggleWatch(item)) pruneAlerts().catch(() => {});
+      }}
       disabled={blocked}
       aria-pressed={on}
       aria-label={blocked ? `Watch list full (${MAX_WATCH} sections): ${name}` : `${on ? "Watching" : "Watch"} ${name}`}
