@@ -14,6 +14,12 @@ history).
 
 ### Added
 
+- Seat alerts with the site closed, on the site's side (#90). **Alert me** on a watched section asks once for
+  notification permission, subscribes this browser and sends the alert server only the push address and the
+  section's term and CRN; **Stop all alerts** or no longer watching a section undoes it. iPhones are told to add the
+  site to the Home Screen first. The buttons appear once the alert server (#91) runs; until then Just opened works
+  as before. docs/PUSH.md has the server's side.
+- The site can be added to a phone's Home Screen and opens there as an app of its own.
 - Up to three minors in the degree checklist (#111). Each one gets its own checklist and tick boxes under the major,
   and the share link carries all of them (`mn=` takes a list). A course that counts toward two of your minors is
   pointed out, since the catalog doesn't give a rule for that. Links and saved lists with one minor open as before.
