@@ -27,6 +27,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 PACKAGE = "web/package.json"
 LOCK = "web/package-lock.json"
+MCP_PACKAGE = "mcp/package.json"  # the MCP server's npm package carries the same version (mcp/README.md)
+MCP_LOCK = "mcp/package-lock.json"
 PYPROJECT = "pyproject.toml"
 CHANGELOG = "CHANGELOG.md"
 
@@ -98,15 +100,18 @@ def from_pep440(s: str) -> str:
 
 
 def read_versions(root: Path = ROOT) -> dict[str, str]:
-    pkg = json.loads((root / PACKAGE).read_text(encoding="utf-8"))
-    lock = json.loads((root / LOCK).read_text(encoding="utf-8"))
+    def load(path: str) -> dict:
+        return json.loads((root / path).read_text(encoding="utf-8"))
+
     py = re.search(r'^version = "([^"]+)"', (root / PYPROJECT).read_text(encoding="utf-8"), re.M)
-    return {
-        PACKAGE: pkg["version"],
-        LOCK: lock["version"],
-        f"{LOCK} (packages[''])": lock.get("packages", {}).get("", {}).get("version", lock["version"]),
-        PYPROJECT: from_pep440(py.group(1)) if py else "missing",
-    }
+    found = {}
+    for package, lockfile in ((PACKAGE, LOCK), (MCP_PACKAGE, MCP_LOCK)):
+        pkg, lock = load(package), load(lockfile)
+        found[package] = pkg.get("version", "missing")
+        found[lockfile] = lock.get("version", "missing")
+        found[f"{lockfile} (packages[''])"] = lock.get("packages", {}).get("", {}).get("version", "missing")
+    found[PYPROJECT] = from_pep440(py.group(1)) if py else "missing"
+    return found
 
 
 def write_version(v: Version, root: Path = ROOT) -> None:
@@ -119,9 +124,10 @@ def write_version(v: Version, root: Path = ROOT) -> None:
         p.write_bytes(new.encode("utf-8"))
 
     # Text substitution, not json.dump, so the files keep their formatting and line endings.
-    sub(PACKAGE, r'^(  "version": )"[^"]+"', rf'\g<1>"{v}"', 1)
-    sub(LOCK, r'^(  "version": )"[^"]+"', rf'\g<1>"{v}"', 1)  # top level
-    sub(LOCK, r'^(  "packages": \{\s*"": \{\s*"name": "[^"]+",\s*"version": )"[^"]+"', rf'\g<1>"{v}"', 1)
+    for package, lockfile in ((PACKAGE, LOCK), (MCP_PACKAGE, MCP_LOCK)):
+        sub(package, r'^(  "version": )"[^"]+"', rf'\g<1>"{v}"', 1)
+        sub(lockfile, r'^(  "version": )"[^"]+"', rf'\g<1>"{v}"', 1)  # top level
+        sub(lockfile, r'^(  "packages": \{\s*"": \{\s*"name": "[^"]+",\s*"version": )"[^"]+"', rf'\g<1>"{v}"', 1)
     sub(PYPROJECT, r'^version = "[^"]+"', f'version = "{v.pep440}"', 1)
 
 

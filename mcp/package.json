@@ -1,28 +1,45 @@
 {
   "name": "illini-scheduler-mcp",
-  "private": true,
+  "version": "0.15.0",
   "description": "MCP server for Illini Scheduler: search UIUC courses, sections, GPA and gen-eds from your own AI app",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "uiuc",
+    "illinois",
+    "course-scheduler"
+  ],
+  "homepage": "https://github.com/kamransingri/illini-scheduler/tree/main/mcp#readme",
+  "bugs": "https://github.com/kamransingri/illini-scheduler/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kamransingri/illini-scheduler.git",
+    "directory": "mcp"
+  },
   "type": "module",
   "bin": {
     "illini-scheduler-mcp": "dist/index.js"
   },
+  "files": [
+    "dist/index.js"
+  ],
   "scripts": {
     "build": "esbuild src/index.ts --bundle --platform=node --target=node20 --format=esm --outfile=dist/index.js --banner:js=\"#!/usr/bin/env node\"",
+    "prepack": "npm run build --silent",
     "start": "node dist/index.js",
     "typecheck": "tsc --noEmit",
-    "test": "npm run build --silent && vitest run"
+    "test": "npm run build --silent && vitest run",
+    "smoke": "node scripts/smoke-pack.mjs"
   },
   "engines": {
     "node": ">=20"
   },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "1.32.2",
-    "zod": "4.6.7"
-  },
   "devDependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
     "@types/node": "22.18.0",
     "esbuild": "0.28.2",
     "typescript": "5.9.3",
-    "vitest": "3.2.4"
+    "vitest": "3.2.4",
+    "zod": "4.6.7"
   }
 }

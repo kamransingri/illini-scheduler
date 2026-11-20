@@ -42,7 +42,7 @@ async function readCourse(src: DataSource, code: { subject: string; number: stri
 
 const clock = z.string().describe("A time like '10am', '2:30pm' or '14:30'");
 
-export function createServer(src: DataSource, version = "0.1.0"): McpServer {
+export function createServer(src: DataSource, version = "0.0.0"): McpServer {
   const server = new McpServer(
     { name: "illini-scheduler", title: "Illini Scheduler", version },
     {
