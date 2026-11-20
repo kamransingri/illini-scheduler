@@ -15,6 +15,7 @@ web/.next/
 web/out/
 web/test-results/
 web/playwright-report/
+web/.wrangler/
 web/public/data/
 *.tsbuildinfo
 .env*

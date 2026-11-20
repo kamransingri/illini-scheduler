@@ -20,6 +20,8 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
+    outputs:
+      cloudflare: ${{ steps.cf.outputs.on }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -123,6 +125,17 @@ jobs:
           exit 1
       - uses: actions/upload-pages-artifact@v5
         with: { path: web/out }
+      # Cloudflare (docs/CLOUDFLARE.md): the same site at the root without data/, which it reads from GitHub Pages.
+      # Off until the CLOUDFLARE_API_TOKEN secret is set.
+      - name: Cloudflare deploy on?
+        id: cf
+        run: echo "on=${{ secrets.CLOUDFLARE_API_TOKEN != '' }}" >> "$GITHUB_OUTPUT"
+      - name: Build for Cloudflare
+        if: steps.cf.outputs.on == 'true'
+        run: cd web && npm run cf:build
+      - if: steps.cf.outputs.on == 'true'
+        uses: actions/upload-artifact@v5
+        with: { name: cloudflare-site, path: web/out, retention-days: 3 }
 
   deploy:
     needs: build
@@ -135,6 +148,25 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v5
+
+  cloudflare:
+    # After GitHub Pages, so the data the Cloudflare pages fetch is already live
+    needs: [build, deploy]
+    if: needs.build.outputs.cloudflare == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with: { node-version: "22", cache: npm, cache-dependency-path: web/package-lock.json }
+      - run: cd web && npm ci --prefer-offline
+      - uses: actions/download-artifact@v5
+        with: { name: cloudflare-site, path: web/out }
+      - name: Deploy to Cloudflare
+        run: cd web && npm run cf:deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
   smoke:
     # Load the live site after every deploy and run the core browser tests against it.
