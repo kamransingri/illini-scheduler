@@ -33,6 +33,11 @@ history).
   another minor too. Their checklist shows the rule in the catalog's words, which of your courses count, which don't
   because your major uses them, and flags a minor that leans on courses your major already uses.
 
+### Fixed
+
+- Moving a course in the four-year plan right after the page opens works, instead of saying the course isn't in the
+  course data until that data has loaded.
+
 ## [0.15.0] - 2026-11-20
 
 ### Added
