@@ -57,10 +57,27 @@ export type Degree = {
   total_hours: number | null;
   notes: string[];
   double_counting: DcRule[];
+  major_overlap?: OverlapRule[]; // a minor's coursework that must be distinct from the major (missing in older files)
   groups: DegreeGroup[];
   courses: Record<string, DegreeCourse>;
   unknown: string[];
   generated?: string; // date, when the file was imported automatically from the catalog (pipeline/catalog_import.py)
+};
+
+/**
+ * A minor's rule from its catalog page (#112): at least `distinct_hours` (or `distinct_courses`) of the minor's
+ * coursework, at `min_level` or above, must not also count toward the major, nor toward another minor with
+ * `minors_too`. `from`/`exclude` name the courses it's about when the minor's own lists don't.
+ */
+export type OverlapRule = {
+  distinct_hours?: number;
+  distinct_courses?: number;
+  min_level?: number;
+  from?: string[];
+  exclude?: string[];
+  minors_too?: boolean;
+  quote: string;
+  source: string;
 };
 
 export type DegreeIndex = { id: string; type?: "major" | "minor"; program: string; college: string; catalog_year: string; groups: number; generated?: string }[];
@@ -309,4 +326,61 @@ export function prereqNote(pre: string | undefined, taken: Set<string>): string 
   const named = [...text.matchAll(CODE_IN_TEXT)].map((m) => `${m[1]} ${m[2]}`);
   if (named.length && named.every((c) => taken.has(c))) return null;
   return text;
+}
+
+export type OverlapCheck = {
+  rule: OverlapRule;
+  unit: "hours" | "courses";
+  need: number;
+  have: number;
+  distinct: string[]; // the minor's courses that count toward it
+  shared: string[]; // the minor's courses that don't, because the major (or another minor) uses them too
+  maybe: string[]; // counted, but also on the major's (or another minor's) hand-ticked lists, so they may count there
+};
+
+/** What the major and the student's other minors use (`major`, `minors`), and what their hand-ticked lists name. */
+export type OtherPrograms = { major: Set<string>; minors: Set<string>; majorLists: Set<string>; minorLists: Set<string> };
+export const NO_PROGRAMS: OtherPrograms = { major: new Set(), minors: new Set(), majorLists: new Set(), minorLists: new Set() };
+
+/** The courses a checklist counts toward the program's own requirements: its gen-eds aren't "the major". */
+export function programCourses(ev: Evaluation): Set<string> {
+  const out = new Set<string>();
+  for (const r of ev.results) if (r.group.kind === "program") for (const u of r.used) out.add(u.code);
+  return out;
+}
+
+/** Courses named in a program's hand-ticked requirements: they may count toward it, but the checklist can't tell. */
+export function listedByHand(deg: Degree): Set<string> {
+  const out = new Set<string>();
+  for (const g of deg.groups) if (g.kind === "program" && g.rule === "manual") for (const item of g.items) for (const alt of item) for (const c of alt) out.add(c);
+  return out;
+}
+
+/** "CS 4--" (AP elective credit) is at the 400 level like "CS 410". */
+const levelOf = (c: string) => Number(/^\S+ (\d)/.exec(c)?.[1] ?? 0) * 100;
+
+/**
+ * Where a minor stands on each of its overlap rules. Its coursework: courses in My courses that its requirement lists
+ * take (or that match the rule's `from`), at `min_level` or above. They count unless the major (or, with `minors_too`,
+ * another minor) uses them too. `hoursFor` gives a course's credit hours.
+ */
+export function overlapChecks(minor: Degree, mine: MyCourse[], other: OtherPrograms, hoursFor: (code: string) => number): OverlapCheck[] {
+  return (minor.major_overlap ?? []).map((rule) => {
+    const counts = (c: string) =>
+      rule.from?.length ? rule.from.some((s) => selectorMatches(s, c, minor.courses[c])) && !rule.exclude?.includes(c) : minor.groups.some((g) => accepts(g, c, minor));
+    const cands = [...new Set(mine.map(code))].filter((c) => counts(c) && levelOf(c) >= (rule.min_level ?? 0));
+    const used = (c: string) => other.major.has(c) || (!!rule.minors_too && other.minors.has(c));
+    const listed = (c: string) => other.majorLists.has(c) || (!!rule.minors_too && other.minorLists.has(c));
+    const distinct = cands.filter((c) => !used(c));
+    const unit = rule.distinct_courses ? "courses" : "hours";
+    return {
+      rule,
+      unit,
+      need: rule.distinct_courses ?? rule.distinct_hours ?? 0,
+      have: unit === "courses" ? distinct.length : distinct.reduce((t, c) => t + hoursFor(c), 0),
+      distinct,
+      shared: cands.filter(used),
+      maybe: distinct.filter(listed),
+    };
+  });
 }

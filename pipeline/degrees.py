@@ -32,7 +32,8 @@ RULES = {"all", "n_of", "hours", "manual"}
 KINDS = {"program", "gened"}
 TYPES = {"major", "minor"}
 TOP_KEYS = {"id", "type", "program", "college", "catalog_year", "source", "read_on", "total_hours", "notes",
-            "double_counting", "groups", "generated"}
+            "double_counting", "major_overlap", "groups", "generated"}
+OVERLAP_KEYS = {"distinct_hours", "distinct_courses", "min_level", "from", "exclude", "minors_too", "quote", "source"}
 GROUP_KEYS = {"id", "name", "section", "kind", "rule", "n", "hours", "courses", "from", "exclude", "max_hours",
               "min_from", "not_with", "exclusive", "source", "notes"}
 
@@ -76,6 +77,8 @@ class Degree:
     unknown: list[str] = field(default_factory=list)
     generated: str = ""  # date, for files written by pipeline/catalog_import.py
     type: str = "major"  # or "minor"
+    # a minor's rules for coursework that must be distinct from the major (#112, docs/DEGREE-DATA.md)
+    major_overlap: list[dict[str, Any]] = field(default_factory=list)
 
     def codes(self) -> set[str]:
         """Every course code named in a list, an exclusion or a cap."""
@@ -245,6 +248,33 @@ def validate(doc: Any, name: str = "?") -> Degree:
         if not r.get("quote") or not str(r.get("source", "")).startswith("https://"):
             errs.append(f"{where}: needs the 'quote' it rests on and its 'source' URL")
 
+    mo = doc.get("major_overlap") or []
+    if not isinstance(mo, list):
+        errs.append("'major_overlap' must be a list of rules")
+        mo = []
+    if mo and doc.get("type") != "minor":
+        errs.append("'major_overlap' is for minors (type: minor)")
+    for i, r in enumerate(mo):
+        where = f"major_overlap rule {i + 1}"
+        if not isinstance(r, dict):
+            errs.append(f"{where}: must be a mapping")
+            continue
+        for k in sorted(set(r) - OVERLAP_KEYS):
+            errs.append(f"{where}: unknown key '{k}'")
+        counts = [k for k in ("distinct_hours", "distinct_courses") if k in r]
+        if len(counts) != 1 or not isinstance(r[counts[0]], int) or isinstance(r[counts[0]], bool) or r[counts[0]] <= 0:
+            errs.append(f"{where}: needs exactly one of 'distinct_hours' or 'distinct_courses', a whole number above 0")
+        if "min_level" in r and r["min_level"] not in (100, 200, 300, 400):
+            errs.append(f"{where}: 'min_level' is 100, 200, 300 or 400")
+        if "from" in r and (not _str_list(r["from"]) or not r["from"] or any(not RANGE_RE.match(x) for x in r["from"])):
+            errs.append(f"{where}: 'from' lists course ranges like 'ANSC 300-499'")
+        if "exclude" in r and (not _str_list(r["exclude"]) or any(not CODE_RE.match(x) for x in r["exclude"])):
+            errs.append(f"{where}: 'exclude' lists course codes")
+        if "minors_too" in r and not isinstance(r["minors_too"], bool):
+            errs.append(f"{where}: 'minors_too' is true or false")
+        if not r.get("quote") or not str(r.get("source", "")).startswith("https://"):
+            errs.append(f"{where}: needs the 'quote' it rests on and its 'source' URL")
+
     if errs:
         raise DegreeError(f"{name}:\n  - " + "\n  - ".join(errs))
     return Degree(
@@ -253,6 +283,7 @@ def validate(doc: Any, name: str = "?") -> Degree:
         notes=list(doc.get("notes") or []),
         double_counting=[dict(r) for r in dc], groups=groups,
         generated=str(doc.get("generated") or ""), type=str(doc.get("type") or "major"),
+        major_overlap=[dict(r) for r in mo],
     )
 
 
@@ -320,7 +351,7 @@ def to_json(d: Degree, eligible: dict[str, list[str]], courses: dict[str, dict])
         "id": d.id, "type": d.type, "program": d.program, "college": d.college, "catalog_year": d.catalog_year,
         "source": d.source,
         "read_on": d.read_on, "generated": d.generated, "total_hours": d.total_hours, "notes": d.notes,
-        "double_counting": d.double_counting,
+        "double_counting": d.double_counting, "major_overlap": d.major_overlap,
         "groups": [{
             "id": g.id, "name": g.name, "section": g.section, "kind": g.kind, "rule": g.rule, "n": g.n,
             "hours": g.hours, "items": g.items, "from": g.selectors,

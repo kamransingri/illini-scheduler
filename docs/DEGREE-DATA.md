@@ -21,6 +21,7 @@ degree checklist at `/degree/`.
 | `total_hours` | no | Minimum hours for the degree, or for the minor (the lowest number of a range like "18-21") |
 | `notes` | no | Catalog text for rules the schema can't express (copied, not paraphrased) |
 | `double_counting` | no | When one course may count toward two requirements (below) |
+| `major_overlap` | no | A minor's coursework that must be distinct from the major (below) |
 | `groups` | yes | The requirement groups, in catalog order |
 
 A short example, from the hand-checked `finance-data-science.yaml`:
@@ -87,6 +88,27 @@ double_counting:
 at least one more; it's how the campus exception for Advanced Composition and Quantitative Reasoning II is written
 (DECISIONS.md D32). An advisor's answer is a rule too: put their role and the date in `quote` and a written policy URL,
 if they give one, in `source`.
+
+## Overlap with the major (minors)
+
+Some minor pages say part of the minor must not also count toward the major. Copy the sentence into a rule; a page
+that says nothing gets none, and the checklist keeps saying the rules are unclear.
+
+```yaml
+major_overlap:
+  - distinct_hours: 6                 # or distinct_courses: 2
+    min_level: 300                    # only 300- and 400-level courses count toward it ("advanced")
+    from: [UP 300-499]                # optional: the courses it's about, when the minor's own lists don't name them
+    exclude: [UP 499]                 # optional, with from
+    minors_too: true                  # "...distinct from credit earned for your major or another minor"
+    quote: "At least six (6) hours of coursework must be advanced courses (300- or 400-level) and distinct from ..."
+    source: https://catalog.illinois.edu/undergraduate/faa/minors/urban-studies-planning/
+```
+
+The checklist counts the minor's courses in My courses (on its lists, or in `from`) at `min_level` or above that the
+major's own requirements don't use (its gen-eds aren't the major), nor another minor's with `minors_too`. A course on a
+hand-ticked list of the major is counted, with a note that it may count there. The importer keeps this key when it
+rewrites a generated file, so it survives a re-import (DECISIONS.md D43).
 
 ## Importing every program
 

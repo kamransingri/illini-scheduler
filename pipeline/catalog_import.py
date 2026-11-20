@@ -514,6 +514,10 @@ def write(doc: dict, directory: Path = DEGREES_DIR) -> bool:
         text = path.read_text(encoding="utf-8")
         if "generated:" not in text:
             return False
+        # a minor's overlap rules are added by hand from the page's prose (#112): carry them into the new file
+        kept = (yaml.safe_load(text) or {}).get("major_overlap")
+        if kept and "major_overlap" not in doc:
+            doc = {**{k: v for k, v in doc.items() if k != "groups"}, "major_overlap": kept, "groups": doc["groups"]}
         # the same requirements read again: keep the file (and its date) as it is, so a re-import only shows changes
         same = {k: v for k, v in doc.items() if k not in ("read_on", "generated")}
         old = {k: v for k, v in (yaml.safe_load(text) or {}).items() if k not in ("read_on", "generated")}

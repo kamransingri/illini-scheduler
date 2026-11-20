@@ -22,6 +22,10 @@ history).
   need to each term ahead (summers if you want them). Each term shows its hours, and each requirement says the term
   your plan finishes it in, or that it doesn't. My courses count as already done. The plan is saved in this browser
   and in the share link; older links open as before.
+- Minors whose catalog page asks for coursework distinct from the major say how much you have (#112). Eight minors
+  ask for six advanced hours (or two advanced courses) that don't also count toward the major, and most toward
+  another minor too. Their checklist shows the rule in the catalog's words, which of your courses count, which don't
+  because your major uses them, and flags a minor that leans on courses your major already uses.
 
 ## [0.15.0] - 2026-11-20
 

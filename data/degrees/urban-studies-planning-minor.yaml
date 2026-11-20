@@ -14,6 +14,15 @@ generated: '2026-11-17'
 total_hours: 18
 notes: []
 double_counting: []
+major_overlap:
+- distinct_hours: 6
+  min_level: 300
+  from:
+  - UP 300-499
+  minors_too: true
+  quote: Elective courses offered by UP. At least six (6) hours of coursework must be advanced courses (300- or 400-level)
+    and distinct from credit earned for the student's major or another minor.
+  source: https://catalog.illinois.edu/undergraduate/faa/minors/urban-studies-planning/
 groups:
 - name: Required courses
   section: Requirements

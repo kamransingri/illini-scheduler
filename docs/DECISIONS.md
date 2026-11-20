@@ -1158,3 +1158,28 @@ Every judgment call made during the autonomous build, newest phase last.
   unreadable is dropped. Storage keeps the same three keys next to My courses. Old links and saved lists have none
   and open with an empty plan. Moving courses between terms is #115, and the warnings (offering terms,
   prerequisites, hours) are #116.
+
+## Minors' overlap with the major (2026-11-19, issue #112)
+
+- **D43.1 What the pages say.** Of the 125 minors, the imported requirement text of 8 limits overlap with the major,
+  and every one asks for a minimum of distinct coursework rather than capping shared hours: six advanced hours
+  (Ecology and Conservation Biology, Integrative Biology, Hip-Hop Culture and Arts, Landscape, Minoritarian Aesthetics,
+  Urban Studies and Planning, World Literature) or two advanced courses (Animal Sciences). Six of them also say "or
+  another minor". Each is a `major_overlap` rule with the sentence it rests on (DEGREE-DATA.md). The rest stay "rules
+  unclear" (D41.3): no rule is guessed.
+- **D43.2 Pages not read again.** The catalog now answers scripts with an AWS WAF challenge (HTTP 202,
+  `x-amzn-waf-action: challenge`), so the minor pages couldn't be fetched to check their Overview tabs, which the
+  importer doesn't read. The list above comes from the requirement text already imported. Checking the Overview tabs
+  in a browser is what's left of #112, and the importer itself can't refresh pages until the challenge is lifted or
+  allowed for it.
+- **D43.3 "The major" is its own requirements.** A course counts as the major's when the major's checklist uses it in
+  a program requirement. Gen-eds are campus requirements, not the major, so a course the major uses only as a gen-ed
+  stays distinct. Courses on the major's hand-ticked lists can't be placed, so they're counted with a note that they
+  may count toward the major.
+- **D43.4 The minor's coursework.** Courses in My courses that the minor's lists take (hand-ticked lists included) or
+  that match the rule's `from`, at its level. Animal Sciences and Urban Studies name their electives only in words
+  ("additional 300- or 400-level ANSC courses", "Elective courses offered by UP"), so their rules carry `from` ranges
+  read from that sentence.
+- **D43.5 Kept through re-imports.** These rules are added by hand to generated files. `catalog_import.write` carries
+  `major_overlap` from the old file into the new one, so the file stays generated (and re-importable) without losing
+  them.
