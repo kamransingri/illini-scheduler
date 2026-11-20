@@ -1183,3 +1183,18 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D43.5 Kept through re-imports.** These rules are added by hand to generated files. `catalog_import.write` carries
   `major_overlap` from the old file into the new one, so the file stays generated (and re-importable) without losing
   them.
+
+## Four-year plan, part 2: moving courses (2026-11-19, issue #115)
+
+- **D44.1 Native drag and drop, plus a menu.** Planned courses and the checklist's course options are draggable
+  (HTML drag and drop, type `application/x-illini-course`), and every term accepts a drop. Phones don't fire these
+  events for touch, so each planned course also has a "Move to" select listing the other terms. A select is what
+  keyboard and screen-reader users already know, and it's the same control at 375px, where terms stack. A polite
+  live region says what moved ("Moved MATH 257 from Fall 2027 to Fall 2028"), since the course leaves the list the
+  focus was in.
+- **D44.2 One rule for every way in.** Typing a code, dropping a course and the menu all go through the same check:
+  a course already in My courses can't be planned, and a planned course moves rather than appearing twice
+  (`moveToTerm`, `lib/plan.ts`). Typing a code that's planned elsewhere says where it is instead of moving it, so a
+  typo can't pull a course out of another term.
+- **D44.3 Search.** The site has no course search on the degree page, so "from search" is each term's own box: type a
+  code to add it.

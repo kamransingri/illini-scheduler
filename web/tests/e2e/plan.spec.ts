@@ -33,7 +33,7 @@ test("plan the terms to graduation: hours per term, when each requirement is fin
 
   // a course can't be planned twice, or planned when it's already done
   await addTo(page, "Spring 2029", "MATH 257");
-  await expect(term(page, "Spring 2029").getByRole("alert")).toHaveText("MATH 257 is already in Fall 2027.");
+  await expect(term(page, "Spring 2029").getByRole("alert")).toHaveText("MATH 257 is already in Fall 2027. Use its Move to menu to move it.");
   await addTo(page, "Spring 2029", "MATH 220");
   await expect(term(page, "Spring 2029").getByRole("alert")).toHaveText("MATH 220 is already in My courses.");
 
