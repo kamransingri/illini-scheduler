@@ -15,6 +15,10 @@ history).
 - A privacy page (#142), linked from the footer: what the site keeps in your browser (every storage key, listed by
   what it holds), the little that leaves it (share links, and seat alerts once they're on), and a button that deletes
   everything the site saved in this browser. No accounts, analytics, ads or trackers.
+- Terms of use (#143) and an AI use policy (#144), linked from the footer next to Privacy. The terms say the site is
+  unofficial (check before you register), comes with no warranty, and how to reuse its data with credit to the
+  sources. The AI use policy says how AI tools are used to build the site, that it never sends what you enter to an AI
+  service, and how AI tools may read its data.
 - Seat alerts with the site closed, on the site's side (#90). **Alert me** on a watched section asks once for
   notification permission, subscribes this browser and sends the alert server only the push address and the
   section's term and CRN; **Stop all alerts** or no longer watching a section undoes it. iPhones are told to add the
