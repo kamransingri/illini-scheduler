@@ -16,6 +16,7 @@ web/.next/
 web/out/
 web/test-results/
 web/playwright-report/
+web/.wrangler/
 web/public/data/
 *.tsbuildinfo
 .env*
@@ -38,3 +39,4 @@ graphify-out/
 .DS_Store
 Thumbs.db
 desktop.ini
+.claude/
