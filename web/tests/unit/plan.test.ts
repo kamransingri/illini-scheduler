@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { Degree, DegreeCourse, DegreeGroup } from "@/lib/degree";
 import { decodeCourses, decodeState, EMPTY, encodeState, stateFromParams, stateToParams } from "@/lib/mycourses";
-import { addToTerm, decodePlan, EMPTY_PLAN, encodePlanTerms, finishTerms, gradOptions, planTerms, plannedIn, removeFromPlan, termHours, termIndex, type Plan } from "@/lib/plan";
+import { addToTerm, decodePlan, EMPTY_PLAN, encodePlanTerms, finishTerms, gradOptions, moveToTerm, planTerms, plannedIn, removeFromPlan, termHours, termIndex, type Plan } from "@/lib/plan";
 
 const PLAN: Plan = { grad: "2029-sp", summers: false, terms: { "2027-fa": ["CS 225", "MATH 231"], "2027-sp": ["CS 124"], "2028-sp": ["CS 233"] } };
 
@@ -62,6 +62,15 @@ describe("editing the plan", () => {
     const q = removeFromPlan(p, "CS 124");
     expect(q.terms["2027-sp"]).toBeUndefined();
     expect(plannedIn(q, "CS 124")).toBeNull();
+  });
+  it("moves a course between terms, or adds it when it isn't planned (#115)", () => {
+    const moved = moveToTerm(PLAN, "MATH 231", "2028-sp");
+    expect(moved.terms["2027-fa"]).toEqual(["CS 225"]);
+    expect(moved.terms["2028-sp"]).toEqual(["CS 233", "MATH 231"]);
+    expect(moveToTerm(PLAN, "CS 124", "2027-sp")).toBe(PLAN); // already there
+    const emptied = moveToTerm(PLAN, "CS 124", "2027-fa");
+    expect(emptied.terms["2027-sp"]).toBeUndefined();
+    expect(moveToTerm(PLAN, "STAT 107", "2029-sp").terms["2029-sp"]).toEqual(["STAT 107"]);
   });
   it("adds up each term's hours, variable credit at its minimum", () => {
     const cr: Record<string, [number, number]> = { "CS 225": [4, 4], "MATH 231": [3, 3], "CS 498": [1, 4] };
