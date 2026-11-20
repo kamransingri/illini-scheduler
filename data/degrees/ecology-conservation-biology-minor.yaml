@@ -14,6 +14,12 @@ generated: '2026-11-17'
 total_hours: 17
 notes: []
 double_counting: []
+major_overlap:
+- distinct_hours: 6
+  min_level: 300
+  quote: 'Please note: all prerequisite courses must be taken if specified, and students must complete 6 advanced hours of
+    coursework that are distinct from advanced hours required for their major.'
+  source: https://catalog.illinois.edu/undergraduate/las/minors/ecology-conservation-biology/
 groups:
 - name: Required courses
   section: Requirements

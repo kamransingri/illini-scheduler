@@ -410,6 +410,15 @@ files are checked.
 | `double_counting[].approved_for` | string[] | With `between`: only for courses approved for these gen-ed codes (optional) |
 | `double_counting[].quote` | string | The rule as the source says it |
 | `double_counting[].source` | string | Where it's from |
+| `major_overlap` | object[] | A minor's coursework that must be distinct from the major (empty for most programs; DEGREE-DATA.md) |
+| `major_overlap[].distinct_hours` | number | Hours of the minor's coursework that must not also count toward the major (or `distinct_courses`) |
+| `major_overlap[].distinct_courses` | number | The same as a number of courses |
+| `major_overlap[].min_level` | number | Only courses at this level or above count toward it (300 = "advanced") (optional) |
+| `major_overlap[].from` | string[] | Course ranges it's about, when the minor's lists don't name them (optional) |
+| `major_overlap[].exclude` | string[] | Courses in `from` that don't count (optional) |
+| `major_overlap[].minors_too` | boolean | Distinct from the student's other minors too (optional) |
+| `major_overlap[].quote` | string | The rule in the catalog's words |
+| `major_overlap[].source` | string | The minor's catalog page |
 | `groups[].id` | string | Group id |
 | `groups[].name` | string | "Composition I" |
 | `groups[].section` | string | Heading it's under |

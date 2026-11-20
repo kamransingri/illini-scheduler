@@ -154,3 +154,24 @@ def test_catalog_uses_each_courses_latest_term(tmp_path):
     assert cat["CS 107"].title == "Data Science Discovery" and cat["CS 107"].credits == [4, 4]
     assert isinstance(conn, sqlite3.Connection)
     conn.close()
+
+
+def test_major_overlap_rules_are_checked_and_exported(tmp_path):
+    rule = {"distinct_hours": 6, "min_level": 300, "minors_too": True, "quote": "At least six hours ... distinct",
+            "source": "https://catalog.illinois.edu/undergraduate/test/"}
+    d = validate(doc(id="test-minor", type="minor", major_overlap=[rule]))
+    assert d.major_overlap == [rule]
+    with pytest.raises(DegreeError) as e:
+        validate(doc(major_overlap=[rule]))  # a major
+    assert "'major_overlap' is for minors" in str(e.value)
+    with pytest.raises(DegreeError) as e:
+        validate(doc(id="test-minor", type="minor", major_overlap=[
+            {"distinct_hours": 6, "distinct_courses": 2, "min_level": 350, "from": ["ANSC 3xx"], "exclude": ["bad"],
+             "minors_too": "yes", "why": "?"},
+        ]))
+    msg = str(e.value)
+    for part in ("exactly one of 'distinct_hours' or 'distinct_courses'", "'min_level' is 100",
+                 "'from' lists course ranges", "'exclude' lists course codes", "'minors_too' is true or false",
+                 "unknown key 'why'", "needs the 'quote'"):
+        assert part in msg
+    assert degrees.to_json(d, {}, {})["major_overlap"] == [rule]
