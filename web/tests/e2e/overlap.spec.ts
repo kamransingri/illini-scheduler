@@ -13,17 +13,18 @@ test("a minor's advanced hours distinct from the major: met, maybe shared, and s
   await expect(note).toContainText("Met: 6 hours (LA 430 and LA 446).");
   await expect(note.getByRole("button", { name: "The catalog's words" })).toHaveAccessibleDescription(/must be distinct from credit earned for your major or another minor/);
 
-  // Sustainable Design lists both among its major electives, which are ticked by hand
+  // Sustainable Design and Fine and Applied Arts list them among electives ticked by hand
   await page.goto("./degree/?p=sustainable-design-bs&mn=landscape-minor&m=LA101,LA430,LA446");
   await expect(note).toHaveAttribute("data-met", "true");
   await expect(note).toContainText("LA 430 and LA 446 are also on a list for your major or another minor, which you tick by hand");
 
-  // Fine and Applied Arts counts LA 387 and LA 480 itself: only LA 446 is left for the minor
-  await page.goto("./degree/?p=fine-applied-arts-ba&mn=landscape-minor&m=LA101,LA387,LA480,LA446");
-  await expect(note).toHaveAttribute("data-met", "false");
-  await expect(note).toContainText("4 hours so far (LA 446).");
-  await expect(note).toContainText("LA 387 and LA 480 count toward your major or another minor too");
-  await expect(note).toContainText("this minor leans on courses your major already uses");
+  // Studio Art (Fashion) requires ARTS 320 and ARTS 420 itself: only FAA 481 (3 hours) is left for the Hip-Hop minor
+  const hipHop = page.locator('[data-minor="hip-hop-culture-arts-minor"]').getByTestId("major-overlap");
+  await page.goto("./degree/?p=studio-art-bfasa-fashion&mn=hip-hop-culture-arts-minor&m=ARTS320,ARTS420,FAA481");
+  await expect(hipHop).toHaveAttribute("data-met", "false");
+  await expect(hipHop).toContainText("3 hours so far (FAA 481).");
+  await expect(hipHop).toContainText("ARTS 320 and ARTS 420 count toward your major or another minor too");
+  await expect(hipHop).toContainText("this minor leans on courses your major already uses");
   await expect(page.locator("body")).not.toContainText(/NaN|undefined/);
 });
 
