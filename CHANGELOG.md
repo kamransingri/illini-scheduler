@@ -38,7 +38,6 @@ history).
 - Moving a course in the four-year plan right after the page opens works, instead of saying the course isn't in the
   course data until that data has loaded.
 
-
 ## [0.15.0] - 2026-11-20
 
 ### Added
