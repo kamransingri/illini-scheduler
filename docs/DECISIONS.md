@@ -77,6 +77,14 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D2.5 RHET 105 has no GPA data in the window.** Its sections hold at most 20 students, and FERPA exclusions drop
   those from the dataset after 2013. The UI says "No grade data" and doesn't borrow numbers from other courses.
 - **D2.6 Instructor identity** for GPA rows is `names.instructor_key` ("last|first"); see Phase 3.
+- **D2.7 Never publish what the University withholds (#192).** The University leaves small sections out of the GPA
+  data under FERPA, because their grades could identify a student. Wade's README, quoting the University's FOIA
+  answer: "courses with 20 or fewer students were excluded (the smallest course in the dataset has 21 students)."
+  `gpa.compute` checks every row it is given, inside the GPA window or not, and stops the build
+  (`gpa.WithheldGradeData`, `make data` exits 1) when `Students` or the letter-grade total (A+ to F, W not counted)
+  is under 21, naming up to 20 of the rows. It doesn't drop them quietly: a small row means the source changed or
+  someone added data, and a person should look. A course with no rows (RHET 105, D2.5) keeps showing "No grade data";
+  nothing fills it in from another course, term or source.
 
 ## Phase 3 — Instructor matching and Rate My Professors
 
