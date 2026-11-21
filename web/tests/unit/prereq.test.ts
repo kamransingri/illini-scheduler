@@ -63,6 +63,25 @@ describe("reading prerequisites: the patterns", () => {
     expect(read("One of ACE 240 or FIN 221; or consent of instructor and knowledge of spreadsheet software equivalent to the coverage of ACE 360.")).toBe("ACE 240 | FIN 221 | (consent & ?)");
     expect(read("Audition required and/or consent of instructor.")).toBe("? | consent");
   });
+  it("misreadings found across the whole catalog", () => {
+    // a recommendation in the same sentence used to drop the requirements with it
+    expect(read("One of CS 241, CS 341 or ECE 391; strongly recommend one of CS 361, STAT 361, ECE 313 or STAT 400.")).toBe("CS 241 | CS 341 | ECE 391");
+    expect(read("MATH 241; MATH 314 or MATH 347 is recommended.")).toBe("MATH 241");
+    expect(read("ME 200; MATH 285 OR MATH 441; Recommended: ME 404.")).toBe("ME 200 & (MATH 285 | MATH 441)");
+    expect(read("ANTH 240, ANTH 243 or ANTH 443 strongly recommended; permission of instructor.")).toBe("consent");
+    expect(read("ECON 203; MATH 231 are recommended.")).toBe("NONE");
+    // "both", "one of the following", grades, more ways to say concurrent
+    expect(read("Either CHEM 237 or both CHEM 223 and CHEM 233.")).toBe("CHEM 237 | (CHEM 223 & CHEM 233)");
+    expect(read("One of the following: SOC 100, SOC 101, or SOC 163.")).toBe("SOC 100 | SOC 101 | SOC 163");
+    expect(read("Students must complete VCM 507, VCM 509, VCM 513 maintaining a B or better to advance to VCM 514.")).toBe("?");
+    expect(read("Credit or registration in one of MATH 220, MATH 221, MATH 234.")).toBe("MATH 220~ | MATH 221~ | MATH 234~");
+    expect(read("SPAN 252 or consent of instructor. May be taken concurrently with SPAN 252.")).toBe("SPAN 252~ | consent");
+    expect(read("Concurrent enrollment in BIOE 302 is allowed.")).toBe("BIOE 302~");
+    // "A or B, or C" is all OR; a course named in a form isn't one to take
+    expect(read("AAS 100 or AAS 120, or consent of instructor.")).toBe("AAS 100 | AAS 120 | consent");
+    expect(read('MS students must submit a "Request to Enroll in IS 599 - Master\'s Thesis" form.')).toBe("?");
+    expect(read("MATH 461, STAT 410, STAT 420, or equivalent coursework for these three courses.")).toBe("?");
+  });
 });
 
 describe("checking prerequisites against My courses", () => {

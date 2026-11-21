@@ -1334,3 +1334,11 @@ Every judgment call made during the autonomous build, newest phase last.
   out; best picks first); and the four-year plan, which D45.4 left waiting for this: a course is warned about when
   its prerequisites aren't met by My courses plus the courses in earlier terms, with "take alongside" courses allowed
   in the same term. "Can't tell" gives no warning in the plan; the checklist shows it.
+- **D49.7 Checked against the whole catalog.** All 2,734 Spring 2027 prerequisite sentences were read and every
+  reading that changed was reviewed. Fixed: a recommendation anywhere in a sentence used to drop the whole sentence
+  (CS 438, MATH 441, ME 505 and PSYC 361 read as having no prerequisites); now only the recommended clause goes
+  ("ECON 203; MATH 231 are recommended" still drops both). "Either A or both B and C", "One of the following:",
+  "Any of", "a B or better", "credit or registration in", "concurrent enrollment or prior completion of" and
+  "A or B, or consent" are read. "May be taken concurrently with X" lets X share the term instead of requiring it
+  again, and a course named in a form or a placement test, or the course itself, is no longer required.
+  "Coursework for these three courses" gives up. Give-ups went from 650 to 624.
