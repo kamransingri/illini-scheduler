@@ -2,7 +2,7 @@
 
 Closes #
 
-- <!-- What students (or whoever works on the code) will notice, in a few bullets. Screenshots at desktop and 375px for anything visual. -->
+- <!-- What students (or whoever works on the code) will notice, in a few bullets. -->
 
 **Tests:** <!-- One line: what you ran and what you looked at. -->
 
