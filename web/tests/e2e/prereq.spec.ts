@@ -6,20 +6,26 @@ test("prerequisites in the checklist and the courses you can take next", async (
   await page.goto("./degree/?p=computer-science-bs&m=CS124,CS128,CS173,MATH221");
   const next = page.getByTestId("next-courses");
   await expect(next).toBeVisible();
+  // the list shows the best 8 first; which 8 depends on the data, so open it all
+  const all = next.getByRole("button", { name: /^Show all/ });
+  if (await all.count()) await all.click();
   // CS 233 needs CS 225 alongside ("credit or concurrent enrollment")
   await expect(next.locator('[data-code="CS 233"]')).toContainText("take with CS 225");
   // CS 374 needs CS 225 first, so it isn't listed
   await expect(next.locator('[data-code="CS 374"]')).toHaveCount(0);
 
-  // the course option's own line, with the catalog text
-  const option = page.locator('[data-code="CS 374"]').filter({ has: page.locator("[data-prereq]") }).first();
+  // the course option's own line, with the catalog text (the requirement shows its top 5 first)
+  const core = page.locator('[data-group="technical-core"]');
+  const more = core.getByRole("button", { name: /^Show all \d+ options/ });
+  if (await more.count()) await more.click();
+  const option = core.locator('[data-code="CS 374"]');
   await expect(option.locator("[data-prereq]")).toHaveAttribute("data-prereq", "no");
   await expect(option.locator("[data-prereq]")).toContainText("Prerequisites not met: needs CS 225.");
   await expect(option.locator("[data-prereq]")).toContainText("Catalog: One of CS 173, MATH 213; CS 225.");
 
   // finishing CS 225 opens CS 374 and CS 341's other half
   await page.goto("./degree/?p=computer-science-bs&m=CS124,CS128,CS173,MATH221,CS225");
-  await next.getByRole("button", { name: /^Show all/ }).click();
+  if (await all.count()) await all.click();
   await expect(next.locator('[data-code="CS 374"]')).toBeVisible();
   await expect(next.locator('[data-code="CS 233"]')).not.toContainText("take with");
 });
