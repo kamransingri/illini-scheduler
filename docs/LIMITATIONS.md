@@ -136,9 +136,13 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
   in it at all: retired or renumbered courses that program pages still list. They show greyed out, without a link.
 - **Scope.** Undergraduate majors (with their concentrations) and minors in the 2026-2027 catalog only. No certificates,
   graduate programs or earlier catalog years.
-- **Major and minor overlap.** A course counts toward both your major and your minor on the checklist. Some minors and
-  colleges limit that overlap; the minor's catalog page says so, and the checklist doesn't check it.
-- **You enter your courses by hand.** There's no transcript or DARS import, because those sit behind a NetID.
+- **Major and minor overlap.** A course counts toward both your major and your minor on the checklist. The 30 minors
+  whose catalog page asks for coursework distinct from the major show how much you have (D43, D47); other limits
+  (no overlap with one named major, majors that can't take the minor) are only in the minor page's words.
+- **Transcript and DARS import reads text, not the systems.** Both sit behind a NetID, so you copy the page and paste
+  it; it's read in your browser. The parser was written from the transcript's published layout and the registrar's
+  grade key, with hand-written samples, so a layout it hasn't seen may leave lines unread: it lists them instead of
+  guessing, and you add those courses by hand.
 - **AP and IB credit are estimates.** The courses come from CITL's tables for the year you started (AP: 2024-2025,
   2025-2026 or 2026-2027; IB: 2026-2027 only, because CITL's earlier IB tables don't separate Higher and Standard
   Level), copied by hand, with a few slips in CITL's tables corrected (docs/AP-CREDIT.md). The real credit shows on DARS

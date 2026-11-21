@@ -12,6 +12,11 @@ history).
 
 ### Added
 
+- Paste your transcript or DARS audit into the degree checklist (#20). Copy Self-Service's Academic History or a DARS
+  audit and paste it under My courses: the courses are read in your browser (nothing is sent or saved), shown as
+  "adds 13, updates 1 (3 in progress)" with a box to leave any out, and applied to My courses. Withdrawn, failed or
+  audited attempts are listed instead of added, lines it can't read are shown, and test credit on the transcript
+  replaces the AP/IB estimate.
 - A data sources page (#191), linked from the footer: where course, grade, gen-ed and rating data comes from, who
   publishes it and how often the site reads it. It quotes the University's FERPA exclusion from the GPA dataset, and
   a course's "Sections of 20 or fewer students are withheld" note links to it.
