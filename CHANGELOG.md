@@ -12,6 +12,12 @@ history).
 
 ### Added
 
+- Prerequisites are checked against My courses (#21). Each course option in the degree checklist says "Prerequisites
+  met", "met if you take CS 225 at the same time", "not met: needs CS 173 or MATH 213" or "can't tell", next to the
+  catalog's sentence. A new **You can take next** list shows the courses on your major's open requirements whose
+  prerequisites you meet and that run next term, best picks first. The four-year plan warns when a planned course's
+  prerequisites won't be done by that term.
+
 - Paste your transcript or DARS audit into the degree checklist (#20). Copy Self-Service's Academic History or a DARS
   audit and paste it under My courses: the courses are read in your browser (nothing is sent or saved), shown as
   "adds 13, updates 1 (3 in progress)" with a box to leave any out, and applied to My courses. Withdrawn, failed or

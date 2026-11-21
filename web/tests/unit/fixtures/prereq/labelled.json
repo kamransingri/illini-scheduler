@@ -1,0 +1,502 @@
+[
+ {
+  "code": "CHEM 103",
+  "text": "Credit or concurrent registration in CHEM 102 is required.",
+  "label": "CHEM 102~"
+ },
+ {
+  "code": "CHEM 203",
+  "text": "Concurrent registration or credit in CHEM 202 or consent of instructor.",
+  "label": "CHEM 202~ | consent"
+ },
+ {
+  "code": "CHEM 222",
+  "text": "CHEM 104 and CHEM 105 or equivalent.",
+  "label": "(CHEM 104 & CHEM 105) | ?"
+ },
+ {
+  "code": "CHEM 223",
+  "text": "Credit or concurrent registration in CHEM 222.",
+  "label": "CHEM 222~"
+ },
+ {
+  "code": "CHEM 233",
+  "text": "Credit or concurrent registration in CHEM 232.",
+  "label": "CHEM 232~"
+ },
+ {
+  "code": "CHEM 236",
+  "text": "Completion of CHEM 104 with a B- or higher, or completion of CHEM 204, or completion of CHEM 222 and CHEM 223.",
+  "label": "(CHEM 104 & ?) | CHEM 204 | (CHEM 222 & CHEM 223)"
+ },
+ {
+  "code": "CHEM 237",
+  "text": "Credit or concurrent registration in CHEM 236.",
+  "label": "CHEM 236~"
+ },
+ {
+  "code": "CHEM 436",
+  "text": "CHEM 236 and CHEM 237; or CHEM 232 and CHEM 233 with consent of instructor.",
+  "label": "(CHEM 236 & CHEM 237) | (CHEM 232 & CHEM 233 & consent)"
+ },
+ {
+  "code": "CHEM 440",
+  "text": "Completion of either CHEM 104 or CHEM 204, completion of either PHYS 102 or PHYS 212, and completion of MATH 241 or equivalent calculus including partial derivatives.",
+  "label": "(CHEM 104 | CHEM 204) & (PHYS 102 | PHYS 212) & (MATH 241 | ?)"
+ },
+ {
+  "code": "CHEM 442",
+  "text": "CHEM 204 or CHEM 222; MATH 225, MATH 257, or MATH 415, and a minimal knowledge of differential equations, or equivalent; and PHYS 211, PHYS 212, and PHYS 214 or equivalent.",
+  "label": "(CHEM 204 | CHEM 222) & ? & ((PHYS 211 & PHYS 212 & PHYS 214) | ?)"
+ },
+ {
+  "code": "CHEM 445",
+  "text": "Credit for or concurrent registration in CHEM 440, CHEM 442 or CHEM 472 (same as BIOC 446 or MCB 446) or consent of instructor.",
+  "label": "CHEM 440~ | CHEM 442~ | CHEM 472~ | consent"
+ },
+ {
+  "code": "CHEM 447",
+  "text": "Credit for or concurrent registration in CHEM 440 or CHEM 442 or consent of instructor.",
+  "label": "CHEM 440~ | CHEM 442~ | consent"
+ },
+ {
+  "code": "CHEM 483",
+  "text": "CHEM 442 or consent of instructor.",
+  "label": "CHEM 442 | consent"
+ },
+ {
+  "code": "CS 222",
+  "text": "CS 128; credit or concurrent registration in CS 225. Restricted to majors in Computer Science undergraduate curricula only.",
+  "label": "CS 128 & CS 225~"
+ },
+ {
+  "code": "CS 233",
+  "text": "CS 125 or CS 128; CS 173 or MATH 213; credit or concurrent enrollment in CS 225.",
+  "label": "(CS 125 | CS 128) & (CS 173 | MATH 213) & CS 225~"
+ },
+ {
+  "code": "CS 307",
+  "text": "STAT 207; one of MATH 225, MATH 227, MATH 257, MATH 415, MATH 416, ASRM 406.",
+  "label": "STAT 207 & (MATH 225 | MATH 227 | MATH 257 | MATH 415 | MATH 416 | ASRM 406)"
+ },
+ {
+  "code": "CS 397",
+  "text": "Consent of instructor.",
+  "label": "consent"
+ },
+ {
+  "code": "CS 400",
+  "text": "Current enrollment in the Illinois Computing Accelerator for Non-specialists (iCAN) program or consent of instructor. Restricted to post-baccalaureate students with a non-computing background.",
+  "label": "? | consent"
+ },
+ {
+  "code": "CS 401",
+  "text": "Current enrollment in the Illinois Computing Accelerator for Non-specialists (iCAN) program or consent of instructor. Restricted to post- baccalaureate students with a non-computing background.",
+  "label": "? | consent"
+ },
+ {
+  "code": "CS 402",
+  "text": "CS 400 or consent of instructor. Current enrollment in the Illinois Computing Accelerator for Non-specialists (iCAN) program or consent of instructor. Restricted to post-baccalaureate students with a non-computing background.",
+  "label": "(CS 400 | consent) & (? | consent)"
+ },
+ {
+  "code": "CS 403",
+  "text": "CS 401 or consent of instructor. Current enrollment in the Illinois Computing Accelerator for Non-specialists (iCAN) program or consent of instructor. Restricted to post-baccalaureate students with a non-computing background.",
+  "label": "(CS 401 | consent) & (? | consent)"
+ },
+ {
+  "code": "CS 409",
+  "text": "CS 225.",
+  "label": "CS 225"
+ },
+ {
+  "code": "CS 411",
+  "text": "CS 225.",
+  "label": "CS 225"
+ },
+ {
+  "code": "CS 415",
+  "text": "CS 225.",
+  "label": "CS 225"
+ },
+ {
+  "code": "CS 417",
+  "text": "CS 128; one of MATH 257, MATH 225, MATH 227, MATH 415, MATH 416, ASRM 406 or BIOE 210.",
+  "label": "CS 128 & (MATH 257 | MATH 225 | MATH 227 | MATH 415 | MATH 416 | ASRM 406 | BIOE 210)"
+ },
+ {
+  "code": "CS 421",
+  "text": "One of CS 233, CS 240, CS 340 or ECE 391; CS 374 or ECE 374; one of MATH 225, MATH 257, MATH 415, MATH 416, ASRM 406, or BIOE 210.",
+  "label": "(CS 233 | CS 240 | CS 340 | ECE 391) & (CS 374 | ECE 374) & (MATH 225 | MATH 257 | MATH 415 | MATH 416 | ASRM 406 | BIOE 210)"
+ },
+ {
+  "code": "CS 422",
+  "text": "CS 421.",
+  "label": "CS 421"
+ },
+ {
+  "code": "CS 424",
+  "text": "One of CS 241, CS 341 or ECE 391.",
+  "label": "CS 241 | CS 341 | ECE 391"
+ },
+ {
+  "code": "CS 426",
+  "text": "Credit or concurrent enrollment in CS 421.",
+  "label": "CS 421~"
+ },
+ {
+  "code": "CS 427",
+  "text": "One of CS 222, CS 240, CS 241, CS 340, CS 341 or ECE 391.",
+  "label": "CS 222 | CS 240 | CS 241 | CS 340 | CS 341 | ECE 391"
+ },
+ {
+  "code": "CS 435",
+  "text": "One of CS 240, CS 241, CS 340, CS 341 or ECE 391.",
+  "label": "CS 240 | CS 241 | CS 340 | CS 341 | ECE 391"
+ },
+ {
+  "code": "CS 437",
+  "text": "CS 241 or CS 341. Additional prerequisites may be specified each term. See section information.",
+  "label": "CS 241 | CS 341"
+ },
+ {
+  "code": "CS 446",
+  "text": "CS 225; One of MATH 225, MATH 257, MATH 415, MATH 416, ASRM 406 or BIOE 210; one of CS 361, STAT 361, ECE 313, MATH 362, MATH 461, MATH 463, STAT 400 or BIOE 310.",
+  "label": "CS 225 & (MATH 225 | MATH 257 | MATH 415 | MATH 416 | ASRM 406 | BIOE 210) & (CS 361 | STAT 361 | ECE 313 | MATH 362 | MATH 461 | MATH 463 | STAT 400 | BIOE 310)"
+ },
+ {
+  "code": "CS 452",
+  "text": "(CS 128 or ECE 220) and CS 225 and (CS 241 or CS 341 or ECE 391).",
+  "label": "(CS 128 | ECE 220) & CS 225 & (CS 241 | CS 341 | ECE 391)"
+ },
+ {
+  "code": "CS 461",
+  "text": "One of CS 241, CS 341 or ECE 391, or a combination of CS 233 and CS 340.",
+  "label": "CS 241 | CS 341 | ECE 391 | (CS 233 & CS 340)"
+ },
+ {
+  "code": "CS 467",
+  "text": "CS 225.",
+  "label": "CS 225"
+ },
+ {
+  "code": "CS 469",
+  "text": "CS 173; CS 225; one of MATH 225, MATH 257, MATH 415, MATH 416, ASRM 406 or BIOE 210; one of CS 361, ECE 313, MATH 461, or STAT 400.",
+  "label": "CS 173 & CS 225 & (MATH 225 | MATH 257 | MATH 415 | MATH 416 | ASRM 406 | BIOE 210) & (CS 361 | ECE 313 | MATH 461 | STAT 400)"
+ },
+ {
+  "code": "CS 474",
+  "text": "CS 173; CS 225; one of CS 374 or ECE 374.",
+  "label": "CS 173 & CS 225 & (CS 374 | ECE 374)"
+ },
+ {
+  "code": "CS 475",
+  "text": "CS 374 or ECE 374.",
+  "label": "CS 374 | ECE 374"
+ },
+ {
+  "code": "CS 477",
+  "text": "CS 225; one of CS 374, ECE 374 or MATH 414.",
+  "label": "CS 225 & (CS 374 | ECE 374 | MATH 414)"
+ },
+ {
+  "code": "CS 497",
+  "text": "For majors only; junior or senior standing required.",
+  "label": "?"
+ },
+ {
+  "code": "CS 510",
+  "text": "One of CS 410, CS 412, CS 446, ECE 449 or LING 406.",
+  "label": "CS 410 | CS 412 | CS 446 | ECE 449 | LING 406"
+ },
+ {
+  "code": "CS 514",
+  "text": "CS 412; one of CS 446 or ECE 449. Additional prerequisites or corequisites may be specified each term. See section information.",
+  "label": "CS 412 & (CS 446 | ECE 449)"
+ },
+ {
+  "code": "CS 521",
+  "text": "CS 374 or ECE 374; CS 421. Additional prerequisites or corequisites may be specified each term. See section information.",
+  "label": "(CS 374 | ECE 374) & CS 421"
+ },
+ {
+  "code": "CS 523",
+  "text": "One of CS 423 or CSE 423; one of CS 425 or ECE 428; and one of CS 433 or CSE 422.",
+  "label": "(CS 423 | CSE 423) & (CS 425 | ECE 428) & (CS 433 | CSE 422)"
+ },
+ {
+  "code": "CS 526",
+  "text": "CS 426.",
+  "label": "CS 426"
+ },
+ {
+  "code": "CS 533",
+  "text": "CS 433 or CSE 422.",
+  "label": "CS 433 | CSE 422"
+ },
+ {
+  "code": "CS 537",
+  "text": "One of CS 425 or ECE 428; one of CS 438 or ECE 438. Additional prerequisites may be specified each term. See section information.",
+  "label": "(CS 425 | ECE 428) & (CS 438 | ECE 438)"
+ },
+ {
+  "code": "CS 538",
+  "text": "CS 438 or ECE 438.",
+  "label": "CS 438 | ECE 438"
+ },
+ {
+  "code": "CS 542",
+  "text": "Calculus, linear algebra, probability and statistics, and basic concepts of machine learning. Familiarity with (at least one of) the following topics is highly recommended: stochastic processes, numerical analysis, and theoretical computer science.",
+  "label": "?"
+ },
+ {
+  "code": "CS 546",
+  "text": "CS 447 and one of CS 446 or ECE 449, or equivalent background.",
+  "label": "(CS 447 & (CS 446 | ECE 449)) | ?"
+ },
+ {
+  "code": "CS 562",
+  "text": "One of CS 446 or ECE 449 and one of CS 463 or ECE 424, or equivalent courses, by consent of instructor. Additional prerequisites or corequisites may be specified each term. See section information.",
+  "label": "RAW"
+ },
+ {
+  "code": "CS 565",
+  "text": "CS 465.",
+  "label": "CS 465"
+ },
+ {
+  "code": "CS 567",
+  "text": "CS 465 or equivalent or permission of instructor. Prioritize PhD students, then others.",
+  "label": "CS 465 | ? | consent"
+ },
+ {
+  "code": "CS 576",
+  "text": "As specified for each topic offering, see Schedule or departmental course description.",
+  "label": "?"
+ },
+ {
+  "code": "CS 580",
+  "text": "CS 473.",
+  "label": "CS 473"
+ },
+ {
+  "code": "CS 581",
+  "text": "One of CS 374 or ECE 374 and one of CS 361 or STAT 361, or consent of instructor.",
+  "label": "((CS 374 | ECE 374) & (CS 361 | STAT 361)) | consent"
+ },
+ {
+  "code": "CS 582",
+  "text": "CS 446 or ECE 449; Credit or concurrent enrollment in CS 466; or consent of instructor.",
+  "label": "((CS 446 | ECE 449) & CS 466~) | consent"
+ },
+ {
+  "code": "CS 588",
+  "text": "CS 374, ECE 374, ECE 484, or equivalent.",
+  "label": "CS 374 | ECE 374 | ECE 484 | ?"
+ },
+ {
+  "code": "ECON 203",
+  "text": "ECON 202; one of MATH 220, MATH 221, or MATH 234.",
+  "label": "ECON 202 & (MATH 220 | MATH 221 | MATH 234)"
+ },
+ {
+  "code": "ECON 300",
+  "text": "Not intended for Economics majors or minors.",
+  "label": "NONE"
+ },
+ {
+  "code": "ECON 302",
+  "text": "ECON 102 or equivalent. MATH 220, MATH 221, MATH 234 or equivalent.",
+  "label": "(ECON 102 | ?) & (MATH 220 | MATH 221 | MATH 234 | ?)"
+ },
+ {
+  "code": "ECON 303",
+  "text": "ECON 102; ECON 103; and one of MATH 220, MATH 221, MATH 234.",
+  "label": "ECON 102 & ECON 103 & (MATH 220 | MATH 221 | MATH 234)"
+ },
+ {
+  "code": "ECON 397",
+  "text": "Cumulative grade-point average of 3.0 or honors in the junior year, or consent of instructor; senior standing.",
+  "label": "(? | consent) & ?"
+ },
+ {
+  "code": "ECON 402",
+  "text": "ECON 202; ECON 302; MATH 220/MATH 221 or other Calculus course are required.",
+  "label": "ECON 202 & ECON 302 & (MATH 220 | MATH 221 | ?)"
+ },
+ {
+  "code": "ECON 418",
+  "text": "ECON 202; ECON 302; MATH 220 or MATH 221 or other calculus course are required.",
+  "label": "ECON 202 & ECON 302 & (MATH 220 | MATH 221 | ?)"
+ },
+ {
+  "code": "ECON 422",
+  "text": "ECON 202 or introductory statistics equivalent, ECON 303, MATH 220/MATH 221 or Calculus I equivalent.",
+  "label": "(ECON 202 | ?) & ECON 303 & (MATH 220 | MATH 221 | ?)"
+ },
+ {
+  "code": "ECON 425",
+  "text": "ECON 203; ECON 302; ECON 303; MATH 220 or MATH 221 are required. MATH 231 is recommended. Prior exposure to financial markets is encouraged.",
+  "label": "ECON 203 & ECON 302 & ECON 303 & (MATH 220 | MATH 221)"
+ },
+ {
+  "code": "ECON 437",
+  "text": "ECON 202; ECON 302; MATH 220/MATH 221 are required. ECON 203; MATH 231 are recommended.",
+  "label": "ECON 202 & ECON 302 & (MATH 220 | MATH 221)"
+ },
+ {
+  "code": "ECON 440",
+  "text": "ECON 202; ECON 302; and one of: MATH 220, MATH 221, or MATH 234 are required.",
+  "label": "ECON 202 & ECON 302 & (MATH 220 | MATH 221 | MATH 234)"
+ },
+ {
+  "code": "ECON 448",
+  "text": "ECON 202; ECON 302; MATH 220/MATH 221 or other Calculus course.",
+  "label": "ECON 202 & ECON 302 & (MATH 220 | MATH 221 | ?)"
+ },
+ {
+  "code": "ECON 469",
+  "text": "ECON 202; ECON 302; and one of: MATH 220 or MATH 221 are required.",
+  "label": "ECON 202 & ECON 302 & (MATH 220 | MATH 221)"
+ },
+ {
+  "code": "ECON 471",
+  "text": "ECON 203 or equivalent; ECON 302 or ECON 303.",
+  "label": "(ECON 203 | ?) & (ECON 302 | ECON 303)"
+ },
+ {
+  "code": "ECON 482",
+  "text": "ECON 302; MATH 220/MATH 221 or Calculus I equivalent.",
+  "label": "ECON 302 & (MATH 220 | MATH 221 | ?)"
+ },
+ {
+  "code": "ECON 490",
+  "text": "ECON 202; ECON 302 or ECON 303; MATH 220 or MATH 221 or other Calculus course. Some topics may require additional prerequisites, read the section text for each topic.",
+  "label": "ECON 202 & (ECON 302 | ECON 303) & (MATH 220 | MATH 221 | ?)"
+ },
+ {
+  "code": "MATH 257",
+  "text": "MATH 220 or MATH 221; CS 101 or equivalent programming experience.",
+  "label": "(MATH 220 | MATH 221) & (CS 101 | ?)"
+ },
+ {
+  "code": "MATH 402",
+  "text": "MATH 241; MATH 314 or MATH 347 or MATH 348, or equivalent; or consent of instructor.",
+  "label": "(MATH 241 & (MATH 314 | MATH 347 | MATH 348 | ?)) | consent"
+ },
+ {
+  "code": "MATH 405",
+  "text": "MATH 241; MATH 314 or MATH 347, or equivalent; or consent of instructor.",
+  "label": "(MATH 241 & (MATH 314 | MATH 347 | ?)) | consent"
+ },
+ {
+  "code": "MATH 412",
+  "text": "MATH 314 or MATH 347 or equivalent experience or CS 374.",
+  "label": "MATH 314 | MATH 347 | ? | CS 374"
+ },
+ {
+  "code": "MATH 416",
+  "text": "MATH 241; MATH 314 or MATH 347; or consent of instructor.",
+  "label": "(MATH 241 & (MATH 314 | MATH 347)) | consent"
+ },
+ {
+  "code": "MATH 423",
+  "text": "MATH 241 or equivalent.",
+  "label": "MATH 241 | ?"
+ },
+ {
+  "code": "MATH 424",
+  "text": "An honors section of MATH 347 or an honors section of MATH 416, and consent of the department.",
+  "label": "((MATH 347 & ?) | (MATH 416 & ?)) & consent"
+ },
+ {
+  "code": "MATH 425",
+  "text": "MATH 424 and either MATH 415 or MATH 416, and consent of the department.",
+  "label": "MATH 424 & (MATH 415 | MATH 416) & consent"
+ },
+ {
+  "code": "MATH 448",
+  "text": "MATH 447.",
+  "label": "MATH 447"
+ },
+ {
+  "code": "MATH 466",
+  "text": "MATH 241, MATH 416, and MATH 461. Priority registration will be given to students in the Mathematics + Data Science major.",
+  "label": "MATH 241 & MATH 416 & MATH 461"
+ },
+ {
+  "code": "MATH 482",
+  "text": "ASRM 406, MATH 257, MATH 415, or MATH 416.",
+  "label": "ASRM 406 | MATH 257 | MATH 415 | MATH 416"
+ },
+ {
+  "code": "MATH 484",
+  "text": "MATH 241 and one of MATH 257, MATH 415, or MATH 416.",
+  "label": "MATH 241 & (MATH 257 | MATH 415 | MATH 416)"
+ },
+ {
+  "code": "MATH 487",
+  "text": "One of MATH 284, MATH 285, MATH 286, MATH 441.",
+  "label": "MATH 284 | MATH 285 | MATH 286 | MATH 441"
+ },
+ {
+  "code": "MATH 489",
+  "text": "One of MATH 284, MATH 285, MATH 286, MATH 441.",
+  "label": "MATH 284 | MATH 285 | MATH 286 | MATH 441"
+ },
+ {
+  "code": "STAT 400",
+  "text": "MATH 231. Not intended for first-time freshmen.",
+  "label": "MATH 231"
+ },
+ {
+  "code": "STAT 410",
+  "text": "MATH 241 and STAT 400.",
+  "label": "MATH 241 & STAT 400"
+ },
+ {
+  "code": "STAT 420",
+  "text": "STAT 408 or STAT 400; MATH 231 or equivalent; knowledge of basic matrix manipulations; or consent of instructor.",
+  "label": "((STAT 408 | STAT 400) & (MATH 231 | ?) & ?) | consent"
+ },
+ {
+  "code": "STAT 424",
+  "text": "STAT 420 or STAT 425, and completion of or concurrent enrollment in STAT 410.",
+  "label": "(STAT 420 | STAT 425) & STAT 410~"
+ },
+ {
+  "code": "STAT 429",
+  "text": "STAT 410.",
+  "label": "STAT 410"
+ },
+ {
+  "code": "STAT 430",
+  "text": "STAT 410; STAT 425. Some topics may require additional prerequisites. Read the section text for each topic.",
+  "label": "STAT 410 & STAT 425"
+ },
+ {
+  "code": "STAT 431",
+  "text": "STAT 410 and knowledge of R.",
+  "label": "STAT 410 & ?"
+ },
+ {
+  "code": "STAT 433",
+  "text": "STAT 400 required, STAT 410 preferred, and MATH 225 (or equivalent knowledge of Linear Algebra) highly recommended.",
+  "label": "STAT 400"
+ },
+ {
+  "code": "STAT 443",
+  "text": "STAT 420 or STAT 425 (completion preferred, but may be taken concurrently) or consent of instructor.",
+  "label": "STAT 420~ | STAT 425~ | consent"
+ },
+ {
+  "code": "STAT 448",
+  "text": "STAT 400 or STAT 409, and credit for or concurrent registration in STAT 410.",
+  "label": "(STAT 400 | STAT 409) & STAT 410~"
+ },
+ {
+  "code": "STAT 480",
+  "text": "(STAT 440 or STAT 447) and (STAT 420 or STAT 425); or permission of the instructor.",
+  "label": "((STAT 440 | STAT 447) & (STAT 420 | STAT 425)) | consent"
+ }
+]
