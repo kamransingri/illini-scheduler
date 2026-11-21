@@ -1274,3 +1274,29 @@ Every judgment call made during the autonomous build, newest phase last.
   Economics & Law for some concentrations). Both stay in the catalog's words on the minor's page.
 - **D47.4 The importer still can't refresh.** Re-importing needs the pages fetched again, which the challenge still
   blocks; the cached pages are what `--offline` re-parses, and `major_overlap` survives a re-import (D43.5).
+
+## Transcript and DARS import (2026-11-21, issue #20)
+
+- **D48.1 Pasted text, read in the browser.** Self-Service and DARS sit behind a NetID, so the student copies the page
+  and pastes it (`lib/transcript.ts`, `components/TranscriptPaste.tsx`), as with AP scores (#198). The text stays in
+  the component's state: it isn't saved, put in the link or sent, and the Playwright test checks that no request
+  carries any of it. Only the courses the student applies are kept, in My courses as before (D13.14).
+- **D48.2 Two layouts, one row reader.** Self-Service's Academic History puts the grade before the credit hours
+  ("CS 124 UG Intro A 3.000 12.00", sometimes wrapped so the hours start the next line) under "Term:" headings, in
+  sections for institution credit, transfer credit and courses in progress (no grade there). DARS puts the term first
+  and the grade after the hours ("FA23 CS 124 3.0 A TITLE"). The reader looks on both sides of the hours. Lines that
+  list options ("SELECT FROM: CS 233 CS 341") don't start like a row, so they're not courses taken.
+- **D48.3 Grades from the registrar's key.** Letter grades A+ to D-, CR, S and the pandemic pass codes mean completed;
+  PS (test-based credit), TR and T, or any passing grade in a transfer or test-credit section, mean AP, IB or transfer
+  credit; IP and DFR (deferred), or anything under Courses in Progress, mean in progress. F, ABS, FR, W, NC, U, NP, NZ,
+  AU, NR, NV and I aren't added and are listed with why, unless the course was passed in another term. A course
+  counts once, at its best status. Honors (H) and GPA marks (*, &) after a grade are ignored.
+- **D48.4 Nothing dropped silently.** A line that starts like a course row but can't be read (an unknown grade, a
+  malformed number) is shown in the preview, as is elective credit ("ECON 1--"), which has no single course to add.
+- **D48.5 Merge, don't replace.** Applying adds new courses and updates statuses (in progress → completed); courses
+  already in My courses that the paste doesn't list are kept and named, since students add transfer courses by hand.
+  When the paste has test credit (an Advanced Placement or other test-credit heading), the AP/IB estimate's courses it
+  doesn't list are switched off (`declined`), with a box to keep them.
+- **D48.6 Samples are hand-written.** No real transcript or DARS audit is in the repository. The fixtures follow the
+  layout of a UIUC unofficial transcript its owner published and the uAchieve DARS row format; redacted samples from
+  volunteers can be added beside them (fixtures/transcript/README.md).
