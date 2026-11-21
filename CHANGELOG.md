@@ -12,6 +12,8 @@ history).
 
 ### Added
 
+- Professor ratings from Rate My Professors show as three meters on course pages (#197): quality, difficulty
+  (marked "lower is easier") and would take again, each with its number, instead of one line of small grey text.
 - Paste your AP or IB scores in the degree checklist (#199, #200) instead of adding each exam by hand. Copy your
   College Board score page or IB results page into the box, check what was found (exams not recognised and ones
   that would replace an exam you entered are listed), then apply. Retakes keep the highest score. The text never
