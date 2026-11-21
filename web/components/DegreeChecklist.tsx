@@ -15,6 +15,7 @@ import FourYearPlan from "./FourYearPlan";
 import ScoreBreakdown from "./course/ScoreBreakdown";
 import ProgramPicker from "./ProgramPicker";
 import ScorePaste from "./ScorePaste";
+import TranscriptPaste from "./TranscriptPaste";
 import { loadIndex } from "./SearchBox";
 import { Badge } from "./ui/Badge";
 import CourseRow, { CourseRowHeader, type CourseCols } from "./ui/CourseRow";
@@ -159,6 +160,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
   const apSum = useMemo(() => (apYear && st.ap.length ? apCredit(apYear, st.ap, grainger) : null), [apYear, st.ap, grainger]);
   const ibSum = useMemo(() => (ibYear && st.ib.length ? ibCredit(ibYear, st.ib) : null), [ibYear, st.ib]);
   const allCourses = useMemo(() => [...st.courses, ...creditCourses(allCredits(apSum, ibSum), st.declined, st.courses)], [st.courses, st.declined, apSum, ibSum]);
+  const estimated = useMemo(() => allCourses.filter((c) => c.ap), [allCourses]);
   const apReady = (!st.ap.length || !!apTable || apError) && (!st.ib.length || (!!ibTable && !!apTable) || ibError || apError);
   const majorTicks = useMemo(() => ticksOf(st.ticked), [st.ticked]);
   const ev = useMemo(() => (deg && apReady ? evaluate(deg, allCourses, majorTicks) : null), [deg, apReady, allCourses, majorTicks]);
@@ -269,6 +271,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
           <AddCourse st={st} update={update} deg={deg} index={index} />
           <ApForm st={st} update={update} table={apTable} ibTable={ibTable} error={apError || ibError} />
           <ScorePaste st={st} update={update} table={apTable} ibTable={ibTable} />
+          <TranscriptPaste st={st} update={update} estimated={estimated} />
         </div>
         <MyCourseList
           st={st}
