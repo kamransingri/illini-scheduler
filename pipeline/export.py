@@ -19,6 +19,8 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+from .buildings import CREDIT as BUILDINGS_CREDIT
+from .buildings import export_rows as building_rows
 from .config import WEB_DATA
 from .fetch import CURRENT_TERM, NEXT_TERM
 from .names import alias_key, load_aliases, parse_name, term_order
@@ -403,6 +405,11 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA, rename: Renamer | No
     redirects = {x.old_code: x.new_code for x in rn.links if x.old not in keys and x.new in keys}
     (out_dir / "renumbered.json").write_text(json.dumps(redirects, separators=(",", ":")))
     (out_dir / "crns.json").write_text(json.dumps(crn_index(sections, keys, live_terms), separators=(",", ":")))
+    # where each meeting's building (`b`) is, from OpenStreetMap (#93); empty when OSM couldn't be reached
+    places = building_rows(conn)
+    (out_dir / "buildings.json").write_text(json.dumps(
+        {"credit": BUILDINGS_CREDIT, "osm_base": meta_rows.get("buildings_osm_base") or None, "buildings": places},
+        separators=(",", ":"), ensure_ascii=False))
     titles = {(c["s"], c["n"]): c["t"] for c in search_courses}
     write_seat_feeds(out_dir, all_events, titles)
     meta = {
@@ -414,6 +421,8 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA, rename: Renamer | No
         "geneds_snapshot": meta_rows.get("geneds_snapshot"),
         "rmp_status": meta_rows.get("rmp_status", "unavailable: not run"),
         "match_report": json.loads(meta_rows.get("match_report", "{}")),
+        "buildings": {"osm_base": meta_rows.get("buildings_osm_base") or None, "located": len(places),
+                      "share": float(meta_rows.get("buildings_share") or 0)},
         "repo_url": REPO_URL, "live_url": LIVE_URL, "n_courses": n_files,
         "history_terms": sorted(terms, key=term_order),
         "score_priors": score_priors(gpa_course.values(), rmp.values()),
