@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { accepts, alsoCounts, canShare, evaluate, hydrate, needText, options, prereqNote, rankCourse, type Degree, type DegreeCourse, type DegreeGroup } from "@/lib/degree";
+import { accepts, alsoCounts, canShare, evaluate, hydrate, needText, options, rankCourse, type Degree, type DegreeCourse, type DegreeGroup } from "@/lib/degree";
+import { checkPrereq, parsePrereq } from "@/lib/prereq";
 import { decodeCourses, decodeState, encodeCourses, encodeState, MAX_MINORS, stateFromParams, stateToParams, ticksOf, type MyCourse } from "@/lib/mycourses";
 import { DEFAULT_WEIGHTS } from "@/lib/score";
 
@@ -182,11 +183,12 @@ describe("options and marks", () => {
     expect(accepts(g("fin-400"), "FIN 494", DEG)).toBe(false);
   });
 
-  it("prerequisite notes only when a named course isn't in My courses", () => {
-    expect(prereqNote("Credit in PHIL 100 or STAT 107.", new Set(["STAT 107"]))).toBe("Credit in PHIL 100 or STAT 107.");
-    expect(prereqNote("Credit in STAT 107.", new Set(["STAT 107"]))).toBeNull();
-    expect(prereqNote("Junior standing.", new Set())).toBe("Junior standing."); // can't verify: show it
-    expect(prereqNote("", new Set())).toBeNull();
+  it("prerequisites are checked against My courses (#21; the old note only looked for named courses)", () => {
+    const check = (pre: string, have: string[]) => checkPrereq(parsePrereq(pre), new Set(have)).status;
+    expect(check("Credit in PHIL 100 or STAT 107.", ["STAT 107"])).toBe("met"); // the old note flagged this one
+    expect(check("Credit in STAT 107.", ["STAT 107"])).toBe("met");
+    expect(check("Junior standing.", [])).toBe("unclear"); // can't verify: say so
+    expect(check("", [])).toBe("met");
   });
 
   it("ranks a course by its best next-term professor", () => {

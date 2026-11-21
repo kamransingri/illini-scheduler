@@ -4,7 +4,7 @@ import { useId, useState } from "react";
 import { hourWarnings, totalHours } from "@/lib/credits";
 import { courseHref, termLabel } from "@/lib/format";
 import type { MyCourse, MyState } from "@/lib/mycourses";
-import { COURSE_DRAG, gradOptions, moveToTerm, offeringWarning, plannedIn, planTerms, removeFromPlan, termHours, termIndex } from "@/lib/plan";
+import { COURSE_DRAG, gradOptions, moveToTerm, offeringWarning, plannedIn, planTerms, prereqWarning, removeFromPlan, termHours, termIndex } from "@/lib/plan";
 import Icon from "./ui/Icon";
 
 type Props = {
@@ -19,6 +19,8 @@ type Props = {
   titleOf: (code: string) => string;
   /** When a course usually runs (search.json `o`), for the offering warnings (#116). */
   patternOf: (code: string) => string | undefined;
+  /** A course's catalog prerequisite sentence, when the program's data has it, for the prerequisite warnings (#21). */
+  preOf: (code: string) => string | undefined;
   totalHours: number | null;
 };
 
@@ -29,7 +31,7 @@ const fmtHours = (h: number, variable: boolean) => `${h}${variable ? "+" : ""} h
  * dragging one from the checklist's options or from another term, or with a course's "Move to" menu (#115). The
  * checklist below says when each requirement gets finished.
  */
-export default function FourYearPlan({ st, update, nextTerm, mine, lookup, titleOf, patternOf, totalHours }: Props) {
+export default function FourYearPlan({ st, update, nextTerm, mine, lookup, titleOf, patternOf, preOf, totalHours }: Props) {
   const plan = st.plan;
   const setPlan = (next: MyState["plan"]) => update({ ...st, plan: next });
   const terms = planTerms(plan, nextTerm);
@@ -39,6 +41,7 @@ export default function FourYearPlan({ st, update, nextTerm, mine, lookup, title
     return h !== undefined ? [h, h] : lookup(code);
   };
   const done = termHours([...own.keys()], hoursOf);
+  const prereqNote = (code: string, term: string) => prereqWarning(preOf(code), term, plan, [...own.keys()], termLabel(term));
   const planned = termHours(Object.values(plan.terms).flat(), hoursOf);
   const id = useId();
   const [said, say] = useState("");
@@ -109,6 +112,7 @@ export default function FourYearPlan({ st, update, nextTerm, mine, lookup, title
                 hoursOf={hoursOf}
                 titleOf={titleOf}
                 patternOf={patternOf}
+                prereqNote={prereqNote}
               />
             ))}
           </ol>
@@ -131,6 +135,7 @@ function Term({
   hoursOf,
   titleOf,
   patternOf,
+  prereqNote,
 }: {
   term: string;
   terms: string[];
@@ -141,6 +146,7 @@ function Term({
   hoursOf: (code: string) => [number, number] | null;
   titleOf: (code: string) => string;
   patternOf: (code: string) => string | undefined;
+  prereqNote: (code: string, term: string) => string | null;
 }) {
   const codes = plan.terms[term] ?? [];
   const h = termHours(codes, hoursOf);
@@ -215,6 +221,7 @@ function Term({
           {codes.map((c) => {
             const cr = hoursOf(c);
             const offering = offeringWarning(patternOf(c), term, name);
+            const pre = prereqNote(c, term);
             return (
               <li
                 key={c}
@@ -237,6 +244,12 @@ function Term({
                     <span className="mt-0.5 flex items-start gap-1 text-sm" data-testid="offering-warning">
                       <Icon name="alert" className="mt-0.5 shrink-0" />
                       {offering}
+                    </span>
+                  )}
+                  {pre && (
+                    <span className="mt-0.5 flex items-start gap-1 text-sm" data-testid="prereq-warning">
+                      <Icon name="alert" className="mt-0.5 shrink-0" />
+                      {pre}
                     </span>
                   )}
                 </span>
