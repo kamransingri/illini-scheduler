@@ -19,6 +19,8 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+from .buildings import CREDIT as BUILDINGS_CREDIT
+from .buildings import export_rows as building_rows
 from .config import WEB_DATA
 from .fetch import CURRENT_TERM, NEXT_TERM
 from .names import alias_key, load_aliases, parse_name, term_order
@@ -403,8 +405,17 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA, rename: Renamer | No
     redirects = {x.old_code: x.new_code for x in rn.links if x.old not in keys and x.new in keys}
     (out_dir / "renumbered.json").write_text(json.dumps(redirects, separators=(",", ":")))
     (out_dir / "crns.json").write_text(json.dumps(crn_index(sections, keys, live_terms), separators=(",", ":")))
+    # where each meeting's building (`b`) is, from OpenStreetMap (#93); empty when OSM couldn't be reached
+    places = building_rows(conn)
+    (out_dir / "buildings.json").write_text(json.dumps(
+        {"credit": BUILDINGS_CREDIT, "osm_base": meta_rows.get("buildings_osm_base") or None, "buildings": places},
+        separators=(",", ":"), ensure_ascii=False))
     titles = {(c["s"], c["n"]): c["t"] for c in search_courses}
-    write_seat_feeds(out_dir, all_events, titles)
+    sec_info = {(t, sec["crn"]): (sec["type_name"] or sec["type"] or "",
+                                  [display(k, raw) for k, raw in zip(sec["instructors"], sec["instructors_raw"],
+                                                                     strict=True)])
+                for by_term in sections.values() for t, secs in by_term.items() for sec in secs}
+    write_seat_feeds(out_dir, all_events, titles, sec_info)
     meta = {
         "format_version": DATA_FORMAT,
         "built_at": meta_rows.get("built_at"), "current_term": CURRENT_TERM, "next_term": NEXT_TERM,
@@ -414,6 +425,8 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA, rename: Renamer | No
         "geneds_snapshot": meta_rows.get("geneds_snapshot"),
         "rmp_status": meta_rows.get("rmp_status", "unavailable: not run"),
         "match_report": json.loads(meta_rows.get("match_report", "{}")),
+        "buildings": {"osm_base": meta_rows.get("buildings_osm_base") or None, "located": len(places),
+                      "share": float(meta_rows.get("buildings_share") or 0)},
         "repo_url": REPO_URL, "live_url": LIVE_URL, "n_courses": n_files,
         "history_terms": sorted(terms, key=term_order),
         "score_priors": score_priors(gpa_course.values(), rmp.values()),
@@ -510,15 +523,27 @@ def is_open(status: str) -> bool:
     return "open" in (status or "").lower()
 
 
-def write_seat_feeds(out_dir: Path, events: list[dict], titles: dict[tuple[str, str], str]) -> None:
-    """data/seat-events.json (last week, for the "Just opened" page) and an RSS feed per course
-    (data/feeds/{SUBJ}/{NUM}.xml) so students can watch seats in any feed reader."""
+def section_fields(info: tuple[str, list[str]] | None) -> dict:
+    """A seat event's section type (`y`) and instructor names (`i`), left out when unknown."""
+    if not info:
+        return {}
+    kind, people = info
+    return {**({"y": kind} if kind else {}), **({"i": people} if people else {})}
+
+
+def write_seat_feeds(out_dir: Path, events: list[dict], titles: dict[tuple[str, str], str],
+                     sec_info: dict[tuple[str, str], tuple[str, list[str]]] | None = None) -> None:
+    """data/seat-events.json (last week, for the "Just opened" page, with each section's type `y` and instructors
+    `i` when known) and an RSS feed per course (data/feeds/{SUBJ}/{NUM}.xml) so students can watch seats in any
+    feed reader."""
     from datetime import UTC, datetime, timedelta
     from email.utils import format_datetime
     from xml.sax.saxutils import escape
 
     cutoff = (datetime.now(UTC) - timedelta(days=RECENT_EVENT_DAYS)).isoformat(timespec="seconds")
-    recent = [e | {"t": titles.get((e["s"], e["n"]), "")} for e in events if e["at"] >= cutoff]
+    info = sec_info or {}
+    recent = [e | {"t": titles.get((e["s"], e["n"]), "")} | section_fields(info.get((e["term"], e["crn"])))
+              for e in events if e["at"] >= cutoff]
     (out_dir / "seat-events.json").write_text(json.dumps(recent[:3000], separators=(",", ":")))
     by_course: dict[tuple[str, str], list[dict]] = defaultdict(list)
     for e in events:

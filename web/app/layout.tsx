@@ -13,6 +13,9 @@ import "./globals.css";
 // headlines in heavier weights), self-hosted by next/font at build time. One family for everything.
 const sourceSans = Source_Sans_3({ subsets: ["latin"], variable: "--font-source-sans", display: "swap" });
 
+// The AI use policy is a doc in the repository (#144), so contributors and students read the same text.
+const AI_USE_URL = "https://github.com/kamransingri/illini-scheduler/blob/main/docs/AI-USE.md";
+
 export const metadata: Metadata = {
   title: { default: "Illini Scheduler", template: "%s | Illini Scheduler" },
   description: "Unofficial UIUC course planner: professors compared by GPA and ratings, sections, gen-eds, a degree checklist and a conflict-free schedule builder.",
@@ -90,6 +93,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <Link className="underline-offset-2 hover:text-orange hover:underline" href="/privacy/">
                     Privacy
                   </Link>
+                </li>
+                <li>
+                  <Link className="underline-offset-2 hover:text-orange hover:underline" href="/data-sources/">
+                    Data sources
+                  </Link>
+                </li>
+                <li>
+                  <Link className="underline-offset-2 hover:text-orange hover:underline" href="/terms/">
+                    Terms of use
+                  </Link>
+                </li>
+                <li>
+                  <a className="underline-offset-2 hover:text-orange hover:underline" href={AI_USE_URL}>
+                    AI use policy
+                  </a>
                 </li>
               </ul>
             </nav>

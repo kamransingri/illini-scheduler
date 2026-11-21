@@ -75,7 +75,8 @@ section must match its GitHub release.
 ## Pull requests
 
 1. Open one against `main`. The template asks for the issues it closes, what changed in a few bullets and a one-line
-   test summary ([docs/ISSUES-AND-PRS.md](docs/ISSUES-AND-PRS.md#pull-requests)).
+   test summary ([docs/ISSUES-AND-PRS.md](docs/ISSUES-AND-PRS.md#pull-requests)). AI coding tools are fine; when one
+   wrote most of the pull request, say so in one line ([docs/AI-USE.md](docs/AI-USE.md)).
 2. CI runs these checks, and all must pass:
    - `test`: lint, type checks and unit tests (about 2 minutes)
    - `versions`: version files agree, CHANGELOG covers the version, the version only goes up, and the branch name follows the convention

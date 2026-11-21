@@ -12,9 +12,24 @@ history).
 
 ### Added
 
+- A data sources page (#191), linked from the footer: where course, grade, gen-ed and rating data comes from, who
+  publishes it and how often the site reads it. It quotes the University's FERPA exclusion from the GPA dataset, and
+  a course's "Sections of 20 or fewer students are withheld" note links to it.
+- Just opened says what each section is and who teaches it (#162): "Lecture with Geoffrey Challen" or
+  "Discussion/Recitation" under the course name.
+- Professor ratings from Rate My Professors show as three meters on course pages (#197): quality, difficulty
+  (marked "lower is easier") and would take again, each with its number, instead of one line of small grey text.
+- Paste your AP or IB scores in the degree checklist (#199, #200) instead of adding each exam by hand. Copy your
+  College Board score page or IB results page into the box, check what was found (exams not recognised and ones
+  that would replace an exam you entered are listed), then apply. Retakes keep the highest score. The text never
+  leaves your browser.
 - A privacy page (#142), linked from the footer: what the site keeps in your browser (every storage key, listed by
   what it holds), the little that leaves it (share links, and seat alerts once they're on), and a button that deletes
   everything the site saved in this browser. No accounts, analytics, ads or trackers.
+- Terms of use (#143) and an AI use policy (#144), linked from the footer next to Privacy. The terms say the site is
+  unofficial (check before you register), comes with no warranty, and how to reuse its data with credit to the
+  sources. The AI use policy says how AI tools are used to build the site, that it never sends what you enter to an AI
+  service, and how AI tools may read its data.
 - Seat alerts with the site closed, on the site's side (#90). **Alert me** on a watched section asks once for
   notification permission, subscribes this browser and sends the alert server only the push address and the
   section's term and CRN; **Stop all alerts** or no longer watching a section undoes it. iPhones are told to add the
