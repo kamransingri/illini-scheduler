@@ -128,6 +128,7 @@ def test_check_records_a_change_once():
     ev = live["events"][0]
     assert ev["crn"] == "76898" and ev["old"] == "Open" and ev["new"] == "Closed" and ev["s"] == "CS"
     assert ev["t"] == "Intro to Computer Science I" and ev["code"]
+    assert ev["y"] and ev["i"]  # the section's type and instructors, for the Just opened row (#162)
     # the next run compares with what this job saw, so the same change isn't logged twice
     live_seats.check("2026-fa", ["CS 124"], daily, live, titles, 1e12, 0, FakeClient({"/CS/124": 200}),
                      lambda *_: None)
