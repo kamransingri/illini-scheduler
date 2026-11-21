@@ -25,6 +25,7 @@ test("prerequisites in the checklist and the courses you can take next", async (
 
   // finishing CS 225 opens CS 374 and CS 341's other half
   await page.goto("./degree/?p=computer-science-bs&m=CS124,CS128,CS173,MATH221,CS225");
+  await expect(next.locator("li").first()).toBeVisible();
   if (await all.count()) await all.click();
   await expect(next.locator('[data-code="CS 374"]')).toBeVisible();
   await expect(next.locator('[data-code="CS 233"]')).not.toContainText("take with");
