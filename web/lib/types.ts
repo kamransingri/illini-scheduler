@@ -95,7 +95,8 @@ export type Instructor = {
 
 export type Change = { term: string; field: string; summary: string };
 
-export type SeatEvent = { term: string; at: string; crn: string; s: string; n: string; code: string; old: string; new: string; t?: string };
+/** `y`: the section type ("Lecture", "Discussion/Recitation"); `i`: its instructors. Both left out when unknown. */
+export type SeatEvent = { term: string; at: string; crn: string; s: string; n: string; code: string; old: string; new: string; t?: string; y?: string; i?: string[] };
 
 export type Course = {
   subject: string;
