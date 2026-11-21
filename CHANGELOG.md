@@ -12,6 +12,8 @@ history).
 
 ### Added
 
+- Just opened says what each section is and who teaches it (#162): "Lecture with Geoffrey Challen" or
+  "Discussion/Recitation" under the course name.
 - Professor ratings from Rate My Professors show as three meters on course pages (#197): quality, difficulty
   (marked "lower is easier") and would take again, each with its number, instead of one line of small grey text.
 - Paste your AP or IB scores in the degree checklist (#199, #200) instead of adding each exam by hand. Copy your

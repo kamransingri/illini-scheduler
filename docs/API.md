@@ -397,6 +397,8 @@ Seat status changes from the last 7 days, newest first, at most 3,000 (the Just 
 | `[].code` | string | Section code |
 | `[].old` | string | Status before |
 | `[].new` | string | Status after |
+| `[].y` | string | Section type ("Lecture", "Discussion/Recitation"); left out when unknown |
+| `[].i` | string[] | The section's instructors; left out when none are listed |
 
 ### `data/degrees/index.json`
 
@@ -581,6 +583,8 @@ courses are re-read.
 | `events[].code` | string | |
 | `events[].old` | string | |
 | `events[].new` | string | |
+| `events[].y` | string | |
+| `events[].i` | string[] | As Course Explorer prints them ("Challen, G") |
 | `seen.<term>.<crn>` | [string, string] | Latest `[status, checked at]` of each section in `events` |
 | `read.<term>.<course>` | string | When each course was last re-read |
 | `watched.<term>` | string[] | Courses on the watch list (`data/watch.txt`) |
