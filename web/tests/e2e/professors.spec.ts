@@ -93,3 +93,20 @@ test("matched professors link to RMP's page for adding a rating", async ({ page 
   await expect(panel.getByTestId("rmp-rate")).toContainText("Took RHET 105 with them? Rate them on RMP");
   await expect(panel.getByTestId("rmp-rate")).toHaveAttribute("href", RATE);
 });
+
+test("RMP averages show as three meters with a label that reads the numbers (#197)", async ({ page }) => {
+  await page.goto("./course/CS/124/");
+  const rows = page.getByTestId("prof-row");
+  const n = await rows.count();
+  let meters = null;
+  for (let i = 0; i < n && !meters; i++) {
+    await rows.nth(i).getByRole("button", { expanded: false }).first().click();
+    const m = rows.nth(i).getByTestId("rmp-meters");
+    if (await m.count()) meters = m;
+  }
+  test.skip(!meters, "no professor with RMP ratings in this build");
+  await expect(meters!.locator("[data-meter]")).toHaveCount(3);
+  await expect(meters!.locator('[data-meter="difficulty"]')).toContainText("lower is easier");
+  await expect(meters!.getByRole("img")).toHaveAttribute("aria-label", /^Rate My Professors: Quality (\d\.\d|–) of 5, difficulty (\d\.\d|–) of 5, .+ from [\d,]+ ratings \(all courses\)$/);
+  await expect(meters!).toContainText(/ratings \(all courses\), fetched/);
+});
