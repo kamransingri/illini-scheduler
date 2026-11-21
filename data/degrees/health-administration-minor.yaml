@@ -14,6 +14,12 @@ generated: '2026-11-17'
 total_hours: 17
 notes: []
 double_counting: []
+major_overlap:
+- distinct_hours: 6
+  min_level: 300
+  minors_too: true
+  quote: "Students must complete 9 hours of required coursework and a minimum of 8 hours of approved elective coursework, including at least 6 hours of 300- or 400-level courses that are not used in any other major or minor."
+  source: https://catalog.illinois.edu/undergraduate/ahs/minors/health-administration/
 groups:
 - name: Foundational Courses (Required)
   section: Degree Requirements

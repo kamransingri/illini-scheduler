@@ -1,4 +1,5 @@
 import json
+import re
 import sqlite3
 
 import pytest
@@ -175,3 +176,21 @@ def test_major_overlap_rules_are_checked_and_exported(tmp_path):
                  "unknown key 'why'", "needs the 'quote'"):
         assert part in msg
     assert degrees.to_json(d, {}, {})["major_overlap"] == [rule]
+
+
+def test_minor_overlap_rules_in_the_data_quote_their_own_page():
+    # #112: 30 minors' catalog pages ask for coursework distinct from the major (DECISIONS D43, D45)
+    files = sorted(degrees.DEGREES_DIR.glob("*-minor.yaml"))
+    with_rules = {}
+    for f in files:
+        d = yaml.safe_load(f.read_text(encoding="utf-8"))
+        for r in d.get("major_overlap") or []:
+            assert r["source"] == d["source"], f.name
+            assert re.search(r"distinct|not used in any other", r["quote"]), f.name
+            assert re.search(r"major", r["quote"]), f.name
+            with_rules[d["id"]] = r
+    assert len(with_rules) == 30
+    # "six hours of advanced ... and six hours ... must be distinct": the distinct hours needn't be advanced
+    assert "min_level" not in with_rules["dance-minor"]
+    assert with_rules["agricultural-consumer-environmental-sciences-minor"]["min_level"] == 400
+    assert with_rules["public-relations-minor"].get("minors_too") is not True  # "distinct from ... their major"

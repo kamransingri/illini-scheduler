@@ -13,6 +13,12 @@ read_on: '2026-11-17'
 generated: '2026-11-17'
 notes: []
 double_counting: []
+major_overlap:
+- distinct_hours: 6
+  min_level: 400
+  minors_too: true
+  quote: "At least six hours of 400-level courses must be distinct from any credit earned for the student’s major, concentration, and any other minor."
+  source: https://catalog.illinois.edu/undergraduate/aces/minors/spatial-quantitative-methods-natural-resources-environmental-sciences/
 groups:
 - name: More requirements
   section: Requirements
