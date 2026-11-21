@@ -482,7 +482,6 @@ course-explorer,"Gupta, P",BTW,250,2027-sp,3 global candidates
 course-explorer,"Williams, P",BTW,250,2027-sp,no candidate
 course-explorer,"Williard, J",BTW,250,2026-fa,no candidate
 course-explorer,"Dimitrova, I",BULG,102,2027-sp,no candidate
-course-explorer,"Kim, M",BUS,101,2026-fa,10 global candidates
 course-explorer,"Chominski, E",BUS,199,2027-sp,no candidate
 course-explorer,"Clark, J",BUS,199,2027-sp,4 global candidates
 course-explorer,"Pearson, G",BUS,199,2027-sp,no candidate
@@ -490,6 +489,7 @@ course-explorer,"Smith, M",BUS,199,2027-sp,7 global candidates
 course-explorer,"Watkins, M",BUS,199,2027-sp,no candidate
 course-explorer,"Reed, W",BUS,201,2027-sp,no candidate
 course-explorer,"Headtke, J",BUS,299,2027-sp,no candidate
+course-explorer,"Kim, M",BUS,302,2027-sp,10 global candidates
 course-explorer,"Flaws, J",CB,290,2027-sp,no candidate
 course-explorer,"Rudolph, U",CB,290,2027-sp,no candidate
 course-explorer,"Bonthuis, P",CB,591,2027-sp,no candidate
@@ -858,6 +858,7 @@ course-explorer,"Finn, S",CLE,689,2027-sp,no candidate
 course-explorer,"Shima, M",CLE,692,2027-sp,no candidate
 course-explorer,"Wilson, C",CLE,693,2026-fa,4 global candidates
 course-explorer,"Zimmerman, L",CLE,693,2027-sp,no candidate
+course-explorer,"Nelson, C",CLE,694,2027-sp,no candidate
 course-explorer,"Su, F",CLE,695,2027-sp,no candidate
 course-explorer,"Gersh, B",CLE,696,2027-sp,no candidate
 course-explorer,"Khalid, M",CLE,697,2027-sp,no candidate
@@ -886,6 +887,7 @@ course-explorer,"Piccone, C",CLE,753,2027-sp,no candidate
 course-explorer,"Person, E",CLE,755,2026-fa,no candidate
 course-explorer,"Jain, S",CLE,764,2027-sp,no candidate
 course-explorer,"Bane, R",CLE,765,2027-sp,no candidate
+course-explorer,"Wessol, E",CLE,771,2027-sp,no candidate
 course-explorer,"Barnett, D",CLE,773,2027-sp,no candidate
 course-explorer,"Weis, B",CLE,776,2026-fa,no candidate
 course-explorer,"Johnson, C",CLE,780,2027-sp,3 global candidates
@@ -894,7 +896,7 @@ course-explorer,"Chase, D",CLE,782,2027-sp,no candidate
 course-explorer,"Tangen, L",CLE,783,2027-sp,no candidate
 course-explorer,"Dominguez, K",CLE,784,2027-sp,no candidate
 course-explorer,"Strayer, S",CLE,788,2027-sp,no candidate
-course-explorer,"Aronson, K",CLE,790,2027-sp,no candidate
+course-explorer,"Aronson, K",CLE,789,2027-sp,no candidate
 course-explorer,"Orban, J",CLE,790,2027-sp,no candidate
 course-explorer,"Moreno, M",CLE,795,2026-fa,no candidate
 course-explorer,"Dolan, N",CMN,101,2026-fa,no candidate
@@ -1899,9 +1901,11 @@ course-explorer,"Sun, E",IS,107,2026-fa,no candidate
 course-explorer,"Tsiamalos, E",IS,107,2027-sp,no candidate
 course-explorer,"Zhang, J",IS,107,2027-sp,10 global candidates
 course-explorer,"Zhou, X",IS,107,2027-sp,no candidate
+course-explorer,"Adewunmi, J",IS,145,2026-fa,no candidate
 course-explorer,"Mukherjee, S",IS,145,2027-sp,no candidate
 course-explorer,"Wiley, C",IS,145,2027-sp,no candidate
 course-explorer,"Abdelatif, E",IS,202,2026-fa,no candidate
+course-explorer,"Burnett, J",IS,202,2026-fa,no candidate
 course-explorer,"Doran-Myers, M",IS,202,2026-fa,no candidate
 course-explorer,"Gong, Y",IS,202,2026-fa,no candidate
 course-explorer,"Hussein Moustafa, L",IS,202,2027-sp,no candidate
@@ -1931,6 +1935,7 @@ course-explorer,"Frye, J",IS,310,2026-fa,no candidate
 course-explorer,"Jamieson, V",IS,311,2026-fa,no candidate
 course-explorer,"Hong, G",IS,327,2026-fa,no candidate
 course-explorer,"Miller, S",IS,357,2026-fa,4 global candidates
+course-explorer,"Seilkhanova, T",IS,357,2026-fa,no candidate
 course-explorer,"Raji, M",IS,364,2027-sp,no candidate
 course-explorer,"Oh, Y",IS,380,2026-fa,no candidate
 course-explorer,"Abrams, K",IS,390,2027-sp,no candidate
@@ -1947,18 +1952,13 @@ course-explorer,"Yuan, X",IS,445,2026-fa,no candidate
 course-explorer,"Batoma, A",IS,451,2027-sp,no candidate
 course-explorer,"Jung, Y",IS,455,2027-sp,2 global candidates
 course-explorer,"Condill, C",IS,461,2027-sp,no candidate
-course-explorer,"Adewunmi, J",IS,467,2027-sp,no candidate
 course-explorer,"Alghamdi, L",IS,467,2026-fa,no candidate
-course-explorer,"Bell, K",IS,467,2027-sp,no candidate
-course-explorer,"Burnett, J",IS,467,2027-sp,no candidate
 course-explorer,"Choudhry, A",IS,467,2026-fa,no candidate
 course-explorer,"Grisales Bohorquez, C",IS,467,2026-fa,no candidate
-course-explorer,"Jenkins, K",IS,467,2027-sp,no candidate
+course-explorer,"Jenkins, K",IS,467,2026-fa,no candidate
 course-explorer,"Lanquist, L",IS,467,2026-fa,no candidate
 course-explorer,"Li, A",IS,467,2026-fa,no candidate
-course-explorer,"Liu, J",IS,467,2027-sp,4 global candidates
 course-explorer,"Posey, S",IS,467,2026-fa,no candidate
-course-explorer,"Seilkhanova, T",IS,467,2027-sp,no candidate
 course-explorer,"Uba, E",IS,467,2026-fa,no candidate
 course-explorer,"Xu, E",IS,467,2026-fa,no candidate
 course-explorer,"Cohen, B",IS,477,2026-fa,no candidate
@@ -2757,7 +2757,7 @@ course-explorer,"Whitted, E",MUS,169,2027-sp,no candidate
 course-explorer,"Young, N",MUS,169,2027-sp,no candidate
 course-explorer,"Tsitsaros, C",MUS,172,2027-sp,no candidate
 course-explorer,"Camacho Castro, J",MUS,173,2026-fa,no candidate
-course-explorer,"Sanchez Portuguez, G",MUS,177,2027-sp,no candidate
+course-explorer,"Sanchez Portuguez, G",MUS,176,2027-sp,no candidate
 course-explorer,"De Souza Lumertz, D",MUS,202,2027-sp,no candidate
 course-explorer,"Grady, J",MUS,202,2027-sp,no candidate
 course-explorer,"Haynes, L",MUS,202,2027-sp,no candidate
@@ -2805,7 +2805,6 @@ course-explorer,"Corrales Ventura, M",MUSC,115,2027-sp,no candidate
 course-explorer,"Sanchez Portuguez, G",MUSC,115,2027-sp,no candidate
 course-explorer,"Keeble, J",MUSC,120,2027-sp,no candidate
 course-explorer,"Li, Y",MUSC,120,2027-sp,11 global candidates
-course-explorer,"Yang, Y",MUSC,120,2026-fa,7 global candidates
 course-explorer,"Dee, J",MUSC,121,2027-sp,no candidate
 course-explorer,"Hutchinson, J",MUSC,121,2027-sp,no candidate
 course-explorer,"Cox, M",MUSC,122,2027-sp,no candidate
@@ -2829,6 +2828,7 @@ course-explorer,"Yuan, S",MUSC,135,2027-sp,no candidate
 course-explorer,"Serda, V",MUSC,136,2027-sp,no candidate
 course-explorer,"Robards, C",MUSC,404,2027-sp,no candidate
 course-explorer,"Smith, J",MUSC,449,2026-fa,2 global candidates
+course-explorer,"Yang, Y",MUSC,450,2027-sp,7 global candidates
 course-explorer,"Kavelman, A",MUSC,455,2027-sp,no candidate
 course-explorer,"Brown, E",MUSC,457,2027-sp,2 global candidates
 course-explorer,"Stephenson, S",MUSC,460,2027-sp,no candidate
