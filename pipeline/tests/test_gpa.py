@@ -45,11 +45,11 @@ def test_delta_is_weighted_by_same_terms():
     rows = [
         # term 1: course avg 3.0 (X=4.0 n=1, Y=2.0 n=1); term 2: only X teaches with 2.0
         {"YearTerm": "2024-fa", "Subject": "Z", "Number": "1", "Course Title": "t", "Primary Instructor": "X, Ann",
-         "A": 10},
+         "A": 25},
         {"YearTerm": "2024-fa", "Subject": "Z", "Number": "1", "Course Title": "t", "Primary Instructor": "Y, Bob",
-         "C": 10},
+         "C": 25},
         {"YearTerm": "2025-sp", "Subject": "Z", "Number": "1", "Course Title": "t", "Primary Instructor": "X, Ann",
-         "C": 10},
+         "C": 25},
     ]
     df = pd.DataFrame(rows).fillna(0)
     for k in gpa.LETTERS + ["W"]:
@@ -59,9 +59,57 @@ def test_delta_is_weighted_by_same_terms():
     res = gpa.compute(df, window_start="2020-fa")
     x = next(i for i in res.instructor_course if i["instructor_key"] == "x|ann")
     y = next(i for i in res.instructor_course if i["instructor_key"] == "y|bob")
-    assert x["delta_vs_course"] == pytest.approx(0.5)   # +1.0 in fall (n=10), 0 in spring (n=10)
+    assert x["delta_vs_course"] == pytest.approx(0.5)   # +1.0 in fall (n=25), 0 in spring (n=25)
     assert y["delta_vs_course"] == pytest.approx(-1.0)
-    assert x["limited_data"] == 1  # 20 students < 60
+    assert x["limited_data"] == 1  # 50 students < 60
+
+
+def _row(term, subj, num, who, **counts):
+    return {"YearTerm": term, "Subject": subj, "Number": num, "Course Title": "t", "Primary Instructor": who,
+            **{k: counts.get(k, 0) for k in gpa.LETTERS + ["W"]},
+            "Students": counts.get("Students", sum(counts.get(k, 0) for k in gpa.LETTERS))}
+
+
+def test_withheld_row_stops_the_build():
+    """A section of 20 students is one the University withholds (FERPA): compute() refuses it and names it (#192)."""
+    df = pd.DataFrame([_row("2025-fa", "CS", "124", "Lewis, Colleen", A=30),
+                       _row("2025-fa", "RHET", "105", "Doe, Jane", A=12, B=8)])
+    with pytest.raises(gpa.WithheldGradeData) as e:
+        gpa.compute(df)
+    msg = str(e.value)
+    assert msg.startswith("1 GPA row(s) have fewer than 21 students")
+    assert "2025-fa RHET 105 (Doe, Jane): Students 20, letter grades 20" in msg
+    assert "CS 124" not in msg
+
+
+def test_withheld_by_letter_total_even_when_students_says_more():
+    # Students claims 25 but only 20 letter grades are given (A+ to F): still too small to publish
+    df = pd.DataFrame([_row("2025-fa", "Z", "1", "X, Ann", A=15, C=5, W=5, Students=25)])
+    with pytest.raises(gpa.WithheldGradeData, match="Students 25, letter grades 20"):
+        gpa.compute(df)
+
+
+def test_withheld_checks_rows_outside_the_window():
+    # rows before WINDOW_START never reach the site today, but a smaller window would publish them
+    df = pd.DataFrame([_row("2010-fa", "Z", "1", "X, Ann", A=5), _row("2025-fa", "Z", "1", "X, Ann", A=30)])
+    with pytest.raises(gpa.WithheldGradeData):
+        gpa.compute(df)
+
+
+def test_withheld_message_lists_at_most_20_rows():
+    df = pd.DataFrame([_row("2025-fa", "Z", str(i), "X, Ann", A=3) for i in range(25)])
+    with pytest.raises(gpa.WithheldGradeData) as e:
+        gpa.compute(df)
+    assert str(e.value).count("\n  2025-fa Z ") == 20 and "...and 5 more" in str(e.value)
+
+
+def test_exactly_21_students_is_published():
+    res = gpa.compute(pd.DataFrame([_row("2025-fa", "Z", "1", "X, Ann", A=21)]), window_start="2020-fa")
+    assert res.course[("Z", "1")]["students"] == 21
+
+
+def test_real_fixture_passes_the_check():
+    gpa.check_withheld(gpa.load_gpa_csv(FIXTURES / "gpa" / "uiuc-gpa-dataset.csv"))
 
 
 def test_geneds_fixture():
