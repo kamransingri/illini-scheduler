@@ -19,9 +19,17 @@ const CONSENT_NODE: PreNode = { k: "consent" };
 // ---------- reading the text ----------
 
 const CODE = /\b([A-Z]{2,5}) (\d{3})\b/;
-const SKIP_SENTENCE = /^(restricted to|not intended|not open|open only|priority|prioriti|for .*majors only$)|cannot be taken|may not be taken|not be taken concurrently|credit is not given|no credit (is|will be) given/i;
+const SKIP_SENTENCE = /^(restricted to|not intended|not open|open only|priority|prioriti|for .*majors only$)|cannot be taken|may not be taken|not be taken concurrently|credit (is )?not given|no credit (is|will be) given|should also (enroll|register)/i;
+// "May be taken concurrently with SPAN 252.", "Concurrent enrollment with JOUR 317 is allowed.": those courses may share the term
+const ALONGSIDE = /^(?:(?:it|this course|the [a-z ]+? class) )?may be taken concurrently with\b|^concurrent (?:enrollment|registration) (?:with|in) .* (?:is )?(?:allowed|permitted)$/i;
+// "Concurrent enrollment in BIOE 302 is allowed." on its own: BIOE 302, which may share the term
+const ALONGSIDE_IN = /^concurrent (?:enrollment|registration) in /i;
 const MORE = /additional prerequisites|may require additional|see section|section (text|information)|see (class )?schedule|as specified for each/i;
-const SOFT = /recommend|encourag|preferred/i;
+// "…; strongly recommend one of …", "Recommended: ME 404", "and recommend concurrent enrollment in …": from there to the end of the clause
+const SOFT_LEAD = /(?:^|,\s*|\b(?:and|but)\s+)(?:it is\s+)?(?:(?:strongly|highly|also)\s+)?(?:recommend(?!ation)|encourag|prefer)\w*\b.*$/i;
+const SOFT_WORD = /\b(?:recommends?|recommended|encourag\w*|preferred)\b/i;
+// "MATH 314 or MATH 347 is recommended": the clause is a recommendation ("…; ECON 203; MATH 231 are recommended": all of them)
+const SOFT_TAIL = /\b(?:recommended|preferred|encouraged)\b/i;
 
 type Tok =
   | { t: "course"; code: string; with: boolean; qualified: boolean }
@@ -40,19 +48,19 @@ const LEX: [RegExp, (m: RegExpExecArray) => Tok | null][] = [
   [/\)/y, () => ({ t: "rp" })],
   [/[A-Z]{2,5} \d{3}\b/y, (m) => ({ t: "course", code: m[0], with: false, qualified: false })],
   [
-    /(?:credit (?:for |in )?or concurrent (?:registration|enrollment) in|concurrent (?:registration|enrollment) or credit in|completion of or concurrent (?:registration|enrollment) in|concurrent (?:registration|enrollment) in)\b/iy,
+    /(?:credit (?:for |in )?or (?:concurrent )?(?:registration|enrollment) in|(?:concurrent )?(?:registration|enrollment) or (?:prior )?(?:credit|completion) (?:in|of)|(?:completion of|prior) or concurrent (?:registration|enrollment) in|concurrent (?:registration|enrollment) (?:in|of)|(?:have )?completed or (?:be )?concurrently enrolled in)\b/iy,
     () => ({ t: "conc" }),
   ],
   [/(?:(?:the )?(?:consent|permission|approval) of (?:the )?[a-z ]*?(?:instructor|department|faculty|advisor|program director|program)|(?:instructor|department(?:al)?|faculty) (?:consent|approval|permission))\b/iy, () => ({ t: "consent" })],
-  [/with an? [A-F][+-]? or (?:higher|better|above)\b/iy, () => ({ t: "grade" })],
-  [/(?:one of:?|either)(?=\s|$)/iy, () => ({ t: "oneof" })],
+  [/(?:(?:with|maintaining|earning) )?(?:an? )?(?:(?:minimum )?grade of )?[A-F][+-]? or (?:higher|better|above)\b/iy, () => ({ t: "grade" })],
+  [/(?:(?:any )?(?:one )?of the following:?|(?:any )?one of:?|any of:?|either)(?=\s|$)/iy, () => ({ t: "oneof" })],
   [/,/y, () => ({ t: "sep", v: "," })],
   [/and\/or\b/iy, () => ({ t: "sep", v: "or" })],
   [/(?:and|with)\b/iy, () => ({ t: "sep", v: "and" })],
   [/or\b/iy, () => ({ t: "sep", v: "or" })],
   // words that add nothing to the rule
-  [/a combination of\b/iy, () => ({ t: "combo" })],
-  [/(?:completion of|completed|credit (?:in|for)|(?:is|are) required|required|both|successful)\b/iy, () => null],
+  [/(?:a combination of|both)\b/iy, () => ({ t: "combo" })],
+  [/(?:completion of|completed|credit (?:in|for)|(?:is|are) required|required|successful)\b/iy, () => null],
   [/[:.]/y, () => null],
   // anything else is a word the reader doesn't know: runs of them become one "can't tell" item
   [/[A-Za-z0-9'+&./-]+/y, (m) => ({ t: "other", bare: /^(equivalent|its|an|the)$/i.test(m[0]), text: m[0] })],
@@ -228,9 +236,11 @@ function parseClause(toks: Tok[]): PreNode {
     const lastLead = leads[leads.length - 1];
     const inner = segs.map((s) => s.seps);
     const singleBeforeLast = segs.slice(0, -1).every((s) => s.items.length === 1);
-    // "A or B, C, or D" could be "(A or B) and C, or D": an "or" inside an earlier item makes the list ambiguous
-    if (lastLead === "or" && inner.slice(0, -1).some((s) => s.includes("or"))) throw new Bail();
-    if (lastLead === "or" && leads.slice(0, -1).every((l) => l === null || l === "or")) node = { k: "any", of: segs.map(one) };
+    // "A or B, or C" is all OR; "A or B, C, or D" could be "(A or B) and C, or D": an "or" inside an earlier item
+    // makes a list with an unmarked item ambiguous
+    if (leads.every((l) => l === "or") && segs.slice(1).every((s) => !s.seps.includes("and"))) node = { k: "any", of: segs.map(one) };
+    else if (lastLead === "or" && inner.slice(0, -1).some((s) => s.includes("or"))) throw new Bail();
+    else if (lastLead === "or" && leads.slice(0, -1).every((l) => l === null || l === "or")) node = { k: "any", of: segs.map(one) };
     else if (lastLead === "and" && leads.slice(0, -1).every((l) => l === null || l === "and")) node = { k: "all", of: segs.map(one) };
     else if (leads.every((l) => l === null)) {
       const lastSeps = inner[inner.length - 1];
@@ -259,6 +269,8 @@ function simplify(n: PreNode): PreNode {
 export function parsePrereq(text: string | undefined): Prereq {
   let t = (text ?? "").replace(/\s+/g, " ").trim();
   if (!t) return { tree: null, more: false };
+  // a course named in a form or test isn't a course to take: "submit a \"Request to Enroll in IS 599\" form", "ESL 115 placement result"
+  t = t.replace(/["“][^"”]*["”]/g, " form ").replace(/\b[A-Z]{2,5} \d{3}(?= (?:placement|application)\b)/gi, "the");
   // parentheses: "(same as BIOC 446)" and remarks without a course go; "(… may be taken concurrently)" marks the clause
   t = t.replace(/\(([^()]*)\)/g, (_, inner: string) => (/concurrent/i.test(inner) ? " ~CONC~ " : /^same as/i.test(inner.trim()) || !CODE.test(inner) ? " " : `(${inner})`));
   // "MATH 220/MATH 221", "MATH 220/221": either one
@@ -268,6 +280,8 @@ export function parsePrereq(text: string | undefined): Prereq {
   });
   let more = false;
   const sentences: PreNode[] = [];
+  const alongside = new Set<string>();
+  const alongIn = new Set<string>();
   for (const raw of t.split(/(?<=\.)\s+(?=[A-Z(])/)) {
     const s = raw.replace(/\.$/, "").trim();
     if (!s) continue;
@@ -276,20 +290,37 @@ export function parsePrereq(text: string | undefined): Prereq {
       continue;
     }
     if (SKIP_SENTENCE.test(s)) continue;
-    if (SOFT.test(s) && !/requir/i.test(s)) continue; // "MATH 231 is recommended."
+    if (ALONGSIDE.test(s)) {
+      for (const m of s.matchAll(new RegExp(CODE, "g"))) {
+        alongside.add(m[0]);
+        if (ALONGSIDE_IN.test(s)) alongIn.add(m[0]);
+      }
+      continue;
+    }
+    if (SOFT_WORD.test(s) && !CODE.test(s) && !/consent|permission|approval|standing|requir/i.test(s)) continue; // "The department strongly recommends …", "Prior training preferred."
+    // "X required, Y preferred": only the soft part goes; otherwise a soft clause goes whole
+    const required = /requir/i.test(s);
     // clauses: ";" is AND, a clause opening with "or" is an alternative to everything before it
+    const clauses = s.split(";").map((x) => x.trim().replace(SOFT_LEAD, "").trim());
+    for (let k = 0; k < clauses.length; k++) {
+      if (required || !SOFT_TAIL.test(clauses[k])) continue;
+      const plural = /\bare\b[^;]*$/i.test(clauses[k]); // "ECON 203; MATH 231 are recommended"
+      for (let j = plural ? 0 : k; j <= k; j++) clauses[j] = "";
+    }
     const alts: PreNode[] = [];
     let cur: PreNode[] = [];
-    for (let c of s.split(";").map((x) => x.trim())) {
+    for (let c of clauses) {
       if (!c || /^(for .*majors only|restricted to|open only to)/i.test(c)) continue;
       const isAlt = /^or\b/i.test(c);
       c = c.replace(/^(or|and)\b\s*/i, "");
       // "STAT 410 preferred", "MATH 225 highly recommended": not requirements
       c = c.replace(/,?\s*(?:and\s+)?[^,;]*\b(?:preferred|recommended|encouraged)\b[^,;]*/gi, "");
+      if (!c.trim()) continue;
       const conc = c.includes("~CONC~");
       c = c.replace(/~CONC~/g, " ");
       let node: PreNode;
       try {
+        if (/\b(?:these|all) (?:two|three|four|five|of these)\b/i.test(c)) throw new Bail(); // "MATH 461, STAT 410, STAT 420, or equivalent coursework for these three courses"
         const toks = lex(c);
         if (!toks) throw new Bail();
         if (conc) for (const tok of toks) if (tok.t === "course") tok.with = true;
@@ -307,8 +338,11 @@ export function parsePrereq(text: string | undefined): Prereq {
     if (cur.length) alts.push({ k: "all", of: cur });
     if (alts.length) sentences.push({ k: "any", of: alts });
   }
+  for (const code of alongIn) if ([...t.matchAll(new RegExp(`\\b${code}\\b`, "g"))].length === 1) sentences.push({ k: "course", code, with: true });
   if (!sentences.length) return { tree: more ? OTHER : null, more };
-  return { tree: simplify({ k: "all", of: sentences }), more };
+  const mark = (n: PreNode): PreNode =>
+    n.k === "course" ? (alongside.has(n.code) ? { ...n, with: true } : n) : n.k === "all" || n.k === "any" ? { k: n.k, of: n.of.map(mark) } : n;
+  return { tree: simplify(mark({ k: "all", of: sentences })), more };
 }
 
 const cache = new Map<string, Prereq>();
