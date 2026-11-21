@@ -130,6 +130,13 @@ account. The checklist links to it, and the student adds the Illinois course as 
   IB table), AP or IB, an exam and a score, plus the subscore when an AP score depends on one (Calculus BC 3: the AB
   subscore, with "no subscore"; Music Theory 4 and 5: the aural subscore) or the level for IB (asked only when the
   subject has both). The English Literature rows read the English Language score already in the list.
+- **Pasting scores.** "Paste your AP or IB scores" under the form takes the text of College Board's score page or
+  the IB's results page (`web/lib/scoreimport.ts`). It matches exam names to the year's table, including short and
+  old names ("Calc BC", "US Gov"), reads the Calculus BC AB and Music Theory aural subscores, keeps the highest
+  score of a retaken exam and says so, and lists the IB diploma core (Theory of Knowledge, Extended Essay, total
+  points) as not used for credit. A preview shows what was found, what isn't recognised and what would be replaced;
+  Apply writes the same `a=` and `i=` lists typing does. The text is parsed in the browser and never sent. Sample
+  pages are in `web/tests/unit/fixtures/scoreimport/`.
 - **College.** Calculus AB and BC have separate Grainger rows; the college comes from the chosen program. With no
   program, the other rows are used and the panel says so.
 - **Stored as scores, not courses.** The link carries `a=CALCBC-3-4,CHEM-5` (exam, score, subscore),

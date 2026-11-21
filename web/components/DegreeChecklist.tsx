@@ -14,6 +14,7 @@ import CopyButton from "./CopyButton";
 import FourYearPlan from "./FourYearPlan";
 import ScoreBreakdown from "./course/ScoreBreakdown";
 import ProgramPicker from "./ProgramPicker";
+import ScorePaste from "./ScorePaste";
 import { loadIndex } from "./SearchBox";
 import { Badge } from "./ui/Badge";
 import CourseRow, { CourseRowHeader, type CourseCols } from "./ui/CourseRow";
@@ -267,6 +268,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
             ))}
           <AddCourse st={st} update={update} deg={deg} index={index} />
           <ApForm st={st} update={update} table={apTable} ibTable={ibTable} error={apError || ibError} />
+          <ScorePaste st={st} update={update} table={apTable} ibTable={ibTable} />
         </div>
         <MyCourseList
           st={st}
