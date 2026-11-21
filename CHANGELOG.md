@@ -31,9 +31,9 @@ history).
 - Warnings in the four-year plan (#116): a course placed in a term it doesn't usually run in ("Usually runs in fall
   only, not in Spring 2028", from the last four years of offerings), and a term over the 18-hour limit or under 12
   hours (not full-time), as in the schedule builder. Moving the course clears its warning.
-- Minors whose catalog page asks for coursework distinct from the major say how much you have (#112). Eight minors
-  ask for six advanced hours (or two advanced courses) that don't also count toward the major, and most toward
-  another minor too. Their checklist shows the rule in the catalog's words, which of your courses count, which don't
+- Minors whose catalog page asks for coursework distinct from the major say how much you have (#112). 30 minors
+  ask for six hours (usually advanced, or two advanced courses for Animal Sciences) that don't also count toward the
+  major, and almost all toward another minor too. Their checklist shows the rule in the catalog's words, which of your courses count, which don't
   because your major uses them, and flags a minor that leans on courses your major already uses.
 
 ### Fixed

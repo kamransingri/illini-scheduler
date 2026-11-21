@@ -14,6 +14,12 @@ generated: '2026-11-17'
 total_hours: 21
 notes: []
 double_counting: []
+major_overlap:
+- distinct_hours: 6
+  min_level: 300
+  minors_too: true
+  quote: "At least six (6) hours of coursework must be advanced courses (300- or 400-level) and distinct from credit earned for the student's major or another minor."
+  source: https://catalog.illinois.edu/undergraduate/engineering/minors/international-engineering/
 groups:
 - name: Degree Requirements
   section: Degree Requirements

@@ -14,6 +14,11 @@ generated: '2026-11-17'
 total_hours: 18
 notes: []
 double_counting: []
+major_overlap:
+- distinct_hours: 6
+  min_level: 300
+  quote: "Students must complete at least six hours of advanced course work for the minor distinct from credits earned for their major."
+  source: https://catalog.illinois.edu/undergraduate/media/minors/public-relations/
 groups:
 - name: Foundations of public relations
   section: Requirements
