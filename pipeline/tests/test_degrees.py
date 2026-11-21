@@ -179,7 +179,7 @@ def test_major_overlap_rules_are_checked_and_exported(tmp_path):
 
 
 def test_minor_overlap_rules_in_the_data_quote_their_own_page():
-    # #112: 30 minors' catalog pages ask for coursework distinct from the major (DECISIONS D43, D45)
+    # #112: 30 minors' catalog pages ask for coursework distinct from the major (DECISIONS D43, D47)
     files = sorted(degrees.DEGREES_DIR.glob("*-minor.yaml"))
     with_rules = {}
     for f in files:

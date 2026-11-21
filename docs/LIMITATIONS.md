@@ -50,6 +50,10 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
   schedule than Course Explorer lists won't match. A term the Registrar hasn't published gets estimated dates, and the
   builder and every exported event say so.
 - **Search by CRN** covers the next and the current term only.
+- **Building locations** come from OpenStreetMap (`buildings.json`, #93). About 97% of next term's in-person
+  meetings have one; a building OSM doesn't have (the School of Information Sciences building, the Veterinary
+  Teaching Hospital) or a name nobody has checked in `data/buildings.csv` has none. A building is one point at its
+  centre, not its entrances.
 - **Only the renumberings in `data/renumbered.csv` are linked** (33 in 2026-11, including the 2026-2027 French,
   German, Italian, Spanish and Scandinavian sequences). Each needs a source, so a renumbering the catalog doesn't
   state stays unlinked and that course's history stops at the change. My courses and the degree checklist don't

@@ -1,0 +1,64 @@
+# Building names in the section data that don't match OpenStreetMap as they are (#93, pipeline/buildings.py).
+# name = as Course Explorer writes it; osm = the OSM name (name, official_name, alt_name or short_name) it is, checked
+# by hand on openstreetmap.org; "-" = no location on purpose (off campus, or not one building), and the note says why.
+# Names matching OSM after ignoring case, "&" and punctuation need no row. Never add a row from similarity alone: a
+# name nobody has checked stays without a location and is listed by `python -m pipeline.buildings`.
+name,osm,note
+"ACES Lib, Info & Alum Ctr",Funk Library,"ACES Library, Information and Alumni Center; OSM alt_name ""ACES Library"""
+Agricultural Bioprocess Lab,Agricultural Bioprocess Laboratory,
+Agricultural Engr Sciences Bld,Agricultural Engineering Sciences,
+Allen Residence Hall,Allen Hall,
+"Art-East Annex, Studio 2",Art Annex Studio 2,
+Business Instructional Fac,Business Instructional Facility,
+Chemical and Life Sci Lab,Chemical & Life Sciences Building A,"CLSL is buildings A, B and C side by side; Course Explorer doesn't say which, so A"
+Christopher Hall,Doris Kelley Christopher Hall,
+Civil & Envir Eng Bldg,Civil and Environmental Engineering Building,
+Civil Eng Hydrosystems Lab,Ven Te Chow Hydrosystems Laboratory,
+Coordinated Science Lab,Coordinated Science Laboratory,
+Ctr Wounded Veterans Higher Ed,Chez Veterans Center,Chez Family Foundation Center for Wounded Veterans in Higher Education
+E R Madigan Laboratory,Edward R. Madigan Laboratory,
+Early Child Development Lab,Early Child Development Laboratory,
+Electrical & Computer Eng Bldg,Electrical and Computer Engineering Building,
+FAR Meeting Space,Florida Avenue Residence Halls,FAR = Florida Avenue Residence Halls
+GYM Campus Recreation Center East,Campus Recreation Center East,"Seat pages: room ""MAC GYM"" split after its first word"
+Grad Sch of Lib & Info Science,Graduate School of Library and Information Science,
+Henry Administration Bldg,Henry Administration Building,
+Illinois Street Residence Lng,Illinois Street Residence Halls,The ISR lounge
+Inst Gov & Public Affairs Bldg,Institute of Government and Public Affairs,
+Inst Labor & Industrial Rel,School of Labor & Employment Relations,The Institute of Labor and Industrial Relations is now the School of Labor and Employment Relations
+Institute for Genomic Biology,Institute for Genomic Biology (IGB),
+Irwin Doctoral Hall,Irwin Doctoral Study Hall,
+Krannert Center for Perf Arts,Krannert Center for the Performing Arts,
+"LAB Art-East Annex, Studio 2",Art Annex Studio 2,"Seat pages: room ""FAB LAB"" split after its first word"
+Law Building,University of Illinois College of Law,504 E Pennsylvania Ave
+Lincoln Avenue Residence Hall,Lincoln Avenue Residence Halls,
+"Literatures, Cultures, & Ling","Literatures, Cultures & Linguistics Building",
+Loomis Laboratory,Loomis Laboratory of Physics,
+Materials Science & Eng Bld,Materials Science & Engineering Building,
+Meat Science Laboratory,Meat Science Lab,
+Micro & Nanotechnology Lab,Holonyak Micro and Nanotechnology Laboratory,
+Nat Center for Suprcomp Appl,National Center for Supercomputing Applications,1205 W Clark St (not the Petascale Computing Facility)
+National Soybean Res Ctr,National Soybean Research Center,
+Newmark Civil Engineering Bldg,Newmark Civil Engineering Laboratory,
+Nuclear Radiations Laboratory,Nuclear Radiation Laboratory,
+OSF Heart of Mary,OSF HealthCare Sacred Heart Medical Center – Urbana,"OSF Heart of Mary Medical Center, 1400 W Park St, Urbana; OSM has the hospital at that address under this name"
+Observatory,University of Illinois Observatory,
+POOL Activities & Recreation Center,Activities and Recreation Center,"Seat pages: room ""INDR POOL"" split after its first word"
+Pennsylvania Lounge Bld - PAR,Pennsylvania Avenue Residence Halls,PAR = Pennsylvania Avenue Residence Halls
+Plant Sciences Laboratory,Plant Sciences Laboratory and Greenhouse,
+Seitz Materials Research Lab,Materials Research Laboratory,Renamed for Frederick Seitz; OSM keeps the old name
+Sidney Lu Mech Engr Bldg,Sidney Lu Mechanical Engineering Building,
+Siebel Center for Comp Sci,Siebel Center for Computer Science,
+Speech & Hearing Science Bldg,Speech and Hearing Science Building,
+Student Dining & Res Program,Student Dining and Residential Programs,
+Vet Med Basic Sciences Bldg,Veterinary Medicine Basic Sciences Building,
+Wardall Hall - ISR,Wardall Hall,
+200 S Wacker,-,"Off campus: the Illini Center, 200 S Wacker Dr, Chicago"
+Chicago IL,-,Off campus
+Danville IL,-,Off campus
+Discovery Partners Inst. CHI,-,"Off campus: Discovery Partners Institute, Chicago"
+Illini Center,-,"Off campus: 200 S Wacker Dr, Chicago"
+Oakton Com Coll Des Plaines IL,-,"Off campus: Oakton College, Des Plaines"
+Outdoor Space,-,Not a building
+South Farms,-,"Farmland south of campus, not one building"
+Washington DC,-,Off campus

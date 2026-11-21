@@ -1,6 +1,6 @@
 import json
 
-from pipeline import course_explorer, db, exam_format, export, gpa, instructors, offerings
+from pipeline import buildings, course_explorer, db, exam_format, export, gpa, instructors, offerings
 from pipeline.config import FIXTURES
 from pipeline.export import bundle_opts, bundles, credit_range
 from tools import api_docs
@@ -45,11 +45,30 @@ def test_export_end_to_end(tmp_path):
     instructors.run(conn, df, False, tmp_path / "x.csv", tmp_path / "u.csv", tmp_path / "rmp")
     offerings.run(conn, "2027-sp")
     exam_format.run(conn)
+    buildings.run(conn, FIXTURES / "osm" / "campus.json", "2027-sp")
     msg = export.run(conn, tmp_path / "out")
     assert "course files" in msg
+    # every in-person meeting's building on the reference courses' pages has a location (#93)
+    places = json.loads((tmp_path / "out" / "buildings.json").read_text())
+    assert "OpenStreetMap" in places["credit"] and places["osm_base"]
+    met = {m["b"] for c in ("CS/124", "STAT/107", "RHET/105") for s in json.loads(
+        (tmp_path / "out" / "course" / f"{c}.json").read_text())["terms"]["2027-sp"]["sections"] for m in s["meetings"]}
+    met -= {"", "Location Pending"}
+    assert met and met <= set(places["buildings"])
+    assert all({"name", "short", "lat", "lon"} <= set(p) for p in places["buildings"].values())
     cs = json.loads((tmp_path / "out" / "course" / "CS" / "124.json").read_text())
     assert cs["gpa"]["recent"] and cs["terms"]["2027-sp"]["sections"]
     assert cs["terms"]["2027-sp"]["status_known"] is False  # pre-registration snapshot
+    # no GPA rows in the window (FERPA withholds its small sections, D2.5): no GPA anywhere, never a borrowed one (#192)
+    rhet = json.loads((tmp_path / "out" / "course" / "RHET" / "105.json").read_text())
+    assert rhet["gpa"] is None and rhet["terms"]["2027-sp"]["sections"]
+    assert rhet["instructors"] and all(p["gpa"] is None for p in rhet["instructors"].values())
+    rhet_search = next(c for c in json.loads((tmp_path / "out" / "search.json").read_text())["courses"]
+                       if (c["s"], c["n"]) == ("RHET", "105"))
+    assert rhet_search["gpa"] is None
+    rhet_gened = [r for r in json.loads((tmp_path / "out" / "geneds.json").read_text())
+                  if (r["s"], r["n"]) == ("RHET", "105")]
+    assert rhet_gened and all(r["gpa"] is None and r["pctA"] is None for r in rhet_gened)
     math = json.loads((tmp_path / "out" / "course" / "MATH" / "221.json").read_text())
     assert "2027-sp" not in math["terms"] and math["pattern"]["label"].startswith("Fall only")
     meta = json.loads((tmp_path / "out" / "meta.json").read_text())

@@ -6,6 +6,7 @@ import argparse
 import sys
 import time
 from datetime import UTC, datetime
+from pathlib import Path
 
 from . import db
 from .config import DATA, RAW
@@ -32,7 +33,7 @@ def main(argv: list[str] | None = None) -> int:
     subjects = None if args.subjects == "all" else {s.strip().upper() for s in args.subjects.split(",")}
     terms = [t.strip() for t in args.terms.split(",") if t.strip()]
 
-    from . import availability, course_explorer, exam_format, export, gpa, instructors, offerings, renumbered
+    from . import availability, buildings, course_explorer, exam_format, export, gpa, instructors, offerings, renumbered
 
     if args.export_only:
         from . import config
@@ -54,6 +55,7 @@ def main(argv: list[str] | None = None) -> int:
         cat_path = lambda t: FIXTURES / "course-catalog" / f"{t}.csv"  # noqa: E731
         gpa_path, gened_path = FIXTURES / "gpa" / "uiuc-gpa-dataset.csv", FIXTURES / "gpa" / "gened-courses.csv"
         tre_path = FIXTURES / "none.csv"
+        osm_path: Path | None = FIXTURES / "osm" / "campus.json"
         dates: dict[str, str] = {}
         args.source, args.no_rmp = "csv", True
     else:
@@ -63,6 +65,11 @@ def main(argv: list[str] | None = None) -> int:
         cat_path = catalog_path
         gpa_path, gened_path = WADE_DIR / "gpa" / "uiuc-gpa-dataset.csv", WADE_DIR / "geneds" / "gened-courses.csv"
         tre_path = WADE_DIR / "teachers-ranked-as-excellent" / "uiuc-tre-dataset.csv"
+        try:
+            osm_path = buildings.fetch()
+        except buildings.BuildingsUnavailable as e:  # the site builds without locations, as it does without RMP
+            log(f"  OpenStreetMap unavailable, no building locations this build: {e}")
+            osm_path = None
     conn = db.connect()
     db.set_meta(conn, "built_at", datetime.now(UTC).isoformat(timespec="seconds"))
     db.set_meta(conn, "current_term", CURRENT_TERM)
@@ -91,7 +98,12 @@ def main(argv: list[str] | None = None) -> int:
     df_as_taught = df  # before renumbering: who taught in a subject, for matching names (#12)
     df = renumbered.apply_gpa(df, rename)
     log(f"  {len(rename.links)} renumbered courses linked (data/renumbered.csv)")
-    res = gpa.compute(df)
+    try:
+        res = gpa.compute(df)
+    except gpa.WithheldGradeData as e:
+        log(str(e))
+        conn.close()
+        return 1
     gpa.store(conn, res)
     gpa.store_geneds(conn, gpa.load_geneds(gened_path))
     db.set_meta(conn, "gpa_window", f"{res.window[0]},{res.window[1]}")
@@ -114,6 +126,14 @@ def main(argv: list[str] | None = None) -> int:
 
     log("phase 5: exam format")
     log(f"  {exam_format.run(conn)}")
+    conn.commit()
+
+    log("phase 6: building locations (OpenStreetMap)")
+    if osm_path is not None:
+        log(f"  {buildings.run(conn, osm_path, NEXT_TERM)}")
+    else:
+        conn.execute("DELETE FROM buildings")
+        db.set_meta(conn, "buildings_osm_base", "")
     conn.commit()
 
     if not args.skip_export:

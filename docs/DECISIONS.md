@@ -77,6 +77,14 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D2.5 RHET 105 has no GPA data in the window.** Its sections hold at most 20 students, and FERPA exclusions drop
   those from the dataset after 2013. The UI says "No grade data" and doesn't borrow numbers from other courses.
 - **D2.6 Instructor identity** for GPA rows is `names.instructor_key` ("last|first"); see Phase 3.
+- **D2.7 Never publish what the University withholds (#192).** The University leaves small sections out of the GPA
+  data under FERPA, because their grades could identify a student. Wade's README, quoting the University's FOIA
+  answer: "courses with 20 or fewer students were excluded (the smallest course in the dataset has 21 students)."
+  `gpa.compute` checks every row it is given, inside the GPA window or not, and stops the build
+  (`gpa.WithheldGradeData`, `make data` exits 1) when `Students` or the letter-grade total (A+ to F, W not counted)
+  is under 21, naming up to 20 of the rows. It doesn't drop them quietly: a small row means the source changed or
+  someone added data, and a person should look. A course with no rows (RHET 105, D2.5) keeps showing "No grade data";
+  nothing fills it in from another course, term or source.
 
 ## Phase 3 — Instructor matching and Rate My Professors
 
@@ -1216,14 +1224,41 @@ Every judgment call made during the autonomous build, newest phase last.
   into rules (#21); the free-text check the checklist uses ("check prerequisites") would flag courses with "or"
   alternatives wrongly. That warning is left for #21.
 
+## Building locations (2026-11-21, issue #93)
+
+- **D46.1 OpenStreetMap, not Google Maps.** One Overpass query a week (cached in `data/raw/osm/`, and in CI like the
+  RMP cache) returns every named building and campus place around Urbana-Champaign. OSM's data is under the ODbL, so
+  the coordinates can be stored in `buildings.json` and shipped; the file and API.md carry its credit. Google's
+  geocoding needs a billing account and its terms don't allow keeping the coordinates in a file rebuilt every night,
+  and the site has no server to hide a key behind. A student who wants Google Maps can be sent there with a plain link,
+  which needs no key.
+- **D46.2 Exact names, never similarity.** A building name matches an OSM `name`, `official_name`, `alt_name`,
+  `short_name` or `old_name` after ignoring case, "&" and punctuation. Street-address names ("1205 W Nevada") match an
+  OSM building with that house number on that street. Everything else goes through `data/buildings.csv`, one row per
+  name checked by hand, with "-" for places that are off campus (Chicago, Washington DC) or not one building (South
+  Farms). Fuzzy matching would have to choose for "Child Development Laboratory" between two child-development
+  buildings on Nevada Street; a name nobody has checked stays without a location and `python -m pipeline.buildings`
+  lists it.
+- **D46.3 When names repeat, buildings win.** "Illinois Street Residence Halls" is a building and three entrance points
+  in OSM: buildings come before other places, and ways and relations before points.
+- **D46.4 Room words left on the name.** Seat pages split "FAB LAB Art-East Annex, Studio 2" after the first word, so
+  the building arrives as "LAB Art-East Annex, Studio 2" (`availability._split_place`). The four such names are rows
+  in `data/buildings.csv`; the splitter is unchanged, because a room can't be told from a building word in general.
+- **D46.5 Coverage, 2026-11-21.** 107 building names located, 7 off campus, 11 without a location: 97.3% of Spring
+  2027's in-person meetings (8,356 of 8,589). The largest gap is the School of Information Sciences building (614 E
+  Daniel St, 105 meetings), which OSM doesn't have; adding it to OpenStreetMap itself would fix it here on the next
+  refresh. `meta.json` reports the share every build.
+- **D46.6 OSM down.** The build goes on with an empty `buildings` map and `meta.buildings.osm_base: null`, as it does
+  without Rate My Professors; a cached answer up to any age is used before giving up.
+
 ## Minors' overlap with the major: the Overview tabs (2026-11-21, issue #112)
 
-- **D46.1 Read from the pages already cached.** D43.2 left the minor pages' Overview tabs unread because the catalog
+- **D47.1 Read from the pages already cached.** D43.2 left the minor pages' Overview tabs unread because the catalog
   now challenges scripts. The pages cached on 2026-11-17 (`data/raw/catalog/*-minor.html`, before the challenge)
   hold every tab, Overview included, so they were read from disk: no new requests, nothing worked around. 22 more
   minors state a rule there, so 30 of the 125 minors now have one. Each quote was checked word for word against its
   cached page.
-- **D46.2 The 22.** Six hours that don't count toward the major or another minor, 300-level or above: Adult
+- **D47.2 The 22.** Six hours that don't count toward the major or another minor, 300-level or above: Adult
   Development, American Indian Studies, Art History, Child Health and Well-Being, Aging and Health, Health
   Administration, Public Health, Crop and Soil Management, Data Science, Gender and Women's Studies, Horticulture,
   International Engineering, LGBT/Queer Studies, Semiconductor Engineering, Theatre, Wildlife and Fisheries
@@ -1231,11 +1266,11 @@ Every judgment call made during the autonomous build, newest phase last.
   Relations. At any level: Dance, Disability Studies and Recreation, Sport & Tourism, whose sentence asks for "six
   hours of advanced" courses and, separately, "six hours of coursework" that are distinct, so the distinct hours
   aren't held to a level. "Not used in any other major or minor" (the three health minors) reads as `minors_too`.
-- **D46.3 Not encoded: rules about one named major.** Natural Resource Conservation ("may not be counted toward the
+- **D47.3 Not encoded: rules about one named major.** Natural Resource Conservation ("may not be counted toward the
   major in Natural Resources and Environmental Sciences") and LGBT/Queer Studies with a Gender & Women's Studies
   major ("classes may not count towards both") ban any overlap with one major, which `major_overlap` can't say. Nor
   are eligibility rules ("not open to students majoring in chemical engineering", Advertising, Media, Dance,
   Biomolecular Engineering, Political and Civic Leadership, Wildlife and Fisheries, Horticulture and Environmental
   Economics & Law for some concentrations). Both stay in the catalog's words on the minor's page.
-- **D46.4 The importer still can't refresh.** Re-importing needs the pages fetched again, which the challenge still
+- **D47.4 The importer still can't refresh.** Re-importing needs the pages fetched again, which the challenge still
   blocks; the cached pages are what `--offline` re-parses, and `major_overlap` survives a re-import (D43.5).

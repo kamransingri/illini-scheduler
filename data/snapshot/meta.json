@@ -1,18 +1,18 @@
 {
  "format_version": 1,
- "built_at": "2026-11-20T17:56:32+00:00",
+ "built_at": "2026-11-21T20:07:58+00:00",
  "current_term": "2026-fa",
  "next_term": "2027-sp",
  "terms": {
   "2026-fa": {
    "label": "Fall 2026",
    "source": "course-explorer-web + web availability",
-   "checked_at": "2026-11-20T15:33:35+00:00"
+   "checked_at": "2026-11-21T15:25:53+00:00"
   },
   "2027-sp": {
    "label": "Spring 2027",
    "source": "course-explorer-web + web availability",
-   "checked_at": "2026-11-20T14:12:37+00:00"
+   "checked_at": "2026-11-21T14:01:26+00:00"
   }
  },
  "gpa": {
@@ -447,13 +447,13 @@
   },
   "BUS": {
    "gpa_matched": 15,
-   "names": 22,
-   "gpa_pct": 68.2,
+   "names": 23,
+   "gpa_pct": 65.2,
    "primary_matched": 15,
-   "primary_names": 22,
-   "primary_gpa_pct": 68.2,
+   "primary_names": 23,
+   "primary_gpa_pct": 65.2,
    "rmp_matched": 10,
-   "rmp_pct": 45.5
+   "rmp_pct": 43.5
   },
   "CB": {
    "gpa_matched": 0,
@@ -567,13 +567,13 @@
   },
   "CLE": {
    "gpa_matched": 8,
-   "names": 64,
-   "gpa_pct": 12.5,
+   "names": 66,
+   "gpa_pct": 12.1,
    "primary_matched": 8,
-   "primary_names": 64,
-   "primary_gpa_pct": 12.5,
+   "primary_names": 66,
+   "primary_gpa_pct": 12.1,
    "rmp_matched": 6,
-   "rmp_pct": 9.4
+   "rmp_pct": 9.1
   },
   "CMN": {
    "gpa_matched": 24,
@@ -1106,14 +1106,14 @@
    "rmp_pct": 18.8
   },
   "IS": {
-   "gpa_matched": 116,
-   "names": 177,
-   "gpa_pct": 65.5,
+   "gpa_matched": 114,
+   "names": 169,
+   "gpa_pct": 67.5,
    "primary_matched": 114,
    "primary_names": 156,
    "primary_gpa_pct": 73.1,
    "rmp_matched": 63,
-   "rmp_pct": 35.6
+   "rmp_pct": 37.3
   },
   "ITAL": {
    "gpa_matched": 10,
@@ -1387,13 +1387,13 @@
   },
   "MUSC": {
    "gpa_matched": 28,
-   "names": 82,
-   "gpa_pct": 34.1,
+   "names": 83,
+   "gpa_pct": 33.7,
    "primary_matched": 27,
-   "primary_names": 76,
-   "primary_gpa_pct": 35.5,
+   "primary_names": 77,
+   "primary_gpa_pct": 35.1,
    "rmp_matched": 20,
-   "rmp_pct": 24.4
+   "rmp_pct": 24.1
   },
   "MUSE": {
    "gpa_matched": 1,
@@ -1906,9 +1906,14 @@
    "rmp_pct": 100.0
   }
  },
+ "buildings": {
+  "osm_base": "2026-05-31T22:37:44Z",
+  "located": 119,
+  "share": 0.9673
+ },
  "repo_url": "https://github.com/kamransingri/illini-scheduler",
  "live_url": "https://raw.githubusercontent.com/kamransingri/illini-scheduler/live-seats/live.json",
- "n_courses": 7128,
+ "n_courses": 7132,
  "history_terms": [
   "2022-fa",
   "2023-sp",

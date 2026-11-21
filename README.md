@@ -42,10 +42,13 @@ Formula: [docs/DECISIONS.md](docs/DECISIONS.md) D13.18.
 | [Teachers Ranked as Excellent](https://github.com/wadefagen/datasets/tree/main/teachers-ranked-as-excellent) | Instructor badges | Fall 2020 to Summer 2025, instructors only |
 | [Grade disparity view](https://waf.web.engr.illinois.edu/discovery/grade_disparity_between_sections_at_uiuc/) | Design reference for the instructor comparison | Recomputed from the GPA dataset |
 | Rate My Professors (unofficial GraphQL) | Ratings, tags, snippets | Optional; cached 7 days; the site works without it |
+| [OpenStreetMap](https://www.openstreetmap.org/copyright) (Overpass API) | Where each building is | Cached 7 days; 97% of next term's in-person meetings; names that don't match go through `data/buildings.csv`. © OpenStreetMap contributors, ODbL |
 | Student notes (`data/notes/*.yaml`) | Exam and grading notes | Added by a maintainer, each with a source (students review courses on Rate My Professors) |
 | [Academic Catalog](https://catalog.illinois.edu/) | Degree requirements (`data/degrees/*.yaml`) | All 171 undergraduate programs, 2026-2027 |
 | [CITL AP credit tables](https://citl.illinois.edu/current-cutoff-scores) | Courses each AP score gives (`data/ap-credit/*.yaml`) | Students entering 2024-2025 to 2026-2027, copied by hand |
 | [CITL IB credit table](https://citl.illinois.edu/current-cutoff-scores) | Courses each IB score and level gives (`data/ib-credit/*.yaml`) | Students entering 2026-2027, checked by hand |
+
+Students see a short version of this table on the site's `/data-sources/` page.
 
 Self-Service (Banner) needs a NetID and is never scraped: the site only links to it and copies CRNs. Seat counts and
 waitlists live only there, so the site knows open / restricted / closed, not how many seats are left.

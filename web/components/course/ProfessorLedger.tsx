@@ -9,6 +9,7 @@ import GradeBar from "../GradeBar";
 import { Badge, Delta, SeatStatus } from "../ui/Badge";
 import Icon from "../ui/Icon";
 import Info from "../ui/Info";
+import RmpMeters from "./RmpMeters";
 import ScoreBreakdown from "./ScoreBreakdown";
 
 type Ctx = { course: Course; term: string | null; rmpStatus: string };
@@ -325,11 +326,7 @@ function ProfessorPanel({ p, ctx }: { p: ProfEntry; ctx: Ctx }) {
       <section aria-label={`${p.ins.name}: reviews and format`}>
         <h4 className="font-semibold text-heading">Rate My Professors</h4>
         {rmp && rmp.num_ratings > 0 ? (
-          <p className="tnum text-sm text-muted">
-            Quality {rmp.rating?.toFixed(1) ?? "–"} of 5, difficulty {rmp.difficulty?.toFixed(1) ?? "–"} of 5,{" "}
-            {rmp.would_take_again === null ? "would-take-again not reported" : `${Math.round(rmp.would_take_again)}% would take again`}, from{" "}
-            {fmtInt(rmp.num_ratings)} ratings (all courses), fetched {fmtDate(rmp.fetched_at)}.
-          </p>
+          <RmpMeters rmp={rmp} />
         ) : null}
         <div className="mt-2">
           <Reviews p={p} course={course} />

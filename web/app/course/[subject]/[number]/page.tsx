@@ -95,7 +95,12 @@ export default async function CoursePage({ params }: Props) {
                 <span className="font-sans text-lg font-semibold text-muted">No grade data</span>
               )
             }
-            sub={g ? (g.recent !== null ? `${fmtInt(g.recent_students)} students, ${recentLabel}` : `All-time, ${termRange(g.first_term, g.last_term)}`) : "Sections of 20 or fewer students are withheld"}
+            sub={g ? (g.recent !== null ? `${fmtInt(g.recent_students)} students, ${recentLabel}` : `All-time, ${termRange(g.first_term, g.last_term)}`) : (
+                    <Link href="/data-sources/#gpa" className="underline hover:text-action">
+                      Sections of 20 or fewer students are withheld
+                    </Link>
+                  )
+            }
             source={
               g
                 ? g.recent !== null
