@@ -1223,3 +1223,30 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D45.4 Prerequisites wait for #21.** The plan can't tell whether a prerequisite is met until prerequisites are read
   into rules (#21); the free-text check the checklist uses ("check prerequisites") would flag courses with "or"
   alternatives wrongly. That warning is left for #21.
+
+## Building locations (2026-11-21, issue #93)
+
+- **D46.1 OpenStreetMap, not Google Maps.** One Overpass query a week (cached in `data/raw/osm/`, and in CI like the
+  RMP cache) returns every named building and campus place around Urbana-Champaign. OSM's data is under the ODbL, so
+  the coordinates can be stored in `buildings.json` and shipped; the file and API.md carry its credit. Google's
+  geocoding needs a billing account and its terms don't allow keeping the coordinates in a file rebuilt every night,
+  and the site has no server to hide a key behind. A student who wants Google Maps can be sent there with a plain link,
+  which needs no key.
+- **D46.2 Exact names, never similarity.** A building name matches an OSM `name`, `official_name`, `alt_name`,
+  `short_name` or `old_name` after ignoring case, "&" and punctuation. Street-address names ("1205 W Nevada") match an
+  OSM building with that house number on that street. Everything else goes through `data/buildings.csv`, one row per
+  name checked by hand, with "-" for places that are off campus (Chicago, Washington DC) or not one building (South
+  Farms). Fuzzy matching would have to choose for "Child Development Laboratory" between two child-development
+  buildings on Nevada Street; a name nobody has checked stays without a location and `python -m pipeline.buildings`
+  lists it.
+- **D46.3 When names repeat, buildings win.** "Illinois Street Residence Halls" is a building and three entrance points
+  in OSM: buildings come before other places, and ways and relations before points.
+- **D46.4 Room words left on the name.** Seat pages split "FAB LAB Art-East Annex, Studio 2" after the first word, so
+  the building arrives as "LAB Art-East Annex, Studio 2" (`availability._split_place`). The four such names are rows
+  in `data/buildings.csv`; the splitter is unchanged, because a room can't be told from a building word in general.
+- **D46.5 Coverage, 2026-11-21.** 107 building names located, 7 off campus, 11 without a location: 97.3% of Spring
+  2027's in-person meetings (8,356 of 8,589). The largest gap is the School of Information Sciences building (614 E
+  Daniel St, 105 meetings), which OSM doesn't have; adding it to OpenStreetMap itself would fix it here on the next
+  refresh. `meta.json` reports the share every build.
+- **D46.6 OSM down.** The build goes on with an empty `buildings` map and `meta.buildings.osm_base: null`, as it does
+  without Rate My Professors; a cached answer up to any age is used before giving up.
