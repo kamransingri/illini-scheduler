@@ -12,6 +12,9 @@ history).
 
 ### Added
 
+- A data sources page (#191), linked from the footer: where course, grade, gen-ed and rating data comes from, who
+  publishes it and how often the site reads it. It quotes the University's FERPA exclusion from the GPA dataset, and
+  a course's "Sections of 20 or fewer students are withheld" note links to it.
 - Just opened says what each section is and who teaches it (#162): "Lecture with Geoffrey Challen" or
   "Discussion/Recitation" under the course name.
 - Professor ratings from Rate My Professors show as three meters on course pages (#197): quality, difficulty

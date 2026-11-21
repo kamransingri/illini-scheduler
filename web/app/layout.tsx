@@ -95,6 +95,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   </Link>
                 </li>
                 <li>
+                  <Link className="underline-offset-2 hover:text-orange hover:underline" href="/data-sources/">
+                    Data sources
+                  </Link>
+                </li>
+                <li>
                   <Link className="underline-offset-2 hover:text-orange hover:underline" href="/terms/">
                     Terms of use
                   </Link>
