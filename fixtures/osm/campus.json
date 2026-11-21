@@ -1,0 +1,1644 @@
+{
+"osm3s": {
+"timestamp_osm_base": "2026-11-21T06:56:36Z",
+"copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+},
+"elements": [
+{
+"type": "way",
+"id": 49898797,
+"center": {
+"lat": 40.1056859,
+"lon": -88.2281046
+},
+"tags": {
+"addr:housenumber": "810",
+"addr:street": "South Wright Street",
+"building": "university",
+"name": "Gregory Hall"
+}
+},
+{
+"type": "way",
+"id": 49898803,
+"center": {
+"lat": 40.1059511,
+"lon": -88.2272174
+},
+"tags": {
+"addr:housenumber": "709",
+"addr:street": "South Mathews Avenue",
+"amenity": "theatre",
+"building": "yes",
+"name": "Foellinger Auditorium"
+}
+},
+{
+"type": "way",
+"id": 49898804,
+"center": {
+"lat": 40.1062804,
+"lon": -88.2261745
+},
+"tags": {
+"addr:housenumber": "707",
+"addr:street": "South Mathews Avenue",
+"building": "university",
+"name": "Literatures, Cultures & Linguistics Building",
+"old_name": "Foreign Languages Building",
+"short_name": "LCLB"
+}
+},
+{
+"type": "way",
+"id": 52158204,
+"center": {
+"lat": 40.1117966,
+"lon": -88.2261556
+},
+"tags": {
+"addr:housenumber": "105",
+"addr:street": "South Mathews Avenue",
+"building": "university",
+"name": "Mechanical Engineering Lab"
+}
+},
+{
+"type": "way",
+"id": 52158249,
+"center": {
+"lat": 40.1109099,
+"lon": -88.2282574
+},
+"tags": {
+"addr:housenumber": "1406",
+"addr:street": "West Green Street",
+"building": "university",
+"name": "Everitt Laboratory"
+}
+},
+{
+"type": "way",
+"id": 60961625,
+"center": {
+"lat": 40.1036025,
+"lon": -88.2297403
+},
+"tags": {
+"addr:housenumber": "1206",
+"addr:street": "South Sixth Street",
+"building": "university",
+"name": "Wohlers Hall"
+}
+},
+{
+"type": "way",
+"id": 83023679,
+"center": {
+"lat": 40.1028356,
+"lon": -88.2251329
+},
+"tags": {
+"addr:housenumber": "1101",
+"addr:street": "South Goodwin Avenue",
+"alt_name": "ACES Library",
+"amenity": "library",
+"building": "yes",
+"name": "Funk Library"
+}
+},
+{
+"type": "way",
+"id": 83023683,
+"center": {
+"lat": 40.1020773,
+"lon": -88.2296394
+},
+"tags": {
+"addr:housenumber": "1310",
+"addr:street": "South Sixth Street",
+"building": "university",
+"name": "Education Building"
+}
+},
+{
+"type": "way",
+"id": 104338289,
+"center": {
+"lat": 40.1010079,
+"lon": -88.2316031
+},
+"tags": {
+"addr:housenumber": "504",
+"addr:street": "East Pennsylvania Ave",
+"building": "university",
+"name": "University of Illinois College of Law"
+}
+},
+{
+"type": "way",
+"id": 104433868,
+"center": {
+"lat": 40.102017,
+"lon": -88.2319229
+},
+"tags": {
+"addr:housenumber": "408",
+"addr:street": "Peabody Drive",
+"building": "university",
+"name": "Art and Design Building"
+}
+},
+{
+"type": "way",
+"id": 128248718,
+"center": {
+"lat": 40.1038059,
+"lon": -88.223822
+},
+"tags": {
+"addr:housenumber": "1201",
+"addr:street": "West Gregory Drive",
+"building": "university",
+"name": "Edward R. Madigan Laboratory",
+"short_name": "ERML"
+}
+},
+{
+"type": "way",
+"id": 137367409,
+"center": {
+"lat": 40.1036124,
+"lon": -88.228405
+},
+"tags": {
+"addr:housenumber": "1407",
+"addr:street": "West Gregory Drive",
+"building": "university",
+"name": "David Kinley Hall"
+}
+},
+{
+"type": "way",
+"id": 137367429,
+"center": {
+"lat": 40.100781,
+"lon": -88.2360495
+},
+"tags": {
+"addr:housenumber": "201",
+"addr:street": "East Peabody Drive",
+"building": "yes",
+"name": "Activities and Recreation Center",
+"official_name": "Activities and Recreation Center",
+"short_name": "ARC"
+}
+},
+{
+"type": "way",
+"id": 137367434,
+"center": {
+"lat": 40.1035681,
+"lon": -88.2327618
+},
+"tags": {
+"addr:housenumber": "1206",
+"addr:street": "South Fourth Street",
+"building": "stadium",
+"name": "Huff Hall"
+}
+},
+{
+"type": "way",
+"id": 137367444,
+"center": {
+"lat": 40.1020817,
+"lon": -88.2281101
+},
+"tags": {
+"addr:housenumber": "611",
+"addr:street": "West Lorado Taft Drive",
+"building": "university",
+"name": "Temple Hoyne Buell Hall"
+}
+},
+{
+"type": "way",
+"id": 137475332,
+"center": {
+"lat": 40.1039865,
+"lon": -88.2294909
+},
+"tags": {
+"addr:housenumber": "607",
+"addr:street": "East Gregory Drive",
+"alt_name": "Surveying Building",
+"building": "university",
+"name": "Irwin Doctoral Study Hall"
+}
+},
+{
+"type": "way",
+"id": 137475347,
+"center": {
+"lat": 40.1094922,
+"lon": -88.2260305
+},
+"tags": {
+"addr:housenumber": "1301",
+"addr:street": "West Green Street",
+"building": "university",
+"name": "Natural History Building",
+"short_name": "NHB"
+}
+},
+{
+"type": "way",
+"id": 137475356,
+"center": {
+"lat": 40.1051839,
+"lon": -88.2260548
+},
+"tags": {
+"addr:housenumber": "901",
+"addr:street": "South Mathews Avenue",
+"building": "yes",
+"man_made": "observatory",
+"name": "University of Illinois Observatory"
+}
+},
+{
+"type": "way",
+"id": 137475359,
+"center": {
+"lat": 40.1038249,
+"lon": -88.2251424
+},
+"tags": {
+"addr:housenumber": "1201",
+"addr:street": "West Gregory Drive",
+"building": "university",
+"name": "Animal Sciences Laboratory"
+}
+},
+{
+"type": "way",
+"id": 137475372,
+"center": {
+"lat": 40.1036286,
+"lon": -88.2259567
+},
+"tags": {
+"addr:housenumber": "1301",
+"addr:street": "West Gregory Drive",
+"building": "university",
+"name": "Mumford Hall"
+}
+},
+{
+"type": "way",
+"id": 137475373,
+"center": {
+"lat": 40.1016375,
+"lon": -88.2263437
+},
+"tags": {
+"addr:housenumber": "1304",
+"addr:street": "West Pennsylvania Avenue",
+"building": "university",
+"name": "Agricultural Engineering Sciences"
+}
+},
+{
+"type": "way",
+"id": 137475374,
+"center": {
+"lat": 40.1094007,
+"lon": -88.2272548
+},
+"tags": {
+"addr:housenumber": "1401",
+"addr:street": "West Green Street",
+"building": "public",
+"name": "Illini Union"
+}
+},
+{
+"type": "way",
+"id": 137475379,
+"center": {
+"lat": 40.1033588,
+"lon": -88.2290851
+},
+"tags": {
+"addr:housenumber": "608",
+"addr:street": "West Lorado Taft Drive",
+"building": "university",
+"name": "Architecture Building"
+}
+},
+{
+"type": "way",
+"id": 137475383,
+"center": {
+"lat": 40.1010228,
+"lon": -88.227191
+},
+"tags": {
+"addr:housenumber": "1402",
+"addr:street": "West Pennsylvania Avenue",
+"building": "university",
+"name": "Stock Pavilion"
+}
+},
+{
+"type": "way",
+"id": 137480082,
+"center": {
+"lat": 40.1020668,
+"lon": -88.224824
+},
+"tags": {
+"addr:housenumber": "1301",
+"addr:street": "South Goodwin Avenue",
+"amenity": "arts_centre",
+"building": "yes",
+"name": "Art Annex Studio 2"
+}
+},
+{
+"type": "way",
+"id": 137480084,
+"center": {
+"lat": 40.1010825,
+"lon": -88.2225774
+},
+"tags": {
+"addr:housenumber": "1101",
+"addr:street": "Peabody Drive",
+"building": "university",
+"name": "National Soybean Research Center"
+}
+},
+{
+"type": "way",
+"id": 137480091,
+"center": {
+"lat": 40.1022125,
+"lon": -88.2227254
+},
+"tags": {
+"addr:housenumber": "1201",
+"addr:street": "South Dorner Drive",
+"building": "greenhouse",
+"name": "Plant Sciences Laboratory and Greenhouse"
+}
+},
+{
+"type": "way",
+"id": 137480094,
+"center": {
+"lat": 40.1029621,
+"lon": -88.224233
+},
+"tags": {
+"addr:housenumber": "1102",
+"addr:street": "South Goodwin Avenue",
+"alt_name": "Plant Sciences Building",
+"building": "university",
+"name": "Turner Hall"
+}
+},
+{
+"type": "way",
+"id": 137480108,
+"center": {
+"lat": 40.101159,
+"lon": -88.2255593
+},
+"tags": {
+"building": "university",
+"name": "Agricultural Bioprocess Laboratory"
+}
+},
+{
+"type": "way",
+"id": 137490801,
+"center": {
+"lat": 40.1057141,
+"lon": -88.2261119
+},
+"tags": {
+"addr:housenumber": "805",
+"addr:street": "South Mathews Avenue",
+"building": "university",
+"name": "Smith Memorial Hall"
+}
+},
+{
+"type": "way",
+"id": 137490808,
+"center": {
+"lat": 40.107215,
+"lon": -88.2262013
+},
+"tags": {
+"addr:housenumber": "607",
+"addr:street": "South Mathews Avenue",
+"building": "university",
+"name": "Davenport Hall"
+}
+},
+{
+"type": "way",
+"id": 137490830,
+"center": {
+"lat": 40.1084353,
+"lon": -88.2260913
+},
+"tags": {
+"addr:housenumber": "505",
+"addr:street": "South Mathews Avenue",
+"building": "university",
+"name": "Noyes Laboratory",
+"official_name": "William Albert Noyes Laboratory of Chemistry"
+}
+},
+{
+"type": "way",
+"id": 137490832,
+"center": {
+"lat": 40.1075589,
+"lon": -88.2281563
+},
+"tags": {
+"addr:housenumber": "608",
+"addr:street": "South Wright Street",
+"building": "university",
+"name": "English Building"
+}
+},
+{
+"type": "way",
+"id": 137624122,
+"center": {
+"lat": 40.1109069,
+"lon": -88.2269804
+},
+"tags": {
+"addr:housenumber": "1308",
+"addr:street": "West Green Street",
+"building": "university",
+"name": "Engineering Hall"
+}
+},
+{
+"type": "way",
+"id": 137624124,
+"center": {
+"lat": 40.1109284,
+"lon": -88.2261035
+},
+"tags": {
+"addr:housenumber": "1304",
+"addr:street": "West Green Street",
+"alt_name": "MSEB",
+"building": "university",
+"name": "Materials Science & Engineering Building"
+}
+},
+{
+"type": "way",
+"id": 137624127,
+"center": {
+"lat": 40.1118434,
+"lon": -88.2282766
+},
+"tags": {
+"addr:housenumber": "104",
+"addr:street": "South Wright Street",
+"building": "university",
+"name": "Talbot Laboratory"
+}
+},
+{
+"type": "way",
+"id": 137624140,
+"center": {
+"lat": 40.112443,
+"lon": -88.2268606
+},
+"tags": {
+"addr:housenumber": "1301",
+"addr:street": "West Springfield Avenue",
+"amenity": "library",
+"building": "university",
+"name": "Grainger Engineering Library"
+}
+},
+{
+"type": "way",
+"id": 137759336,
+"center": {
+"lat": 40.108563,
+"lon": -88.225172
+},
+"tags": {
+"addr:housenumber": "506",
+"addr:street": "South Mathews Avenue",
+"building": "university",
+"name": "Medical Sciences Building"
+}
+},
+{
+"type": "way",
+"id": 137759337,
+"center": {
+"lat": 40.1074718,
+"lon": -88.224805
+},
+"tags": {
+"addr:housenumber": "600",
+"addr:street": "South Mathews Avenue",
+"building": "yes",
+"name": "Roger Adams Laboratory"
+}
+},
+{
+"type": "way",
+"id": 137759341,
+"center": {
+"lat": 40.1075314,
+"lon": -88.2242568
+},
+"tags": {
+"addr:housenumber": "601",
+"addr:street": "South Goodwin Avenue",
+"building": "yes",
+"name": "Chemical & Life Sciences Building A"
+}
+},
+{
+"type": "way",
+"id": 137759344,
+"center": {
+"lat": 40.1092941,
+"lon": -88.2248799
+},
+"tags": {
+"addr:housenumber": "407",
+"addr:street": "South Goodwin Avenue",
+"building": "university",
+"name": "Burrill Hall"
+}
+},
+{
+"type": "way",
+"id": 137918148,
+"center": {
+"lat": 40.104833,
+"lon": -88.2227302
+},
+"tags": {
+"addr:housenumber": "906",
+"addr:street": "South Goodwin Avenue",
+"building": "university",
+"name": "Louise Freer Hall",
+"short_name": "Freer Hall"
+}
+},
+{
+"type": "way",
+"id": 137918154,
+"center": {
+"lat": 40.1110059,
+"lon": -88.2247298
+},
+"tags": {
+"addr:housenumber": "1206",
+"addr:street": "West Green Street",
+"building": "university",
+"name": "Sidney Lu Mechanical Engineering Building",
+"short_name": "Mechanical Engineering Building"
+}
+},
+{
+"type": "way",
+"id": 137918159,
+"center": {
+"lat": 40.104791,
+"lon": -88.224418
+},
+"tags": {
+"addr:housenumber": "905",
+"addr:street": "South Goodwin Avenue",
+"building": "university",
+"name": "Bevier Hall"
+}
+},
+{
+"type": "way",
+"id": 137918165,
+"center": {
+"lat": 40.1116261,
+"lon": -88.2246972
+},
+"tags": {
+"addr:housenumber": "107",
+"addr:street": "South Goodwin Avenue",
+"building": "university",
+"name": "Ceramics Kiln House"
+}
+},
+{
+"type": "way",
+"id": 137918168,
+"center": {
+"lat": 40.1047755,
+"lon": -88.2219668
+},
+"tags": {
+"addr:housenumber": "1102",
+"addr:street": "West Gregory Drive",
+"building": "yes",
+"name": "Campus Recreation Center East",
+"short_name": "CRCE"
+}
+},
+{
+"type": "way",
+"id": 137918171,
+"center": {
+"lat": 40.104787,
+"lon": -88.2248764
+},
+"tags": {
+"addr:housenumber": "1206",
+"addr:street": "West Gregory Drive",
+"building": "university",
+"name": "Institute for Genomic Biology (IGB)"
+}
+},
+{
+"type": "way",
+"id": 137918172,
+"center": {
+"lat": 40.1117006,
+"lon": -88.2242591
+},
+"tags": {
+"addr:housenumber": "105",
+"addr:street": "South Goodwin Avenue",
+"building": "university",
+"name": "Ceramics Building"
+}
+},
+{
+"type": "way",
+"id": 137918177,
+"center": {
+"lat": 40.1112169,
+"lon": -88.2244514
+},
+"tags": {
+"building": "university",
+"name": "Nuclear Radiation Laboratory"
+}
+},
+{
+"type": "way",
+"id": 137918183,
+"center": {
+"lat": 40.1117043,
+"lon": -88.2251971
+},
+"tags": {
+"addr:housenumber": "104",
+"addr:street": "South Mathews Avenue",
+"building": "university",
+"name": "Transportation Building"
+}
+},
+{
+"type": "way",
+"id": 138062537,
+"center": {
+"lat": 40.1027792,
+"lon": -88.2339533
+},
+"tags": {
+"addr:housenumber": "1207",
+"addr:street": "South Fourth Street",
+"building": "dormitory",
+"name": "Flagg Hall"
+}
+},
+{
+"type": "way",
+"id": 138062549,
+"center": {
+"lat": 40.1023222,
+"lon": -88.2341943
+},
+"tags": {
+"addr:housenumber": "1209",
+"addr:street": "South Fourth Street",
+"building": "dormitory",
+"name": "Noble Hall"
+}
+},
+{
+"type": "way",
+"id": 138183417,
+"center": {
+"lat": 40.1058673,
+"lon": -88.2325373
+},
+"tags": {
+"addr:housenumber": "406",
+"addr:street": "East Armory Avenue",
+"building": "yes",
+"name": "Ice Arena"
+}
+},
+{
+"type": "way",
+"id": 138183432,
+"center": {
+"lat": 40.1047619,
+"lon": -88.231952
+},
+"tags": {
+"addr:housenumber": "505",
+"addr:street": "East Armory Avenue",
+"building": "university",
+"name": "Armory"
+}
+},
+{
+"type": "way",
+"id": 138183445,
+"center": {
+"lat": 40.1080214,
+"lon": -88.2227462
+},
+"tags": {
+"addr:housenumber": "500",
+"addr:street": "South Goodwin Avenue",
+"amenity": "arts_centre",
+"building": "yes",
+"name": "Krannert Center for the Performing Arts"
+}
+},
+{
+"type": "way",
+"id": 138183446,
+"center": {
+"lat": 40.1047686,
+"lon": -88.2307498
+},
+"tags": {
+"building": "university",
+"name": "Harding Band Building"
+}
+},
+{
+"type": "way",
+"id": 138260130,
+"center": {
+"lat": 40.0927956,
+"lon": -88.217943
+},
+"tags": {
+"addr:housenumber": "2000",
+"addr:street": "South Lincoln Avenue",
+"amenity": "arts_centre",
+"building": "yes",
+"name": "Japan House"
+}
+},
+{
+"type": "way",
+"id": 138260157,
+"center": {
+"lat": 40.0929643,
+"lon": -88.2209505
+},
+"tags": {
+"amenity": "veterinary",
+"building": "yes",
+"name": "Veterinary Medicine Basic Sciences Building"
+}
+},
+{
+"type": "way",
+"id": 138484204,
+"center": {
+"lat": 40.1074769,
+"lon": -88.2299558
+},
+"tags": {
+"addr:housenumber": "603",
+"addr:street": "East Daniel Street",
+"building": "university",
+"name": "Psychology Building"
+}
+},
+{
+"type": "way",
+"id": 138519996,
+"center": {
+"lat": 40.1149318,
+"lon": -88.2267559
+},
+"tags": {
+"addr:housenumber": "1308",
+"addr:street": "West Main Street",
+"building": "university",
+"name": "Coordinated Science Laboratory",
+"short_name": "CSL"
+}
+},
+{
+"type": "way",
+"id": 138519998,
+"center": {
+"lat": 40.1140307,
+"lon": -88.2248176
+},
+"tags": {
+"addr:housenumber": "201",
+"addr:street": "North Goodwin Avenue",
+"building": "university",
+"name": "Siebel Center for Computer Science",
+"official_name": "Thomas M. Siebel Center for Computer Science",
+"short_name": "Siebel Center"
+}
+},
+{
+"type": "way",
+"id": 138520010,
+"center": {
+"lat": 40.1139977,
+"lon": -88.2265445
+},
+"tags": {
+"addr:housenumber": "205",
+"addr:street": "North Mathews Avenue",
+"building": "university",
+"name": "Newmark Civil Engineering Laboratory",
+"official_name": "Nathan M. Newmark Civil Engineering Laboratory",
+"short_name": "Newmark;NCEL"
+}
+},
+{
+"type": "way",
+"id": 138520011,
+"center": {
+"lat": 40.1131539,
+"lon": -88.2264551
+},
+"tags": {
+"addr:housenumber": "1304",
+"addr:street": "Springfield Avenue",
+"building": "university",
+"name": "Digital Computer Laboratory",
+"short_name": "DCL"
+}
+},
+{
+"type": "way",
+"id": 138520016,
+"center": {
+"lat": 40.1148266,
+"lon": -88.225004
+},
+"tags": {
+"addr:housenumber": "1205",
+"addr:street": "West Clark Street",
+"building": "university",
+"name": "National Center for Supercomputing Applications",
+"short_name": "NCSA Building"
+}
+},
+{
+"type": "way",
+"id": 138520025,
+"center": {
+"lat": 40.1157003,
+"lon": -88.2275303
+},
+"tags": {
+"addr:housenumber": "405",
+"addr:street": "North Mathews Avenue",
+"building": "university",
+"name": "Beckman Institute",
+"official_name": "Beckman Institute for Advanced Science and Technology"
+}
+},
+{
+"type": "way",
+"id": 142439012,
+"center": {
+"lat": 40.1041266,
+"lon": -88.2207719
+},
+"tags": {
+"addr:housenumber": "1005",
+"addr:street": "West Gregory Drive",
+"building": "dormitory",
+"name": "Allen Hall"
+}
+},
+{
+"type": "way",
+"id": 142439013,
+"center": {
+"lat": 40.1124444,
+"lon": -88.2230859
+},
+"tags": {
+"addr:housenumber": "1101",
+"addr:street": "Springfield Avenue",
+"building": "university",
+"name": "Engineering Sciences Building"
+}
+},
+{
+"type": "way",
+"id": 142439014,
+"center": {
+"lat": 40.1109241,
+"lon": -88.2208777
+},
+"tags": {
+"addr:housenumber": "1002",
+"addr:street": "West Green Street",
+"building": "yes",
+"name": "Astronomy Building"
+}
+},
+{
+"type": "way",
+"id": 142439016,
+"center": {
+"lat": 40.111665,
+"lon": -88.2230737
+},
+"tags": {
+"addr:housenumber": "104",
+"addr:street": "South Goodwin Avenue",
+"building": "yes",
+"name": "Materials Research Laboratory"
+}
+},
+{
+"type": "way",
+"id": 142439017,
+"center": {
+"lat": 40.1111055,
+"lon": -88.2232324
+},
+"tags": {
+"addr:housenumber": "1110",
+"addr:street": "West Green Street",
+"building": "university",
+"name": "Loomis Laboratory of Physics"
+}
+},
+{
+"type": "way",
+"id": 175621699,
+"center": {
+"lat": 40.1055406,
+"lon": -88.2244506
+},
+"tags": {
+"addr:housenumber": "1203 1/2",
+"addr:street": "West Nevada Street",
+"alt_name": "Nevada ICS Computer Lab",
+"building": "yes",
+"name": "Nevada Building Computer Lab"
+}
+},
+{
+"type": "way",
+"id": 175621702,
+"center": {
+"lat": 40.1067035,
+"lon": -88.2246076
+},
+"tags": {
+"addr:housenumber": "1205",
+"addr:street": "West Oregon Street",
+"alt_name": "Honors House or \"Ho Ho\"",
+"building": "yes",
+"name": "Campus Honors Program"
+}
+},
+{
+"type": "way",
+"id": 175621704,
+"center": {
+"lat": 40.10668,
+"lon": -88.2248297
+},
+"tags": {
+"addr:housenumber": "1207",
+"addr:street": "West Oregon Street",
+"building": "yes",
+"name": "Department of Latina/Latino Studies"
+}
+},
+{
+"type": "way",
+"id": 175621705,
+"center": {
+"lat": 40.1056937,
+"lon": -88.2246899
+},
+"tags": {
+"addr:housenumber": "1205",
+"addr:street": "West Nevada Street",
+"building": "yes",
+"name": "Gender & Women's Studies"
+}
+},
+{
+"type": "way",
+"id": 175628227,
+"center": {
+"lat": 40.1055857,
+"lon": -88.2207417
+},
+"tags": {
+"addr:housenumber": "1005",
+"addr:street": "West Nevada Street",
+"building": "yes",
+"name": "Early Child Development Laboratory"
+}
+},
+{
+"type": "way",
+"id": 175628240,
+"center": {
+"lat": 40.1056473,
+"lon": -88.2212987
+},
+"tags": {
+"addr:housenumber": "1007",
+"addr:street": "West Nevada Street",
+"building": "yes",
+"name": "Institute of Government and Public Affairs"
+}
+},
+{
+"type": "way",
+"id": 175628246,
+"center": {
+"lat": 40.1056768,
+"lon": -88.2199435
+},
+"tags": {
+"amenity": "dancing_school",
+"building": "yes",
+"name": "Dance Studio"
+}
+},
+{
+"type": "way",
+"id": 175637436,
+"center": {
+"lat": 40.1076255,
+"lon": -88.2207857
+},
+"tags": {
+"addr:housenumber": "600",
+"addr:street": "South Gregory Street",
+"building": "yes",
+"name": "Spurlock Museum",
+"tourism": "museum"
+}
+},
+{
+"type": "way",
+"id": 220347990,
+"center": {
+"lat": 40.1083802,
+"lon": -88.2282366
+},
+"tags": {
+"addr:housenumber": "506",
+"addr:street": "South Wright Street",
+"building": "university",
+"name": "Henry Administration Building",
+"official_name": "David Dodds Henry Administration Building"
+}
+},
+{
+"type": "way",
+"id": 220347991,
+"center": {
+"lat": 40.1093159,
+"lon": -88.22839
+},
+"tags": {
+"addr:housenumber": "1409",
+"addr:street": "West Green Street",
+"building": "university",
+"name": "Altgeld Hall"
+}
+},
+{
+"type": "way",
+"id": 220347992,
+"center": {
+"lat": 40.1078109,
+"lon": -88.2260761
+},
+"tags": {
+"addr:housenumber": "601",
+"addr:street": "South Mathews Avenue",
+"building": "yes",
+"name": "Chemistry Annex"
+}
+},
+{
+"type": "way",
+"id": 225864307,
+"center": {
+"lat": 40.1076551,
+"lon": -88.2315057
+},
+"tags": {
+"addr:housenumber": "501",
+"addr:street": "East Daniel Street",
+"building": "university",
+"name": "Graduate School of Library and Information Science"
+}
+},
+{
+"type": "way",
+"id": 229945850,
+"center": {
+"lat": 40.1076465,
+"lon": -88.2307354
+},
+"tags": {
+"addr:housenumber": "901",
+"addr:street": "South Sixth Street",
+"building": "university",
+"name": "Speech and Hearing Science Building"
+}
+},
+{
+"type": "way",
+"id": 259492705,
+"center": {
+"lat": 40.1150203,
+"lon": -88.22354
+},
+"tags": {
+"addr:housenumber": "300",
+"addr:street": "North Goodwin Avenue",
+"building": "yes",
+"name": "Campbell Hall"
+}
+},
+{
+"type": "way",
+"id": 265726375,
+"center": {
+"lat": 40.1036226,
+"lon": -88.2352136
+},
+"tags": {
+"addr:housenumber": "301",
+"addr:street": "East Gregory Drive",
+"building": "university",
+"name": "Student Dining and Residential Programs",
+"official_name": "Student Dining and Residential Programs"
+}
+},
+{
+"type": "way",
+"id": 387281105,
+"center": {
+"lat": 40.1003854,
+"lon": -88.2181203
+},
+"tags": {
+"addr:housenumber": "805",
+"addr:street": "West Pennsylvania Avenue",
+"building": "yes",
+"name": "Office for the Protection of Research Subjects"
+}
+},
+{
+"type": "way",
+"id": 477622561,
+"center": {
+"lat": 40.1147492,
+"lon": -88.2261334
+},
+"tags": {
+"addr:housenumber": "301",
+"addr:street": "North Mathews Avenue",
+"building": "university",
+"name": "Civil and Environmental Engineering Building",
+"short_name": "CEEB"
+}
+},
+{
+"type": "way",
+"id": 526844623,
+"center": {
+"lat": 40.1034877,
+"lon": -88.2379581
+},
+"tags": {
+"addr:housenumber": "1202",
+"addr:street": "South First Street",
+"building": "dormitory",
+"name": "Wassaja Hall"
+}
+},
+{
+"type": "way",
+"id": 562607689,
+"center": {
+"lat": 40.1056463,
+"lon": -88.2315332
+},
+"tags": {
+"addr:housenumber": "504",
+"addr:street": "East Armory Avenue",
+"building": "university",
+"name": "School of Labor & Employment Relations"
+}
+},
+{
+"type": "way",
+"id": 585465887,
+"center": {
+"lat": 40.1155985,
+"lon": -88.2439555
+},
+"tags": {
+"amenity": "clinic",
+"building": "healthcare",
+"name": "Christie Clinic"
+}
+},
+{
+"type": "way",
+"id": 623506584,
+"center": {
+"lat": 40.1063181,
+"lon": -88.2203868
+},
+"tags": {
+"addr:housenumber": "908",
+"addr:street": "West Nevada Street",
+"building": "college",
+"name": "Chez Veterans Center"
+}
+},
+{
+"type": "way",
+"id": 626446443,
+"center": {
+"lat": 40.0994396,
+"lon": -88.2231034
+},
+"tags": {
+"addr:housenumber": "1503",
+"addr:street": "South Maryland Drive",
+"building": "yes",
+"name": "Meat Science Lab"
+}
+},
+{
+"type": "way",
+"id": 886109954,
+"center": {
+"lat": 40.1124626,
+"lon": -88.2282767
+},
+"tags": {
+"addr:housenumber": "1405",
+"addr:street": "Springfield Avenue",
+"building": "university",
+"name": "Campus Instructional Facility",
+"short_name": "CIF"
+}
+},
+{
+"type": "way",
+"id": 899305030,
+"center": {
+"lat": 40.1094885,
+"lon": -88.2217569
+},
+"tags": {
+"addr:housenumber": "1012",
+"addr:street": "West Illinois Street",
+"building": "dormitory",
+"name": "Wardall Hall"
+}
+},
+{
+"type": "way",
+"id": 900185291,
+"center": {
+"lat": 40.102724,
+"lon": -88.2324742
+},
+"tags": {
+"addr:housenumber": "1208",
+"addr:street": "South Fourth Street",
+"building": "university",
+"name": "Siebel Center for Design"
+}
+},
+{
+"type": "way",
+"id": 1112153050,
+"center": {
+"lat": 40.1035834,
+"lon": -88.2309554
+},
+"tags": {
+"addr:housenumber": "515",
+"addr:street": "East Gregory Drive",
+"building": "university",
+"name": "Business Instructional Facility",
+"official_name": "Business Instructional Facility",
+"short_name": "BIF"
+}
+},
+{
+"type": "way",
+"id": 1264844582,
+"center": {
+"lat": 40.1035347,
+"lon": -88.2318329
+},
+"tags": {
+"addr:housenumber": "503",
+"addr:street": "East Gregory Drive",
+"building": "university",
+"name": "Steven S. Wymer Hall",
+"short_name": "Wymer Hall"
+}
+},
+{
+"type": "way",
+"id": 1370732651,
+"center": {
+"lat": 40.1063853,
+"lon": -88.2232719
+},
+"tags": {
+"addr:housenumber": "1114",
+"addr:street": "West Nevada Street",
+"building": "university",
+"name": "Music Building"
+}
+},
+{
+"type": "relation",
+"id": 1860883,
+"center": {
+"lat": 40.1029889,
+"lon": -88.2352973
+},
+"tags": {
+"addr:housenumber": "204",
+"addr:street": "East Peabody Drive",
+"building": "dormitory",
+"name": "Weston Hall"
+}
+},
+{
+"type": "relation",
+"id": 8128904,
+"center": {
+"lat": 40.0866054,
+"lon": -88.2408748
+},
+"tags": {
+"addr:housenumber": "2202",
+"addr:street": "Kirk Drive",
+"building": "yes",
+"name": "Children's Research Center"
+}
+},
+{
+"type": "relation",
+"id": 8636142,
+"center": {
+"lat": 40.1062908,
+"lon": -88.2196473
+},
+"tags": {
+"addr:housenumber": "904",
+"addr:street": "West Nevada Street",
+"alt_name": "Family Resiliency Center",
+"building": "yes",
+"name": "Doris Kelley Christopher Hall"
+}
+},
+{
+"type": "relation",
+"id": 8840902,
+"center": {
+"lat": 40.1149331,
+"lon": -88.2282421
+},
+"tags": {
+"addr:housenumber": "306",
+"addr:street": "North Wright Street",
+"building": "university",
+"name": "Electrical and Computer Engineering Building",
+"short_name": "ECE Building"
+}
+},
+{
+"type": "relation",
+"id": 8840903,
+"center": {
+"lat": 40.1139553,
+"lon": -88.2280509
+},
+"tags": {
+"addr:housenumber": "208",
+"addr:street": "North Wright Street",
+"building": "university",
+"name": "Holonyak Micro and Nanotechnology Laboratory",
+"official_name": "Nick Holonyak, Jr. Micro and Nanotechnology Laboratory",
+"short_name": "HMNTL"
+}
+},
+{
+"type": "relation",
+"id": 11741953,
+"center": {
+"lat": 40.1066127,
+"lon": -88.2281809
+},
+"tags": {
+"addr:housenumber": "702",
+"addr:street": "South Wright Street",
+"building": "university",
+"name": "Lincoln Hall"
+}
+},
+{
+"type": "relation",
+"id": 19565297,
+"center": {
+"lat": 40.1041388,
+"lon": -88.2199526
+},
+"tags": {
+"addr:housenumber": "1005",
+"addr:street": "South Lincoln Avenue",
+"building": "dormitory",
+"name": "Lincoln Avenue Residence Halls",
+"short_name": "LAR"
+}
+},
+{
+"type": "node",
+"id": 368074521,
+"lat": 40.1022068,
+"lon": -88.2308877,
+"tags": {
+"addr:housenumber": "500",
+"addr:street": "Peabody Drive",
+"name": "Krannert Art Museum",
+"tourism": "museum"
+}
+},
+{
+"type": "node",
+"id": 5425410081,
+"lat": 40.108985,
+"lon": -88.2217713,
+"tags": {
+"name": "Illinois Street Residence Halls"
+}
+},
+{
+"type": "node",
+"id": 5425410082,
+"lat": 40.1091547,
+"lon": -88.2220864,
+"tags": {
+"name": "Illinois Street Residence Halls"
+}
+},
+{
+"type": "node",
+"id": 11954619922,
+"lat": 40.1089649,
+"lon": -88.2211445,
+"tags": {
+"name": "Illinois Street Residence Halls"
+}
+},
+{
+"type": "way",
+"id": 142289621,
+"center": {
+"lat": 40.1170934,
+"lon": -88.2160509
+},
+"tags": {
+"addr:housenumber": "611",
+"addr:street": "West Park Street",
+"amenity": "hospital",
+"name": "Carle Foundation Hospital"
+}
+},
+{
+"type": "way",
+"id": 142439020,
+"center": {
+"lat": 40.1176842,
+"lon": -88.2264782
+},
+"tags": {
+"addr:housenumber": "1400",
+"addr:street": "West Park Street",
+"amenity": "hospital",
+"name": "OSF HealthCare Sacred Heart Medical Center – Urbana",
+"old_name": "OSF Heart of Mary Medical Center;Provena Covenant Medical Center"
+}
+},
+{
+"type": "way",
+"id": 899083269,
+"center": {
+"lat": 40.0998253,
+"lon": -88.2202884
+},
+"tags": {
+"name": "Pennsylvania Avenue Residence Halls",
+"short_name": "PAR"
+}
+},
+{
+"type": "way",
+"id": 899088878,
+"center": {
+"lat": 40.0987544,
+"lon": -88.2206466
+},
+"tags": {
+"addr:street": "College Court",
+"name": "Florida Avenue Residence Halls",
+"official_name": "Florida Avenue Residence Halls",
+"short_name": "FAR"
+}
+},
+{
+"type": "way",
+"id": 899305031,
+"center": {
+"lat": 40.1097911,
+"lon": -88.2213938
+},
+"tags": {
+"name": "Illinois Street Residence Halls",
+"short_name": "ISR"
+}
+},
+{
+"type": "way",
+"id": 1553052925,
+"center": {
+"lat": 40.1148292,
+"lon": -88.2261144
+},
+"tags": {
+"amenity": "research_institute",
+"name": "Ven Te Chow Hydrosystems Laboratory",
+"short_name": "Hydrosystems Laboratory"
+}
+},
+{
+"type": "relation",
+"id": 14975076,
+"center": {
+"lat": 40.115328,
+"lon": -88.2451689
+},
+"tags": {
+"amenity": "clinic",
+"name": "Christie Clinic"
+}
+}
+]
+}
