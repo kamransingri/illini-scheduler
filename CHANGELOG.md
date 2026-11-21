@@ -12,6 +12,10 @@ history).
 
 ### Added
 
+- Paste your AP or IB scores in the degree checklist (#199, #200) instead of adding each exam by hand. Copy your
+  College Board score page or IB results page into the box, check what was found (exams not recognised and ones
+  that would replace an exam you entered are listed), then apply. Retakes keep the highest score. The text never
+  leaves your browser.
 - A privacy page (#142), linked from the footer: what the site keeps in your browser (every storage key, listed by
   what it holds), the little that leaves it (share links, and seat alerts once they're on), and a button that deletes
   everything the site saved in this browser. No accounts, analytics, ads or trackers.
