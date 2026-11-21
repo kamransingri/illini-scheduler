@@ -13,6 +13,12 @@ read_on: '2026-11-17'
 generated: '2026-11-17'
 notes: []
 double_counting: []
+major_overlap:
+- distinct_hours: 6
+  min_level: 300
+  minors_too: true
+  quote: "Completion of the Minor in Data Science requires at least six hours of advanced (300 or 400 level) course credit distinct from credit earned for any major or another minor."
+  source: https://catalog.illinois.edu/undergraduate/las/minors/data-science/
 groups:
 - name: Required courses
   section: Requirements

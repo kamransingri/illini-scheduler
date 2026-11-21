@@ -1250,3 +1250,27 @@ Every judgment call made during the autonomous build, newest phase last.
   refresh. `meta.json` reports the share every build.
 - **D46.6 OSM down.** The build goes on with an empty `buildings` map and `meta.buildings.osm_base: null`, as it does
   without Rate My Professors; a cached answer up to any age is used before giving up.
+
+## Minors' overlap with the major: the Overview tabs (2026-11-21, issue #112)
+
+- **D47.1 Read from the pages already cached.** D43.2 left the minor pages' Overview tabs unread because the catalog
+  now challenges scripts. The pages cached on 2026-11-17 (`data/raw/catalog/*-minor.html`, before the challenge)
+  hold every tab, Overview included, so they were read from disk: no new requests, nothing worked around. 22 more
+  minors state a rule there, so 30 of the 125 minors now have one. Each quote was checked word for word against its
+  cached page.
+- **D47.2 The 22.** Six hours that don't count toward the major or another minor, 300-level or above: Adult
+  Development, American Indian Studies, Art History, Child Health and Well-Being, Aging and Health, Health
+  Administration, Public Health, Crop and Soil Management, Data Science, Gender and Women's Studies, Horticulture,
+  International Engineering, LGBT/Queer Studies, Semiconductor Engineering, Theatre, Wildlife and Fisheries
+  Conservation. At 400-level: ACES and Spatial and Quantitative Methods. The major only (no "another minor"): Public
+  Relations. At any level: Dance, Disability Studies and Recreation, Sport & Tourism, whose sentence asks for "six
+  hours of advanced" courses and, separately, "six hours of coursework" that are distinct, so the distinct hours
+  aren't held to a level. "Not used in any other major or minor" (the three health minors) reads as `minors_too`.
+- **D47.3 Not encoded: rules about one named major.** Natural Resource Conservation ("may not be counted toward the
+  major in Natural Resources and Environmental Sciences") and LGBT/Queer Studies with a Gender & Women's Studies
+  major ("classes may not count towards both") ban any overlap with one major, which `major_overlap` can't say. Nor
+  are eligibility rules ("not open to students majoring in chemical engineering", Advertising, Media, Dance,
+  Biomolecular Engineering, Political and Civic Leadership, Wildlife and Fisheries, Horticulture and Environmental
+  Economics & Law for some concentrations). Both stay in the catalog's words on the minor's page.
+- **D47.4 The importer still can't refresh.** Re-importing needs the pages fetched again, which the challenge still
+  blocks; the cached pages are what `--offline` re-parses, and `major_overlap` survives a re-import (D43.5).

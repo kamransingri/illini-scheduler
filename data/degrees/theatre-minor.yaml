@@ -13,6 +13,12 @@ read_on: '2026-11-17'
 generated: '2026-11-17'
 notes: []
 double_counting: []
+major_overlap:
+- distinct_hours: 6
+  min_level: 300
+  minors_too: true
+  quote: "At least six hours of coursework for the minor should be advanced (300-level or 400-level courses) and must be distinct from credit earned for the student’s major or another minor."
+  source: https://catalog.illinois.edu/undergraduate/faa/minors/theatre/
 groups:
 - name: Required Courses
   section: Requirements

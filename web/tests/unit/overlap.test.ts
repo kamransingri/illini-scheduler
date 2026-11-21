@@ -25,6 +25,11 @@ describe("coursework distinct from the major", () => {
     expect(check("LA315,LA437")).toMatchObject({ have: 6, distinct: ["LA 315", "LA 437"] });
     expect(check("LA315,LA342,LA437")).toMatchObject({ have: 10 });
   });
+  it("counts courses at any level when the rule has no min_level (Dance, Disability Studies)", () => {
+    const anyLevel = { ...MINOR, major_overlap: [{ ...SIX, min_level: undefined }] };
+    expect(check("LA101,LA250", [], [], anyLevel)).toMatchObject({ have: 6, distinct: ["LA 101", "LA 250"] });
+    expect(check("LA101,LA250", ["LA 250"], [], anyLevel)).toMatchObject({ have: 3, shared: ["LA 250"] });
+  });
   it("leaves out what the major (or another minor) uses too", () => {
     expect(check("LA315,LA342,LA437", ["LA 342", "LA 437"])).toMatchObject({ have: 3, distinct: ["LA 315"], shared: ["LA 342", "LA 437"] });
     expect(check("LA315,LA437", [], ["LA 437"])).toMatchObject({ have: 3, shared: ["LA 437"] });
