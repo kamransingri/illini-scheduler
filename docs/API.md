@@ -34,6 +34,8 @@ Credit these sources if you republish the data:
 - **[CITL](https://citl.illinois.edu/current-cutoff-scores)**: AP and IB credit tables.
 - **Rate My Professors**: ratings, tags and review snippets. They belong to Rate My Professors and its reviewers, so
   link to the professor's page (`rmp.url`) when you show them.
+- **[OpenStreetMap](https://www.openstreetmap.org/copyright)**: building locations in `buildings.json`, © OpenStreetMap
+  contributors under the Open Database License (ODbL). Show that credit wherever you show them.
 
 ## Conventions
 
@@ -62,6 +64,7 @@ Credit these sources if you republish the data:
 | `summer.json` | The newest summer's classes | ~100 KB |
 | `crns.json` | CRN to course and section | ~1 MB |
 | `renumbered.json` | Old course numbers to new ones | small |
+| `buildings.json` | Where each building in the section data is | ~12 KB |
 | `seat-events.json` | Seat status changes from the last 7 days | ~300 KB |
 | `degrees/index.json` | Every major and minor | ~60 KB |
 | `degrees/<id>.json` | One program's requirements | 5–150 KB each |
@@ -96,6 +99,9 @@ Build information. Read it first to learn the current and next term.
 | `match_report.<subject>.primary_gpa_pct` | number | Share matched, 0 to 100 |
 | `match_report.<subject>.rmp_matched` | number | Names matched to Rate My Professors |
 | `match_report.<subject>.rmp_pct` | number | Share matched, 0 to 100 |
+| `buildings.osm_base` | string | When the OpenStreetMap data behind `buildings.json` was current; `null` when OSM couldn't be reached this build |
+| `buildings.located` | number | Building names with a location |
+| `buildings.share` | number | Share of next term's in-person meetings whose building has a location, 0 to 1 |
 | `repo_url` | string | Source code |
 | `live_url` | string | URL of `live.json` |
 | `n_courses` | number | Course files in `course/` |
@@ -359,6 +365,22 @@ Old course codes that now redirect to a renumbered course.
 | Field | Type | Meaning |
 | --- | --- | --- |
 | `<old code>` | string | New code, `"CS 199": "CS 124"` |
+
+### `data/buildings.json`
+
+Where each building in the section data is, from OpenStreetMap. Keys are building names exactly as a meeting's `b`
+field has them, so `buildings[meeting.b]` finds the place. Online, arranged and "Location Pending" meetings, and
+places off campus, have no entry; neither does a building OpenStreetMap doesn't have yet. `buildings` is empty when
+OpenStreetMap couldn't be reached during the build.
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `credit` | string | The credit OpenStreetMap's licence asks for: show it next to anything drawn from this file |
+| `osm_base` | string | When the OpenStreetMap data was current |
+| `buildings.<building>.name` | string | The building's OpenStreetMap name: "Electrical and Computer Engineering Building" for `Electrical & Computer Eng Bldg` |
+| `buildings.<building>.short` | string | OpenStreetMap's short name (`LCLB`, `CRCE`), or `null` |
+| `buildings.<building>.lat` | number | Latitude of the building's centre |
+| `buildings.<building>.lon` | number | Longitude of the building's centre |
 
 ### `data/seat-events.json`
 

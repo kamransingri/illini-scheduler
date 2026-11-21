@@ -115,6 +115,13 @@ CREATE TABLE IF NOT EXISTS exam_format (
     instructor_key TEXT, subject TEXT, number TEXT, profile_json TEXT,
     PRIMARY KEY (instructor_key, subject, number)
 );
+
+-- Map 1 (#93): where each building name in `meetings` is, from OpenStreetMap (pipeline/buildings.py)
+CREATE TABLE IF NOT EXISTS buildings (
+    building TEXT PRIMARY KEY,      -- the name as the section data has it
+    osm_name TEXT, short_name TEXT, lat REAL, lon REAL,
+    osm_id TEXT                     -- "way/138520016"
+);
 """
 
 
