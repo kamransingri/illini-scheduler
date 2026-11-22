@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import AddToCart from "@/components/AddToCart";
+import AskAi from "@/components/AskAi";
 import BestPick from "@/components/course/BestPick";
 import CourseView from "@/components/course/CourseView";
 import { Badge } from "@/components/ui/Badge";
@@ -10,6 +11,7 @@ import Expandable from "@/components/ui/Expandable";
 import Icon from "@/components/ui/Icon";
 import Info from "@/components/ui/Info";
 import Stat from "@/components/ui/Stat";
+import { courseSummary } from "@/lib/askai";
 import { courseParams, getCourse, getMeta, getSummer } from "@/lib/data";
 import { cisUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, GPA_DATASET, GPA_SOURCES, gpaRelease, termLabel, termRange } from "@/lib/format";
 import { profInput } from "@/lib/rank";
@@ -81,6 +83,9 @@ export default async function CoursePage({ params }: Props) {
             Course Explorer
             <Icon name="external" />
           </a>
+        </div>
+        <div className="mt-3">
+          <AskAi text={courseSummary(course, meta.next_term)} what={`${course.subject} ${course.number}`} />
         </div>
 
         <dl className="mt-6 grid gap-x-8 gap-y-4 border-y border-line py-4 sm:grid-cols-3">
