@@ -166,7 +166,7 @@ function sched(bundles: [string, Section[]][], daysOff: string[]): Schedule {
   return {
     score: 0,
     bundles: bundles.map(([course, sections]) => ({ course, sections, meetings: [], crns: sections.map((x) => x.crn), gpa: null, rmp: null, prof: null, alternatives: [] })),
-    stats: { expectedGpa: null, daysOff, earliest: null, latest: null, gapMinutes: 0, backToBackFar: 0, backToBack: 0 },
+    stats: { expectedGpa: null, daysOff, earliest: null, latest: null, gapMinutes: 0, backToBackFar: 0, backToBack: 0, walks: [] },
   };
 }
 

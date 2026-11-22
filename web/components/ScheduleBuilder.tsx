@@ -50,6 +50,7 @@ import {
 import type { ScorePriors } from "@/lib/score";
 import { breakNames, TERM_DATES } from "@/lib/terms";
 import { useWeights } from "@/lib/weights";
+import { setBuildings } from "@/lib/walk";
 import type { Course, Section } from "@/lib/types";
 import CopyButton from "./CopyButton";
 import GettingThere from "./GettingThere";
@@ -152,6 +153,7 @@ function mustSummary(p: Prefs): string[] {
   const out = timeRulesSummary(p);
   if (p.lunch) out.push(lunchIsDefault(p) ? "lunch break" : `${p.lunchMin}-minute lunch ${fmtTime(p.lunchFrom)}–${fmtTime(p.lunchTo)}`);
   if (p.openOnly) out.push("open sections only");
+  if (p.noRushedWalks) out.push("no rushed walks");
   if (p.includeSpecial) out.push("special sections allowed");
   if (!p.eligibleOnly) out.push("restricted sections allowed");
   if (p.blocked.length) out.push(`${p.blocked.length} blocked time${p.blocked.length > 1 ? "s" : ""}`);
@@ -341,13 +343,23 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
   );
   const loaded = inputs.length + loadErrors.length >= cart.length;
 
+  // Building locations for walking times (#94); every run waits for them, and without them rushed walks fall back
+  // to campus areas.
+  const buildings = useRef<Promise<void> | null>(null);
+  useEffect(() => {
+    buildings.current = fetch(dataUrl("buildings.json"))
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => setBuildings(d?.buildings))
+      .catch(() => setBuildings(null));
+  }, []);
+
   const lastRun = useRef<{ inputs: CourseInput[]; term: string; prefs: Prefs } | null>(null);
   const run = useCallback(
     (openIndex = 0) => {
       lastRun.current = { inputs, term, prefs };
       setBusy(true);
       setAuto(true);
-      setTimeout(() => {
+      void (buildings.current ?? Promise.resolve()).then(() => setTimeout(() => {
         const r = generate(inputs, term, prefs);
         setResult(r);
         setBlame(r.schedules.length ? null : locksToBlame(inputs, term, prefs));
@@ -356,7 +368,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
         keepOpen.current = null;
         setIdx(kept >= 0 ? kept : Math.min(openIndex, Math.max(0, r.schedules.length - 1)));
         setBusy(false);
-      }, 10);
+      }, 10));
     },
     [inputs, term, prefs],
   );
@@ -894,6 +906,13 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                 </span>
               </label>
               <label className="flex items-start gap-2">
+                <input type="checkbox" className="mt-1 size-4 accent-action" checked={prefs.noRushedWalks} onChange={(e) => set("noRushedWalks", e.target.checked)} />
+                <span>
+                  No rushed walks between classes
+                  <span className="block text-sm text-muted">Skip schedules where the walk to your next class is longer than the time between them</span>
+                </span>
+              </label>
+              <label className="flex items-start gap-2">
                 <input type="checkbox" className="mt-1 size-4 accent-action" checked={prefs.eligibleOnly} onChange={(e) => set("eligibleOnly", e.target.checked)} />
                 <span>
                   Only sections I can register for
@@ -965,7 +984,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
               <button
                 type="button"
                 className="font-semibold text-action hover:underline"
-                onClick={() => setPrefs((p) => ({ ...p, earliest: null, latest: null, daysOff: 0, lunch: false, openOnly: false, includeSpecial: false, blocked: [] }))}
+                onClick={() => setPrefs((p) => ({ ...p, earliest: null, latest: null, daysOff: 0, lunch: false, openOnly: false, noRushedWalks: false, includeSpecial: false, blocked: [] }))}
               >
                 Clear must-haves
               </button>
@@ -1172,6 +1191,16 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                 {summaryLine(sched.stats, (m) => fmtTime(m))}
                 {missing.length > 0 && <span> (without {missing.map((m) => m.key).join(", ")})</span>}
               </p>
+              {sched.stats.walks.length > 0 && (
+                <ul className="space-y-0.5 text-sm" data-testid="rushed-walks" aria-label="Rushed walks">
+                  {sched.stats.walks.map((w, k) => (
+                    <li key={k}>
+                      <span className="font-semibold text-heading">{w.day}:</span> {w.fromCourse} in {w.from} to {w.toCourse} in {w.to},{" "}
+                      {w.walk === null ? `another part of campus with ${w.gap} min between` : `${w.walk} min walk, ${w.gap} min gap`}
+                    </li>
+                  ))}
+                </ul>
+              )}
               <dl className="grid grid-cols-2 gap-y-3 border-y border-line py-3 sm:grid-cols-3 xl:grid-cols-6 xl:divide-x xl:divide-line" data-testid="schedule-stats">
                 {(
                   [
