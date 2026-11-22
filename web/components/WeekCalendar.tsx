@@ -1,5 +1,9 @@
+"use client";
+import { useState } from "react";
 import type { Schedule } from "@/lib/schedule";
-import { fmtTime } from "@/lib/format";
+import { daysStr, fmtTime } from "@/lib/format";
+import type { Section } from "@/lib/types";
+import Icon from "./ui/Icon";
 
 // Categorical colours that tell courses apart in the calendar and the cart (their only meaning). Illinois brand
 // supporting colours, leaving out green and the seat-status hues (globals.css: .course-0 ... .course-5).
@@ -18,13 +22,25 @@ export default function WeekCalendar({
   colorOf,
   blocked = [],
   daysOff = 0,
+  isLocked,
+  onToggleLock,
 }: {
   schedule: Schedule;
   colorOf: (course: string) => string;
   blocked?: { d: number; s: number; e: number }[];
   /** days kept free by the student's must-haves (bit mask), shaded */
   daysOff?: number;
+  /** with these, each class is a button that locks or unlocks its section (#138) */
+  isLocked?: (course: string, crn: string) => boolean;
+  onToggleLock?: (course: string, sec: Section) => void;
 }) {
+  // on a narrow screen a tap opens this panel (the blocks are too small to read), on a wide one it toggles the lock
+  const [menu, setMenu] = useState<{ course: string; sec: Section } | null>(null);
+  const interactive = !!onToggleLock;
+  const press = (course: string, sec: Section) => {
+    if (typeof window !== "undefined" && window.matchMedia?.("(max-width: 639px)").matches) setMenu({ course, sec });
+    else onToggleLock?.(course, sec);
+  };
   const timed = schedule.bundles.flatMap((b) => b.sections.flatMap((s) => s.meetings.filter((m) => m.s !== null).map((m) => ({ b, s, m }))));
   const untimed = schedule.bundles.flatMap((b) => b.sections.filter((s) => s.meetings.every((m) => m.s === null)).map((s) => ({ b, s })));
   const starts = [...timed.map((t) => t.m.s!), ...blocked.map((x) => x.s)];
@@ -36,7 +52,11 @@ export default function WeekCalendar({
   for (let h = lo; h <= hi; h += 60) hours.push(h);
   return (
     <div>
-      <div className="grid grid-cols-[2.75rem_repeat(5,minmax(0,1fr))] text-sm leading-tight" role="img" aria-label="Weekly calendar of this schedule">
+      <div
+        className="grid grid-cols-[2.75rem_repeat(5,minmax(0,1fr))] text-sm leading-tight"
+        role={interactive ? "group" : "img"}
+        aria-label={interactive ? "Weekly calendar of this schedule: press a class to lock or unlock it" : "Weekly calendar of this schedule"}
+      >
         <div />
         {DAYS.map(([, n]) => (
           <div key={n} className="border-b border-line pb-1 text-center font-semibold text-heading">
@@ -69,27 +89,70 @@ export default function WeekCalendar({
               ))}
             {timed
               .filter((t) => t.m.d & bit)
-              .map(({ b, s, m }, i) => (
-                <div
-                  key={`${s.crn}-${i}`}
-                  className={`course-block absolute inset-x-0.5 overflow-hidden rounded border-l-4 px-1 py-0.5 ${colorOf(b.course)}`}
-                  style={{ top: (m.s! - lo) * PX, height: Math.max(18, (m.e! - m.s!) * PX) }}
-                  title={`${b.course} ${s.code} (${s.type}) ${fmtTime(m.s)}–${fmtTime(m.e)} ${m.r} ${m.b}${s.part !== "1" ? ` · part of term ${s.part}` : ""}`}
-                >
-                  <div className="truncate font-semibold">
-                    <span className="sm:hidden">{b.course.split(" ")[0]}</span>
-                    <span className="hidden sm:inline">{b.course}</span>
-                  </div>
-                  <div className="truncate">
-                    <span className="font-semibold sm:hidden">{b.course.split(" ")[1]} </span>
-                    {s.code}
-                    <span className="hidden sm:inline"> {s.type}</span>
-                  </div>
-                </div>
-              ))}
+              .sort((x, y) => x.m.s! - y.m.s!)
+              .map(({ b, s, m }, i) => {
+                const locked = !!isLocked?.(b.course, s.crn);
+                const Tag = interactive ? "button" : "div";
+                return (
+                  <Tag
+                    key={`${s.crn}-${i}`}
+                    {...(interactive
+                      ? {
+                          type: "button" as const,
+                          "aria-pressed": locked,
+                          "aria-label": `${locked ? "Unlock" : "Lock"} ${b.course} ${s.code}, ${n} ${fmtTime(m.s)}`,
+                          onClick: () => press(b.course, s),
+                          "data-testid": "calendar-class",
+                        }
+                      : {})}
+                    className={`course-block absolute inset-x-0.5 overflow-hidden rounded border-l-4 px-1 py-0.5 text-left ${colorOf(b.course)} ${
+                      locked ? "border-2 border-l-8 font-semibold" : ""
+                    } ${interactive ? "cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1" : ""}`}
+                    style={{ top: (m.s! - lo) * PX, height: Math.max(18, (m.e! - m.s!) * PX) }}
+                    title={`${b.course} ${s.code} (${s.type}) ${fmtTime(m.s)}–${fmtTime(m.e)} ${m.r} ${m.b}${s.part !== "1" ? ` · part of term ${s.part}` : ""}${
+                      interactive ? (locked ? ". Locked: press to unlock" : ". Press to lock this section") : ""
+                    }`}
+                  >
+                    <span className="flex items-center gap-0.5 truncate font-semibold">
+                      {locked && <Icon name="lock" className="size-3" />}
+                      <span className="sm:hidden">{b.course.split(" ")[0]}</span>
+                      <span className="hidden sm:inline">{b.course}</span>
+                    </span>
+                    <span className="block truncate">
+                      <span className="font-semibold sm:hidden">{b.course.split(" ")[1]} </span>
+                      {s.code}
+                      <span className="hidden sm:inline"> {s.type}</span>
+                    </span>
+                  </Tag>
+                );
+              })}
           </div>
         ))}
       </div>
+      {menu && (
+        <div className="mt-2 flex flex-wrap items-center gap-2 rounded border border-line bg-panel p-2 text-sm" role="dialog" aria-label={`${menu.course} ${menu.sec.code}`} data-testid="calendar-menu">
+          <span className="min-w-0 flex-1">
+            <strong>
+              {menu.course} {menu.sec.code}
+            </strong>{" "}
+            {menu.sec.type}, {menu.sec.meetings.map((m) => (m.s === null ? "no set time" : `${daysStr(m.d)} ${fmtTime(m.s)}–${fmtTime(m.e)} ${m.b}`)).join("; ")}
+          </span>
+          <button
+            type="button"
+            className="inline-flex items-center gap-1 rounded border border-action bg-action px-2 font-semibold leading-8 text-white"
+            onClick={() => {
+              onToggleLock?.(menu.course, menu.sec);
+              setMenu(null);
+            }}
+          >
+            <Icon name={isLocked?.(menu.course, menu.sec.crn) ? "unlock" : "lock"} />
+            {isLocked?.(menu.course, menu.sec.crn) ? "Unlock" : "Lock"}
+          </button>
+          <button type="button" className="rounded border border-line bg-white px-2 leading-8" onClick={() => setMenu(null)}>
+            Close
+          </button>
+        </div>
+      )}
       {untimed.length > 0 && (
         <p className="mt-2 text-sm text-muted">
           No set time (online / arranged): {untimed.map(({ b, s }) => `${b.course} ${s.code}`).join(", ")}
