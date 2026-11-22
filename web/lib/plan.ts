@@ -3,6 +3,7 @@
 // future terms. Saved and shared with My courses (lib/mycourses.ts): ?g=<graduation term>&gs=1 (summers)&pl=<terms>.
 import { evaluate, type Degree } from "./degree";
 import type { MyCourse } from "./mycourses";
+import { checkPrereq, prereqOf } from "./prereq";
 
 /** `terms`: term id ("2027-fa") -> course codes ("CS 225"), in the order they were added. */
 export type Plan = { grad: string; summers: boolean; terms: Record<string, string[]> };
@@ -190,4 +191,23 @@ export function offeringWarning(o: string | undefined, term: string, termName: s
   if (codes.includes("n")) return "Not offered in the last four years.";
   const when = codes.map((c) => SEASON_WORDS[c]).filter(Boolean);
   return `Usually runs in ${when.join(" and ")} only, not in ${termName}.`;
+}
+
+/**
+ * The prerequisite warning for a course planned in `term` (#21; D45.4 waited for it), or null. What counts: My courses
+ * (`have`) and the courses planned in earlier terms; a course that may be taken concurrently also counts from the same
+ * term. A prerequisite the site can't check gives no warning here: the checklist shows it with the catalog's words.
+ */
+export function prereqWarning(pre: string | undefined, term: string, plan: Plan, have: string[], termName: string): string | null {
+  const t = termIndex(term);
+  const before = new Set(have);
+  for (const [k, codes] of Object.entries(plan.terms)) if (termIndex(k) < t) codes.forEach((c) => before.add(c));
+  const c = checkPrereq(prereqOf(pre), before);
+  if (c.status === "no") return `Prerequisites not met by ${termName}: needs ${c.missing}.`;
+  if (c.status === "with") {
+    const same = plan.terms[term] ?? [];
+    const missing = c.alongside.filter((x) => !same.includes(x));
+    if (missing.length) return `Take ${missing.join(" and ")} in ${termName} too, or earlier.`;
+  }
+  return null;
 }

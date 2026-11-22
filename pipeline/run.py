@@ -115,7 +115,12 @@ def main(argv: list[str] | None = None) -> int:
     df_as_taught = df  # before renumbering: who taught in a subject, for matching names (#12)
     df = renumbered.apply_gpa(df, rename)
     log(f"  {len(rename.links)} renumbered courses linked (data/renumbered.csv)")
-    res = gpa.compute(df)
+    try:
+        res = gpa.compute(df)
+    except gpa.WithheldGradeData as e:
+        log(str(e))
+        conn.close()
+        return 1
     gpa.store(conn, res)
     gpa.store_geneds(conn, gpa.load_geneds(gened_path))
     db.set_meta(conn, "gpa_window", f"{res.window[0]},{res.window[1]}")
