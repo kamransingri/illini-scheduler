@@ -84,6 +84,10 @@ history).
 - "Ask your AI" on course pages and schedules (#103) shows a short summary (sections, times, CRNs, GPA, Rate My
   Professors ratings, your must-haves) and a starter question, and copies exactly that text to paste into any AI app.
   The site sends nothing.
+- Course pages always show the same term tabs (#140): this term, next term, and the next summer and fall. A term
+  Course Explorer hasn't published is greyed out and says so; one the course isn't offered in is greyed but opens; the
+  summer tab shows the course's summer line. Arrow keys move between the tabs, and the schedule builder's term list
+  shows the unpublished terms greyed out.
 
 ### Fixed
 

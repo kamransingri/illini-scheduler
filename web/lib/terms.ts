@@ -42,3 +42,25 @@ export function breakNames(dates: TermDates): string {
   const names = dates.breaks.map(([, , name]) => name);
   return names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}` : (names[0] ?? "");
 }
+
+const SEASONS = ["sp", "su", "fa"] as const;
+/** The term after `t` ("2026-fa" -> "2027-sp"), skipping winter. */
+export function termAfter(t: string): string {
+  const [y, s] = t.split("-");
+  const i = SEASONS.indexOf(s as (typeof SEASONS)[number]);
+  return i < 0 || i === 2 ? `${Number(y) + 1}-sp` : `${y}-${SEASONS[i + 1]}`;
+}
+
+/** Course pages' term tabs (#140): this term, next term, and the next summer and fall after this term, in order. */
+export function tabTerms(current: string): string[] {
+  const out = [current, termAfter(current)];
+  let t = out[1];
+  while (!out.some((x) => x.endsWith("-su") && x !== current) || !out.some((x) => x.endsWith("-fa") && x !== current)) {
+    t = termAfter(t);
+    out.push(t);
+  }
+  return out;
+}
+
+/** When Course Explorer usually posts a term's sections, where we know it ("March" for fall: #140). */
+export const POSTED_IN: Record<string, string> = { fa: "March" };

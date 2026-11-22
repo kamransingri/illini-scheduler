@@ -48,7 +48,7 @@ import {
   type Schedule,
 } from "@/lib/schedule";
 import type { ScorePriors } from "@/lib/score";
-import { breakNames, TERM_DATES } from "@/lib/terms";
+import { breakNames, tabTerms, TERM_DATES } from "@/lib/terms";
 import { useWeights } from "@/lib/weights";
 import { scheduleSummary } from "@/lib/askai";
 import { setBuildings } from "@/lib/walk";
@@ -659,12 +659,19 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
               <h2 id="cart-h" className="font-display text-xl font-bold text-heading">
                 Your courses
               </h2>
-              <select className="rounded border border-line bg-white px-2 py-1.5" value={term} onChange={(e) => setTerm(e.target.value)} aria-label="Term">
+              <select className="min-w-0 max-w-[11rem] rounded border border-line bg-white px-2 py-1.5" value={term} onChange={(e) => setTerm(e.target.value)} aria-label="Term">
                 {termOptions.map((t) => (
                   <option key={t} value={t}>
                     {termLabel(t)}
                   </option>
                 ))}
+                {tabTerms(meta.current_term)
+                  .filter((t) => !termOptions.includes(t))
+                  .map((t) => (
+                    <option key={t} value={t} disabled>
+                      {termLabel(t)} (not out yet)
+                    </option>
+                  ))}
               </select>
             </div>
             <SearchBox
