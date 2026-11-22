@@ -16,6 +16,28 @@ history).
   of a schedule says when to leave and whether to walk or take an MTD bus, with the stop, route and time, then the
   trip home. Between classes that are too far apart to walk in time, it shows the bus that makes it, or how late
   you'd be. Times come from MTD's published timetable and are estimates; where you live stays in your browser.
+- Prerequisites are checked against My courses (#21). Each course option in the degree checklist says "Prerequisites
+  met", "met if you take CS 225 at the same time", "not met: needs CS 173 or MATH 213" or "can't tell", next to the
+  catalog's sentence. A new **You can take next** list shows the courses on your major's open requirements whose
+  prerequisites you meet and that run next term, best picks first. The four-year plan warns when a planned course's
+  prerequisites won't be done by that term.
+
+- Paste your transcript or DARS audit into the degree checklist (#20). Copy Self-Service's Academic History or a DARS
+  audit and paste it under My courses: the courses are read in your browser (nothing is sent or saved), shown as
+  "adds 13, updates 1 (3 in progress)" with a box to leave any out, and applied to My courses. Withdrawn, failed or
+  audited attempts are listed instead of added, lines it can't read are shown, and test credit on the transcript
+  replaces the AP/IB estimate.
+- A data sources page (#191), linked from the footer: where course, grade, gen-ed and rating data comes from, who
+  publishes it and how often the site reads it. It quotes the University's FERPA exclusion from the GPA dataset, and
+  a course's "Sections of 20 or fewer students are withheld" note links to it.
+- Just opened says what each section is and who teaches it (#162): "Lecture with Geoffrey Challen" or
+  "Discussion/Recitation" under the course name.
+- Professor ratings from Rate My Professors show as three meters on course pages (#197): quality, difficulty
+  (marked "lower is easier") and would take again, each with its number, instead of one line of small grey text.
+- Paste your AP or IB scores in the degree checklist (#199, #200) instead of adding each exam by hand. Copy your
+  College Board score page or IB results page into the box, check what was found (exams not recognised and ones
+  that would replace an exam you entered are listed), then apply. Retakes keep the highest score. The text never
+  leaves your browser.
 - A privacy page (#142), linked from the footer: what the site keeps in your browser (every storage key, listed by
   what it holds), the little that leaves it (share links, and seat alerts once they're on), and a button that deletes
   everything the site saved in this browser. No accounts, analytics, ads or trackers.
@@ -39,9 +61,9 @@ history).
 - Warnings in the four-year plan (#116): a course placed in a term it doesn't usually run in ("Usually runs in fall
   only, not in Spring 2028", from the last four years of offerings), and a term over the 18-hour limit or under 12
   hours (not full-time), as in the schedule builder. Moving the course clears its warning.
-- Minors whose catalog page asks for coursework distinct from the major say how much you have (#112). Eight minors
-  ask for six advanced hours (or two advanced courses) that don't also count toward the major, and most toward
-  another minor too. Their checklist shows the rule in the catalog's words, which of your courses count, which don't
+- Minors whose catalog page asks for coursework distinct from the major say how much you have (#112). 30 minors
+  ask for six hours (usually advanced, or two advanced courses for Animal Sciences) that don't also count toward the
+  major, and almost all toward another minor too. Their checklist shows the rule in the catalog's words, which of your courses count, which don't
   because your major uses them, and flags a minor that leans on courses your major already uses.
 
 ### Fixed

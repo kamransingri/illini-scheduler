@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { allCredits, apCredit, creditCourses, IB_LEVEL, ibCredit, isElective, isGrainger, pickIbYear, pickYear, subOptions, type ApSummary, type ApTable, type ApYear, type IbLevel } from "@/lib/apcredit";
-import { alsoCounts, evaluate, hoursSoFar, hydrate, needText, listedByHand, options, overlapChecks, parseHours, prereqNote, programCourses, rankCourse, type Degree, type DegreeCourse, type DegreeIndex, type Evaluation, type GroupResult, type GroupStatus, type HoursSoFar, type OverlapCheck, type Ranked } from "@/lib/degree";
+import { alsoCounts, evaluate, hoursSoFar, hydrate, needText, listedByHand, options, overlapChecks, parseHours, programCourses, rankCourse, type Degree, type DegreeCourse, type DegreeIndex, type Evaluation, type GroupResult, type GroupStatus, type HoursSoFar, type OverlapCheck, type Ranked } from "@/lib/degree";
 import { courseHref, dataUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, termLabel } from "@/lib/format";
 import { EMPTY, MAX_MINORS, minorTick, onMineChange, readMine, sameState, STATUS_LABEL, stateFromParams, stateToParams, ticksOf, writeMine, type CourseStatus, type MyState } from "@/lib/mycourses";
 import { COURSE_DRAG, finishTerms, isEmptyPlan, planTerms, type FinishAt } from "@/lib/plan";
@@ -13,7 +13,10 @@ import AddToCart from "./AddToCart";
 import CopyButton from "./CopyButton";
 import FourYearPlan from "./FourYearPlan";
 import ScoreBreakdown from "./course/ScoreBreakdown";
+import { NextCourses, PrereqLine } from "./Prereq";
 import ProgramPicker from "./ProgramPicker";
+import ScorePaste from "./ScorePaste";
+import TranscriptPaste from "./TranscriptPaste";
 import { loadIndex } from "./SearchBox";
 import { Badge } from "./ui/Badge";
 import CourseRow, { CourseRowHeader, type CourseCols } from "./ui/CourseRow";
@@ -158,6 +161,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
   const apSum = useMemo(() => (apYear && st.ap.length ? apCredit(apYear, st.ap, grainger) : null), [apYear, st.ap, grainger]);
   const ibSum = useMemo(() => (ibYear && st.ib.length ? ibCredit(ibYear, st.ib) : null), [ibYear, st.ib]);
   const allCourses = useMemo(() => [...st.courses, ...creditCourses(allCredits(apSum, ibSum), st.declined, st.courses)], [st.courses, st.declined, apSum, ibSum]);
+  const estimated = useMemo(() => allCourses.filter((c) => c.ap), [allCourses]);
   const apReady = (!st.ap.length || !!apTable || apError) && (!st.ib.length || (!!ibTable && !!apTable) || ibError || apError);
   const majorTicks = useMemo(() => ticksOf(st.ticked), [st.ticked]);
   const ev = useMemo(() => (deg && apReady ? evaluate(deg, allCourses, majorTicks) : null), [deg, apReady, allCourses, majorTicks]);
@@ -267,6 +271,8 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
             ))}
           <AddCourse st={st} update={update} deg={deg} index={index} />
           <ApForm st={st} update={update} table={apTable} ibTable={ibTable} error={apError || ibError} />
+          <ScorePaste st={st} update={update} table={apTable} ibTable={ibTable} />
+          <TranscriptPaste st={st} update={update} estimated={estimated} />
         </div>
         <MyCourseList
           st={st}
@@ -285,6 +291,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
         lookup={lookup}
         titleOf={(code) => titleIn(deg, index, code)}
         patternOf={(code) => patterns.get(code)}
+        preOf={(code) => deg?.courses[code]?.pre}
         totalHours={deg?.total_hours ?? null}
       />
 
@@ -940,6 +947,7 @@ function Checklist({
         </div>
         {deg.unknown.length > 0 && <p className="mt-2 text-sm text-muted">Not in this site&apos;s course data, so not shown as options: {deg.unknown.join(", ")}.</p>}
         {meta.score_priors && !minor && <WeightsControl className="mt-4" />}
+        {!minor && <NextCourses results={results} deg={deg} taken={taken} nextTerm={meta.next_term} priors={meta.score_priors} weights={weights} />}
       </header>
 
       {sections.map((sec) => (
@@ -1140,7 +1148,6 @@ function OptionRow({
   const [s, n] = x.code.split(" ");
   const c = x.course;
   const marks = alsoCounts(x.code, r.group, results, deg);
-  const pre = prereqNote(c.pre, taken);
   const yes = marks.filter((m) => m.verdict.allow === true);
   const unclear = marks.filter((m) => m.verdict.allow === "unclear");
   const no = marks.filter((m) => m.verdict.allow === false);
@@ -1174,15 +1181,11 @@ function OptionRow({
         </>
       }
       note={
-        unclear.length || no.length || pre ? (
+        unclear.length || no.length || c.pre?.trim() ? (
           <span className="block space-y-0.5">
             {unclear.length > 0 && <span className="block">Also matches {unclear.map((m) => m.group.name).join(", ")}; the catalog doesn&apos;t say it can count for both.</span>}
             {no.length > 0 && <span className="block">Matches {no.map((m) => m.group.name).join(", ")} too, but can count for only one.</span>}
-            {pre && (
-              <span className="block">
-                <span className="font-semibold text-ink">Check prerequisites:</span> {pre}
-              </span>
-            )}
+            <PrereqLine text={c.pre} taken={taken} />
           </span>
         ) : undefined
       }

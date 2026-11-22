@@ -49,6 +49,8 @@ Formula: [docs/DECISIONS.md](docs/DECISIONS.md) D13.18.
 | [CITL AP credit tables](https://citl.illinois.edu/current-cutoff-scores) | Courses each AP score gives (`data/ap-credit/*.yaml`) | Students entering 2024-2025 to 2026-2027, copied by hand |
 | [CITL IB credit table](https://citl.illinois.edu/current-cutoff-scores) | Courses each IB score and level gives (`data/ib-credit/*.yaml`) | Students entering 2026-2027, checked by hand |
 
+Students see a short version of this table on the site's `/data-sources/` page.
+
 Self-Service (Banner) needs a NetID and is never scraped: the site only links to it and copies CRNs. Seat counts and
 waitlists live only there, so the site knows open / restricted / closed, not how many seats are left.
 

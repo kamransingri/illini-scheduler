@@ -13,7 +13,7 @@ Places to live are OpenStreetMap's named residence halls and apartment buildings
 
 The timetable is MTD's: the export carries "Data provided by Champaign-Urbana Mass Transit District", which MTD's
 developer terms ask for, and the site shows it next to every bus time. The feed covers one term at a time, so a
-schedule for a term MTD hasn't published uses the current term's times, and the site says so (DECISIONS.md D47).
+schedule for a term MTD hasn't published uses the current term's times, and the site says so (DECISIONS.md D50).
 
     python -m pipeline.transit           # what the export would hold, from data/illini.db and the cached feed
     python -m pipeline.transit --fetch   # download the feed first

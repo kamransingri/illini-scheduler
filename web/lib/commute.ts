@@ -1,7 +1,7 @@
 // Map 4 (#96): getting to class from where you live, and between classes, on foot or by MTD bus.
 // Bus times are MTD's published timetable (transit.json, pipeline/transit.py); building locations are
 // OpenStreetMap's (buildings.json, #93). Everything here is an estimate, and the page says so.
-// One bus, no transfers: the campus routes run between the halls and the buildings directly (DECISIONS.md D47).
+// One bus, no transfers: the campus routes run between the halls and the buildings directly (DECISIONS.md D50).
 
 export type Place = { name: string; lat: number; lon: number };
 export type Home = Place & { kind: "hall" | "apartments" };

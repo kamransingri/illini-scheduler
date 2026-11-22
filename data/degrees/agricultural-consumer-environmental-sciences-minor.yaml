@@ -14,6 +14,12 @@ generated: '2026-11-17'
 total_hours: 21
 notes: []
 double_counting: []
+major_overlap:
+- distinct_hours: 6
+  min_level: 400
+  minors_too: true
+  quote: "At least 6 credit hours (ACES or non-ACES) must come from 400-level courses and must be distinct from credit earned for the student’s major or another minor."
+  source: https://catalog.illinois.edu/undergraduate/aces/minors/agricultural-consumer-environmental-sciences/
 groups:
 - name: Global Study in the Social Science Disciplines
   section: Degree Requirements
