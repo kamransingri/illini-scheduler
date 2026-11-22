@@ -22,6 +22,7 @@ test("a cross-campus walk with 10 minutes between classes is flagged, and the mu
   await page.getByRole("button", { name: "Generate schedules" }).click();
 
   // with every priority at 0 both schedules tie; find the one with the 10:00 section
+  await expect(page.getByText(/Schedule 1 of 2/)).toBeVisible();
   const walks = page.getByTestId("rushed-walks");
   for (let i = 0; i < 2 && !(await walks.isVisible()); i++) await page.getByRole("button", { name: "Next schedule" }).click();
   await expect(walks).toContainText(/Mon: STAT 107 in North Test Hall to RHET 105 in South Test Hall, \d+ min walk, 10 min gap/);

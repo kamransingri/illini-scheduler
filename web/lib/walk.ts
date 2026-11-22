@@ -1,9 +1,11 @@
-// Walking time between buildings (#94): straight-line distance from buildings.json (OpenStreetMap, #93) times a
-// detour factor for paths around buildings, at an easy walking pace. Rough on purpose (DECISIONS D50).
+// Walking time between buildings (#94): buildings.json's locations (OpenStreetMap, #93) with Getting there's walking
+// estimate (lib/commute.ts), so a walk takes as long in the schedule as on the map. Rough on purpose (DECISIONS D52).
 import { areaOf } from "./campus";
+import { walkMinutes as walkBetween } from "./commute";
 
 export type Point = { lat: number; lon: number };
-export const WALK = { detour: 1.35, metersPerMin: 80, window: 30 };
+/** Classes further apart than `window` minutes never make a rushed walk. */
+export const WALK = { window: 30 };
 
 let points: Record<string, Point> = {};
 /** buildings.json's `buildings`, once it has loaded; until then (or if it fails) walks fall back to campus areas. */
@@ -17,12 +19,7 @@ export function walkMinutes(a: string, b: string): number | null {
   if (a === b) return 0;
   const p = points[a],
     q = points[b];
-  if (!p || !q) return null;
-  const rad = Math.PI / 180;
-  const x = (q.lon - p.lon) * rad * Math.cos(((p.lat + q.lat) / 2) * rad);
-  const y = (q.lat - p.lat) * rad;
-  const meters = Math.hypot(x, y) * 6371000;
-  return Math.ceil((meters * WALK.detour) / WALK.metersPerMin);
+  return p && q ? walkBetween(p, q) : null;
 }
 
 type Timed = { d: number; s: number | null; e: number | null; b: string };
