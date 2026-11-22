@@ -19,6 +19,7 @@ import {
 } from "@/lib/commute";
 import { dataUrl, fmtTime } from "@/lib/format";
 import type { Schedule } from "@/lib/schedule";
+import BestBus from "./BestBus";
 import DayMap from "./DayMap";
 import PinPicker from "./PinPicker";
 import Icon from "./ui/Icon";
@@ -152,6 +153,12 @@ export default function GettingThere({ schedule, termName }: { schedule: Schedul
     });
   }, [data, schedule, home]);
 
+  // every class meeting of the week with a room, for the best bus line
+  const week = useMemo(
+    () => schedule.bundles.flatMap((b) => b.meetings).filter((m) => m.s !== null && m.b).map((m) => ({ course: m.course, b: m.b })),
+    [schedule],
+  );
+
   function pick(name: string) {
     setHere(null);
     setPinning(false);
@@ -225,6 +232,7 @@ export default function GettingThere({ schedule, termName }: { schedule: Schedul
       </p>
 
       {!home && <p>Pick where you live to see when to leave and which bus to take. Trips between classes are below either way.</p>}
+      {home && !noBuses && <BestBus transit={t!} home={home} classes={week} buildings={data.buildings} />}
 
       {days.map((d) => (
         <section key={d.bit} aria-label={d.name} className="space-y-1.5">

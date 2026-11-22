@@ -189,6 +189,103 @@ export function planDay(
   return { legs, missing };
 }
 
+// ---- Best bus line (#216): one line from near home that reaches the most of the week's classes ----
+
+export const NEAR_WALK = 10; // a class this close to home is a walk, not a bus
+
+export type LineStop = { courses: string[]; building: string; lat: number; lon: number; stop: string; walkFrom: number; ride: number; walk: number };
+export type BestLine = {
+  route: string;
+  color: string;
+  textColor: string;
+  headsign: string;
+  board: string; // the stop near home
+  walkTo: number;
+  covered: LineStop[];
+  courses: number; // classes it reaches
+  path: [number, number][]; // [lon, lat] of its stops from the boarding stop to the last class stop
+};
+/** Minutes on foot over a week's trips on a line: to the stop once per class building, and from each stop. */
+const lineWalking = (l: BestLine) => l.walkTo * l.covered.length + l.covered.reduce((n, c) => n + c.walkFrom, 0);
+
+export type LinePlan = { lines: BestLine[]; walk: { courses: string[]; building: string; walk: number }[]; missing: string[]; total: number };
+
+/**
+ * The bus lines that take you from near home straight to the most of your classes (one bus, no transfers). A class
+ * counts when the walk to the stop and from the last stop is at least BUS_SAVES minutes less than walking all the way.
+ * Classes within NEAR_WALK minutes of home are left to walk. Best line first; ties go to less walking.
+ */
+export function bestLines(t: Transit, home: Place, classes: { course: string; b: string }[], buildings: BuildingMap, limit = 3): LinePlan {
+  const by = new Map<string, { at: Place; courses: string[] }>();
+  const missing: string[] = [];
+  for (const c of classes) {
+    const p = buildings[c.b];
+    if (!p) {
+      if (c.b && !missing.includes(c.b)) missing.push(c.b);
+      continue;
+    }
+    const g = by.get(p.name) ?? { at: { name: p.name, lat: p.lat, lon: p.lon }, courses: [] };
+    if (!g.courses.includes(c.course)) g.courses.push(c.course);
+    by.set(p.name, g);
+  }
+  const groups = [...by.values()].map((g) => ({ ...g, walk: walkMinutes(home, g.at) }));
+  const walk = groups.filter((g) => g.walk <= NEAR_WALK).map((g) => ({ courses: g.courses, building: g.at.name, walk: g.walk }));
+  const far = groups.filter((g) => g.walk > NEAR_WALK).map((g) => ({ ...g, near: nearStops(t, g.at) }));
+  const total = groups.reduce((n, g) => n + g.courses.length, 0);
+  const atHome = nearStops(t, home);
+  const weekday = t.patterns.filter((p) => p.t.some(([, mask]) => mask & 31));
+  const lines: BestLine[] = [];
+  for (let r = 0; r < t.routes.length; r++) {
+    const pats = weekday.filter((p) => p.r === r);
+    let best: BestLine | null = null;
+    for (const [stop, walkTo] of atHome) {
+      const covered: LineStop[] = [];
+      let bestPat: { p: Pattern; i: number; j: number; n: number } | null = null;
+      const perPat = new Map<Pattern, { i: number; j: number; n: number }>();
+      for (const g of far) {
+        let hit: { p: Pattern; i: number; j: number; wb: number; ride: number } | null = null;
+        for (const p of pats) {
+          const i = p.s.indexOf(stop);
+          if (i < 0) continue;
+          for (let j = i + 1; j < p.s.length; j++) {
+            const wb = g.near.get(p.s[j]);
+            if (wb === undefined) continue;
+            const ride = p.o[j] - p.o[i];
+            if (!hit || wb + ride < hit.wb + hit.ride) hit = { p, i, j, wb, ride };
+          }
+        }
+        if (!hit || walkTo + hit.wb + BUS_SAVES > g.walk) continue;
+        covered.push({ courses: g.courses, building: g.at.name, lat: g.at.lat, lon: g.at.lon, stop: t.stops[hit.p.s[hit.j]][0], walkFrom: hit.wb, ride: hit.ride, walk: g.walk });
+        const e = perPat.get(hit.p) ?? { i: hit.i, j: hit.j, n: 0 };
+        e.j = Math.max(e.j, hit.j);
+        e.n += g.courses.length;
+        perPat.set(hit.p, e);
+      }
+      if (!covered.length) continue;
+      for (const [p, e] of perPat) if (!bestPat || e.n > bestPat.n) bestPat = { p, ...e };
+      const courses = covered.reduce((n, c) => n + c.courses.length, 0);
+      const walking = walkTo * covered.length + covered.reduce((n, c) => n + c.walkFrom, 0);
+      if (best && (courses < best.courses || (courses === best.courses && walking >= lineWalking(best)))) continue;
+      const [short, long, color, text] = t.routes[r];
+      const pat = bestPat!;
+      best = {
+        route: `${short} ${long}`.trim(),
+        color: color ? `#${color}` : "",
+        textColor: text ? `#${text}` : "",
+        headsign: pat.p.h,
+        board: t.stops[stop][0],
+        walkTo,
+        covered: covered.sort((a, b) => b.courses.length - a.courses.length || a.walkFrom - b.walkFrom),
+        courses,
+        path: pat.p.s.slice(pat.i, pat.j + 1).map((k) => [t.stops[k][2], t.stops[k][1]] as [number, number]),
+      };
+    }
+    if (best) lines.push(best);
+  }
+  lines.sort((a, b) => b.courses - a.courses || lineWalking(a) - lineWalking(b));
+  return { lines: lines.slice(0, limit), walk, missing, total };
+}
+
 // ---- Map 3 (#95): a day's classes as numbered stops ----
 
 export type MapStop = {

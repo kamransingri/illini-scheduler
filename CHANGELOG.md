@@ -76,6 +76,9 @@ history).
 - The schedule builder works out walking time between back-to-back classes from building locations (#94). Each
   schedule lists the walks that take longer than the gap before the next class ("14 min walk, 10 min gap"), and a
   new must-have, **No rushed walks between classes**, skips schedules that have one.
+- Getting there names your best bus (#216): the MTD line from a stop near where you live that reaches the most of
+  your classes without a transfer, where to get off for each, the classes close enough to walk, and the next two
+  lines. The line can be shown on the map.
 
 ### Fixed
 
