@@ -21,3 +21,16 @@ test("a course with no grade data links its note to the data sources page", asyn
   await note.click();
   await expect(page).toHaveURL(/\/data-sources\/#gpa$/);
 });
+
+// #193: the GPA source note names Wade's dataset, links it, and says what released the terms shown
+test("CS 124's GPA source note credits the dataset and Senate item EP.25.072", async ({ page }) => {
+  await page.goto("./course/CS/124/");
+  const info = page.getByRole("button", { name: /Source for recent course GPA/i });
+  await info.focus();
+  const note = page.getByTestId("gpa-source");
+  await expect(note).toContainText("Senate item EP.25.072");
+  await expect(note.getByRole("link", { name: "Wade Fagen-Ulmschneider's GPA dataset" })).toHaveAttribute("href", "https://github.com/wadefagen/datasets/tree/main/gpa");
+  await page.keyboard.press("Tab");
+  await expect(note.getByRole("link", { name: "Wade Fagen-Ulmschneider's GPA dataset" })).toBeFocused();
+  await expect(info).toHaveAttribute("aria-expanded", "true");
+});

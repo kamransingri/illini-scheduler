@@ -29,7 +29,9 @@ Credit these sources if you republish the data:
 - **[UIUC GPA dataset](https://github.com/wadefagen/datasets/tree/main/gpa)**,
   **[gen-ed list](https://github.com/wadefagen/datasets/tree/main/geneds)** and
   **[Teachers Ranked as Excellent](https://github.com/wadefagen/datasets/tree/main/teachers-ranked-as-excellent)**
-  by Wade Fagen-Ulmschneider.
+  by Wade Fagen-Ulmschneider. The University released the grade terms before Spring 2025 through FOIA requests and
+  the terms from Spring 2025 on under Urbana Senate item EP.25.072, brought by the Illinois Student Council. The
+  dataset's [data source table](https://github.com/wadefagen/datasets/tree/main/gpa#data-source) lists each request.
 - **[Academic Catalog](https://catalog.illinois.edu/)**: degree requirements.
 - **[CITL](https://citl.illinois.edu/current-cutoff-scores)**: AP and IB credit tables.
 - **Rate My Professors**: ratings, tags and review snippets. They belong to Rate My Professors and its reviewers, so
