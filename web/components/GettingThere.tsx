@@ -6,7 +6,10 @@ import { useEffect, useId, useMemo, useState } from "react";
 import {
   homeChoices,
   planDay,
+  decodePin,
+  PIN_NAME,
   readHome,
+  stopsForDay,
   writeHome,
   type BuildingMap,
   type Leg,
@@ -16,6 +19,8 @@ import {
 } from "@/lib/commute";
 import { dataUrl, fmtTime } from "@/lib/format";
 import type { Schedule } from "@/lib/schedule";
+import DayMap from "./DayMap";
+import PinPicker from "./PinPicker";
 import Icon from "./ui/Icon";
 
 const DAYS: [number, string][] = [
@@ -120,6 +125,7 @@ export default function GettingThere({ schedule, termName }: { schedule: Schedul
   const [homeName, setHomeName] = useState<string | null>(null);
   const [here, setHere] = useState<Place | null>(null);
   const [locating, setLocating] = useState<"idle" | "asking" | "denied">("idle");
+  const [pinning, setPinning] = useState(false);
   const pickId = useId();
 
   useEffect(() => {
@@ -132,7 +138,8 @@ export default function GettingThere({ schedule, termName }: { schedule: Schedul
   }, []);
 
   const choices = useMemo(() => (data ? homeChoices(data.transit, data.buildings) : []), [data]);
-  const picked = useMemo(() => choices.flatMap((g) => g.places).find((p) => p.name === homeName) ?? null, [choices, homeName]);
+  const pin = useMemo(() => decodePin(homeName), [homeName]);
+  const picked = useMemo(() => pin ?? choices.flatMap((g) => g.places).find((p) => p.name === homeName) ?? null, [pin, choices, homeName]);
   const home = here ?? picked;
 
   const days = useMemo(() => {
@@ -141,12 +148,13 @@ export default function GettingThere({ schedule, termName }: { schedule: Schedul
     return DAYS.flatMap(([bit, name]) => {
       const today = mtgs.filter((m) => m.d & bit && m.s !== null && m.e !== null).map((m) => ({ course: m.course, s: m.s!, e: m.e!, b: m.b }));
       if (!today.length) return [];
-      return [{ bit, name, ...planDay(today, home, data.buildings, data.transit, bit) }];
+      return [{ bit, name, ...planDay(today, home, data.buildings, data.transit, bit), stops: stopsForDay(today, data.buildings).stops }];
     });
   }, [data, schedule, home]);
 
   function pick(name: string) {
     setHere(null);
+    setPinning(false);
     setHomeName(name || null);
     writeHome(name || null);
   }
@@ -179,12 +187,13 @@ export default function GettingThere({ schedule, termName }: { schedule: Schedul
           <span className="font-semibold text-heading">Where you live</span>
           <select
             id={pickId}
-            className="max-w-full rounded border border-line bg-surface px-2 py-1.5"
-            value={here ? "" : (picked?.name ?? "")}
+            className="max-w-full rounded border border-line bg-white px-2 py-1.5"
+            value={here ? "" : pin ? homeName! : (picked?.name ?? "")}
             onChange={(e) => pick(e.target.value)}
             data-testid="home-picker"
           >
             <option value="">{here ? "Where you are now" : "Choose a hall or building"}</option>
+            {pin && <option value={homeName!}>{PIN_NAME}</option>}
             {choices.map((g) => (
               <optgroup key={g.group} label={g.group}>
                 {g.places.map((p) => (
@@ -199,9 +208,19 @@ export default function GettingThere({ schedule, termName }: { schedule: Schedul
         <button type="button" className="inline-flex items-center gap-1 font-semibold text-action underline" onClick={useHere} disabled={locating === "asking"}>
           {locating === "asking" ? "Finding you…" : "Use where I am now"}
         </button>
+        <button
+          type="button"
+          className="inline-flex items-center gap-1 font-semibold text-action underline"
+          aria-expanded={pinning}
+          onClick={() => setPinning((v) => !v)}
+        >
+          {pin ? "Move your pin" : "Drop a pin"}
+        </button>
       </div>
+      {pinning && <PinPicker start={pin ?? here} onSave={(v) => pick(v)} onCancel={() => setPinning(false)} />}
       <p className="text-sm text-muted">
-        Kept in this browser only and never put in share links. &ldquo;Where I am now&rdquo; asks your browser each time and isn&rsquo;t saved.
+        Kept in this browser only and never put in share links; a pin is rounded to about 100 m. &ldquo;Where I am now&rdquo; asks your browser each
+        time and isn&rsquo;t saved.
         {locating === "denied" && <strong className="ml-1 text-heading">Your browser didn&rsquo;t share a location; pick a place instead.</strong>}
       </p>
 
@@ -210,6 +229,7 @@ export default function GettingThere({ schedule, termName }: { schedule: Schedul
       {days.map((d) => (
         <section key={d.bit} aria-label={d.name} className="space-y-1.5">
           <h4 className="font-semibold text-heading">{d.name}</h4>
+          <DayMap day={d.name} stops={d.stops} home={home} />
           {d.legs.length ? (
             <ol className="space-y-1.5">
               {d.legs.map((l, i) => (

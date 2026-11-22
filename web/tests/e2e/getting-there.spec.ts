@@ -77,3 +77,55 @@ test("with no bus times or building locations, the tab says so instead of breaki
   await expect(there).toContainText("No location yet for");
   await expect(there.getByTestId("trip-leg")).toHaveCount(0);
 });
+
+test("drop a pin for where you live: saved rounded, used for every trip, kept after a reload, not in the link (#96)", async ({ page }) => {
+  const errors: string[] = [];
+  page.on("pageerror", (e) => errors.push(String(e)));
+  const course = await (await page.request.get("./data/course/RHET/105.json")).json();
+  const names = new Set<string>();
+  for (const t of Object.values(course.terms) as { sections: { meetings: { b: string }[] }[] }[])
+    for (const s of t.sections) for (const m of s.meetings) if (m.b && m.b !== "Location Pending") names.add(m.b);
+  const buildings = Object.fromEntries([...names].map((b) => [b, { name: b, short: null, lat: 40.115, lon: -88.2272 }]));
+  await page.route("**/data/buildings.json", (r) => r.fulfill({ json: { credit: "", osm_base: null, buildings } }));
+  await page.route("**/data/transit.json", (r) => r.fulfill({ status: 404, body: "" }));
+  await page.route("https://tiles.openfreemap.org/**", (r) =>
+    r.fulfill({ json: { version: 8, sources: {}, layers: [{ id: "bg", type: "background", paint: { "background-color": "#eeeeee" } }] } }),
+  );
+
+  await page.goto("./schedule/?c=RHET105");
+  await page.getByRole("button", { name: "Generate schedules" }).click();
+  await page.getByRole("tab", { name: "Getting there" }).click();
+  await page.getByRole("button", { name: "Drop a pin" }).click();
+  const picker = page.getByTestId("pin-picker");
+  await expect(picker.getByRole("button", { name: "Use this spot" })).toBeDisabled();
+  const canvas = page.getByTestId("pin-map-canvas");
+  await expect(canvas).toHaveAttribute("data-ready", "1");
+  // the map opens on the Illini Union (40.1092, -88.2272); the keyboard way puts the pin in its middle
+  await picker.getByRole("button", { name: "Put the pin in the middle of the map" }).click();
+  await picker.getByRole("button", { name: "Use this spot" }).click();
+  await expect(picker).toHaveCount(0);
+
+  const home = page.getByTestId("home-picker");
+  await expect(home).toHaveValue("pin:40.109,-88.227");
+  await expect(home.locator("option:checked")).toHaveText("Your pin");
+  expect(await page.evaluate(() => localStorage.getItem("illini-scheduler:home:v1"))).toBe("pin:40.109,-88.227");
+  await expect(page.locator('[data-testid="trip-leg"][data-kind="to-class"]').first()).toContainText("walk");
+  await expect(page.locator('[data-testid="trip-leg"][data-kind="home"]').first()).toContainText("Your pin");
+  expect(page.url()).not.toContain("pin");
+
+  // clicking the map moves the pin too
+  await page.getByRole("button", { name: "Move your pin" }).click();
+  await expect(canvas).toHaveAttribute("data-ready", "1");
+  const box = (await canvas.boundingBox())!;
+  await canvas.click({ position: { x: box.width / 2 + 60, y: box.height / 2 } });
+  await picker.getByRole("button", { name: "Use this spot" }).click();
+  const moved = await page.evaluate(() => localStorage.getItem("illini-scheduler:home:v1"));
+  expect(moved).toMatch(/^pin:40\.1\d\d,-88\.2\d\d$/);
+  expect(moved).not.toBe("pin:40.109,-88.227");
+
+  await page.reload();
+  await page.getByRole("button", { name: "Generate schedules" }).click();
+  await page.getByRole("tab", { name: "Getting there" }).click();
+  await expect(page.getByTestId("home-picker")).toHaveValue(moved!);
+  expect(errors).toEqual([]);
+});
