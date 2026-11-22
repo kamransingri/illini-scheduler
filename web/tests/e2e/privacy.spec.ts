@@ -14,7 +14,7 @@ test("the footer links to the privacy page, which lists what's stored and delete
   await expect(page).toHaveURL(/\/privacy\/$/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Privacy");
   const table = page.getByTestId("stored-keys");
-  await expect(table.locator("tbody tr")).toHaveCount(8);
+  await expect(table.locator("tbody tr")).toHaveCount(9);
   await expect(table).toContainText("illini-scheduler:mycourses:v1");
 
   await page.getByRole("button", { name: "Delete everything this site saved in this browser" }).click();

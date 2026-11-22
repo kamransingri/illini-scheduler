@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 /** Change this date in the same pull request as any change the page describes (#141). */
-const UPDATED = "2026-11-20";
+const UPDATED = "2026-11-21";
 const LINK = "text-action underline hover:text-action-dark";
 const REPO = "https://github.com/kamransingri/illini-scheduler";
 
@@ -71,6 +71,11 @@ export default function PrivacyPage() {
           <li>
             <strong>Share links.</strong> A link you copy (a schedule, a checklist, a watch list) carries what it shows in the address itself: courses,
             CRNs, your rules, your courses and plan. Anyone you send it to sees that. The site doesn&apos;t store links anywhere.
+          </li>
+          <li>
+            <strong>Nothing, for &ldquo;Use where I am now&rdquo;.</strong> In the schedule builder&apos;s Getting there tab, that button asks your
+            browser for your location once. The page uses it to work out walking and bus times and forgets it when you leave; it isn&apos;t saved,
+            put in share links or sent anywhere. The hall or building you pick as where you live is saved in your browser only, and never in links.
           </li>
           <li>
             <strong>Seat alerts, when you turn them on.</strong> &ldquo;Alert me&rdquo; on a watched section sends the alert server your browser&apos;s
