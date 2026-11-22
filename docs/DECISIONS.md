@@ -1409,3 +1409,15 @@ Every judgment call made during the autonomous build, newest phase last.
   Hall, 14 min walk, 10 min gap"). "Avoid rushed walks across campus" under What matters to you ranks by them as
   before, and the must-have **No rushed walks between classes** (`nw=1` in links) never shows a schedule with one.
   The builder waits for `buildings.json` before it builds schedules, and falls back to campus areas if it can't load.
+
+## The best bus line from where you live (2026-11-22, issue #216)
+
+- **D53.1 One line, the most classes.** From every stop within STOP_WALK_MAX (8 minutes) of home, each MTD line that
+  runs on weekdays is tried. A class building counts when one ride on that line, from that boarding stop, gets
+  within 8 minutes' walk of it, and the walking at both ends is at least BUS_SAVES (5) minutes less than walking all
+  the way (D50.4's estimate). A line is scored by the classes it reaches, each class once a week whatever its number
+  of meetings, and ties go to less walking. Classes within NEAR_WALK (10 minutes) of home are left to walk.
+- **D53.2 Where it shows.** "Your best bus" in Getting there, once where you live is set: the line, the stop to board
+  at, where to get off for each class, the classes to walk to, and the next two lines. "Show the line on the map"
+  draws the line from its boarding stop ("B"), home ("H") and the class buildings, on D51's map. Times stay with the
+  day-by-day trips below it, which already pick each bus.

@@ -6,7 +6,18 @@ import { useEffect, useRef, useState } from "react";
 import type { MapStop, Place } from "@/lib/commute";
 import { actionColor, maplibregl, newMap, pinElement as pin } from "@/lib/maplibre";
 
-export default function DayMapCanvas({ stops, home, label }: { stops: MapStop[]; home: Place | null; label: string }) {
+/** `route`: a bus line to draw instead of the walk between stops, from its boarding stop ("B") on (#216). */
+export default function DayMapCanvas({
+  stops,
+  home,
+  label,
+  route,
+}: {
+  stops: MapStop[];
+  home: Place | null;
+  label: string;
+  route?: { path: [number, number][]; color: string };
+}) {
   const box = useRef<HTMLDivElement>(null);
   const [failed, setFailed] = useState(false);
 
@@ -30,8 +41,15 @@ export default function DayMapCanvas({ stops, home, label }: { stops: MapStop[];
       bounds.extend([s.lon, s.lat]);
       line.push([s.lon, s.lat]);
     }
+    if (route?.path.length) {
+      new maplibregl.Marker({ element: pin("B", true) }).setLngLat(route.path[0]).addTo(map);
+      for (const p of route.path) bounds.extend(p);
+    }
     map.on("load", () => {
-      if (line.length > 1) {
+      if (route && route.path.length > 1) {
+        map.addSource("bus", { type: "geojson", data: { type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: route.path } } });
+        map.addLayer({ id: "bus", type: "line", source: "bus", paint: { "line-color": route.color || actionColor(), "line-width": 5, "line-opacity": 0.85 } });
+      } else if (line.length > 1) {
         map.addSource("route", { type: "geojson", data: { type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: line } } });
         map.addLayer({
           id: "route",
@@ -46,7 +64,7 @@ export default function DayMapCanvas({ stops, home, label }: { stops: MapStop[];
     // extra room at the bottom: the map's credit line stays visible (OpenStreetMap asks for that) and pins stay clear of it
     if (!bounds.isEmpty()) map.fitBounds(bounds, { padding: { top: 40, right: 56, bottom: 100, left: 40 }, maxZoom: 17, duration: 0 });
     return () => map.remove();
-  }, [stops, home]);
+  }, [stops, home, route]);
 
   if (failed) return <p className="text-sm text-muted">This browser can&rsquo;t draw the map; the stops are listed here.</p>;
   return <div ref={box} role="img" aria-label={label} className="h-80 w-full overflow-hidden rounded border border-line" data-testid="day-map-canvas" />;
