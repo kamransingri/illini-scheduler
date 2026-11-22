@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { cisUrl, dataUrl, daysStr, fmtDate, fmtDelta, fmtGpa, fmtTime, rmpRateUrl, termLabel, termOrder, treLabel } from "@/lib/format";
+import { cisUrl, dataUrl, daysStr, fmtDate, fmtDelta, fmtGpa, fmtTime, gpaRelease, rmpRateUrl, termLabel, termOrder, treLabel } from "@/lib/format";
 import { decodeCart, encodeCart } from "@/lib/cart";
 
 describe("format", () => {
@@ -118,4 +118,10 @@ describe("seat history helpers", () => {
     expect(seatVerb("Open", "Closed")).toBe("closed");
     expect(seatVerb("Open", "Open (Restricted)")).toBe("changed");
   });
+});
+
+it("gpaRelease names FOIA before Spring 2025 and EP.25.072 from then (#193)", () => {
+  expect(gpaRelease("2021-fa", "2024-fa")).toBe("released through FOIA requests");
+  expect(gpaRelease("2025-sp", "2026-sp")).toBe("released under Senate item EP.25.072");
+  expect(gpaRelease("2022-fa", "2026-sp")).toContain("FOIA requests before Spring 2025 and under Senate item EP.25.072");
 });
