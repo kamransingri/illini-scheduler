@@ -1300,3 +1300,45 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D48.6 Samples are hand-written.** No real transcript or DARS audit is in the repository. The fixtures follow the
   layout of a UIUC unofficial transcript its owner published and the uAchieve DARS row format; redacted samples from
   volunteers can be added beside them (fixtures/transcript/README.md).
+
+## Prerequisites (2026-11-21, issue #21)
+
+- **D49.1 Read in the browser, from text already exported.** Every course's prerequisite sentence is already in the
+  degree files (`pre`) and course pages, so `web/lib/prereq.ts` reads it into an AND/OR tree where it's shown, instead
+  of the pipeline exporting a second copy (#21 suggested the pipeline; one reader in one place avoids two copies
+  drifting apart, the problem D13.22 solves with a parity test). Results are cached per sentence.
+- **D49.2 The reading.** Sentences and ";" are AND; a clause opening with "or" ("; or consent of instructor") is an
+  alternative to everything before it in the sentence. "One of", "either" and "A, B, or C" are OR; "A, B, and C" is
+  AND; "A or B, C, D or E" is an AND of ORs; "MATH 220/221" is either. "Credit or concurrent enrollment in X" lets X
+  share the term. A bare "or equivalent" at the end of a clause is an alternative to the whole clause; "or other
+  calculus course" and the like are an alternative to the item next to them. Sentences about what's recommended,
+  preferred, restricted or can't be taken alongside are left out, and "additional prerequisites may be specified" is
+  noted.
+- **D49.3 Wrong is worse than missing.** Consent of the instructor, "or equivalent", standing, GPA, "knowledge of R",
+  a minimum grade or an honors section are "can't tell", not met or unmet. A clause the reader can't parse with
+  confidence becomes "can't tell" as a whole: "A and B or C", and "A or B, C, or D", which could mean "(A or B) and C,
+  or D". A course named as a yardstick ("equivalent to the coverage of ACE 360") isn't required.
+- **D49.4 Checking.** Completed courses, AP/IB/transfer credit and courses in progress count (in progress will be done
+  by the next term). All: any unmet part makes it unmet, else any "can't tell" makes it can't tell. Any: one met part
+  is enough. "Met if taken alongside" ranks between met and can't tell, and names the courses to take with it.
+- **D49.5 Measured.** 100 courses from CS, MATH, STAT, ECON and CHEM, picked at random, were labelled by hand before
+  any code was written, then the reader was written while reading them: 99 read exactly, 1 gave up safely
+  (`fixtures/prereq/labelled.json`). Then 50 courses from every other subject were labelled and read once without
+  changes: 44 of 50 exactly; of the 6, 3 were the ambiguous "A or B, C, or D" read as all-OR, 1 required a yardstick
+  course, 1 misread "and/or", and 1 was stricter than needed. All but the stricter one are fixed (D49.3), and both
+  sets are now tests (`heldout.json`). Of all 1,966 sentences in the degree files, 1,543 read into a tree (562 of
+  them with a "can't tell" part), 280 are "can't tell" only and 143 require nothing.
+- **D49.6 Where it shows.** Each course option in the checklist (replacing D13.16's "Check prerequisites" note, which
+  only looked for named courses and flagged "PHIL 100 or STAT 107" for a student with STAT 107); a **You can take
+  next** list under the major (its own requirements, not gen-eds; courses offered next term once the schedule is
+  out; best picks first); and the four-year plan, which D45.4 left waiting for this: a course is warned about when
+  its prerequisites aren't met by My courses plus the courses in earlier terms, with "take alongside" courses allowed
+  in the same term. "Can't tell" gives no warning in the plan; the checklist shows it.
+- **D49.7 Checked against the whole catalog.** All 2,734 Spring 2027 prerequisite sentences were read and every
+  reading that changed was reviewed. Fixed: a recommendation anywhere in a sentence used to drop the whole sentence
+  (CS 438, MATH 441, ME 505 and PSYC 361 read as having no prerequisites); now only the recommended clause goes
+  ("ECON 203; MATH 231 are recommended" still drops both). "Either A or both B and C", "One of the following:",
+  "Any of", "a B or better", "credit or registration in", "concurrent enrollment or prior completion of" and
+  "A or B, or consent" are read. "May be taken concurrently with X" lets X share the term instead of requiring it
+  again, and a course named in a form or a placement test, or the course itself, is no longer required.
+  "Coursework for these three courses" gives up. Give-ups went from 650 to 624.

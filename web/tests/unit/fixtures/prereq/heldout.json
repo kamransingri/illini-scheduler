@@ -1,0 +1,252 @@
+[
+ {
+  "code": "ACE 440",
+  "text": "Concurrent enrollment in or completion of ACE 345, ACE 346, ACE 444, and ACE 449.",
+  "label": "ACE 345~ & ACE 346~ & ACE 444~ & ACE 449~"
+ },
+ {
+  "code": "ACE 446",
+  "text": "One of ACE 240, ACE 345, FIN 221 or FIN 232; or consent of instructor and knowledge of spreadsheet software equivalent to the coverage of ACE 360.",
+  "label": "ACE 240 | ACE 345 | FIN 221 | FIN 232 | (consent & ?)"
+ },
+ {
+  "code": "ACE 476",
+  "text": "ACE 300, ECON 302 or consent of instructor; a course in statistics. Restricted to students with senior standing.",
+  "label": "(ACE 300 | ECON 302 | consent) & ?"
+ },
+ {
+  "code": "ADV 391",
+  "text": "Not intended for Advertising or CS+Advertising majors.",
+  "label": "NONE"
+ },
+ {
+  "code": "ADV 480",
+  "text": "Restricted to students with Junior, Senior, or Graduate class standing.",
+  "label": "NONE"
+ },
+ {
+  "code": "AE 311",
+  "text": "Credit or concurrent registration in AE 202 and MATH 241.",
+  "label": "AE 202~ & MATH 241~"
+ },
+ {
+  "code": "AE 460",
+  "text": "AE 311; credit or concurrent registration in AE 433.",
+  "label": "AE 311 & AE 433~"
+ },
+ {
+  "code": "ALEC 393",
+  "text": "ALEC 110. Restricted to majors only.",
+  "label": "ALEC 110"
+ },
+ {
+  "code": "ANTH 374",
+  "text": "Restricted to Sophomore or above class standing.",
+  "label": "NONE"
+ },
+ {
+  "code": "ARCH 210",
+  "text": "Sophomore standing or consent of instructor.",
+  "label": "? | consent"
+ },
+ {
+  "code": "ARTD 371",
+  "text": "Credit in ARTD 333, credit or concurrent registration in ARTD 318, and senior standing.",
+  "label": "ARTD 333 & ARTD 318~ & ?"
+ },
+ {
+  "code": "ATMS 305",
+  "text": "MATH 241 or consent of instructor.",
+  "label": "MATH 241 | consent"
+ },
+ {
+  "code": "BADM 446",
+  "text": "BADM 346 required for undergraduate students.",
+  "label": "BADM 346"
+ },
+ {
+  "code": "BIOE 460",
+  "text": "BIOE 202 and BIOE 206. For bioengineering undergraduate majors only.",
+  "label": "BIOE 202 & BIOE 206"
+ },
+ {
+  "code": "CEE 409",
+  "text": "CEE 310.",
+  "label": "CEE 310"
+ },
+ {
+  "code": "CEE 493",
+  "text": "CEE 340 or Graduate Standing.",
+  "label": "CEE 340 | ?"
+ },
+ {
+  "code": "CHBE 430",
+  "text": "CHBE 422; credit or concurrent registration in CHBE 424; senior standing in Chemical and Biomolecular Engineering.",
+  "label": "CHBE 422 & CHBE 424~ & ?"
+ },
+ {
+  "code": "CHLH 469",
+  "text": "CHLH 274 or equivalent.",
+  "label": "CHLH 274 | ?"
+ },
+ {
+  "code": "CI 465",
+  "text": "Admission to the Early Childhood Teacher Education Program.",
+  "label": "?"
+ },
+ {
+  "code": "CLCV 492",
+  "text": "Senior standing and consent of Classics Honors Program.",
+  "label": "? & consent"
+ },
+ {
+  "code": "CPSC 336",
+  "text": "One course in the life sciences and one course in the social sciences, or consent of instructor.",
+  "label": "? | consent"
+ },
+ {
+  "code": "CPSC 414",
+  "text": "An introductory class in biology.",
+  "label": "?"
+ },
+ {
+  "code": "CW 404",
+  "text": "CW 204 or equivalent.",
+  "label": "CW 204 | ?"
+ },
+ {
+  "code": "DANC 370",
+  "text": "Restricted to BFA Dance majors only.",
+  "label": "NONE"
+ },
+ {
+  "code": "ECE 469",
+  "text": "ECE 343; credit or concurrent registration in ECE 464.",
+  "label": "ECE 343 & ECE 464~"
+ },
+ {
+  "code": "ES 471",
+  "text": "MATH 220 or MATH 221; one of CHEM 104, CHEM 204, PHYS 101, PHYS 211. Recommended: NPRE 201.",
+  "label": "(MATH 220 | MATH 221) & (CHEM 104 | CHEM 204 | PHYS 101 | PHYS 211)"
+ },
+ {
+  "code": "FIN 423",
+  "text": "FIN 300 or consent of instructor.",
+  "label": "FIN 300 | consent"
+ },
+ {
+  "code": "GEOL 450",
+  "text": "PHYS 102 or PHYS 212, GEOL 107, or consent of instructor.",
+  "label": "RAW"
+ },
+ {
+  "code": "GER 203",
+  "text": "Two semesters of college German or equivalent.",
+  "label": "?"
+ },
+ {
+  "code": "HK 403",
+  "text": "Restricted to students with Junior or Senior class standing and Graduate students.",
+  "label": "NONE"
+ },
+ {
+  "code": "HNDI 406",
+  "text": "HNDI 405 or consent of instructor.",
+  "label": "HNDI 405 | consent"
+ },
+ {
+  "code": "LAT 460",
+  "text": "Two years of college Latin or consent of instructor.",
+  "label": "? | consent"
+ },
+ {
+  "code": "LAT 492",
+  "text": "Senior standing and consent of Classics Honors Program.",
+  "label": "? & consent"
+ },
+ {
+  "code": "ME 462",
+  "text": "ME 360.",
+  "label": "ME 360"
+ },
+ {
+  "code": "ME 471",
+  "text": "CS 101 and ME 371 or TAM 470. Alternatively, AE 370 for AE students.",
+  "label": "RAW"
+ },
+ {
+  "code": "MSE 450",
+  "text": "MSE 401.",
+  "label": "MSE 401"
+ },
+ {
+  "code": "MUSC 469",
+  "text": "Audition required and/or consent of instructor.",
+  "label": "? | consent"
+ },
+ {
+  "code": "PHIL 411",
+  "text": "One course in philosophy.",
+  "label": "?"
+ },
+ {
+  "code": "PHYS 427",
+  "text": "PHYS 213; PHYS 214; PHYS 435 or ECE 329.",
+  "label": "PHYS 213 & PHYS 214 & (PHYS 435 | ECE 329)"
+ },
+ {
+  "code": "PHYS 486",
+  "text": "PHYS 214 and PHYS 435 or ECE 329.",
+  "label": "RAW"
+ },
+ {
+  "code": "PS 344",
+  "text": "PS 240 or PS 241, six hours of Political Science credit, or consent of instructor.",
+  "label": "RAW"
+ },
+ {
+  "code": "PS 374",
+  "text": "Six hours of political science credit or consent of instructor.",
+  "label": "? | consent"
+ },
+ {
+  "code": "PS 376",
+  "text": "PS 270, six hours of Political Science credit, or consent of instructor.",
+  "label": "PS 270 | ? | consent"
+ },
+ {
+  "code": "PS 390",
+  "text": "PS 280 or PS 283, six hours of Political Science credit, or consent of instructor.",
+  "label": "RAW"
+ },
+ {
+  "code": "PSYC 312",
+  "text": "PSYC 100.",
+  "label": "PSYC 100"
+ },
+ {
+  "code": "SCAN 102",
+  "text": "SCAN 101 or consent of instructor.",
+  "label": "SCAN 101 | consent"
+ },
+ {
+  "code": "SE 420",
+  "text": "SE 320.",
+  "label": "SE 320"
+ },
+ {
+  "code": "SPED 470",
+  "text": "Admission to the Department of Special Education or consent of instructor.",
+  "label": "? | consent"
+ },
+ {
+  "code": "THEA 427",
+  "text": "Consent of instructor.",
+  "label": "consent"
+ },
+ {
+  "code": "THEA 479",
+  "text": "THEA 270. Restricted to BFA Theatre concentration in Acting. Senior standing required.",
+  "label": "THEA 270 & ?"
+ }
+]
