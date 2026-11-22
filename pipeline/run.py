@@ -33,7 +33,18 @@ def main(argv: list[str] | None = None) -> int:
     subjects = None if args.subjects == "all" else {s.strip().upper() for s in args.subjects.split(",")}
     terms = [t.strip() for t in args.terms.split(",") if t.strip()]
 
-    from . import availability, buildings, course_explorer, exam_format, export, gpa, instructors, offerings, renumbered
+    from . import (
+        availability,
+        buildings,
+        course_explorer,
+        exam_format,
+        export,
+        gpa,
+        instructors,
+        offerings,
+        renumbered,
+        transit,
+    )
 
     if args.export_only:
         from . import config
@@ -56,6 +67,7 @@ def main(argv: list[str] | None = None) -> int:
         gpa_path, gened_path = FIXTURES / "gpa" / "uiuc-gpa-dataset.csv", FIXTURES / "gpa" / "gened-courses.csv"
         tre_path = FIXTURES / "none.csv"
         osm_path: Path | None = FIXTURES / "osm" / "campus.json"
+        gtfs_path: Path | None = FIXTURES / "mtd" / "google_transit.zip"
         dates: dict[str, str] = {}
         args.source, args.no_rmp = "csv", True
     else:
@@ -70,6 +82,11 @@ def main(argv: list[str] | None = None) -> int:
         except buildings.BuildingsUnavailable as e:  # the site builds without locations, as it does without RMP
             log(f"  OpenStreetMap unavailable, no building locations this build: {e}")
             osm_path = None
+        try:
+            gtfs_path = transit.fetch()
+        except transit.TransitUnavailable as e:  # no bus times this build; the rest of the site is unchanged
+            log(f"  MTD's timetable unavailable, no bus times this build: {e}")
+            gtfs_path = None
     conn = db.connect()
     db.set_meta(conn, "built_at", datetime.now(UTC).isoformat(timespec="seconds"))
     db.set_meta(conn, "current_term", CURRENT_TERM)
@@ -129,6 +146,10 @@ def main(argv: list[str] | None = None) -> int:
     else:
         conn.execute("DELETE FROM buildings")
         db.set_meta(conn, "buildings_osm_base", "")
+    conn.commit()
+
+    log("phase 7: MTD bus timetable")
+    log(f"  {transit.run(conn, gtfs_path, osm_path)}")
     conn.commit()
 
     if not args.skip_export:

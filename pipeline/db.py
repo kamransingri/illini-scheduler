@@ -122,6 +122,9 @@ CREATE TABLE IF NOT EXISTS buildings (
     osm_name TEXT, short_name TEXT, lat REAL, lon REAL,
     osm_id TEXT                     -- "way/138520016"
 );
+
+-- Map 4 (#96): MTD's timetable near campus, as the exported transit.json (pipeline/transit.py)
+CREATE TABLE IF NOT EXISTS transit_export (id INTEGER PRIMARY KEY CHECK (id = 1), doc TEXT);
 """
 
 

@@ -12,6 +12,10 @@ history).
 
 ### Added
 
+- Schedule builder: Getting there (#96). Pick the hall or building you live in (or use where you are now) and each day
+  of a schedule says when to leave and whether to walk or take an MTD bus, with the stop, route and time, then the
+  trip home. Between classes that are too far apart to walk in time, it shows the bus that makes it, or how late
+  you'd be. Times come from MTD's published timetable and are estimates; where you live stays in your browser.
 - A privacy page (#142), linked from the footer: what the site keeps in your browser (every storage key, listed by
   what it holds), the little that leaves it (share links, and seat alerts once they're on), and a button that deletes
   everything the site saved in this browser. No accounts, analytics, ads or trackers.

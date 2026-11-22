@@ -42,10 +42,12 @@ jobs:
           path: data/raw/rmp
           key: rmp-${{ github.run_id }}
           restore-keys: rmp-
-      - name: Restore OpenStreetMap cache (building locations, refreshed weekly, #93)
+      - name: Restore OpenStreetMap and MTD caches (building locations #93, bus timetable #96; refreshed weekly)
         uses: actions/cache/restore@v6
         with:
-          path: data/raw/osm
+          path: |
+            data/raw/osm
+            data/raw/mtd
           key: osm-${{ github.run_id }}
           restore-keys: osm-
       - name: Seat availability files from the availability branch
@@ -63,11 +65,13 @@ jobs:
         with:
           path: data/raw/rmp
           key: rmp-${{ github.run_id }}
-      - name: Save OpenStreetMap cache (even if later steps fail)
+      - name: Save OpenStreetMap and MTD caches (even if later steps fail)
         if: always()
         uses: actions/cache/save@v6
         with:
-          path: data/raw/osm
+          path: |
+            data/raw/osm
+            data/raw/mtd
           key: osm-${{ github.run_id }}
       - name: Save the pipeline database for pull requests' browser tests (ci.yml e2e, #148)
         if: github.ref == 'refs/heads/main'
