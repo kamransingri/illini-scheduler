@@ -1342,3 +1342,19 @@ Every judgment call made during the autonomous build, newest phase last.
   "A or B, or consent" are read. "May be taken concurrently with X" lets X share the term instead of requiring it
   again, and a course named in a form or a placement test, or the course itself, is no longer required.
   "Coursework for these three courses" gives up. Give-ups went from 650 to 624.
+
+## Walking time between classes (2026-11-22, issue #94)
+
+- **D50.1 Worked out in the browser, from building locations.** Walking minutes are the straight-line distance between
+  two buildings in `buildings.json` (#93, D46) times 1.35 for paths around buildings, at 80 meters a minute, rounded
+  up (`lib/walk.ts`). #94 said to work them out at build time. Every pair would be a table of about 300 by 300 that
+  says nothing the 12 KB of coordinates doesn't already say, so the builder reads the coordinates instead. Footpaths
+  from OpenStreetMap stay for later if this turns out too rough.
+- **D50.2 A rushed walk.** Two classes on a shared day, 30 minutes or less apart, where the walk takes longer than the
+  gap. This replaces D8.2's campus areas wherever both buildings have a location. Where one doesn't, the old rule
+  holds: 10 minutes or less apart in different campus areas. Bundles now merge by building instead of campus area
+  (D8.1), since two sections at the same time in different buildings can mean different walks.
+- **D50.3 Where it shows.** Each schedule lists its rushed walks ("Mon: CS 124 in Siebel Center to MATH 231 in Altgeld
+  Hall, 14 min walk, 10 min gap"). "Avoid rushed walks across campus" under What matters to you ranks by them as
+  before, and the must-have **No rushed walks between classes** (`nw=1` in links) never shows a schedule with one.
+  The builder waits for `buildings.json` before it builds schedules, and falls back to campus areas if it can't load.
