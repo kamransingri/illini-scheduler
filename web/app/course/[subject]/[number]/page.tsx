@@ -194,7 +194,15 @@ export default async function CoursePage({ params }: Props) {
       <CourseView
         subject={course.subject}
         number={course.number}
-        meta={{ next_term: meta.next_term, current_term: meta.current_term, rmp_status: meta.rmp_status, repo_url: meta.repo_url, score_priors: meta.score_priors }}
+        meta={{
+          next_term: meta.next_term,
+          current_term: meta.current_term,
+          rmp_status: meta.rmp_status,
+          repo_url: meta.repo_url,
+          score_priors: meta.score_priors,
+          published: Object.keys(meta.terms ?? {}),
+          summer: summer ? { term: summer.data.upcoming ? summer.data.term : summer.data.next, line: inSummer ? summerLine(inSummer, summer.data) : null } : null,
+        }}
       />
     </article>
   );

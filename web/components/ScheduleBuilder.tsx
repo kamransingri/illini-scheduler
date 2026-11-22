@@ -48,7 +48,7 @@ import {
   type Schedule,
 } from "@/lib/schedule";
 import type { ScorePriors } from "@/lib/score";
-import { breakNames, TERM_DATES } from "@/lib/terms";
+import { breakNames, tabTerms, TERM_DATES } from "@/lib/terms";
 import { useWeights } from "@/lib/weights";
 import { setBuildings } from "@/lib/walk";
 import type { Course, Section } from "@/lib/types";
@@ -658,6 +658,13 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                     {termLabel(t)}
                   </option>
                 ))}
+                {tabTerms(meta.current_term)
+                  .filter((t) => !termOptions.includes(t))
+                  .map((t) => (
+                    <option key={t} value={t} disabled>
+                      {termLabel(t)} (sections not out yet)
+                    </option>
+                  ))}
               </select>
             </div>
             <SearchBox
