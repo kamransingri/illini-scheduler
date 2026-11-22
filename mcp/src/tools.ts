@@ -324,6 +324,7 @@ export type BuildArgs = {
   blocked_times?: { days: string; from: string; to: string }[];
   open_sections_only?: boolean;
   include_special_sections?: boolean;
+  no_rushed_walks?: boolean;
   what_matters?: Weights & { preset?: string; too_early_before?: string; too_late_after?: string };
   limit?: number;
 };
@@ -423,6 +424,7 @@ export function prefsOf(a: BuildArgs): { prefs: Prefs; problems: string[] } {
   }
   p.openOnly = a.open_sections_only ?? false;
   p.includeSpecial = a.include_special_sections ?? false;
+  p.noRushedWalks = a.no_rushed_walks ?? false;
   const w = a.what_matters ?? {};
   const preset = w.preset ? PRESETS.find((x) => x.id === w.preset) : undefined;
   if (preset) p.weights = { ...preset.weights };
