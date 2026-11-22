@@ -38,6 +38,9 @@ Credit these sources if you republish the data:
   link to the professor's page (`rmp.url`) when you show them.
 - **[OpenStreetMap](https://www.openstreetmap.org/copyright)**: building locations in `buildings.json`, © OpenStreetMap
   contributors under the Open Database License (ODbL). Show that credit wherever you show them.
+- **[MTD](https://developer.mtd.org/)** (Champaign-Urbana Mass Transit District): bus routes, stops and scheduled times in
+  `transit.json`, under MTD's developer terms. Show "Data provided by Champaign-Urbana Mass Transit District" next to
+  them, don't use MTD's name or logo to promote anything, and use them only to help people ride the bus.
 
 ## Conventions
 
@@ -67,6 +70,7 @@ Credit these sources if you republish the data:
 | `crns.json` | CRN to course and section | ~1 MB |
 | `renumbered.json` | Old course numbers to new ones | small |
 | `buildings.json` | Where each building in the section data is | ~12 KB |
+| `transit.json` | MTD bus stops, routes and a normal week's times near campus, and places to live | ~170 KB |
 | `seat-events.json` | Seat status changes from the last 7 days | ~300 KB |
 | `degrees/index.json` | Every major and minor | ~60 KB |
 | `degrees/<id>.json` | One program's requirements | 5–150 KB each |
@@ -104,6 +108,7 @@ Build information. Read it first to learn the current and next term.
 | `buildings.osm_base` | string | When the OpenStreetMap data behind `buildings.json` was current; `null` when OSM couldn't be reached this build |
 | `buildings.located` | number | Building names with a location |
 | `buildings.share` | number | Share of next term's in-person meetings whose building has a location, 0 to 1 |
+| `transit_feed_end` | string | Last day of the MTD timetable in `transit.json`; `null` when it couldn't be downloaded |
 | `repo_url` | string | Source code |
 | `live_url` | string | URL of `live.json` |
 | `n_courses` | number | Course files in `course/` |
@@ -383,6 +388,34 @@ OpenStreetMap couldn't be reached during the build.
 | `buildings.<building>.short` | string | OpenStreetMap's short name (`LCLB`, `CRCE`), or `null` |
 | `buildings.<building>.lat` | number | Latitude of the building's centre |
 | `buildings.<building>.lon` | number | Longitude of the building's centre |
+
+### `data/transit.json`
+
+MTD's published timetable (GTFS) for stops within 500 m of a class building or a place to live, for a normal week of
+classes: each weekday's most common set of services, so holidays and breaks don't show. Only buses that call at two or
+more of those stops are kept, grouped into patterns (same route, headsign, stops and minutes between them). A trip
+on pattern `p` leaving at `t` calls at stop `p.s[i]` at `t + p.o[i]`. The feed covers one term at a time: until MTD
+publishes the next term, its times are the current term's. Everything but `homes` is empty when the feed couldn't be
+downloaded.
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `credit` | string | "Data provided by Champaign-Urbana Mass Transit District": show it next to the bus times |
+| `feed.version` | string | MTD's name for this feed |
+| `feed.start` | string | First day the feed covers |
+| `feed.end` | string | Last day the feed covers |
+| `week.<weekday>` | string | An example date whose service is the weekday's (`0` Monday ... `6` Sunday) |
+| `routes` | [string, string, string, string][] | Short name, long name, colour and text colour (hex, no `#`): `["22", "Illini", "5a1d5a", "ffffff"]` |
+| `stops` | [string, number, number][] | Name, latitude, longitude: `["Wright & Healey (East Side)", 40.112038, -88.228853]` |
+| `patterns[].r` | number | Index into `routes` |
+| `patterns[].h` | string | Headsign: where the bus is going |
+| `patterns[].s` | number[] | The stops it calls at, in order (indexes into `stops`) |
+| `patterns[].o` | number[] | Minutes from the first stop to each stop; `o[0]` is 0 |
+| `patterns[].t` | [number, number][] | One entry per trip: departure from the first stop (minutes after midnight, past 1440 after midnight) and the days it runs (a bit mask, Monday 1 ... Sunday 64) |
+| `homes[].name` | string | A residence hall, house or apartment building, as OpenStreetMap names it |
+| `homes[].kind` | string | `hall` (residence halls and houses) or `apartments` |
+| `homes[].lat` | number | Latitude |
+| `homes[].lon` | number | Longitude |
 
 ### `data/seat-events.json`
 

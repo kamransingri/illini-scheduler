@@ -2,6 +2,7 @@
 // Decorative by default (aria-hidden); give the button or link around it an accessible name.
 
 const PATHS = {
+  bus: "M4 1.75h8a1.5 1.5 0 0 1 1.5 1.5v8.5a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1v-8.5A1.5 1.5 0 0 1 4 1.75zM2.5 7.5h11M5 12.75v1.5M11 12.75v1.5M5.25 10.25h.01M10.75 10.25h.01",
   chevronDown: "M4 6l4 4 4-4",
   chevronRight: "M6 4l4 4-4 4",
   chevronUp: "M4 10l4-4 4 4",

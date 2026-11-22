@@ -1343,18 +1343,69 @@ Every judgment call made during the autonomous build, newest phase last.
   again, and a course named in a form or a placement test, or the course itself, is no longer required.
   "Coursework for these three courses" gives up. Give-ups went from 650 to 624.
 
+## Getting there: where you live and MTD buses (2026-11-21, issue #96)
+
+- **D50.1 MTD's published timetable, not its live API.** `pipeline/transit.py` reads MTD's GTFS zip
+  (developer.mtd.org, no key) once a week, cached in `data/raw/mtd/` and in CI. Live departures need MTD's API key,
+  which can't sit in a static page (Map 5, #97). MTD's developer terms (2014) license route and schedule data, and
+  anything derived from it, for uses that help riders. They ask for "Data provided by Champaign-Urbana Mass Transit
+  District" next to the data, and no use of MTD's name or logo to promote anything. The tab shows the credit under the
+  times, and API.md passes the terms on. The terms also have the licensee indemnify MTD, which is the project
+  owner's call to accept; the #96 pull request asks.
+- **D50.2 A normal week, small.** Each weekday uses the set of services that runs on most of that weekday's dates, so
+  Labor Day and Thanksgiving week don't set the times. Only stops within 500 m (about a 6-minute walk) of a class
+  building or a place to live are kept, and trips are grouped into patterns: 3,641 trips become 518 patterns,
+  ~170 KB, loaded only when someone opens the tab.
+- **D50.3 One term behind.** MTD publishes one term's timetable at a time (Fall 2026 runs to 2026-12-19). A Spring 2027
+  schedule uses the fall times until MTD publishes spring's, and the tab says which dates its times are for.
+- **D50.4 One bus, no transfers, and estimates.** Walking is straight-line distance times 1.3 at 4.8 km/h. A bus is
+  suggested when it saves 5 minutes or more, or between classes when walking won't make it and the bus will: be at
+  the stop a minute early, at class 2 minutes early. Transfers are left out: the campus routes link the halls and the
+  buildings directly, and a transfer suggestion that misses its connection is worse than none.
+- **D50.5 Where you live.** OpenStreetMap's named residence halls, houses and apartment buildings, or any class
+  building, saved as a name in `illini-scheduler:home:v1` (this browser only, never in share links, like About you).
+  "Use where I am now" asks the browser each time and keeps the position in the page only. Dropping a pin came with
+  the map (D51.5). OSM's points named "... Residence Hall" duplicate the drawn hall complexes and are left out.
+- **D50.6 Between classes.** Asked for on #96 (2026-11-19): when the next class is too far to walk in the gap, the
+  tab shows the bus that makes it, or how late walking would be. Back-to-back walking times in the calendar are Map 2
+  (#94).
+
+## A map of each day (2026-11-21, issue #95)
+
+- **D51.1 MapLibre and OpenFreeMap, not Leaflet and OpenStreetMap's tiles.** #95 planned Leaflet with
+  tile.openstreetmap.org. OSM's tile servers are donated and their usage policy asks apps not to lean on them;
+  OpenFreeMap serves OpenStreetMap-based vector tiles free, with no key, account or request limit, and MapLibre GL
+  (BSD) draws them. The Illinois app uses Google Maps, which would need a billing account and a key in the page
+  (D46.1). The map credits OpenFreeMap, OpenMapTiles and OpenStreetMap in its corner, from the tiles' own attribution.
+- **D51.2 Loaded only when opened.** "Show Monday's map" loads `DayMapCanvas` with `next/dynamic`, so MapLibre's
+  code (1 MB, ~290 KB compressed), its CSS and its 0.5 MB worker never load on a page where no map is opened (Playwright checks no request is
+  made). MapLibre 6 finds its worker next to its own module, which the bundler moves, so `setWorkerUrl` points at the
+  copy the build emits under `_next/static/media/`.
+- **D51.3 What's on it.** One pin per stop in class order, numbered like the list beside it; back-to-back classes in
+  one building share a stop. A dashed line joins them in order, and "H" is where you live when it's set. The list
+  gives each walk in minutes and the gap before the next class (Map 2's straight-line estimate, `walkMinutes`), and
+  marks a walk longer than its gap. The list is the map for screen readers (the map has an `aria-label` naming the
+  same stops) and for browsers without WebGL.
+- **D51.4 Privacy.** The tiles come from OpenFreeMap's servers, which see an IP address and the area on screen; the
+  pins and everything about the schedule stay in the browser. The privacy page says so.
+- **D51.5 Drop a pin (#96).** "Drop a pin" opens a map (the same MapLibre setup, `lib/maplibre.ts`, loaded only then):
+  click or tap to put the pin, drag it, or pan and use "Put the pin in the middle of the map" from the keyboard. It's
+  saved in `illini-scheduler:home:v1` as `pin:<lat>,<lon>` rounded to 3 decimal places (about 110 m by 85 m here): close
+  enough for walking and bus estimates, without keeping an exact address. Pins outside Champaign, Urbana and Savoy
+  (MTD's area) aren't saved. The pin is "H" on the day maps and the start and end of every trip.
+
 ## Walking time between classes (2026-11-22, issue #94)
 
-- **D50.1 Worked out in the browser, from building locations.** Walking minutes are the straight-line distance between
-  two buildings in `buildings.json` (#93, D46) times 1.35 for paths around buildings, at 80 meters a minute, rounded
-  up (`lib/walk.ts`). #94 said to work them out at build time. Every pair would be a table of about 300 by 300 that
+- **D52.1 Worked out in the browser, from building locations.** Walking minutes are the straight-line distance between
+  two buildings in `buildings.json` (#93, D46) with the same formula as Getting there (D50.4: times 1.3 at 80 meters a minute, rounded up,
+  `lib/commute.ts`), so a walk takes as long in the schedule as on the map (`lib/walk.ts`). #94 said to work them out at build time. Every pair would be a table of about 300 by 300 that
   says nothing the 12 KB of coordinates doesn't already say, so the builder reads the coordinates instead. Footpaths
   from OpenStreetMap stay for later if this turns out too rough.
-- **D50.2 A rushed walk.** Two classes on a shared day, 30 minutes or less apart, where the walk takes longer than the
+- **D52.2 A rushed walk.** Two classes on a shared day, 30 minutes or less apart, where the walk takes longer than the
   gap. This replaces D8.2's campus areas wherever both buildings have a location. Where one doesn't, the old rule
   holds: 10 minutes or less apart in different campus areas. Bundles now merge by building instead of campus area
   (D8.1), since two sections at the same time in different buildings can mean different walks.
-- **D50.3 Where it shows.** Each schedule lists its rushed walks ("Mon: CS 124 in Siebel Center to MATH 231 in Altgeld
+- **D52.3 Where it shows.** Each schedule lists its rushed walks ("Mon: CS 124 in Siebel Center to MATH 231 in Altgeld
   Hall, 14 min walk, 10 min gap"). "Avoid rushed walks across campus" under What matters to you ranks by them as
   before, and the must-have **No rushed walks between classes** (`nw=1` in links) never shows a schedule with one.
   The builder waits for `buildings.json` before it builds schedules, and falls back to campus areas if it can't load.
