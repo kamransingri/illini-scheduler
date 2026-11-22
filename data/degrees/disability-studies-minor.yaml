@@ -14,6 +14,11 @@ generated: '2026-11-17'
 total_hours: 18
 notes: []
 double_counting: []
+major_overlap:
+- distinct_hours: 6
+  minors_too: true
+  quote: "Students must take at least six hours of advanced (300-level or 400-level courses) and six hours of coursework must be distinct from credit earned for the student’s major or another minor."
+  source: https://catalog.illinois.edu/undergraduate/ahs/minors/disability-studies/
 groups:
 - name: Foundational Courses (Required)
   section: Degree Requirements

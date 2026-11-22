@@ -130,6 +130,12 @@ def baseline(daily: dict, live: dict, crn: str) -> tuple[str, str] | None:
     return max(cands, key=lambda x: x[1]) if cands else None
 
 
+def section_fields(sec: dict) -> dict:
+    """The section's type (`y`) and instructors (`i`, as Course Explorer prints them) from the daily row, when known."""
+    people = list(dict.fromkeys(p for m in sec.get("meetings", []) for p in m.get("instructors", [])))
+    return {**({"y": sec["type_name"]} if sec.get("type_name") else {}), **({"i": people} if people else {})}
+
+
 def check(term: str, courses: list[str], daily: dict, live: dict, titles: dict[str, str], deadline: float,
           interval: float = 1.5, client: Any = None, sleep: Any = time.sleep) -> str:
     """Re-read `courses` until `deadline` (time.monotonic()); record status changes as events in `live`."""
@@ -155,13 +161,14 @@ def check(term: str, courses: list[str], daily: dict, live: dict, titles: dict[s
             if code == 200 and r is not None:
                 ok += 1
                 streak = 0
-                codes = {s["crn"]: s.get("code", "") for s in daily.get("rows", {}).get(course, {}).get("sections", [])}
+                secs = {s["crn"]: s for s in daily.get("rows", {}).get(course, {}).get("sections", [])}
                 for crn, status in parse_availability(r.content).items():
                     prev = baseline(daily, live, crn)
                     if prev and prev[0] != status:
+                        sec = secs.get(crn, {})
                         live["events"].append({"term": term, "at": now, "crn": crn, "s": subj, "n": num,
-                                               "code": codes.get(crn, ""), "old": prev[0], "new": status,
-                                               "t": titles.get(course, "")})
+                                               "code": sec.get("code", ""), "old": prev[0], "new": status,
+                                               "t": titles.get(course, ""), **section_fields(sec)})
                         changes += 1
                     live["sections"][crn] = [status, now]
                 live["courses"][course] = now

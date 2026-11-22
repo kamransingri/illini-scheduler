@@ -27,6 +27,7 @@ BUCKETS = {"A": ["A+", "A", "A-"], "B": ["B+", "B", "B-"], "C": ["C+", "C", "C-"
 WINDOW_START = "2015-fa"     # avg_gpa covers this term onward (docs/DECISIONS.md D2.2)
 RECENT_TERMS = 8             # recent_avg_gpa = last 8 regular (fall/spring) terms in the dataset
 LOW_SAMPLE = 60              # instructors with fewer students get a "limited data" flag
+MIN_STUDENTS = 21            # the University withholds sections of 20 or fewer students (FERPA, D2.7)
 
 
 def row_gpa(counts: Mapping[str, float]) -> float | None:
@@ -82,6 +83,30 @@ def load_gpa_csv(path: Path | str) -> pd.DataFrame:
     return df
 
 
+class WithheldGradeData(ValueError):
+    """GPA rows smaller than anything the University releases. The build stops rather than publish them (#192)."""
+
+
+def check_withheld(df: pd.DataFrame, limit: int = 20) -> None:
+    """Stop if any row has fewer than MIN_STUDENTS students, by `Students` or by its letter-grade total (A+ to F).
+
+    Every row of Wade's dataset has 21 or more today; this catches a changed source or rows added from elsewhere
+    (docs/DECISIONS.md D2.7). The message names the first `limit` rows."""
+    graded = df[LETTERS].sum(axis=1)
+    small = (df["Students"] < MIN_STUDENTS) | (graded < MIN_STUDENTS)
+    if not small.any():
+        return
+    bad = df[small]
+    lines = [f"  {r['YearTerm']} {r['Subject']} {r['Number']} ({r.get('Primary Instructor') or 'no instructor'}): "
+             f"Students {int(r['Students'])}, letter grades {int(n)}"
+             for r, n in zip(bad.head(limit).to_dict("records"), graded[small].head(limit), strict=True)]
+    more = [f"  ...and {len(bad) - limit} more"] if len(bad) > limit else []
+    raise WithheldGradeData("\n".join([
+        f"{len(bad)} GPA row(s) have fewer than {MIN_STUDENTS} students. The University withholds sections of "
+        f"20 or fewer students (FERPA), so the site must never publish them (docs/DECISIONS.md D2.7):",
+        *lines, *more]))
+
+
 def recent_terms(all_terms: Iterable[str], n: int = RECENT_TERMS) -> list[str]:
     regular = sorted({t for t in all_terms if t.endswith(("-sp", "-fa"))}, key=term_order)
     return regular[-n:]
@@ -97,6 +122,7 @@ class GpaResult:
 
 
 def compute(df: pd.DataFrame, window_start: str = WINDOW_START) -> GpaResult:
+    check_withheld(df)  # every row, not only the window: whatever reaches this point is a candidate for the site
     df = df[df["YearTerm"].map(term_order) >= term_order(window_start)]
     recent = set(recent_terms(df["YearTerm"].unique()))
     course_all: dict[tuple[str, str], Agg] = defaultdict(Agg)

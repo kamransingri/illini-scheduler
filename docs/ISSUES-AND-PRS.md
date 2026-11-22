@@ -52,7 +52,7 @@ Why it's needed and where things are today, in one or two sentences (`web/lib/su
 
 ### Done when
 - [ ] The tests that prove it: pytest, Vitest or Playwright, and on what
-- [ ] Anything to report in the pull request: a number, a screenshot
+- [ ] Anything to report in the pull request, such as a number
 ```
 
 - The first line links the parent issue and any issue this one needs first. Leave out what doesn't apply.
@@ -168,7 +168,6 @@ Keep it short: the reviewer reads the diff for the details.
 Closes #98.
 
 - What students (or whoever works on the code) will notice, in a few bullets
-- Screenshots at desktop and phone width (375px) for anything visual
 
 **Tests:** pytest and Vitest pass; Playwright schedule.spec.ts; checked /schedule/ at 375px.
 

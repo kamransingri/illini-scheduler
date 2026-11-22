@@ -14,6 +14,12 @@ generated: '2026-11-17'
 total_hours: 17
 notes: []
 double_counting: []
+major_overlap:
+- distinct_hours: 6
+  min_level: 300
+  minors_too: true
+  quote: "Six hours of advanced course work must be distinct from credit required in major or another minor."
+  source: https://catalog.illinois.edu/undergraduate/aces/minors/wildlife-fisheries-conservation/
 groups:
 - name: Required Courses for a Minor in Wildlife & Fisheries
   section: Requirements
