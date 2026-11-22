@@ -1,6 +1,6 @@
 {
  "format_version": 1,
- "built_at": "2026-11-22T03:44:23+00:00",
+ "built_at": "2026-11-22T14:06:28+00:00",
  "current_term": "2026-fa",
  "next_term": "2027-sp",
  "terms": {
@@ -1907,10 +1907,11 @@
   }
  },
  "buildings": {
-  "osm_base": "2026-05-31T22:37:44Z",
-  "located": 119,
-  "share": 0.9673
+  "osm_base": "2026-11-22T14:05:06Z",
+  "located": 122,
+  "share": 0.9721
  },
+ "transit_feed_end": "2026-12-19",
  "repo_url": "https://github.com/kamransingri/illini-scheduler",
  "live_url": "https://raw.githubusercontent.com/kamransingri/illini-scheduler/live-seats/live.json",
  "n_courses": 7132,
