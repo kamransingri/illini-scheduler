@@ -79,6 +79,10 @@ history).
 - Getting there names your best bus (#216): the MTD line from a stop near where you live that reaches the most of
   your classes without a transfer, where to get off for each, the classes close enough to walk, and the next two
   lines. The line can be shown on the map.
+- Course pages always show the same term tabs (#140): this term, next term, and the next summer and fall. A term
+  Course Explorer hasn't published is greyed out and says so; one the course isn't offered in is greyed but opens; the
+  summer tab shows the course's summer line. Arrow keys move between the tabs, and the schedule builder's term list
+  shows the unpublished terms greyed out.
 
 ### Fixed
 
