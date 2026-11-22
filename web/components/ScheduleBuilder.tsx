@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
-import { decodeCart, encodeCart, onCartChange, readCart, writeCart, type CartItem } from "@/lib/cart";
+import { decodeCart, encodeCart, onCartChange, parseAt, readCart, writeCart, type CartItem } from "@/lib/cart";
 import { courseHref, dataUrl, daysStr, fmtGpa, fmtTime, SELF_SERVICE_URL, termLabel } from "@/lib/format";
 import { fmtCredits, hourWarnings, totalHours } from "@/lib/credits";
 import { examConflicts, examDay, examTime, finalsByDay, finalsOf, finalsPending, finalsSummary, STUDENT_CODE_EXAMS } from "@/lib/finals";
@@ -337,7 +337,8 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
         .filter((c) => courses[`${c.s} ${c.n}`])
         .map((c) => {
           const key = `${c.s} ${c.n}`;
-          return courseInput(key, courses[key], c.locked, term, ctx, profRanks[key]?.scores);
+          const at = (c.at ?? []).flatMap((v) => parseAt(v) ?? []);
+          return { ...courseInput(key, courses[key], c.locked, term, ctx, profRanks[key]?.scores), ...(at.length ? { at } : {}) };
         }),
     [cart, courses, profRanks, term, ctx],
   );
@@ -458,11 +459,26 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
   /** Lock every section of the schedule on screen (#138), or free every course again. One write, so the URL updates once. */
   const lockAll = (on: boolean) => {
     if (on && sched) keepOpen.current = crnKey(sched);
-    writeCart(cart.map((c) => ({ ...c, locked: on ? (sched?.bundles.find((b) => b.course === `${c.s} ${c.n}`)?.crns ?? c.locked) : [] })));
+    writeCart(cart.map((c) => (on ? { ...c, locked: sched?.bundles.find((b) => b.course === `${c.s} ${c.n}`)?.crns ?? c.locked } : { ...c, locked: [], at: [] })));
   };
   const unlockCourse = (course: string) => {
     const it = itemOf(course);
-    if (it) updateItem(it.s, it.n, (c) => ({ ...c, locked: [] }));
+    if (it) updateItem(it.s, it.n, (c) => ({ ...c, locked: [], at: [] }));
+  };
+  /** A section's first timed meeting as a time lock ("21-660"), when another section of its kind meets then too (#139). */
+  const atOf = (course: string, sec: Section): string | null => {
+    const m = sec.meetings.find((x) => x.s !== null);
+    if (!m) return null;
+    const same = courses[course]?.terms[term]?.sections.filter((x) => x.component === sec.component && x.meetings.some((y) => y.d === m.d && y.s === m.s)) ?? [];
+    return same.length > 1 ? `${m.d}-${m.s}` : null;
+  };
+  const hasAt = (course: string, at: string) => !!itemOf(course)?.at?.includes(at);
+  /** Keep the course at this time in every schedule, in any section that meets then (#139). */
+  const toggleAt = (course: string, at: string) => {
+    const it = itemOf(course);
+    if (!it) return;
+    if (sched) keepOpen.current = crnKey(sched);
+    updateItem(it.s, it.n, (c) => ({ ...c, at: c.at?.includes(at) ? c.at.filter((x) => x !== at) : [...(c.at ?? []), at] }));
   };
   const set = <K extends keyof Prefs>(k: K, v: Prefs[K]) => setPrefs((p) => ({ ...p, [k]: v }));
   const setW = (k: W, v: number) => setPrefs((p) => ({ ...p, weights: { ...p.weights, [k]: v } }));
@@ -1301,6 +1317,25 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                         <Icon name={isLockedSec(b.course, s.crn) ? "lock" : "unlock"} />
                         Lock
                       </button>
+                      {(() => {
+                        const at = atOf(b.course, s);
+                        if (!at) return null;
+                        const t = parseAt(at)!;
+                        const on = hasAt(b.course, at);
+                        return (
+                          <button
+                            type="button"
+                            aria-pressed={on}
+                            aria-label={`Keep ${b.course} at ${fmtTime(t.s)} ${daysStr(t.d)}, any section`}
+                            title={on ? "Every schedule has this course at this time, in any section that meets then. Press again to remove." : "Keep this time in every schedule, whichever section meets then"}
+                            onClick={() => toggleAt(b.course, at)}
+                            className={`inline-flex items-center gap-1 rounded border px-2 text-sm leading-7 font-semibold ${on ? "border-action bg-action text-white" : "border-line bg-white text-action hover:border-action"}`}
+                          >
+                            <Icon name={on ? "lock" : "clock"} />
+                            Keep {fmtTime(t.s).replace(":00", "")} {daysStr(t.d)}, any section
+                          </button>
+                        );
+                      })()}
                       <span className="min-w-[9rem] flex-1 tnum">{s.meetings.map((m) => (m.s === null ? "No set time" : `${daysStr(m.d)} ${fmtTime(m.s)}–${fmtTime(m.e)}`)).join("; ")}</span>
                       {s.status && <SeatStatus status={s.status} />}
                       <RestrictionBadge e={elig.get(s.crn)} />
@@ -1355,7 +1390,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                     Lock this schedule
                   </button>
                 )}
-                {cart.some((c) => c.locked.length) && (
+                {cart.some((c) => c.locked.length || c.at?.length) && (
                   <button
                     type="button"
                     className="inline-flex items-center gap-1.5 rounded border border-line bg-white px-3 font-semibold leading-9 hover:border-action hover:text-action"

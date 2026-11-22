@@ -1,23 +1,37 @@
 // Cart: list of courses (with optional locked CRNs), stored in localStorage and encodable into the URL.
 
-export type CartItem = { s: string; n: string; locked: string[] };
+/** `locked`: CRNs every schedule must have. `at`: time locks (#139), "21-660" = MWF (days mask) at 11:00am (minutes):
+ * one of the course's sections must meet then, whichever section it is. */
+export type CartItem = { s: string; n: string; locked: string[]; at?: string[] };
+
+const AT = /^(\d{1,3})-(\d{1,4})$/;
+/** A time lock as days mask and start minute, or null when it can't be read. */
+export function parseAt(v: string): { d: number; s: number } | null {
+  const m = AT.exec(v);
+  if (!m) return null;
+  const d = Number(m[1]);
+  const s = Number(m[2]);
+  return d > 0 && d < 128 && s < 1440 ? { d, s } : null;
+}
 
 /** The active plan's courses (lib/plans.ts keeps the other plans). */
 export const CART_KEY = "illini-scheduler:cart:v1";
 export const CART_EVENT = "illini-cart-change";
 
 export function encodeCart(items: CartItem[]): string {
-  return items.map((i) => `${i.s}${i.n}${i.locked.length ? "!" + i.locked.join("!") : ""}`).join(",");
+  return items.map((i) => `${i.s}${i.n}${i.locked.length ? "!" + i.locked.join("!") : ""}${i.at?.length ? "@" + i.at.join("@") : ""}`).join(",");
 }
 
 export function decodeCart(param: string | null | undefined): CartItem[] {
   if (!param) return [];
   const out: CartItem[] = [];
   for (const part of param.split(",")) {
-    const [code, ...locked] = part.trim().split("!");
+    const [head, ...times] = part.trim().split("@");
+    const [code, ...locked] = head.split("!");
     const m = /^([A-Za-z]{2,5})(\d{3})$/.exec(code);
     if (!m) continue;
-    const item = { s: m[1].toUpperCase(), n: m[2], locked: locked.filter((c) => /^\d{5}$/.test(c)) };
+    const at = [...new Set(times.filter((t) => parseAt(t)))];
+    const item: CartItem = { s: m[1].toUpperCase(), n: m[2], locked: locked.filter((c) => /^\d{5}$/.test(c)), ...(at.length ? { at } : {}) };
     if (!out.some((o) => o.s === item.s && o.n === item.n)) out.push(item);
   }
   return out;
