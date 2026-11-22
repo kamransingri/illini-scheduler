@@ -9,7 +9,7 @@ export const STORED: Stored[] = [
   { key: "illini-scheduler:prefs:v1", what: "Your must-haves (times, days off, lunch) and what matters to you", where: "Schedule builder" },
   { key: "illini-scheduler:plans:v1", what: "Your named plans, each with its courses, locks and rules", where: "Schedule builder" },
   { key: "illini-scheduler:about-you:v1", what: "Your level (undergraduate, graduate) and class standing, to check section restrictions", where: "About you" },
-  { key: "illini-scheduler:home:v1", what: "The hall or building you picked as where you live (its name only)", where: "Schedule builder, Getting there" },
+  { key: "illini-scheduler:home:v1", what: "Where you live: the hall or building you picked (its name), or the pin you dropped, rounded to about 100 m", where: "Schedule builder, Getting there" },
   { key: "illini-score-weights", what: "How much GPA, ratings and the other factors count in the best-pick score", where: "Every page that ranks courses" },
   {
     key: "illini-scheduler:mycourses:v1",
