@@ -27,6 +27,7 @@ from .names import alias_key, load_aliases, parse_name, term_order
 from .offerings import pattern_code
 from .renumbered import Renamer
 from .rmp import course_code, fits_subject
+from .transit import export_doc as transit_doc
 
 REPO_URL = "https://github.com/kamransingri/illini-scheduler"
 SITE_URL = os.environ.get("SITE_URL", "https://kamransingri.github.io/illini-scheduler")
@@ -410,6 +411,8 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA, rename: Renamer | No
     (out_dir / "buildings.json").write_text(json.dumps(
         {"credit": BUILDINGS_CREDIT, "osm_base": meta_rows.get("buildings_osm_base") or None, "buildings": places},
         separators=(",", ":"), ensure_ascii=False))
+    # MTD's timetable near campus and places to live (#96); loaded by the builder's Getting there tab
+    (out_dir / "transit.json").write_text(json.dumps(transit_doc(conn), separators=(",", ":"), ensure_ascii=False))
     titles = {(c["s"], c["n"]): c["t"] for c in search_courses}
     write_seat_feeds(out_dir, all_events, titles)
     meta = {
@@ -423,6 +426,7 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA, rename: Renamer | No
         "match_report": json.loads(meta_rows.get("match_report", "{}")),
         "buildings": {"osm_base": meta_rows.get("buildings_osm_base") or None, "located": len(places),
                       "share": float(meta_rows.get("buildings_share") or 0)},
+        "transit_feed_end": meta_rows.get("transit_feed_end") or None,
         "repo_url": REPO_URL, "live_url": LIVE_URL, "n_courses": n_files,
         "history_terms": sorted(terms, key=term_order),
         "score_priors": score_priors(gpa_course.values(), rmp.values()),
