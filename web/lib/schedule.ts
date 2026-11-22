@@ -1,6 +1,6 @@
 // Schedule builder engine: section bundles, conflicts, backtracking generator, ranking. Pure functions.
 import type { Course, Section } from "./types";
-import { areaOf } from "./campus";
+import { rushedWalk } from "./walk";
 import { K_RMP_RATINGS, shrink } from "./score";
 import { examConflicts } from "./finals";
 
@@ -47,6 +47,7 @@ export type Prefs = {
   openOnly: boolean; // hard: skip sections that were Closed at the last check (locked ones are kept)
   includeSpecial: boolean; // allow sections flagged as restricted / special-program
   eligibleOnly: boolean; // hard: skip sections whose restriction clearly excludes the student (About you, #81; locked ones are kept)
+  noRushedWalks: boolean; // hard: no class may start before you can walk there from the one before it (#94)
   softEarly: number; // "too early": a class starting before this counts against `early` (minutes)
   softLate: number; // "too late": a class ending after this counts against `late` (minutes)
   weights: { gpa: number; rmp: number; early: number; late: number; daysOff: number; compact: number; walking: number; open: number; prof: number };
@@ -67,6 +68,7 @@ export const DEFAULT_PREFS: Prefs = {
   openOnly: false,
   includeSpecial: false,
   eligibleOnly: true,
+  noRushedWalks: false,
   softEarly: 600,
   softLate: 1020,
   weights: { gpa: 2, rmp: 1, early: 1, late: 0, daysOff: 1, compact: 1, walking: 1, open: 1, prof: 2 },
@@ -92,7 +94,11 @@ export type ScheduleStats = {
   gapMinutes: number;
   backToBackFar: number;
   backToBack: number;
+  /** each walk longer than the gap before the next class (#94); walk null when a building has no location */
+  walks: RushedWalk[];
 };
+
+export type RushedWalk = { day: string; from: string; to: string; fromCourse: string; toCourse: string; walk: number | null; gap: number };
 
 // ---------------------------------------------------------------------------------------------------------
 // Time primitives
@@ -213,7 +219,7 @@ export function prepareBundles(input: CourseInput, term: string, prefs: Prefs): 
     if (!hardOk(meetings, prefs)) continue;
     const { gpa, rmp } = instructorStats(input.course, secs, input.rmpPrior ?? null);
     const sig = meetings
-      .map((m) => `${m.d}:${m.s}:${m.e}:${m.part}:${m.s === null ? "" : areaOf(m.b)}`)
+      .map((m) => `${m.d}:${m.s}:${m.e}:${m.part}:${m.s === null ? "" : m.b}`)
       .sort()
       .join("|");
     const cur = byKey.get(sig);
@@ -260,7 +266,20 @@ export function brokenRule(meetings: Pick<Mtg, "d" | "s" | "e" | "part">[], pref
   return null;
 }
 
-const hardOk = (meetings: Mtg[], prefs: Prefs) => brokenRule(meetings, prefs) === null;
+const hardOk = (meetings: Mtg[], prefs: Prefs) => brokenRule(meetings, prefs) === null && !(prefs.noRushedWalks && rushedPairs(meetings, meetings) > 0);
+
+/** Rushed walks between two sets of meetings, either way round (#94); the same set twice counts each pair once. */
+function rushedPairs(a: Mtg[], b: Mtg[]): number {
+  let n = 0;
+  for (const x of a)
+    for (const y of b) {
+      if (a === b && x === y) continue;
+      if (!partsOverlap(x.part, y.part) || meetingsConflict(x, y)) continue;
+      if (rushedWalk(x, y)) n++;
+      else if (a !== b && rushedWalk(y, x)) n++;
+    }
+  return n;
+}
 
 // ---------------------------------------------------------------------------------------------------------
 // Generator
@@ -289,16 +308,16 @@ export function scheduleStats(bundles: Bundle[], credits: number[]): ScheduleSta
   const daysOff = DAY_NAMES.filter(([bit]) => !(used & bit)).map(([, n]) => n);
   let gap = 0;
   let b2b = 0;
-  let far = 0;
-  for (const [bit] of DAY_NAMES) {
+  const walks: RushedWalk[] = [];
+  for (const [bit, name] of DAY_NAMES) {
     const day = timed.filter((m) => m.d & bit).sort((a, b) => a.s! - b.s!);
     for (let i = 1; i < day.length; i++) {
       const g = day[i].s! - day[i - 1].e!;
       if (g > 10) gap += g - 10;
-      if (backToBack(day[i - 1], day[i])) {
-        b2b++;
-        if (areaOf(day[i - 1].b) !== areaOf(day[i].b) && areaOf(day[i - 1].b) !== "?" && areaOf(day[i].b) !== "?") far++;
-      }
+      if (backToBack(day[i - 1], day[i])) b2b++;
+      const [x, y] = [day[i - 1], day[i]];
+      const r = partsOverlap(x.part, y.part) && !meetingsConflict(x, y) ? rushedWalk(x, y) : null;
+      if (r) walks.push({ day: name, from: x.b, to: y.b, fromCourse: x.course, toCourse: y.course, ...r });
     }
   }
   let wsum = 0;
@@ -316,7 +335,8 @@ export function scheduleStats(bundles: Bundle[], credits: number[]): ScheduleSta
     latest: timed.length ? Math.max(...timed.map((m) => m.e!)) : null,
     gapMinutes: gap,
     backToBack: b2b,
-    backToBackFar: far,
+    backToBackFar: walks.length,
+    walks,
   };
 }
 
@@ -364,16 +384,6 @@ const popcount5 = (x: number) => [1, 2, 4, 8, 16].filter((b) => x & b).length;
 
 type Node = { b: Bundle; timed: Mtg[]; days: number; early: number; late: number; open: number };
 
-function farPairs(a: Mtg[], b: Mtg[]): number {
-  let n = 0;
-  for (const x of a)
-    for (const y of b)
-      if (backToBack(x, y)) {
-        const ax = areaOf(x.b), ay = areaOf(y.b);
-        if (ax !== ay && ax !== "?" && ay !== "?") n++;
-      }
-  return n;
-}
 
 /**
  * Branch and bound over courses (fewest options first, best bundles first). Each score term has an
@@ -429,7 +439,8 @@ export function generate(inputs: CourseInput[], term: string, prefs: Prefs, limi
                 break;
               }
             }
-          if (v === 0) v = Math.min(100, farPairs(na.timed, nb.timed));
+          if (v === 0) v = Math.min(100, rushedPairs(na.timed, nb.timed));
+          if (v > 0 && prefs.noRushedWalks) v = -1;
           arr[a * levels[j].length + b] = v;
         }),
       );

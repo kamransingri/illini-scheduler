@@ -5,6 +5,7 @@ import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
 import { parseCode } from "../../web/lib/search";
 import type { Course, GenedRow, Meta, SearchIndex } from "../../web/lib/types";
+import { setBuildings, type Point } from "../../web/lib/walk";
 import { NotFound, type DataSource } from "./data";
 import { buildSchedules, CHECK_NOTE, findGeneds, GENED_HELP, getCourse, PRESET_HELP, PRESET_IDS, searchCourses, termInfo, type Loaded } from "./tools";
 
@@ -178,6 +179,7 @@ export function createServer(src: DataSource, version = "0.0.0"): McpServer {
           .describe("Times with no class, like work or practice: [{days: 'TR', from: '5pm', to: '7pm'}]"),
         open_sections_only: z.boolean().optional().describe("Skip sections that were Closed at the last seat check (locked ones are kept). Default false"),
         include_special_sections: z.boolean().optional().describe("Allow sections that look reserved for a program (odd codes, notes). Default false"),
+        no_rushed_walks: z.boolean().optional().describe("Skip schedules where the walk to the next class takes longer than the time between them. Default false"),
         what_matters: z
           .object({
             preset: z.enum(PRESET_IDS).optional().describe(`A starting point: ${PRESET_HELP}. The numbers below change it`),
@@ -214,6 +216,8 @@ export function createServer(src: DataSource, version = "0.0.0"): McpServer {
             found.push({ course: r.course, ...(r.renamed ? { renumbered: r.renamed } : {}) });
         });
         if (!found.length) return fail(`None of the courses could be read. ${missing.join(" ")}`);
+        // walking times between buildings, as the builder uses them (#94); without them walks fall back to campus areas
+        setBuildings((await src.read<{ buildings: Record<string, Point> }>("buildings.json").catch(() => null))?.buildings);
         return ok(buildSchedules(found, missing, meta, src.site, args));
       }),
   );
