@@ -1364,8 +1364,32 @@ Every judgment call made during the autonomous build, newest phase last.
   buildings directly, and a transfer suggestion that misses its connection is worse than none.
 - **D50.5 Where you live.** OpenStreetMap's named residence halls, houses and apartment buildings, or any class
   building, saved as a name in `illini-scheduler:home:v1` (this browser only, never in share links, like About you).
-  "Use where I am now" asks the browser each time and keeps the position in the page only. Dropping a pin waits for the
-  map (#95). OSM's points named "... Residence Hall" duplicate the drawn hall complexes and are left out.
+  "Use where I am now" asks the browser each time and keeps the position in the page only. Dropping a pin came with
+  the map (D51.5). OSM's points named "... Residence Hall" duplicate the drawn hall complexes and are left out.
 - **D50.6 Between classes.** Asked for on #96 (2026-11-19): when the next class is too far to walk in the gap, the
   tab shows the bus that makes it, or how late walking would be. Back-to-back walking times in the calendar are Map 2
   (#94).
+
+## A map of each day (2026-11-21, issue #95)
+
+- **D51.1 MapLibre and OpenFreeMap, not Leaflet and OpenStreetMap's tiles.** #95 planned Leaflet with
+  tile.openstreetmap.org. OSM's tile servers are donated and their usage policy asks apps not to lean on them;
+  OpenFreeMap serves OpenStreetMap-based vector tiles free, with no key, account or request limit, and MapLibre GL
+  (BSD) draws them. The Illinois app uses Google Maps, which would need a billing account and a key in the page
+  (D46.1). The map credits OpenFreeMap, OpenMapTiles and OpenStreetMap in its corner, from the tiles' own attribution.
+- **D51.2 Loaded only when opened.** "Show Monday's map" loads `DayMapCanvas` with `next/dynamic`, so MapLibre's
+  code (1 MB, ~290 KB compressed), its CSS and its 0.5 MB worker never load on a page where no map is opened (Playwright checks no request is
+  made). MapLibre 6 finds its worker next to its own module, which the bundler moves, so `setWorkerUrl` points at the
+  copy the build emits under `_next/static/media/`.
+- **D51.3 What's on it.** One pin per stop in class order, numbered like the list beside it; back-to-back classes in
+  one building share a stop. A dashed line joins them in order, and "H" is where you live when it's set. The list
+  gives each walk in minutes and the gap before the next class (Map 2's straight-line estimate, `walkMinutes`), and
+  marks a walk longer than its gap. The list is the map for screen readers (the map has an `aria-label` naming the
+  same stops) and for browsers without WebGL.
+- **D51.4 Privacy.** The tiles come from OpenFreeMap's servers, which see an IP address and the area on screen; the
+  pins and everything about the schedule stay in the browser. The privacy page says so.
+- **D51.5 Drop a pin (#96).** "Drop a pin" opens a map (the same MapLibre setup, `lib/maplibre.ts`, loaded only then):
+  click or tap to put the pin, drag it, or pan and use "Put the pin in the middle of the map" from the keyboard. It's
+  saved in `illini-scheduler:home:v1` as `pin:<lat>,<lon>` rounded to 3 decimal places (about 110 m by 85 m here): close
+  enough for walking and bus estimates, without keeping an exact address. Pins outside Champaign, Urbana and Savoy
+  (MTD's area) aren't saved. The pin is "H" on the day maps and the start and end of every trip.

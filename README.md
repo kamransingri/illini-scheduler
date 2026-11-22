@@ -44,6 +44,7 @@ Formula: [docs/DECISIONS.md](docs/DECISIONS.md) D13.18.
 | Rate My Professors (unofficial GraphQL) | Ratings, tags, snippets | Optional; cached 7 days; the site works without it |
 | [OpenStreetMap](https://www.openstreetmap.org/copyright) (Overpass API) | Where each building is | Cached 7 days; 97% of next term's in-person meetings; names that don't match go through `data/buildings.csv`. © OpenStreetMap contributors, ODbL |
 | [MTD GTFS feed](https://developer.mtd.org/) | Bus stops, routes and a normal week's times near campus (Getting there) | Downloaded weekly; one term at a time. Data provided by Champaign-Urbana Mass Transit District |
+| [OpenFreeMap](https://openfreemap.org/) | Map tiles for the map of each day (Getting there) | Loaded in the browser only when a map is opened; free, no key. OpenFreeMap © OpenMapTiles, data from OpenStreetMap |
 | Student notes (`data/notes/*.yaml`) | Exam and grading notes | Added by a maintainer, each with a source (students review courses on Rate My Professors) |
 | [Academic Catalog](https://catalog.illinois.edu/) | Degree requirements (`data/degrees/*.yaml`) | All 171 undergraduate programs, 2026-2027 |
 | [CITL AP credit tables](https://citl.illinois.edu/current-cutoff-scores) | Courses each AP score gives (`data/ap-credit/*.yaml`) | Students entering 2024-2025 to 2026-2027, copied by hand |

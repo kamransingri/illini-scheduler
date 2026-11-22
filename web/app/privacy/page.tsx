@@ -75,7 +75,14 @@ export default function PrivacyPage() {
           <li>
             <strong>Nothing, for &ldquo;Use where I am now&rdquo;.</strong> In the schedule builder&apos;s Getting there tab, that button asks your
             browser for your location once. The page uses it to work out walking and bus times and forgets it when you leave; it isn&apos;t saved,
-            put in share links or sent anywhere. The hall or building you pick as where you live is saved in your browser only, and never in links.
+            put in share links or sent anywhere. The hall or building you pick as where you live, or the pin you drop (rounded to about 100
+            m), is saved in your browser only, and never in links.
+          </li>
+          <li>
+            <strong>Map tiles, when you open a map.</strong> &ldquo;Show Monday&apos;s map&rdquo; (Getting there) loads the map&apos;s streets and
+            labels from <a className={LINK} href="https://openfreemap.org/">OpenFreeMap</a>, so like any web host it sees your IP address and
+            which part of the map is on screen. Your courses, schedule and where you live aren&apos;t sent; the pins are drawn in your browser.
+            No map is loaded until you open one.
           </li>
           <li>
             <strong>Seat alerts, when you turn them on.</strong> &ldquo;Alert me&rdquo; on a watched section sends the alert server your browser&apos;s

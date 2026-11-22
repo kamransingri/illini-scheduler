@@ -189,9 +189,76 @@ export function planDay(
   return { legs, missing };
 }
 
+// ---- Map 3 (#95): a day's classes as numbered stops ----
+
+export type MapStop = {
+  n: number; // 1, 2, 3 in class order
+  courses: string[]; // "CS 124" (two when back-to-back classes share a building)
+  name: string; // the building's OpenStreetMap name
+  lat: number;
+  lon: number;
+  start: number;
+  end: number;
+  walkNext: number | null; // minutes on foot to the next stop; null for the last
+  gapNext: number | null; // minutes between this stop's last class and the next stop's first
+};
+
+/** The day's classes in order as map stops: back-to-back classes in one building share a stop. */
+export function stopsForDay(meetings: DayMeeting[], buildings: BuildingMap): { stops: MapStop[]; missing: string[] } {
+  const missing: string[] = [];
+  const stops: MapStop[] = [];
+  for (const m of [...meetings].sort((a, b) => a.s - b.s)) {
+    const p = buildings[m.b];
+    if (!p) {
+      if (m.b && !missing.includes(m.b)) missing.push(m.b);
+      continue;
+    }
+    const last = stops[stops.length - 1];
+    if (last && last.name === p.name) {
+      last.courses.push(m.course);
+      last.end = Math.max(last.end, m.e);
+      continue;
+    }
+    stops.push({ n: stops.length + 1, courses: [m.course], name: p.name, lat: p.lat, lon: p.lon, start: m.s, end: m.e, walkNext: null, gapNext: null });
+  }
+  for (let i = 0; i + 1 < stops.length; i++) {
+    stops[i].walkNext = walkMinutes(stops[i], stops[i + 1]);
+    stops[i].gapNext = stops[i + 1].start - stops[i].end;
+  }
+  return { stops, missing };
+}
+
 // ---- where you live, kept in this browser only (never in share links, like About you) ----
 
 export const HOME_KEY = "illini-scheduler:home:v1";
+
+// A dropped pin is saved as "pin:<lat>,<lon>" in the same key, rounded to PIN_DECIMALS places (~110 m north-south,
+// ~85 m east-west here): close enough for walking and bus estimates, without keeping someone's exact address.
+export const PIN_PREFIX = "pin:";
+export const PIN_DECIMALS = 3;
+export const PIN_NAME = "Your pin";
+/** Champaign, Urbana and Savoy: MTD's area. A pin outside it isn't saved. */
+export const PIN_AREA = { south: 40.03, north: 40.17, west: -88.33, east: -88.13 };
+
+export function inPinArea(lat: number, lon: number): boolean {
+  return lat >= PIN_AREA.south && lat <= PIN_AREA.north && lon >= PIN_AREA.west && lon <= PIN_AREA.east;
+}
+
+/** "pin:40.105,-88.227", or null when the spot is outside Champaign-Urbana. */
+export function encodePin(lat: number, lon: number): string | null {
+  if (!Number.isFinite(lat) || !Number.isFinite(lon) || !inPinArea(lat, lon)) return null;
+  return `${PIN_PREFIX}${lat.toFixed(PIN_DECIMALS)},${lon.toFixed(PIN_DECIMALS)}`;
+}
+
+/** The saved pin as a place, or null if `v` isn't a valid pin (a hall's name, or something edited by hand). */
+export function decodePin(v: string | null): Place | null {
+  if (!v || !v.startsWith(PIN_PREFIX)) return null;
+  const m = v.slice(PIN_PREFIX.length).match(/^(-?\d{1,3}\.\d{1,6}),(-?\d{1,3}\.\d{1,6})$/);
+  if (!m) return null;
+  const lat = Number(m[1]);
+  const lon = Number(m[2]);
+  return inPinArea(lat, lon) ? { name: PIN_NAME, lat, lon } : null;
+}
 
 export function readHome(): string | null {
   try {
