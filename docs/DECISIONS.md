@@ -1342,3 +1342,30 @@ Every judgment call made during the autonomous build, newest phase last.
   "A or B, or consent" are read. "May be taken concurrently with X" lets X share the term instead of requiring it
   again, and a course named in a form or a placement test, or the course itself, is no longer required.
   "Coursework for these three courses" gives up. Give-ups went from 650 to 624.
+
+## Getting there: where you live and MTD buses (2026-11-21, issue #96)
+
+- **D50.1 MTD's published timetable, not its live API.** `pipeline/transit.py` reads MTD's GTFS zip
+  (developer.mtd.org, no key) once a week, cached in `data/raw/mtd/` and in CI. Live departures need MTD's API key,
+  which can't sit in a static page (Map 5, #97). MTD's developer terms (2014) license route and schedule data, and
+  anything derived from it, for uses that help riders. They ask for "Data provided by Champaign-Urbana Mass Transit
+  District" next to the data, and no use of MTD's name or logo to promote anything. The tab shows the credit under the
+  times, and API.md passes the terms on. The terms also have the licensee indemnify MTD, which is the project
+  owner's call to accept; the #96 pull request asks.
+- **D50.2 A normal week, small.** Each weekday uses the set of services that runs on most of that weekday's dates, so
+  Labor Day and Thanksgiving week don't set the times. Only stops within 500 m (about a 6-minute walk) of a class
+  building or a place to live are kept, and trips are grouped into patterns: 3,641 trips become 518 patterns,
+  ~170 KB, loaded only when someone opens the tab.
+- **D50.3 One term behind.** MTD publishes one term's timetable at a time (Fall 2026 runs to 2026-12-19). A Spring 2027
+  schedule uses the fall times until MTD publishes spring's, and the tab says which dates its times are for.
+- **D50.4 One bus, no transfers, and estimates.** Walking is straight-line distance times 1.3 at 4.8 km/h. A bus is
+  suggested when it saves 5 minutes or more, or between classes when walking won't make it and the bus will: be at
+  the stop a minute early, at class 2 minutes early. Transfers are left out: the campus routes link the halls and the
+  buildings directly, and a transfer suggestion that misses its connection is worse than none.
+- **D50.5 Where you live.** OpenStreetMap's named residence halls, houses and apartment buildings, or any class
+  building, saved as a name in `illini-scheduler:home:v1` (this browser only, never in share links, like About you).
+  "Use where I am now" asks the browser each time and keeps the position in the page only. Dropping a pin waits for the
+  map (#95). OSM's points named "... Residence Hall" duplicate the drawn hall complexes and are left out.
+- **D50.6 Between classes.** Asked for on #96 (2026-11-19): when the next class is too far to walk in the gap, the
+  tab shows the bus that makes it, or how late walking would be. Back-to-back walking times in the calendar are Map 2
+  (#94).

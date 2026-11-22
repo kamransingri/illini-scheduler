@@ -12,6 +12,10 @@ history).
 
 ### Added
 
+- Schedule builder: Getting there (#96). Pick the hall or building you live in (or use where you are now) and each day
+  of a schedule says when to leave and whether to walk or take an MTD bus, with the stop, route and time, then the
+  trip home. Between classes that are too far apart to walk in time, it shows the bus that makes it, or how late
+  you'd be. Times come from MTD's published timetable and are estimates; where you live stays in your browser.
 - Prerequisites are checked against My courses (#21). Each course option in the degree checklist says "Prerequisites
   met", "met if you take CS 225 at the same time", "not met: needs CS 173 or MATH 213" or "can't tell", next to the
   catalog's sentence. A new **You can take next** list shows the courses on your major's open requirements whose

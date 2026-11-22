@@ -52,6 +52,7 @@ import { breakNames, TERM_DATES } from "@/lib/terms";
 import { useWeights } from "@/lib/weights";
 import type { Course, Section } from "@/lib/types";
 import CopyButton from "./CopyButton";
+import GettingThere from "./GettingThere";
 import { Badge, SeatStatus } from "./ui/Badge";
 import Icon from "./ui/Icon";
 import Info from "./ui/Info";
@@ -192,7 +193,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
   const [shared, setShared] = useState<{ mine: CartItem[]; rules?: { plan: string; name: string | null } } | null>(null);
   const [blockForm, setBlockForm] = useState({ days: 0, s: "17:00", e: "19:00" });
   const [icsError, setIcsError] = useState<string | null>(null);
-  const [view, setView] = useState<"week" | "finals">("week");
+  const [view, setView] = useState<"week" | "finals" | "travel">("week");
   const feed = useSeatFeed(meta.liveUrl);
   const now = useNow();
   const [icsFinals, setIcsFinals] = useState(true);
@@ -1193,6 +1194,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                   [
                     ["week", "Week", "calendar"],
                     ["finals", "Finals week", "clock"],
+                    ["travel", "Getting there", "bus"],
                   ] as const
                 ).map(([v, label, icon]) => (
                   <button
@@ -1211,8 +1213,10 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
               </div>
               {view === "week" ? (
                 <WeekCalendar schedule={sched} colorOf={colorOf} blocked={prefs.blocked} daysOff={prefs.daysOff} />
-              ) : (
+              ) : view === "finals" ? (
                 <FinalsWeek schedule={sched} colorOf={colorOf} termName={termLabel(term)} />
+              ) : (
+                <GettingThere schedule={sched} termName={termLabel(term)} />
               )}
               {justClosed.length > 0 && (
                 <ul className="space-y-1 rounded border-2 border-heading p-3" data-testid="just-closed" role="status">

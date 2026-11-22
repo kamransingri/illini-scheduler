@@ -9,6 +9,7 @@ the network.
 | `rmp/` | Rate My Professors answers as RMP sent them: the school search, and the teacher searches for "Challen" and "Lewis" | 2026-11-17 | `python -m pipeline.fetch_fixtures` |
 | `course-catalog/`, `gpa/` | Slices of Wade Fagen-Ulmschneider's datasets for the reference courses | 2026-11-04 | `python -m pipeline.make_fixtures` |
 | `osm/campus.json` | OpenStreetMap buildings and places the section data's building names match, with only the tags the locator reads | 2026-11-21 | `python -m pipeline.buildings --save-fixture` |
+| `mtd/google_transit.zip` | MTD's GTFS feed cut to the ILLINI and SILVER routes, September 2026 and the stops in the core of campus, rows unchanged | 2026-11-21 | `python -m pipeline.transit --save-fixture` |
 | `course-explorer-web/` | Course Explorer web pages (sections, seat status, final exams) | 2026-11-16 | saved by hand from the site |
 | `catalog/` | Academic catalog program pages for the importer tests | 2026-11-17 | saved by hand from the catalog |
 | `bundle-parity.json` | Section bundles both test suites must agree on | 2026-11-16, cases added 2026-11-17 | `pipeline/tests` |
