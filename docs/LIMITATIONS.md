@@ -57,6 +57,8 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
 - **Getting there** (#96) uses MTD's published timetable, one bus and no transfers. MTD publishes one term at a time, so
   next term's trips use this term's times until MTD publishes the next. Walking times are straight-line estimates.
   Buses run late, and the tab can't see detours or cancellations (live departures are #97).
+- **The map of each day** needs WebGL and OpenFreeMap's tile servers. Without either, the list of stops still shows.
+  Walking lines are straight lines between buildings, not the path you'd walk.
 - **Only the renumberings in `data/renumbered.csv` are linked** (33 in 2026-11, including the 2026-2027 French,
   German, Italian, Spanish and Scandinavian sequences). Each needs a source, so a renumbering the catalog doesn't
   state stays unlinked and that course's history stops at the change. My courses and the degree checklist don't

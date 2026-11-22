@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { arriveBy, departAfter, homeChoices, metres, planDay, rides, walkMinutes, type BuildingMap, type Transit } from "@/lib/commute";
+import { arriveBy, decodePin, departAfter, encodePin, homeChoices, metres, planDay, rides, stopsForDay, walkMinutes, type BuildingMap, type Transit } from "@/lib/commute";
 
 // A made-up line due north: home at the south end, a class building 1.7 km north, a stop beside each.
 const LON = -88.23;
@@ -127,5 +127,65 @@ describe("homeChoices", () => {
     const g = homeChoices(t, { ...B, Dup: { name: "Nugent Hall", short: null, lat: 0, lon: 0 } });
     expect(g.map((x) => x.group)).toEqual(["Residence halls and houses", "Apartment buildings", "Campus buildings"]);
     expect(g[2].places.map((p) => p.name)).toEqual(["Far North Building", "Near Home Building"]);
+  });
+});
+
+describe("stopsForDay (Map 3, #95)", () => {
+  const BLD: BuildingMap = {
+    "Siebel Center for Comp Sci": { name: "Siebel Center for Computer Science", short: null, lat: 40.1138, lon: -88.2249 },
+    "Lincoln Hall": { name: "Lincoln Hall", short: null, lat: 40.1066, lon: -88.2283 },
+  };
+
+  it("numbers the stops in class order, with the walk and the gap to the next", () => {
+    const { stops, missing } = stopsForDay(
+      [
+        { course: "RHET 105", s: 720, e: 770, b: "Lincoln Hall" },
+        { course: "CS 124", s: 600, e: 650, b: "Siebel Center for Comp Sci" },
+      ],
+      BLD,
+    );
+    expect(missing).toEqual([]);
+    expect(stops.map((s) => [s.n, s.courses, s.name])).toEqual([
+      [1, ["CS 124"], "Siebel Center for Computer Science"],
+      [2, ["RHET 105"], "Lincoln Hall"],
+    ]);
+    expect(stops[0].walkNext).toBe(walkMinutes(stops[0], stops[1]));
+    expect(stops[0].gapNext).toBe(70);
+    expect(stops[1].walkNext).toBeNull();
+  });
+
+  it("puts back-to-back classes in one building on one stop, and lists buildings with no location", () => {
+    const { stops, missing } = stopsForDay(
+      [
+        { course: "CS 124", s: 600, e: 650, b: "Siebel Center for Comp Sci" },
+        { course: "CS 128", s: 660, e: 710, b: "Siebel Center for Comp Sci" },
+        { course: "ART 101", s: 720, e: 770, b: "Nowhere Hall" },
+        { course: "RHET 105", s: 780, e: 830, b: "Lincoln Hall" },
+      ],
+      BLD,
+    );
+    expect(stops.map((s) => [s.n, s.courses, s.start, s.end])).toEqual([
+      [1, ["CS 124", "CS 128"], 600, 710],
+      [2, ["RHET 105"], 780, 830],
+    ]);
+    expect(stops[0].gapNext).toBe(70);
+    expect(missing).toEqual(["Nowhere Hall"]);
+  });
+});
+
+describe("dropped pins (#96)", () => {
+  it("rounds to about 100 m and reads back as Your pin", () => {
+    const v = encodePin(40.1092345, -88.2271987)!;
+    expect(v).toBe("pin:40.109,-88.227");
+    expect(decodePin(v)).toEqual({ name: "Your pin", lat: 40.109, lon: -88.227 });
+  });
+
+  it("refuses spots outside Champaign-Urbana and anything that isn't a pin", () => {
+    expect(encodePin(41.8781, -87.6298)).toBeNull(); // Chicago
+    expect(encodePin(Number.NaN, -88.2)).toBeNull();
+    expect(decodePin("Nugent Hall")).toBeNull();
+    expect(decodePin("pin:41.878,-87.630")).toBeNull();
+    expect(decodePin("pin:40.1,-88.2;alert(1)")).toBeNull();
+    expect(decodePin(null)).toBeNull();
   });
 });
