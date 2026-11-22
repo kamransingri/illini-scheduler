@@ -81,6 +81,9 @@ history).
   lines. The line can be shown on the map.
 - Classes on the schedule builder's week calendar lock and unlock with a click or Enter (#138), and "Lock this
   schedule" and "Unlock all" sit next to Copy all CRNs. On a phone, a tap opens the class's details with a Lock button.
+- Time locks (#139): when two sections meet at the same time, "Keep 11am MWF, any section" keeps the course at that
+  time in every schedule, whichever section it is, instead of locking one CRN. Share links carry it (`CS124@21-660`)
+  and older links still open.
 
 ### Fixed
 
