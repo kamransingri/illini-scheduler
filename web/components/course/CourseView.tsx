@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Course } from "@/lib/types";
 import { dataUrl, fmtGpa, fmtInt, seatVerb, fmtAgo, termLabel, termOrder, termRange } from "@/lib/format";
 import { professorsFor, profDomId } from "@/lib/sections";
+import { POSTED_IN, tabTerms } from "@/lib/terms";
 import { rankProfs } from "@/lib/rank";
 import type { ScorePriors } from "@/lib/score";
 import { useWeights } from "@/lib/weights";
@@ -17,7 +18,19 @@ import { ExamList, ProfessorHeader, ProfessorRow } from "./ProfessorLedger";
 import WeightsControl from "../WeightsControl";
 import SectionsList from "./SectionsList";
 
-export type CourseMeta = { next_term: string; current_term: string; rmp_status: string; repo_url: string; score_priors?: ScorePriors | null };
+export type CourseMeta = {
+  next_term: string;
+  current_term: string;
+  rmp_status: string;
+  repo_url: string;
+  score_priors?: ScorePriors | null;
+  /** terms Course Explorer has published (meta.json `terms`); others are greyed out (#140) */
+  published?: string[];
+  /** this course's line from summer.json (#122), shown on the summer tab instead of sections */
+  summer?: { term: string; line: string | null } | null;
+};
+
+type Tab = { term: string; state: "open" | "none" | "summer" | "unpublished" };
 
 const NAV = [
   ["professors", "Professors"],
@@ -116,32 +129,78 @@ export default function CourseView({ subject, number, meta }: { subject: string;
   // Reserve a screen of height while loading so the footer doesn't jump into view (layout shift).
   if (!course || !scored) return <p className="min-h-screen text-muted">Loading sections and professors…</p>;
 
-  const terms = Object.keys(course.terms).sort((a, b) => termOrder(b) - termOrder(a));
+  // The same tabs on every course page (#140): this term, next term, and the next summer and fall, plus any other term
+  // this course's file has. A term not published yet is disabled; one with no sections for this course is greyed.
+  const published = meta.published ?? Object.keys(course.terms);
+  const tabs: Tab[] = [...new Set([...tabTerms(meta.current_term), ...Object.keys(course.terms)])]
+    .sort((a, b) => termOrder(a) - termOrder(b))
+    .map((t) => ({
+      term: t,
+      state: course.terms[t]?.sections.length
+        ? "open"
+        : published.includes(t)
+          ? "none"
+          : meta.summer?.term === t
+            ? meta.summer.line
+              ? "summer"
+              : "none"
+            : "unpublished",
+    }));
+  const openable = tabs.filter((x) => x.state !== "unpublished");
+  const pick = (t: string) => {
+    setTerm(t);
+    setOpenKey(null);
+  };
   const block = term ? course.terms[term] : null;
+  const tabNote = (x: Tab) =>
+    x.state === "unpublished"
+      ? `${termLabel(x.term)} sections aren't out yet.${POSTED_IN[x.term.split("-")[1]] ? ` Course Explorer usually posts them in ${POSTED_IN[x.term.split("-")[1]]}.` : ""}`
+      : x.state === "none"
+        ? `Not offered in ${termLabel(x.term)}`
+        : null;
   const ctx = { course, term, rmpStatus: meta.rmp_status };
   const toggle = (k: string) => setOpenKey((o) => (o === k ? null : k));
   const g = course.gpa;
   // The term switch sits in the sticky bar on wider screens and in the Professors heading on phones.
+  // Arrow keys, Home and End move between the tabs that can be opened (the tablist pattern), selecting as they go.
+  const onKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const i = openable.findIndex((x) => x.term === term);
+    const to = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: openable.length - 1 }[e.key];
+    if (to === undefined || !openable.length) return;
+    e.preventDefault();
+    const next = openable[(to + openable.length) % openable.length].term;
+    pick(next);
+    e.currentTarget.querySelector<HTMLButtonElement>(`[data-term="${next}"]`)?.focus();
+  };
   const termTabs = (cls: string) =>
-    terms.length > 0 && (
-      <div className={`gap-1 ${cls}`} role="tablist" aria-label="Term">
-        {terms.map((t) => (
-          <button
-            key={t}
-            role="tab"
-            type="button"
-            aria-selected={t === term}
-            onClick={() => {
-              setTerm(t);
-              setOpenKey(null);
-            }}
-            className={`rounded px-2.5 py-1 text-sm font-semibold whitespace-nowrap ${t === term ? "bg-navy text-white" : "text-action hover:bg-action-tint"}`}
-          >
-            {termLabel(t)}
-          </button>
-        ))}
+    tabs.length > 0 && (
+      <div className={`gap-1 overflow-x-auto ${cls}`} role="tablist" aria-label="Term" onKeyDown={onKey}>
+        {tabs.map((x) => {
+          const off = x.state === "unpublished";
+          return (
+            <button
+              key={x.term}
+              role="tab"
+              type="button"
+              data-term={x.term}
+              data-state={x.state}
+              aria-selected={x.term === term}
+              aria-disabled={off || undefined}
+              tabIndex={x.term === term ? 0 : -1}
+              title={tabNote(x) ?? undefined}
+              onClick={() => !off && pick(x.term)}
+              className={`shrink-0 rounded px-2.5 py-1 text-sm font-semibold whitespace-nowrap ${
+                x.term === term ? "bg-navy text-white" : off ? "cursor-not-allowed text-muted opacity-60" : x.state === "open" ? "text-action hover:bg-action-tint" : "text-muted hover:bg-action-tint"
+              }`}
+            >
+              {termLabel(x.term)}
+            </button>
+          );
+        })}
       </div>
     );
+  const notes = tabs.filter((x) => x.state === "unpublished").map(tabNote);
+  if (notes.length && course.pattern) notes.push(`${course.subject} ${course.number} is usually ${course.pattern.label.toLowerCase()}.`);
 
   return (
     <div>
@@ -166,6 +225,11 @@ export default function CourseView({ subject, number, meta }: { subject: string;
           {termTabs("ml-auto hidden shrink-0 sm:flex")}
         </div>
       </nav>
+      {notes.length > 0 && (
+        <p className="-mt-4 mb-6 text-sm text-muted" data-testid="term-notes">
+          {notes.join(" ")}
+        </p>
+      )}
 
       <div className="space-y-12">
         <section id="professors" aria-labelledby="professors-h" className="scroll-mt-16">
@@ -174,7 +238,7 @@ export default function CourseView({ subject, number, meta }: { subject: string;
             title={term ? `Professors in ${termLabel(term)}` : "Professors"}
             actions={
               <>
-                {termTabs("flex sm:hidden")}
+                {termTabs("flex max-w-full sm:hidden")}
                 {scored.profs.length > 1 ? (
                   <div className="inline-flex rounded border border-line p-0.5" role="group" aria-label="Layout">
                     {(
@@ -267,7 +331,9 @@ export default function CourseView({ subject, number, meta }: { subject: string;
 
         <section id="sections" aria-labelledby="sections-h" className="scroll-mt-16">
           <SectionHeader id="sections-h" title={term ? `Sections in ${termLabel(term)}` : "Sections"} />
-          {!block || !block.sections.length ? (
+          {term && meta.summer?.line && meta.summer.term === term && !block?.sections.length ? (
+            <p data-testid="summer-tab">{meta.summer.line}</p>
+          ) : !block || !block.sections.length ? (
             <p className="text-muted">
               Not offered in {termLabel(term ?? meta.next_term)}.{course.pattern ? ` Usual pattern: ${course.pattern.label}.` : ""}
             </p>
