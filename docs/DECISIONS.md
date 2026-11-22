@@ -204,7 +204,9 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D8.5 .ics** uses America/Chicago with a VTIMEZONE, weekly RRULE with UNTIL in UTC, half-term sections clipped
   to their half, and the break week removed with EXDATE. Instruction dates are **estimates**
   (`web/lib/terms.ts`; the academic calendar page was blocked) and the UI says so.
-- **D8.6 Cart** lives in localStorage and in the URL (`?c=CS124,MATH231!12345&t=2027-sp`; `!CRN` = locked).
+- **D8.6 Cart** lives in localStorage and in the URL (`?c=CS124,MATH231!12345&t=2027-sp`; `!CRN` = locked;
+  `@21-660` = a time lock, days mask and start minute, after any `!CRN`: one of the course's sections must meet
+  then, #139).
   A URL with `c` replaces the stored cart so shared links open exactly.
 
 ## Final QA — fixes from the independent reviewer

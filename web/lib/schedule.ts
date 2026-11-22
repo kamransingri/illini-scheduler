@@ -26,6 +26,8 @@ export type CourseInput = {
   course: Course;
   credits: number;
   locked: string[];
+  /** time locks (#139): one of the course's sections must meet on these days at this start minute */
+  at?: { d: number; s: number }[];
   /** UIUC-wide mean RMP quality; when set, ratings from few students are pulled toward it, as in the best-pick score */
   rmpPrior?: number | null;
   /** each professor's best-pick score for this course and term (lib/rank.ts rankProfs), by instructor key */
@@ -210,6 +212,7 @@ export function prepareBundles(input: CourseInput, term: string, prefs: Prefs): 
   const raw = buildBundles(block.sections, input.key, prefs.includeSpecial, input.locked).filter(
     (b) =>
       input.locked.every((crn) => !block.sections.some((s) => s.crn === crn) || b.some((s) => s.crn === crn)) &&
+      meetsAt(b, input.at) &&
       (!prefs.openOnly || b.every((s) => !isClosed(s) || input.locked.includes(s.crn))) &&
       (!prefs.eligibleOnly || b.every((s) => !input.cannot?.includes(s.crn) || input.locked.includes(s.crn))),
   );
@@ -549,17 +552,24 @@ export function generate(inputs: CourseInput[], term: string, prefs: Prefs, limi
   return { schedules: best, total, truncated, emptyCourses, ms: Date.now() - t0 };
 }
 
+/** Does a combination of sections meet at every time lock (#139)? */
+const meetsAt = (b: Section[], at: CourseInput["at"]) => !at?.length || at.every((t) => b.some((s) => s.meetings.some((m) => m.d === t.d && m.s === t.s)));
+/** "11:00am MWF" for time locks. */
+const atLabel = (at: NonNullable<CourseInput["at"]>) => at.map((t) => `${hhmm(t.s)} ${dayLetters(t.d)}`).join(" and ");
+
 /** Why a course has no usable bundle, in words a student can act on. */
 export function explainEmpty(input: CourseInput, term: string, prefs: Prefs): string {
   const block = input.course.terms[term];
   if (!block || !block.sections.length) return "it isn't offered this term";
   const all = buildBundles(block.sections, input.key, true, input.locked);
   const locked = input.locked.filter((c) => block.sections.some((s) => s.crn === c));
-  const withLocks = all.filter((b) => locked.every((c) => b.some((s) => s.crn === c)));
-  if (locked.length && !withLocks.length) {
+  const crnLocked = all.filter((b) => locked.every((c) => b.some((s) => s.crn === c)));
+  if (locked.length && !crnLocked.length) {
     const codes = locked.map((c) => block.sections.find((s) => s.crn === c)!.code).join(" + ");
     return `the locked sections ${codes} can't be taken together (they belong to different lecture groups or overlap)`;
   }
+  const withLocks = crnLocked.filter((b) => meetsAt(b, input.at));
+  if (!withLocks.length) return `no section meets at your ${atLabel(input.at!)} lock${locked.length ? ` together with your locked ${lockedCodes(input, block.sections)}` : ""}`;
   const visible = prefs.includeSpecial ? withLocks : withLocks.filter((b) => b.every((s) => !s.special || locked.includes(s.crn)));
   if (!visible.length) return "only special/restricted-looking sections are left (tick “Include special sections” to allow them)";
   const open = prefs.openOnly ? visible.filter((b) => b.every((s) => !isClosed(s) || locked.includes(s.crn))) : visible;
@@ -572,6 +582,7 @@ export function explainEmpty(input: CourseInput, term: string, prefs: Prefs): st
     if (why) return `your locked ${s.code} ${s.type} (${sectionTimes(s)}) breaks a must-have: ${why}`;
   }
   if (locked.length) return `every combination with your locked ${lockedCodes(input, block.sections)} breaks one of your must-haves (start or end time, days off, a blocked time or the lunch break)`;
+  if (input.at?.length) return `every section at your ${atLabel(input.at)} lock breaks one of your must-haves (start or end time, days off, a blocked time or the lunch break)`;
   return "every section breaks one of your must-haves (start or end time, days off, a blocked time or the lunch break)";
 }
 
@@ -598,6 +609,7 @@ export function clashingPairs(inputs: CourseInput[], term: string, prefs: Prefs)
   const out: Clash[] = [];
   const label = (p: (typeof prepared)[number], first: boolean) => {
     if (p.locked.length) return `${first ? "Your" : "your"} locked ${p.inp.key} ${p.locked.map((s) => s.code).join(" + ")} (${p.locked.map(sectionTimes).join("; ")})`;
+    if (p.inp.at?.length) return `${first ? "Your" : "your"} ${atLabel(p.inp.at)} lock for ${p.inp.key}`;
     const times = [...new Set(p.bundles.flatMap((b) => b.meetings.filter((m) => m.s !== null).map((m) => `${dayLetters(m.d)} ${hhmm(m.s!)}–${hhmm(m.e!)}`)))];
     return `${p.inp.key} (${times.slice(0, 2).join(", ")})`;
   };
@@ -625,8 +637,8 @@ export type LockBlame = { each: string[]; all: boolean };
  * unlocking every course does. Both empty: the locks aren't the problem (or nothing is locked).
  */
 export function locksToBlame(inputs: CourseInput[], term: string, prefs: Prefs, budgetMs = 300): LockBlame {
-  const lockedKeys = inputs.filter((i) => lockedSections(i, i.course.terms[term]?.sections ?? []).length).map((i) => i.key);
-  const fits = (unlock: string[]) => generate(inputs.map((i) => (unlock.includes(i.key) ? { ...i, locked: [] } : i)), term, prefs, 1, budgetMs, true).total > 0;
+  const lockedKeys = inputs.filter((i) => lockedSections(i, i.course.terms[term]?.sections ?? []).length || i.at?.length).map((i) => i.key);
+  const fits = (unlock: string[]) => generate(inputs.map((i) => (unlock.includes(i.key) ? { ...i, locked: [], at: [] } : i)), term, prefs, 1, budgetMs, true).total > 0;
   const each = lockedKeys.filter((k) => fits([k]));
   return { each, all: !each.length && lockedKeys.length > 1 && fits(lockedKeys) };
 }
