@@ -50,8 +50,10 @@ import {
 import type { ScorePriors } from "@/lib/score";
 import { breakNames, TERM_DATES } from "@/lib/terms";
 import { useWeights } from "@/lib/weights";
+import { scheduleSummary } from "@/lib/askai";
 import { setBuildings } from "@/lib/walk";
 import type { Course, Section } from "@/lib/types";
+import AskAi from "./AskAi";
 import CopyButton from "./CopyButton";
 import GettingThere from "./GettingThere";
 import { Badge, SeatStatus } from "./ui/Badge";
@@ -1398,6 +1400,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                   <Icon name="external" />
                 </a>
               </div>
+              <AskAi text={scheduleSummary(sched, term, must, courses)} what="this schedule" />
               {icsError && (
                 <p className="flex items-start gap-2" role="alert">
                   <Icon name="alert" className="mt-1" />

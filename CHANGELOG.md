@@ -81,6 +81,9 @@ history).
   lines. The line can be shown on the map.
 - Classes on the schedule builder's week calendar lock and unlock with a click or Enter (#138), and "Lock this
   schedule" and "Unlock all" sit next to Copy all CRNs. On a phone, a tap opens the class's details with a Lock button.
+- "Ask your AI" on course pages and schedules (#103) shows a short summary (sections, times, CRNs, GPA, Rate My
+  Professors ratings, your must-haves) and a starter question, and copies exactly that text to paste into any AI app.
+  The site sends nothing.
 
 ### Fixed
 
