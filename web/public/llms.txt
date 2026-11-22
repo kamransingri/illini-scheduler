@@ -16,6 +16,8 @@ How to use the data:
 - No key is needed, and cross-origin reads are allowed.
 - Credit the sources: Course Explorer, Wade Fagen-Ulmschneider's GPA and course datasets, the Academic Catalog, CITL,
   and Rate My Professors (link to the professor's page when you show ratings).
+- Grades: terms before Spring 2025 were released through FOIA requests, terms from Spring 2025 on under Urbana Senate
+  item EP.25.072. Each request is listed at https://github.com/wadefagen/datasets/tree/main/gpa#data-source
 
 ## Docs
 

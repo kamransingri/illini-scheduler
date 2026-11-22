@@ -11,7 +11,7 @@ import Icon from "@/components/ui/Icon";
 import Info from "@/components/ui/Info";
 import Stat from "@/components/ui/Stat";
 import { courseParams, getCourse, getMeta, getSummer } from "@/lib/data";
-import { cisUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, termLabel, termRange } from "@/lib/format";
+import { cisUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, GPA_DATASET, GPA_SOURCES, gpaRelease, termLabel, termRange } from "@/lib/format";
 import { profInput } from "@/lib/rank";
 import { professorsFor, tally } from "@/lib/sections";
 import { DEFAULT_SUMMER, summerHref, summerLine } from "@/lib/summer";
@@ -102,11 +102,19 @@ export default async function CoursePage({ params }: Props) {
                   )
             }
             source={
-              g
-                ? g.recent !== null
-                  ? `UIUC GPA dataset, ${recentLabel}, ${fmtInt(g.recent_students)} graded students. All-time (${termRange(g.first_term, g.last_term)}): ${fmtGpa(g.avg)} from ${fmtInt(g.students)} students.`
-                  : `UIUC GPA dataset, ${termRange(g.first_term, g.last_term)}, ${fmtInt(g.students)} students (none in the recent window).`
-                : "The UIUC GPA dataset leaves out sections of 20 or fewer students (FERPA), so small courses have no grade data."
+              <span data-testid="gpa-source">
+                <a href={GPA_DATASET} className="underline" rel="noopener">
+                  Wade Fagen-Ulmschneider&apos;s GPA dataset
+                </a>
+                {g
+                  ? g.recent !== null
+                    ? `, ${recentLabel}, ${fmtInt(g.recent_students)} graded students, ${gpaRelease(g.recent_terms?.[0], g.recent_terms?.[1])}. All-time (${termRange(g.first_term, g.last_term)}): ${fmtGpa(g.avg)} from ${fmtInt(g.students)} students.`
+                    : `, ${termRange(g.first_term, g.last_term)}, ${fmtInt(g.students)} students (none in the recent window), ${gpaRelease(g.first_term, g.last_term)}.`
+                  : " leaves out sections of 20 or fewer students (FERPA), so small courses have no grade data."}{" "}
+                <a href={GPA_SOURCES} className="underline" rel="noopener">
+                  Which request released each term
+                </a>
+              </span>
             }
           />
           <Stat
