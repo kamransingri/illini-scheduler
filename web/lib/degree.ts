@@ -317,16 +317,6 @@ export function alsoCounts(c: string, from: DegreeGroup, open: GroupResult[], de
     .map((r) => ({ group: r.group, verdict: canShare(from, r.group, deg.double_counting, deg.courses[c]) }));
 }
 
-const CODE_IN_TEXT = /\b([A-Z]{2,5})\s?(\d{3})\b/g;
-
-/** Prerequisite text worth a "check prerequisites" note: it names a course that isn't in My courses, or no course at all. */
-export function prereqNote(pre: string | undefined, taken: Set<string>): string | null {
-  const text = (pre ?? "").trim();
-  if (!text) return null;
-  const named = [...text.matchAll(CODE_IN_TEXT)].map((m) => `${m[1]} ${m[2]}`);
-  if (named.length && named.every((c) => taken.has(c))) return null;
-  return text;
-}
 
 export type OverlapCheck = {
   rule: OverlapRule;
