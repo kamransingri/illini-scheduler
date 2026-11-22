@@ -77,6 +77,14 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D2.5 RHET 105 has no GPA data in the window.** Its sections hold at most 20 students, and FERPA exclusions drop
   those from the dataset after 2013. The UI says "No grade data" and doesn't borrow numbers from other courses.
 - **D2.6 Instructor identity** for GPA rows is `names.instructor_key` ("last|first"); see Phase 3.
+- **D2.7 Never publish what the University withholds (#192).** The University leaves small sections out of the GPA
+  data under FERPA, because their grades could identify a student. Wade's README, quoting the University's FOIA
+  answer: "courses with 20 or fewer students were excluded (the smallest course in the dataset has 21 students)."
+  `gpa.compute` checks every row it is given, inside the GPA window or not, and stops the build
+  (`gpa.WithheldGradeData`, `make data` exits 1) when `Students` or the letter-grade total (A+ to F, W not counted)
+  is under 21, naming up to 20 of the rows. It doesn't drop them quietly: a small row means the source changed or
+  someone added data, and a person should look. A course with no rows (RHET 105, D2.5) keeps showing "No grade data";
+  nothing fills it in from another course, term or source.
 
 ## Phase 3 — Instructor matching and Rate My Professors
 
@@ -1243,52 +1251,144 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D46.6 OSM down.** The build goes on with an empty `buildings` map and `meta.buildings.osm_base: null`, as it does
   without Rate My Professors; a cached answer up to any age is used before giving up.
 
+## Minors' overlap with the major: the Overview tabs (2026-11-21, issue #112)
+
+- **D47.1 Read from the pages already cached.** D43.2 left the minor pages' Overview tabs unread because the catalog
+  now challenges scripts. The pages cached on 2026-11-17 (`data/raw/catalog/*-minor.html`, before the challenge)
+  hold every tab, Overview included, so they were read from disk: no new requests, nothing worked around. 22 more
+  minors state a rule there, so 30 of the 125 minors now have one. Each quote was checked word for word against its
+  cached page.
+- **D47.2 The 22.** Six hours that don't count toward the major or another minor, 300-level or above: Adult
+  Development, American Indian Studies, Art History, Child Health and Well-Being, Aging and Health, Health
+  Administration, Public Health, Crop and Soil Management, Data Science, Gender and Women's Studies, Horticulture,
+  International Engineering, LGBT/Queer Studies, Semiconductor Engineering, Theatre, Wildlife and Fisheries
+  Conservation. At 400-level: ACES and Spatial and Quantitative Methods. The major only (no "another minor"): Public
+  Relations. At any level: Dance, Disability Studies and Recreation, Sport & Tourism, whose sentence asks for "six
+  hours of advanced" courses and, separately, "six hours of coursework" that are distinct, so the distinct hours
+  aren't held to a level. "Not used in any other major or minor" (the three health minors) reads as `minors_too`.
+- **D47.3 Not encoded: rules about one named major.** Natural Resource Conservation ("may not be counted toward the
+  major in Natural Resources and Environmental Sciences") and LGBT/Queer Studies with a Gender & Women's Studies
+  major ("classes may not count towards both") ban any overlap with one major, which `major_overlap` can't say. Nor
+  are eligibility rules ("not open to students majoring in chemical engineering", Advertising, Media, Dance,
+  Biomolecular Engineering, Political and Civic Leadership, Wildlife and Fisheries, Horticulture and Environmental
+  Economics & Law for some concentrations). Both stay in the catalog's words on the minor's page.
+- **D47.4 The importer still can't refresh.** Re-importing needs the pages fetched again, which the challenge still
+  blocks; the cached pages are what `--offline` re-parses, and `major_overlap` survives a re-import (D43.5).
+
+## Transcript and DARS import (2026-11-21, issue #20)
+
+- **D48.1 Pasted text, read in the browser.** Self-Service and DARS sit behind a NetID, so the student copies the page
+  and pastes it (`lib/transcript.ts`, `components/TranscriptPaste.tsx`), as with AP scores (#198). The text stays in
+  the component's state: it isn't saved, put in the link or sent, and the Playwright test checks that no request
+  carries any of it. Only the courses the student applies are kept, in My courses as before (D13.14).
+- **D48.2 Two layouts, one row reader.** Self-Service's Academic History puts the grade before the credit hours
+  ("CS 124 UG Intro A 3.000 12.00", sometimes wrapped so the hours start the next line) under "Term:" headings, in
+  sections for institution credit, transfer credit and courses in progress (no grade there). DARS puts the term first
+  and the grade after the hours ("FA23 CS 124 3.0 A TITLE"). The reader looks on both sides of the hours. Lines that
+  list options ("SELECT FROM: CS 233 CS 341") don't start like a row, so they're not courses taken.
+- **D48.3 Grades from the registrar's key.** Letter grades A+ to D-, CR, S and the pandemic pass codes mean completed;
+  PS (test-based credit), TR and T, or any passing grade in a transfer or test-credit section, mean AP, IB or transfer
+  credit; IP and DFR (deferred), or anything under Courses in Progress, mean in progress. F, ABS, FR, W, NC, U, NP, NZ,
+  AU, NR, NV and I aren't added and are listed with why, unless the course was passed in another term. A course
+  counts once, at its best status. Honors (H) and GPA marks (*, &) after a grade are ignored.
+- **D48.4 Nothing dropped silently.** A line that starts like a course row but can't be read (an unknown grade, a
+  malformed number) is shown in the preview, as is elective credit ("ECON 1--"), which has no single course to add.
+- **D48.5 Merge, don't replace.** Applying adds new courses and updates statuses (in progress → completed); courses
+  already in My courses that the paste doesn't list are kept and named, since students add transfer courses by hand.
+  When the paste has test credit (an Advanced Placement or other test-credit heading), the AP/IB estimate's courses it
+  doesn't list are switched off (`declined`), with a box to keep them.
+- **D48.6 Samples are hand-written.** No real transcript or DARS audit is in the repository. The fixtures follow the
+  layout of a UIUC unofficial transcript its owner published and the uAchieve DARS row format; redacted samples from
+  volunteers can be added beside them (fixtures/transcript/README.md).
+
+## Prerequisites (2026-11-21, issue #21)
+
+- **D49.1 Read in the browser, from text already exported.** Every course's prerequisite sentence is already in the
+  degree files (`pre`) and course pages, so `web/lib/prereq.ts` reads it into an AND/OR tree where it's shown, instead
+  of the pipeline exporting a second copy (#21 suggested the pipeline; one reader in one place avoids two copies
+  drifting apart, the problem D13.22 solves with a parity test). Results are cached per sentence.
+- **D49.2 The reading.** Sentences and ";" are AND; a clause opening with "or" ("; or consent of instructor") is an
+  alternative to everything before it in the sentence. "One of", "either" and "A, B, or C" are OR; "A, B, and C" is
+  AND; "A or B, C, D or E" is an AND of ORs; "MATH 220/221" is either. "Credit or concurrent enrollment in X" lets X
+  share the term. A bare "or equivalent" at the end of a clause is an alternative to the whole clause; "or other
+  calculus course" and the like are an alternative to the item next to them. Sentences about what's recommended,
+  preferred, restricted or can't be taken alongside are left out, and "additional prerequisites may be specified" is
+  noted.
+- **D49.3 Wrong is worse than missing.** Consent of the instructor, "or equivalent", standing, GPA, "knowledge of R",
+  a minimum grade or an honors section are "can't tell", not met or unmet. A clause the reader can't parse with
+  confidence becomes "can't tell" as a whole: "A and B or C", and "A or B, C, or D", which could mean "(A or B) and C,
+  or D". A course named as a yardstick ("equivalent to the coverage of ACE 360") isn't required.
+- **D49.4 Checking.** Completed courses, AP/IB/transfer credit and courses in progress count (in progress will be done
+  by the next term). All: any unmet part makes it unmet, else any "can't tell" makes it can't tell. Any: one met part
+  is enough. "Met if taken alongside" ranks between met and can't tell, and names the courses to take with it.
+- **D49.5 Measured.** 100 courses from CS, MATH, STAT, ECON and CHEM, picked at random, were labelled by hand before
+  any code was written, then the reader was written while reading them: 99 read exactly, 1 gave up safely
+  (`fixtures/prereq/labelled.json`). Then 50 courses from every other subject were labelled and read once without
+  changes: 44 of 50 exactly; of the 6, 3 were the ambiguous "A or B, C, or D" read as all-OR, 1 required a yardstick
+  course, 1 misread "and/or", and 1 was stricter than needed. All but the stricter one are fixed (D49.3), and both
+  sets are now tests (`heldout.json`). Of all 1,966 sentences in the degree files, 1,543 read into a tree (562 of
+  them with a "can't tell" part), 280 are "can't tell" only and 143 require nothing.
+- **D49.6 Where it shows.** Each course option in the checklist (replacing D13.16's "Check prerequisites" note, which
+  only looked for named courses and flagged "PHIL 100 or STAT 107" for a student with STAT 107); a **You can take
+  next** list under the major (its own requirements, not gen-eds; courses offered next term once the schedule is
+  out; best picks first); and the four-year plan, which D45.4 left waiting for this: a course is warned about when
+  its prerequisites aren't met by My courses plus the courses in earlier terms, with "take alongside" courses allowed
+  in the same term. "Can't tell" gives no warning in the plan; the checklist shows it.
+- **D49.7 Checked against the whole catalog.** All 2,734 Spring 2027 prerequisite sentences were read and every
+  reading that changed was reviewed. Fixed: a recommendation anywhere in a sentence used to drop the whole sentence
+  (CS 438, MATH 441, ME 505 and PSYC 361 read as having no prerequisites); now only the recommended clause goes
+  ("ECON 203; MATH 231 are recommended" still drops both). "Either A or both B and C", "One of the following:",
+  "Any of", "a B or better", "credit or registration in", "concurrent enrollment or prior completion of" and
+  "A or B, or consent" are read. "May be taken concurrently with X" lets X share the term instead of requiring it
+  again, and a course named in a form or a placement test, or the course itself, is no longer required.
+  "Coursework for these three courses" gives up. Give-ups went from 650 to 624.
+
 ## Getting there: where you live and MTD buses (2026-11-21, issue #96)
 
-- **D47.1 MTD's published timetable, not its live API.** `pipeline/transit.py` reads MTD's GTFS zip
+- **D50.1 MTD's published timetable, not its live API.** `pipeline/transit.py` reads MTD's GTFS zip
   (developer.mtd.org, no key) once a week, cached in `data/raw/mtd/` and in CI. Live departures need MTD's API key,
   which can't sit in a static page (Map 5, #97). MTD's developer terms (2014) license route and schedule data, and
   anything derived from it, for uses that help riders. They ask for "Data provided by Champaign-Urbana Mass Transit
   District" next to the data, and no use of MTD's name or logo to promote anything. The tab shows the credit under the
   times, and API.md passes the terms on. The terms also have the licensee indemnify MTD, which is the project
   owner's call to accept; the #96 pull request asks.
-- **D47.2 A normal week, small.** Each weekday uses the set of services that runs on most of that weekday's dates, so
+- **D50.2 A normal week, small.** Each weekday uses the set of services that runs on most of that weekday's dates, so
   Labor Day and Thanksgiving week don't set the times. Only stops within 500 m (about a 6-minute walk) of a class
   building or a place to live are kept, and trips are grouped into patterns: 3,641 trips become 518 patterns,
   ~170 KB, loaded only when someone opens the tab.
-- **D47.3 One term behind.** MTD publishes one term's timetable at a time (Fall 2026 runs to 2026-12-19). A Spring 2027
+- **D50.3 One term behind.** MTD publishes one term's timetable at a time (Fall 2026 runs to 2026-12-19). A Spring 2027
   schedule uses the fall times until MTD publishes spring's, and the tab says which dates its times are for.
-- **D47.4 One bus, no transfers, and estimates.** Walking is straight-line distance times 1.3 at 4.8 km/h. A bus is
+- **D50.4 One bus, no transfers, and estimates.** Walking is straight-line distance times 1.3 at 4.8 km/h. A bus is
   suggested when it saves 5 minutes or more, or between classes when walking won't make it and the bus will: be at
   the stop a minute early, at class 2 minutes early. Transfers are left out: the campus routes link the halls and the
   buildings directly, and a transfer suggestion that misses its connection is worse than none.
-- **D47.5 Where you live.** OpenStreetMap's named residence halls, houses and apartment buildings, or any class
+- **D50.5 Where you live.** OpenStreetMap's named residence halls, houses and apartment buildings, or any class
   building, saved as a name in `illini-scheduler:home:v1` (this browser only, never in share links, like About you).
-  "Use where I am now" asks the browser each time and keeps the position in the page only. Dropping a pin waits for the
-  map (#95). OSM's points named "... Residence Hall" duplicate the drawn hall complexes and are left out.
-- **D47.6 Between classes.** Asked for on #96 (2026-11-19): when the next class is too far to walk in the gap, the
+  "Use where I am now" asks the browser each time and keeps the position in the page only. Dropping a pin came with
+  the map (D51.5). OSM's points named "... Residence Hall" duplicate the drawn hall complexes and are left out.
+- **D50.6 Between classes.** Asked for on #96 (2026-11-19): when the next class is too far to walk in the gap, the
   tab shows the bus that makes it, or how late walking would be. Back-to-back walking times in the calendar are Map 2
   (#94).
 
 ## A map of each day (2026-11-21, issue #95)
 
-- **D48.1 MapLibre and OpenFreeMap, not Leaflet and OpenStreetMap's tiles.** #95 planned Leaflet with
+- **D51.1 MapLibre and OpenFreeMap, not Leaflet and OpenStreetMap's tiles.** #95 planned Leaflet with
   tile.openstreetmap.org. OSM's tile servers are donated and their usage policy asks apps not to lean on them;
   OpenFreeMap serves OpenStreetMap-based vector tiles free, with no key, account or request limit, and MapLibre GL
   (BSD) draws them. The Illinois app uses Google Maps, which would need a billing account and a key in the page
   (D46.1). The map credits OpenFreeMap, OpenMapTiles and OpenStreetMap in its corner, from the tiles' own attribution.
-- **D48.2 Loaded only when opened.** "Show Monday's map" loads `DayMapCanvas` with `next/dynamic`, so MapLibre's
+- **D51.2 Loaded only when opened.** "Show Monday's map" loads `DayMapCanvas` with `next/dynamic`, so MapLibre's
   code (1 MB, ~290 KB compressed), its CSS and its 0.5 MB worker never load on a page where no map is opened (Playwright checks no request is
   made). MapLibre 6 finds its worker next to its own module, which the bundler moves, so `setWorkerUrl` points at the
   copy the build emits under `_next/static/media/`.
-- **D48.3 What's on it.** One pin per stop in class order, numbered like the list beside it; back-to-back classes in
+- **D51.3 What's on it.** One pin per stop in class order, numbered like the list beside it; back-to-back classes in
   one building share a stop. A dashed line joins them in order, and "H" is where you live when it's set. The list
   gives each walk in minutes and the gap before the next class (Map 2's straight-line estimate, `walkMinutes`), and
   marks a walk longer than its gap. The list is the map for screen readers (the map has an `aria-label` naming the
   same stops) and for browsers without WebGL.
-- **D48.4 Privacy.** The tiles come from OpenFreeMap's servers, which see an IP address and the area on screen; the
+- **D51.4 Privacy.** The tiles come from OpenFreeMap's servers, which see an IP address and the area on screen; the
   pins and everything about the schedule stay in the browser. The privacy page says so.
-- **D48.5 Drop a pin (#96).** "Drop a pin" opens a map (the same MapLibre setup, `lib/maplibre.ts`, loaded only then):
+- **D51.5 Drop a pin (#96).** "Drop a pin" opens a map (the same MapLibre setup, `lib/maplibre.ts`, loaded only then):
   click or tap to put the pin, drag it, or pan and use "Put the pin in the middle of the map" from the keyboard. It's
   saved in `illini-scheduler:home:v1` as `pin:<lat>,<lon>` rounded to 3 decimal places (about 110 m by 85 m here): close
   enough for walking and bus estimates, without keeping an exact address. Pins outside Champaign, Urbana and Savoy

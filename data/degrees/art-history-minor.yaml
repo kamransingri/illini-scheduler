@@ -13,6 +13,12 @@ read_on: '2026-11-17'
 generated: '2026-11-17'
 notes: []
 double_counting: []
+major_overlap:
+- distinct_hours: 6
+  min_level: 300
+  minors_too: true
+  quote: "At least 6 hours of coursework must be advanced (300-400) level and distinct from credit earned for a major or a second minor."
+  source: https://catalog.illinois.edu/undergraduate/faa/minors/art-history/
 groups:
 - name: Required courses
   section: Requirements

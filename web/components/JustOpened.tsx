@@ -15,6 +15,12 @@ import WatchedSections from "./WatchedSections";
 
 const evKey = (e: SeatEvent) => e.term + e.crn + e.at;
 
+/** "Lecture with Geoffrey Challen", "Discussion/Recitation", or "With Smith, J" when the type isn't known. */
+export function sectionDetail(e: Pick<SeatEvent, "y" | "i">): string {
+  const who = e.i?.length ? e.i.join(" and ") : "";
+  return e.y ? `${e.y}${who ? ` with ${who}` : ""}` : who ? `With ${who}` : "";
+}
+
 /** Live / daily status line: how fresh the list is, in words. */
 export function Freshness({ isLive, updated, checked, polledAt, now, dailyAt }: { isLive: boolean; updated?: string; checked?: number; polledAt: Date | null; now: number; dailyAt?: string }) {
   if (isLive && updated)
@@ -240,6 +246,11 @@ export default function JustOpened({ nextTerm, currentTerm, liveUrl, dailyAt }: 
                   </span>{" "}
                   <span className="group-hover:underline">{e.t}</span>
                 </Link>
+                {(e.y || e.i?.length) && (
+                  <span className="block text-sm text-muted" data-testid="section-detail">
+                    {sectionDetail(e)}
+                  </span>
+                )}
                 {isNew && <span className="ml-2 rounded bg-navy px-1.5 text-sm font-semibold leading-6 text-white">New</span>}
                 {watchSet.has(watchKey(e.term, e.crn)) && (
                   <Badge icon="bell" className="ml-2">

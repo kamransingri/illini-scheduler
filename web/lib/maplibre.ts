@@ -1,7 +1,7 @@
 "use client";
 // MapLibre, set up once for every map on the site (#95 day maps, #96 drop a pin). Only modules loaded with
 // next/dynamic import this, so MapLibre's code, CSS and worker load only when someone opens a map.
-// Tiles: OpenFreeMap (free, no key), credited by the map itself (DECISIONS.md D48).
+// Tiles: OpenFreeMap (free, no key), credited by the map itself (DECISIONS.md D51).
 
 import * as maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";

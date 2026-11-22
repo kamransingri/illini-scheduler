@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { Degree, DegreeCourse, DegreeGroup } from "@/lib/degree";
 import { decodeCourses, decodeState, EMPTY, encodeState, stateFromParams, stateToParams } from "@/lib/mycourses";
-import { addToTerm, decodePlan, EMPTY_PLAN, encodePlanTerms, finishTerms, gradOptions, moveToTerm, offeringWarning, planTerms, plannedIn, removeFromPlan, termHours, termIndex, usuallyOffered, type Plan } from "@/lib/plan";
+import { addToTerm, decodePlan, EMPTY_PLAN, encodePlanTerms, finishTerms, gradOptions, moveToTerm, offeringWarning, planTerms, plannedIn, prereqWarning, removeFromPlan, termHours, termIndex, usuallyOffered, type Plan } from "@/lib/plan";
 
 const PLAN: Plan = { grad: "2029-sp", summers: false, terms: { "2027-fa": ["CS 225", "MATH 231"], "2027-sp": ["CS 124"], "2028-sp": ["CS 233"] } };
 
@@ -139,5 +139,26 @@ describe("terms a course doesn't usually run in (#116)", () => {
     expect(usuallyOffered("i,u", "2028-su")).toBe(true);
     expect(offeringWarning("f,i", "2028-sp", "Spring 2028")).toBeNull();
     expect(offeringWarning("n", "2028-sp", "Spring 2028")).toBe("Not offered in the last four years.");
+  });
+});
+
+describe("prerequisites in the plan (#21)", () => {
+  // CS 124 in spring 2027, CS 225 and MATH 231 in fall 2027, CS 233 in spring 2028
+  const cs233 = "CS 125 or CS 128; CS 173 or MATH 213; credit or concurrent enrollment in CS 225.";
+  it("counts My courses and the courses planned in earlier terms", () => {
+    expect(prereqWarning(cs233, "2028-sp", PLAN, ["CS 128", "CS 173"], "Spring 2028")).toBeNull();
+    expect(prereqWarning(cs233, "2028-sp", PLAN, ["CS 128"], "Spring 2028")).toBe("Prerequisites not met by Spring 2028: needs CS 173 or MATH 213.");
+    // CS 124 planned in spring 2027 counts for a fall 2027 course, not for one in the same spring
+    expect(prereqWarning("CS 124.", "2027-fa", PLAN, [], "Fall 2027")).toBeNull();
+    expect(prereqWarning("CS 124.", "2027-sp", PLAN, [], "Spring 2027")).toBe("Prerequisites not met by Spring 2027: needs CS 124.");
+  });
+  it("a course that may be taken concurrently can share the term", () => {
+    // CS 225 is in fall 2027: a CS 233 there is fine, one in spring 2027 isn't
+    expect(prereqWarning(cs233, "2027-fa", PLAN, ["CS 128", "CS 173"], "Fall 2027")).toBeNull();
+    expect(prereqWarning(cs233, "2027-sp", PLAN, ["CS 128", "CS 173"], "Spring 2027")).toBe("Take CS 225 in Spring 2027 too, or earlier.");
+  });
+  it("says nothing when the site can't check it", () => {
+    expect(prereqWarning("Junior standing or consent of instructor.", "2027-fa", PLAN, [], "Fall 2027")).toBeNull();
+    expect(prereqWarning(undefined, "2027-fa", PLAN, [], "Fall 2027")).toBeNull();
   });
 });

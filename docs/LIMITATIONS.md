@@ -141,9 +141,13 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
   in it at all: retired or renumbered courses that program pages still list. They show greyed out, without a link.
 - **Scope.** Undergraduate majors (with their concentrations) and minors in the 2026-2027 catalog only. No certificates,
   graduate programs or earlier catalog years.
-- **Major and minor overlap.** A course counts toward both your major and your minor on the checklist. Some minors and
-  colleges limit that overlap; the minor's catalog page says so, and the checklist doesn't check it.
-- **You enter your courses by hand.** There's no transcript or DARS import, because those sit behind a NetID.
+- **Major and minor overlap.** A course counts toward both your major and your minor on the checklist. The 30 minors
+  whose catalog page asks for coursework distinct from the major show how much you have (D43, D47); other limits
+  (no overlap with one named major, majors that can't take the minor) are only in the minor page's words.
+- **Transcript and DARS import reads text, not the systems.** Both sit behind a NetID, so you copy the page and paste
+  it; it's read in your browser. The parser was written from the transcript's published layout and the registrar's
+  grade key, with hand-written samples, so a layout it hasn't seen may leave lines unread: it lists them instead of
+  guessing, and you add those courses by hand.
 - **AP and IB credit are estimates.** The courses come from CITL's tables for the year you started (AP: 2024-2025,
   2025-2026 or 2026-2027; IB: 2026-2027 only, because CITL's earlier IB tables don't separate Higher and Standard
   Level), copied by hand, with a few slips in CITL's tables corrected (docs/AP-CREDIT.md). The real credit shows on DARS
@@ -151,7 +155,10 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
   are in Transferology, which needs an account, so look your courses up there and add the Illinois course yourself as
   "AP, IB or transfer credit". Elective credit such as `MATH 1--` counts toward your hours,
   and toward a requirement only when it takes every course at that level in that subject.
-- **Prerequisites** are shown as catalog text, not checked against your courses.
+- **Prerequisites are read from the catalog's sentence.** The checklist says met, not met or can't tell, with the
+  sentence beside it. Anything the site can't check (consent of the instructor, "or equivalent", class standing, a
+  grade, a clause it can't read) is "can't tell", never a guess, and a course's section may add prerequisites of its
+  own. On 150 hand-labelled courses it read none looser than the catalog (DECISIONS.md D49).
 - **Double counting** is allowed only where the catalog or the gen-ed rules say so in quotable words. Anything else
   shows as "rules unclear" instead of being guessed. A course approved for Advanced Composition or Quantitative
   Reasoning II counts for its other gen-ed category too. Two program groups that list the same course (common in
