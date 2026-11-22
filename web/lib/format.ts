@@ -166,3 +166,17 @@ export function treLabel(s: string): string {
   const m = /^(\d{4}-(?:sp|su|fa|wi))\s+(.+)$/.exec(s.trim());
   return m ? `${termLabel(m[1])}, ${m[2]}` : s;
 }
+
+/** Wade Fagen-Ulmschneider's GPA dataset, and its table of where each term came from (#193). */
+export const GPA_DATASET = "https://github.com/wadefagen/datasets/tree/main/gpa";
+export const GPA_SOURCES = `${GPA_DATASET}#data-source`;
+
+/** What released a run of terms: FOIA requests before Spring 2025, Urbana Senate item EP.25.072 from Spring 2025 on. */
+export function gpaRelease(first?: string, last?: string): string {
+  if (!first) return "";
+  const cut = termOrder("2025-sp");
+  const early = termOrder(first) < cut;
+  const late = termOrder(last ?? first) >= cut;
+  if (early && late) return "released through FOIA requests before Spring 2025 and under Senate item EP.25.072 from Spring 2025";
+  return late ? "released under Senate item EP.25.072" : "released through FOIA requests";
+}
