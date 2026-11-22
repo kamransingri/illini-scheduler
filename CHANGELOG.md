@@ -61,6 +61,9 @@ history).
   ask for six hours (usually advanced, or two advanced courses for Animal Sciences) that don't also count toward the
   major, and almost all toward another minor too. Their checklist shows the rule in the catalog's words, which of your courses count, which don't
   because your major uses them, and flags a minor that leans on courses your major already uses.
+- The source note on a course's GPA names and links Wade Fagen-Ulmschneider's GPA dataset and says what released the
+  terms shown: FOIA requests before Spring 2025, Urbana Senate item EP.25.072 from Spring 2025 (#193). docs/API.md and
+  llms.txt say the same, and a source note's links can be reached with the keyboard.
 - The schedule builder works out walking time between back-to-back classes from building locations (#94). Each
   schedule lists the walks that take longer than the gap before the next class ("14 min walk, 10 min gap"), and a
   new must-have, **No rushed walks between classes**, skips schedules that have one.

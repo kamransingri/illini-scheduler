@@ -70,7 +70,7 @@ test("keyboard: a professor row opens and closes with Enter, and a source popove
   const info = page.getByRole("button", { name: /Source for recent course GPA/i });
   await info.focus();
   await expect(info).toHaveAttribute("aria-expanded", "true");
-  await expect(page.locator(`[id="${await info.getAttribute("aria-describedby")}"]`)).toContainText("UIUC GPA dataset");
+  await expect(page.locator(`[id="${await info.getAttribute("aria-describedby")}"]`)).toContainText("Wade Fagen-Ulmschneider's GPA dataset");
   await page.keyboard.press("Escape");
   await expect(info).toHaveAttribute("aria-expanded", "false");
 });
