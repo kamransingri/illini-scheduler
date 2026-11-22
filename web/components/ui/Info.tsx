@@ -47,6 +47,9 @@ export default function Info({ children, label = "Source and details", className
       className={`relative inline-flex align-middle ${className}`}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => !pinned && setOpen(false)}
+      onFocus={() => setOpen(true)}
+      // stays open while focus moves to a link inside the panel
+      onBlur={(e) => !pinned && !wrap.current?.contains(e.relatedTarget as Node) && setOpen(false)}
     >
       <button
         type="button"
@@ -58,8 +61,6 @@ export default function Info({ children, label = "Source and details", className
           setPinned(!open || !pinned);
           setOpen(!(open && pinned));
         }}
-        onFocus={() => setOpen(true)}
-        onBlur={() => !pinned && setOpen(false)}
       >
         <Icon name="info" />
       </button>
