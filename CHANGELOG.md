@@ -88,6 +88,9 @@ history).
   Course Explorer hasn't published is greyed out and says so; one the course isn't offered in is greyed but opens; the
   summer tab shows the course's summer line. Arrow keys move between the tabs, and the schedule builder's term list
   shows the unpublished terms greyed out.
+- Time locks (#139): when two sections meet at the same time, "Keep 11am MWF, any section" keeps the course at that
+  time in every schedule, whichever section it is, instead of locking one CRN. Share links carry it (`CS124@21-660`)
+  and older links still open.
 
 ### Fixed
 
