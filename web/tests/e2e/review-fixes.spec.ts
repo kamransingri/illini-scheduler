@@ -56,6 +56,9 @@ test("opening a share link doesn't overwrite your own plan: it opens as a new on
 
 test("rules survive reload", async ({ page }) => {
   await page.goto("./schedule/?c=CS124&t=2027-sp");
+  // wait until the builder has read the link and loaded the course, as the other builder tests do: a click before then
+  // can be overwritten by the rules it reads on start
+  await expect(page.getByTestId("cart").locator("li")).toHaveCount(1);
   await page.locator('label[title="Keep Friday free"]').click();
   await expect(page.getByLabel("Keep Friday free")).toBeChecked();
   await page.goto("./schedule/");
