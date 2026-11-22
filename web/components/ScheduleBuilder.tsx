@@ -455,6 +455,11 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
     if (sched) keepOpen.current = crnKey(sched);
     updateItem(it.s, it.n, (c) => ({ ...c, locked: c.locked.includes(sec.crn) ? c.locked.filter((x) => x !== sec.crn) : [...c.locked.filter((x) => !sameComponent(x)), sec.crn] }));
   };
+  /** Lock every section of the schedule on screen (#138), or free every course again. One write, so the URL updates once. */
+  const lockAll = (on: boolean) => {
+    if (on && sched) keepOpen.current = crnKey(sched);
+    writeCart(cart.map((c) => ({ ...c, locked: on ? (sched?.bundles.find((b) => b.course === `${c.s} ${c.n}`)?.crns ?? c.locked) : [] })));
+  };
   const unlockCourse = (course: string) => {
     const it = itemOf(course);
     if (it) updateItem(it.s, it.n, (c) => ({ ...c, locked: [] }));
@@ -1241,7 +1246,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                 ))}
               </div>
               {view === "week" ? (
-                <WeekCalendar schedule={sched} colorOf={colorOf} blocked={prefs.blocked} daysOff={prefs.daysOff} />
+                <WeekCalendar schedule={sched} colorOf={colorOf} blocked={prefs.blocked} daysOff={prefs.daysOff} isLocked={isLockedSec} onToggleLock={toggleLock} />
               ) : view === "finals" ? (
                 <FinalsWeek schedule={sched} colorOf={colorOf} termName={termLabel(term)} />
               ) : (
@@ -1339,6 +1344,27 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
               )}
               <div className="flex flex-wrap gap-2">
                 <CopyButton text={sched.bundles.flatMap((b) => b.crns).join(", ")} label="Copy all CRNs" className="!px-3 !leading-9" />
+                {!sched.bundles.every((b) => b.crns.every((crn) => isLockedSec(b.course, crn))) && (
+                  <button
+                    type="button"
+                    className="inline-flex items-center gap-1.5 rounded border border-line bg-white px-3 font-semibold leading-9 hover:border-action hover:text-action"
+                    title="Keep every section of this schedule, so changing the rules can't swap them out"
+                    onClick={() => lockAll(true)}
+                  >
+                    <Icon name="lock" />
+                    Lock this schedule
+                  </button>
+                )}
+                {cart.some((c) => c.locked.length) && (
+                  <button
+                    type="button"
+                    className="inline-flex items-center gap-1.5 rounded border border-line bg-white px-3 font-semibold leading-9 hover:border-action hover:text-action"
+                    onClick={() => lockAll(false)}
+                  >
+                    <Icon name="unlock" />
+                    Unlock all
+                  </button>
+                )}
                 <button
                   type="button"
                   className="inline-flex items-center gap-1.5 rounded border border-line bg-white px-3 font-semibold leading-9 hover:border-action hover:text-action"
