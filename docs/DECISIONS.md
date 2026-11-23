@@ -1353,7 +1353,11 @@ Every judgment call made during the autonomous build, newest phase last.
   anything derived from it, for uses that help riders. They ask for "Data provided by Champaign-Urbana Mass Transit
   District" next to the data, and no use of MTD's name or logo to promote anything. The tab shows the credit under the
   times, and API.md passes the terms on. The terms also have the licensee indemnify MTD, which is the project
-  owner's call to accept; the #96 pull request asks.
+  owner's call to accept; the #96 pull request asks. **Decided 2026-11-22 (#218):** the owner accepts the terms as
+  they are (the [terms](https://developer.mtd.org/terms-of-use/), "Last Updated: September 5, 2014", were read in
+  full first) and is also asking developer@mtd.org for written OK for a free student tool that shows the published
+  timetable with MTD's credit line. The bus data stays on. If MTD says no or revokes the licence, the bus times come
+  off and walking directions and maps keep working.
 - **D50.2 A normal week, small.** Each weekday uses the set of services that runs on most of that weekday's dates, so
   Labor Day and Thanksgiving week don't set the times. Only stops within 500 m (about a 6-minute walk) of a class
   building or a place to live are kept, and trips are grouped into patterns: 3,641 trips become 518 patterns,
