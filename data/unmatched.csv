@@ -344,7 +344,6 @@ course-explorer,"Albuquerque Araujo, I",ARTH,240,2026-fa,no candidate
 course-explorer,"Buttery, H",ARTH,299,2027-sp,no candidate
 course-explorer,"Bevis, B",ARTH,416,2027-sp,no candidate
 course-explorer,"Talcott, T",ARTJ,301,2026-fa,no candidate
-course-explorer,"Bakaletz, M",ARTS,205,2026-fa,no candidate
 course-explorer,"Johnston, W",ARTS,210,2027-sp,no candidate
 course-explorer,"Wiesener, C",ARTS,210,2027-sp,no candidate
 course-explorer,"Flatley, D",ARTS,244,2027-sp,no candidate
@@ -353,6 +352,7 @@ course-explorer,"Thornton, S",ARTS,245,2027-sp,no candidate
 course-explorer,"Thursday, T",ARTS,245,2026-fa,no candidate
 course-explorer,"Cain, K",ARTS,250,2027-sp,no candidate
 course-explorer,"Hudson, S",ARTS,250,2027-sp,no candidate
+course-explorer,"Bakaletz, M",ARTS,251,2027-sp,no candidate
 course-explorer,"Matsumine, J",ARTS,251,2026-fa,no candidate
 course-explorer,"Fein-Smolinski, R",ARTS,264,2027-sp,no candidate
 course-explorer,"Farish, G",ARTS,265,2027-sp,no candidate
@@ -1000,6 +1000,7 @@ course-explorer,"Zhou, X",CS,107,2027-sp,no candidate
 course-explorer,"Ahuja, A",CS,128,2026-fa,no candidate
 course-explorer,"Ali, F",CS,128,2026-fa,no candidate
 course-explorer,"Balappanawar, I",CS,128,2026-fa,no candidate
+course-explorer,"Legende, J",CS,128,2027-sp,no candidate
 course-explorer,"Saraswatula, A",CS,128,2026-fa,no candidate
 course-explorer,"Amato, N",CS,199,2027-sp,no candidate
 course-explorer,"Azam, R",CS,225,2026-fa,no candidate
@@ -1180,7 +1181,6 @@ course-explorer,"Pal, V",ECE,391,2026-fa,no candidate
 course-explorer,"Qiu, H",ECE,391,2026-fa,no candidate
 course-explorer,"McGowan, E",ECE,395,2026-fa,no candidate
 course-explorer,"Majumder, R",ECE,398,2027-sp,no candidate
-course-explorer,"Um, D",ECE,414,2027-sp,no candidate
 course-explorer,"Tibbs, J",ECE,415,2026-fa,no candidate
 course-explorer,"Valera Cano, E",ECE,416,2027-sp,no candidate
 course-explorer,"Luallen, M",ECE,419,2026-fa,no candidate
@@ -1655,12 +1655,12 @@ course-explorer,"Son, J",HDFS,586,2027-sp,2 global candidates
 course-explorer,"Blazek, K",HEBR,404,2027-sp,2 global candidates
 course-explorer,"Ofli, E",HIST,100,2027-sp,no candidate
 course-explorer,"Zhang, T",HIST,100,2027-sp,3 global candidates
-course-explorer,"Cabrera, L",HIST,103,2026-fa,no candidate
 course-explorer,"Kale, P",HIST,104,2027-sp,no candidate
 course-explorer,"Leon, J",HIST,105,2027-sp,no candidate
 course-explorer,"Eftefield, H",HIST,120,2026-fa,no candidate
 course-explorer,"Wu, J",HIST,120,2026-fa,2 global candidates
 course-explorer,"Marko, T",HIST,141,2027-sp,no candidate
+course-explorer,"Cabrera, L",HIST,171,2027-sp,no candidate
 course-explorer,"Xu, L",HIST,227,2026-fa,2 global candidates
 course-explorer,"Young, R",HIST,252,2027-sp,no candidate
 course-explorer,"Horan, K",HIST,263,2027-sp,no candidate
