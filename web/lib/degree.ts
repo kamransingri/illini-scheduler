@@ -58,6 +58,7 @@ export type Degree = {
   notes: string[];
   double_counting: DcRule[];
   major_overlap?: OverlapRule[]; // a minor's coursework that must be distinct from the major (missing in older files)
+  not_open_to?: NotOpenRule[];
   groups: DegreeGroup[];
   courses: Record<string, DegreeCourse>;
   unknown: string[];
@@ -80,7 +81,28 @@ export type OverlapRule = {
   source: string;
 };
 
-export type DegreeIndex = { id: string; type?: "major" | "minor" | "certificate"; program: string; college: string; catalog_year: string; groups: number; generated?: string }[];
+/** Eligibility restrictions transcribed from a minor/certificate page (#230). */
+export type NotOpenRule = {
+  majors?: string[]; // these programs can't take it
+  colleges?: string[];
+  only_majors?: string[]; // everyone outside these programs/colleges can't take it
+  only_colleges?: string[];
+  quote: string;
+  source: string;
+  caveat?: string;
+};
+
+export type DegreeIndex = { id: string; type?: "major" | "minor" | "certificate"; program: string; college: string; catalog_year: string; groups: number; generated?: string; not_open_to?: NotOpenRule[] }[];
+
+/** Eligibility rules that match this exact major, without throwing away a saved or shared minor selection. */
+export function notOpenRules(minor: Pick<Degree, "not_open_to">, major: Pick<DegreeIndex[number], "id" | "college">): NotOpenRule[] {
+  return (minor.not_open_to ?? []).filter(
+    (r) =>
+      r.majors?.includes(major.id) ||
+      r.colleges?.includes(major.college) ||
+      ((r.only_majors || r.only_colleges) && !r.only_majors?.includes(major.id) && !r.only_colleges?.includes(major.college)),
+  );
+}
 
 /**
  * Add the shared gen-ed courses (degrees/gened-courses.json, the same for every program) to a program's own courses,

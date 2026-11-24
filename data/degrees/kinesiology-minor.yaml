@@ -14,6 +14,10 @@ generated: '2026-11-17'
 total_hours: 9
 notes: []
 double_counting: []
+not_open_to:
+- majors: [kinesiology-bs, kinesiology-bs-applied-exercise-science, kinesiology-bs-biobehavioral-health-science, kinesiology-bs-health-science, kinesiology-bs-teacher-certification]
+  quote: Students may not declare a minor in the same program as their major.
+  source: https://hk.illinois.edu/academics/undergrad-programs/minors/
 groups:
 - name: Foundational Courses (Required)
   section: Foundational Courses (Required)

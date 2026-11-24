@@ -22,6 +22,7 @@ degree checklist at `/degree/`.
 | `notes` | no | Catalog text for rules the schema can't express (copied, not paraphrased) |
 | `double_counting` | no | When one course may count toward two requirements (below) |
 | `major_overlap` | no | A minor's coursework that must be distinct from the major (below) |
+| `not_open_to` | no | Catalog-backed major or college eligibility restrictions for minors and certificates (below) |
 | `groups` | yes | The requirement groups, in catalog order |
 
 A short example, from the hand-checked `finance-data-science.yaml`:
@@ -109,6 +110,31 @@ The checklist counts the minor's courses in My courses (on its lists, or in `fro
 major's own requirements don't use (its gen-eds aren't the major), nor another minor's with `minors_too`. A course on a
 hand-ticked list of the major is counted, with a note that it may count there. The importer keeps this key when it
 rewrites a generated file, so it survives a re-import (DECISIONS.md D43).
+
+## Eligibility (minors and certificates)
+
+Some program pages say a minor is not open to particular majors or colleges. Copy the sentence and link to its source;
+do not infer restrictions from a program's name or coursework. `majors` names program ids, including concentration ids;
+`colleges` names the exact college strings in the degree files. A rule may use either or both. For a minor that says who
+it *is* for ("open only to students in Gies"), use `only_majors` and/or `only_colleges`: every other major is excluded.
+A department page counts as a source when the catalog is silent (Statistics, Chemistry, Kinesiology). Wording that only
+describes an audience ("designed for non-majors", "not appropriate for") is not a rule. A `caveat` records an
+eligibility exception the checklist cannot determine, and is shown with the warning.
+
+```yaml
+not_open_to:
+  - majors: [advertising-bs, computer-science-advertising-bs]
+    quote: "Students pursuing a major in Advertising or CS+Advertising are not eligible for a minor in Advertising."
+    source: https://catalog.illinois.edu/undergraduate/media/minors/advertising/
+  # International Business: everyone outside Gies
+  - only_colleges: [Gies College of Business]
+    quote: "…is not open to students earning Undergraduate degrees in colleges other than the Gies College."
+    source: https://catalog.illinois.edu/undergraduate/bus/minors/international-business/
+```
+
+The picker keeps restricted minors visible but disabled for the selected major. A saved/shared selection or later major
+change is retained and shown with the quoted rule and source. The catalog importer preserves `not_open_to` when it
+rewrites a generated file.
 
 ## Importing every program
 

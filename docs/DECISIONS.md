@@ -1273,7 +1273,8 @@ Every judgment call made during the autonomous build, newest phase last.
   major ("classes may not count towards both") ban any overlap with one major, which `major_overlap` can't say. Nor
   are eligibility rules ("not open to students majoring in chemical engineering", Advertising, Media, Dance,
   Biomolecular Engineering, Political and Civic Leadership, Wildlife and Fisheries, Horticulture and Environmental
-  Economics & Law for some concentrations). Both stay in the catalog's words on the minor's page.
+  Economics & Law for some concentrations). Both stay in the catalog's words on the minor's page. Eligibility rules
+  are now encoded as `not_open_to` (D55); the overlap bans still aren't.
 - **D47.4 The importer still can't refresh.** Re-importing needs the pages fetched again, which the challenge still
   blocks; the cached pages are what `--offline` re-parses, and `major_overlap` survives a re-import (D43.5).
 
@@ -1449,3 +1450,21 @@ Every judgment call made during the autonomous build, newest phase last.
   MAX_MINORS between them) and rides in the same `mn=` link parameter, so old links open unchanged. Other colleges'
   certificates aren't listed: no campus-wide list exists to import from.
 
+## Minors your major can't take (2026-11-24, issue #230)
+
+- **D55.1 Only what a page says.** A rule is encoded only when the minor's catalog page, its college's catalog page
+  (Journalism) or its department's page (Statistics, Chemistry, Business Analytics, Natural Resource Conservation,
+  Kinesiology, Public Health) says a major, concentration or college can't take it, and the rule carries that sentence
+  and its link. Every minor on the catalog's index was checked on 2026-11-24; a minor whose pages say nothing is open
+  to everyone.
+- **D55.2 Audience wording isn't a rule.** "Designed for non-majors" (Mathematics, Music, Materials Science),
+  "not appropriate for" (Hospitality Management) and "introduces non-architecture students" stay unencoded, so no one
+  is blocked on a reading of intent.
+- **D55.3 Open only to.** Some minors say who they are for instead of who they aren't: `only_majors` and
+  `only_colleges` close them to everyone else (International Business, Business Analytics, Musical Theatre).
+- **D55.4 Not encoded yet.** Teacher Education minors name subject areas, not programs; Interdisciplinary Health
+  Technology's "same program" rule has no matching major; Economics + Data Science isn't in the catalog yet, and
+  neither page says whether Mathematics & CS or Statistics & CS majors count as "Computer Science programs" for the
+  CS minor, so the rule says so in a caveat instead of blocking them.
+- **D55.5 Kept, not dropped.** A link, a saved list or a change of major that produces a combination the rules close
+  keeps the minor and shows the rule at the top of its checklist; the picker only stops new picks.

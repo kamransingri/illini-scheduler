@@ -11,6 +11,10 @@ catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/media/minors/advertising/
 read_on: '2026-11-17'
 generated: '2026-11-17'
+not_open_to:
+- majors: [advertising-bs, computer-science-advertising-bs]
+  quote: Students pursuing a major in Advertising or CS+Advertising are not eligible for a minor in Advertising.
+  source: https://catalog.illinois.edu/undergraduate/media/minors/advertising/
 notes: []
 double_counting: []
 groups:

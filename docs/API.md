@@ -451,6 +451,14 @@ Every major and minor in the degree checklist.
 | `[].program` | string | "Computer Science, BS" |
 | `[].college` | string | College |
 | `[].catalog_year` | string | `2026-2027` |
+| `[].not_open_to` | object[] | Catalog-backed minor or certificate eligibility rules, if any |
+| `[].not_open_to[].majors` | string[] | Program ids that cannot take it (optional) |
+| `[].not_open_to[].colleges` | string[] | Colleges whose students cannot take it (optional) |
+| `[].not_open_to[].only_majors` | string[] | Only these program ids can take it (optional) |
+| `[].not_open_to[].only_colleges` | string[] | Only these colleges' students can take it (optional) |
+| `[].not_open_to[].quote` | string | The catalog's eligibility sentence |
+| `[].not_open_to[].source` | string | Catalog page for the rule |
+| `[].not_open_to[].caveat` | string | Exception the checklist cannot determine (optional) |
 | `[].groups` | number | Requirement groups |
 | `[].generated` | string | When the file was made from the catalog |
 
@@ -487,6 +495,14 @@ files are checked.
 | `major_overlap[].minors_too` | boolean | Distinct from the student's other minors too (optional) |
 | `major_overlap[].quote` | string | The rule in the catalog's words |
 | `major_overlap[].source` | string | The minor's catalog page |
+| `not_open_to` | object[] | Catalog-backed eligibility restrictions for minors and certificates |
+| `not_open_to[].majors` | string[] | Excluded major or concentration ids (optional) |
+| `not_open_to[].colleges` | string[] | Excluded colleges (optional) |
+| `not_open_to[].only_majors` | string[] | The only program ids that can take it (optional) |
+| `not_open_to[].only_colleges` | string[] | The only colleges whose students can take it (optional) |
+| `not_open_to[].quote` | string | The eligibility rule in the catalog's words |
+| `not_open_to[].source` | string | The catalog page for the rule |
+| `not_open_to[].caveat` | string | Exception the checklist cannot determine (optional) |
 | `groups[].id` | string | Group id |
 | `groups[].name` | string | "Composition I" |
 | `groups[].section` | string | Heading it's under |

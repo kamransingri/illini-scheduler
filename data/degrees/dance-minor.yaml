@@ -11,6 +11,10 @@ catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/faa/minors/dance/
 read_on: '2026-11-17'
 generated: '2026-11-17'
+not_open_to:
+- majors: [dance-ba, dance-bfa]
+  quote: BA Dance and BFA Dance majors are not eligible for the undergraduate minor in Dance.
+  source: https://catalog.illinois.edu/undergraduate/faa/minors/dance/
 total_hours: 18
 notes: []
 double_counting: []

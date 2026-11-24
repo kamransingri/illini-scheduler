@@ -12,6 +12,11 @@ history).
 
 ### Added
 
+- Degree checklist: minors your major can't take are greyed out (#230). In the minor picker, a minor closed to your
+  major still shows, with "Not open to Journalism, BS" (or your major), and can't be picked. 24 minors carry a rule,
+  each in the catalog's or department's own words with a link, such as Computer Science (not for CS, CS + X or
+  Computer Engineering majors), Media (not for College of Media majors) and International Business (Gies only). A
+  link or saved list with a combination that isn't allowed keeps the minor and says why at the top of its checklist.
 - Degree checklist: undergraduate certificates (#113). The 22 LAS certificates can be picked beside the major in the
   minor slots, with a link to the unit's page and one box to tick; they aren't in the Academic Catalog (D54).
 - Schedule builder: Getting there (#96). Pick the hall or building you live in (or use where you are now) and each day

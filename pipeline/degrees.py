@@ -15,6 +15,7 @@ import re
 import sqlite3
 import sys
 from dataclasses import dataclass, field
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -24,6 +25,24 @@ from .config import DATA
 
 DEGREES_DIR = DATA / "degrees"
 
+
+@lru_cache(maxsize=1)
+def _known_programs_and_colleges() -> tuple[set[str], set[str]]:
+    """Load eligibility references once; validation is called once per degree file."""
+    known_ids = {p.stem for p in DEGREES_DIR.glob("*.yaml")}
+    # These catalog-listed majors are tracked by #231 but their pages have not yet been imported.
+    known_ids.update({"computer-science-advertising-bs", "computer-science-economics-bslas",
+                      "statistics-computer-science-bslas", "statistics-major"})
+    known_colleges: set[str] = set()
+    for p in DEGREES_DIR.glob("*.yaml"):
+        try:
+            item = yaml.safe_load(p.read_text(encoding="utf-8")) or {}
+            if isinstance(item, dict) and isinstance(item.get("college"), str):
+                known_colleges.add(item["college"])
+        except (OSError, yaml.YAMLError):
+            continue
+    return known_ids, known_colleges
+
 CODE_RE = re.compile(r"^([A-Z]{2,5}) (\d{3})$")
 RANGE_RE = re.compile(r"^([A-Z]{2,5}) (\d{3})-(\d{3})$")
 GENED_RE = re.compile(r"^gened:([A-Z0-9]+)$")
@@ -32,8 +51,11 @@ RULES = {"all", "n_of", "hours", "manual"}
 KINDS = {"program", "gened"}
 TYPES = {"major", "minor", "certificate"}
 TOP_KEYS = {"id", "type", "program", "college", "catalog_year", "source", "read_on", "total_hours", "notes",
-            "double_counting", "major_overlap", "groups", "generated"}
+            "double_counting", "major_overlap", "not_open_to", "groups", "generated"}
 OVERLAP_KEYS = {"distinct_hours", "distinct_courses", "min_level", "from", "exclude", "minors_too", "quote", "source"}
+NOT_OPEN_KEYS = {"majors", "colleges", "only_majors", "only_colleges", "quote", "source", "caveat"}
+# `majors`/`colleges` close a minor to those programs; `only_majors`/`only_colleges` close it to everyone else (#230)
+NOT_OPEN_LISTS = ("majors", "colleges", "only_majors", "only_colleges")
 GROUP_KEYS = {"id", "name", "section", "kind", "rule", "n", "hours", "courses", "from", "exclude", "max_hours",
               "min_from", "not_with", "exclusive", "source", "notes"}
 
@@ -79,6 +101,8 @@ class Degree:
     type: str = "major"  # or "minor", "certificate"
     # a minor's rules for coursework that must be distinct from the major (#112, docs/DEGREE-DATA.md)
     major_overlap: list[dict[str, Any]] = field(default_factory=list)
+    # eligibility restrictions copied from the catalog (#230)
+    not_open_to: list[dict[str, Any]] = field(default_factory=list)
 
     def codes(self) -> set[str]:
         """Every course code named in a list, an exclusion or a cap."""
@@ -279,6 +303,37 @@ def validate(doc: Any, name: str = "?") -> Degree:
         if not r.get("quote") or not str(r.get("source", "")).startswith("https://"):
             errs.append(f"{where}: needs the 'quote' it rests on and its 'source' URL")
 
+    no = doc.get("not_open_to") or []
+    if not isinstance(no, list):
+        errs.append("'not_open_to' must be a list of rules")
+        no = []
+    if no and doc.get("type") not in ("minor", "certificate"):
+        errs.append("'not_open_to' is for minors and certificates")
+    known_ids, known_colleges = _known_programs_and_colleges()
+    for i, r in enumerate(no):
+        where = f"not_open_to rule {i + 1}"
+        if not isinstance(r, dict):
+            errs.append(f"{where}: must be a mapping")
+            continue
+        for k in sorted(set(r) - NOT_OPEN_KEYS):
+            errs.append(f"{where}: unknown key '{k}'")
+        lists = {k: r.get(k, []) for k in NOT_OPEN_LISTS}
+        for k in NOT_OPEN_LISTS:
+            if k in r and (not _str_list(lists[k]) or not lists[k]):
+                noun = "college names" if "college" in k else "program ids"
+                errs.append(f"{where}: '{k}' must be a non-empty list of {noun}")
+        if not any(lists.values()):
+            errs.append(f"{where}: needs 'majors', 'colleges', 'only_majors' or 'only_colleges'")
+        for k in NOT_OPEN_LISTS:
+            known, noun = (known_colleges, "college") if "college" in k else (known_ids, "program id")
+            for name in lists[k] if _str_list(lists[k]) else []:
+                if name not in known:
+                    errs.append(f"{where}: unknown {noun} '{name}'")
+        if "caveat" in r and (not isinstance(r["caveat"], str) or not r["caveat"].strip()):
+            errs.append(f"{where}: 'caveat' must be a non-empty string")
+        if not r.get("quote") or not str(r.get("source", "")).startswith("https://"):
+            errs.append(f"{where}: needs the 'quote' it rests on and its 'source' URL")
+
     if errs:
         raise DegreeError(f"{name}:\n  - " + "\n  - ".join(errs))
     return Degree(
@@ -287,7 +342,7 @@ def validate(doc: Any, name: str = "?") -> Degree:
         notes=list(doc.get("notes") or []),
         double_counting=[dict(r) for r in dc], groups=groups,
         generated=str(doc.get("generated") or ""), type=str(doc.get("type") or "major"),
-        major_overlap=[dict(r) for r in mo],
+        major_overlap=[dict(r) for r in mo], not_open_to=[dict(r) for r in no],
     )
 
 
@@ -355,7 +410,7 @@ def to_json(d: Degree, eligible: dict[str, list[str]], courses: dict[str, dict])
         "id": d.id, "type": d.type, "program": d.program, "college": d.college, "catalog_year": d.catalog_year,
         "source": d.source,
         "read_on": d.read_on, "generated": d.generated, "total_hours": d.total_hours, "notes": d.notes,
-        "double_counting": d.double_counting, "major_overlap": d.major_overlap,
+        "double_counting": d.double_counting, "major_overlap": d.major_overlap, "not_open_to": d.not_open_to,
         "groups": [{
             "id": g.id, "name": g.name, "section": g.section, "kind": g.kind, "rule": g.rule, "n": g.n,
             "hours": g.hours, "items": g.items, "from": g.selectors,
@@ -393,7 +448,7 @@ def export(conn: sqlite3.Connection, out_dir: Path, summaries: dict[str, dict], 
         courses = {code: info(code) for code in sorted(listed) if code in catalog and code not in gened}
         (dest / f"{d.id}.json").write_text(json.dumps(to_json(d, eligible, courses), separators=(",", ":")))
         index.append({"id": d.id, "type": d.type, "program": d.program, "college": d.college,
-                      "catalog_year": d.catalog_year,
+                      "catalog_year": d.catalog_year, "not_open_to": d.not_open_to,
                       "groups": len(d.groups), "generated": d.generated})
     (dest / "index.json").write_text(json.dumps(sorted(index, key=lambda x: (x["college"], x["program"])),
                                                 separators=(",", ":")))

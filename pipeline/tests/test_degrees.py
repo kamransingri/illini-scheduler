@@ -135,6 +135,7 @@ def test_export_writes_index_and_program(tmp_path):
     index = json.loads((tmp_path / "out" / "degrees" / "index.json").read_text())
     assert index == [{"id": "test-bs", "type": "major", "program": "Test, BS", "college": "Test College",
                       "catalog_year": "2026-2027",
+                      "not_open_to": [],
                       "groups": 2, "generated": ""}]
     out = json.loads((tmp_path / "out" / "degrees" / "test-bs.json").read_text())
     assert out["unknown"] == ["ZZZ 999"]
@@ -176,6 +177,54 @@ def test_major_overlap_rules_are_checked_and_exported(tmp_path):
                  "unknown key 'why'", "needs the 'quote'"):
         assert part in msg
     assert degrees.to_json(d, {}, {})["major_overlap"] == [rule]
+
+
+def test_not_open_rules_need_known_program_ids_and_catalog_text():
+    rule = {"majors": ["advertising-bs"], "quote": "The minor is not open to this major.",
+            "source": "https://catalog.illinois.edu/undergraduate/media/minors/advertising/"}
+    minor = validate(doc(id="test-minor", type="minor", not_open_to=[rule]))
+    assert minor.not_open_to == [rule]
+    assert degrees.to_json(minor, {}, {})["not_open_to"] == [rule]
+    for bad in [
+        {**rule, "majors": ["unknown-program"]},
+        {k: v for k, v in rule.items() if k != "quote"},
+        {k: v for k, v in rule.items() if k != "majors"} | {"colleges": ["Unknown College"]},
+        {k: v for k, v in rule.items() if k != "majors"} | {"only_majors": ["unknown-program"]},
+        {k: v for k, v in rule.items() if k != "majors"} | {"only_colleges": []},
+        {k: v for k, v in rule.items() if k != "majors"},
+    ]:
+        with pytest.raises(DegreeError):
+            validate(doc(id="test-minor", type="minor", not_open_to=[bad]))
+    with pytest.raises(DegreeError, match="is for minors and certificates"):
+        validate(doc(not_open_to=[rule]))
+    # "open only to" rules (#230): International Business is closed to everyone outside Gies
+    only = {"only_colleges": ["Gies College of Business"], "quote": rule["quote"], "source": rule["source"]}
+    assert validate(doc(id="test-minor", type="minor", not_open_to=[only])).not_open_to == [only]
+
+
+def test_encoded_minor_eligibility_rules_are_source_backed():
+    rules = {}
+    for path in degrees.DEGREES_DIR.glob("*-minor.yaml"):
+        raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        if raw.get("not_open_to"):
+            rules[raw["id"]] = raw["not_open_to"]
+    assert set(rules) == {
+        "advertising-minor", "biomolecular-engineering-minor", "business-non-business-minor", "dance-minor",
+        "data-science-minor", "economics-minor", "environmental-economics-law-minor",
+        "food-agribusiness-management-minor", "horticulture-minor", "international-business-minor",
+        "media-minor", "statistics-minor", "wildlife-fisheries-conservation-minor",
+        # added from the #230 sweep of every minor page (DECISIONS.md D55)
+        "business-analytics-minor", "chemistry-minor", "computer-science-minor",
+        "electrical-computer-engineering-minor",
+        "journalism-minor", "kinesiology-minor", "leadership-studies-minor",
+        "musical-theatre-performing-artists-minor",
+        "natural-resource-conservation-minor", "political-civic-leadership-minor", "public-health-minor",
+    }
+    for rules_for_minor in rules.values():
+        for rule in rules_for_minor:
+            assert any(rule.get(k) for k in degrees.NOT_OPEN_LISTS)
+            assert rule["quote"].strip()
+            assert rule["source"].startswith("https://")
 
 
 def test_minor_overlap_rules_in_the_data_quote_their_own_page():

@@ -14,6 +14,10 @@ generated: '2026-11-17'
 total_hours: 17
 notes: []
 double_counting: []
+not_open_to:
+- majors: [statistics-major, statistics-computer-science-bslas]
+  quote: All University of Illinois undergraduate students are eligible to earn the Minor in Statistics, except for those enrolled in the Statistics or Stat & Computer Science majors.
+  source: https://stat.illinois.edu/academics/undergraduate/minors/statistics-minor
 groups:
 - name: More requirements
   section: Requirements

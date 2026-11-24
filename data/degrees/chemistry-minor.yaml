@@ -14,6 +14,10 @@ generated: '2026-11-17'
 total_hours: 19
 notes: []
 double_counting: []
+not_open_to:
+- majors: [chemical-engineering-bs, chemical-engineering-bs-biomolecular-engineering, chemical-engineering-data-science-bs]
+  quote: Chemical and Biomolecular Engineering majors are not eligible for the Chemistry minor.
+  source: https://scs.illinois.edu/academics/advising/scs-minors
 groups:
 - name: More requirements
   section: Requirements

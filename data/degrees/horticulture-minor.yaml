@@ -11,6 +11,10 @@ catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/aces/minors/horticulture/
 read_on: '2026-11-17'
 generated: '2026-11-17'
+not_open_to:
+- majors: [crop-sciences-bs-horticultural-food-systems]
+  quote: The Horticulture minor is not available to students enrolled in the Horticultural Food Systems concentration within the Crop Sciences major.
+  source: https://catalog.illinois.edu/undergraduate/aces/minors/horticulture/
 total_hours: 18
 notes: []
 double_counting: []

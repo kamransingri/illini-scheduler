@@ -14,6 +14,10 @@ generated: '2026-11-17'
 total_hours: 18
 notes: []
 double_counting: []
+not_open_to:
+- majors: [journalism-bs]
+  quote: Students majoring in Journalism may not pursue a Journalism minor.
+  source: https://catalog.illinois.edu/schools/media/
 groups:
 - name: Required courses
   section: Requirements
