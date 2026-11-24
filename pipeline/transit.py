@@ -26,6 +26,7 @@ import csv
 import io
 import json
 import math
+import re
 import sqlite3
 import sys
 import zipfile
@@ -84,6 +85,12 @@ def fetch(cache: Path = CACHE, stamp: Path = STAMP, max_age_days: float = CACHE_
     tmp.replace(cache)
     stamp.write_text(json.dumps({"fetched_at": datetime.now(UTC).isoformat(timespec="seconds")}))
     return cache
+
+
+def headsign(raw: str, last_stop: str) -> str:
+    """MTD writes "N/A to Illini Union" for a trip with no direction: drop the "N/A" so the site says "toward Illini
+    Union", and use the last stop when nothing is left."""
+    return re.sub(r"^N/A\b\s*(to\s+)?", "", raw.strip()) or last_stop
 
 
 def _rows(z: zipfile.ZipFile, name: str) -> list[dict[str, str]]:
@@ -181,7 +188,8 @@ def build(gtfs: Path, points: list[tuple[float, float]], homes: list[Home]) -> d
         cs.sort()
         trip = trips[tid]
         t0 = cs[0][2]
-        key = (trip["route_id"], trip.get("trip_headsign", ""), tuple(c[1] for c in cs), tuple(c[2] - t0 for c in cs))
+        key = (trip["route_id"], headsign(trip.get("trip_headsign", ""), stops[cs[-1][1]][0]), tuple(c[1] for c in cs),
+               tuple(c[2] - t0 for c in cs))
         patterns[key].append([t0, masks[trip["service_id"]]])
     out_patterns = []
     for (rid, head, sids, offs), starts in sorted(patterns.items(), key=lambda kv: (kv[0][0], kv[0][1], kv[0][2])):

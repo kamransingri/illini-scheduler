@@ -212,7 +212,8 @@ export type LinePlan = { lines: BestLine[]; walk: { courses: string[]; building:
 
 /**
  * The bus lines that take you from near home straight to the most of your classes (one bus, no transfers). A class
- * counts when the walk to the stop and from the last stop is at least BUS_SAVES minutes less than walking all the way.
+ * counts when the walk to the stop, the ride and the walk from the last stop take at least BUS_SAVES minutes less than
+ * walking all the way.
  * Classes within NEAR_WALK minutes of home are left to walk. Best line first; ties go to less walking.
  */
 export function bestLines(t: Transit, home: Place, classes: { course: string; b: string }[], buildings: BuildingMap, limit = 3): LinePlan {
@@ -254,7 +255,8 @@ export function bestLines(t: Transit, home: Place, classes: { course: string; b:
             if (!hit || wb + ride < hit.wb + hit.ride) hit = { p, i, j, wb, ride };
           }
         }
-        if (!hit || walkTo + hit.wb + BUS_SAVES > g.walk) continue;
+        // walk + ride + walk must beat walking all the way: a loop line can ride longer than the walk (D53.3)
+        if (!hit || walkTo + hit.ride + hit.wb + BUS_SAVES > g.walk) continue;
         covered.push({ courses: g.courses, building: g.at.name, lat: g.at.lat, lon: g.at.lon, stop: t.stops[hit.p.s[hit.j]][0], walkFrom: hit.wb, ride: hit.ride, walk: g.walk });
         const e = perPat.get(hit.p) ?? { i: hit.i, j: hit.j, n: 0 };
         e.j = Math.max(e.j, hit.j);
@@ -283,7 +285,9 @@ export function bestLines(t: Transit, home: Place, classes: { course: string; b:
     if (best) lines.push(best);
   }
   lines.sort((a, b) => b.courses - a.courses || lineWalking(a) - lineWalking(b));
-  return { lines: lines.slice(0, limit), walk, missing, total };
+  // MTD lists some lines under more than one route id ("130 Silver" twice): show each name once, its best entry
+  const unique = lines.filter((l, i) => lines.findIndex((m) => m.route === l.route) === i);
+  return { lines: unique.slice(0, limit), walk, missing, total };
 }
 
 // ---- Map 3 (#95): a day's classes as numbered stops ----

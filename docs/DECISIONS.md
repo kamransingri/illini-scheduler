@@ -1427,6 +1427,11 @@ Every judgment call made during the autonomous build, newest phase last.
   at, where to get off for each class, the classes to walk to, and the next two lines. "Show the line on the map"
   draws the line from its boarding stop ("B"), home ("H") and the class buildings, on D51's map. Times stay with the
   day-by-day trips below it, which already pick each bus.
+- **D53.3 The ride counts too (2026-11-23).** D53.1 compared only the walking at both ends with walking all the
+  way, so a loop line could win with a longer trip than the walk (22 Illini from Lincoln Avenue Residence Halls: a
+  20-minute ride plus 5 minutes' walk against 19 on foot). Now walk + ride + walk must be at least BUS_SAVES
+  minutes shorter. A line MTD lists under two route ids (130 Silver) is shown once, and MTD's "N/A to <stop>"
+  headsign reads "toward <stop>".
 
 ## Undergraduate certificates (2026-11-23, issue #113)
 

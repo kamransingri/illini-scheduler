@@ -96,6 +96,9 @@ history).
 
 ### Fixed
 
+- Your best bus: a line is suggested only when walk + ride + walk beats walking all the way (it ignored the ride, so
+  a slow loop could win), each line is listed once, and MTD's "N/A" direction no longer shows ("toward N/A to
+  Illini Union" now reads "toward Illini Union"). D53.3.
 - Moving a course in the four-year plan right after the page opens works, instead of saying the course isn't in the
   course data until that data has loaded.
 

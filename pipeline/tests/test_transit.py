@@ -112,3 +112,9 @@ def test_fetch_keeps_a_stale_copy_when_mtd_is_down_and_rejects_broken_zips(tmp_p
     assert zipfile.ZipFile(io.BytesIO(cache.read_bytes())).testzip() is None  # the good copy wasn't overwritten
     with pytest.raises(transit.TransitUnavailable):
         transit.fetch(tmp_path / "none.zip", tmp_path / "s.json", transport=down)
+
+
+def test_headsign_drops_mtds_na_direction():
+    assert transit.headsign("N/A to Illini Union", "PAR") == "Illini Union"
+    assert transit.headsign("N/A", "Illini Union (South Side Shelter)") == "Illini Union (South Side Shelter)"
+    assert transit.headsign("North to Lincoln Square", "x") == "North to Lincoln Square"
