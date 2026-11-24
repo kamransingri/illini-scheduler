@@ -12,7 +12,7 @@ degree checklist at `/degree/`.
 | Key | Required | Meaning |
 | --- | --- | --- |
 | `id` | yes | Slug, same as the file name (`finance-data-science`; minors end in `-minor`) |
-| `type` | no | `minor` for a minor; leave it out for a major |
+| `type` | no | `minor` for a minor, `certificate` for a certificate (its `source` may be any illinois.edu page, D54); leave it out for a major |
 | `program`, `college` | yes | As the catalog names them |
 | `catalog_year` | yes | `2026-2027` |
 | `source` | yes | The catalog page URL |

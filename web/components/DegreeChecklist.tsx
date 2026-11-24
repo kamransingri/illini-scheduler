@@ -88,8 +88,9 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
   const [error, setError] = useState<string | null>(null);
   const [minorDegs, setMinorDegs] = useState<Record<string, Degree>>({});
   const [minorErrors, setMinorErrors] = useState<Record<string, string>>({});
-  const majors = useMemo(() => programs.filter((p) => p.type !== "minor"), [programs]);
-  const minors = useMemo(() => programs.filter((p) => p.type === "minor"), [programs]);
+  const majors = useMemo(() => programs.filter((p) => (p.type ?? "major") === "major"), [programs]);
+  // certificates (#113) sit in the minor slots: picked beside the major, carried in the same mn= link parameter
+  const minors = useMemo(() => programs.filter((p) => p.type === "minor" || p.type === "certificate"), [programs]);
   const [index, setIndex] = useState<SearchIndex | null>(null);
   const [apTable, setApTable] = useState<ApTable | null>(null);
   const [apError, setApError] = useState(false);
@@ -259,13 +260,13 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
                     MINOR_LABELS[k]
                   ) : (
                     <>
-                      {k ? "Another minor" : "Minor"} <span className="font-normal text-muted">(optional)</span>
+                      {k ? "Another minor or certificate" : "Minor or certificate"} <span className="font-normal text-muted">(optional)</span>
                     </>
                   )
                 }
                 idPrefix={k ? `minor-${k + 1}` : "minor"}
-                noun={["minor", "minors"]}
-                hint="business, CS, music"
+                noun={["minor or certificate", "minors and certificates"]}
+                hint="business, CS, neuroscience"
                 clearable
               />
             ))}
@@ -349,7 +350,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
                     filed with your college.{" "}
                   </>
                 )}
-                {minorGeneratedOn && <>This minor was read automatically from its catalog page on {fmtDate(minorGeneratedOn)}; check that page before you rely on it.</>}
+                {minorGeneratedOn && <>This was read automatically from its page on {fmtDate(minorGeneratedOn)}; check that page before you rely on it.</>}
               </span>
             </p>
             {overlap.length > 0 && (
@@ -897,7 +898,8 @@ function Checklist({
   tickPrefix: string; // "" for the major, minorTick(id) for a minor
   finish: Map<string, FinishAt> | null; // the term the four-year plan finishes each requirement in
 }) {
-  const minor = deg.type === "minor";
+  const minor = deg.type === "minor" || deg.type === "certificate";
+  const kind = deg.type === "certificate" ? "certificate" : "minor";
   const counts = (s: GroupStatus) => results.filter((r) => r.status === s).length;
   const total = results.length;
   const sections = [...new Set(results.map((r) => r.group.section || "Requirements"))];
@@ -907,12 +909,12 @@ function Checklist({
         <p className="text-muted">
           {deg.college}, {deg.catalog_year} catalog{" "}
           <a href={deg.source} className="inline-flex items-center gap-1 font-semibold text-action underline" rel="noopener">
-            Catalog page
+            {deg.type === "certificate" ? "Program page" : "Catalog page"}
             <Icon name="external" />
           </a>
           <span className="block text-sm">
             Read {fmtDate(deg.read_on)}.{" "}
-            {minor ? (deg.total_hours ? `At least ${deg.total_hours} hours for the minor.` : "") : `Minimum ${deg.total_hours ?? "–"} hours to graduate.`}
+            {minor ? (deg.total_hours ? `At least ${deg.total_hours} hours for the ${kind}.` : "") : `Minimum ${deg.total_hours ?? "–"} hours to graduate.`}
           </span>
           {hours && (hours.done > 0 || hours.inProgress > 0) && (
             <span className="block text-sm" data-testid="hours-so-far">
@@ -929,7 +931,7 @@ function Checklist({
           )}
         </p>
         <h2 className="mt-2 font-display text-xl font-bold text-heading">
-          {minor && <span className="mr-2 align-middle text-sm font-semibold tracking-wide text-muted uppercase">Minor </span>}
+          {minor && <span className="mr-2 align-middle text-sm font-semibold tracking-wide text-muted uppercase">{kind} </span>}
           {deg.program}
         </h2>
         <p className="mt-3 text-lg" data-testid={minor ? "minor-progress" : "degree-progress"}>

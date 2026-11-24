@@ -1427,3 +1427,20 @@ Every judgment call made during the autonomous build, newest phase last.
   at, where to get off for each class, the classes to walk to, and the next two lines. "Show the line on the map"
   draws the line from its boarding stop ("B"), home ("H") and the class buildings, on D51's map. Times stay with the
   day-by-day trips below it, which already pick each bus.
+
+## Undergraduate certificates (2026-11-23, issue #113)
+
+- **D54.1 Not in the catalog.** The 2026-2027 Academic Catalog lists no undergraduate certificates: its certificates
+  index is graduate GCRTs only, and the Programs Index's undergraduate column has majors, minors and concentrations.
+  LAS keeps its own list (https://las.illinois.edu/academics/programs/certificates), 22 under "LAS undergraduate
+  certificate programs", each linking to the unit that runs it. That page isn't behind the catalog's WAF challenge
+  (D43.2). The units' pages share no layout, so their requirement tables can't be read the way the catalog's are.
+- **D54.2 A link and one box.** `catalog_import --only certificates` writes `<name>-certificate.yaml` with
+  `type: certificate`, the unit's page as `source` (an illinois.edu page, not a catalog URL) and one `manual` group the
+  student ticks when the certificate is done. LAS's own sentence goes with it: "Certificate programs do not appear on
+  the student's official transcript; only courses taken are listed." A hand-checked file (no `generated:`) is kept,
+  so a certificate's real requirements can be typed in later without the importer overwriting them.
+- **D54.3 In the minor slots.** A certificate is picked beside the major in the same pickers as minors (up to
+  MAX_MINORS between them) and rides in the same `mn=` link parameter, so old links open unchanged. Other colleges'
+  certificates aren't listed: no campus-wide list exists to import from.
+

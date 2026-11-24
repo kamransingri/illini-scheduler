@@ -46,7 +46,7 @@ def test_the_real_degree_files_are_valid():
 
 
 def test_schema_errors_are_all_reported():
-    bad = doc(extra=1, catalog_year="26-27", type="certificate", groups=[
+    bad = doc(extra=1, catalog_year="26-27", type="concentration", groups=[
         {"id": "a", "name": "A", "rule": "n_of", "courses": ["FIN 221"]},  # no n
         {"id": "a", "name": "Dup", "rule": "all", "courses": ["fin221"]},  # duplicate id, bad code
         {"id": "m", "name": "Manual", "rule": "manual"},  # no notes
@@ -59,7 +59,7 @@ def test_schema_errors_are_all_reported():
     for expected in ["unknown key 'extra'", "catalog_year", "needs a whole number 'n'", "duplicate id",
                      "'fin221' is not a course code", "rule 'manual' needs 'notes'", "runs backwards",
                      "'not_with' must list other group ids", "'kind' must be one of", "unknown key 'colour'",
-                     "'type' must be major or minor"]:
+                     "'type' must be major, minor or certificate"]:
         assert expected in msg, expected
 
 
