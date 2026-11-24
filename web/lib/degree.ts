@@ -48,7 +48,7 @@ export type DegreeCourse = {
 
 export type Degree = {
   id: string;
-  type?: "major" | "minor"; // missing in files exported before minors were added: a major
+  type?: "major" | "minor" | "certificate"; // missing in files exported before minors were added: a major
   program: string;
   college: string;
   catalog_year: string;
@@ -80,7 +80,7 @@ export type OverlapRule = {
   source: string;
 };
 
-export type DegreeIndex = { id: string; type?: "major" | "minor"; program: string; college: string; catalog_year: string; groups: number; generated?: string }[];
+export type DegreeIndex = { id: string; type?: "major" | "minor" | "certificate"; program: string; college: string; catalog_year: string; groups: number; generated?: string }[];
 
 /**
  * Add the shared gen-ed courses (degrees/gened-courses.json, the same for every program) to a program's own courses,

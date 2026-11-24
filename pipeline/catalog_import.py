@@ -2,7 +2,7 @@
 
     python -m pipeline.catalog_import            # fetch (cached in data/raw/catalog, 1 request/s) and write the files
     python -m pipeline.catalog_import --offline  # re-parse the cached pages only
-    python -m pipeline.catalog_import --only minors   # just the minors (or --only majors)
+    python -m pipeline.catalog_import --only minors   # just the minors (or --only majors, --only certificates)
 
 The catalog lays requirements out as course-list tables. This reads only what the tables state outright: course lists
 ("all of these"), "or" alternatives, "&" pairs taken together, "Select N of the following" and "N hours from". A block
@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import html
 import re
 import sys
 import time
@@ -31,6 +32,9 @@ from .degrees import DEGREES_DIR, DegreeError, validate
 CATALOG = "https://catalog.illinois.edu"
 INDEX = f"{CATALOG}/undergraduate/"
 MINORS_INDEX = f"{CATALOG}/undergraduate/minors/"
+# Undergraduate certificates aren't in the Academic Catalog (its certificates are all graduate GCRTs): LAS lists its own
+# with a link to each unit's page, which holds the requirements (DECISIONS D54.1)
+LAS_CERTIFICATES = "https://las.illinois.edu/academics/programs/certificates"
 CACHE = RAW / "catalog"
 COLLEGES = {
     "aces": "College of Agricultural, Consumer and Environmental Sciences",
@@ -85,6 +89,42 @@ def minor_links(index_html: str | bytes) -> list[str]:
     return [f"{CATALOG}{u}" for u in links]
 
 
+def certificate_links(page: str | bytes) -> list[tuple[str, str]]:
+    """(name, unit page) for each certificate under the LAS page's "LAS undergraduate certificate programs" heading,
+    stopping at the graduate ones."""
+    text = page.decode("utf-8", "replace") if isinstance(page, bytes) else page
+    start = text.find("LAS undergraduate certificate programs")
+    end = text.find("LAS graduate certificate programs", start)
+    if start < 0:
+        return []
+    out = []
+    part = text[start:end if end > 0 else None]
+    for href, body in re.findall(r'<a [^>]*href="(https?://[^"]+)"[^>]*>(.*?)</a>', part, re.S):
+        name = norm(html.unescape(re.sub(r"<[^>]+>", " ", body)))
+        if name:
+            out.append((name, href.split("#")[0].replace("http://", "https://", 1)))
+    return out
+
+
+def certificate_doc(name: str, url: str, today: str) -> dict:
+    """A certificate as a checklist with one hand-ticked group: its requirements are on the unit's page, not here."""
+    words = re.sub(r"[^a-z0-9]+", " ", re.sub(r"\(.*?\)", "", name).lower()).split()  # "(TESL)" isn't in the id
+    slug = "-".join(w for w in words if w not in ("of", "and", "the"))
+    return {
+        "id": f"{slug}-certificate", "type": "certificate", "program": f"{name} Certificate",
+        "college": COLLEGES["las"], "catalog_year": "2026-2027", "source": url, "read_on": today, "generated": today,
+        "notes": ["Undergraduate certificates aren't in the Academic Catalog. The unit's page has the requirements.",
+                  "Certificate programs do not appear on the student's official transcript; only courses taken are "
+                  "listed. "
+                  f"({LAS_CERTIFICATES})"],
+        "double_counting": [],
+        "groups": [{"id": "requirements", "name": "Certificate requirements", "section": "Requirements",
+                    "rule": "manual",
+                    "notes": [f"Follow the requirements on the {name} page; tick this once you (or your advisor) "
+                              "confirm they're done."]}],
+    }
+
+
 def is_minor(url: str) -> bool:
     return "/minors/" in url.split("/undergraduate/", 1)[-1]
 
@@ -119,7 +159,8 @@ def fetch_all(urls: list[str], delay: float = 1.0, offline: bool = False, client
                                                         follow_redirects=True))
     try:
         for u in urls:
-            name = {INDEX: "_index", MINORS_INDEX: "_minors"}.get(u) or program_id(u)
+            name = ({INDEX: "_index", MINORS_INDEX: "_minors", LAS_CERTIFICATES: "_las_certificates"}.get(u)
+                    or program_id(u))
             path = CACHE / f"{name}.html"
             if path.exists():
                 out[u] = path.read_bytes()
@@ -528,6 +569,10 @@ def write(doc: dict, directory: Path = DEGREES_DIR) -> bool:
               "# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'\n"
               "# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your\n"
               "# changes.\n")
+    if doc.get("type") == "certificate":
+        header = (f"# {doc['program']} ({doc['college']}), from the LAS certificates list on {doc['generated']} by\n"
+                  "# pipeline/catalog_import.py: one hand-ticked group; the requirements are on the source page.\n"
+                  "# Edit by hand and delete the `generated:` line to keep your changes.\n")
     path.write_text(header + yaml.safe_dump(doc, sort_keys=False, allow_unicode=True, width=120), encoding="utf-8")
     return True
 
@@ -536,10 +581,19 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--offline", action="store_true", help="only re-parse pages already in data/raw/catalog")
     ap.add_argument("--delay", type=float, default=1.0, help="seconds between requests")
-    ap.add_argument("--only", choices=["majors", "minors"], help="import just the majors or just the minors")
+    ap.add_argument("--only", choices=["majors", "minors", "certificates"], help="import just one kind of program")
     args = ap.parse_args(argv)
     today = dt.date.today().isoformat()
     urls: list[str] = []
+    if args.only in (None, "certificates"):
+        page = fetch_all([LAS_CERTIFICATES], args.delay, args.offline).get(LAS_CERTIFICATES)
+        certs = certificate_links(page) if page else []
+        if not certs:
+            print("warn: could not read the LAS certificates page; certificates are not updated", file=sys.stderr)
+        n = sum(write(certificate_doc(name, u, today)) for name, u in certs)
+        print(f"{len(certs)} certificates: {n} written")
+        if args.only:
+            return 0
     if args.only != "minors":
         index = fetch_all([INDEX], args.delay, args.offline).get(INDEX)
         if not index:

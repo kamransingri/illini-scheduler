@@ -256,3 +256,15 @@ def test_the_hand_checked_majors_are_protected_and_valid():
         text = (DATA / "degrees" / f"{pid}.yaml").read_text(encoding="utf-8")
         assert "generated:" not in text and "Checked by hand against https://catalog.illinois.edu/" in text, pid
         validate(yaml.safe_load(text), pid)
+
+
+def test_certificates_stop_at_the_graduate_list_and_validate():
+    page = ('<h2>LAS undergraduate certificate programs</h2><a href="http://x.illinois.edu/c#frag">'
+            '<h3>Teaching of English as a Second Language (TESL)</h3></a><h2>LAS graduate certificate programs</h2><a href="https://y.illinois.edu/">'
+            'Grad Only</a>')
+    links = catalog_import.certificate_links(page)
+    assert links == [("Teaching of English as a Second Language (TESL)", "https://x.illinois.edu/c")]
+    doc = catalog_import.certificate_doc(*links[0], "2026-11-23")
+    assert doc["id"] == "teaching-english-as-a-second-language-certificate"
+    d = validate(yaml.safe_load(yaml.safe_dump(doc)), doc["id"])
+    assert d.type == "certificate" and d.groups[0].rule == "manual"

@@ -32,6 +32,11 @@ Credit these sources if you republish the data:
   by Wade Fagen-Ulmschneider. The University released the grade terms before Spring 2025 through FOIA requests and
   the terms from Spring 2025 on under Urbana Senate item EP.25.072, brought by the Illinois Student Council. The
   dataset's [data source table](https://github.com/wadefagen/datasets/tree/main/gpa#data-source) lists each request.
+  **Reuse:** the grades are public records, but the cleaned files are Wade's work and
+  [wadefagen/datasets](https://github.com/wadefagen/datasets) has no licence file. We've asked him in
+  [wadefagen/datasets#49](https://github.com/wadefagen/datasets/pull/49) whether derived course and instructor GPAs may
+  be republished through this API and the npm package, and how he'd like to be credited (#194). Until he answers,
+  credit him by name with a link to the dataset, and don't republish his files themselves.
 - **[Academic Catalog](https://catalog.illinois.edu/)**: degree requirements.
 - **[CITL](https://citl.illinois.edu/current-cutoff-scores)**: AP and IB credit tables.
 - **Rate My Professors**: ratings, tags and review snippets. They belong to Rate My Professors and its reviewers, so
