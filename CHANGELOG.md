@@ -96,6 +96,9 @@ history).
 
 ### Fixed
 
+- Pipeline on Windows: `buildings.json`, `transit.json` and the OpenStreetMap cache are written as UTF-8, not the
+  system code page, so the "©" in the OpenStreetMap credit no longer breaks them. The AP/IB score-import test reads
+  tables with Windows line endings.
 - Moving a course in the four-year plan right after the page opens works, instead of saying the course isn't in the
   course data until that data has loaded.
 

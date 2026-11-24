@@ -199,6 +199,19 @@ test("a minor gets its own checklist from the same course list, and can be remov
   await expect(page).not.toHaveURL(/mn=/);
 });
 
+test("a certificate is picked in the minor slot, ticked, shared and reloaded (#113)", async ({ page }) => {
+  await page.goto("./degree/?p=computer-science-bs");
+  await page.getByRole("combobox", { name: /Minor or certificate/ }).fill("neuroscience");
+  await page.getByRole("option", { name: /^Neuroscience Certificate/ }).click();
+  await expect(page).toHaveURL(/mn=neuroscience-certificate/);
+  const cert = page.locator('[data-testid="minor-checklist"][data-minor="neuroscience-certificate"]');
+  await expect(cert.getByRole("link", { name: "Program page" })).toHaveAttribute("href", /mcb\.illinois\.edu/);
+  await cert.locator('[data-group^="requirements"]').getByLabel("I've met this requirement").check();
+  await expect(page).toHaveURL(/x=neuroscience-certificate--requirements/);
+  await page.reload();
+  await expect(cert.locator('[data-group^="requirements"]')).toHaveAttribute("data-status", "done");
+});
+
 test("a minor's tick boxes are kept apart from the major's", async ({ page }) => {
   await page.goto("./degree/?p=finance-data-science&mn=history-minor");
   const more = page.getByTestId("minor-checklist").locator('[data-group^="more-requirements"]');

@@ -10,7 +10,7 @@ const fixture = (f: string) => fs.readFileSync(path.join(__dirname, "fixtures/sc
 // The exam ids and names of a real table; the parser only reads those
 function year(file: string): ApYear {
   const yaml = fs.readFileSync(path.join(root, file), "utf8");
-  const exams = [...yaml.matchAll(/^ {2}- id: (\S+)\n {4}name: (.+)$/gm)].map(([, id, name]) => ({ id, name: name.replace(/^["']|["']$/g, ""), sub: null, notes: [], rows: [] }));
+  const exams = [...yaml.matchAll(/^ {2}- id: (\S+)\r?\n {4}name: (.+?)\r?$/gm)].map(([, id, name]) => ({ id, name: name.replace(/^["']|["']$/g, ""), sub: null, notes: [], rows: [] }));
   return { id: "2026", label: "2026-2027", entering: "", source: "", read_on: "", notes: [], unknown: [], exams };
 }
 const AP = year("data/ap-credit/2026-2027.yaml");
