@@ -1,0 +1,254 @@
+# Agricultural & Biological Engineering, BS and Agricultural & Biological Engineering, BSAG (The Grainger College of Engineering and College of Agricultural, Consumer and Environmental Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/eng_aces/agricultural-biological-engineering-bs-agricultural-engineering-agricultural-science-bsag/ on 2026-11-24 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: agricultural-biological-engineering-bs-agricultural-engineering-agricultural-science-bsag
+program: Agricultural & Biological Engineering, BS and Agricultural & Biological Engineering, BSAG
+college: The Grainger College of Engineering and College of Agricultural, Consumer and Environmental Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/eng_aces/agricultural-biological-engineering-bs-agricultural-engineering-agricultural-science-bsag/
+read_on: '2026-11-24'
+generated: '2026-11-24'
+notes:
+- Minimum of 40 hours of upper-division coursework, generally at the 300 and 400 level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - gened
+  - gened
+  approved_for:
+  - ACP
+  - QR2
+  quote: Individual courses will be approved to satisfy only one General Education requirement except as follows. Exceptions
+    are the Advanced Composition, Quantitative Reasoning II, and the Cultural Studies requirements.
+  source: https://gened.illinois.edu/faculty-staff/details-criteria/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/eng_aces/agricultural-biological-engineering-bs-agricultural-engineering-agricultural-science-bsag/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+  notes:
+  - fulfilled by ABE 469
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by CHEM 102, CHEM 104, PHYS 211, PHYS 212
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by ECON 102, ACE 100, ACE 210, ACE 251, or ACE 255 and one other course approved as Social and Behavioral Sciences
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by CS 101; MATH 221; MATH 231; MATH 241; PHYS 211; and PHYS 212
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Required coursework
+  section: Agricultural & Biological Engineering, BSAG Requirements in addition to completion of Agricultural & Biological
+    Engineering, B.S.
+  rule: manual
+  notes:
+  - Communication
+  courses:
+  - CMN 101
+  id: required-coursework-11
+- name: Required coursework
+  section: Agricultural & Biological Engineering, BSAG Requirements in addition to completion of Agricultural & Biological
+    Engineering, B.S.
+  rule: manual
+  notes:
+  - 'Additional Biological Sciences Coursework. Choose an additional 4 hours from the list below:'
+  courses:
+  - ANSC 100
+  - ANSC 221
+  - ANSC 350
+  - ANSC 363
+  - ANSC 400
+  - ANSC 401
+  - ANSC 402
+  - ANSC 403
+  - ANSC 404
+  - ANSC 406
+  - ANSC 450
+  - ATMS 201
+  - ATMS 307
+  - CHEM 232
+  - CHEM 233
+  - CHEM 312
+  - CHEM 332
+  - CHEM 360
+  - CHEM 460
+  - CPSC 112
+  - CPSC 261
+  - CPSC 265
+  - CPSC 352
+  - CPSC 414
+  - CPSC 415
+  - CPSC 418
+  - CPSC 431
+  - CPSC 437
+  - FSHN 101
+  - FSHN 414
+  - FSHN 416
+  - FSHN 471
+  - FSHN 481
+  - FSHN 482
+  - FSHN 483
+  - FSHN 484
+  - GEOL 107
+  - GEOL 380
+  - HORT 100
+  - HORT 341
+  - HORT 344
+  - HORT 360
+  - HORT 361
+  - HORT 435
+  - IB 103
+  - IB 150 + IB 151
+  - IB 203
+  - IB 329
+  - IB 411
+  - IB 420
+  - IB 439
+  - IB 444
+  - IB 452
+  - IB 482
+  - MCB 100 + MCB 101
+  - MCB 150 + MCB 151
+  - MCB 244 + MCB 245
+  - MCB 250 + MCB 251
+  - MCB 252 + MCB 253
+  - MCB 300 + MCB 301
+  - MCB 314
+  - MCB 316
+  - MCB 450
+  - NRES 201
+  - NRES 219
+  - NRES 348
+  - NRES 351
+  - NRES 419
+  - NRES 420
+  - NRES 429
+  - NRES 439
+  - NRES 471
+  - NRES 475
+  - NRES 487
+  - NRES 488
+  - PLPA 405
+  id: required-coursework-12
+- name: Required coursework
+  section: Agricultural & Biological Engineering, BSAG Requirements in addition to completion of Agricultural & Biological
+    Engineering, B.S.
+  rule: manual
+  notes:
+  - Agricultural Sciences Coursework (additional 15 hours of agricultural sciences with courses from at least two subject
+    areas other than ABE and ETMAS and approval of advisers are required)
+  id: required-coursework-13
+- name: Required coursework
+  section: Agricultural & Biological Engineering, BSAG Requirements in addition to completion of Agricultural & Biological
+    Engineering, B.S.
+  rule: manual
+  notes:
+  - Free Electives (sufficient free electives selected to total minimum curriculum requirement of 158 hours. All requirements
+    of the combined curriculum must be completed to satisfy the requirements for both degrees)
+  id: required-coursework-14

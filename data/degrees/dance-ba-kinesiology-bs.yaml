@@ -1,0 +1,281 @@
+# Dance, BA & Kinesiology, BS (College of Applied Health Sciences and College of Fine and Applied Arts), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/ahs_faa/dance-ba-kinesiology-bs/ on 2026-11-24 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: dance-ba-kinesiology-bs
+program: Dance, BA & Kinesiology, BS
+college: College of Applied Health Sciences and College of Fine and Applied Arts
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/ahs_faa/dance-ba-kinesiology-bs/
+read_on: '2026-11-24'
+generated: '2026-11-24'
+total_hours: 150
+notes:
+- 'Minimum hours required for graduation: 150 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - gened
+  - gened
+  approved_for:
+  - ACP
+  - QR2
+  quote: Individual courses will be approved to satisfy only one General Education requirement except as follows. Exceptions
+    are the Advanced Composition, Quantitative Reasoning II, and the Cultural Studies requirements.
+  source: https://gened.illinois.edu/faculty-staff/details-criteria/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/ahs_faa/dance-ba-kinesiology-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+  notes:
+  - fulfilled by DANC 100 and any other course approved as Humanities & the Arts
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by HK 150 and any other course approved as Natural Sciences & Technology
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+  notes:
+  - fulfilled by HK 140 and HK 250
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+  notes:
+  - fulfilled by DANC 100
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by HK 201 and any other course approved as Quantitative Reasoning I
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the third semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Foundation Course
+  section: Dance Requirements
+  rule: all
+  courses:
+  - DANC 150
+  id: foundation-course-11
+- name: Physical Practice
+  section: Dance Requirements
+  rule: all
+  courses:
+  - DANC 160
+  - - DANC 260
+    - DANC 316
+  - DANC 245
+  notes:
+  - 'Catalog total: 18 hours.'
+  id: physical-practice-12
+- name: Physical Practice
+  section: Dance Requirements
+  rule: manual
+  notes:
+  - Courses from Physical Practice Elective list, see BA Dance
+  id: physical-practice-13
+- name: Creative Process
+  section: Dance Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 6 hours.'
+  - Courses from Physical Practice Elective list, see BA Dance
+  courses:
+  - DANC 259
+  - DANC 262
+  - DANC 362
+  id: creative-process-14
+- name: Performance
+  section: Dance Requirements
+  rule: manual
+  notes:
+  - Courses from Physical Practice Elective list, see BA Dance
+  courses:
+  - DANC 232
+  id: performance-15
+- name: Production
+  section: Dance Requirements
+  rule: n_of
+  n: 2
+  courses:
+  - DANC 131
+  - DANC 231
+  - DANC 330
+  - DANC 331
+  - DANC 431
+  notes:
+  - 'Catalog total: 2 hours.'
+  - 'Choose two of the following:'
+  id: production-16
+- name: Context
+  section: Dance Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 19 hours.'
+  - Courses from Physical Practice Elective list, see BA Dance
+  courses:
+  - DANC 100
+  - DANC 162
+  - DANC 475
+  id: context-17
+- name: Context
+  section: Dance Requirements
+  rule: manual
+  notes:
+  - Courses from Context Elective list, see BA Dance
+  id: context-18
+- name: Synthesis
+  section: Dance Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 5 hours.'
+  - Courses from Physical Practice Elective list, see BA Dance
+  - Courses from Context Elective list, see BA Dance
+  courses:
+  - DANC 375
+  - DANC 496
+  - DANC 497
+  id: synthesis-19
+- name: Focused Electives in Secondary Area of Study
+  section: Dance Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 0 hours.'
+  - Met by Kinesiology (HK) courses below
+  id: focused-electives-in-secondary-area-of-s-20
+- name: Major Requirements
+  section: Kinesiology Requirements
+  rule: all
+  courses:
+  - HK 125
+  - HK 140
+  - HK 150
+  - HK 154
+  - HK 160
+  - HK 201
+  - HK 250
+  - MCB 244 + MCB 245
+  - MCB 246 + MCB 247
+  id: major-requirements-21
+- name: Required Concentration. Choose one below
+  section: Kinesiology Requirements
+  rule: manual
+  notes:
+  - Health Sciences
+  - Applied Exercise Science
+  - Biobehavioral Health Science
+  - Teacher Education preK-12
+  id: required-concentration-choose-one-below-22
+- name: Summary of Degree Requirements
+  section: Summary of Degree Requirements
+  rule: manual
+  notes:
+  - General Education courses, beyond Dance/Kinesiology requirements
+  - Dance courses
+  - Kinesiology courses
+  - Free Electives
+  - A minimum of 40 credits at the 300 or 400 course level are required
+  id: summary-of-degree-requirements-23
+- name: Total Minimum Hours for Dual Degrees
+  section: Summary of Degree Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 150 hours.'
+  - 'Total Minimum Hours for Dual Degrees: see the catalog page for which courses count.'
+  id: total-minimum-hours-for-dual-degrees-24

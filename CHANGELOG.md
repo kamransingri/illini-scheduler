@@ -12,6 +12,12 @@ history).
 
 ### Added
 
+- Degree checklist: 26 more majors and concentrations (#231), 317 instead of 291. The importer skipped the joint-
+  college majors (Statistics & Computer Science, Mathematics & Computer Science, most CS + X majors, Agricultural &
+  Biological Engineering and its six concentrations, Dance & Kinesiology) and Statistics, BSLAS, because their catalog
+  links didn't match its pattern. Music Composition, BMUS and four ACES majors new for Spring 2027 (Consumer Economics
+  and Finance, Environmental and Resource Economics and Policy, Food and Agribusiness Management, and the Agricultural
+  & Applied Economics concentration) are in too. The importer now lists every index link it skips, with the reason.
 - Degree checklist: minors your major can't take are greyed out (#230). In the minor picker, a minor closed to your
   major still shows, with "Not open to Journalism, BS" (or your major), and can't be picked. 24 minors carry a rule,
   each in the catalog's or department's own words with a link, such as Computer Science (not for CS, CS + X or

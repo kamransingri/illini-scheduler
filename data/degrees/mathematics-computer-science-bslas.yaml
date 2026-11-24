@@ -1,0 +1,263 @@
+# Mathematics & Computer Science, BSLAS (The Grainger College of Engineering and College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/eng_las/mathematics-computer-science-bslas/ on 2026-11-24 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: mathematics-computer-science-bslas
+program: Mathematics & Computer Science, BSLAS
+college: The Grainger College of Engineering and College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/eng_las/mathematics-computer-science-bslas/
+read_on: '2026-11-24'
+generated: '2026-11-24'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - gened
+  - gened
+  approved_for:
+  - ACP
+  - QR2
+  quote: Individual courses will be approved to satisfy only one General Education requirement except as follows. Exceptions
+    are the Advanced Composition, Quantitative Reasoning II, and the Cultural Studies requirements.
+  source: https://gened.illinois.edu/faculty-staff/details-criteria/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/eng_las/mathematics-computer-science-bslas/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 220 or MATH 221, MATH 231, MATH 241, CS 124, CS 128, CS 225
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English, or completion
+    of the third semester in two different languages other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Orientation and Professional Development
+  section: Orientation and Professional Development
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  notes:
+  - Highly recommended, optional 1 credit hour course, CS 100, Computer Science Orientation.
+  id: orientation-and-professional-development-11
+- name: Major Requirements
+  section: Major Requirements
+  rule: all
+  courses:
+  - - MATH 220
+    - MATH 221
+  - MATH 231
+  - MATH 241
+  - CS 124
+  - CS 128
+  - MATH 314
+  - CS 173
+  - CS 225
+  - CS 222
+  id: major-requirements-12
+- name: Major Requirements
+  section: Major Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - - CS 233 + CS 341
+    - CS 340
+  notes:
+  - Choose one of the following combinations
+  id: major-requirements-13
+- name: Major Requirements
+  section: Major Requirements
+  rule: manual
+  notes:
+  - '& two CS courses at the 400 level above CS 403, excluding CS 421 and CS 491. These two courses must be distinct from
+    all other courses used to fulfill program requirements or options.'
+  courses:
+  - MATH 357
+  - CS 374
+  - CS 421
+  - CS 450
+  - - MATH 257
+    - MATH 415
+    - MATH 416
+  id: major-requirements-14
+- name: GROUP I
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Students must select at least six ​advanced mathematics and computer science courses, including one from each of the following
+    groups (1-5) and one additional 400-level course from CS or MATH with the exception of CS 400; CS 401; CS 402; CS 403;
+    CS 491; MATH 492; or MATH 499.
+  courses:
+  - CS 361
+  - MATH 461
+  - STAT 400 + MATH 463
+  id: group-i-15
+- name: GROUP II
+  section: Major Requirements
+  rule: manual
+  notes:
+  - '& two CS courses at the 400 level above CS 403, excluding CS 421 and CS 491. These two courses must be distinct from
+    all other courses used to fulfill program requirements or options.'
+  - Students must select at least six ​advanced mathematics and computer science courses, including one from each of the following
+    groups (1-5) and one additional 400-level course from CS or MATH with the exception of CS 400; CS 401; CS 402; CS 403;
+    CS 491; MATH 492; or MATH 499.
+  courses:
+  - MATH 412
+  - MATH 413
+  - MATH 417
+  - MATH 427
+  id: group-ii-16
+- name: GROUP III
+  section: Major Requirements
+  rule: manual
+  notes:
+  - '& two CS courses at the 400 level above CS 403, excluding CS 421 and CS 491. These two courses must be distinct from
+    all other courses used to fulfill program requirements or options.'
+  - Students must select at least six ​advanced mathematics and computer science courses, including one from each of the following
+    groups (1-5) and one additional 400-level course from CS or MATH with the exception of CS 400; CS 401; CS 402; CS 403;
+    CS 491; MATH 492; or MATH 499.
+  courses:
+  - MATH 441
+  - MATH 446
+  - MATH 484
+  id: group-iii-17
+- name: GROUP IV
+  section: Major Requirements
+  rule: manual
+  notes:
+  - '& two CS courses at the 400 level above CS 403, excluding CS 421 and CS 491. These two courses must be distinct from
+    all other courses used to fulfill program requirements or options.'
+  - Students must select at least six ​advanced mathematics and computer science courses, including one from each of the following
+    groups (1-5) and one additional 400-level course from CS or MATH with the exception of CS 400; CS 401; CS 402; CS 403;
+    CS 491; MATH 492; or MATH 499.
+  courses:
+  - MATH 424
+  - MATH 444
+  - MATH 447
+  id: group-iv-18
+- name: GROUP V
+  section: Major Requirements
+  rule: manual
+  notes:
+  - '& two CS courses at the 400 level above CS 403, excluding CS 421 and CS 491. These two courses must be distinct from
+    all other courses used to fulfill program requirements or options.'
+  - Students must select at least six ​advanced mathematics and computer science courses, including one from each of the following
+    groups (1-5) and one additional 400-level course from CS or MATH with the exception of CS 400; CS 401; CS 402; CS 403;
+    CS 491; MATH 492; or MATH 499.
+  courses:
+  - MATH 414
+  - MATH 473
+  - MATH 475
+  - CS 476
+  - CS 477
+  id: group-v-19

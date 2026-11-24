@@ -30,9 +30,6 @@ DEGREES_DIR = DATA / "degrees"
 def _known_programs_and_colleges() -> tuple[set[str], set[str]]:
     """Load eligibility references once; validation is called once per degree file."""
     known_ids = {p.stem for p in DEGREES_DIR.glob("*.yaml")}
-    # These catalog-listed majors are tracked by #231 but their pages have not yet been imported.
-    known_ids.update({"computer-science-advertising-bs", "computer-science-economics-bslas",
-                      "statistics-computer-science-bslas", "statistics-major"})
     known_colleges: set[str] = set()
     for p in DEGREES_DIR.glob("*.yaml"):
         try:

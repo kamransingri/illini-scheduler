@@ -1,0 +1,228 @@
+# Computer Science + Astronomy, BSLAS (The Grainger College of Engineering and College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/eng_las/computer-science-astronomy-bs/ on 2026-11-24 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: computer-science-astronomy-bs
+program: Computer Science + Astronomy, BSLAS
+college: The Grainger College of Engineering and College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/eng_las/computer-science-astronomy-bs/
+read_on: '2026-11-24'
+generated: '2026-11-24'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - gened
+  - gened
+  approved_for:
+  - ACP
+  - QR2
+  quote: Individual courses will be approved to satisfy only one General Education requirement except as follows. Exceptions
+    are the Advanced Composition, Quantitative Reasoning II, and the Cultural Studies requirements.
+  source: https://gened.illinois.edu/faculty-staff/details-criteria/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/eng_las/computer-science-astronomy-bs/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by PHYS 211 and PHYS 212
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by MATH 220 or MATH 221, MATH 231, MATH 241, PHYS 211, PHYS 212, CS 124, CS 128, CS 225
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Required Computer Science Coursework
+  section: Major Requirements
+  rule: all
+  courses:
+  - CS 100
+  - CS 124
+  - CS 128
+  - CS 173
+  - CS 225
+  - CS 222
+  id: required-computer-science-coursework-11
+- name: Required Computer Science Coursework
+  section: Major Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - - CS 233 + CS 341
+    - CS 340
+  notes:
+  - Choose one of the following combinations
+  id: required-computer-science-coursework-12
+- name: Required Computer Science Coursework
+  section: Major Requirements
+  rule: manual
+  notes:
+  - '& two CS courses at the 400 level above CS 403, excluding CS 421 and CS 491'
+  - 'Choose one of the following:'
+  courses:
+  - STAT 200
+  - STAT 212
+  - CS 361
+  - CS 374
+  - CS 421
+  id: required-computer-science-coursework-13
+- name: Required Computer Science Coursework
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Mathematics (may also fulfill the General Education Quantitative Reasoning I and II requirements)
+  courses:
+  - - MATH 221
+    - MATH 220
+  - - MATH 225
+    - MATH 257
+  - MATH 231
+  id: required-computer-science-coursework-14
+- name: Physics, Mathematics, and Astronomy Foundations
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Catalog total: 15 hours.'
+  - 'Choose one of the following:'
+  - Mathematics (may also fulfill the General Education Quantitative Reasoning I and II requirements)
+  courses:
+  - PHYS 211
+  - PHYS 212
+  - MATH 241
+  - ASTR 210
+  id: physics-mathematics-and-astronomy-founda-15
+- name: Advanced Astronomy Courses (Minimum 12 total advanced ASTR hours required)
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Advanced Astronomy Courses (Minimum 12 total advanced ASTR hours required)
+  courses:
+  - ASTR 310
+  id: advanced-astronomy-courses-minimum-12-to-16
+- name: Advanced Astronomy Courses (Minimum 12 total advanced ASTR hours required)
+  section: Major Requirements
+  rule: n_of
+  n: 2
+  courses:
+  - ASTR 404
+  - ASTR 405
+  - ASTR 406
+  - ASTR 414
+  notes:
+  - 'Select 2 courses from the following list:'
+  id: advanced-astronomy-courses-minimum-12-to-17
+- name: Advanced Astronomy Courses (Minimum 12 total advanced ASTR hours required)
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Additional ASTR course(s) at the 300 level or higher
+  id: advanced-astronomy-courses-minimum-12-to-18

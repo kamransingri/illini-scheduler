@@ -1,0 +1,109 @@
+# Statistics & Computer Science, BSLAS (The Grainger College of Engineering and College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/eng_las/statistics-computer-science-bslas/ on 2026-11-24 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: statistics-computer-science-bslas
+program: Statistics & Computer Science, BSLAS
+college: The Grainger College of Engineering and College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/eng_las/statistics-computer-science-bslas/
+read_on: '2026-11-24'
+generated: '2026-11-24'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+double_counting: []
+groups:
+- name: Requirement
+  section: ''
+  rule: all
+  courses:
+  - CS 100
+  id: requirement-1
+- name: Mathematical Foundation
+  section: Mathematical Foundation
+  rule: manual
+  notes:
+  - 'Calculus through MATH 241: Calculus III'
+  courses:
+  - - MATH 257
+    - MATH 415
+  id: mathematical-foundation-2
+- name: Computer Science Foundation
+  section: Computer Science Foundation
+  rule: manual
+  notes:
+  - 'Calculus through MATH 241: Calculus III'
+  courses:
+  - CS 124
+  - CS 128
+  - CS 173
+  - CS 222
+  - CS 225
+  id: computer-science-foundation-3
+- name: Computer Science Foundation
+  section: Computer Science Foundation
+  rule: n_of
+  n: 1
+  courses:
+  - - CS 233 + CS 341
+    - CS 340
+  notes:
+  - 'Choose one of the following combinations:'
+  id: computer-science-foundation-4
+- name: Computer Science Foundation
+  section: Computer Science Foundation
+  rule: manual
+  notes:
+  - '& two CS courses at the 400 level above CS 403, excluding CS 421 and CS 491. These two courses must be distinct from
+    all other courses used to fulfill program requirements or options.'
+  courses:
+  - CS 357
+  - CS 374
+  - CS 421
+  id: computer-science-foundation-5
+- name: Probability and Statistics Foundation
+  section: Probability and Statistics Foundation
+  rule: n_of
+  n: 1
+  courses:
+  - STAT 107
+  - STAT 200
+  - STAT 212
+  - STAT 400
+  - STAT 410
+  - STAT 425
+  - STAT 426
+  notes:
+  - 'Choose one of the following:'
+  id: probability-and-statistics-foundation-6
+- name: Statistical Application Electives -Choose one of the following
+  section: Statistical Application Electives -Choose one of the following
+  rule: n_of
+  n: 1
+  courses:
+  - STAT 428
+  - STAT 431
+  - STAT 432
+  - STAT 434
+  - STAT 448
+  notes:
+  - 'Catalog total: 3 hours.'
+  - Choose 1.
+  id: statistical-application-electives-choose-7
+- name: Computational Application Elective - Choose one of the following
+  section: Computational Application Elective - Choose one of the following
+  rule: n_of
+  n: 1
+  courses:
+  - CS 410
+  - CS 411
+  - CS 412
+  - CS 446
+  - CS 481
+  - CS 482
+  notes:
+  - 'Catalog total: 3 hours.'
+  - Choose 1.
+  id: computational-application-elective-choos-8

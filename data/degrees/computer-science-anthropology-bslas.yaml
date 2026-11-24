@@ -1,0 +1,147 @@
+# Computer Science + Anthropology, BSLAS (The Grainger College of Engineering and College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/eng_las/computer-science-anthropology-bslas/ on 2026-11-24 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: computer-science-anthropology-bslas
+program: Computer Science + Anthropology, BSLAS
+college: The Grainger College of Engineering and College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/eng_las/computer-science-anthropology-bslas/
+read_on: '2026-11-24'
+generated: '2026-11-24'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/eng_las/computer-science-anthropology-bslas/
+groups:
+- name: General Education Requirements
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Composition 1
+  - Advanced Composition
+  - Humanities & the Arts (6 hours)
+  - Natural Sciences & Technology (6 hours)
+  - Social & Behavioral Sciences (6 hours)
+  - 'Cultural Studies: Non-Western Cultures (1 course)'
+  - 'Cultural Studies: US Minority Cultures (1 course)'
+  - 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  - Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  - fulfilled by MATH 220 or MATH 221, MATH 231, CS 124, CS 128, and CS 225
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English, or completion
+    of the third semester in two different languages other than English is required)
+  id: general-education-requirements-1
+- name: Orientation and Professional Development
+  section: General Education Requirements
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-and-professional-development-2
+- name: Required Computer Science Coursework
+  section: General Education Requirements
+  rule: all
+  courses:
+  - CS 100
+  - CS 124
+  - CS 128
+  - CS 173
+  - CS 222
+  - CS 225
+  id: required-computer-science-coursework-3
+- name: Required Computer Science Coursework
+  section: General Education Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - - CS 233 + CS 341
+    - CS 340
+  notes:
+  - Choose one of the following combinations
+  id: required-computer-science-coursework-4
+- name: Required Computer Science Coursework
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - '& two CS courses at the 400 level above CS 403, excluding CS 421 and CS 491'
+  - 'Choose one of the following:'
+  courses:
+  - STAT 200
+  - STAT 212
+  - CS 361
+  - CS 374
+  - CS 421
+  id: required-computer-science-coursework-5
+- name: Mathematics Requirements
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - '& two CS courses at the 400 level above CS 403, excluding CS 421 and CS 491'
+  - 'Choose one of the following:'
+  courses:
+  - - MATH 221
+    - MATH 220
+  - - MATH 225
+    - MATH 257
+  - MATH 231
+  id: mathematics-requirements-6
+- name: Required Anthropology Coursework
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Anthropology Core Courses. Choose three (3) of the following courses. May select no more than one 100-level course from
+    the list below.
+  courses:
+  - - ANTH 220
+    - ANTH 105
+  - - ANTH 230
+    - ANTH 103
+  - - ANTH 240
+    - ANTH 102
+  - - ANTH 270
+    - ANTH 104
+  id: required-anthropology-coursework-7
+- name: Required Anthropology Coursework
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Electives. Select five (5) courses from the following list. Four (4) of these courses need to be at the 300- and 400-level.
+    (Substitutions with permission of advisor)
+  courses:
+  - ANTH 110
+  - ANTH 241
+  - ANTH 246
+  - ANTH 268
+  - ANTH 346
+  - ANTH 347
+  - ANTH 368
+  - ANTH 372
+  - ANTH 374
+  - ANTH 375
+  - ANTH 379
+  - ANTH 411
+  - ANTH 414
+  - ANTH 421
+  - ANTH 423
+  - ANTH 435
+  - ANTH 440
+  - ANTH 441
+  - ANTH 442
+  - ANTH 447
+  - ANTH 450
+  - ANTH 453
+  - ANTH 468
+  - ANTH 471
+  - ANTH 477
+  - ANTH 488
+  - ANTH 498
+  id: required-anthropology-coursework-8

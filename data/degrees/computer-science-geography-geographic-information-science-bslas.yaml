@@ -1,0 +1,169 @@
+# Computer Science + Geography & Geographic Information Science, BSLAS (The Grainger College of Engineering and College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/eng_las/computer-science-geography-geographic-information-science-bslas/ on 2026-11-24 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: computer-science-geography-geographic-information-science-bslas
+program: Computer Science + Geography & Geographic Information Science, BSLAS
+college: The Grainger College of Engineering and College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/eng_las/computer-science-geography-geographic-information-science-bslas/
+read_on: '2026-11-24'
+generated: '2026-11-24'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300 and 400 level.
+double_counting:
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/eng_las/computer-science-geography-geographic-information-science-bslas/
+groups:
+- name: General Education Requirements
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - Composition I
+  - Advanced Composition
+  - Humanities & the Arts (6 hours)
+  - Natural Sciences & Technology (6 hours)
+  - Social & Behavioral Sciences (6 hours)
+  - 'Cultural Studies: Non-Western Cultures (1 course)'
+  - 'Cultural Studies: US Minority Cultures (1 course)'
+  - 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  - Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  - fulfilled by CS 124, CS 128, CS 225, MATH 220 or MATH 221, MATH 231, GGIS 371, GGIS 380
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English, or completion
+    of the third semester in two different languages other than English is required)
+  id: general-education-requirements-1
+- name: Orientation & Professional Development
+  section: General Education Requirements
+  rule: all
+  courses:
+  - - LAS 101
+    - LAS 100 + LAS 101
+    - LAS 102
+  id: orientation-professional-development-2
+- name: Required Computer Science Courses
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - The catalog lists these courses under Required Computer Science Courses; see the catalog page for the rule.
+  courses:
+  - CS 100
+  - CS 124
+  - CS 128
+  - CS 173
+  - CS 225
+  - CS 222
+  id: required-computer-science-courses-3
+- name: Required Computer Science Courses
+  section: General Education Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - - CS 233 + CS 341
+    - CS 340
+  notes:
+  - Choose one of the following combinations
+  id: required-computer-science-courses-4
+- name: Required Computer Science Courses
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - '& two CS courses at the 400 level above CS 403, excluding CS 421 and CS 491'
+  - 'Choose one of the following:'
+  courses:
+  - STAT 200
+  - STAT 212
+  - CS 361
+  - CS 374
+  - CS 421
+  id: required-computer-science-courses-5
+- name: Required Mathematics Courses
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - '& two CS courses at the 400 level above CS 403, excluding CS 421 and CS 491'
+  - 'Choose one of the following:'
+  courses:
+  - - MATH 220
+    - MATH 221
+  - - MATH 225
+    - MATH 257
+  - MATH 231
+  id: required-mathematics-courses-6
+- name: Required Geographic Information Science Courses
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - '& two CS courses at the 400 level above CS 403, excluding CS 421 and CS 491'
+  - 'Choose one of the following:'
+  courses:
+  - GGIS 371
+  - GGIS 379
+  - GGIS 380
+  id: required-geographic-information-science-7
+- name: Required Geographic Information Science Courses
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Two (2) additional GIS courses from the following list:'
+  courses:
+  - GGIS 205
+  - GGIS 280
+  - GGIS 381
+  - GGIS 403
+  - GGIS 407
+  - GGIS 412
+  - GGIS 421
+  - GGIS 439
+  - GGIS 460
+  - GGIS 473
+  - GGIS 476
+  - GGIS 477
+  - GGIS 478
+  - GGIS 479
+  - GGIS 480
+  - GGIS 489
+  id: required-geographic-information-science-8
+- name: Required Geographic Information Science Courses
+  section: General Education Requirements
+  rule: manual
+  notes:
+  - 'Two (2) human and/or physical geography courses:'
+  courses:
+  - GGIS 204
+  - GGIS 210
+  - GGIS 220
+  - GGIS 221
+  - GGIS 222
+  - GGIS 223
+  - GGIS 224
+  - GGIS 254
+  - GGIS 287
+  - ESE 350
+  - GGIS 370 + ESE 320
+  - GGIS 384
+  - GGIS 401
+  - GGIS 405
+  - GGIS 406
+  - GGIS 408
+  - GGIS 410
+  - GGIS 425
+  - IB 439 + GGIS 436
+  - GGIS 438
+  - GGIS 446
+  - GGIS 455
+  - GGIS 459
+  - GGIS 465
+  - GGIS 466
+  - GGIS 471
+  - GGIS 482
+  - GGIS 483
+  - GGIS 495
+  - GGIS 496
+  id: required-geographic-information-science-9

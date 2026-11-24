@@ -280,3 +280,13 @@ test("two minors: each gets its own checklist and ticks, and the link brings bot
   await expect(page).toHaveURL(/mn=history-minor(&|$)/);
   await expect(history.locator('[data-group^="more-requirements"]')).toHaveAttribute("data-status", "done");
 });
+
+test("a joint-college major is in the checklist: Statistics & Computer Science (#231)", async ({ page }) => {
+  await page.goto("./degree/");
+  const program = page.getByRole("combobox", { name: "Major", exact: true });
+  await program.fill("statistics & computer");
+  await page.getByRole("option", { name: /^Statistics & Computer Science, BSLAS/ }).click();
+  await expect(page).toHaveURL(/p=statistics-computer-science-bslas/);
+  await expect(req(page, "computer-science-foundation-3")).toBeVisible();
+  await expect(req(page, "probability-and-statistics-foundation-6")).toContainText("STAT");
+});
