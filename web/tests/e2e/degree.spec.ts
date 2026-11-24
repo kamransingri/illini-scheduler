@@ -95,6 +95,29 @@ test("programs imported from the catalog say so and show prose rules in the cata
   await expect(manual.getByTestId("catalog-words")).not.toBeEmpty();
 });
 
+test("a restricted minor stays selected from a shared link and explains the catalog rule", async ({ page }) => {
+  await page.goto("./degree/?p=journalism-bs&mn=media-minor");
+  await expect(page.getByTestId("not-open-warning")).toContainText("isn't open to Journalism, BS");
+  await expect(page.getByTestId("not-open-warning")).toContainText("Students pursuing a major in the College of Media are not eligible");
+  await expect(page.getByTestId("not-open-warning").getByRole("link", { name: "Check the source page." })).toHaveAttribute("href", "https://catalog.illinois.edu/undergraduate/media/minors/media/");
+  await expect(page.locator("#minor-search")).toHaveValue("Media Minor");
+  await expect(page).toHaveURL(/mn=media-minor/);
+
+  const picker = page.locator("#minor-search");
+  await picker.fill("media");
+  const restricted = page.getByRole("option", { name: /Media Minor.*Not open to Journalism, BS/ });
+  await expect(restricted).toHaveAttribute("aria-disabled", "true");
+  await restricted.click({ force: true }); // exercise the event guard even though aria-disabled blocks normal clicks
+  await expect(page).toHaveURL(/mn=media-minor/);
+});
+
+test("an Economics major sees the specific Economics minor restriction", async ({ page }) => {
+  await page.goto("./degree/?p=economics-balas&mn=economics-minor");
+  await expect(page.getByTestId("not-open-warning")).toContainText("isn't open to Economics, BALAS");
+  await expect(page.getByTestId("not-open-warning")).toContainText("Economics BALAS");
+  await expect(page).toHaveURL(/mn=economics-minor/);
+});
+
 test("a hand-checked major (Computer Science): no import note, focus areas in one requirement, technical electives counted (#17)", async ({ page }) => {
   // six 400-level CS courses, one from the team project list; CS 421 is in the core, so it isn't a technical elective too
   await page.goto("./degree/?p=computer-science-bs&m=CS411,CS412,CS440,CS446,CS447,CS473,CS421");

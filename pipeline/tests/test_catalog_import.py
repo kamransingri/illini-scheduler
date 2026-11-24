@@ -248,6 +248,25 @@ def test_a_reimport_keeps_a_minors_hand_added_overlap_rule(tmp_path):
     assert list(again).index("major_overlap") < list(again).index("groups")
 
 
+def test_a_reimport_keeps_not_open_rules_and_authored_group_notes(tmp_path):
+    doc = {**parse("accountancy-bs", ACCY), "id": "test-minor", "type": "minor"}
+    assert catalog_import.write(doc, tmp_path) is True
+    path = tmp_path / "test-minor.yaml"
+    rule = {"majors": ["advertising-bs"], "quote": "Not open to this major.",
+            "source": "https://catalog.illinois.edu/undergraduate/media/minors/advertising/"}
+    old = yaml.safe_load(path.read_text(encoding="utf-8"))
+    old["not_open_to"] = [rule]
+    old["groups"][0]["notes"] = ["Only applies to this option."]
+    old["groups"][0]["source"] = rule["source"]
+    path.write_text(yaml.safe_dump(old, sort_keys=False), encoding="utf-8")
+    changed = {**doc, "total_hours": 21, "generated": "2026-12-01"}
+    assert catalog_import.write(changed, tmp_path) is True
+    again = yaml.safe_load(path.read_text(encoding="utf-8"))
+    assert again["not_open_to"] == [rule]
+    assert again["groups"][0]["notes"] == ["Only applies to this option."]
+    assert again["groups"][0]["source"] == rule["source"]
+
+
 def test_the_hand_checked_majors_are_protected_and_valid():
     from pipeline.config import DATA
 

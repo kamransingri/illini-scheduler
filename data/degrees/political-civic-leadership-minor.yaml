@@ -14,6 +14,10 @@ generated: '2026-11-17'
 total_hours: 17
 notes: []
 double_counting: []
+not_open_to:
+- majors: [political-science-balas-citizen-politics, political-science-balas-civic-leadership, political-science-balas-general-political-science, political-science-balas-international-relations, political-science-balas-law-power, political-science-balas-public-policy-democratic-institutions, political-science-balas-world-politics]
+  quote: The Minor in Political and Civic Leadership is for students who are not political science majors.
+  source: https://catalog.illinois.edu/undergraduate/las/minors/political-civic-leadership/
 groups:
 - name: Required courses
   section: Requirements

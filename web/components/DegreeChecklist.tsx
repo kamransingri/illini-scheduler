@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { allCredits, apCredit, creditCourses, IB_LEVEL, ibCredit, isElective, isGrainger, pickIbYear, pickYear, subOptions, type ApSummary, type ApTable, type ApYear, type IbLevel } from "@/lib/apcredit";
-import { alsoCounts, evaluate, hoursSoFar, hydrate, needText, listedByHand, options, overlapChecks, parseHours, programCourses, rankCourse, type Degree, type DegreeCourse, type DegreeIndex, type Evaluation, type GroupResult, type GroupStatus, type HoursSoFar, type OverlapCheck, type Ranked } from "@/lib/degree";
+import { alsoCounts, evaluate, hoursSoFar, hydrate, needText, listedByHand, notOpenRules, options, overlapChecks, parseHours, programCourses, rankCourse, type Degree, type DegreeCourse, type DegreeIndex, type Evaluation, type GroupResult, type GroupStatus, type HoursSoFar, type OverlapCheck, type Ranked } from "@/lib/degree";
 import { courseHref, dataUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, termLabel } from "@/lib/format";
 import { EMPTY, MAX_MINORS, minorTick, onMineChange, readMine, sameState, STATUS_LABEL, stateFromParams, stateToParams, ticksOf, writeMine, type CourseStatus, type MyState } from "@/lib/mycourses";
 import { COURSE_DRAG, finishTerms, isEmptyPlan, planTerms, type FinishAt } from "@/lib/plan";
@@ -89,6 +89,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
   const [minorDegs, setMinorDegs] = useState<Record<string, Degree>>({});
   const [minorErrors, setMinorErrors] = useState<Record<string, string>>({});
   const majors = useMemo(() => programs.filter((p) => (p.type ?? "major") === "major"), [programs]);
+  const selectedMajor = majors.find((p) => p.id === st.program);
   // certificates (#113) sit in the minor slots: picked beside the major, carried in the same mn= link parameter
   const minors = useMemo(() => programs.filter((p) => p.type === "minor" || p.type === "certificate"), [programs]);
   const [index, setIndex] = useState<SearchIndex | null>(null);
@@ -248,6 +249,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
                 // a minor you've already picked isn't offered again
                 programs={minors.filter((p) => p.id === id || !st.minors.includes(p.id))}
                 value={id}
+                disabledReason={(p) => (selectedMajor && notOpenRules(p, selectedMajor).length ? selectedMajor.program : null)}
                 // a different minor starts with none of the old one's boxes ticked; removing one moves the next up
                 onChange={(next) => {
                   const list = [...st.minors];
@@ -323,6 +325,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
         const minorDeg = minorDegs[id];
         const minorEv = minorEvs.get(id);
         const minorGeneratedOn = minors.find((p) => p.id === id)?.generated;
+        const eligibilityRules = minorDeg && selectedMajor ? notOpenRules(minorDeg, selectedMajor) : [];
         const overlap = [...minorOverlap].filter(([, ids]) => ids.includes(id)).map(([c, ids]) => ({ c, others: ids.filter((o) => o !== id) }));
         const otherIds = st.minors.filter((o) => o !== id);
         const other = {
@@ -353,6 +356,16 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
                 {minorGeneratedOn && <>This was read automatically from its page on {fmtDate(minorGeneratedOn)}; check that page before you rely on it.</>}
               </span>
             </p>
+            {eligibilityRules.map((rule, i) => (
+              <p key={`${rule.source}-${i}`} className="mb-4 flex max-w-3xl items-start gap-2 rounded border-l-4 border-orange bg-action-tint p-3" role="alert" data-testid="not-open-warning">
+                <Icon name="alert" className="mt-1 shrink-0 text-heading" />
+                <span>
+                  <strong>{nameOf(id)} isn&apos;t open to {selectedMajor?.program}.</strong> The rule: &ldquo;{rule.quote}&rdquo;{" "}
+                  <a className="font-semibold text-action underline" href={rule.source} rel="noopener">Check the source page.</a>
+                  {rule.caveat && <span className="mt-1 block">{rule.caveat}</span>}
+                </span>
+              </p>
+            ))}
             {overlap.length > 0 && (
               <p className="mb-4 flex max-w-3xl items-start gap-2 rounded bg-panel p-3" data-testid="minor-overlap">
                 <Icon name="alert" className="mt-1 shrink-0 text-heading" />

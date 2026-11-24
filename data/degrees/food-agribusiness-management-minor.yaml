@@ -11,6 +11,10 @@ catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/aces/minors/food-agribusiness-management/
 read_on: '2026-11-17'
 generated: '2026-11-17'
+not_open_to:
+- majors: [agricultural-consumer-economics-bs-agribusiness-markets-management]
+  quote: Enrollment in the Food and Agribusiness Minor is not available to students enrolled in the Agribusiness Markets and Management concentration of the Department of ACE, but students in other concentrations in ACE may be admitted to the minor.
+  source: https://catalog.illinois.edu/undergraduate/aces/minors/food-agribusiness-management/
 total_hours: 18
 notes: []
 double_counting: []

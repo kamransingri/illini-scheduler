@@ -18,6 +18,7 @@ export default function ProgramPicker({
   noun,
   hint,
   clearable = false,
+  disabledReason,
 }: {
   programs: DegreeIndex;
   value: string;
@@ -27,6 +28,7 @@ export default function ProgramPicker({
   noun: [string, string]; // singular, plural: ["major", "majors"]
   hint: string; // example searches, for the empty box: "finance, CS, MCB"
   clearable?: boolean;
+  disabledReason?: (program: Program) => string | null;
 }) {
   const selected = programs.find((p) => p.id === value);
   const [q, setQ] = useState("");
@@ -72,22 +74,25 @@ export default function ProgramPicker({
 
   const option = (p: Program, withCollege: boolean) => {
     const isActive = p === current;
+    const reason = disabledReason?.(p) ?? null;
     return (
       <div
         key={p.id}
         id={optId(p)}
         role="option"
         aria-selected={p.id === value}
+        aria-disabled={reason ? true : undefined}
         data-active={isActive || undefined}
-        className={`flex cursor-pointer items-start gap-2 px-3 py-1.5 ${isActive ? "bg-action-tint" : "hover:bg-panel"}`}
+        className={`flex items-start gap-2 px-3 py-1.5 ${reason ? "cursor-not-allowed text-muted opacity-60" : "cursor-pointer"} ${isActive ? "bg-action-tint" : !reason ? "hover:bg-panel" : ""}`}
         onMouseDown={(e) => e.preventDefault()} // keep focus in the input
-        onMouseMove={() => setActive(shown.indexOf(p))}
-        onClick={() => pick(p, false)}
+        onMouseMove={() => !reason && setActive(shown.indexOf(p))}
+        onClick={() => !reason && pick(p, false)}
       >
         <Icon name="check" className={`mt-1 ${p.id === value ? "text-heading" : "invisible"}`} />
         <span className="min-w-0">
           <span className={p.id === value ? "font-semibold text-heading" : ""}>{p.program}</span>
           {withCollege && <span className="block text-sm text-muted">{p.college}</span>}
+          {reason && <span className="block text-sm">Not open to {reason}</span>}
         </span>
       </div>
     );
@@ -130,7 +135,7 @@ export default function ProgramPicker({
               if (!open) return openList();
               const last = shown.length - 1;
               setActive((a) => (e.key === "ArrowDown" ? Math.min(a + 1, last) : Math.max(a - 1, 0)));
-            } else if (e.key === "Enter" && open && current) {
+            } else if (e.key === "Enter" && open && current && !disabledReason?.(current)) {
               e.preventDefault();
               pick(current, true);
             } else if (e.key === "Escape" && open) {

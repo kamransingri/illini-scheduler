@@ -13,6 +13,10 @@ read_on: '2026-11-17'
 generated: '2026-11-17'
 notes: []
 double_counting: []
+not_open_to:
+- majors: [electrical-engineering-bs, computer-engineering-bs]
+  quote: The minor is open to undergraduates outside the ECE Department.
+  source: https://catalog.illinois.edu/undergraduate/engineering/minors/electrical-computer-engineering/
 groups:
 - name: Circuits Requirement
   section: Requirements
@@ -82,6 +86,8 @@ groups:
   rule: manual
   notes:
   - 'Core Requirement:'
+  - Computer Science majors cannot elect the Computer Engineering Option within the minor.
+  source: https://catalog.illinois.edu/undergraduate/engineering/minors/electrical-computer-engineering/
   courses:
   - ECE 120
   - ECE 220

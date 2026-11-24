@@ -20,6 +20,10 @@ major_overlap:
   minors_too: true
   quote: "Six hours of advanced course work must be distinct from credit required in major or another minor."
   source: https://catalog.illinois.edu/undergraduate/aces/minors/wildlife-fisheries-conservation/
+not_open_to:
+- majors: [natural-resources-environmental-sciences-bs, natural-resources-environmental-sciences-bs-ecosystem-stewardship-restoration-ecology, natural-resources-environmental-sciences-bs-environmental-science-management, natural-resources-environmental-sciences-bs-environmental-social-sciences, natural-resources-environmental-sciences-bs-fish-wildlife-conservation-biology]
+  quote: This minor is not available to NRES majors, but it is open to students in all other majors.
+  source: https://catalog.illinois.edu/undergraduate/aces/minors/wildlife-fisheries-conservation/
 groups:
 - name: Required Courses for a Minor in Wildlife & Fisheries
   section: Requirements

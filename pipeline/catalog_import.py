@@ -555,10 +555,34 @@ def write(doc: dict, directory: Path = DEGREES_DIR) -> bool:
         text = path.read_text(encoding="utf-8")
         if "generated:" not in text:
             return False
-        # a minor's overlap rules are added by hand from the page's prose (#112): carry them into the new file
-        kept = (yaml.safe_load(text) or {}).get("major_overlap")
-        if kept and "major_overlap" not in doc:
-            doc = {**{k: v for k, v in doc.items() if k != "groups"}, "major_overlap": kept, "groups": doc["groups"]}
+        # Hand-encoded rules are added from catalog prose: carry them through re-imports.
+        old_doc = yaml.safe_load(text) or {}
+        preserved = {}
+        for key in ("major_overlap", "not_open_to"):
+            kept = old_doc.get(key)
+            if kept and key not in doc:
+                preserved[key] = kept
+        if preserved:
+            ordered = {}
+            for key, value in doc.items():
+                if key == "groups":
+                    ordered.update(preserved)
+                ordered[key] = value
+            doc = ordered
+        # The ECE minor's option-level CS restriction is a hand-authored catalog note. Keep authored group notes
+        # matched by id when a later catalog re-import refreshes the generated requirement rows.
+        old_groups = {g.get("id"): g for g in old_doc.get("groups", []) if isinstance(g, dict)}
+        new_groups = []
+        for group in doc.get("groups", []):
+            old_group = old_groups.get(group.get("id"), {})
+            old_notes = old_group.get("notes", [])
+            notes = list(dict.fromkeys([*(group.get("notes") or []), *(old_notes or [])]))
+            if notes != (group.get("notes") or []):
+                group = {**group, "notes": notes}
+            if old_group.get("source"):
+                group = {**group, "source": old_group["source"]}
+            new_groups.append(group)
+        doc = {**doc, "groups": new_groups}
         # the same requirements read again: keep the file (and its date) as it is, so a re-import only shows changes
         same = {k: v for k, v in doc.items() if k not in ("read_on", "generated")}
         old = {k: v for k, v in (yaml.safe_load(text) or {}).items() if k not in ("read_on", "generated")}

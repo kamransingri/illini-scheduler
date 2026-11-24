@@ -11,6 +11,10 @@ catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/las/minors/biomolecular-engineering/
 read_on: '2026-11-17'
 generated: '2026-11-17'
+not_open_to:
+- majors: [chemical-engineering-bs, chemical-engineering-bs-biomolecular-engineering, chemical-engineering-data-science-bs]
+  quote: This minor is not open to students majoring in chemical engineering.
+  source: https://catalog.illinois.edu/undergraduate/las/minors/biomolecular-engineering/
 total_hours: 21
 notes: []
 double_counting: []

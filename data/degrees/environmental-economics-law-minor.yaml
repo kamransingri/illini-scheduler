@@ -11,6 +11,11 @@ catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/aces/minors/environmental-economics-law/
 read_on: '2026-11-17'
 generated: '2026-11-17'
+not_open_to:
+- majors: [agricultural-consumer-economics-bs-environmental-economics-policy]
+  quote: Enrollment in the Environmental Economics and Law minor is not available to students enrolled in the Environmental Economics and Policy concentration of the Department of ACE.
+  source: https://catalog.illinois.edu/undergraduate/aces/minors/environmental-economics-law/
+  caveat: The catalog also excludes students in the Human Dimensions of the Environment concentration of NRES only if they enrolled before January 2013; the checklist cannot determine enrollment date.
 total_hours: 18
 notes: []
 double_counting: []

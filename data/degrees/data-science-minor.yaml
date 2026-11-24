@@ -11,6 +11,19 @@ catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/las/minors/data-science/
 read_on: '2026-11-17'
 generated: '2026-11-17'
+not_open_to:
+- majors:
+  - accountancy-data-science-bs
+  - astronomy-data-science-bslas
+  - business-data-science-bs
+  - chemical-engineering-data-science-bs
+  - finance-data-science
+  - information-sciences-data-science-bs
+  - materials-science-engineering-data-science-bs
+  - molecular-cellular-biology-data-science-bslas
+  - nuclear-plasma-radiological-engineering-data-science-bs
+  quote: All University of Illinois Urbana-Champaign undergraduate students are eligible to earn the Minor in Data Science, except for those enrolled in a BS degree program for an X+DS major.
+  source: https://catalog.illinois.edu/undergraduate/las/minors/data-science/
 notes: []
 double_counting: []
 major_overlap:

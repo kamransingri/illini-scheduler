@@ -11,6 +11,11 @@ catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/bus/minors/business-non-business/
 read_on: '2026-11-17'
 generated: '2026-11-17'
+not_open_to:
+- colleges: [Gies College of Business]
+  quote: The Business Minor is not available to Gies College students and Technology and Management Minor students.
+  source: https://catalog.illinois.edu/undergraduate/bus/minors/business-non-business/
+  caveat: The checklist cannot identify a separately declared Technology and Management Minor, so check the source page for that restriction too.
 notes: []
 double_counting: []
 groups:

@@ -13,6 +13,11 @@ read_on: '2026-11-17'
 generated: '2026-11-17'
 notes: []
 double_counting: []
+not_open_to:
+- majors: [computer-engineering-bs, computer-science-advertising-bs, computer-science-animal-sciences-bs, computer-science-bioengineering-bs, computer-science-bs, computer-science-crop-sciences-bs, computer-science-economics-bslas, computer-science-education-bs-learning-sciences, computer-science-education-bs-secondary-education, computer-science-physics-bs]
+  quote: This minor may be taken by any student except majors in the Computer Science programs and in Computer Engineering.
+  source: https://catalog.illinois.edu/undergraduate/engineering/minors/computer-science/
+  caveat: The Siebel School's page reads "CS, CS + X, or Computer Engineering majors cannot pursue a CS minor." Neither page says whether Mathematics & Computer Science or Statistics & Computer Science count; ask a Siebel advisor.
 groups:
 - name: More requirements
   section: Requirements

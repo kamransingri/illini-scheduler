@@ -20,6 +20,10 @@ major_overlap:
   minors_too: true
   quote: "Students must complete 13 hours of required coursework and a minimum of hours of elective coursework, including at least 6 hours of 300- or 400-level courses that are not used in any other major or minor."
   source: https://catalog.illinois.edu/undergraduate/ahs/minors/public-health/
+not_open_to:
+- majors: [public-health-bs, public-health-bs-community-health-practice, public-health-bs-epidemiology, public-health-bs-health-administration-policy, public-health-bs-health-education-promotion]
+  quote: Students may not declare a minor in the same program as their major.
+  source: https://hk.illinois.edu/academics/undergrad-programs/minors/
 groups:
 - name: Foundational Courses (Required)
   section: Degree Requirements

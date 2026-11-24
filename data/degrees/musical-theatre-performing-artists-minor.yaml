@@ -13,6 +13,11 @@ read_on: '2026-11-17'
 generated: '2026-11-17'
 notes: []
 double_counting: []
+not_open_to:
+- only_majors: [dance-ba, dance-bfa, theatre-bfa-acting]
+  quote: The Musical Theatre Minor is intended for students in the performing arts who are majoring in either dance or the acting concentration of the theatre major in the College of Fine and Applied Arts.
+  source: https://catalog.illinois.edu/undergraduate/faa/minors/musical-theatre-performing-artists/
+  caveat: 'Eligible majors must also apply and audition: only students admitted by the School of Music may earn it.'
 groups:
 - name: Prerequisite Courses for Dance Majors
   section: Requirements for Dance Majors

@@ -11,6 +11,10 @@ catalog_year: 2026-2027
 source: https://catalog.illinois.edu/undergraduate/las/minors/economics/
 read_on: '2026-11-17'
 generated: '2026-11-17'
+not_open_to:
+- majors: [economics-balas, econometrics-quantitative-economics-bslas, computer-science-economics-bslas]
+  quote: 'All University of Illinois Urbana-Champaign undergraduate students are eligible to earn the Minor in Economics except for those enrolled in one of these majors: Economics BALAS, Econometrics & Quantitative Economics BSLAS, or Computer Science + Economics BSLAS.'
+  source: https://catalog.illinois.edu/undergraduate/las/minors/economics/
 total_hours: 18
 notes: []
 double_counting: []

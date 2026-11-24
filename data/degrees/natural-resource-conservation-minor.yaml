@@ -14,6 +14,10 @@ generated: '2026-11-17'
 total_hours: 18
 notes: []
 double_counting: []
+not_open_to:
+- majors: [natural-resources-environmental-sciences-bs, natural-resources-environmental-sciences-bs-ecosystem-stewardship-restoration-ecology, natural-resources-environmental-sciences-bs-environmental-science-management, natural-resources-environmental-sciences-bs-environmental-social-sciences, natural-resources-environmental-sciences-bs-fish-wildlife-conservation-biology]
+  quote: This minor is not available to NRES majors, but it is open to students in all other majors.
+  source: https://nres.illinois.edu/academics/undergraduate-degree/undergraduate-minors
 groups:
 - name: Required Courses for a Minor in Natural Resource Conservation
   section: Requirements

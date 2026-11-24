@@ -14,6 +14,10 @@ generated: '2026-11-17'
 total_hours: 18
 notes: []
 double_counting: []
+not_open_to:
+- colleges: [College of Media]
+  quote: Students pursuing a major in the College of Media are not eligible for a minor in Media.
+  source: https://catalog.illinois.edu/undergraduate/media/minors/media/
 groups:
 - name: More requirements
   section: Requirements

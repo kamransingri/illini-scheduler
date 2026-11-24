@@ -13,6 +13,10 @@ read_on: '2026-11-17'
 generated: '2026-11-17'
 notes: []
 double_counting: []
+not_open_to:
+- majors: [agricultural-leadership-education-communications-bs-organizational-community-leadership]
+  quote: Students within the Organizational Community Leadership concentration of the ALEC major are unable to add this minor.
+  source: https://catalog.illinois.edu/undergraduate/aces/minors/leadership-studies/
 groups:
 - name: Required courses
   section: Requirements
