@@ -285,7 +285,8 @@ def save_fixture(conn: sqlite3.Connection, osm_path: Path, out: Path, aliases: d
             slim["tags"] = {k: v for k, v in e.get("tags", {}).items() if k in keep}
             els.append(slim)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps({"osm3s": doc.get("osm3s", {}), "elements": els}, indent=0, ensure_ascii=False) + "\n")
+    out.write_text(json.dumps({"osm3s": doc.get("osm3s", {}), "elements": els}, indent=0, ensure_ascii=False) + "\n",
+                   encoding="utf-8")
     return len(els)
 
 
