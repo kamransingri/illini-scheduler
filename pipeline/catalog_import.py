@@ -51,6 +51,12 @@ COLLEGES = {
     "law": "College of Law",
     "ler": "School of Labor and Employment Relations",
     "provost": "Office of the Provost",
+    # joint programs, run by two colleges
+    "eng_las": "The Grainger College of Engineering and College of Liberal Arts and Sciences",
+    "eng_media": "The Grainger College of Engineering and College of Media",
+    "eng_faa": "The Grainger College of Engineering and College of Fine and Applied Arts",
+    "eng_aces": "The Grainger College of Engineering and College of Agricultural, Consumer and Environmental Sciences",
+    "ahs_faa": "College of Applied Health Sciences and College of Fine and Applied Arts",
 }
 GENED_SOURCE = "https://catalog.illinois.edu/general-information/degree-general-education-requirements/"
 GENED_RULES_SOURCE = "https://gened.illinois.edu/requirements/"
@@ -75,11 +81,35 @@ def norm(text: str) -> str:
     return " ".join(text.replace("\xa0", " ").split())
 
 
+# A program page on the undergraduate index: '/undergraduate/<college>/<program>/'. A joint program's college
+# folder has an underscore ('eng_las/'), and a few programs sit under their unit
+# ('las/academic-units/stats/statistics-major/').
+PROGRAM_PATH = re.compile(r"^/undergraduate/[a-z0-9_-]+/(?:academic-units/[a-z0-9-]+/)?[a-z0-9-]+/$")
+CONCENTRATION_PATH = re.compile(r"^/undergraduate/[a-z0-9_-]+/(?:academic-units/[a-z0-9-]+/)?[a-z0-9-]+/[a-z0-9-]+/$")
+
+
+def index_links(index_html: str | bytes) -> tuple[list[str], list[tuple[str, str]]]:
+    """(program pages, [(skipped link, reason)]) for every '/undergraduate/...' link on the undergraduate index."""
+    text = index_html.decode("utf-8", "replace") if isinstance(index_html, bytes) else index_html
+    keep: list[str] = []
+    skipped: list[tuple[str, str]] = []
+    for u in sorted(set(re.findall(r'href="(/undergraduate/[^"#?]*)"', text))):
+        if re.search(r"undeclared", u):
+            skipped.append((f"{CATALOG}{u}", "undeclared"))
+        elif re.search(r"individual-plans", u):
+            skipped.append((f"{CATALOG}{u}", "individual plan of study"))
+        elif PROGRAM_PATH.match(u) and not u.rstrip("/").endswith(("/minors", "/academic-units")):
+            keep.append(f"{CATALOG}{u}")
+        elif CONCENTRATION_PATH.match(u) and "/minors/" not in u:
+            skipped.append((f"{CATALOG}{u}", "concentration: read from its program's page"))
+        else:
+            skipped.append((f"{CATALOG}{u}", "not a program page"))
+    return keep, skipped
+
+
 def program_links(index_html: str | bytes) -> list[str]:
     """Program pages listed on the undergraduate index (no 'undeclared' or individual-plan pages)."""
-    text = index_html.decode("utf-8", "replace") if isinstance(index_html, bytes) else index_html
-    links = sorted(set(re.findall(r'href="(/undergraduate/[a-z0-9-]+/[a-z0-9-]+/)"', text)))
-    return [f"{CATALOG}{u}" for u in links if not re.search(r"undeclared|individual-plans", u)]
+    return index_links(index_html)[0]
 
 
 def minor_links(index_html: str | bytes) -> list[str]:
@@ -131,16 +161,38 @@ def is_minor(url: str) -> bool:
 
 def has_requirements(page: bytes, url: str) -> bool:
     """A requirements tab, or (some minors) course lists on the overview tab."""
-    return b"degreerequirementstextcontainer" in page or (is_minor(url) and b"sc_courselist" in page)
+    return REQUIREMENTS_TAB.search(page) is not None or (is_minor(url) and b"sc_courselist" in page)
+
+
+# The requirements tab is 'degreerequirementstextcontainer' on most pages, 'requirementstextcontainer' on some (Music
+# Composition, BMUS), and a dual degree's second tab is its own ('abebsagrequirementstextcontainer').
+REQUIREMENTS_TAB = re.compile(rb'id="[a-z]*requirementstextcontainer"')
+
+
+def requirements_tab(doc: Any) -> Any:
+    """The tab holding the program's course tables: the degree-requirements tab, else the first requirements tab
+    with course tables (a dual degree's first tab can be prose only), else the overview tab (some minors)."""
+    tabs = doc.xpath('//*[substring(@id, string-length(@id) - 24) = "requirementstextcontainer"]')
+    for t in tabs:
+        if t.get("id") == "degreerequirementstextcontainer":
+            return t
+    for t in tabs:
+        if t.xpath('.//table[contains(@class, "sc_courselist")]'):
+            return t
+    return tabs[0] if tabs else doc.get_element_by_id("textcontainer")
 
 
 def program_id(url: str) -> str:
     """'.../las/english-balas/' -> 'english-balas'; a concentration '.../english-balas/english-teaching/' ->
-    'english-balas-english-teaching'; a minor '.../aces/minors/nutrition/' -> 'nutrition-minor'."""
+    'english-balas-english-teaching'; a minor '.../aces/minors/nutrition/' -> 'nutrition-minor'. A joint program
+    drops its college too ('.../eng_las/statistics-computer-science-bslas/' -> 'statistics-computer-science-bslas'),
+    and a unit's program its unit ('.../las/academic-units/stats/statistics-major/' -> 'statistics-major')."""
     parts = url.rstrip("/").split("/undergraduate/", 1)[-1].split("/")
     if len(parts) >= 3 and parts[1] == "minors":
         slug = "-".join(parts[2:])
         return slug if "minor" in slug.split("-") else f"{slug}-minor"
+    if len(parts) >= 4 and parts[1] == "academic-units":  # '.../las/academic-units/stats/statistics-major/'
+        parts = parts[:1] + parts[3:]
     return re.sub(r"-{2,}", "-", "-".join(parts[1:]))  # ".../science-pre-veterinary--medical/" has a double hyphen
 
 
@@ -460,8 +512,7 @@ def parse_program(page: str | bytes, url: str, read_on: str) -> dict:
     program = re.sub(r",\s*UG$", "", h1[-1] if h1 else title.split("|")[0].strip())  # "History Minor, UG"
     year = re.search(r"(\d{4}-\d{4}) Course Catalog", title)
     # some minors have no requirements tab and list their courses on the overview tab
-    found = doc.xpath('//*[@id="degreerequirementstextcontainer"]')
-    c = found[0] if found else doc.get_element_by_id("textcontainer")
+    c = requirements_tab(doc)
     text = norm(c.text_content())
     minor = is_minor(url)
     total = re.search(r"Minimum hours required for graduation:\s*(\d+)", text)
@@ -623,7 +674,11 @@ def main(argv: list[str] | None = None) -> int:
         if not index:
             print("could not read the catalog index", file=sys.stderr)
             return 1
-        urls += program_links(index)
+        found, skipped = index_links(index)
+        for u, why in skipped:
+            print(f"index: skip {u}: {why}", file=sys.stderr)
+        print(f"index: {len(found)} program pages, {len(skipped)} links skipped")
+        urls += found
     if args.only != "majors":
         minors_index = fetch_all([MINORS_INDEX], args.delay, args.offline).get(MINORS_INDEX)
         if minors_index:

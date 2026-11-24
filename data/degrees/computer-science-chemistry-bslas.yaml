@@ -1,0 +1,220 @@
+# Computer Science + Chemistry, BSLAS (The Grainger College of Engineering and College of Liberal Arts and Sciences), 2026-2027 Academic Catalog.
+# Generated from https://catalog.illinois.edu/undergraduate/eng_las/computer-science-chemistry-bslas/ on 2026-11-24 by pipeline/catalog_import.py: course lists,
+# alternatives and 'Select N' rules are read from the catalog's tables; prose rules are 'manual'
+# groups with the catalog's own words. Edit by hand and delete the `generated:` line to keep your
+# changes.
+id: computer-science-chemistry-bslas
+program: Computer Science + Chemistry, BSLAS
+college: The Grainger College of Engineering and College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://catalog.illinois.edu/undergraduate/eng_las/computer-science-chemistry-bslas/
+read_on: '2026-11-24'
+generated: '2026-11-24'
+total_hours: 120
+notes:
+- 'Minimum hours required for graduation: 120 hours.'
+- Minimum of 40 hours of upper-division coursework, generally at the 300- or 400-level.
+double_counting:
+- allow: false
+  within: cultural-studies
+  quote: These courses may fulfill other curricular requirements, but no single course can fulfill multiple Cultural Studies
+    categories.
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - cultural-studies
+  - gened
+  quote: These courses may fulfill other curricular requirements
+  source: https://gened.illinois.edu/requirements/
+- allow: true
+  between:
+  - gened
+  - gened
+  approved_for:
+  - ACP
+  - QR2
+  quote: Individual courses will be approved to satisfy only one General Education requirement except as follows. Exceptions
+    are the Advanced Composition, Quantitative Reasoning II, and the Cultural Studies requirements.
+  source: https://gened.illinois.edu/faculty-staff/details-criteria/
+- allow: true
+  between:
+  - program
+  - gened
+  quote: Some Gen Ed requirements may be met by courses required and/or electives in the program.
+  source: https://catalog.illinois.edu/undergraduate/eng_las/computer-science-chemistry-bslas/
+groups:
+- id: comp1
+  name: Composition I
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  courses:
+  - RHET 105
+  - RHET 101 + RHET 102
+  - CMN 111 + CMN 112
+  - ESL 115
+  - ESL 111 + ESL 112
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- id: acp
+  name: Advanced Composition
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 3
+  from:
+  - gened:ACP
+- id: hum
+  name: Humanities & the Arts (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:HP
+  - gened:LA
+- id: nat
+  name: Natural Sciences & Technology (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:LS
+  - gened:PS
+  notes:
+  - fulfilled by CHEM 102 and CHEM 104 or CHEM 202 and CHEM 204
+- id: sbs
+  name: Social & Behavioral Sciences (6 hours)
+  section: General Education
+  kind: gened
+  rule: hours
+  hours: 6
+  from:
+  - gened:SS
+  - gened:BSC
+- id: cs-nw
+  name: 'Cultural Studies: Non-Western Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:NW
+  exclusive: cultural-studies
+- id: cs-us
+  name: 'Cultural Studies: US Minority Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:US
+  exclusive: cultural-studies
+- id: cs-wcc
+  name: 'Cultural Studies: Western/Comparative Cultures (1 course)'
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 1
+  from:
+  - gened:WCC
+  exclusive: cultural-studies
+- id: qr
+  name: Quantitative Reasoning (2 courses, at least one course must be Quantitative Reasoning I)
+  section: General Education
+  kind: gened
+  rule: n_of
+  n: 2
+  from:
+  - gened:QR1
+  - gened:QR2
+  min_from:
+    gened:QR1: 1
+  notes:
+  - fulfilled by CS 124, CS 128, CS 225, MATH 220 or MATH 221, MATH 231
+- id: language
+  name: Language other than English
+  section: General Education
+  kind: gened
+  rule: manual
+  notes:
+  - Language Requirement (Completion of the fourth semester or equivalent of a language other than English, or completion
+    of the third semester in two different languages other than English is required)
+  source: https://catalog.illinois.edu/general-information/degree-general-education-requirements/
+- name: Required Computer Science Coursework
+  section: Major Requirements
+  rule: all
+  courses:
+  - CS 100
+  - CS 124
+  - CS 128
+  - CS 173
+  - CS 225
+  - CS 222
+  id: required-computer-science-coursework-11
+- name: Required Computer Science Coursework
+  section: Major Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - - CS 233 + CS 341
+    - CS 340
+  notes:
+  - Choose one of the following combinations
+  id: required-computer-science-coursework-12
+- name: Required Computer Science Coursework
+  section: Major Requirements
+  rule: manual
+  notes:
+  - '& two CS courses at the 400 level above CS 403, excluding CS 421 and CS 491'
+  - 'Choose one of the following:'
+  courses:
+  - STAT 200
+  - STAT 212
+  - CS 361
+  - CS 374
+  - CS 421
+  id: required-computer-science-coursework-13
+- name: Required Computer Science Coursework
+  section: Major Requirements
+  rule: manual
+  notes:
+  - Mathematics (may also fulfill the General Education Quantitative Reasoning I and II requirements)
+  courses:
+  - - MATH 221
+    - MATH 220
+  - - MATH 225
+    - MATH 257
+  - MATH 231
+  id: required-computer-science-coursework-14
+- name: Foundation Courses- 12 hours required
+  section: Major Requirements
+  rule: n_of
+  n: 1
+  courses:
+  - - CHEM 102 + CHEM 103 + CHEM 104 + CHEM 105
+    - CHEM 202 + CHEM 203 + CHEM 204
+  - - CHEM 232
+    - CHEM 236
+  notes:
+  - 'Select one of the following (General or Accelerated Chemistry):'
+  id: foundation-courses-12-hours-required-15
+- name: Advanced Chemistry Courses- 12 hours
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'Choose one of the following:'
+  - Mathematics (may also fulfill the General Education Quantitative Reasoning I and II requirements)
+  courses:
+  - - CHEM 440
+    - CHEM 442
+  id: advanced-chemistry-courses-12-hours-16
+- name: Advanced Chemistry Courses- 12 hours
+  section: Major Requirements
+  rule: manual
+  notes:
+  - 'In consultation with an advisor, choose 8 hours of 300- or 400- level chemistry courses (The following courses may not
+    be used to complete the advanced chemistry hours: CHEM 315, CHEM 397, CHEM 445, CHEM 447, CHEM 492, CHEM 494, CHEM 497
+    and CHEM 499; and any course in another unit, such as any BIOC or MCB course.)'
+  id: advanced-chemistry-courses-12-hours-17

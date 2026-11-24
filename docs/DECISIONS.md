@@ -1468,3 +1468,25 @@ Every judgment call made during the autonomous build, newest phase last.
   CS minor, so the rule says so in a caveat instead of blocking them.
 - **D55.5 Kept, not dropped.** A link, a saved list or a change of major that produces a combination the rules close
   keeps the minor and shows the rule at the top of its checklist; the picker only stops new picks.
+
+## Joint-college majors (2026-11-24, issue #231)
+
+- **D56.1 Every index link is accounted for.** `index_links` sorts each `/undergraduate/...` link on the index into a
+  program page or a skip with its reason (undeclared, individual plan of study, a concentration read from its
+  program's page, not a program page), and the importer prints each skip and the count. 21 majors had gone missing
+  silently because joint-college folders (`eng_las/`) have an underscore and Statistics sits at
+  `las/academic-units/stats/statistics-major/`.
+- **D56.2 Ids without the college or unit.** A joint program's id is its slug (`statistics-computer-science-bslas`),
+  and a unit's program drops `academic-units/<unit>` (`statistics-major`, the id #230's rules already use). The
+  catalog serves the same Statistics page at `las/statistics-bslas/`; the index links the `academic-units` path, so
+  that is the source.
+- **D56.3 Any requirements tab.** Most pages call the tab `degreerequirementstextcontainer`; Music Composition, BMUS
+  calls it `requirementstextcontainer`, and the ABE BS + BSAG dual degree keeps its course tables on a second tab
+  (`abebsagrequirementstextcontainer`, "in addition to completion of" the ABE BS). The importer takes the degree tab,
+  else the first requirements tab with course tables.
+- **D56.4 Saved from a browser.** The catalog still challenges scripts (D43.2), so the 31 pages were saved with a
+  headless Chromium, one at a time, into `data/raw/catalog/` under the importer's names, then read with `--offline`.
+- **D56.5 Suspended concentrations stay out.** Interdisciplinary Health Sciences' health-aging,
+  health-behavior-change and health-diversity stop admitting in Spring 2027, have no course tables, and are
+  replaced by concentrations already in the checklist. English, Political Science and the other parents whose main
+  page has no course tables still come in through their concentrations only.

@@ -1,3 +1,5 @@
+import re
+
 import yaml
 
 from pipeline import catalog_import
@@ -287,3 +289,39 @@ def test_certificates_stop_at_the_graduate_list_and_validate():
     assert doc["id"] == "teaching-english-as-a-second-language-certificate"
     d = validate(yaml.safe_load(yaml.safe_dump(doc)), doc["id"])
     assert d.type == "certificate" and d.groups[0].rule == "manual"
+
+
+def test_index_links_take_joint_college_and_academic_units_programs():
+    index = (FIXTURES / "catalog" / "undergraduate-index.html").read_bytes()
+    links = catalog_import.program_links(index)
+    base = "https://catalog.illinois.edu/undergraduate/"
+    for u in ("eng_las/statistics-computer-science-bslas/", "eng_las/mathematics-computer-science-bslas/",
+              "eng_media/computer-science-advertising-bs/", "eng_faa/computer-science-music-bs/",
+              "eng_aces/agricultural-biological-engineering-bs/", "ahs_faa/dance-ba-kinesiology-bs/",
+              "las/academic-units/stats/statistics-major/", "bus/accountancy-bs/"):
+        assert f"{base}{u}" in links
+    assert not [u for u in links if re.search(r"undeclared|individual-plans", u)]
+    assert f"{base}las/academic-units/" not in links and f"{base}minors/" not in links
+    found, skipped = catalog_import.index_links(index)
+    reasons = dict(skipped)
+    assert reasons[f"{base}las/individual-plans-study/"] == "individual plan of study"
+    assert reasons[f"{base}bus/business-undeclared/"] == "undeclared"
+    assert reasons[f"{base}eng_aces/agricultural-biological-engineering-bs/synthetic-biological-engineering/"] \
+        .startswith("concentration")
+    assert not set(found) & {u for u, _ in skipped}
+
+
+def test_joint_and_unit_program_ids_drop_the_college_and_unit():
+    base = "https://catalog.illinois.edu/undergraduate/"
+    assert catalog_import.program_id(f"{base}eng_las/statistics-computer-science-bslas/") \
+        == "statistics-computer-science-bslas"
+    assert catalog_import.program_id(f"{base}las/academic-units/stats/statistics-major/") == "statistics-major"
+    abe = f"{base}eng_aces/agricultural-biological-engineering-bs/"
+    assert catalog_import.program_id(f"{abe}soil-water-resources-engineering/") \
+        == "agricultural-biological-engineering-bs-soil-water-resources-engineering"
+
+
+def test_a_requirements_tab_without_degree_in_its_id():
+    doc = parse("music-composition-bmus", "https://catalog.illinois.edu/undergraduate/faa/music-composition-bmus/")
+    assert doc["id"] == "music-composition-bmus" and doc["total_hours"] == 120
+    assert any(g.get("kind") != "gened" for g in doc["groups"])
