@@ -96,6 +96,9 @@ history).
 
 ### Fixed
 
+- Your best bus: a line is suggested only when walk + ride + walk beats walking all the way (it ignored the ride, so
+  a slow loop could win), each line is listed once, and MTD's "N/A" direction no longer shows ("toward N/A to
+  Illini Union" now reads "toward Illini Union"). D53.3.
 - Pipeline on Windows: `buildings.json`, `transit.json` and the OpenStreetMap cache are written as UTF-8, not the
   system code page, so the "©" in the OpenStreetMap credit no longer breaks them. The AP/IB score-import test reads
   tables with Windows line endings.

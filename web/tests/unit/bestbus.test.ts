@@ -70,4 +70,14 @@ describe("bestLines", () => {
     expect(bestLines(T, HOME, [{ course: "CS 124", b: "Mid" }], close).lines).toEqual([]);
     expect(bestLines(T, { name: "far away", lat: 40.2, lon: LON }, classes, B).lines).toEqual([]); // no stop near home
   });
+
+  it("counts the ride: a slow loop that beats the walk only on foot-minutes isn't suggested", () => {
+    const loop = { ...T, patterns: [{ ...T.patterns[0], o: [0, 30, 40] }, ...T.patterns.slice(1)] };
+    expect(bestLines(loop, HOME, classes, B).lines.map((l) => l.route)).toEqual(["5 Green"]);
+  });
+
+  it("lists a line MTD has under two route ids once", () => {
+    const twice = { ...T, routes: [...T.routes, T.routes[1]], patterns: [...T.patterns, { ...T.patterns[0], r: 2 }] };
+    expect(bestLines(twice, HOME, classes, B).lines.map((l) => l.route)).toEqual(["22 Illini", "5 Green"]);
+  });
 });
