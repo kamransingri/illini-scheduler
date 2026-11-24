@@ -139,8 +139,9 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
 - **Missing courses.** About 260 course codes in about 130 programs aren't offered in the terms the site loads. Of
   these, about 215 are in the 2026-2027 course catalog but rarely taught (often graduate courses), and about 40 aren't
   in it at all: retired or renumbered courses that program pages still list. They show greyed out, without a link.
-- **Scope.** Undergraduate majors (with their concentrations) and minors in the 2026-2027 catalog only. No certificates,
-  graduate programs or earlier catalog years.
+- **Scope.** Undergraduate majors (with their concentrations) and minors in the 2026-2027 catalog, plus the 22 LAS
+  undergraduate certificates as a link and one box to tick (D54). No other colleges' certificates, graduate programs or
+  earlier catalog years.
 - **Major and minor overlap.** A course counts toward both your major and your minor on the checklist. The 30 minors
   whose catalog page asks for coursework distinct from the major show how much you have (D43, D47); other limits
   (no overlap with one named major, majors that can't take the minor) are only in the minor page's words.

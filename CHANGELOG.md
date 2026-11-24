@@ -12,6 +12,8 @@ history).
 
 ### Added
 
+- Degree checklist: undergraduate certificates (#113). The 22 LAS certificates can be picked beside the major in the
+  minor slots, with a link to the unit's page and one box to tick; they aren't in the Academic Catalog (D54).
 - Schedule builder: Getting there (#96). Pick the hall or building you live in (or use where you are now) and each day
   of a schedule says when to leave and whether to walk or take an MTD bus, with the stop, route and time, then the
   trip home. Between classes that are too far apart to walk in time, it shows the bus that makes it, or how late

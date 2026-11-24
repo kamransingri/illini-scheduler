@@ -30,7 +30,7 @@ GENED_RE = re.compile(r"^gened:([A-Z0-9]+)$")
 GENED_CODES = {"ACP", "COMP1", "HP", "LA", "LS", "PS", "QR1", "QR2", "SS", "BSC", "NW", "US", "WCC"}
 RULES = {"all", "n_of", "hours", "manual"}
 KINDS = {"program", "gened"}
-TYPES = {"major", "minor"}
+TYPES = {"major", "minor", "certificate"}
 TOP_KEYS = {"id", "type", "program", "college", "catalog_year", "source", "read_on", "total_hours", "notes",
             "double_counting", "major_overlap", "groups", "generated"}
 OVERLAP_KEYS = {"distinct_hours", "distinct_courses", "min_level", "from", "exclude", "minors_too", "quote", "source"}
@@ -76,7 +76,7 @@ class Degree:
     groups: list[Group]
     unknown: list[str] = field(default_factory=list)
     generated: str = ""  # date, for files written by pipeline/catalog_import.py
-    type: str = "major"  # or "minor"
+    type: str = "major"  # or "minor", "certificate"
     # a minor's rules for coursework that must be distinct from the major (#112, docs/DEGREE-DATA.md)
     major_overlap: list[dict[str, Any]] = field(default_factory=list)
 
@@ -124,10 +124,14 @@ def validate(doc: Any, name: str = "?") -> Degree:
     if "id" in doc and (not isinstance(doc["id"], str) or not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", doc["id"])):
         errs.append("'id' must be a lower-case slug like finance-data-science")
     if "type" in doc and doc["type"] not in TYPES:
-        errs.append("'type' must be major or minor (leave it out for a major)")
+        errs.append("'type' must be major, minor or certificate (leave it out for a major)")
     if "catalog_year" in doc and not re.fullmatch(r"\d{4}-\d{4}", str(doc["catalog_year"])):
         errs.append("'catalog_year' must look like 2026-2027")
-    if "source" in doc and not str(doc["source"]).startswith("https://catalog.illinois.edu/"):
+    # certificates aren't in the catalog: their source is the unit's own page (DECISIONS D54.1)
+    if doc.get("type") == "certificate":
+        if "source" in doc and not re.match(r"https://[a-z0-9.-]+\.illinois\.edu/", str(doc["source"])):
+            errs.append("'source' must be an illinois.edu page for a certificate")
+    elif "source" in doc and not str(doc["source"]).startswith("https://catalog.illinois.edu/"):
         errs.append("'source' must be an Academic Catalog URL (https://catalog.illinois.edu/...)")
     read_on = doc.get("read_on")
     if isinstance(read_on, dt.date):

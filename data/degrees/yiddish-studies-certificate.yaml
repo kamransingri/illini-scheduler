@@ -1,0 +1,22 @@
+# Yiddish Studies Certificate (College of Liberal Arts and Sciences), from the LAS certificates list on 2026-11-23 by
+# pipeline/catalog_import.py: one hand-ticked group; the requirements are on the source page.
+# Edit by hand and delete the `generated:` line to keep your changes.
+id: yiddish-studies-certificate
+type: certificate
+program: Yiddish Studies Certificate
+college: College of Liberal Arts and Sciences
+catalog_year: 2026-2027
+source: https://jewishculture.illinois.edu/academics/undergraduate/yiddish-studies-certificate
+read_on: '2026-11-23'
+generated: '2026-11-23'
+notes:
+- Undergraduate certificates aren't in the Academic Catalog. The unit's page has the requirements.
+- Certificate programs do not appear on the student's official transcript; only courses taken are listed. (https://las.illinois.edu/academics/programs/certificates)
+double_counting: []
+groups:
+- id: requirements
+  name: Certificate requirements
+  section: Requirements
+  rule: manual
+  notes:
+  - Follow the requirements on the Yiddish Studies page; tick this once you (or your advisor) confirm they're done.
