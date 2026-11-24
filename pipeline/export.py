@@ -410,9 +410,10 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA, rename: Renamer | No
     places = building_rows(conn)
     (out_dir / "buildings.json").write_text(json.dumps(
         {"credit": BUILDINGS_CREDIT, "osm_base": meta_rows.get("buildings_osm_base") or None, "buildings": places},
-        separators=(",", ":"), ensure_ascii=False))
+        separators=(",", ":"), ensure_ascii=False), encoding="utf-8")
     # MTD's timetable near campus and places to live (#96); loaded by the builder's Getting there tab
-    (out_dir / "transit.json").write_text(json.dumps(transit_doc(conn), separators=(",", ":"), ensure_ascii=False))
+    (out_dir / "transit.json").write_text(json.dumps(transit_doc(conn), separators=(",", ":"), ensure_ascii=False),
+                                             encoding="utf-8")
     titles = {(c["s"], c["n"]): c["t"] for c in search_courses}
     sec_info = {(t, sec["crn"]): (sec["type_name"] or sec["type"] or "",
                                   [display(k, raw) for k, raw in zip(sec["instructors"], sec["instructors_raw"],
