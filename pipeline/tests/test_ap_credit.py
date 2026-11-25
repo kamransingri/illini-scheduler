@@ -124,3 +124,28 @@ def test_export_lists_unknown_codes(tmp_path):
     assert y["exams"][1]["rows"][0] == {"scores": [4, 5], "sub": None, "college": None, "with": None,
                                         "credit": [["STAT 100", 3]], "message": None, "fix": None}
     conn.close()
+
+
+def test_act_and_sat_files_parse_and_their_cutoffs_move_by_year():
+    """#105: every row parses, ranges don't overlap (validate refuses that), each fix quotes its source."""
+    y26, y25 = (y for y in ap_credit.load_all(kind=ap_credit.TEST))
+    assert (y26["label"], y25["label"]) == ("2026-2027", "2025-2026")
+    rhet = [["RHET 105", 4]]
+    assert credit(y26, "ACTENG", 35) == rhet and credit(y26, "ACTENG", 34) == []
+    assert credit(y25, "ACTENG", 34) == rhet and credit(y25, "ACTENG", 33) == []
+    assert credit(y26, "SATEBRW", 740) == rhet and credit(y26, "SATEBRW", 730) == []
+    assert credit(y25, "SATEBRW", 730) == rhet
+    chem = [r for e in y26["exams"] if e["id"] == "SATMATH" for r in e["rows"]][0]
+    assert 590 in chem["scores"] and 600 not in chem["scores"] and "Chemistry 101" in chem["message"]
+    for y in (y26, y25):
+        assert all('"' in r["fix"] for e in y["exams"] for r in e["rows"] if r["fix"])
+
+
+def test_a_bad_act_or_sat_range_is_refused():
+    exam = {"id": "SATMATH", "name": "SAT Math", "rows": [{"range": [205, 900], "credit": {}, "message": "x"}]}
+    with pytest.raises(ApCreditError, match="'range' must be"):
+        validate(doc(exams=[exam]), "2026-2027.yaml", ap_credit.TEST)
+    exam["rows"] = [{"range": [200, 600], "credit": {}, "message": "x"},
+                    {"range": [600, 800], "credit": {}, "message": "y"}]
+    with pytest.raises(ApCreditError, match="both apply to a score of 600"):
+        validate(doc(exams=[exam]), "2026-2027.yaml", ap_credit.TEST)

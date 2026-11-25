@@ -12,6 +12,11 @@ history).
 
 ### Added
 
+- Degree checklist: SAT and ACT scores (#104). Add your ACT English or SAT EBRW score next to AP and IB: 35+ (or 740+)
+  gives RHET 105 credit and fills Composition I (34+ and 730+ for 2025-2026), lower scores show CITL's Rhetoric
+  placement, and ACT Math 25 or SAT Math 590 or below shows the Chemistry 101 recommendation. RHET 105 from both an
+  ACT/SAT score and AP English Language counts once. Scores travel in the share link (`t=`), and the weekly CITL
+  check now watches the ACT and SAT rows and the Rhetoric and Chemistry placement pages.
 - Degree checklist: 26 more majors and concentrations (#231), 317 instead of 291. The importer skipped the joint-
   college majors (Statistics & Computer Science, Mathematics & Computer Science, most CS + X majors, Agricultural &
   Biological Engineering and its six concentrations, Dance & Kinesiology) and Statistics, BSLAS, because their catalog

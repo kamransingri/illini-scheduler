@@ -38,7 +38,7 @@ Credit these sources if you republish the data:
   be republished through this API and the npm package, and how he'd like to be credited (#194). Until he answers,
   credit him by name with a link to the dataset, and don't republish his files themselves.
 - **[Academic Catalog](https://catalog.illinois.edu/)**: degree requirements.
-- **[CITL](https://citl.illinois.edu/current-cutoff-scores)**: AP and IB credit tables.
+- **[CITL](https://citl.illinois.edu/current-cutoff-scores)**: AP, IB, ACT and SAT credit tables.
 - **Rate My Professors**: ratings, tags and review snippets. They belong to Rate My Professors and its reviewers, so
   link to the professor's page (`rmp.url`) when you show them.
 - **[OpenStreetMap](https://www.openstreetmap.org/copyright)**: building locations in `buildings.json`, © OpenStreetMap
@@ -80,7 +80,7 @@ Credit these sources if you republish the data:
 | `degrees/index.json` | Every major and minor | ~60 KB |
 | `degrees/<id>.json` | One program's requirements | 5–150 KB each |
 | `degrees/gened-courses.json` | Every course with a gen-ed code | ~250 KB |
-| `ap-credit.json`, `ib-credit.json` | Course credit for AP and IB scores | small |
+| `ap-credit.json`, `ib-credit.json`, `test-credit.json` | Course credit for AP, IB, ACT and SAT scores | small |
 | `feeds/<SUBJECT>/<NUMBER>.xml` | RSS feed of one course's seat changes | small |
 | `live.json` (another URL) | Seat changes from the last 48 hours, every ~10 minutes | small |
 
@@ -612,6 +612,32 @@ Course credit for IB scores. Same as `ap-credit.json`, plus levels and without `
 | `years[].exams[].rows[].with` | null | Always `null` |
 | `years[].exams[].rows[].credit` | array | `[[course code, hours], ...]` |
 | `years[].exams[].rows[].message` | string \| null | CITL's note |
+| `years[].exams[].rows[].fix` | string \| null | Hand correction, and why |
+
+### `data/test-credit.json`
+
+RHET 105 credit and placement for ACT and SAT scores (#105). Same as `ap-credit.json`, without `sub`, `college` and
+`with` values. Exam ids: `ACTENG`, `SATEBRW`, `ACTMATH`, `SATMATH` (the math rows are a chemistry placement note).
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `years[].id` | string | First year |
+| `years[].label` | string | `2026-2027` |
+| `years[].entering` | string | Which students the table is for |
+| `years[].source` | string | CITL page |
+| `years[].read_on` | string | When it was checked |
+| `years[].notes` | string[] | Notes |
+| `years[].unknown` | string[] | Credited codes not in this build's courses |
+| `years[].exams[].id` | string | Exam id |
+| `years[].exams[].name` | string | Exam name |
+| `years[].exams[].sub` | null | Always `null` |
+| `years[].exams[].notes` | string[] | Notes |
+| `years[].exams[].rows[].scores` | number[] | Every score the row covers (ACT 1 to 36, SAT 200 to 800 in tens) |
+| `years[].exams[].rows[].sub` | null | Always `null` |
+| `years[].exams[].rows[].college` | null | Always `null` |
+| `years[].exams[].rows[].with` | null | Always `null` |
+| `years[].exams[].rows[].credit` | array | `[[course code, hours], ...]` |
+| `years[].exams[].rows[].message` | string \| null | CITL's placement message |
 | `years[].exams[].rows[].fix` | string \| null | Hand correction, and why |
 
 ### `data/feeds/<SUBJECT>/<NUMBER>.xml`

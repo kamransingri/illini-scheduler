@@ -114,3 +114,29 @@ def test_ib_rows_are_checked_on_their_own_and_older_missing_years_are_not_new(ci
     rep = cw.check(client, folder, "IB")
     assert rep.new_years == ["2027-2028"]
     assert f"`data/{folder.name}/2027-2028.yaml`" in cw.issue_body([rep]) and "(IB)" in cw.issue_body([rep])
+
+
+def test_act_and_sat_rows_and_placement_pages_are_watched_together(citl, monkeypatch):
+    folder, state, client = citl
+    (folder / "2025-2026.yaml").unlink()
+    page = ("<main><h1>Chemistry Placement</h1><p>SAT Math scores of 590 or below</p><script>x</script></main>"
+            "<p>footer</p>")
+    monkeypatch.setitem(cw.PAGES, folder, {"chemistry-placement": STATIC})
+    state["page"] = page
+    state["entries"] += [
+        {"Exam Type": "SAT", "Test Name": "SAT ERBW", "Score": "740-800", "Course Credit": "RHET 105"},
+        {"Exam Type": "ACT", "Test Name": "ACT ENGLISH", "Score": "35-36", "Course Credit": "RHET 105"},
+    ]
+    first = cw.check(client, folder, "ACT/SAT")
+    assert first.lines["2026-2027"] == ["ACT | ACT ENGLISH |  | 35-36 | RHET 105 |  |  | ",
+                                        "SAT | SAT ERBW |  | 740-800 | RHET 105 |  |  | "]
+    assert first.lines["chemistry-placement"] == ["Chemistry Placement", "SAT Math scores of 590 or below"]
+    cw.save_snapshots(first, folder)
+    assert not cw.check(client, folder, "ACT/SAT").anything  # unchanged data isn't reported
+
+    state["page"] = page.replace("590", "600")
+    state["entries"][-1]["Score"] = "34-36"
+    state["years"].insert(0, "2027-2028")
+    rep = cw.check(client, folder, "ACT/SAT")
+    assert set(rep.changed) == {"2026-2027", "chemistry-placement"} and rep.new_years == ["2027-2028"]
+    assert "CITL's AP, IB, SAT or ACT tables" in cw.issue_body([rep])

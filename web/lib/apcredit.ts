@@ -182,3 +182,39 @@ export function creditCourses(credits: ApCredit[], declined: string[], own: MyCo
       return { s, n, status: "credit" as const, hours: c.hours, ap: c.from.join("; ") };
     });
 }
+
+// ACT and SAT (#106): web/public/data/test-credit.json in the same table shape. Each row lists every score in its range;
+// the English rows give RHET 105 credit or a Rhetoric placement, the math rows a chemistry placement note.
+export type TestScore = { exam: string; score: number };
+
+const TEST_PART = /^([A-Z][A-Z0-9]{1,9})-(\d{1,3})$/;
+
+/** The scores an exam can have, highest first: SAT 800 to 200 in tens, ACT 36 to 1. */
+export const testScores = (exam: string): number[] =>
+  exam.startsWith("SAT") ? Array.from({ length: 61 }, (_, i) => 800 - 10 * i) : Array.from({ length: 36 }, (_, i) => 36 - i);
+
+/** "ACTENG-35,SATMATH-600". */
+export function encodeTest(list: TestScore[]): string {
+  return list.map((a) => `${a.exam}-${a.score}`).join(",");
+}
+
+/** One score per exam (the last one wins); a score the test can't have is dropped. */
+export function decodeTest(param: string | null | undefined): TestScore[] {
+  const out = new Map<string, TestScore>();
+  for (const part of (param ?? "").split(",")) {
+    const m = TEST_PART.exec(part.trim().toUpperCase());
+    if (m && testScores(m[1]).includes(Number(m[2]))) out.set(m[1], { exam: m[1], score: Number(m[2]) });
+  }
+  return [...out.values()];
+}
+
+/** What the ACT and SAT scores give under one year's table, in the same shape as apCredit. */
+export function testCredit(year: ApYear, list: TestScore[]): ApSummary {
+  const byId = new Map(year.exams.map((e) => [e.id, e]));
+  const results = list.map((a): ApResult => {
+    const exam = byId.get(a.exam);
+    const row = exam?.rows.find((r) => r.scores.includes(a.score)) ?? null;
+    return { score: { ...a, sub: null }, exam, label: `${exam?.name ?? a.exam}, ${a.score}`, row, needsSub: false };
+  });
+  return { results, credits: allCredits({ results, credits: [] }) };
+}

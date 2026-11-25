@@ -114,3 +114,29 @@ test("IB scores: the level picks the row, the credit counts like AP credit, and 
   await expect(panel(page).locator('[data-kind="IB"][data-exam="MATHAA"]')).toContainText("No IB table here for students starting in Summer 2025");
   await expect(req(page, "calculus")).toHaveAttribute("data-status", "open");
 });
+
+test("an ACT English 35 meets Composition I, and the share link keeps it (#106)", async ({ page }) => {
+  await page.goto("./degree/?p=finance-data-science");
+  await expect(exam(page)).toBeEnabled();
+  await page.getByRole("button", { name: "ACT/SAT" }).click();
+  await expect(page.getByTestId("test-hint")).toContainText("Only official scores sent with your application count");
+  const test = page.getByRole("combobox", { name: "ACT/SAT exam", exact: true });
+  await test.selectOption({ label: "ACT English" });
+  await score(page).selectOption("35");
+  await addExam(page).click();
+  await expect(panel(page).locator('[data-exam="ACTENG"]')).toContainText("RHET 105");
+  await expect(req(page, "comp1")).toHaveAttribute("data-status", "done");
+  await expect(page).toHaveURL(/t=ACTENG-35/);
+
+  await test.selectOption({ label: "SAT Math" });
+  await score(page).selectOption("590");
+  await addExam(page).click();
+  await expect(panel(page).locator('[data-exam="SATMATH"]')).toContainText("recommended to enroll in Chemistry 101");
+
+  const link = page.url();
+  await page.evaluate(() => localStorage.clear());
+  await page.goto(link);
+  await expect(req(page, "comp1")).toHaveAttribute("data-status", "done");
+  await req(page, "comp1").getByRole("button", { name: /Show what counts/ }).click();
+  await expect(req(page, "comp1")).toContainText("RHET 105, ACT/SAT credit");
+});

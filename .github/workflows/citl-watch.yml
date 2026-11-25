@@ -1,7 +1,8 @@
-# Weekly check that CITL's AP and IB credit tables still match the snapshots taken when data/ap-credit/*.yaml and
-# data/ib-credit/*.yaml were last checked by hand, and that CITL hasn't published a new year (pipeline/citl_watch.py,
-# issues #23 and #25). On a change it opens one issue with the diff; it never edits the YAML.
-name: CITL AP and IB credit check
+# Weekly check that CITL's AP, IB, ACT and SAT credit tables still match the snapshots taken when the YAML in
+# data/ap-credit, data/ib-credit and data/test-credit was last checked by hand, and that CITL hasn't published a new
+# year (pipeline/citl_watch.py, issues #23, #25 and #107). On a change it opens one issue with the diff; it never edits
+# the YAML.
+name: CITL AP, IB, SAT and ACT credit check
 on:
   schedule:
     - cron: "41 14 * * 1" # Mondays
@@ -32,7 +33,7 @@ jobs:
         if: steps.check.outputs.code == '10'
         env:
           GH_TOKEN: ${{ github.token }}
-          TITLE: "CITL's AP or IB credit tables changed"
+          TITLE: "CITL's AP, IB, SAT or ACT tables changed"
         run: |
           open=$(gh issue list --state open --search "\"$TITLE\" in:title" --json number --jq 'length')
           if [ "$open" != "0" ]; then echo "An open issue already covers this."; exit 0; fi

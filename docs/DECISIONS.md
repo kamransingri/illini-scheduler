@@ -1490,3 +1490,12 @@ Every judgment call made during the autonomous build, newest phase last.
   health-behavior-change and health-diversity stop admitting in Spring 2027, have no course tables, and are
   replaced by concentrations already in the checklist. English, Political Science and the other parents whose main
   page has no course tables still come in through their concentrations only.
+
+## SAT and ACT scores (2026-11-25, issue #104)
+
+- **D57.1 Same table, ranges.** ACT and SAT tables use the AP file shape with `range: [lowest, highest]` rows, expanded
+  to every score on export, so the checklist matches, shows and counts them with the AP and IB code.
+- **D57.2 The Rhetoric page over the tool.** Where the 2026-2027 Rhetoric Placement page and the cutoff tool disagree
+  (SAT EBRW 530), the page wins: it's the department's policy page, updated the same day. The `fix` quotes both.
+- **D57.3 Placement on the card.** Placement messages show under each score in My courses, not on the Composition I
+  and chemistry rows of every program; only RHET 105 credit changes a requirement.

@@ -1,0 +1,43 @@
+# ACT and SAT credit and placement for students entering Illinois in Summer 2025, Fall 2025 or Spring 2026 (#105).
+# Copied by hand from CITL's cutoff score tool (year 2025-2026, exam types ACT and SAT). The chemistry rule is from the
+# 2026-2027 Chemistry page, which says nothing about earlier years, so it isn't repeated here. Format: docs/AP-CREDIT.md.
+year: 2025-2026
+entering: Summer 2025, Fall 2025 or Spring 2026
+source: https://citl.illinois.edu/current-cutoff-scores
+read_on: 2026-11-25
+notes:
+  - Only official scores sent with your application count; self-reported scores serve for preliminary placement only.
+exams:
+  - id: ACTENG
+    name: ACT English
+    rows:
+      - range: [34, 36]
+        credit: {RHET 105: 4}
+        message: You earned 4 hours of credit for RHET 105 and fulfilled the Composition I requirement.
+      - range: [20, 33]
+        credit: {}
+        message: If the EPT is not required, placed into RHET 105. You must enroll in Fall 2025 if your UIN ends in an
+          even number. You must enroll in Spring 2026 if your UIN ends in an odd number. Alternatively, you may enroll
+          in Fall 2025 CMN 111 and Spring 2026 CMN 112.
+        fix: The tool's message says "Spring 2025" and "Fall 2024 CMN 111" for this year's students; we use 2025-2026's
+          terms, as its SAT row does.
+      - range: [1, 19]
+        credit: {}
+        message: If the EPT is not required, placed into RHET 101 for Fall 2025 and RHET 102 for Spring 2026.
+        fix: The tool writes the range as "19-Jan" (a spreadsheet's date for 1-19) and the terms as "Fall 2024" and
+          "Spring 2025".
+
+  - id: SATEBRW
+    name: SAT Evidence-Based Reading and Writing
+    rows:
+      - range: [730, 800]
+        credit: {RHET 105: 4}
+        message: You earned 4 hours of credit for RHET 105 and fulfilled the Composition I requirement.
+      - range: [540, 720]
+        credit: {}
+        message: If the EPT is not required, placed into RHET 105. You must enroll in Fall 2025 if your UIN ends in an
+          even number. You must enroll in Spring 2026 if your UIN ends in an odd number. Alternatively, you may enroll
+          in Fall 2025 CMN 111 and Spring 2026 CMN 112.
+      - range: [200, 530]
+        credit: {}
+        message: If the EPT is not required, placed into RHET 101 for Fall 2025 and RHET 102 for Spring 2026.

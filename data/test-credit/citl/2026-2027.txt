@@ -1,0 +1,6 @@
+ACT | ACT ENGLISH |  | 1 to 19 | None | 0 | If the EPT is not required, placed into RHET 101 for Fall 2026 and RHET 102 for Spring 2027. | 
+ACT | ACT ENGLISH |  | 20-34 | None | 0 | If the EPT is not required, placed into RHET 105. You must enroll in Fall 2026 if your UIN ends in an even number. You must enroll in Spring 2027 if your UIN ends in an odd number. Alternatively, you may enroll in Fall 2026 CMN 111 and Spring 2027 CMN 112. | 
+ACT | ACT ENGLISH |  | 35-36 | RHET 105 | 4 | You earned 4 hours of credit for RHET 105 and fulfilled the Composition I requirement. | Composition I
+SAT | SAT ERBW |  | 200-530 | None | 0 | If the EPT is not required, placed into RHET 101 for Fall 2026 and RHET 102 for Spring 2027. | 
+SAT | SAT ERBW |  | 540-730 | None | 0 | If the EPT is not required, placed into RHET 105. You must enroll in Fall 2026 if your UIN ends in an even number. You must enroll in Spring 2027 if your UIN ends in an odd number. Alternatively, you may enroll in Fall 2026 CMN 111 and Spring 2027 CMN 112. | 
+SAT | SAT ERBW |  | 740-800 | RHET 105 | 4 | You earned 4 hours of credit for RHET 105 and fulfilled the Composition I requirement. | Composition I

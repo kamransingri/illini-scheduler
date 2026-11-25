@@ -1,12 +1,14 @@
-"""Weekly check that CITL's AP and IB credit tables still say what data/ap-credit/*.yaml and data/ib-credit/*.yaml
-copied from them (issues #23 and #25).
+"""Weekly check that CITL's AP, IB, ACT and SAT credit tables still say what data/ap-credit/*.yaml,
+data/ib-credit/*.yaml and data/test-credit/*.yaml copied from them (issues #23, #25 and #107).
 
 Each year file's `source` is read again and cut down to its content lines: exam names and table rows for a static CITL
 page, or the AP rows of the cutoff-score tool's data (that page is an empty shell its script fills from a JSON
 service). The lines are compared with data/ap-credit/citl/<year>.txt, taken when the YAML was last checked by hand.
 The tool's list of years is checked too, so a new table (2027-2028) is noticed; a year older than the newest file is
 not, because some are left out on purpose (the tool's 2025-2026 IB rows have no level). IB files are checked the same
-way, against the tool's IB rows and data/ib-credit/citl/. Nothing here edits the YAML: the hand copy and its `fix`
+way, against the tool's IB rows and data/ib-credit/citl/. ACT and SAT rows go together into data/test-credit/citl/,
+with the Rhetoric and Chemistry placement pages beside them: the chemistry rule isn't in the tool, and the Rhetoric page
+and the tool disagree on one SAT score. Nothing here edits the YAML: the hand copy and its `fix`
 notes stay the source of truth (docs/AP-CREDIT.md).
 
     python -m pipeline.citl_watch               report; exit code 10 when something changed
@@ -28,17 +30,20 @@ from typing import Any
 import httpx
 import yaml
 
-from .ap_credit import AP_DIR, IB_DIR
+from .ap_credit import AP_DIR, IB_DIR, TEST_DIR
 from .config import USER_AGENT
 
 CUTOFF_PAGE = "https://citl.illinois.edu/current-cutoff-scores"
 # Where the cutoff page's script reads its data; the page names it (PNP_API_BASE_URL), and that wins over this.
 CUTOFF_API = "https://pnp-cutoffs-backend-104034467107.us-central1.run.app"
 COLUMNS = ("Test Name", "Level", "Score", "Course Credit", "Credit Earned", "Placement Message", "Gen Ed Fulfillment")
-KINDS = (("AP", AP_DIR), ("IB", IB_DIR))  # exam type in CITL's tool, folder of year files
+KINDS = (("AP", AP_DIR), ("IB", IB_DIR), ("ACT/SAT", TEST_DIR))  # exam type(s) in CITL's tool, folder of year files
+PLACEMENT = "https://citl.illinois.edu/test-placement-proficiency/current-cutoffs/"
+PAGES = {TEST_DIR: {name: PLACEMENT + name for name in ("rhetoric-placement", "chemistry-placement")}}
 CHANGED = 10  # exit code when something changed; errors exit 1, so the workflow can tell them apart
 MAX_DIFF_LINES = 120
 VOID = {"area", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "wbr"}
+BR = "\n"
 BLOCK = {"p", "div", "li", "tr", "table", "ul", "ol", "h1", "h2", "h3", "h4", "h5", "h6"}
 
 
@@ -113,6 +118,38 @@ class _PageText(HTMLParser):
             self._buf.append(data)
 
 
+class _MainText(HTMLParser):
+    """Every line of text inside <main>: a static page with no accordions, like the placement pages."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.buf: list[str] = []
+        self._main = self._skip = 0
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        self._main += tag == "main"
+        self._skip += tag in ("script", "style")
+        if tag in BLOCK or tag in ("br", "td", "th"):
+            self.buf.append(BR)
+
+    def handle_endtag(self, tag: str) -> None:
+        self._main -= tag == "main"
+        self._skip -= tag in ("script", "style")
+        if tag in BLOCK or tag in ("td", "th"):
+            self.buf.append(BR)
+
+    def handle_data(self, data: str) -> None:
+        if self._main > 0 and self._skip <= 0:
+            self.buf.append(data)
+
+
+def main_lines(html: str) -> list[str]:
+    p = _MainText()
+    p.feed(html)
+    p.close()
+    return [x for x in (_norm(line) for line in "".join(p.buf).split(BR)) if x]
+
+
 def page_lines(html: str) -> list[str]:
     p = _PageText()
     p.feed(html)
@@ -121,9 +158,12 @@ def page_lines(html: str) -> list[str]:
 
 
 def api_lines(data: dict[str, Any], exam_type: str = "AP") -> list[str]:
-    """One exam type's rows of one year from the cutoff tool, one line each, sorted so a reordering isn't a change."""
-    rows = [e for e in data.get("entries") or [] if str(e.get("Exam Type", "")).upper() == exam_type]
-    return sorted(" | ".join(_norm(str(e.get(c) or "")) for c in COLUMNS) for e in rows)
+    """One exam type's rows of one year from the cutoff tool, one line each, sorted so a reordering isn't a change.
+    "ACT/SAT" takes both types, with the type first on each line."""
+    types = exam_type.split("/")
+    rows = [e for e in data.get("entries") or [] if str(e.get("Exam Type", "")).upper() in types]
+    cols = (("Exam Type",) if len(types) > 1 else ()) + COLUMNS
+    return sorted(" | ".join(_norm(str(e.get(c) or "")) for c in cols) for e in rows)
 
 
 @dataclass
@@ -161,9 +201,12 @@ def check(client: httpx.Client, directory: Path = AP_DIR, exam_type: str = "AP")
     base = api_base(client)
     offered = [str(y["id"]) for y in client.get(f"{base}/api/public/years").raise_for_status().json()]
     rep.new_years = sorted(y for y in set(offered) - set(files) if not files or y > max(files))
-    for year, source in files.items():
+    pages = PAGES.get(directory, {})
+    for year, source in [*files.items(), *pages.items()]:
         rep.sources[year] = source
-        if source.rstrip("/") == CUTOFF_PAGE:
+        if year in pages:
+            lines = main_lines(client.get(source).raise_for_status().text)
+        elif source.rstrip("/") == CUTOFF_PAGE:
             lines = api_lines(client.get(f"{base}/api/public/years/{year}").raise_for_status().json(), exam_type)
         else:
             lines = page_lines(client.get(source).raise_for_status().text)
@@ -189,8 +232,9 @@ def save_snapshots(rep: Report, directory: Path | None = None) -> None:
 
 def issue_body(reps: Report | list[Report]) -> str:
     reps = [reps] if isinstance(reps, Report) else reps
-    out = ["CITL's AP or IB credit tables no longer match the snapshots taken when `data/ap-credit/*.yaml` and "
-           "`data/ib-credit/*.yaml` were last checked (`python -m pipeline.citl_watch`).", ""]
+    out = ["CITL's AP, IB, SAT or ACT tables no longer match the snapshots taken when `data/ap-credit/*.yaml`, "
+           "`data/ib-credit/*.yaml` and `data/test-credit/*.yaml` were last checked (`python -m pipeline.citl_watch`).",
+           ""]
     for rep in reps:
         folder = rep.directory.name
         for year in rep.new_years:

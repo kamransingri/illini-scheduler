@@ -1,0 +1,66 @@
+# ACT and SAT credit and placement for students entering Illinois in Summer 2026, Fall 2026 or Spring 2027 (#105).
+# Copied by hand from CITL's cutoff score tool (year 2026-2027, exam types ACT and SAT) and the Rhetoric and Chemistry
+# placement pages. Format and rules: docs/AP-CREDIT.md. Messages are word for word; a `fix` quotes what we corrected.
+year: 2026-2027
+entering: Summer 2026, Fall 2026 or Spring 2027
+source: https://citl.illinois.edu/current-cutoff-scores
+read_on: 2026-11-25
+notes:
+  - Placement is based on your highest official ACT English or SAT EBRW score if submitted during the application
+    process. Self-reported scores serve for preliminary placement only.
+  - Students who didn't submit ACT or SAT scores are placed into a Rhetoric class from their high school record and are
+    invited to complete the Rhetoric Placement Questionnaire.
+exams:
+  - id: ACTENG
+    name: ACT English
+    rows:
+      - range: [35, 36]
+        credit: {RHET 105: 4}
+        message: You earned 4 hours of credit for RHET 105 and fulfilled the Composition I requirement.
+      - range: [20, 34]
+        credit: {}
+        message: If the EPT is not required, placed into RHET 105. You must enroll in Fall 2026 if your UIN ends in an
+          even number. You must enroll in Spring 2027 if your UIN ends in an odd number. Alternatively, you may enroll
+          in Fall 2026 CMN 111 and Spring 2027 CMN 112.
+      - range: [1, 19]
+        credit: {}
+        message: If the EPT is not required, placed into RHET 101 for Fall 2026 and RHET 102 for Spring 2027.
+        fix: The cutoff tool writes the range "1 to 19"; the Rhetoric page writes "1 - 19".
+
+  - id: SATEBRW
+    name: SAT Evidence-Based Reading and Writing
+    rows:
+      - range: [740, 800]
+        credit: {RHET 105: 4}
+        message: You earned 4 hours of credit for RHET 105 and fulfilled the Composition I requirement.
+      - range: [530, 730]
+        credit: {}
+        message: If the EPT is not required, placed into RHET 105. You must enroll in Fall 2026 if your UIN ends in an
+          even number. You must enroll in Spring 2027 if your UIN ends in an odd number. Alternatively, you may enroll
+          in Fall 2026 CMN 111 and Spring 2027 CMN 112.
+        fix: The Rhetoric Placement page puts 530 here ("530 - 730"); the cutoff tool says "540-730" and puts 530 in
+          "200-530". We follow the Rhetoric page.
+      - range: [200, 520]
+        credit: {}
+        message: If the EPT is not required, placed into RHET 101 for Fall 2026 and RHET 102 for Spring 2027.
+        fix: The cutoff tool says "200-530"; the Rhetoric Placement page says "200 - 520".
+
+  - id: ACTMATH
+    name: ACT Math
+    notes:
+      - From CITL's Chemistry Placement page (https://citl.illinois.edu/test-placement-proficiency/current-cutoffs/chemistry-placement). No course credit.
+    rows:
+      - range: [1, 25]
+        credit: {}
+        message: Students who have ACT Math scores of 25 or below or who have SAT Math scores of 590 or below are
+          recommended to enroll in Chemistry 101 regardless of chemistry placement score.
+
+  - id: SATMATH
+    name: SAT Math
+    notes:
+      - From CITL's Chemistry Placement page (https://citl.illinois.edu/test-placement-proficiency/current-cutoffs/chemistry-placement). No course credit.
+    rows:
+      - range: [200, 590]
+        credit: {}
+        message: Students who have ACT Math scores of 25 or below or who have SAT Math scores of 590 or below are
+          recommended to enroll in Chemistry 101 regardless of chemistry placement score.
