@@ -10,6 +10,8 @@ history).
 
 ## [Unreleased]
 
+## [0.16.0] - 2026-11-25
+
 ### Added
 
 - Degree checklist: SAT and ACT scores (#104). Add your ACT English or SAT EBRW score next to AP and IB: 35+ (or 740+)
@@ -109,6 +111,12 @@ history).
 - Time locks (#139): when two sections meet at the same time, "Keep 11am MWF, any section" keeps the course at that
   time in every schedule, whichever section it is, instead of locking one CRN. Share links carry it (`CS124@21-660`)
   and older links still open.
+
+### Changed
+
+- A lighter repository (#227): old screenshots and daily availability files were removed from git history, so a fresh
+  clone went from about 47 MB to about 9 MB. Nothing in the site changed. Anyone with an older clone should re-clone
+  (or `git fetch origin && git reset --hard origin/main`) before pushing.
 
 ### Fixed
 
@@ -463,7 +471,8 @@ history).
 - A partial Rate My Professors error no longer stops `make data`.
 - RSS feeds are written as UTF-8.
 
-[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.15.0...HEAD
+[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.16.0...HEAD
+[0.16.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.15.0...v0.16.0
 [0.15.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.14.1...v0.15.0
 [0.14.1]: https://github.com/kamransingri/illini-scheduler/compare/v0.14.0...v0.14.1
 [0.14.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.13.1...v0.14.0
