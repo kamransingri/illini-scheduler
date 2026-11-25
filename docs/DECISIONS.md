@@ -1499,3 +1499,14 @@ Every judgment call made during the autonomous build, newest phase last.
   (SAT EBRW 530), the page wins: it's the department's policy page, updated the same day. The `fix` quotes both.
 - **D57.3 Placement on the card.** Placement messages show under each score in My courses, not on the Composition I
   and chemistry rows of every program; only RHET 105 credit changes a requirement.
+
+## Tracks, the footer and the header (2026-11-25)
+
+- **D58.1 A track is a group named "... Track".** The importer already keeps each track as groups with that name; two
+  or more different names make a choice. The checklist shows only the picked track's groups (`withTrack`), and a
+  "Pick a track" requirement until one is picked. Industrial Engineering's "Track Option Electives" lists options by
+  area, not "... Track" groups, so it isn't a choice here yet.
+- **D58.2 The footer names the current version only.** Earlier ones are a click away on What's new; three version
+  links and a paragraph of sources were noise on every page.
+- **D58.3 Four header links.** Just opened is a feed students reach from the home page, a course or the schedule
+  builder; the header keeps the four planning pages (replaces D39.3's five).

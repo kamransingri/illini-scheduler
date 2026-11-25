@@ -30,7 +30,7 @@ export default function SiteNav() {
             : `flex h-full items-center gap-2 px-3 whitespace-nowrap xl:px-4 ${cur ? "bg-white/10 font-semibold shadow-[inset_0_-4px_0_var(--color-orange)]" : "hover:bg-white/5 hover:underline"}`
         }
       >
-        {/* five labels fit a 1024px header with their icons (DECISIONS D39.3) */}
+        {/* four labels fit a 1024px header with their icons (DECISIONS D39.3) */}
         <Icon name={n.icon} className={cur ? "text-white" : "text-white/70"} />
         {n.label}
         {n.href === "/schedule/" && <CartCount />}

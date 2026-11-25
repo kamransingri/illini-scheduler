@@ -2,9 +2,9 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { allCredits, apCredit, creditCourses, IB_LEVEL, ibCredit, isElective, isGrainger, pickIbYear, pickYear, subOptions, testCredit, testScores, type ApSummary, type ApTable, type ApYear, type IbLevel } from "@/lib/apcredit";
-import { alsoCounts, evaluate, hoursSoFar, hydrate, needText, listedByHand, notOpenRules, options, overlapChecks, parseHours, programCourses, rankCourse, type Degree, type DegreeCourse, type DegreeIndex, type Evaluation, type GroupResult, type GroupStatus, type HoursSoFar, type OverlapCheck, type Ranked } from "@/lib/degree";
+import { alsoCounts, evaluate, hoursSoFar, hydrate, needText, listedByHand, notOpenRules, options, overlapChecks, parseHours, programCourses, rankCourse, trackSlug, withTrack, type Degree, type DegreeCourse, type DegreeIndex, type Evaluation, type GroupResult, type GroupStatus, type HoursSoFar, type OverlapCheck, type Ranked } from "@/lib/degree";
 import { courseHref, dataUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, termLabel } from "@/lib/format";
-import { EMPTY, MAX_MINORS, minorTick, onMineChange, readMine, sameState, STATUS_LABEL, stateFromParams, stateToParams, ticksOf, writeMine, type CourseStatus, type MyState } from "@/lib/mycourses";
+import { EMPTY, MAX_MINORS, minorTick, onMineChange, pickedTrack, readMine, sameState, setTrack, STATUS_LABEL, stateFromParams, stateToParams, ticksOf, writeMine, type CourseStatus, type MyState } from "@/lib/mycourses";
 import { COURSE_DRAG, finishTerms, isEmptyPlan, planTerms, type FinishAt } from "@/lib/plan";
 import type { ScorePriors } from "@/lib/score";
 import type { SearchIndex } from "@/lib/types";
@@ -89,9 +89,9 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
   const [st, setSt] = useState<MyState>(EMPTY);
   const [shared, setShared] = useState<MyState | null>(null); // your own list, kept while a shared link is open
   const [ready, setReady] = useState(false);
-  const [deg, setDeg] = useState<Degree | null>(null);
+  const [fullDeg, setDeg] = useState<Degree | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [minorDegs, setMinorDegs] = useState<Record<string, Degree>>({});
+  const [fullMinorDegs, setMinorDegs] = useState<Record<string, Degree>>({});
   const [minorErrors, setMinorErrors] = useState<Record<string, string>>({});
   const majors = useMemo(() => programs.filter((p) => (p.type ?? "major") === "major"), [programs]);
   const selectedMajor = majors.find((p) => p.id === st.program);
@@ -157,7 +157,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
   const minorKey = st.minors.join(",");
   useEffect(() => {
     for (const id of minorKey ? minorKey.split(",") : []) {
-      if (minorDegs[id] || minorErrors[id]) continue;
+      if (fullMinorDegs[id] || minorErrors[id]) continue;
       loadDegree(id)
         .then((d) => setMinorDegs((m) => ({ ...m, [id]: d })))
         .catch((e: Error) => setMinorErrors((m) => ({ ...m, [id]: e.message })));
@@ -180,6 +180,12 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
   );
   const estimated = useMemo(() => allCourses.filter((c) => c.ap), [allCourses]);
   const apReady = (!st.ap.length || !!apTable || apError) && (!st.ib.length || (!!ibTable && !!apTable) || ibError || apError) && (!st.tests.length || (!!testTable && !!apTable) || testError || apError);
+  // a program with tracks shows only the picked one (the others stay in its picker)
+  const deg = useMemo(() => (fullDeg ? withTrack(fullDeg, pickedTrack(st.tracks, fullDeg.id)) : null), [fullDeg, st.tracks]);
+  const minorDegs = useMemo(
+    () => Object.fromEntries(Object.entries(fullMinorDegs).map(([id, d]) => [id, withTrack(d, pickedTrack(st.tracks, id))])),
+    [fullMinorDegs, st.tracks],
+  );
   const majorTicks = useMemo(() => ticksOf(st.ticked), [st.ticked]);
   const ev = useMemo(() => (deg && apReady ? evaluate(deg, allCourses, majorTicks) : null), [deg, apReady, allCourses, majorTicks]);
   const minorEvs = useMemo(
@@ -993,6 +999,28 @@ function Checklist({
           {minor && <span className="mr-2 align-middle text-sm font-semibold tracking-wide text-muted uppercase">{kind} </span>}
           {deg.program}
         </h2>
+        {deg.tracks?.length ? (
+          <label className="mt-3 block max-w-md" data-testid="track-picker">
+            <span className="font-semibold text-heading">Track</span>
+            <select
+              className="mt-1 w-full rounded border border-line bg-white px-2 py-1.5"
+              value={deg.track ? trackSlug(deg.track) : ""}
+              onChange={(e) => update({ ...st, tracks: setTrack(st.tracks, deg.id, e.target.value) })}
+            >
+              <option value="">Pick a track</option>
+              {deg.tracks.map((t) => (
+                <option key={t} value={trackSlug(t)}>
+                  {t}
+                </option>
+              ))}
+            </select>
+            <span className="mt-1 block text-sm text-muted">
+              {deg.track
+                ? `Only the ${deg.track} is shown; the other ${deg.tracks.length - 1} stay in this list if you switch.`
+                : `This ${minor ? kind : "program"} has ${deg.tracks.length} tracks. Pick one to see its requirements.`}
+            </span>
+          </label>
+        ) : null}
         <p className="mt-3 text-lg" data-testid={minor ? "minor-progress" : "degree-progress"}>
           <span className="font-semibold text-heading tnum">
             {counts("done")} of {total}
@@ -1102,7 +1130,7 @@ function Requirement({
           {g.items.length > 0 && <ListedCourses items={g.items} deg={deg} taken={taken} />}
         </div>
       )}
-      {g.rule === "manual" ? (
+      {g.rule === "manual" && g.id !== "track" ? (
         <label className="mt-2 flex items-start gap-2">
           <input
             type="checkbox"

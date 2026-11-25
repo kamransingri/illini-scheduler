@@ -63,6 +63,8 @@ export type Degree = {
   courses: Record<string, DegreeCourse>;
   unknown: string[];
   generated?: string; // date, when the file was imported automatically from the catalog (pipeline/catalog_import.py)
+  tracks?: string[]; // set by withTrack: the tracks the student picks one of
+  track?: string | null; // set by withTrack: the picked one, null until picked
 };
 
 /**
@@ -395,4 +397,44 @@ export function overlapChecks(minor: Degree, mine: MyCourse[], other: OtherProgr
       maybe: distinct.filter(listed),
     };
   });
+}
+
+// Tracks: some programs ask the student to pick one track (the Economics minor's Microeconomics, Macroeconomics and
+// Econometrics tracks, Physics's five). The catalog importer keeps each as groups named "... Track".
+
+/** The track a group belongs to: its name, when that ends in "Track" (ignoring a trailing "(two options)"). */
+export function trackOf(g: Pick<DegreeGroup, "name">): string | null {
+  const name = g.name.replace(/\s*\([^)]*\)\s*$/, "").trim();
+  return / Track$/.test(name) ? name : null;
+}
+
+export const trackSlug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+/** The tracks a student picks one of: two or more differently named "... Track" groups; [] when there's no choice. */
+export function tracksOf(deg: Pick<Degree, "groups">): string[] {
+  const names = [...new Set(deg.groups.map(trackOf).filter((t): t is string => !!t))];
+  return names.length > 1 ? names : [];
+}
+
+const PICK_NOTE = /select one of the following tracks/i;
+
+/**
+ * The program with only the picked track's groups, beside everything outside the tracks. Until a track is picked, one
+ * "Pick a track" requirement stands where the tracks were, so the program can't look finished. The catalog's bare
+ * "Students will select one of the following tracks:" line is dropped: the picker says it.
+ */
+export function withTrack(deg: Degree, slug: string | undefined): Degree {
+  const tracks = tracksOf(deg);
+  if (!tracks.length) return deg;
+  const track = tracks.find((t) => trackSlug(t) === slug) ?? null;
+  const groups: DegreeGroup[] = [];
+  for (const g of deg.groups) {
+    const t = trackOf(g);
+    if (!t) {
+      if (!(g.rule === "manual" && !g.items.length && !g.from.length && g.notes.length === 1 && PICK_NOTE.test(g.notes[0]))) groups.push(g);
+    } else if (track ? t === track : !groups.some((x) => x.id === "track")) {
+      groups.push(track ? g : { ...g, id: "track", name: "Pick a track", rule: "manual", n: null, hours: null, items: [], from: [], eligible: [], notes: [`Choose one: ${tracks.join(", ")}.`] });
+    }
+  }
+  return { ...deg, groups, tracks, track };
 }

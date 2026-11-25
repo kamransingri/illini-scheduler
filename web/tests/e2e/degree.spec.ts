@@ -290,3 +290,17 @@ test("a joint-college major is in the checklist: Statistics & Computer Science (
   await expect(req(page, "computer-science-foundation-3")).toBeVisible();
   await expect(req(page, "probability-and-statistics-foundation-6")).toContainText("STAT");
 });
+
+test("a program with tracks shows only the one you pick, and the link keeps it", async ({ page }) => {
+  await page.goto("./degree/?p=physics-bs");
+  const picker = page.getByTestId("track-picker");
+  await expect(picker).toContainText("This program has 5 tracks");
+  await expect(page.locator('[data-group="track"]')).toContainText("Pick a track");
+  await picker.getByRole("combobox").selectOption({ label: "Astrophysics Track" });
+  await expect(page).toHaveURL(/tr=physics-bs%3Aastrophysics-track|tr=physics-bs:astrophysics-track/);
+  await expect(page.getByTestId("requirements").first()).not.toContainText("Pick a track");
+  await expect(page.locator("main")).toContainText("Astrophysics Track");
+  await expect(page.locator("main h4, main [data-group]").filter({ hasText: "Nuclear Physics Track" })).toHaveCount(0);
+  await page.reload();
+  await expect(picker.getByRole("combobox")).toHaveValue("astrophysics-track");
+});

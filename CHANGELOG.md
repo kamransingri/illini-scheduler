@@ -10,6 +10,20 @@ history).
 
 ## [Unreleased]
 
+### Added
+
+- Degree checklist: tracks. Programs that ask you to pick one track (the Economics, Classical Languages and Legal
+  Studies minors, Physics, Classics, Media & Cinema Studies) now have a Track picker. Only the picked track's
+  requirements show; the others stay in the picker, and the pick travels in the share link (`tr=`). Until you pick, a
+  "Pick a track" requirement keeps the program from looking finished.
+
+### Changed
+
+- A tidier footer: links grouped into Plan, More and Policies, only the current version (every version is on What's
+  new), and the long data-sources paragraph moved to the Data sources page it already had.
+- The header has four links: Just opened left it and is reached from the home page, course pages, the schedule
+  builder and the footer.
+
 ## [0.16.0] - 2026-11-25
 
 ### Added

@@ -14,7 +14,7 @@ export type MyCourse = { s: string; n: string; status: CourseStatus; hours?: num
  * `year`: the AP and IB tables' entering year ("2026" = 2026-2027; "" = the newest). `declined`: AP or IB credit switched off.
  * `plan`: the four-year plan (lib/plan.ts); lists and links from before #114 have none.
  */
-export type MyState = { courses: MyCourse[]; program: string; minors: string[]; ticked: string[]; ap: ApScore[]; ib: IbScore[]; tests: TestScore[]; year: string; declined: string[]; plan: Plan };
+export type MyState = { courses: MyCourse[]; program: string; minors: string[]; ticked: string[]; ap: ApScore[]; ib: IbScore[]; tests: TestScore[]; tracks: string[]; year: string; declined: string[]; plan: Plan };
 export const MAX_MINORS = 3;
 /** The prefix of a minor's tick ids. */
 export const minorTick = (minor: string) => `${minor}--`;
@@ -30,7 +30,7 @@ const KEY = "illini-scheduler:mycourses:v1";
 const EVENT = "illini-mycourses-change";
 const SUFFIX: Record<CourseStatus, string> = { done: "", credit: "~c", in_progress: "~p" };
 
-export const EMPTY: MyState = { courses: [], program: "", minors: [], ticked: [], ap: [], ib: [], tests: [], year: "", declined: [], plan: EMPTY_PLAN };
+export const EMPTY: MyState = { courses: [], program: "", minors: [], ticked: [], ap: [], ib: [], tests: [], tracks: [], year: "", declined: [], plan: EMPTY_PLAN };
 const SLUG = /^[a-z0-9-]*$/;
 const TICK = /^[a-z0-9-]+$/;
 
@@ -94,6 +94,21 @@ function decodeCodes(param: string | null | undefined): string[] {
 }
 const cleanYear = (y: unknown) => (typeof y === "string" && /^\d{4}$/.test(y) ? y : "");
 
+const TRACK = /^[a-z0-9-]+:[a-z0-9-]+$/;
+
+/** "economics-minor:macroeconomics-track,physics-bs:astrophysics-track": one picked track per program. */
+export function decodeTracks(param: string | null | undefined): string[] {
+  const out = new Map<string, string>();
+  for (const part of (param ?? "").split(",")) if (TRACK.test(part)) out.set(part.split(":")[0], part);
+  return [...out.values()];
+}
+
+/** The track slug picked for a program, if any. */
+export const pickedTrack = (tracks: string[], program: string) => tracks.find((t) => t.startsWith(`${program}:`))?.slice(program.length + 1);
+
+/** Pick a track for a program ("" clears it). */
+export const setTrack = (tracks: string[], program: string, slug: string) => [...tracks.filter((t) => !t.startsWith(`${program}:`)), ...(slug ? [`${program}:${slug}`] : [])];
+
 export function encodeState(st: MyState): string {
   return JSON.stringify({
     c: encodeCourses(st.courses),
@@ -103,6 +118,7 @@ export function encodeState(st: MyState): string {
     a: encodeAp(st.ap),
     i: encodeIb(st.ib),
     t: encodeTest(st.tests),
+    tr: st.tracks.join(","),
     y: st.year,
     d: encodeCodes(st.declined),
     g: st.plan.grad,
@@ -114,7 +130,7 @@ export function encodeState(st: MyState): string {
 export function decodeState(raw: string | null): MyState {
   if (!raw) return EMPTY;
   try {
-    const o = JSON.parse(raw) as { c?: string; p?: string; n?: string; x?: unknown; a?: unknown; i?: unknown; t?: unknown; y?: unknown; d?: unknown; g?: unknown; gs?: unknown; pl?: unknown };
+    const o = JSON.parse(raw) as { c?: string; p?: string; n?: string; x?: unknown; a?: unknown; i?: unknown; t?: unknown; tr?: unknown; y?: unknown; d?: unknown; g?: unknown; gs?: unknown; pl?: unknown };
     const minors = decodeMinors(o.n);
     return {
       courses: decodeCourses(o.c),
@@ -124,6 +140,7 @@ export function decodeState(raw: string | null): MyState {
       ap: decodeAp(typeof o.a === "string" ? o.a : ""),
       ib: decodeIb(typeof o.i === "string" ? o.i : ""),
       tests: decodeTest(typeof o.t === "string" ? o.t : ""),
+      tracks: decodeTracks(typeof o.tr === "string" ? o.tr : ""),
       year: cleanYear(o.y),
       declined: decodeCodes(typeof o.d === "string" ? o.d : ""),
       plan: decodePlan(o.g, o.gs, o.pl),
@@ -161,7 +178,7 @@ export function onMineChange(fn: () => void): () => void {
 
 /**
  * URL params for a shareable checklist: ?p=<major>&mn=<minor>,<minor>&m=<courses>&x=<ticked groups>&a=<AP scores>
- * &i=<IB scores>&t=<ACT and SAT scores>&y=<entering year>&d=<declined AP or IB credit>&g=<graduation term>&gs=1 (summers)&pl=<planned terms>.
+ * &i=<IB scores>&t=<ACT and SAT scores>&tr=<program:track picked>&y=<entering year>&d=<declined AP or IB credit>&g=<graduation term>&gs=1 (summers)&pl=<planned terms>.
  */
 export function stateToParams(st: MyState, params: URLSearchParams): void {
   const put = (k: string, v: string) => (v ? params.set(k, v) : params.delete(k));
@@ -172,6 +189,7 @@ export function stateToParams(st: MyState, params: URLSearchParams): void {
   put("a", encodeAp(st.ap));
   put("i", encodeIb(st.ib));
   put("t", encodeTest(st.tests));
+  put("tr", st.tracks.join(","));
   const exams = st.ap.length + st.ib.length + st.tests.length;
   put("y", exams ? st.year : "");
   put("d", exams ? encodeCodes(st.declined) : "");
@@ -180,7 +198,7 @@ export function stateToParams(st: MyState, params: URLSearchParams): void {
   put("pl", encodePlanTerms(st.plan));
 }
 
-const PARAMS = ["m", "p", "mn", "x", "a", "i", "t", "y", "d", "g", "pl"];
+const PARAMS = ["m", "p", "mn", "x", "a", "i", "t", "tr", "y", "d", "g", "pl"];
 
 export function stateFromParams(params: URLSearchParams): MyState | null {
   if (!PARAMS.some((k) => params.has(k))) return null;
@@ -194,6 +212,7 @@ export function stateFromParams(params: URLSearchParams): MyState | null {
     ap: decodeAp(params.get("a")),
     ib: decodeIb(params.get("i")),
     tests: decodeTest(params.get("t")),
+    tracks: decodeTracks(params.get("tr")),
     year: cleanYear(params.get("y")),
     declined: decodeCodes(params.get("d")),
     plan: decodePlan(params.get("g"), params.get("gs"), params.get("pl")),

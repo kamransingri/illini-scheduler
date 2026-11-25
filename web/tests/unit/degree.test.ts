@@ -221,6 +221,7 @@ describe("my courses encoding", () => {
       ap: [],
       ib: [],
       tests: [],
+      tracks: [],
       year: "",
       declined: [],
       plan: { grad: "", summers: false, terms: {} },
