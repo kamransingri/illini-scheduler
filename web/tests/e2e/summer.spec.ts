@@ -81,10 +81,10 @@ test("the search marks summer courses and finds summer-only ones", async ({ page
   }
 });
 
-test("the header has five tabs and no Summer courses page", async ({ page }) => {
+test("the header has four tabs and no Summer courses page", async ({ page }) => {
   await page.goto("./");
   const nav = page.getByRole("navigation", { name: "Main" });
-  await expect(nav.locator("li")).toHaveCount(5);
+  await expect(nav.locator("li")).toHaveCount(4); // Just opened is in the footer, not the header
   await expect(page.getByRole("link", { name: "Summer courses" })).toHaveCount(0);
 });
 
