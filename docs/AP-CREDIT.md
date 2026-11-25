@@ -124,6 +124,23 @@ as AP.
 **Transfer and dual credit** aren't tabulated (D27.6): Illinois's equivalencies are in Transferology, which needs an
 account. The checklist links to it, and the student adds the Illinois course as "AP, IB or transfer credit".
 
+## SAT and ACT
+
+`data/test-credit/<year>.yaml` (2025-2026 and 2026-2027, issue #104) has the same shape, with four exams: ACT English,
+SAT EBRW (RHET 105 credit or a Rhetoric placement), ACT Math and SAT Math (CITL's Chemistry page: 25 or below, or 590
+or below, recommends CHEM 101; no credit). A row gives a score `range: [lowest, highest]` instead of `scores` (ACT 1 to
+36, SAT 200 to 800 in tens); the export lists every score in the range. Placement rows have `credit: {}` and CITL's
+message word for word.
+
+- **2026-2027 SAT EBRW 530.** The Rhetoric Placement page puts it in "530 - 730" (RHET 105); the cutoff tool puts it
+  in "200-530". We follow the page and say so in `fix`.
+- **2025-2026.** The tool writes "1-19" as "19-Jan" and its ACT messages name 2024-2025 terms; both are corrected,
+  with `fix` notes.
+- **Rules.** Only official scores sent with the application count (the form says so). RHET 105 from ACT/SAT and AP
+  English Language counts once. The link carries `t=ACTENG-35,SATMATH-590`.
+- **Every year.** `citl-watch.yml` snapshots the tool's ACT and SAT rows and the Rhetoric and Chemistry pages in
+  `data/test-credit/citl/`; the quarterly data check has a "SAT and ACT credit" row.
+
 ## How the checklist uses it
 
 - **Input.** "Add an AP or IB exam" under My courses: the starting term (newest by default; it picks the AP and the

@@ -151,7 +151,7 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
   guessing, and you add those courses by hand.
 - **AP and IB credit are estimates.** The courses come from CITL's tables for the year you started (AP: 2024-2025,
   2025-2026 or 2026-2027; IB: 2026-2027 only, because CITL's earlier IB tables don't separate Higher and Standard
-  Level), copied by hand, with a few slips in CITL's tables corrected (docs/AP-CREDIT.md). The real credit shows on DARS
+  Level; SAT and ACT: 2025-2026 or 2026-2027, Composition I and placement only), copied by hand, with a few slips in CITL's tables corrected (docs/AP-CREDIT.md). The real credit shows on DARS
   once your scores reach the university. Dual credit and transfer credit aren't worked out: Illinois's equivalencies
   are in Transferology, which needs an account, so look your courses up there and add the Illinois course yourself as
   "AP, IB or transfer credit". Elective credit such as `MATH 1--` counts toward your hours,

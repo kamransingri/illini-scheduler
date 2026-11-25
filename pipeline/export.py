@@ -440,11 +440,12 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA, rename: Renamer | No
     from .degrees import export as export_degrees
 
     deg = export_degrees(conn, out_dir, summaries)
-    from .ap_credit import IB
+    from .ap_credit import IB, TEST
     from .ap_credit import export as export_ap_credit
 
     ap = export_ap_credit(conn, out_dir)
     ib = export_ap_credit(conn, out_dir, kind=IB)
+    ib += ", " + export_ap_credit(conn, out_dir, kind=TEST)
     from .summer import export as export_summer
 
     summer = export_summer(conn, out_dir, tuple(live_terms), keys)  # `page` means a course file was written

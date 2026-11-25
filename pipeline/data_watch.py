@@ -155,6 +155,7 @@ def repo_rows(repo: Path, meta: dict[str, Any], today: date) -> list[Row]:
     data = repo / "data"
     ap = [p.stem for p in (data / "ap-credit").glob("*.yaml")]
     ib = [p.stem for p in (data / "ib-credit").glob("*.yaml")]
+    test = [p.stem for p in (data / "test-credit").glob("*.yaml")]
     years, hand = [], 0
     for p in (data / "degrees").glob("*.yaml"):
         text = p.read_text(encoding="utf-8")
@@ -165,6 +166,7 @@ def repo_rows(repo: Path, meta: dict[str, Any], today: date) -> list[Row]:
     rows = [
         yearly_row("AP credit", "by hand; citl-watch.yml checks CITL weekly", ap, today),
         yearly_row("IB credit", "by hand; citl-watch.yml checks CITL weekly", ib, today),
+        yearly_row("SAT and ACT credit", "by hand; citl-watch.yml checks CITL weekly", test, today),
         yearly_row("Degree requirements", "by hand: catalog importer plus hand-checked majors (#17)",
                    sorted(set(years)), today, f" catalog, {len(years)} programs ({hand} checked by hand)"),
     ]

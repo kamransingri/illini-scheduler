@@ -94,7 +94,8 @@ def test_term_dates():
 
 def test_the_repo_files_are_read():
     rows = {r.source: r for r in dw.repo_rows(ROOT, meta(), TODAY)}
-    assert set(rows) == {"AP credit", "IB credit", "Degree requirements", "Term dates (web/lib/terms.ts)"}
+    assert set(rows) == {"AP credit", "IB credit", "SAT and ACT credit", "Degree requirements",
+                         "Term dates (web/lib/terms.ts)"}
     assert "programs" in rows["Degree requirements"].now and "checked by hand" in rows["Degree requirements"].now
 
 

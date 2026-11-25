@@ -220,6 +220,7 @@ describe("my courses encoding", () => {
       ticked: ["language"],
       ap: [],
       ib: [],
+      tests: [],
       year: "",
       declined: [],
       plan: { grad: "", summers: false, terms: {} },

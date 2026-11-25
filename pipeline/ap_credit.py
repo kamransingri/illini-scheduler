@@ -9,6 +9,10 @@ IB files have the same shape with two differences (issue #25): scores run 1 to 7
 level, HL (Higher Level) or SL (Standard Level), because the two levels give different credit. IB rows don't use AP's
 subscore, college or other-exam conditions.
 
+ACT and SAT files (data/test-credit/, issue #105) give each row a score `range: [lowest, highest]` instead of a list:
+ACT scores run 1 to 36, SAT scores 200 to 800 in steps of 10. The range is expanded into `scores` on export, so the site
+matches them like AP and IB rows.
+
     python -m pipeline.ap_credit      # validate every file and list unknown codes (uses data/illini.db if built)
 """
 
@@ -30,6 +34,7 @@ from .config import DATA
 
 AP_DIR = DATA / "ap-credit"
 IB_DIR = DATA / "ib-credit"
+TEST_DIR = DATA / "test-credit"
 
 COURSE_RE = re.compile(r"^[A-Z]{2,5} \d{3}$")
 ELECTIVE_RE = re.compile(r"^[A-Z]{2,5} [1-4]--$")  # elective credit in a subject at a level: "MATH 1--"
@@ -58,6 +63,20 @@ class Kind:
 AP = Kind("AP", AP_DIR, "ap-credit.json", 5, frozenset(EXAM_KEYS), frozenset(ROW_KEYS))
 IB = Kind("IB", IB_DIR, "ib-credit.json", 7, frozenset(EXAM_KEYS - {"sub"}),
           frozenset({"level", "scores", "credit", "message", "fix"}), LEVELS)
+TEST = Kind("ACT/SAT", TEST_DIR, "test-credit.json", 800, frozenset(EXAM_KEYS - {"sub"}),
+            frozenset({"range", "credit", "message", "fix"}))
+
+
+def score_range(exam_id: Any, rng: Any) -> list[int] | None:
+    """[lowest, highest] for an ACT or SAT exam as every score in between; None when it isn't a valid range."""
+    lo, hi, step = (200, 800, 10) if str(exam_id).startswith("SAT") else (1, 36, 1)
+    if not (isinstance(rng, list) and len(rng) == 2
+            and all(isinstance(x, int) and not isinstance(x, bool) for x in rng)):
+        return None
+    a, b = rng
+    if not lo <= a <= b <= hi or (a - lo) % step or (b - lo) % step:
+        return None
+    return list(range(a, b + 1, step))
 
 
 class ApCreditError(ValueError):
@@ -131,6 +150,11 @@ def validate(doc: Any, name: str, kind: Kind = AP) -> dict:
             for k in r:
                 if k not in kind.row_keys:
                     errs.append(f"{rw}: unknown key '{k}'")
+            if "range" in kind.row_keys:
+                scores = score_range(e.get("id"), r.get("range"))
+                if scores is None:
+                    errs.append(f"{rw}: 'range' must be [lowest, highest]: ACT 1 to 36, SAT 200 to 800 in tens")
+                r = {**r, "scores": scores or [1]}
             if not _int_list(r.get("scores"), 1, kind.max_score):
                 errs.append(f"{rw}: 'scores' must list {kind.name} scores 1 to {kind.max_score}")
             if kind.levels and r.get("level") not in kind.levels:
@@ -239,7 +263,7 @@ def main() -> int:
     from .config import DB_PATH
 
     try:
-        tables = [(kind, load_all(kind=kind)) for kind in (AP, IB)]
+        tables = [(kind, load_all(kind=kind)) for kind in (AP, IB, TEST)]
     except ApCreditError as e:
         print(e, file=sys.stderr)
         return 1
