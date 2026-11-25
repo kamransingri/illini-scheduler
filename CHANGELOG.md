@@ -21,6 +21,10 @@ history).
 
 - A tidier footer: links grouped into Plan, More and Policies, only the current version (every version is on What's
   new), and the long data-sources paragraph moved to the Data sources page it already had.
+- Faster deploys: a push to `main` reuses the database from the last nightly refresh instead of fetching every source
+  again, so it goes live in a few minutes instead of about 28. The nightly run still refreshes everything; add
+  `[refresh data]` to a commit message or pull request title (or tick "Refresh data" on a manual run) to refresh on a
+  push. Lighthouse runs on refresh runs only.
 - The header has four links: Just opened left it and is reached from the home page, course pages, the schedule
   builder and the footer.
 

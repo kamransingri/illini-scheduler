@@ -1,3 +1,6 @@
+# Deploys the site. The nightly run refreshes every data source (about 20 minutes); a code push reuses the database the
+# last refresh cached and only re-exports it, so it deploys in a few minutes. To refresh on a push or merge anyway, put
+# [refresh data] in the commit message or the pull request's title, or tick "Refresh data" when running it by hand.
 name: Refresh data and deploy to GitHub Pages
 on:
   push:
@@ -6,6 +9,11 @@ on:
   schedule:
     - cron: "0 9 * * *" # nightly, 09:00 UTC
   workflow_dispatch:
+    inputs:
+      refresh_data:
+        description: Refresh data (about 20 minutes) instead of reusing the last refresh's database
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -36,13 +44,38 @@ jobs:
       - run: pip install -r requirements.txt
       - run: cd web && npm ci --prefer-offline
       - run: cd mcp && npm ci --prefer-offline
+      - name: The last refresh's database (code pushes reuse it)
+        id: db
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && !inputs.refresh_data)
+        uses: actions/cache/restore@v6
+        with:
+          path: data/illini.db
+          key: pipeline-db-none
+          restore-keys: pipeline-db-
+      - name: Refresh data or reuse it?
+        id: mode
+        env:
+          MESSAGE: ${{ github.event.head_commit.message }}
+          CACHED: ${{ steps.db.outputs.cache-matched-key }}
+        run: |
+          if [ "${{ github.event_name }}" = schedule ] || [ "${{ inputs.refresh_data }}" = true ]; then refresh=true
+          elif printf '%s' "$MESSAGE" | grep -qiF '[refresh data]'; then refresh=true
+          elif [ -z "$CACHED" ]; then refresh=true; echo "::notice::No cached database, so this run refreshes data"
+          else refresh=false; echo "::notice::Reusing the database from the last refresh ($CACHED); add [refresh data] to the commit message to refresh"
+          fi
+          echo "refresh=$refresh" >> "$GITHUB_OUTPUT"
+      - name: Export this commit's data from the cached database
+        if: steps.mode.outputs.refresh == 'false'
+        run: make export
       - name: Restore RMP cache (7-day responses)
+        if: steps.mode.outputs.refresh == 'true'
         uses: actions/cache/restore@v6
         with:
           path: data/raw/rmp
           key: rmp-${{ github.run_id }}
           restore-keys: rmp-
       - name: Restore OpenStreetMap and MTD caches (building locations #93, bus timetable #96; refreshed weekly)
+        if: steps.mode.outputs.refresh == 'true'
         uses: actions/cache/restore@v6
         with:
           path: |
@@ -51,30 +84,32 @@ jobs:
           key: osm-${{ github.run_id }}
           restore-keys: osm-
       - name: Seat availability files from the availability branch
+        if: steps.mode.outputs.refresh == 'true'
         run: tools/availability-files.sh fetch
       - name: Refresh data (Wade's datasets + Course Explorer mirror, seat availability files, RMP)
         # SOURCE=csv: the live Course Explorer feed answers bursts from GitHub with HTTP 202 (DECISIONS.md D11.3);
         # seat status comes from data/availability/*.json, kept fresh by availability.yml on the availability branch.
+        if: steps.mode.outputs.refresh == 'true'
         run: make data SOURCE=csv
         env:
           AVAILABILITY_MODE: file
           RMP_BUDGET_SECONDS: "1200" # new RMP lookups per run; the 7-day cache carries the rest forward
       - name: Save RMP cache (even if later steps fail)
-        if: always()
+        if: always() && steps.mode.outputs.refresh == 'true'
         uses: actions/cache/save@v6
         with:
           path: data/raw/rmp
           key: rmp-${{ github.run_id }}
       - name: Save OpenStreetMap and MTD caches (even if later steps fail)
-        if: always()
+        if: always() && steps.mode.outputs.refresh == 'true'
         uses: actions/cache/save@v6
         with:
           path: |
             data/raw/osm
             data/raw/mtd
           key: osm-${{ github.run_id }}
-      - name: Save the pipeline database for pull requests' browser tests (ci.yml e2e, #148)
-        if: github.ref == 'refs/heads/main'
+      - name: Save the pipeline database for pull requests' browser tests (ci.yml e2e, #148) and code pushes
+        if: github.ref == 'refs/heads/main' && steps.mode.outputs.refresh == 'true'
         uses: actions/cache/save@v6
         with:
           path: data/illini.db
@@ -112,7 +147,8 @@ jobs:
           cp out/404.html ../site/404.html  # GitHub Pages serves the project's 404.html for unknown paths
           (npx serve ../site -l 4173 --no-clipboard &) && sleep 3
           E2E_BASE_URL=http://127.0.0.1:4173/${{ github.event.repository.name }}/ npx playwright test
-      - name: Lighthouse on a course page (median of 3 runs; performance >= 0.80, accessibility >= 0.90)
+      - name: Lighthouse on a course page (median of 3 runs; performance >= 0.80, accessibility >= 0.90; refresh runs only)
+        if: steps.mode.outputs.refresh == 'true'
         run: |
           curl -s -o /dev/null http://127.0.0.1:4173/ || ((cd web && npx serve ../site -l 4173 --no-clipboard &) && sleep 3)
           for i in 1 2 3; do
@@ -143,7 +179,7 @@ jobs:
         with: { name: cloudflare-site, path: web/out, retention-days: 3 }
       # Last: its `git pull` brings newer commits into this checkout, which nothing after it may build from.
       - name: Commit refreshed data summaries (only after tests pass; never blocks the deploy)
-        if: github.event_name != 'pull_request'
+        if: steps.mode.outputs.refresh == 'true'
         continue-on-error: true
         run: |
           mkdir -p data/snapshot
