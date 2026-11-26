@@ -39,7 +39,7 @@ try {
   const out = npm(["pack", "--json", "--pack-destination", tmp], here);
   const [packed] = JSON.parse(out.slice(out.indexOf("[")));
   const files = packed.files.map((f) => f.path).sort();
-  check(JSON.stringify(files) === JSON.stringify(["README.md", "dist/index.js", "package.json"]), `the tarball holds only ${files.join(", ")}`);
+  check(JSON.stringify(files) === JSON.stringify(["LICENSE", "README.md", "dist/index.js", "package.json"]), `the tarball holds only ${files.join(", ")}`);
   const tarball = path.join(tmp, packed.filename);
 
   // 2. Install into an empty folder: dist/index.js is one bundle, so nothing else comes with it
