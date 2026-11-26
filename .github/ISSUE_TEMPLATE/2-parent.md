@@ -12,6 +12,9 @@ labels: enhancement
 
 <!-- Not included: what's left out on purpose, and why (optional). -->
 
+### Where it goes
+<!-- The page, the block it joins, and what it replaces or hides (docs/DESIGN.md Part 5). "No page" for pipeline or docs work. -->
+
 ### Sub-issues
 In order: 1 ..., 2 ..., 3 ...
 

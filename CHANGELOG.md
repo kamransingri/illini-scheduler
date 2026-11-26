@@ -28,6 +28,27 @@ history).
 
 ### Changed
 
+- The schedule builder's left column is shorter (#238). Must-haves show No classes before, Done by and Days off;
+  lunch, blocked times, open-only, no rushed walks, only sections you can register for, special sections and About you
+  are under one **More options** that says how many are on. What matters to you shows the six presets, with the
+  sliders under **Customize** ("Custom" shows when they don't match a preset). Each course's section dropdowns are
+  behind **Pick sections**, and the course says what's locked ("Locked: L1", with Unlock). Saved settings and share
+  links are unchanged.
+
+- Pages have a budget (#237): docs/DESIGN.md Part 5 gives each page's main job and what shows first at 1280px and
+  375px, and the rules that keep pages from growing back (one banner at a time, one "More" per area that says how many
+  options are on, rows don't grow, one place per thing, three tabs). Task and Parent issues now say "Where it goes",
+  and pull requests that change a page show it before and after.
+
+- The site header is easier to get around (header critique). It has three tabs: Course
+  search, Degree checklist and Schedule builder. The gen-ed finder is part of Course search: the home page's new
+  "Popular gen-eds" row opens it with a category picked. Just opened is still a click away from the home page, course
+  pages, the schedule builder and the footer. Search works from every page: a Search button in the header
+  (and next to Menu on phones), or press `/`. The header slides away while you scroll down and comes back as soon as
+  you scroll up, so it's never a long scroll away. After "Add to schedule" on a course page, "Open schedule builder"
+  is right next to it. Keyboard focus in the header is now clearly visible, the phone buttons are easier to tap,
+  Escape or a tap outside closes the menu, and screen readers hear the schedule count.
+
 - A tidier footer: links grouped into Plan, More and Policies, only the current version (every version is on What's
   new), and the long data-sources paragraph moved to the Data sources page it already had.
 - Faster deploys: a push to `main` reuses the database from the last nightly refresh instead of fetching every source

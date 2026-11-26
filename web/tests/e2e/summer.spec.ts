@@ -81,10 +81,10 @@ test("the search marks summer courses and finds summer-only ones", async ({ page
   }
 });
 
-test("the header has four tabs and no Summer courses page", async ({ page }) => {
+test("the header has three tabs and no Summer courses page", async ({ page }) => {
   await page.goto("./");
   const nav = page.getByRole("navigation", { name: "Main" });
-  await expect(nav.locator("li")).toHaveCount(4); // Just opened is in the footer, not the header
+  await expect(nav.locator("li")).toHaveCount(3); // the gen-ed finder is reached from Course search, Just opened from the footer (D61)
   await expect(page.getByRole("link", { name: "Summer courses" })).toHaveCount(0);
 });
 
@@ -95,6 +95,17 @@ test("the home page is the search, often-searched courses and Just opened", asyn
   await expect(page.getByTestId("home-live")).toBeVisible();
   await expect(page.getByRole("heading", { name: "How it works" })).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "Everything you need before registration" })).toHaveCount(0);
+});
+
+test("a popular gen-ed on the home page opens the gen-ed finder with it picked", async ({ page }) => {
+  await page.goto("./");
+  const geneds = page.getByTestId("home-geneds");
+  await expect(geneds.getByRole("link", { name: "All gen-eds" })).toHaveAttribute("href", /\/geneds\/$/);
+  await geneds.getByRole("link", { name: "Advanced Comp" }).click();
+  await expect(page).toHaveURL(/\/geneds\/\?codes=ACP/);
+  await expect(page.getByRole("checkbox", { name: "Advanced Composition" })).toBeChecked();
+  // the finder belongs to Course search now, so that tab stays lit
+  await expect(page.getByRole("navigation", { name: "Main" }).getByRole("link", { name: "Course search" })).toHaveAttribute("aria-current", "page");
 });
 
 test("375px: the Summer view doesn't make the page scroll sideways", async ({ page }) => {

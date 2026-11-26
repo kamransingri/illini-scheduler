@@ -204,7 +204,7 @@ export default function CourseView({ subject, number, meta }: { subject: string;
 
   return (
     <div>
-      <nav aria-label="On this page" className="sticky top-0 z-30 -mx-4 mb-6 border-b border-line bg-white/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-white/85">
+      <nav aria-label="On this page" className="sticky top-[var(--site-header,0px)] z-30 -mx-4 transition-[top] duration-200 ease-out motion-reduce:transition-none mb-6 border-b border-line bg-white/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-white/85">
         <div className="flex items-center gap-x-4 overflow-x-auto py-2 sm:gap-x-6">
           <ul className="flex shrink-0 gap-x-4 sm:gap-x-5">
             {NAV.map(([id, label]) => (

@@ -1510,3 +1510,55 @@ Every judgment call made during the autonomous build, newest phase last.
   links and a paragraph of sources were noise on every page.
 - **D58.3 Four header links.** Just opened is a feed students reach from the home page, a course or the schedule
   builder; the header keeps the four planning pages (replaces D39.3's five).
+
+## The header after its critique (2026-11-26, redesign branch)
+
+- **D59.1 Why.** An Impeccable critique of `SiteNav` scored the header 26/40: Just opened, the most time-critical page,
+  wasn't in the header or the phone menu; the header's focus ring was 2.08:1 on navy; course pages had no search and
+  the header scrolled away; the Menu button was 36px tall and ignored Escape; the cart count's `aria-label` sat on a
+  plain `<span>`, so screen readers never heard it; and "Add to schedule" led nowhere. The critique is saved in
+  `.impeccable/critique/` (local only).
+- **D59.2 Just opened is a tab again.** This reverses #242's "since 0.16 it's in the footer, not the header": the owner
+  chose a fifth tab after the critique. Five tabs plus a Search button fit at 1024px (the nav ends at 943px of a
+  1009px row). The footer's Plan group is now just the same list.
+- **D59.3 One search, everywhere.** The header's Search opens the existing `SearchBox` in a panel under the header (a
+  compact box, results scrolling inside it, its own id so it can share a page with the builder's search). Not on the
+  home page, which is the search. `/` opens it; Escape or a tap outside closes it and returns focus.
+- **D59.4 Hide on the way down, back on the way up.** A sticky header that always shows costs 56px on every scroll; one
+  that never shows means a long trip back on a phone. It slides up after scrolling down past 120px and returns on any
+  scroll up, on focus, or while a panel is open. It publishes its height as `--site-header`, and the course page's
+  sticky "On this page" bar uses it, so the bar sits under the header instead of behind it.
+- **D59.5 Small fixes.** White focus ring inside the header (CSS on `.site-header`, the search panel keeps the blue
+  one); 44px phone buttons; the cart count as `aria-hidden` digits plus screen-reader words (no `aria-label` on a span),
+  with a calendar glyph on the Menu button; "Open schedule builder" next to "In schedule" on course pages
+  (`AddToCart builderLink`).
+
+## Schedule builder: the left column (2026-11-26, issue #238, UI redesign branch)
+
+- **D60.1 What stays in view.** The term, the search and each course; No classes before, Done by and Days off; the six
+  priority presets. That's three selects and no option checkboxes on a fresh visit (the Days off toggles are
+  checkboxes underneath, styled as buttons). The list was posted on #238 and approved by the maintainer first.
+- **D60.2 More options says what's on.** Lunch break, Blocked times, Open sections only, No rushed walks, Only
+  sections I can register for (with About you under it, the only thing it feeds) and Include special sections are
+  folded under one "More options". Folded, it counts the rules that differ from a fresh visit ("2 on"), so a share
+  link with a lunch break and a blocked time shows that before it's opened.
+- **D60.3 Picking a section before generating stays.** #238 proposed dropping the per-course lock dropdowns and
+  locking only from the calendar and result rows; that would have meant generating schedules before you could pin a
+  section. They fold behind "Pick sections" (a native `<details>`) instead, and the course row says what's locked,
+  with one Unlock.
+- **D60.4 Customize.** The sliders and their two time selects fold behind "Customize". When they match no preset, a
+  "Custom" chip shows in the preset row, so a folded custom setting is still visible.
+- **D60.5 The header and scrolling.** With the sticky header (D59.4), `html` gets `scroll-padding-top:
+  var(--site-header)`, so anchors, keyboard focus and scroll-into-view leave room for it instead of landing under it.
+- **D60.6 Unchanged.** `Prefs`, the localStorage keys and every share-link parameter: layout only.
+
+## Three header tabs (2026-11-26, UI redesign branch)
+
+- **D61.1 The gen-ed finder belongs to Course search.** Both answer "which course should I take?", so they share one
+  tab. The home page has a "Popular gen-eds" row under "Often searched": each chip opens the finder with that category
+  picked (`/geneds/?codes=ACP`), and "All gen-eds" opens it with none. The Course search tab stays lit on the finder.
+  The six chips (Advanced Comp, Non-Western, Western, US Minority, Hist & Phil, Quant Reasoning I) are a hand-picked
+  start, like the often-searched courses.
+- **D61.2 Just opened leaves the header again.** The owner's call, reversing D59.2. The page is unchanged and still
+  reached from the home page's live feed, course pages, the schedule builder's sections to watch and the footer.
+- **D61.3 The footer's Plan group** lists the three tabs, then Gen-ed finder and Just opened.

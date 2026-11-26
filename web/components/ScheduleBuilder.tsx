@@ -201,7 +201,9 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
   const feed = useSeatFeed(meta.liveUrl);
   const now = useNow();
   const [icsFinals, setIcsFinals] = useState(true);
-  const [panels, setPanels] = useState({ must: true, soft: true, about: false });
+  const [panels, setPanels] = useState({ must: true, soft: true });
+  const [moreOpen, setMoreOpen] = useState(false); // must-haves beyond the first three (#238)
+  const [customOpen, setCustomOpen] = useState(false); // the priority sliders behind the presets (#238)
   const { me, about, setAbout: setAboutField } = useAboutYou(); // #80
   const autoRun = useRef<number | null>(null); // schedule index to open once a shared link's courses load
   const keepOpen = useRef<string | null>(null); // after a lock from the results, the CRNs of the schedule to stay on
@@ -235,7 +237,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
     else setPrefs(loadPrefs() ?? DEFAULT_PREFS);
     setPlans(readPlans());
     // On a phone the rules fold away so the results are closer; they stay open on a wide screen.
-    if (!window.matchMedia("(min-width: 1024px)").matches) setPanels({ must: false, soft: false, about: false });
+    if (!window.matchMedia("(min-width: 1024px)").matches) setPanels({ must: false, soft: false });
     setReady(true);
     const offCart = onCartChange(() => {
       setShared((s) => (s?.rules ? s : null)); // the link's rules wait for an answer; a shared list is now yours
@@ -493,6 +495,8 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
   const preset = PRESETS.find((p) => wKeys.every((k) => p.weights[k] === prefs.weights[k]));
   const softChanged = wKeys.some((k) => prefs.weights[k] !== DEFAULT_PREFS.weights[k]) || prefs.softEarly !== DEFAULT_PREFS.softEarly || prefs.softLate !== DEFAULT_PREFS.softLate;
   const mustDefault = must.length === 0;
+  // the rules under More options that differ from a fresh visit, so a folded "More options" still says they're on (#238)
+  const moreOn = [prefs.lunch, prefs.blocked.length > 0, prefs.openOnly, prefs.noRushedWalks, prefs.includeSpecial, !prefs.eligibleOnly].filter(Boolean).length;
 
   const weightRow = (k: W, label: React.ReactNode, ariaLabel: string, disabled = false, note?: string) => (
     <div key={k} className={`grid grid-cols-[minmax(0,1fr)_6.5rem_3.75rem] items-center gap-x-2 ${disabled ? "opacity-50" : ""}`}>
@@ -713,6 +717,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                 const comps = block ? [...new Set(block.sections.map((s) => s.component))].sort((a, b) => (a === "primary" ? -1 : b === "primary" ? 1 : a.localeCompare(b))) : [];
                 const prim = block?.sections.filter((s) => s.component === "primary") ?? [];
                 const openPrim = prim.filter((s) => !/closed/i.test(s.status)).length;
+                const lockedCodes = block ? block.sections.filter((s) => c.locked.includes(s.crn)).map((s) => s.code) : [];
                 return (
                   <li key={key} className={`course-swatch border-b border-l-4 border-b-line py-3 pl-3 ${colorOf(key)}`}>
                     <div className="flex items-start justify-between gap-2">
@@ -752,8 +757,30 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                       </button>
                     </div>
                     {block && block.sections.length > 0 && (
-                      <div className="mt-2 space-y-1.5">
-                        {comps.map((comp) => {
+                      <>
+                        {lockedCodes.length > 0 && (
+                          <p className="mt-1 flex flex-wrap items-center gap-x-2 text-sm" data-testid="cart-locked">
+                            <span>
+                              <Icon name="lock" className="mr-1 align-[-2px] text-heading" />
+                              <span className="font-semibold text-heading">Locked:</span> {lockedCodes.join(", ")}
+                            </span>
+                            <button
+                              type="button"
+                              className="font-semibold text-action hover:underline"
+                              onClick={() => updateItem(c.s, c.n, (it) => ({ ...it, locked: [] }))}
+                              aria-label={`Unlock every section of ${key}`}
+                            >
+                              Unlock
+                            </button>
+                          </p>
+                        )}
+                        <details className="group mt-1" data-testid="pick-sections">
+                          <summary className="inline-flex cursor-pointer list-none items-center gap-1 text-sm font-semibold text-action hover:underline [&::-webkit-details-marker]:hidden">
+                            {lockedCodes.length ? "Change sections" : "Pick sections"}
+                            <Icon name="chevronDown" className="transition-transform group-open:rotate-180 motion-reduce:transition-none" />
+                          </summary>
+                          <div className="mt-2 space-y-1.5">
+                            {comps.map((comp) => {
                           // once a lecture is locked, only offer sections from its link group
                           const lockedPrimary = block.sections.find((s) => s.component === "primary" && c.locked.includes(s.crn));
                           const opts = block.sections.filter(
@@ -783,7 +810,9 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                             </select>
                           );
                         })}
-                      </div>
+                          </div>
+                        </details>
+                      </>
                     )}
                   </li>
                 );
@@ -795,54 +824,6 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
               </p>
             )}
           </section>
-
-          <Panel
-            title="About you"
-            summary={aboutSummary(me) || "Not set: restrictions show as “may be restricted”."}
-            open={panels.about}
-            onToggle={() => setPanels((p) => ({ ...p, about: !p.about }))}
-            testId="about-you"
-          >
-            <p className="text-sm text-muted">
-              Used to check each section&apos;s restrictions (&ldquo;Restricted to Junior or Senior class standing&rdquo;, &ldquo;Restricted to CS majors&rdquo;). Kept in
-              this browser only, and not put in share links.
-            </p>
-            <div className="grid grid-cols-2 gap-3">
-              <label className="block">
-                <span className="text-sm font-semibold text-heading">You are</span>
-                <select className="mt-1 block w-full rounded border border-line bg-white px-2 py-1.5" value={about.level} onChange={(e) => setAboutField("level", e.target.value as Level | "")} aria-label="Student level">
-                  <option value="">Not set</option>
-                  <option value="undergrad">An undergraduate</option>
-                  <option value="graduate">A graduate student</option>
-                  <option value="professional">In a professional program</option>
-                </select>
-              </label>
-              <label className="block">
-                <span className="text-sm font-semibold text-heading">Class standing in {termLabel(term)}</span>
-                <select className="mt-1 block w-full rounded border border-line bg-white px-2 py-1.5" value={about.standing} onChange={(e) => setAboutField("standing", e.target.value as Standing | "")} aria-label="Class standing">
-                  <option value="">Not set</option>
-                  <option value="freshman">Freshman</option>
-                  <option value="sophomore">Sophomore</option>
-                  <option value="junior">Junior</option>
-                  <option value="senior">Senior</option>
-                  <option value="graduate">Graduate</option>
-                </select>
-              </label>
-            </div>
-            <p className="text-sm" data-testid="about-major">
-              <span className="font-semibold text-heading">Major:</span> {me.program ? `${me.program.name} (${me.program.college})` : "not picked"}
-              {me.minors.length > 0 && (
-                <>
-                  {"; "}
-                  <span className="font-semibold text-heading">{me.minors.length === 1 ? "minor" : "minors"}:</span> {me.minors.map((m) => m.name).join(", ")}
-                </>
-              )}
-              .{" "}
-              <Link href="/degree/" className="text-action underline">
-                {me.program ? "Change it in the degree checklist" : "Pick it in the degree checklist"}
-              </Link>
-            </p>
-          </Panel>
 
           <Panel title="Must-haves" summary={mustDefault ? "None set: any time, any day." : must.join(", ")} open={panels.must} onToggle={() => setPanels((p) => ({ ...p, must: !p.must }))} testId="must-haves">
             <p className="text-sm text-muted">A schedule that breaks one of these is never shown.</p>
@@ -899,6 +880,19 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                 })}
               </div>
             </fieldset>
+            <button
+              type="button"
+              className="flex min-h-11 w-fit items-center gap-1.5 font-semibold text-action hover:underline"
+              aria-expanded={moreOpen}
+              aria-controls="more-options"
+              onClick={() => setMoreOpen((v) => !v)}
+              data-testid="more-options-toggle"
+            >
+              More options
+              {moreOn > 0 && <span className="rounded-full bg-action-tint px-2 text-sm leading-6 text-heading tnum">{moreOn} on</span>}
+              <Icon name="chevronDown" className={`transition-transform motion-reduce:transition-none ${moreOpen ? "rotate-180" : ""}`} />
+            </button>
+            <div id="more-options" hidden={!moreOpen} className="space-y-4" data-testid="more-options">
             <div className="space-y-1.5">
               <div className="flex items-start gap-2">
                 <input id="lunch-on" type="checkbox" className="mt-1 size-4 accent-action" checked={prefs.lunch} onChange={(e) => set("lunch", e.target.checked)} />
@@ -947,10 +941,54 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                 <span>
                   Only sections I can register for
                   <span className="block text-sm text-muted">
-                    Skip sections whose restrictions clearly leave you out, going by About you (sections you lock are kept). Unclear ones stay and are marked.
+                    Skip sections whose restrictions clearly leave you out, going by About you below (sections you lock are kept). Unclear ones stay and are marked.
                   </span>
                 </span>
               </label>
+              <div className="ml-6 space-y-2 rounded bg-panel p-3" role="group" aria-label="About you" data-testid="about-you">
+                <p className="font-semibold text-heading">
+                  About you
+                  <Info label="Why About you is asked">
+                    Used to check each section&apos;s restrictions (&ldquo;Restricted to Junior or Senior class standing&rdquo;, &ldquo;Restricted to CS majors&rdquo;). Kept
+                    in this browser only, and not put in share links.
+                  </Info>
+                </p>
+                  <div className="grid grid-cols-2 gap-3">
+                    <label className="block">
+                      <span className="text-sm font-semibold text-heading">You are</span>
+                      <select className="mt-1 block w-full rounded border border-line bg-white px-2 py-1.5" value={about.level} onChange={(e) => setAboutField("level", e.target.value as Level | "")} aria-label="Student level">
+                        <option value="">Not set</option>
+                        <option value="undergrad">An undergraduate</option>
+                        <option value="graduate">A graduate student</option>
+                        <option value="professional">In a professional program</option>
+                      </select>
+                    </label>
+                    <label className="block">
+                      <span className="text-sm font-semibold text-heading">Class standing in {termLabel(term)}</span>
+                      <select className="mt-1 block w-full rounded border border-line bg-white px-2 py-1.5" value={about.standing} onChange={(e) => setAboutField("standing", e.target.value as Standing | "")} aria-label="Class standing">
+                        <option value="">Not set</option>
+                        <option value="freshman">Freshman</option>
+                        <option value="sophomore">Sophomore</option>
+                        <option value="junior">Junior</option>
+                        <option value="senior">Senior</option>
+                        <option value="graduate">Graduate</option>
+                      </select>
+                    </label>
+                  </div>
+                  <p className="text-sm" data-testid="about-major">
+                    <span className="font-semibold text-heading">Major:</span> {me.program ? `${me.program.name} (${me.program.college})` : "not picked"}
+                    {me.minors.length > 0 && (
+                      <>
+                        {"; "}
+                        <span className="font-semibold text-heading">{me.minors.length === 1 ? "minor" : "minors"}:</span> {me.minors.map((m) => m.name).join(", ")}
+                      </>
+                    )}
+                    .{" "}
+                    <Link href="/degree/" className="text-action underline">
+                      {me.program ? "Change it in the degree checklist" : "Pick it in the degree checklist"}
+                    </Link>
+                  </p>
+              </div>
               <div className="flex items-start gap-1">
                 <label className="flex items-start gap-2">
                   <input type="checkbox" className="mt-1 size-4 accent-action" checked={prefs.includeSpecial} onChange={(e) => set("includeSpecial", e.target.checked)} />
@@ -1010,6 +1048,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                 </ul>
               )}
             </div>
+            </div>
             {!mustDefault && (
               <button
                 type="button"
@@ -1041,7 +1080,23 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                   {p.label}
                 </button>
               ))}
+              {!preset && (
+                <span className="rounded border border-action bg-action-tint px-2 text-sm leading-7 font-semibold text-heading" data-testid="preset-custom">
+                  Custom
+                </span>
+              )}
             </div>
+            <button
+              type="button"
+              className="flex min-h-11 w-fit items-center gap-1.5 font-semibold text-action hover:underline"
+              aria-expanded={customOpen}
+              aria-controls="priority-sliders"
+              onClick={() => setCustomOpen((v) => !v)}
+            >
+              Customize
+              <Icon name="chevronDown" className={`transition-transform motion-reduce:transition-none ${customOpen ? "rotate-180" : ""}`} />
+            </button>
+            <div id="priority-sliders" hidden={!customOpen} className="space-y-4">
             <div className="space-y-2.5" role="group" aria-label="Priorities">
               {weightRow("gpa", "Higher expected GPA", "Higher expected GPA")}
               {weightRow(
@@ -1087,6 +1142,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                 Reset to balanced
               </button>
             )}
+            </div>
           </Panel>
         </div>
 

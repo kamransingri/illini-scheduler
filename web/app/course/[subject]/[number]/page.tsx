@@ -70,7 +70,7 @@ export default async function CoursePage({ params }: Props) {
         </p>
         <div className="mt-1 flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
           <h1 className="max-w-3xl font-display text-2xl font-bold text-heading">{course.title}</h1>
-          {next?.sections.length ? <AddToCart subject={course.subject} number={course.number} /> : null}
+          {next?.sections.length ? <AddToCart subject={course.subject} number={course.number} builderLink /> : null}
         </div>
         <div className="mt-3 flex flex-wrap items-center gap-2">
           {credits && <Badge>{credits.startsWith("1 ") ? "1 credit hour" : `${credits} credit hours`}</Badge>}

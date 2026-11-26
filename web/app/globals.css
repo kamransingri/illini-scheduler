@@ -62,6 +62,8 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
+    /* the sticky header (SiteNav) covers this much of the top: anchors, focus and scroll-into-view leave room for it */
+    scroll-padding-top: var(--site-header, 0px);
   }
   body {
     background: #ffffff;
@@ -74,6 +76,16 @@
   }
   :focus-visible {
     outline: 2px solid var(--color-action);
+    outline-offset: 2px;
+  }
+  /* On the navy header the blue ring is 2:1; white is 14:1 (WCAG 1.4.11). Inset, so the full-height tabs don't clip it. */
+  .site-header :focus-visible {
+    outline-color: #fff;
+    outline-offset: -3px;
+  }
+  /* the search panel is white, so its fields keep the usual ring */
+  .site-header [role="search"] :focus-visible {
+    outline-color: var(--color-action);
     outline-offset: 2px;
   }
 }

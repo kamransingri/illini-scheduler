@@ -2,7 +2,8 @@
 
 How Illini Scheduler looks and why. Part 1 is the audit of the site as it was on 2026-11-16 (its screenshots were removed
 from the repository in #181). Part 2 is the direction the redesign follows. Part 3 lists the tokens and shared
-components that implement it. Part 4 covers the logo, navigation and page structure added in v0.4.0.
+components that implement it. Part 4 covers the logo, navigation and page structure added in v0.4.0. Part 5 is how
+much each page may hold, and where new features go (#237).
 
 ## Part 1. Audit (before)
 
@@ -173,15 +174,29 @@ the navy header and footer) and the wordmark "**Illini** Scheduler" (bold, then 
 
 ### Navigation
 
-- Five pages, two words each, in the order students use them: Course search, Gen-ed finder, Degree checklist, Just
-  opened, Schedule builder. The labels say what the page does, not just its topic ("Degree" told you nothing about
-  what's there). The list lives in `web/lib/nav.ts` and feeds the header and the footer.
+- Three tabs, two words each, in the order students use them: Course search, Degree checklist, Schedule builder. The
+  labels say what the page does, not just its topic ("Degree" told you nothing about what's there). The list lives in
+  `web/lib/nav.ts` and feeds the header, the phone menu and the footer. The gen-ed finder is part of Course search
+  (its "Popular gen-eds" row, and the tab stays lit there); the footer adds Gen-ed finder and Just opened (D61).
 - Hairline dividers (white at 25%) between items so each one reads as its own target, and a 16px line icon before
   each label.
 - The current page: light fill, bold, and a 4px orange bar at the bottom that joins the header's orange rule. Orange is
   still only brand chrome (the rule and the mark); the bar is part of that rule.
-- Below 1024px the items don't fit in one row, so a Menu button (with the cart count) opens the same list as full-width
-  rows separated by hairlines, the current one marked by an orange bar on its left.
+- Below 1024px the items don't fit in one row, so a Menu button (with the cart count and a calendar glyph, so the
+  number reads as a schedule) opens the same list as full-width rows separated by hairlines, the current one marked by
+  an orange bar on its left.
+- **Search from every page.** A Search button after the tabs (a labelled button from 1280px, an icon from 1024px,
+  a 44px icon button next to Menu on phones) opens the search in a light panel under the header; `/` opens it from
+  anywhere that isn't a text field. The home page is the search, so it has no header search and `/` focuses its box.
+- **Always one gesture away.** The header is sticky but slides up while you scroll down and comes back as soon as you
+  scroll up (no animation with reduced motion). It sets `--site-header` to the height it covers, and sticky bars below
+  it (the course page's "On this page") use `top: var(--site-header)` so they sit underneath instead of being covered.
+- **Keyboard and touch.** Inside the header the focus ring is white (14:1 on navy; the blue ring is 2:1 there), inset so
+  full-height tabs don't clip it. Phone buttons are at least 44px tall. Escape or a tap outside closes the menu or the
+  search and returns focus to the button that opened it. The cart count is a number for the eye and words for screen
+  readers ("Menu, 2 courses in your schedule").
+- After "Add to schedule" on a course page, "Open schedule builder" appears next to it: the next step is a link, not
+  a trip back to the header.
 
 ### Home page
 
@@ -195,7 +210,7 @@ badge in the seat-status Open colours only when the feed is fresh. Nothing else:
 | Component | Use |
 | --- | --- |
 | `Logo`, `LogoMark` | Wordmark and mark (header, footer) |
-| `SiteNav` | Header with the divided nav, current-page marker and phone menu |
+| `SiteNav` | Header with the divided nav, current-page marker, phone menu, site search and scroll reveal |
 | `home/LiveOpenings` | Newest openings, one row per course, kept fresh by `useSeatFeed` (`web/lib/live.ts`) |
 | `home/YourSchedule` | The saved course list in a sentence, with a link back to the builder |
 | `JustOpened` `Freshness` | "Live" or "Daily" and how old the data is, in words |
@@ -203,4 +218,44 @@ badge in the seat-status Open colours only when the feed is fresh. Nothing else:
 
 The schedule builder's left column uses numbered blocks under a navy rule: each block (Your courses,
 Must-haves, What matters to you) sits under a 4px navy rule, and the two rule blocks fold with a one-line summary of
-what's set. Sliders always show their level in words (Off / Low / Medium / High) next to the track.
+what's set. Inside them (#238): Must-haves show three rules and "More options" (with "N on"), What matters shows the
+presets and "Customize", and each course row shows "Locked: …" and a "Pick sections" disclosure. Sliders always show their level in words (Off / Low / Medium / High) next to the track.
+
+## Part 5. Keeping pages simple (#237)
+
+Pages grew one feature at a time, and each feature brought its own panel, banner, badge or box without anything being
+taken away (#236). From here on every page has **one main job**, its first view shows what that job needs, and the
+rest sits behind one "More" control per area or goes. The Simplify issues (#238 to #244) bring each page to the first
+view below; until a page's issue is done, it may still show more than this.
+
+### Each page's job and first view
+
+"First view" is what's on screen before scrolling, with a typical saved state (a few courses in the schedule, a major
+picked).
+
+| Page | Main job | First view at 1280px | First view at 375px |
+| --- | --- | --- | --- |
+| Course search (`/`) | Find a course, a professor or a CRN | The title, the search box, often-searched courses, and Just opened's newest openings beside them | The title, the search box and often-searched courses; Just opened's box comes next |
+| Course page | Decide whether to take the course, and with whom | Code, title, Add to schedule (then "Open schedule builder"), recent GPA, next-term lectures open, the best pick, and "Before you register" | Code, title, Add to schedule and the three numbers, stacked |
+| Gen-ed finder | Find courses that fill a gen-ed, best first | Term, the category grid, Double-dips only, sort, then results; the other filters under "More filters" with how many are on | Term, a Filters button with how many are on, then results |
+| Degree checklist | See what's left of my program and what to take next | Three steps: 1 Your program (major, minors, level and standing), 2 What you've taken (one "Add what you've taken" box), 3 What's left (open requirements first; finished ones one line each) | The same three steps, stacked; the four-year plan closed as "Plan by term" |
+| Just opened | See which sections just opened, and act before they fill | One "Show" control (All, My schedule, Watched), Closings too, the search box, then the newest changes | The same controls on one or two rows, then the changes |
+| Schedule builder | Turn my courses into a schedule I can register | Left: Your courses, three must-haves in view (No classes before, Done by, Days off) with "More options", and the priority presets. Right: the summary numbers, the Week / Finals week / Getting there tabs, the calendar and its section rows | Your courses, the must-haves in one line, then the schedule |
+
+### The budget
+
+1. **One banner at a time** on a page. A second message waits, or becomes a short toast that goes away on its own.
+2. **One "More" per area.** Secondary options sit behind one "More options" (or "More filters") that says how many are
+   on: "More options, 2 on". Nothing that's on is hidden without that count.
+3. **Rows don't grow.** A new always-visible badge or button on a row replaces one that's there; otherwise it goes in
+   the row's details. A row's problem (closed, restricted) may show on the row itself.
+4. **Explanations go in an `Info` popover**, not a paragraph. A paragraph only when the page can't be used without
+   reading it first.
+5. **One place per thing.** When two blocks show the same information, keep one and link to it from the other (seat
+   changes live on Just opened; the course page and the builder show one line and link there).
+6. **Three tabs.** The header holds Course search, Degree checklist and Schedule builder (Part 4). The gen-ed finder
+   opens from Course search's "Popular gen-eds" row, and Just opened from the home page, course pages, the builder and
+   the footer. A new page goes in the footer unless it replaces one of them.
+7. **Say where it goes.** Every issue that adds to a page names the page, the block it joins, and what it replaces or
+   hides ("Where it goes" in the issue templates). Every pull request that changes a page shows it before and after
+   at 1280px and 375px.

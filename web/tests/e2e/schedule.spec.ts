@@ -103,6 +103,7 @@ test("Best professor: the top schedule takes the lecture of the course page's be
   const bestScore = (await firstRow.getByText(/Best pick \d+/).first().textContent())!.match(/\d+/)![0];
   // only "Best professor" on (weights: gpa, rmp, early, daysOff, compact, walking, late, open, prof)
   await page.goto("./schedule/?c=STAT107&t=2027-sp&w=000000003");
+  await page.getByRole("button", { name: "Customize" }).click(); // the sliders fold away (#238)
   await expect(page.getByRole("slider", { name: "Best professor" })).toHaveValue("3");
   await page.getByRole("button", { name: "Generate schedules" }).click();
   const pick = page.getByTestId("schedule-sections").getByTestId("prof-pick").first();
@@ -114,6 +115,7 @@ test("Best professor: the top schedule takes the lecture of the course page's be
 
 test("the Best professors preset turns the priority up, and an old 8-digit link keeps it at its default", async ({ page }) => {
   await page.goto("./schedule/?c=STAT107&t=2027-sp&w=21101101");
+  await page.getByRole("button", { name: "Customize" }).click(); // the sliders fold away (#238)
   await expect(page.getByRole("slider", { name: "Best professor" })).toHaveValue("2");
   await page.getByRole("button", { name: "Best professors" }).click();
   await expect(page.getByRole("slider", { name: "Best professor" })).toHaveValue("3");
@@ -152,6 +154,7 @@ test("lock a section from the results: the same schedule stays open and every sc
 test("a locked section that breaks a must-have is named with the rule it breaks (#67)", async ({ page }) => {
   await page.goto("./schedule/?c=STAT107&t=2027-sp");
   await expect(page.getByTestId("cart").locator("li")).toHaveCount(1);
+  await page.getByTestId("cart").locator("li", { hasText: "STAT 107" }).getByText(/^(Pick|Change) sections$/).click(); // the lock dropdowns fold away (#238)
   const lecture = page.getByLabel("Lock Lecture for STAT 107");
   await lecture.selectOption((await lecture.locator("option", { hasText: /^L1 LEC/ }).getAttribute("value"))!);
   await page.getByLabel("No classes before").selectOption("630");
@@ -162,6 +165,7 @@ test("a locked section that breaks a must-have is named with the rule it breaks 
 
 test("lunch break: the window and length can be changed and go into the share link (#56)", async ({ page }) => {
   await page.goto("./schedule/?c=STAT107&t=2027-sp");
+  await page.getByTestId("more-options-toggle").click(); // lunch is under More options (#238)
   await page.getByLabel("Keep a lunch break").check();
   await page.getByLabel("Lunch break length").selectOption("60");
   await page.getByLabel("Lunch window starts").selectOption("690");
@@ -313,7 +317,7 @@ test("restrictions: About you decides which sections are left out, and the reaso
   await page.goto("./schedule/?c=CS124&t=2027-sp");
   await expect(page.getByTestId("cart").locator("li")).toHaveCount(1);
   const about = page.getByTestId("about-you");
-  await about.getByRole("button", { name: /About you/ }).click();
+  await page.getByTestId("more-options-toggle").click(); // About you is under More options (#238)
   await expect(about.getByTestId("about-major")).toContainText("Finance, BS (Gies College of Business)");
   await page.getByLabel("Student level").selectOption("undergrad");
   await page.getByLabel("Class standing").selectOption("junior");
@@ -326,6 +330,7 @@ test("restrictions: About you decides which sections are left out, and the reaso
   // turning the must-have off brings AL1 back, flagged with its reason
   await page.getByLabel("Only sections I can register for").uncheck();
   await expect(page).toHaveURL(/eo=0/);
+  await page.getByTestId("cart").locator("li", { hasText: "CS 124" }).getByText(/^(Pick|Change) sections$/).click(); // the lock dropdowns fold away (#238)
   const lec = page.getByLabel("Lock Lecture for CS 124");
   await lec.selectOption({ label: (await lec.locator("option", { hasText: "AL1" }).first().textContent())!.trim() });
   await expect(page.getByTestId("warnings")).toContainText("is locked, but its restriction leaves you out: Restricted to CS and blended CS majors students.");
