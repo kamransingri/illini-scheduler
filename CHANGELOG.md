@@ -23,6 +23,13 @@ history).
 
 ### Changed
 
+- The site header is easier to get around (header critique, on the redesign branch). Just opened is a header tab
+  again, the page students need most during registration. Search works from every page: a Search button in the header
+  (and next to Menu on phones), or press `/`. The header slides away while you scroll down and comes back as soon as
+  you scroll up, so it's never a long scroll away. After "Add to schedule" on a course page, "Open schedule builder"
+  is right next to it. Keyboard focus in the header is now clearly visible, the phone buttons are easier to tap,
+  Escape or a tap outside closes the menu, and screen readers hear the schedule count.
+
 - A tidier footer: links grouped into Plan, More and Policies, only the current version (every version is on What's
   new), and the long data-sources paragraph moved to the Data sources page it already had.
 - Faster deploys: a push to `main` reuses the database from the last nightly refresh instead of fetching every source

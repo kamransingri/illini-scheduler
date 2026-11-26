@@ -54,9 +54,15 @@ export default function SearchBox({
   withCart = true,
   placeholder = 'Try "cs124", a professor or a CRN',
   onPick,
+  id = "q",
+  compact = false,
 }: {
   nextTerm: string;
   autoFocus?: boolean;
+  /** The input's id: the site header has its own search, so a page with a second one gives it another id. */
+  id?: string;
+  /** The header's search: a smaller box, and results that scroll inside the panel. */
+  compact?: boolean;
   withCart?: boolean;
   placeholder?: string;
   /** If set, Enter on a course (or a CRN, which also pins that section) adds it here instead of opening the course page. */
@@ -128,13 +134,13 @@ export default function SearchBox({
 
   return (
     <div>
-      <label htmlFor="q" className="sr-only">
+      <label htmlFor={id} className="sr-only">
         Search courses, instructors or CRNs
       </label>
       <div className="relative">
         <Icon name="search" className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-muted" />
         <input
-          id="q"
+          id={id}
           ref={inputRef}
           type="search"
           autoFocus={autoFocus}
@@ -154,8 +160,8 @@ export default function SearchBox({
             }
           }}
           placeholder={placeholder}
-          className="w-full rounded border-2 border-heading bg-white py-3 pr-4 pl-11 text-lg placeholder:text-muted focus:border-action focus:outline-none"
-          aria-controls={hits.length ? "search-results" : undefined}
+          className={`w-full rounded border-2 border-heading bg-white pr-4 pl-11 placeholder:text-muted focus:border-action focus:outline-none ${compact ? "py-2 text-base" : "py-3 text-lg"}`}
+          aria-controls={hits.length ? `${id}-results` : undefined}
           aria-expanded={hits.length > 0}
           role="combobox"
           aria-autocomplete="list"
@@ -175,7 +181,7 @@ export default function SearchBox({
         </p>
       )}
       {hits.length > 0 && (
-        <ul id="search-results" className="mt-2 rounded border border-line bg-white px-3" role="listbox" aria-label="Search results">
+        <ul id={`${id}-results`} className={`mt-2 rounded border border-line bg-white px-3 ${compact ? "max-h-[min(70vh,36rem)] overflow-y-auto overscroll-contain" : ""}`} role="listbox" aria-label="Search results">
           {hits.map((h, i) => (
             <li key={hitKey(h)} role="option" aria-selected={i === active} className={`-mx-3 px-3 ${i === active ? "bg-action-tint" : ""}`}>
               {h.kind === "summer" ? (

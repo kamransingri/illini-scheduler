@@ -37,10 +37,9 @@ test("a CRN typed in the schedule builder adds the course with that section lock
 test("the nav names every page in two words and marks the current one", async ({ page }) => {
   await page.goto("./geneds/");
   const nav = page.getByRole("navigation", { name: "Main" });
-  for (const label of ["Course search", "Gen-ed finder", "Degree checklist", "Schedule builder"])
+  for (const label of ["Course search", "Gen-ed finder", "Degree checklist", "Schedule builder", "Just opened"])
     await expect(nav.getByRole("link", { name: label })).toBeVisible();
-  // Just opened left the header; the footer still links it
-  await expect(nav.getByRole("link", { name: "Just opened" })).toHaveCount(0);
+  // the footer lists the same pages
   await expect(page.getByRole("navigation", { name: "Footer" }).getByRole("link", { name: "Just opened" })).toBeVisible();
   await expect(nav.getByRole("link", { name: "Gen-ed finder" })).toHaveAttribute("aria-current", "page");
   // phones get a menu button instead

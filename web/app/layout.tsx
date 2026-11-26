@@ -3,7 +3,7 @@ import { Source_Sans_3 } from "next/font/google";
 import Link from "next/link";
 import Logo from "@/components/Logo";
 import SiteNav from "@/components/SiteNav";
-import { getReleases } from "@/lib/data";
+import { getMeta, getReleases } from "@/lib/data";
 import { fmtDate } from "@/lib/format";
 import { FOOTER } from "@/lib/nav";
 import pkg from "../package.json";
@@ -23,13 +23,14 @@ export const viewport: Viewport = { width: "device-width", initialScale: 1 };
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   // The footer names the live version only; every earlier one is on the Versions page (CHANGELOG.md).
   const current = getReleases().find((r) => r.version === pkg.version);
+  const nextTerm = getMeta()?.next_term ?? "";
   return (
     <html lang="en" className={sourceSans.variable}>
       <body className="flex min-h-screen flex-col font-sans antialiased">
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:bg-white focus:p-2">
           Skip to content
         </a>
-        <SiteNav />
+        <SiteNav nextTerm={nextTerm} />
         <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
           {children}
         </main>

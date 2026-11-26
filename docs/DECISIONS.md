@@ -1510,3 +1510,25 @@ Every judgment call made during the autonomous build, newest phase last.
   links and a paragraph of sources were noise on every page.
 - **D58.3 Four header links.** Just opened is a feed students reach from the home page, a course or the schedule
   builder; the header keeps the four planning pages (replaces D39.3's five).
+
+## The header after its critique (2026-11-26, redesign branch)
+
+- **D59.1 Why.** An Impeccable critique of `SiteNav` scored the header 26/40: Just opened, the most time-critical page,
+  wasn't in the header or the phone menu; the header's focus ring was 2.08:1 on navy; course pages had no search and
+  the header scrolled away; the Menu button was 36px tall and ignored Escape; the cart count's `aria-label` sat on a
+  plain `<span>`, so screen readers never heard it; and "Add to schedule" led nowhere. The critique is saved in
+  `.impeccable/critique/` (local only).
+- **D59.2 Just opened is a tab again.** This reverses #242's "since 0.16 it's in the footer, not the header": the owner
+  chose a fifth tab after the critique. Five tabs plus a Search button fit at 1024px (the nav ends at 943px of a
+  1009px row). The footer's Plan group is now just the same list.
+- **D59.3 One search, everywhere.** The header's Search opens the existing `SearchBox` in a panel under the header (a
+  compact box, results scrolling inside it, its own id so it can share a page with the builder's search). Not on the
+  home page, which is the search. `/` opens it; Escape or a tap outside closes it and returns focus.
+- **D59.4 Hide on the way down, back on the way up.** A sticky header that always shows costs 56px on every scroll; one
+  that never shows means a long trip back on a phone. It slides up after scrolling down past 120px and returns on any
+  scroll up, on focus, or while a panel is open. It publishes its height as `--site-header`, and the course page's
+  sticky "On this page" bar uses it, so the bar sits under the header instead of behind it.
+- **D59.5 Small fixes.** White focus ring inside the header (CSS on `.site-header`, the search panel keeps the blue
+  one); 44px phone buttons; the cart count as `aria-hidden` digits plus screen-reader words (no `aria-label` on a span),
+  with a calendar glyph on the Menu button; "Open schedule builder" next to "In schedule" on course pages
+  (`AddToCart builderLink`).

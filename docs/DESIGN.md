@@ -173,15 +173,29 @@ the navy header and footer) and the wordmark "**Illini** Scheduler" (bold, then 
 
 ### Navigation
 
-- Five pages, two words each, in the order students use them: Course search, Gen-ed finder, Degree checklist, Just
-  opened, Schedule builder. The labels say what the page does, not just its topic ("Degree" told you nothing about
-  what's there). The list lives in `web/lib/nav.ts` and feeds the header and the footer.
+- Five pages, two words each, in the order students use them: Course search, Gen-ed finder, Degree checklist,
+  Schedule builder, Just opened. The labels say what the page does, not just its topic ("Degree" told you nothing
+  about what's there). The list lives in `web/lib/nav.ts` and feeds the header, the phone menu and the footer. Just
+  opened is a tab because it's the page students need most during registration, usually on a phone.
 - Hairline dividers (white at 25%) between items so each one reads as its own target, and a 16px line icon before
   each label.
 - The current page: light fill, bold, and a 4px orange bar at the bottom that joins the header's orange rule. Orange is
   still only brand chrome (the rule and the mark); the bar is part of that rule.
-- Below 1024px the items don't fit in one row, so a Menu button (with the cart count) opens the same list as full-width
-  rows separated by hairlines, the current one marked by an orange bar on its left.
+- Below 1024px the items don't fit in one row, so a Menu button (with the cart count and a calendar glyph, so the
+  number reads as a schedule) opens the same list as full-width rows separated by hairlines, the current one marked by
+  an orange bar on its left.
+- **Search from every page.** A Search button after the tabs (a labelled button from 1280px, an icon from 1024px,
+  a 44px icon button next to Menu on phones) opens the search in a light panel under the header; `/` opens it from
+  anywhere that isn't a text field. The home page is the search, so it has no header search and `/` focuses its box.
+- **Always one gesture away.** The header is sticky but slides up while you scroll down and comes back as soon as you
+  scroll up (no animation with reduced motion). It sets `--site-header` to the height it covers, and sticky bars below
+  it (the course page's "On this page") use `top: var(--site-header)` so they sit underneath instead of being covered.
+- **Keyboard and touch.** Inside the header the focus ring is white (14:1 on navy; the blue ring is 2:1 there), inset so
+  full-height tabs don't clip it. Phone buttons are at least 44px tall. Escape or a tap outside closes the menu or the
+  search and returns focus to the button that opened it. The cart count is a number for the eye and words for screen
+  readers ("Menu, 2 courses in your schedule").
+- After "Add to schedule" on a course page, "Open schedule builder" appears next to it: the next step is a link, not
+  a trip back to the header.
 
 ### Home page
 
@@ -195,7 +209,7 @@ badge in the seat-status Open colours only when the feed is fresh. Nothing else:
 | Component | Use |
 | --- | --- |
 | `Logo`, `LogoMark` | Wordmark and mark (header, footer) |
-| `SiteNav` | Header with the divided nav, current-page marker and phone menu |
+| `SiteNav` | Header with the divided nav, current-page marker, phone menu, site search and scroll reveal |
 | `home/LiveOpenings` | Newest openings, one row per course, kept fresh by `useSeatFeed` (`web/lib/live.ts`) |
 | `home/YourSchedule` | The saved course list in a sentence, with a link back to the builder |
 | `JustOpened` `Freshness` | "Live" or "Daily" and how old the data is, in words |
