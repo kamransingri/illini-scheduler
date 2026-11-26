@@ -29,6 +29,10 @@ only checked once the student opens the link.
 
 ## Set it up
 
+**Coming soon, with nothing to install:** the same server is hosted at `https://<ref>.supabase.co/functions/v1/api/mcp`
+(#102). Once it's live (#247), AI apps that add connectors by URL can use that address, and this section will have the
+real one. Until then, run it yourself as below.
+
 You need [Node.js](https://nodejs.org) 20 or newer. Every release of the site comes with the server as a package, and
 `npx` (part of Node.js) downloads and starts it, so there's nothing else to install. The link below always points to
 the newest release:

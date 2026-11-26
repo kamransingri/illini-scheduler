@@ -1,2 +1,4 @@
 node_modules/
 dist/
+# copied from the repo root by prepack, so the npm package carries it
+LICENSE

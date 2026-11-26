@@ -20,6 +20,11 @@ history).
   the schedule builder at `/v1/`, with an OpenAPI description, the same answers as the MCP server, and no key
   (docs/API.md, "HTTP API"). It needs no database: a Supabase Edge Function built from `api/` reads the site's JSON
   from GitHub Pages, and it goes live once the Supabase project is set up (docs/BACKEND.md).
+- A hosted MCP server at `/mcp` on the same API: AI apps that add a connector by URL get the same five tools as
+  `npx illini-scheduler-mcp`, with nothing to install. It keeps nothing between requests and logs only which tool
+  was used, never the question.
+- A licence: the code and the MCP server's npm package are under the MIT licence (LICENSE). The data keeps its
+  sources' terms, as docs/API.md says.
 
 ### Changed
 

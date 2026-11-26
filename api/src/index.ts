@@ -1,8 +1,10 @@
 // Illini Scheduler's public HTTP API (#157, #158): the MCP server's answers (mcp/src/answers.ts) over plain HTTP,
 // reading the site's JSON from GitHub Pages. It needs no database. The handler only uses web standards (Request,
 // Response, fetch), so it runs on Supabase Edge Functions (supabase.ts) and in Node for tests and `npm run dev`.
+// POST /mcp is the MCP server itself over Streamable HTTP (#102), for AI apps that add a connector by URL.
 import { version } from "../../mcp/package.json";
 import * as answers from "../../mcp/src/answers";
+import { handleMcp, toolsCalled } from "../../mcp/src/http";
 import { BUILD_ARGS, check, COURSE_OPTIONS, GENED_ARGS, jsonSchema, SEARCH_ARGS } from "../../mcp/src/schemas";
 import { remoteSource, SITE_URL, type DataSource } from "../../mcp/src/source";
 import { openApi } from "./openapi";
@@ -15,12 +17,14 @@ export type ApiOptions = {
   publicUrl?: string;
   /** false when this address has asked too often (limit.ts); no limit when left out */
   limit?: (key: string) => boolean;
+  /** where each MCP tool call is counted, by tool name only (default: one JSON line on the console, which Supabase keeps) */
+  log?: (event: { mcp_tool: string }) => void;
 };
 
 const SEARCH = "GET /v1/courses?q=";
 const DOCS = "https://github.com/kamransingri/illini-scheduler/blob/main/docs/API.md#http-api";
 const MAX_BODY = 20_000;
-const CORS = { "Access-Control-Allow-Origin": "*", "Access-Control-Expose-Headers": "Retry-After" };
+const CORS = { "Access-Control-Allow-Origin": "*", "Access-Control-Expose-Headers": "Retry-After, Mcp-Session-Id" };
 // Answers only change when the site rebuilds (nightly), so a client may reuse one for 10 minutes.
 const CACHE = { "Cache-Control": "public, max-age=600" };
 
@@ -43,7 +47,7 @@ async function checked<S extends Shape>(shape: S, input: unknown, run: (args: Ex
   return c.ok ? reply(await run(c.value)) : error(400, c.message);
 }
 
-type Ctx = { request: Request; url: URL; base: string; asker: answers.Asker; match: RegExpMatchArray };
+type Ctx = { request: Request; url: URL; base: string; asker: answers.Asker; match: RegExpMatchArray; log: NonNullable<ApiOptions["log"]> };
 type Route = { method: "GET" | "POST"; path: RegExp; limited: boolean; run: (c: Ctx) => Response | Promise<Response> };
 
 let query: { search: ReturnType<typeof jsonSchema>; course: ReturnType<typeof jsonSchema>; geneds: ReturnType<typeof jsonSchema> } | null = null;
@@ -60,8 +64,9 @@ const ROUTES: Route[] = [
         version,
         about: "Read-only answers over Illini Scheduler's public course data for UIUC: the same answers as the site and its MCP server. No key needed; 60 requests a minute per address.",
         openapi: `${base}/v1/openapi.json`,
+        mcp: `${base}/mcp`,
         docs: DOCS,
-        endpoints: ["GET /v1/terms", "GET /v1/courses?q=", "GET /v1/courses/{subject}/{number}", "GET /v1/geneds?gened=", "POST /v1/schedules"],
+        endpoints: ["GET /v1/terms", "GET /v1/courses?q=", "GET /v1/courses/{subject}/{number}", "GET /v1/geneds?gened=", "POST /v1/schedules", "POST /mcp"],
         site: SITE_URL,
       }),
   },
@@ -104,6 +109,19 @@ const ROUTES: Route[] = [
       return checked(BUILD_ARGS, body, (args) => answers.schedules(asker, args));
     },
   },
+  {
+    method: "POST",
+    path: /^\/mcp$/,
+    limited: true,
+    run: async ({ request, asker, log }) => {
+      if (Number(request.headers.get("Content-Length") ?? 0) > MAX_BODY) return error(413, `The request body is over ${MAX_BODY} bytes.`);
+      for (const tool of await toolsCalled(request)) log({ mcp_tool: tool });
+      const res = await handleMcp(request, asker.src, version);
+      const headers = new Headers(res.headers);
+      for (const [k, v] of Object.entries(CORS)) headers.set(k, v);
+      return new Response(res.body, { status: res.status, headers });
+    },
+  },
 ];
 
 /** The address a request comes from, for the rate limit: the first hop of X-Forwarded-For. */
@@ -112,7 +130,7 @@ function caller(request: Request): string {
 }
 
 /** The API's fetch handler over `sourceFor()`'s data (tests pass the MCP fixtures). */
-export function createApi(sourceFor: () => DataSource, { basePath = "", publicUrl, limit }: ApiOptions = {}) {
+export function createApi(sourceFor: () => DataSource, { basePath = "", publicUrl, limit, log = (e) => console.log(JSON.stringify(e)) }: ApiOptions = {}) {
   return {
     async fetch(request: Request): Promise<Response> {
       const url = new URL(request.url);
@@ -122,7 +140,12 @@ export function createApi(sourceFor: () => DataSource, { basePath = "", publicUr
       if (request.method === "OPTIONS")
         return new Response(null, {
           status: 204,
-          headers: { ...CORS, "Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type", "Access-Control-Max-Age": "86400" },
+          headers: {
+            ...CORS,
+            "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Accept, Mcp-Protocol-Version, Mcp-Session-Id, Last-Event-ID",
+            "Access-Control-Max-Age": "86400",
+          },
         });
       const at = ROUTES.filter((r) => r.path.test(path));
       if (!at.length) return error(404, `There's no ${url.pathname}. Every endpoint is in ${base}/v1/openapi.json.`);
@@ -131,7 +154,7 @@ export function createApi(sourceFor: () => DataSource, { basePath = "", publicUr
       if (!route) return error(405, `${url.pathname} takes ${at.map((r) => r.method).join(" or ")}.`, { Allow: [...at.map((r) => r.method), "OPTIONS"].join(", ") });
       if (route.limited && limit && !limit(caller(request)))
         return error(429, "Too many requests: each address gets 60 a minute. Wait a minute, or download the JSON files for bulk use (docs/API.md).", { "Retry-After": "60" });
-      return route.run({ request, url, base, asker: { src: sourceFor(), search: SEARCH }, match: path.match(route.path)! });
+      return route.run({ request, url, base, asker: { src: sourceFor(), search: SEARCH }, match: path.match(route.path)!, log });
     },
   };
 }
