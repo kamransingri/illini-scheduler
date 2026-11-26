@@ -28,6 +28,7 @@ test("a cross-campus walk with 10 minutes between classes is flagged, and the mu
   await expect(walks).toContainText(/Mon: STAT 107 in North Test Hall to RHET 105 in South Test Hall, \d+ min walk, 10 min gap/);
   await expect(page.getByTestId("summary")).toContainText("1 rushed walk");
 
+  await page.getByTestId("more-options-toggle").click(); // under More options (#238)
   await page.getByLabel("No rushed walks between classes").check();
   await expect(page.getByTestId("summary")).not.toContainText("rushed walk");
   await expect(walks).toHaveCount(0);

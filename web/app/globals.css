@@ -62,6 +62,8 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
+    /* the sticky header (SiteNav) covers this much of the top: anchors, focus and scroll-into-view leave room for it */
+    scroll-padding-top: var(--site-header, 0px);
   }
   body {
     background: #ffffff;

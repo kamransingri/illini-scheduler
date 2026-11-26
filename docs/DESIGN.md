@@ -218,7 +218,8 @@ badge in the seat-status Open colours only when the feed is fresh. Nothing else:
 
 The schedule builder's left column uses numbered blocks under a navy rule: each block (Your courses,
 Must-haves, What matters to you) sits under a 4px navy rule, and the two rule blocks fold with a one-line summary of
-what's set. Sliders always show their level in words (Off / Low / Medium / High) next to the track.
+what's set. Inside them (#238): Must-haves show three rules and "More options" (with "N on"), What matters shows the
+presets and "Customize", and each course row shows "Locked: …" and a "Pick sections" disclosure. Sliders always show their level in words (Off / Low / Medium / High) next to the track.
 
 ## Part 5. Keeping pages simple (#237)
 

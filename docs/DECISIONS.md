@@ -1532,3 +1532,22 @@ Every judgment call made during the autonomous build, newest phase last.
   one); 44px phone buttons; the cart count as `aria-hidden` digits plus screen-reader words (no `aria-label` on a span),
   with a calendar glyph on the Menu button; "Open schedule builder" next to "In schedule" on course pages
   (`AddToCart builderLink`).
+
+## Schedule builder: the left column (2026-11-26, issue #238, UI redesign branch)
+
+- **D60.1 What stays in view.** The term, the search and each course; No classes before, Done by and Days off; the six
+  priority presets. That's three selects and no option checkboxes on a fresh visit (the Days off toggles are
+  checkboxes underneath, styled as buttons). The list was posted on #238 and approved by the maintainer first.
+- **D60.2 More options says what's on.** Lunch break, Blocked times, Open sections only, No rushed walks, Only
+  sections I can register for (with About you under it, the only thing it feeds) and Include special sections are
+  folded under one "More options". Folded, it counts the rules that differ from a fresh visit ("2 on"), so a share
+  link with a lunch break and a blocked time shows that before it's opened.
+- **D60.3 Picking a section before generating stays.** #238 proposed dropping the per-course lock dropdowns and
+  locking only from the calendar and result rows; that would have meant generating schedules before you could pin a
+  section. They fold behind "Pick sections" (a native `<details>`) instead, and the course row says what's locked,
+  with one Unlock.
+- **D60.4 Customize.** The sliders and their two time selects fold behind "Customize". When they match no preset, a
+  "Custom" chip shows in the preset row, so a folded custom setting is still visible.
+- **D60.5 The header and scrolling.** With the sticky header (D59.4), `html` gets `scroll-padding-top:
+  var(--site-header)`, so anchors, keyboard focus and scroll-into-view leave room for it instead of landing under it.
+- **D60.6 Unchanged.** `Prefs`, the localStorage keys and every share-link parameter: layout only.

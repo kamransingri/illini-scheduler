@@ -23,6 +23,13 @@ history).
 
 ### Changed
 
+- The schedule builder's left column is shorter (#238). Must-haves show No classes before, Done by and Days off;
+  lunch, blocked times, open-only, no rushed walks, only sections you can register for, special sections and About you
+  are under one **More options** that says how many are on. What matters to you shows the six presets, with the
+  sliders under **Customize** ("Custom" shows when they don't match a preset). Each course's section dropdowns are
+  behind **Pick sections**, and the course says what's locked ("Locked: L1", with Unlock). Saved settings and share
+  links are unchanged.
+
 - Pages have a budget (#237): docs/DESIGN.md Part 5 gives each page's main job and what shows first at 1280px and
   375px, and the rules that keep pages from growing back (one banner at a time, one "More" per area that says how many
   options are on, rows don't grow, one place per thing, five tabs). Task and Parent issues now say "Where it goes",

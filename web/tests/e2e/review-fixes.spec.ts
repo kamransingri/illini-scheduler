@@ -10,6 +10,7 @@ test("two courses that always overlap are named", async ({ page }) => {
 test("an impossible lock is explained and the schedule is marked incomplete", async ({ page }) => {
   await page.goto("./schedule/?c=MATH231,CS124&t=2027-sp");
   await expect(page.getByTestId("cart").locator("li")).toHaveCount(2);
+  await page.getByTestId("cart").locator("li", { hasText: "MATH 231" }).getByText(/^(Pick|Change) sections$/).click(); // the lock dropdowns fold away (#238)
   const lec = page.getByLabel("Lock Lecture for MATH 231");
   const dis = page.getByLabel("Lock Discussion for MATH 231");
   // wait until course data has loaded and the selects list real sections (0 options = not rendered yet, 1 = only
