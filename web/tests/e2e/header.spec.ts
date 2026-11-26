@@ -33,9 +33,11 @@ test("the home page keeps its own search: no header search, and / focuses the pa
   await expect(page.locator("#q")).toBeFocused();
 });
 
-test("Just opened is a tab, marked current on its page", async ({ page }) => {
+test("Just opened isn't a tab, but the page is still there and in the footer", async ({ page }) => {
   await page.goto("./opened/");
-  await expect(page.getByRole("navigation", { name: "Main" }).getByRole("link", { name: "Just opened" })).toHaveAttribute("aria-current", "page");
+  await expect(page.getByRole("navigation", { name: "Main" }).getByRole("link", { name: "Just opened" })).toHaveCount(0);
+  await expect(page.getByRole("navigation", { name: "Footer" }).getByRole("link", { name: "Just opened" })).toBeVisible();
+  await expect(page.locator("h1")).toBeVisible();
 });
 
 test("375px: Search and Menu are 44px tall, Escape closes the menu, and the cart count is read out", async ({ page }) => {
@@ -46,7 +48,7 @@ test("375px: Search and Menu are 44px tall, Escape closes the menu, and the cart
   for (const b of [menu, page.getByRole("button", { name: "Search", exact: true })]) expect((await b.boundingBox())!.height).toBeGreaterThanOrEqual(44);
   await menu.click();
   const nav = page.locator("#mobile-nav");
-  await expect(nav.getByRole("link", { name: "Just opened" })).toBeVisible();
+  await expect(nav.getByRole("link", { name: "Schedule builder" })).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(nav).toBeHidden();
   await expect(menu).toBeFocused();
@@ -68,8 +70,13 @@ test("after Add to schedule, the course page links straight to the builder", asy
 test("the header slides away on the way down and comes back on the way up, above the course page's sticky bar", async ({ page }) => {
   await page.goto("./course/CS/124/");
   const header = page.locator("header.site-header");
-  await page.mouse.wheel(0, 1500);
-  await expect.poll(async () => (await header.boundingBox())!.y).toBeLessThan(0);
+  // keep scrolling until it hides: a scroll that lands before the page hydrates has no listener to see it
+  await expect
+    .poll(async () => {
+      await page.mouse.wheel(0, 500);
+      return (await header.boundingBox())!.y;
+    })
+    .toBeLessThan(0);
   await page.mouse.wheel(0, -300);
   await expect.poll(async () => (await header.boundingBox())!.y).toBe(0);
   const strip = page.getByRole("navigation", { name: "On this page" });
