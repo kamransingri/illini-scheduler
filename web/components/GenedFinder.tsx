@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { onCartChange, readCart } from "@/lib/cart";
 import {
@@ -16,12 +16,13 @@ import {
   type Fit,
   type SortKey,
 } from "@/lib/geneds";
-import { courseHref, dataUrl, fmtGpa, fmtInt, fmtPct, GENED_NAMES, GENED_SHORT, termLabel } from "@/lib/format";
+import { courseHref, dataUrl, fmtGpa, fmtInt, fmtPct, GENED_NAMES, GENED_SHORT, termLabel, termOrder } from "@/lib/format";
 import { loadPrefs, onPrefsChange, timeRulesSummary } from "@/lib/prefs";
 import { rankCourse } from "@/lib/rank";
 import type { Prefs } from "@/lib/schedule";
 import { DEFAULT_WEIGHTS, type ScorePriors } from "@/lib/score";
 import { DEFAULT_SUMMER, summerHref } from "@/lib/summer";
+import { termAfter } from "@/lib/terms";
 import type { GenedRow } from "@/lib/types";
 import { useWeights } from "@/lib/weights";
 import ScoreBreakdown from "./course/ScoreBreakdown";
@@ -32,13 +33,25 @@ import Info from "./ui/Info";
 import WeightsControl from "./WeightsControl";
 
 const PAGE = 50;
+// The term row: this many terms in order from the first one with data, filling the width; the rest scroll (D64)
+const TERM_ROW = 9;
 // Why a course doesn't fit the schedule builder's must-haves (lib/geneds.ts timesFit)
 const NO_FIT: Record<Exclude<Fit, "fits">, string> = { times: "Outside your times", special: "Only special sections", closed: "No open section" };
 // Table cells: hairline row and column dividers (the first column has no left rule).
 const TH = "border-l border-line px-2.5 py-2 align-bottom font-semibold first:border-l-0";
 const TD = "border-l border-line px-2.5 py-2.5 first:border-l-0";
 
-export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTerm: string; rmpAvailable: boolean; priors: ScorePriors | null }) {
+export default function GenedFinder({
+  nextTerm,
+  summerTerm,
+  rmpAvailable,
+  priors,
+}: {
+  nextTerm: string;
+  summerTerm: string | null; // the summer the Summer view shows (summer.json), null when there's none
+  rmpAvailable: boolean;
+  priors: ScorePriors | null;
+}) {
   const [rows, setRows] = useState<GenedRow[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [f, setF] = useState<Filters>(DEFAULT_FILTERS);
@@ -52,6 +65,17 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
   const [inSchedule, setInSchedule] = useState(0);
   // ?term=summer: the newest summer's classes instead of next term's gen-eds (#123); SummerFinder keeps its own filters
   const [summer, setSummer] = useState(false);
+  const termRow = useRef<HTMLDivElement>(null);
+  const terms = useMemo(() => {
+    const out = [summerTerm && termOrder(summerTerm) < termOrder(nextTerm) ? summerTerm : nextTerm];
+    while (out.length < TERM_ROW) out.push(termAfter(out[out.length - 1]));
+    return out;
+  }, [nextTerm, summerTerm]);
+  // on a phone the row scrolls: keep the picked term in view
+  // (braces: newer browsers return a promise from scrollIntoView, and React would call it as the effect's cleanup)
+  useEffect(() => {
+    termRow.current?.querySelector('[aria-pressed="true"]')?.scrollIntoView({ block: "nearest", inline: "nearest" });
+  }, [summer]);
 
   // Filters live in the URL so Back, reload and shared links keep them.
   useEffect(() => {
@@ -119,7 +143,7 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
       type="button"
       aria-pressed={on}
       onClick={on ? undefined : onClick}
-      className={`px-4 py-1.5 font-semibold ${on ? "bg-action text-white" : "text-action hover:bg-action-tint"}`}
+      className={`px-3 py-1.5 font-semibold whitespace-nowrap ${on ? "bg-action text-white" : "text-action hover:bg-action-tint"}`}
     >
       {label}
     </button>
@@ -127,9 +151,26 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
 
   return (
     <div>
-      <div role="group" aria-label="Term" className="mb-6 inline-flex divide-x divide-action overflow-hidden rounded border border-action" data-testid="gened-term">
-        {tab(!summer, termLabel(nextTerm), () => setSummer(false))}
-        {tab(summer, "Summer", toSummer)}
+      <div
+        ref={termRow}
+        role="group"
+        aria-label="Term"
+        className="relative mb-6 grid auto-cols-[minmax(7.5rem,1fr)] grid-flow-col divide-x divide-line overflow-x-auto rounded border border-line"
+        data-testid="gened-term"
+      >
+        {terms.map((t) =>
+          t === nextTerm ? (
+            <Fragment key={t}>{tab(!summer, termLabel(t), () => setSummer(false))}</Fragment>
+          ) : t === summerTerm ? (
+            <Fragment key={t}>{tab(summer, termLabel(t), toSummer)}</Fragment>
+          ) : (
+            // no gen-ed or summer data for this term: greyed out
+            <button key={t} type="button" disabled className="cursor-not-allowed bg-panel px-3 py-1.5 whitespace-nowrap text-muted/70">
+              {termLabel(t)}
+              <span className="sr-only">, {termOrder(t) > termOrder(nextTerm) ? "not out yet" : "not in the finder"}</span>
+            </button>
+          ),
+        )}
       </div>
       {summer ? (
         <SummerFinder />
