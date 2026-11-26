@@ -60,7 +60,7 @@ jobs:
       - run: cd api && npm ci --prefer-offline && npm run bundle
       - uses: supabase/setup-cli@v1
         with: { version: latest }
-      - name: Deploy the api function (public: no Supabase key needed to call it)
+      - name: Deploy the api function, public so callers need no Supabase key
         run: supabase functions deploy api --project-ref "$REF" --no-verify-jwt
       - name: The deployed API answers /health and /v1/terms
         run: |
