@@ -2,7 +2,7 @@ import Link from "next/link";
 import LiveOpenings from "@/components/home/LiveOpenings";
 import SearchBox from "@/components/SearchBox";
 import { getMeta, getSearchIndex } from "@/lib/data";
-import { courseHref, termLabel } from "@/lib/format";
+import { courseHref, GENED_SHORT, termLabel } from "@/lib/format";
 
 const POPULAR: [string, string][] = [
   ["CS", "124"],
@@ -14,8 +14,13 @@ const POPULAR: [string, string][] = [
   ["ECON", "102"],
 ];
 
-// The home page is the search, the courses students look up most, and the seats that just opened (DECISIONS D39).
-// Every other page is one click away in the header.
+// Each opens the gen-ed finder with that category picked; the finder isn't a header tab (DECISIONS D61)
+const POPULAR_GENEDS = ["ACP", "NW", "WCC", "US", "HP", "QR1"];
+
+const chip = "rounded border border-line px-2 leading-7 font-semibold text-action hover:border-action hover:bg-action-tint";
+
+// The home page is the search, the courses and gen-eds students look up most, and the seats that just opened
+// (DECISIONS D39, D61). Every other page is one click away in the header or from here.
 export default function Home() {
   const meta = getMeta();
   if (!meta) {
@@ -40,10 +45,21 @@ export default function Home() {
         <div className="mt-3 flex flex-wrap items-center gap-2" data-testid="home-popular">
           <span className="mr-1 text-muted">Often searched:</span>
           {POPULAR.filter(([s, n]) => known.has(`${s} ${n}`)).map(([s, n]) => (
-            <Link key={s + n} href={courseHref(s, n)} className="rounded border border-line px-2 leading-7 font-semibold text-action hover:border-action hover:bg-action-tint">
+            <Link key={s + n} href={courseHref(s, n)} className={chip}>
               {s} {n}
             </Link>
           ))}
+        </div>
+        <div className="mt-2 flex flex-wrap items-center gap-2" data-testid="home-geneds">
+          <span className="mr-1 text-muted">Popular gen-eds:</span>
+          {POPULAR_GENEDS.map((code) => (
+            <Link key={code} href={`/geneds/?codes=${code}`} className={chip}>
+              {GENED_SHORT[code]}
+            </Link>
+          ))}
+          <Link href="/geneds/" className={chip}>
+            All gen-eds
+          </Link>
         </div>
       </div>
       <LiveOpenings nextTerm={meta.next_term} liveUrl={meta.live_url} />

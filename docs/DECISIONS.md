@@ -1551,3 +1551,14 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D60.5 The header and scrolling.** With the sticky header (D59.4), `html` gets `scroll-padding-top:
   var(--site-header)`, so anchors, keyboard focus and scroll-into-view leave room for it instead of landing under it.
 - **D60.6 Unchanged.** `Prefs`, the localStorage keys and every share-link parameter: layout only.
+
+## Three header tabs (2026-11-26, UI redesign branch)
+
+- **D61.1 The gen-ed finder belongs to Course search.** Both answer "which course should I take?", so they share one
+  tab. The home page has a "Popular gen-eds" row under "Often searched": each chip opens the finder with that category
+  picked (`/geneds/?codes=ACP`), and "All gen-eds" opens it with none. The Course search tab stays lit on the finder.
+  The six chips (Advanced Comp, Non-Western, Western, US Minority, Hist & Phil, Quant Reasoning I) are a hand-picked
+  start, like the often-searched courses.
+- **D61.2 Just opened leaves the header again.** The owner's call, reversing D59.2. The page is unchanged and still
+  reached from the home page's live feed, course pages, the schedule builder's sections to watch and the footer.
+- **D61.3 The footer's Plan group** lists the three tabs, then Gen-ed finder and Just opened.

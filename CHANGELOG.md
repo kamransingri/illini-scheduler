@@ -37,11 +37,13 @@ history).
 
 - Pages have a budget (#237): docs/DESIGN.md Part 5 gives each page's main job and what shows first at 1280px and
   375px, and the rules that keep pages from growing back (one banner at a time, one "More" per area that says how many
-  options are on, rows don't grow, one place per thing, five tabs). Task and Parent issues now say "Where it goes",
+  options are on, rows don't grow, one place per thing, three tabs). Task and Parent issues now say "Where it goes",
   and pull requests that change a page show it before and after.
 
-- The site header is easier to get around (header critique, on the redesign branch). Just opened is a header tab
-  again, the page students need most during registration. Search works from every page: a Search button in the header
+- The site header is easier to get around (header critique, on the redesign branch). It has three tabs: Course
+  search, Degree checklist and Schedule builder. The gen-ed finder is part of Course search: the home page's new
+  "Popular gen-eds" row opens it with a category picked. Just opened is still a click away from the home page, course
+  pages, the schedule builder and the footer. Search works from every page: a Search button in the header
   (and next to Menu on phones), or press `/`. The header slides away while you scroll down and comes back as soon as
   you scroll up, so it's never a long scroll away. After "Add to schedule" on a course page, "Open schedule builder"
   is right next to it. Keyboard focus in the header is now clearly visible, the phone buttons are easier to tap,

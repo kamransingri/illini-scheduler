@@ -174,10 +174,10 @@ the navy header and footer) and the wordmark "**Illini** Scheduler" (bold, then 
 
 ### Navigation
 
-- Five pages, two words each, in the order students use them: Course search, Gen-ed finder, Degree checklist,
-  Schedule builder, Just opened. The labels say what the page does, not just its topic ("Degree" told you nothing
-  about what's there). The list lives in `web/lib/nav.ts` and feeds the header, the phone menu and the footer. Just
-  opened is a tab because it's the page students need most during registration, usually on a phone.
+- Three tabs, two words each, in the order students use them: Course search, Degree checklist, Schedule builder. The
+  labels say what the page does, not just its topic ("Degree" told you nothing about what's there). The list lives in
+  `web/lib/nav.ts` and feeds the header, the phone menu and the footer. The gen-ed finder is part of Course search
+  (its "Popular gen-eds" row, and the tab stays lit there); the footer adds Gen-ed finder and Just opened (D61).
 - Hairline dividers (white at 25%) between items so each one reads as its own target, and a 16px line icon before
   each label.
 - The current page: light fill, bold, and a 4px orange bar at the bottom that joins the header's orange rule. Orange is
@@ -253,8 +253,9 @@ picked).
    reading it first.
 5. **One place per thing.** When two blocks show the same information, keep one and link to it from the other (seat
    changes live on Just opened; the course page and the builder show one line and link there).
-6. **Five tabs.** The header holds Course search, Gen-ed finder, Degree checklist, Schedule builder and Just opened
-   (Part 4). A new page goes in the footer unless it replaces one of them.
+6. **Three tabs.** The header holds Course search, Degree checklist and Schedule builder (Part 4). The gen-ed finder
+   opens from Course search's "Popular gen-eds" row, and Just opened from the home page, course pages, the builder and
+   the footer. A new page goes in the footer unless it replaces one of them.
 7. **Say where it goes.** Every issue that adds to a page names the page, the block it joins, and what it replaces or
    hides ("Where it goes" in the issue templates). Every pull request that changes a page shows it before and after
    at 1280px and 375px.

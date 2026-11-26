@@ -10,7 +10,7 @@ import Icon from "./ui/Icon";
 
 function isCurrent(path: string, href: string): boolean {
   const p = path.endsWith("/") ? path : `${path}/`;
-  if (href === "/") return p === "/" || p.startsWith("/course/");
+  if (href === "/") return p === "/" || p.startsWith("/course/") || p.startsWith("/geneds/");
   return p.startsWith(href);
 }
 
@@ -20,7 +20,7 @@ type Panel = "menu" | "search" | null;
 const typing = (el: Element | null) => !!el && (/^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName) || (el as HTMLElement).isContentEditable);
 
 /**
- * The site header: logo, the five main pages, and a search that works from every page (the header critique, Nov 2026).
+ * The site header: logo, the three main pages, and a search that works from every page (the header critique, Nov 2026).
  * It stays reachable on long pages: it slides away while you scroll down and comes back as soon as you scroll up, and
  * it publishes its visible height as `--site-header` so sticky bars below it (the course page's "On this page") sit
  * underneath instead of being covered. Escape or a tap outside closes the menu or the search and returns focus to the
