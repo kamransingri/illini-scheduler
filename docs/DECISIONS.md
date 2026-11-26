@@ -682,8 +682,8 @@ Every judgment call made during the autonomous build, newest phase last.
   are open. No separate mode was added. What was missing is the list: under the shown schedule, "Sections to watch"
   names each section in it that was Closed at the last check, with its CRN and a link to its row on the course page.
 - **D21.2 No waitlist numbers.** The site knows only open or closed (LIMITATIONS "Open or closed only"), so the list
-  says that and links to Self-Service. It links to Just opened with `?mine=1`, which turns on "Only my schedule's
-  courses". Watching a section so the live job checks it more often is #15.
+  says that and links to Self-Service. It links to Just opened with `?mine=1`, which picks "My schedule" in its
+  Show control (#242). Watching a section so the live job checks it more often is #15.
 
 ## Renumbered courses (2026-11-18, issue #29)
 
@@ -1059,7 +1059,7 @@ Every judgment call made during the autonomous build, newest phase last.
   cart, the share link and localStorage, so a swap needs no new state and survives reloads and links.
 - **D37.5 Live statuses, read only.** While the builder is open it reads the same live feed as Just opened. A live
   status counts only when it is newer than the term's section data (`meta.terms[term].checked_at`). It removes closed
-  backups and flags a chosen section that has closed since ("CS 225 AL1 just closed", with its backup), but doesn't
+  backups and flags a chosen section that has closed since ("CS 225 AL1 Closed", with its backup), but doesn't
   regenerate the schedules, which would move them under a student mid-registration.
 
 ## Section restrictions and About you (2026-11-19, issues #78 to #81)
@@ -1562,6 +1562,18 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D61.2 Just opened leaves the header again.** The owner's call, reversing D59.2. The page is unchanged and still
   reached from the home page's live feed, course pages, the schedule builder's sections to watch and the footer.
 - **D61.3 The footer's Plan group** lists the three tabs, then Gen-ed finder and Just opened.
+
+## One wording for seat changes (2026-11-26, issue #242)
+
+- **D62.1 One helper.** `seatChangeText` in `web/lib/format.ts`, next to `seatVerb`, gives the words every page uses:
+  "Opened", "Opened, restricted", "Closed", or "Changed" for anything else (open to restricted, say). Home, Just
+  opened, the course page and the schedule builder all call it, so a new place can't invent its own wording.
+- **D62.2 Just opened's Show control.** "Only my schedule's courses" and "Only sections I watch" became one Show
+  control (All, My schedule, Watched), since the two never made sense together. "Show closings too" is "Closings too".
+  `?mine=1` and `?watch=1` still open it on My schedule and Watched.
+- **D62.3 Rows on the builder and course page.** The schedule builder's and course page's seat blocks move onto their
+  section rows in #239 and #241, with this wording: "Closed: Watch, or use backup AD4" on a closed builder row, and
+  "Opened 2 days ago" on a course page section row.
 
 ## One plan control and one shared-link banner (2026-11-26, issue #240)
 

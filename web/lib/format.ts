@@ -161,6 +161,13 @@ export function seatVerb(oldStatus: string, newStatus: string): "opened" | "clos
   return "changed";
 }
 
+/** The one wording for a seat change on every page (#242): "Opened", "Opened, restricted", "Closed" or "Changed". */
+export function seatChangeText(oldStatus: string, newStatus: string): string {
+  const verb = seatVerb(oldStatus, newStatus);
+  if (verb === "opened") return newStatus.toLowerCase().includes("restricted") ? "Opened, restricted" : "Opened";
+  return verb === "closed" ? "Closed" : "Changed";
+}
+
 /** Teachers Ranked as Excellent label: "2024-fa Excellent" -> "Fall 2024, Excellent". */
 export function treLabel(s: string): string {
   const m = /^(\d{4}-(?:sp|su|fa|wi))\s+(.+)$/.exec(s.trim());

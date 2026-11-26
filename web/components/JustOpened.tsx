@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { onCartChange, readCart } from "@/lib/cart";
-import { courseHref, fmtDate, SELF_SERVICE_URL, seatVerb, termLabel } from "@/lib/format";
+import { courseHref, fmtDate, SELF_SERVICE_URL, seatChangeText, seatVerb, termLabel } from "@/lib/format";
 import { currentStatus, fmtSince, POLL_MS, useNow, useSeatFeed } from "@/lib/live";
 import type { SeatEvent } from "@/lib/types";
 import { decodeWatch, isWatched, MAX_WATCH, mergeWatch, onWatchChange, readWatch, watchKey, writeWatch, type Watched } from "@/lib/watch";
@@ -14,6 +14,7 @@ import Info from "./ui/Info";
 import WatchedSections from "./WatchedSections";
 
 const evKey = (e: SeatEvent) => e.term + e.crn + e.at;
+type Show = "all" | "mine" | "watched";
 
 /** "Lecture with Geoffrey Challen", "Discussion/Recitation", or "With Smith, J" when the type isn't known. */
 export function sectionDetail(e: Pick<SeatEvent, "y" | "i">): string {
@@ -54,9 +55,10 @@ export default function JustOpened({ nextTerm, currentTerm, liveUrl, dailyAt }: 
   const [subject, setSubject] = useState("");
   const [term, setTerm] = useState(nextTerm);
   const [all, setAll] = useState(false);
-  const [mine, setMine] = useState(false);
+  const [show, setShow] = useState<Show>("all"); // one control for whose sections to list (#242)
+  const mine = show === "mine";
+  const onlyWatched = show === "watched";
   const [cart, setCart] = useState<string[]>([]);
-  const [onlyWatched, setOnlyWatched] = useState(false);
   const [watched, setWatched] = useState<Watched[]>([]);
   const [shared, setShared] = useState<Watched[]>([]);
   const [notify, setNotify] = useState(false);
@@ -68,8 +70,8 @@ export default function JustOpened({ nextTerm, currentTerm, liveUrl, dailyAt }: 
     // ?mine=1 (the schedule builder's "Sections to watch") starts with only the schedule's courses; ?watch=1 with only
     // the watched sections; ?w= is someone's shared watch list
     const params = new URLSearchParams(window.location.search);
-    if (params.get("mine") === "1") setMine(true);
-    if (params.get("watch") === "1") setOnlyWatched(true);
+    if (params.get("mine") === "1") setShow("mine");
+    if (params.get("watch") === "1") setShow("watched");
     setShared(decodeWatch(params.get("w")));
     const sync = () => setCart(readCart().map((c) => `${c.s} ${c.n}`));
     const syncWatch = () => setWatched(readWatch());
@@ -170,6 +172,33 @@ export default function JustOpened({ nextTerm, currentTerm, liveUrl, dailyAt }: 
       )}
       {watched.length > 0 && <WatchedSections items={watched} events={feed.events} live={feed.live} now={now} nextTerm={nextTerm} />}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-3 border-b border-line pb-4">
+        <div role="group" aria-label="Show" className="inline-flex items-center gap-2" data-testid="opened-show">
+          <span>Show</span>
+          <span className="inline-flex divide-x divide-action overflow-hidden rounded border border-action">
+            {(
+              [
+                ["all", "All", null],
+                ["mine", "My schedule", cart.length],
+                ["watched", "Watched", watched.length],
+              ] as [Show, string, number | null][]
+            ).map(([k, label, n]) => (
+              <button
+                key={k}
+                type="button"
+                aria-pressed={show === k}
+                onClick={() => setShow(k)}
+                className={`px-3 py-1 font-semibold ${show === k ? "bg-action text-white" : "text-action hover:bg-action-tint"}`}
+              >
+                {label}
+                {n ? <span className="tnum"> ({n})</span> : null}
+              </button>
+            ))}
+          </span>
+        </div>
+        <label className="inline-flex items-center gap-2">
+          <input type="checkbox" className="size-4 accent-action" checked={all} onChange={(e) => setAll(e.target.checked)} />
+          Closings too
+        </label>
         <select className="rounded border border-line bg-white px-2 py-1.5" value={term} onChange={(e) => setTerm(e.target.value)} aria-label="Term">
           {[nextTerm, currentTerm]
             .filter((t, i, a) => a.indexOf(t) === i)
@@ -186,20 +215,6 @@ export default function JustOpened({ nextTerm, currentTerm, liveUrl, dailyAt }: 
           onChange={(e) => setSubject(e.target.value)}
           aria-label="Filter by subject or course"
         />
-        <label className="inline-flex items-center gap-2">
-          <input type="checkbox" className="size-4 accent-action" checked={mine} onChange={(e) => setMine(e.target.checked)} />
-          Only my schedule&apos;s courses{cart.length ? ` (${cart.length})` : ""}
-        </label>
-        {(watched.length > 0 || onlyWatched) && (
-          <label className="inline-flex items-center gap-2">
-            <input type="checkbox" className="size-4 accent-action" checked={onlyWatched} onChange={(e) => setOnlyWatched(e.target.checked)} />
-            Only sections I watch ({watched.length})
-          </label>
-        )}
-        <label className="inline-flex items-center gap-2">
-          <input type="checkbox" className="size-4 accent-action" checked={all} onChange={(e) => setAll(e.target.checked)} />
-          Show closings too
-        </label>
         <button
           type="button"
           onClick={askNotify}
@@ -230,7 +245,6 @@ export default function JustOpened({ nextTerm, currentTerm, liveUrl, dailyAt }: 
       )}
       <ul data-testid="opened-list">
         {rows.slice(0, 300).map((e) => {
-          const verb = seatVerb(e.old, e.new);
           const cur = status.get(`${e.term}|${e.crn}`);
           const stillSame = cur && cur[0] === e.new;
           const isNew = fresh.has(evKey(e));
@@ -260,7 +274,7 @@ export default function JustOpened({ nextTerm, currentTerm, liveUrl, dailyAt }: 
               </div>
               <span className="flex flex-wrap items-center gap-1.5">
                 <span className="font-semibold">
-                  {e.code} {verb}
+                  {e.code} {seatChangeText(e.old, e.new)}
                 </span>
                 <SeatStatus status={e.old} />
                 <Icon name="chevronRight" className="text-muted" />

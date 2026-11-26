@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { decodeCart, encodeCart, onCartChange, parseAt, readCart, writeCart, type CartItem } from "@/lib/cart";
-import { courseHref, dataUrl, daysStr, fmtGpa, fmtTime, SELF_SERVICE_URL, termLabel } from "@/lib/format";
+import { courseHref, dataUrl, daysStr, fmtGpa, fmtTime, seatChangeText, SELF_SERVICE_URL, termLabel } from "@/lib/format";
 import { fmtCredits, hourWarnings, totalHours } from "@/lib/credits";
 import { examConflicts, examDay, examTime, finalsByDay, finalsOf, finalsPending, finalsSummary, STUDENT_CODE_EXAMS } from "@/lib/finals";
 import { backupsFor, type Backup, type SectionBackups } from "@/lib/backups";
@@ -1357,7 +1357,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                       <li key={s.crn} className="flex flex-wrap items-center gap-x-2 gap-y-1">
                         <Icon name="alert" className="text-heading" />
                         <strong>
-                          {course} {s.code} just closed
+                          {course} {s.code} {seatChangeText(s.status, live.get(s.crn)![0])}
                         </strong>
                         <span className="text-sm text-muted">(checked {fmtSince(live.get(s.crn)![1], now)})</span>
                         {bk ? (

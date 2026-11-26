@@ -102,7 +102,7 @@ describe("prefs in the URL", () => {
   });
 });
 
-import { fmtAgo, seatVerb } from "@/lib/format";
+import { fmtAgo, seatChangeText, seatVerb } from "@/lib/format";
 
 describe("seat history helpers", () => {
   const now = new Date("2026-11-05T12:00:00Z");
@@ -117,6 +117,14 @@ describe("seat history helpers", () => {
     expect(seatVerb("Closed", "CrossListOpen (Restricted)")).toBe("opened");
     expect(seatVerb("Open", "Closed")).toBe("closed");
     expect(seatVerb("Open", "Open (Restricted)")).toBe("changed");
+  });
+
+  it("seatChangeText: one wording on every page (#242)", () => {
+    expect(seatChangeText("Closed", "Open")).toBe("Opened");
+    expect(seatChangeText("Closed", "CrossListOpen (Restricted)")).toBe("Opened, restricted");
+    expect(seatChangeText("Open", "Closed")).toBe("Closed");
+    expect(seatChangeText("Open (Restricted)", "CrossListClosed")).toBe("Closed");
+    expect(seatChangeText("Open", "Open (Restricted)")).toBe("Changed");
   });
 });
 

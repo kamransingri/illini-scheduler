@@ -55,7 +55,7 @@ export default function WatchedSections({ items, events, live, now, nextTerm }: 
         <Info label="How watched sections are checked">
           Every course is read once a day; the busiest are re-read about every 10 to 20 minutes, and so are the few courses on the site&apos;s watch list.
           Watching a section here doesn&apos;t change which courses are re-read: it keeps the section in this list with its latest status, and with
-          &ldquo;Only sections I watch&rdquo; and &ldquo;Notify me&rdquo; you hear only about these. Your list stays in this browser.
+          Show &ldquo;Watched&rdquo; and &ldquo;Notify me&rdquo; you hear only about these. Your list stays in this browser.
         </Info>
         <span className="sm:ml-auto">{href && <CopyButton text={href} label="Copy link to this list" />}</span>
       </div>

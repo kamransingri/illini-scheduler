@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useMemo } from "react";
-import { courseHref, seatVerb } from "@/lib/format";
+import { courseHref, seatChangeText, seatVerb } from "@/lib/format";
 import { fmtSince, useNow, useSeatFeed } from "@/lib/live";
 import type { SeatEvent } from "@/lib/types";
 import CopyButton from "../CopyButton";
@@ -52,14 +52,16 @@ export default function LiveOpenings({ nextTerm, liveUrl }: { nextTerm: string; 
                 {e.code}
                 {more.length ? ` and ${more.length} more` : ""}
               </span>
-              <span className="block text-sm text-muted">Opened, found {fmtSince(e.at, now)}</span>
+              <span className="block text-sm text-muted">
+                {seatChangeText(e.old, e.new)}, found {fmtSince(e.at, now)}
+              </span>
             </Link>
             <CopyButton text={e.crn} label={e.crn} className="shrink-0" />
           </li>
         ))}
       </ul>
       <Link href="/opened/" className="mt-2 inline-block font-semibold text-action hover:underline">
-        See every opening
+        All openings
       </Link>
     </section>
   );

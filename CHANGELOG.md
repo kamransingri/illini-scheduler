@@ -28,6 +28,11 @@ history).
 
 ### Changed
 
+- Seat changes have one wording everywhere (#242): "Opened", "Opened, restricted" or "Closed", on the home page,
+  Just opened, course pages and the schedule builder. Just opened's two "Only" checkboxes are one **Show** control
+  (All, My schedule, Watched), next to **Closings too** and the search box. The home page's link is "All openings".
+  Links with `?mine=1` and `?watch=1` work as before.
+
 - The schedule builder's plans are one control (#240): "Plan: Fall main" opens a menu with your other plans, New
   plan, Duplicate, Rename, Delete and Compare plans, so it stays one line on a phone. A shared link shows one banner
   with at most two buttons: keep it as a new plan, or go back to yours ("How they differ" opens the must-haves). "This
