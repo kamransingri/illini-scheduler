@@ -1,5 +1,5 @@
 // What each question answers, read from the data the same way for the MCP server (server.ts turns an answer into a tool
-// result) and the HTTP API (api/ turns it into a JSON response). Nothing here imports Node, so the Worker bundles it.
+// result) and the HTTP API (api/ turns it into a JSON response). Nothing here imports Node, so the API bundles it.
 import { parseCode } from "../../web/lib/search";
 import type { Course, GenedRow, Meta, SearchIndex } from "../../web/lib/types";
 import { setBuildings, type Point } from "../../web/lib/walk";

@@ -16,6 +16,10 @@ history).
   Studies minors, Physics, Classics, Media & Cinema Studies) now have a Track picker. Only the picked track's
   requirements show; the others stay in the picker, and the pick travels in the share link (`tr=`). Until you pick, a
   "Pick a track" requirement keeps the program from looking finished.
+- An HTTP API for scripts and other student projects: course search, one course's sections, the gen-ed finder and
+  the schedule builder at `/v1/`, with an OpenAPI description, the same answers as the MCP server, and no key
+  (docs/API.md, "HTTP API"). It needs no database: a Supabase Edge Function built from `api/` reads the site's JSON
+  from GitHub Pages, and it goes live once the Supabase project is set up (docs/BACKEND.md).
 
 ### Changed
 

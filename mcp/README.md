@@ -97,7 +97,7 @@ Files are cached in memory for 30 minutes. The site rebuilds once a night.
 - `src/server.ts` registers the tools and their descriptions with the MCP SDK. Each tool's arguments are in
   `src/schemas.ts`, and `src/answers.ts` reads the files and answers. The HTTP API in [`api/`](../docs/BACKEND.md)
   uses the same two files, so the API and the server always give the same answers.
-- `src/source.ts` fetches and caches the files and imports nothing from Node, so the API's Worker can use it;
+- `src/source.ts` fetches and caches the files and imports nothing from Node, so the API's Edge Function can use it;
   `src/data.ts` adds reading a local folder.
 - `npm test` builds `dist/index.js` and runs Vitest against the saved data in `test/fixtures/data`, including a run of
   the built server over stdio. `npx tsc --noEmit` type-checks. `make test` and `make lint` at the repo root run both.

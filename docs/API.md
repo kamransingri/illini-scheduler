@@ -3,7 +3,9 @@
 Everything Illini Scheduler shows comes from public JSON files that are rebuilt every night and served with the site.
 You can read them from scripts, notebooks or AI tools. You don't need a key, and GitHub Pages allows cross-origin
 reads (`Access-Control-Allow-Origin: *`). [`llms.txt`](../web/public/llms.txt) is the short version of this page for
-AI tools. To use the data from an AI app without writing code, add the MCP server in [`mcp/`](../mcp/README.md).
+AI tools. To use the data from an AI app without writing code, add the MCP server in [`mcp/`](../mcp/README.md). To
+ask questions instead of downloading whole files ("open CS sections after 5pm"), use the [HTTP API](#http-api) at the
+end of this page.
 
 - **Base URL:** `https://kamransingri.github.io/illini-scheduler/data/`
 - **Rebuilt:** nightly at 09:00 UTC (`.github/workflows/pages.yml`). `meta.json` `built_at` says when. Seat status in
@@ -670,6 +672,39 @@ courses are re-read.
 | `seen.<term>.<crn>` | [string, string] | Latest `[status, checked at]` of each section in `events` |
 | `read.<term>.<course>` | string | When each course was last re-read |
 | `watched.<term>` | string[] | Courses on the watch list (`data/watch.txt`) |
+
+## HTTP API
+
+Answers to questions over the same data, from a Supabase Edge Function built from `api/` (BACKEND.md). They're the
+MCP server's answers, field for field, so the MCP tool descriptions in `mcp/src/server.ts` describe them too. It
+isn't deployed yet. Once the Supabase project is set up it's at `https://<ref>.supabase.co/functions/v1/api`, written
+`$API` below.
+
+| Endpoint | Answers | MCP tool |
+| --- | --- | --- |
+| GET /v1/terms | The current and next term, their dates and breaks, and when the data was built | term_info |
+| GET /v1/courses?q=cs+124 | Courses by code, nickname or title words, with `subject`, `gened`, `credits`, `min_gpa`, `offered`, `sort` and `limit` | search_courses |
+| GET /v1/courses/CS/124 | One course and every section of a term (`term`, `lectures_only`, `max_sections`) | get_course |
+| GET /v1/geneds?gened=HUM,ACP | The gen-ed finder (`credits`, `open_only`, `min_gpa_students`, `min_rmp`, `two_or_more_categories`, `sort`, `limit`) | find_geneds |
+| POST /v1/schedules | The schedule builder: a JSON body with `courses` and any must-haves and priorities | build_schedules |
+| GET /v1/openapi.json | The OpenAPI 3.1 description of all of the above | |
+| GET /health | `{"status": "ok", "version": ...}` | |
+
+```sh
+curl "$API/v1/courses?q=calc+2&limit=3"
+curl -X POST "$API/v1/schedules" \
+  -H 'Content-Type: application/json' \
+  -d '{"courses": ["CS 124", "MATH 231", "RHET 105"], "no_classes_before": "10am", "days_off": ["F"]}'
+```
+
+- **Parameters** are the MCP tool's arguments. Lists are comma-separated or repeated (`gened=HUM&gened=ACP`);
+  true and false can be `true`/`false`, `1`/`0` or `yes`/`no`. `q` is short for `query`.
+- **Every answer** has `data`: `built_at`, the term where one applies, and a note to confirm in Course Explorer.
+- **Errors** are `{"error": {"status": 400, "message": "..."}}`. The message names the parameter to fix. 404 means no
+  such course (a renumbered course leads to its new number, with `renumbered` saying so), 429 more than 60 requests in
+  a minute from one address (wait for `Retry-After`), and 502 that the site's data couldn't be read.
+- **CORS:** any site may call it. Answers can be cached for 10 minutes; the data changes once a night.
+- **For bulk use**, download the JSON files above instead of calling the API in a loop.
 
 ## Keeping this page up to date
 

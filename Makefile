@@ -5,7 +5,7 @@ TERMS ?=
 SOURCE ?= auto
 PYTEST_ARGS ?=
 
-.PHONY: help availability-files data data-quick fetch pipeline export test test-quick test-py test-web test-mcp lint typecheck dev build e2e serve clean version release
+.PHONY: help availability-files data data-quick fetch pipeline export test test-quick test-py test-web test-mcp test-api lint typecheck dev build e2e serve clean version release
 
 help:
 	@echo "make data        - download sources, build data/illini.db, export web/public/data"
@@ -13,6 +13,7 @@ help:
 	@echo "make export      - export web/public/data again from data/illini.db, without fetching"
 	@echo "make test        - pytest + vitest (web and the MCP server in mcp/)"
 	@echo "make test-quick  - only the unit tests for what changed since origin/main"
+	@echo "make test-api    - the HTTP API in api/: type-check and vitest (docs/BACKEND.md)"
 	@echo "make lint        - ruff + mypy + eslint + tsc"
 	@echo "make dev         - Next.js dev server on :3000"
 	@echo "make build       - static export to web/out"
@@ -47,6 +48,10 @@ test-web:
 
 test-mcp:
 	cd mcp && npm test --silent
+
+# Not part of `make test`: api/ has its own dependencies and CI job (.github/workflows/api.yml)
+test-api:
+	cd api && npm run typecheck --silent && npm test --silent
 
 lint: typecheck
 	ruff check pipeline tools

@@ -1,5 +1,5 @@
 // Reading Illini Scheduler's public JSON (docs/API.md) with a small in-memory cache. Nothing here imports Node, so the
-// HTTP API's Worker (api/) reads the data the same way the MCP server does. data.ts adds reading a local folder.
+// HTTP API (api/) reads the data the same way the MCP server does. data.ts adds reading a local folder.
 
 export const SITE_URL = "https://kamransingri.github.io/illini-scheduler";
 export const TTL_MS = 30 * 60 * 1000;

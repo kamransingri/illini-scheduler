@@ -1,0 +1,6 @@
+# Supabase CLI settings (docs/BACKEND.md). Only the HTTP API's Edge Function is deployed from this repository so far.
+project_id = "illini-scheduler"
+
+[functions.api]
+# A public, read-only API: anyone may call it without a Supabase key or a signed-in user.
+verify_jwt = false

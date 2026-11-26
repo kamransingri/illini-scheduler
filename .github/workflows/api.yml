@@ -1,0 +1,70 @@
+# The HTTP API in api/ (docs/BACKEND.md): tests and a bundle on every change that can affect it, and a deploy to
+# Supabase Edge Functions from main once the repository has the SUPABASE_PROJECT_REF variable and the
+# SUPABASE_ACCESS_TOKEN secret.
+name: API
+
+on:
+  pull_request:
+    paths: ["api/**", "supabase/**", "mcp/src/**", "mcp/package.json", "web/lib/**", ".github/workflows/api.yml"]
+  push:
+    branches: [main]
+    paths: ["api/**", "supabase/**", "mcp/src/**", "mcp/package.json", "web/lib/**", ".github/workflows/api.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: api-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: |
+            mcp/package-lock.json
+            api/package-lock.json
+      # The API bundles mcp/src, which imports zod from mcp/node_modules
+      - run: cd mcp && npm ci --prefer-offline
+      - run: cd api && npm ci --prefer-offline
+      - name: Type-check and test
+        run: cd api && npm run typecheck && npm test
+      - name: Bundle the Edge Function and load it with nothing installed
+        run: cd api && npm run bundle && npm run smoke
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.SUPABASE_PROJECT_REF != ''
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      REF: ${{ vars.SUPABASE_PROJECT_REF }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: |
+            mcp/package-lock.json
+            api/package-lock.json
+      - run: cd mcp && npm ci --prefer-offline
+      - run: cd api && npm ci --prefer-offline && npm run bundle
+      - uses: supabase/setup-cli@v1
+        with: { version: latest }
+      - name: Deploy the api function (public: no Supabase key needed to call it)
+        run: supabase functions deploy api --project-ref "$REF" --no-verify-jwt
+      - name: The deployed API answers /health and /v1/terms
+        run: |
+          url="https://$REF.supabase.co/functions/v1/api"
+          curl --fail --silent --show-error --retry 5 --retry-delay 5 --retry-all-errors "$url/health"
+          curl --fail --silent --show-error --retry 3 --retry-delay 5 "$url/v1/terms" -o /dev/null
+          echo "::notice::API live at $url"
