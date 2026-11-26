@@ -40,7 +40,7 @@ history).
   options are on, rows don't grow, one place per thing, three tabs). Task and Parent issues now say "Where it goes",
   and pull requests that change a page show it before and after.
 
-- The site header is easier to get around (header critique, on the redesign branch). It has three tabs: Course
+- The site header is easier to get around (header critique). It has three tabs: Course
   search, Degree checklist and Schedule builder. The gen-ed finder is part of Course search: the home page's new
   "Popular gen-eds" row opens it with a category picked. Just opened is still a click away from the home page, course
   pages, the schedule builder and the footer. Search works from every page: a Search button in the header
