@@ -57,5 +57,5 @@ test("build_schedules: each returned link opens that schedule in the builder (#1
     await expect(page.getByLabel("No classes before")).toHaveValue("570");
   }
   // both links are the same plan (same courses and rules), so the second one didn't make a copy
-  await expect(page.getByRole("group", { name: "Open a plan" }).getByRole("button")).toHaveCount(1);
+  await expect(page.getByTestId("plan-menu").locator('[role="group"] button')).toHaveCount(1);
 });
