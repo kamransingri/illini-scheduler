@@ -41,7 +41,7 @@ test("watch a section on its course page; Just opened lists it, filters to it an
   const item = panel.getByTestId("watched-row");
   await expect(item).toContainText("CS 124");
   await expect(item).toContainText(/checked|not published|Loading/);
-  await expect(page.getByLabel("Only sections I watch (1)")).toBeChecked();
+  await expect(page.getByTestId("opened-show").getByRole("button", { name: "Watched (1)" })).toHaveAttribute("aria-pressed", "true");
   for (const t of await page.getByTestId("opened-list").locator("li").allTextContents()) expect(t).toContain("CS 124");
   await expect(page.locator("body")).not.toContainText(/NaN|undefined/);
 

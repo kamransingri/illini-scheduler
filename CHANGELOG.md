@@ -28,6 +28,11 @@ history).
 
 ### Changed
 
+- Seat changes have one wording everywhere (#242): "Opened", "Opened, restricted" or "Closed", on the home page,
+  Just opened, course pages and the schedule builder. Just opened's two "Only" checkboxes are one **Show** control
+  (All, My schedule, Watched), next to **Closings too** and the search box. The home page's link is "All openings".
+  Links with `?mine=1` and `?watch=1` work as before.
+
 - The schedule builder's left column is shorter (#238). Must-haves show No classes before, Done by and Days off;
   lunch, blocked times, open-only, no rushed walks, only sections you can register for, special sections and About you
   are under one **More options** that says how many are on. What matters to you shows the six presets, with the

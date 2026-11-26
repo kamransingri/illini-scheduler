@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Course } from "@/lib/types";
-import { dataUrl, fmtGpa, fmtInt, seatVerb, fmtAgo, termLabel, termOrder, termRange } from "@/lib/format";
+import { dataUrl, fmtGpa, fmtInt, seatChangeText, fmtAgo, termLabel, termOrder, termRange } from "@/lib/format";
 import { professorsFor, profDomId } from "@/lib/sections";
 import { POSTED_IN, tabTerms } from "@/lib/terms";
 import { rankProfs } from "@/lib/rank";
@@ -415,12 +415,11 @@ function SeatChanges({ course }: { course: Course }) {
       {events.length ? (
         <ul className="max-w-3xl" data-testid="seat-events">
           {events.slice(0, 15).map((e) => {
-            const verb = seatVerb(e.old, e.new);
             return (
               <li key={e.term + e.crn + e.at} className="grid grid-cols-[1fr_auto] gap-x-4 border-b border-line py-2">
                 <span>
                   <span className="font-semibold">
-                    {e.code} {verb}
+                    {e.code} {seatChangeText(e.old, e.new)}
                   </span>{" "}
                   <span className="text-muted">
                     {e.old} to {e.new}, CRN {e.crn}, {termLabel(e.term)}

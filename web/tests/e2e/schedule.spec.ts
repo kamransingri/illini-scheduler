@@ -88,7 +88,7 @@ test("sections to watch: a schedule that needs closed sections lists them and li
   await expect(watch.getByRole("link", { name: "your watched sections" })).toHaveAttribute("href", /\/opened\/\?watch=1$/);
   await watch.getByRole("link", { name: "Just opened" }).click();
   await expect(page).toHaveURL(/\/opened\/\?mine=1$/);
-  await expect(page.getByLabel(/Only my schedule's courses/)).toBeChecked();
+  await expect(page.getByTestId("opened-show").getByRole("button", { name: /^My schedule/ })).toHaveAttribute("aria-pressed", "true");
   const watched = page.getByTestId("watched").getByTestId("watched-row");
   await expect(watched).toContainText("STAT 107");
   await expect(watched).toContainText(/checked/); // its course file has loaded (through the route above)
@@ -293,7 +293,7 @@ test("a chosen section that closes during registration is flagged with its backu
   closedCrn = /Copy (\d{5})/.exec((await statRow.getByRole("button", { name: /^Copy \d{5}$/ }).first().getAttribute("aria-label"))!)![1];
   await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
   const banner = page.getByTestId("just-closed");
-  await expect(banner).toContainText(/RHET 105 \S+ just closed/);
+  await expect(banner).toContainText(/RHET 105 \S+ Closed/);
   await expect(banner).toContainText("Backup:");
   await banner.getByRole("button", { name: "Use the backup" }).click();
   await expect(page.getByTestId("schedule-sections").locator("li").filter({ hasText: "RHET 105" }).first()).not.toContainText(closedCrn);
