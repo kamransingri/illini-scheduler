@@ -128,7 +128,7 @@ export default function SiteNav({ nextTerm }: { nextTerm: string }) {
         <Link href="/" className="flex items-center py-3 no-underline" aria-label="Illini Scheduler, home">
           <Logo />
         </Link>
-        <div className="hidden items-stretch gap-2 lg:flex">
+        <div className="hidden items-stretch lg:flex">
           <nav aria-label="Main">
             <ul className="flex h-full divide-x divide-white/25 border-x border-white/25">
               {NAV.map((n) => (
@@ -136,18 +136,22 @@ export default function SiteNav({ nextTerm }: { nextTerm: string }) {
               ))}
             </ul>
           </nav>
+          {/* a cell at the end of the tab strip, not a boxed button beside it, with the "/" shortcut shown */}
           {!home && (
             <button
               ref={deskSearchBtn}
               type="button"
-              className={`${btn} my-1.5 self-center px-2.5 xl:px-3 ${panel === "search" ? "bg-white/10" : ""}`}
+              className={`flex h-full items-center gap-2 border-r border-white/25 px-3 whitespace-nowrap xl:px-4 ${panel === "search" ? "bg-white/10 font-semibold shadow-[inset_0_-4px_0_var(--color-orange)]" : "hover:bg-white/5 hover:underline"}`}
               aria-expanded={panel === "search"}
               aria-controls="site-search"
               aria-keyshortcuts="/"
               onClick={() => toggle("search")}
             >
-              <Icon name={panel === "search" ? "x" : "search"} />
+              <Icon name={panel === "search" ? "x" : "search"} className={panel === "search" ? "text-white" : "text-white/70"} />
               <span className="sr-only xl:not-sr-only">Search</span>
+              <kbd aria-hidden className="hidden rounded border border-white/30 px-1.5 font-sans text-sm leading-5 text-white/70 xl:inline">
+                /
+              </kbd>
             </button>
           )}
         </div>
