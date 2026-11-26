@@ -21,6 +21,9 @@ web/public/data/
 *.tsbuildinfo
 .env*
 web/screenshots/
+# API (npm run bundle in api/ writes the Edge Function's bundle; the Supabase CLI keeps local state in .temp)
+supabase/functions/api/bundle.js
+supabase/.temp/
 # Local environments and tools
 .venv/
 venv/

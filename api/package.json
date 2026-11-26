@@ -1,0 +1,20 @@
+{
+  "name": "illini-scheduler-api",
+  "private": true,
+  "description": "Illini Scheduler's public HTTP API, deployed as a Supabase Edge Function (docs/BACKEND.md)",
+  "type": "module",
+  "scripts": {
+    "bundle": "esbuild src/supabase.ts --bundle --format=esm --platform=browser --target=es2022 --outfile=../supabase/functions/api/bundle.js --log-level=warning",
+    "smoke": "node scripts/smoke.mjs",
+    "dev": "npm run bundle --silent && node scripts/dev.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "@types/node": "22.18.0",
+    "esbuild": "0.28.2",
+    "typescript": "5.9.3",
+    "vitest": "3.2.4"
+  }
+}
