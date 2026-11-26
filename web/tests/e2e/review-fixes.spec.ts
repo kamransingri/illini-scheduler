@@ -41,8 +41,10 @@ test("opening a share link doesn't overwrite your own plan: it opens as a new on
   await page.goto("./schedule/?c=PHYS211,CHEM102&t=2027-sp");
   await expect(page.getByTestId("cart").locator("li")).toHaveCount(2);
   await page.goto("./schedule/?c=CS124,STAT200&t=2027-sp&e=540");
-  await expect(page.getByTestId("plan-notice")).toContainText("it's a new plan, “Shared plan”");
-  await expect(page.getByRole("button", { name: /^Shared plan/ })).toHaveAttribute("aria-pressed", "true");
+  const banner = page.getByTestId("link-banner");
+  await expect(banner).toContainText("it's a new plan, “Shared plan”");
+  await expect(banner.getByRole("button")).toHaveCount(2); // one banner, two actions (#240)
+  await expect(page.getByTestId("plan-menu-toggle")).toContainText("Shared plan");
   await expect(page.getByTestId("schedule-result")).toBeVisible(); // rules in the link -> auto-generated
   await expect(page.getByLabel("No classes before")).toHaveValue("540");
   await page.getByRole("button", { name: "Back to Plan A" }).click();
@@ -50,7 +52,8 @@ test("opening a share link doesn't overwrite your own plan: it opens as a new on
   await expect(page.getByTestId("cart")).not.toContainText("CS 124");
   await expect(page.getByLabel("No classes before")).toHaveValue("");
   // the shared plan is kept, with its own rules
-  await page.getByRole("button", { name: /^Shared plan/ }).click();
+  await page.getByTestId("plan-menu-toggle").click();
+  await page.getByTestId("plan-menu").getByRole("button", { name: /^Shared plan/ }).click();
   await expect(page.getByTestId("cart")).toContainText("CS 124");
   await expect(page.getByLabel("No classes before")).toHaveValue("540");
 });
