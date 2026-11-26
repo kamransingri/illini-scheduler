@@ -19,7 +19,9 @@ end of this page.
   [LIMITATIONS.md](LIMITATIONS.md) lists what the data gets wrong.
 - **Terms:** reusing the data is fine with credit to the sources below; the site's
   [terms of use](https://kamransingri.github.io/illini-scheduler/terms/) have the rest, and the
-  [AI use policy](AI-USE.md) covers AI tools.
+  [AI use policy](AI-USE.md) covers AI tools. Our code (the site, the pipeline, this API and the MCP server) is under
+  the [MIT licence](../LICENSE), but that covers only our own work, not the data below: each source keeps its own
+  terms.
 
 ## Where the data comes from
 

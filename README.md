@@ -138,6 +138,11 @@ merged into `main` through pull requests; `main` is what's live. One version for
 Details: [CONTRIBUTING.md](CONTRIBUTING.md). Writing an issue or a pull request:
 [docs/ISSUES-AND-PRS.md](docs/ISSUES-AND-PRS.md).
 
+## Licence
+
+The code, including the MCP server's npm package, is under the [MIT licence](LICENSE). The data keeps its sources'
+terms: [docs/API.md](docs/API.md#where-the-data-comes-from) says what you may reuse and how to credit it.
+
 ## More docs
 
 Everything else is in [`docs/`](docs/README.md): what the site can't do yet, every judgment call, the design system,

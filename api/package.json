@@ -1,6 +1,7 @@
 {
   "name": "illini-scheduler-api",
   "private": true,
+  "license": "MIT",
   "description": "Illini Scheduler's public HTTP API, deployed as a Supabase Edge Function (docs/BACKEND.md)",
   "type": "module",
   "scripts": {

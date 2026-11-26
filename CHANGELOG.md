@@ -23,6 +23,8 @@ history).
 - A hosted MCP server at `/mcp` on the same API: AI apps that add a connector by URL get the same five tools as
   `npx illini-scheduler-mcp`, with nothing to install. It keeps nothing between requests and logs only which tool
   was used, never the question.
+- A licence: the code and the MCP server's npm package are under the MIT licence (LICENSE). The data keeps its
+  sources' terms, as docs/API.md says.
 
 ### Changed
 
