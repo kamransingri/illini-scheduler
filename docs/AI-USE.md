@@ -1,13 +1,17 @@
 # AI use policy
 
 How AI tools are used to build Illini Scheduler, what the site does (and doesn't) send to them, and how AI tools may
-read its data. Last updated 2026-11-20. Change this page in the same pull request as anything it describes.
+read its data. Last updated 2026-11-26. Change this page in the same pull request as anything it describes.
 
 ## Building the site
 
 - **AI coding tools are allowed** for code, tests, docs and issues.
 - **A person is responsible for every change.** A person reviews and merges every pull request, and the checks
   (`test`, `versions`, `e2e`) have to pass, whoever or whatever wrote it ([CONTRIBUTING.md](../CONTRIBUTING.md)).
+- **Start every session from the latest `main`.** Before an AI tool edits anything, pull `main` and bring it into your
+  branch (`git switch main && git pull`, then `git switch <your-branch> && git merge main`). A tool working from an
+  old copy rebuilds on code that has since changed, and its pull request brings back what `main` already fixed or
+  removed. [AGENTS.md](../AGENTS.md) tells AI tools to do this first; check they did.
 - **Say so.** When an AI tool wrote most of a pull request, the pull request says so in one line. The reviewer reads it
   as closely as any other.
 - **Facts come from sources, not models.** Data the site shows as fact (degree requirements, AP, IB and test credit
