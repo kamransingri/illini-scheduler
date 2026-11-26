@@ -185,8 +185,9 @@ the navy header and footer) and the wordmark "**Illini** Scheduler" (bold, then 
 - Below 1024px the items don't fit in one row, so a Menu button (with the cart count and a calendar glyph, so the
   number reads as a schedule) opens the same list as full-width rows separated by hairlines, the current one marked by
   an orange bar on its left.
-- **Search from every page.** A Search button after the tabs (a labelled button from 1280px, an icon from 1024px,
-  a 44px icon button next to Menu on phones) opens the search in a light panel under the header; `/` opens it from
+- **Search from every page.** Search is the last cell of the tab strip, styled like the tabs with its `/` shortcut
+  shown (labelled from 1280px, an icon from 1024px; a 44px icon button next to Menu on phones), not a boxed button
+  beside them (D64). It opens the search in a light panel under the header; `/` opens it from
   anywhere that isn't a text field. The home page is the search, so it has no header search and `/` focuses its box.
 - **Always one gesture away.** The header is sticky but slides up while you scroll down and comes back as soon as you
   scroll up (no animation with reduced motion). It sets `--site-header` to the height it covers, and sticky bars below
@@ -235,9 +236,9 @@ picked).
 
 | Page | Main job | First view at 1280px | First view at 375px |
 | --- | --- | --- | --- |
-| Course search (`/`) | Find a course, a professor or a CRN | The title, the search box, often-searched courses, and Just opened's newest openings beside them | The title, the search box and often-searched courses; Just opened's box comes next |
+| Course search (`/`) | Find a course, a professor or a CRN | The title, the search box, often-searched courses, popular gen-ed courses, and Just opened's newest openings beside them | The title, the search box and often-searched courses; Just opened's box comes next |
 | Course page | Decide whether to take the course, and with whom | Code, title, Add to schedule (then "Open schedule builder"), recent GPA, next-term lectures open, the best pick, and "Before you register" | Code, title, Add to schedule and the three numbers, stacked |
-| Gen-ed finder | Find courses that fill a gen-ed, best first | Term, the category grid, Double-dips only, sort, then results; the other filters under "More filters" with how many are on | Term, a Filters button with how many are on, then results |
+| Gen-ed finder | Find courses that fill a gen-ed, best first | The term row (terms in order with years, across the page, greyed out without data), the category grid, Double-dips only, sort, then results; the other filters under "More filters" with how many are on | Term, a Filters button with how many are on, then results |
 | Degree checklist | See what's left of my program and what to take next | Three steps: 1 Your program (major, minors, level and standing), 2 What you've taken (one "Add what you've taken" box), 3 What's left (open requirements first; finished ones one line each) | The same three steps, stacked; the four-year plan closed as "Plan by term" |
 | Just opened | See which sections just opened, and act before they fill | One "Show" control (All, My schedule, Watched), Closings too, the search box, then the newest changes | The same controls on one or two rows, then the changes |
 | Schedule builder | Turn my courses into a schedule I can register | Left: Your courses, three must-haves in view (No classes before, Done by, Days off) with "More options", and the priority presets. Right: the summary numbers, the Week / Finals week / Getting there tabs, the calendar and its section rows | Your courses, the must-haves in one line, then the schedule |

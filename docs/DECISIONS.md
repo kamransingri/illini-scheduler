@@ -1589,3 +1589,20 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D63.3 Toasts.** "This link is your plan" and "Deleted Fall main. Undo" need nothing from the student, so they
   are toasts at the bottom (`ui/Toast.tsx`) that go away after 6 and 8 seconds, held while hovered or focused.
 - **D63.4 Unchanged.** `lib/plans.ts`, `MAX_PLANS`, the storage keys and every share-link parameter.
+
+## Popular gen-ed courses, the header search and the term row (2026-11-26)
+
+- **D64.1 Popular gen-eds are courses.** The home page's "Popular gen-eds" row showed six categories (Advanced Comp,
+  Non-Western...), which read like requirements, not things to take. It now shows course codes: the six gen-ed
+  courses offered next term that the most students took over the recent terms (graded students in the GPA data),
+  leaving out any already under "Often searched". Each opens its course page, and "All gen-eds" opens the finder.
+  This replaces D61.1's hand-picked categories.
+- **D64.2 Search is a tab-strip cell.** The boxed Search button beside the tabs looked like a different control. It's
+  now the strip's last cell, with the tabs' height, divider, hover and current-page bar, and a `/` hint for the
+  shortcut.
+- **D64.3 The gen-ed finder's term row.** "Spring 2027 | Summer" became a row of nine terms in order (Summer, Fall,
+  Spring...) with their years, from the first term the finder has data for, filling the page's width from its left
+  margin. Only next term (gen-eds) and the summer `summer.json` holds can be picked; the others are greyed out, and
+  screen readers hear "not out yet" or "not in the finder". On a phone the row scrolls, with the picked term kept in
+  view. Summer is labelled with its year, so "Summer 2026" says plainly it's last summer's classes until the next
+  summer's schedule is out.

@@ -28,6 +28,12 @@ history).
 
 ### Changed
 
+- The home page's popular gen-eds are course codes now (PSYC 100, ECON 102...): the gen-ed courses the most students
+  took, each opening its course page, with "All gen-eds" for the finder.
+- The header's Search is part of the tab strip instead of a boxed button next to it, and shows its `/` shortcut.
+- The gen-ed finder's term switch is a row of terms in order with their years (Summer 2026, Fall 2026, Spring 2027,
+  Summer 2027...) across the page. The terms without data are greyed out.
+
 - Seat changes have one wording everywhere (#242): "Opened", "Opened, restricted" or "Closed", on the home page,
   Just opened, course pages and the schedule builder. Just opened's two "Only" checkboxes are one **Show** control
   (All, My schedule, Watched), next to **Closings too** and the search box. The home page's link is "All openings".
