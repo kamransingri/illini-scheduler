@@ -4,7 +4,7 @@ import path from "node:path";
 import { parseChangelog, type Release } from "./changelog";
 import type { DegreeIndex } from "./degree";
 import type { SummerData, SummerRow } from "./summer";
-import type { Course, Meta, SearchIndex } from "./types";
+import type { Course, GenedRow, Meta, SearchIndex } from "./types";
 
 const DATA_DIR = path.join(process.cwd(), "public", "data");
 
@@ -22,6 +22,11 @@ export function getReleases(): Release[] {
 
 export function getMeta(): Meta | null {
   return readJson<Meta>("meta.json");
+}
+
+/** Next term's gen-ed courses, as the gen-ed finder loads them. */
+export function getGeneds(): GenedRow[] {
+  return readJson<GenedRow[]>("geneds.json") ?? [];
 }
 
 export function getSearchIndex(): SearchIndex {

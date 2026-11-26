@@ -1,8 +1,8 @@
 import Link from "next/link";
 import LiveOpenings from "@/components/home/LiveOpenings";
 import SearchBox from "@/components/SearchBox";
-import { getMeta, getSearchIndex } from "@/lib/data";
-import { courseHref, GENED_SHORT, termLabel } from "@/lib/format";
+import { getGeneds, getMeta, getSearchIndex } from "@/lib/data";
+import { courseHref, GENED_NAMES, termLabel } from "@/lib/format";
 
 const POPULAR: [string, string][] = [
   ["CS", "124"],
@@ -14,8 +14,9 @@ const POPULAR: [string, string][] = [
   ["ECON", "102"],
 ];
 
-// Each opens the gen-ed finder with that category picked; the finder isn't a header tab (DECISIONS D61)
-const POPULAR_GENEDS = ["ACP", "NW", "WCC", "US", "HP", "QR1"];
+// The gen-ed courses the most students took over the recent terms (graded students in the GPA data), offered next
+// term and not already under Often searched; "All gen-eds" opens the finder (DECISIONS D61, D64)
+const POPULAR_GENEDS = 6;
 
 const chip = "rounded border border-line px-2 leading-7 font-semibold text-action hover:border-action hover:bg-action-tint";
 
@@ -31,6 +32,11 @@ export default function Home() {
     );
   }
   const known = new Set(getSearchIndex().courses.map((c) => `${c.s} ${c.n}`));
+  const often = POPULAR.filter(([s, n]) => known.has(`${s} ${n}`));
+  const geneds = getGeneds()
+    .filter((r) => r.nSec > 0 && r.gpaN > 0 && !often.some(([s, n]) => s === r.s && n === r.n))
+    .sort((a, b) => b.gpaN - a.gpaN)
+    .slice(0, POPULAR_GENEDS);
 
   return (
     <section className="grid gap-x-12 gap-y-8 lg:grid-cols-[minmax(0,1fr)_21rem]" aria-labelledby="home-h">
@@ -44,7 +50,7 @@ export default function Home() {
         </div>
         <div className="mt-3 flex flex-wrap items-center gap-2" data-testid="home-popular">
           <span className="mr-1 text-muted">Often searched:</span>
-          {POPULAR.filter(([s, n]) => known.has(`${s} ${n}`)).map(([s, n]) => (
+          {often.map(([s, n]) => (
             <Link key={s + n} href={courseHref(s, n)} className={chip}>
               {s} {n}
             </Link>
@@ -52,9 +58,9 @@ export default function Home() {
         </div>
         <div className="mt-2 flex flex-wrap items-center gap-2" data-testid="home-geneds">
           <span className="mr-1 text-muted">Popular gen-eds:</span>
-          {POPULAR_GENEDS.map((code) => (
-            <Link key={code} href={`/geneds/?codes=${code}`} className={chip}>
-              {GENED_SHORT[code]}
+          {geneds.map((r) => (
+            <Link key={r.s + r.n} href={courseHref(r.s, r.n)} className={chip} title={`${r.t}: ${r.codes.map((c) => GENED_NAMES[c] ?? c).join(", ")}`}>
+              {r.s} {r.n}
             </Link>
           ))}
           <Link href="/geneds/" className={chip}>
