@@ -50,12 +50,17 @@ Why it's needed and where things are today, in one or two sentences (`web/lib/su
 - Concrete steps, naming the files and fields to change.
 - Decisions already made (what to keep, what not to do).
 
+### Where it goes
+The schedule builder's results, in each section row's details; replaces the row's separate "alternatives" line.
+
 ### Done when
 - [ ] The tests that prove it: pytest, Vitest or Playwright, and on what
 - [ ] Anything to report in the pull request, such as a number
 ```
 
 - The first line links the parent issue and any issue this one needs first. Leave out what doesn't apply.
+- **Where it goes** names the page, the block the change joins, and what it replaces or hides, so pages don't grow
+  one feature at a time (docs/DESIGN.md Part 5). Pipeline or docs work says "No page".
 - Each "Done when" box has to be something a reviewer can check. "Works well" isn't.
 
 ### Parent
@@ -65,6 +70,9 @@ The problem or the goal in a short paragraph: who it's for and what's wrong toda
 
 ### What to do
 - The outcome in three to five bullets.
+
+### Where it goes
+The pages it changes, and what each one gives up to make room.
 
 Not included: what's left out on purpose, and why (optional).
 
@@ -170,6 +178,8 @@ Closes #98.
 - What students (or whoever works on the code) will notice, in a few bullets
 
 **Tests:** pytest and Vitest pass; Playwright schedule.spec.ts; checked /schedule/ at 375px.
+
+**Before / after:** screenshots at 1280px and 375px, for any change to a page.
 
 **Different from the issue:** only if you changed the plan, and why.
 ```

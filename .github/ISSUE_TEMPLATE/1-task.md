@@ -12,5 +12,8 @@ Part of #. Needs #.
 ### What to do
 -
 
+### Where it goes
+<!-- The page, the block it joins, and what it replaces or hides (docs/DESIGN.md Part 5). "No page" for pipeline or docs work. -->
+
 ### Done when
 - [ ]

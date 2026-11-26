@@ -23,6 +23,11 @@ history).
 
 ### Changed
 
+- Pages have a budget (#237): docs/DESIGN.md Part 5 gives each page's main job and what shows first at 1280px and
+  375px, and the rules that keep pages from growing back (one banner at a time, one "More" per area that says how many
+  options are on, rows don't grow, one place per thing, five tabs). Task and Parent issues now say "Where it goes",
+  and pull requests that change a page show it before and after.
+
 - The site header is easier to get around (header critique, on the redesign branch). Just opened is a header tab
   again, the page students need most during registration. Search works from every page: a Search button in the header
   (and next to Menu on phones), or press `/`. The header slides away while you scroll down and comes back as soon as

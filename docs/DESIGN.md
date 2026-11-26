@@ -2,7 +2,8 @@
 
 How Illini Scheduler looks and why. Part 1 is the audit of the site as it was on 2026-11-16 (its screenshots were removed
 from the repository in #181). Part 2 is the direction the redesign follows. Part 3 lists the tokens and shared
-components that implement it. Part 4 covers the logo, navigation and page structure added in v0.4.0.
+components that implement it. Part 4 covers the logo, navigation and page structure added in v0.4.0. Part 5 is how
+much each page may hold, and where new features go (#237).
 
 ## Part 1. Audit (before)
 
@@ -218,3 +219,41 @@ badge in the seat-status Open colours only when the feed is fresh. Nothing else:
 The schedule builder's left column uses numbered blocks under a navy rule: each block (Your courses,
 Must-haves, What matters to you) sits under a 4px navy rule, and the two rule blocks fold with a one-line summary of
 what's set. Sliders always show their level in words (Off / Low / Medium / High) next to the track.
+
+## Part 5. Keeping pages simple (#237)
+
+Pages grew one feature at a time, and each feature brought its own panel, banner, badge or box without anything being
+taken away (#236). From here on every page has **one main job**, its first view shows what that job needs, and the
+rest sits behind one "More" control per area or goes. The Simplify issues (#238 to #244) bring each page to the first
+view below; until a page's issue is done, it may still show more than this.
+
+### Each page's job and first view
+
+"First view" is what's on screen before scrolling, with a typical saved state (a few courses in the schedule, a major
+picked).
+
+| Page | Main job | First view at 1280px | First view at 375px |
+| --- | --- | --- | --- |
+| Course search (`/`) | Find a course, a professor or a CRN | The title, the search box, often-searched courses, and Just opened's newest openings beside them | The title, the search box and often-searched courses; Just opened's box comes next |
+| Course page | Decide whether to take the course, and with whom | Code, title, Add to schedule (then "Open schedule builder"), recent GPA, next-term lectures open, the best pick, and "Before you register" | Code, title, Add to schedule and the three numbers, stacked |
+| Gen-ed finder | Find courses that fill a gen-ed, best first | Term, the category grid, Double-dips only, sort, then results; the other filters under "More filters" with how many are on | Term, a Filters button with how many are on, then results |
+| Degree checklist | See what's left of my program and what to take next | Three steps: 1 Your program (major, minors, level and standing), 2 What you've taken (one "Add what you've taken" box), 3 What's left (open requirements first; finished ones one line each) | The same three steps, stacked; the four-year plan closed as "Plan by term" |
+| Just opened | See which sections just opened, and act before they fill | One "Show" control (All, My schedule, Watched), Closings too, the search box, then the newest changes | The same controls on one or two rows, then the changes |
+| Schedule builder | Turn my courses into a schedule I can register | Left: Your courses, three must-haves in view (No classes before, Done by, Days off) with "More options", and the priority presets. Right: the summary numbers, the Week / Finals week / Getting there tabs, the calendar and its section rows | Your courses, the must-haves in one line, then the schedule |
+
+### The budget
+
+1. **One banner at a time** on a page. A second message waits, or becomes a short toast that goes away on its own.
+2. **One "More" per area.** Secondary options sit behind one "More options" (or "More filters") that says how many are
+   on: "More options, 2 on". Nothing that's on is hidden without that count.
+3. **Rows don't grow.** A new always-visible badge or button on a row replaces one that's there; otherwise it goes in
+   the row's details. A row's problem (closed, restricted) may show on the row itself.
+4. **Explanations go in an `Info` popover**, not a paragraph. A paragraph only when the page can't be used without
+   reading it first.
+5. **One place per thing.** When two blocks show the same information, keep one and link to it from the other (seat
+   changes live on Just opened; the course page and the builder show one line and link there).
+6. **Five tabs.** The header holds Course search, Gen-ed finder, Degree checklist, Schedule builder and Just opened
+   (Part 4). A new page goes in the footer unless it replaces one of them.
+7. **Say where it goes.** Every issue that adds to a page names the page, the block it joins, and what it replaces or
+   hides ("Where it goes" in the issue templates). Every pull request that changes a page shows it before and after
+   at 1280px and 375px.
