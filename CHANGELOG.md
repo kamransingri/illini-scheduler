@@ -33,6 +33,12 @@ history).
   (All, My schedule, Watched), next to **Closings too** and the search box. The home page's link is "All openings".
   Links with `?mine=1` and `?watch=1` work as before.
 
+- The schedule builder's plans are one control (#240): "Plan: Fall main" opens a menu with your other plans, New
+  plan, Duplicate, Rename, Delete and Compare plans, so it stays one line on a phone. A shared link shows one banner
+  with at most two buttons: keep it as a new plan, or go back to yours ("How they differ" opens the must-haves). "This
+  link is your plan" and "Deleted Fall main. Undo" are short notices that go away on their own. Saved plans and share
+  links are unchanged.
+
 - The gen-ed finder shows the term, the categories, Double-dips only and the sort (#244). Show, Your times, Credit
   hours, Minimum RMP rating and the best pick score weights are under one **More filters** that says how many are on,
   and the phone's Filters button counts every filter that's on. Filter links are unchanged.

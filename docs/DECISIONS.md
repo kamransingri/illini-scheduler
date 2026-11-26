@@ -1574,3 +1574,18 @@ Every judgment call made during the autonomous build, newest phase last.
 - **D62.3 Rows on the builder and course page.** The schedule builder's and course page's seat blocks move onto their
   section rows in #239 and #241, with this wording: "Closed: Watch, or use backup AD4" on a closed builder row, and
   "Opened 2 days ago" on a course page section row.
+
+## One plan control and one shared-link banner (2026-11-26, issue #240)
+
+- **D63.1 One "Plan: name" control.** The plan buttons and their five actions wrapped onto three lines on a phone. Now
+  one button names the open plan (and "of 3" when there are more) and opens a menu: the plans, with a check on the
+  open one, then New plan, Duplicate, Rename, Delete and Compare plans. Escape or a click outside closes it. It's a
+  disclosure with plain buttons, not an ARIA menu, so Tab and Enter work as everywhere else on the page.
+- **D63.2 One banner, two buttons.** A shared link shows one of three banners: it opened as a new plan (Back to
+  yours, Don't keep it), it has your plan's courses with other must-haves (Save as a new plan, Keep yours), or you
+  already have 10 plans (Replace yours, Back to my plan). "Use them in Fall main" went from the second, since saving
+  them as a plan keeps both; when there's no room for a new plan it takes Save's place. How the must-haves differ
+  is under "How they differ".
+- **D63.3 Toasts.** "This link is your plan" and "Deleted Fall main. Undo" need nothing from the student, so they
+  are toasts at the bottom (`ui/Toast.tsx`) that go away after 6 and 8 seconds, held while hovered or focused.
+- **D63.4 Unchanged.** `lib/plans.ts`, `MAX_PLANS`, the storage keys and every share-link parameter.

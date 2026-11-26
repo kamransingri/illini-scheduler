@@ -77,8 +77,15 @@ test("the header slides away on the way down and comes back on the way up, above
       return (await header.boundingBox())!.y;
     })
     .toBeLessThan(0);
+  // and on until the strip is stuck to the top: scrolling back up from short of it would leave it in the page's flow
+  const strip = page.getByRole("navigation", { name: "On this page" });
+  await expect
+    .poll(async () => {
+      await page.mouse.wheel(0, 500);
+      return Math.round((await strip.boundingBox())!.y);
+    })
+    .toBeLessThanOrEqual(0);
   await page.mouse.wheel(0, -300);
   await expect.poll(async () => (await header.boundingBox())!.y).toBe(0);
-  const strip = page.getByRole("navigation", { name: "On this page" });
   await expect.poll(async () => Math.round((await strip.boundingBox())!.y)).toBe(Math.round((await header.boundingBox())!.height));
 });

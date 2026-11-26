@@ -59,6 +59,7 @@ import GettingThere from "./GettingThere";
 import { Badge, SeatStatus } from "./ui/Badge";
 import Icon from "./ui/Icon";
 import Info from "./ui/Info";
+import Toast from "./ui/Toast";
 import SearchBox from "./SearchBox";
 import WatchButton from "./WatchButton";
 import WeekCalendar, { COURSE_COLORS } from "./WeekCalendar";
@@ -118,8 +119,13 @@ function sectionLabel(s: Section): string {
   return `${s.code} ${s.type}, ${t}, CRN ${s.crn}${st}${s.special ? ", special" : ""}`;
 }
 
-/** A notice under the plan switcher: a share link that opened as a new plan or as one of yours, or a delete to undo. */
+/** A share link that opened as a new plan (a banner), or as one of yours, or a delete to undo (toasts). */
 type Notice = { kind: "created"; name: string; id: string; from: Plan } | { kind: "switched"; name: string } | { kind: "deleted"; deleted: Deleted };
+
+// the shared-link banner and its two buttons (#240)
+const BANNER = "rounded bg-panel p-3";
+const BTN_MAIN = "rounded bg-action px-3 py-1.5 font-semibold text-white hover:bg-action-dark";
+const BTN_SECOND = "rounded border border-action bg-white px-3 py-1.5 font-semibold text-action hover:bg-action-tint";
 
 /** The rules as their share-link parameters ("" for the defaults). */
 function prefsParams(p: Prefs): string {
@@ -552,73 +558,62 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
           }}
         />
       )}
-      {notice && (
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded bg-panel p-3" role="status" data-testid="plan-notice">
-          {notice.kind === "created" && (
-            <>
-              <span>
-                You opened a shared schedule, so it&apos;s a new plan, &ldquo;{notice.name}&rdquo;. Your other plans are unchanged.
-              </span>
-              <button type="button" className="font-semibold text-action underline" onClick={() => switchTo(notice.from.id)}>
-                Back to {notice.from.name}
-              </button>
-              <button
-                type="button"
-                className="font-semibold text-action underline"
-                onClick={() => {
-                  deletePlan(notice.id);
-                  setNotice(null);
-                  if (readPlans().active !== notice.from.id) switchPlan(notice.from.id);
-                  afterSwitch(false);
-                }}
-              >
-                Don&apos;t keep it
-              </button>
-            </>
-          )}
-          {notice.kind === "switched" && <span>This link is your plan &ldquo;{notice.name}&rdquo;, so that plan is open.</span>}
-          {notice.kind === "deleted" && (
-            <>
-              <span>Deleted &ldquo;{notice.deleted.plan.name}&rdquo;.</span>
-              <button
-                type="button"
-                className="font-semibold text-action underline"
-                onClick={() => {
-                  if (restorePlan(notice.deleted)) afterSwitch(false);
-                  setNotice(null);
-                }}
-              >
-                Undo
-              </button>
-            </>
-          )}
+      {/* one shared-link banner at a time, with at most two actions; short notices are toasts (#240) */}
+      {notice?.kind === "created" ? (
+        <div className={BANNER} role="status" data-testid="link-banner" data-kind="created">
+          <p>
+            You opened a shared schedule, so it&apos;s a new plan, &ldquo;{notice.name}&rdquo;. Your other plans are unchanged.
+          </p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            <button type="button" className={BTN_MAIN} onClick={() => switchTo(notice.from.id)}>
+              Back to {notice.from.name}
+            </button>
+            <button
+              type="button"
+              className={BTN_SECOND}
+              onClick={() => {
+                deletePlan(notice.id);
+                setNotice(null);
+                if (readPlans().active !== notice.from.id) switchPlan(notice.from.id);
+                afterSwitch(false);
+              }}
+            >
+              Don&apos;t keep it
+            </button>
+          </div>
         </div>
-      )}
-      {shared?.rules && plan && (
-        <div className="rounded bg-panel p-4" role="status" data-testid="link-rules">
+      ) : shared?.rules && plan ? (
+        <div className={BANNER} role="status" data-testid="link-banner" data-kind="rules">
           <p>
             This link has the same courses as your plan &ldquo;{plan.name}&rdquo; with different must-haves or priorities. They&apos;re used below but
             aren&apos;t saved until you choose.
           </p>
-          <p className="mt-1 text-sm text-muted">
-            The link&apos;s must-haves: {must.join(", ") || "none"}. {plan.name}&apos;s: {mustSummary(loadPrefs() ?? DEFAULT_PREFS).join(", ") || "none"}.
-          </p>
+          <details className="mt-1 text-sm">
+            <summary className="cursor-pointer text-action">How they differ</summary>
+            <p className="mt-1">
+              The link&apos;s must-haves: {must.join(", ") || "none"}. {plan.name}&apos;s: {mustSummary(loadPrefs() ?? DEFAULT_PREFS).join(", ") || "none"}.
+            </p>
+          </details>
           <div className="mt-2 flex flex-wrap gap-2">
-            <button className="rounded bg-action px-3 py-1.5 font-semibold text-white hover:bg-action-dark" onClick={() => setShared(null)}>
-              Use them in {plan.name}
-            </button>
+            {plans && plans.plans.length >= MAX_PLANS ? (
+              // no room for another plan: the link's rules can still go into this one
+              <button type="button" className={BTN_MAIN} onClick={() => setShared(null)}>
+                Use them in {plan.name}
+              </button>
+            ) : (
+              <button
+                type="button"
+                className={BTN_MAIN}
+                onClick={() => {
+                  if (createPlan({ name: shared.rules?.name ?? "Shared plan", cart: encodeCart(cart), prefs: prefsParams(prefs) })) afterSwitch(true);
+                }}
+              >
+                Save as a new plan
+              </button>
+            )}
             <button
-              className="rounded border border-action bg-white px-3 py-1.5 font-semibold text-action hover:bg-action-tint disabled:border-line disabled:text-muted"
-              disabled={!plans || plans.plans.length >= MAX_PLANS}
-              title={plans && plans.plans.length >= MAX_PLANS ? `${MAX_PLANS} plans is the most this browser keeps` : undefined}
-              onClick={() => {
-                if (createPlan({ name: shared.rules?.name ?? "Shared plan", cart: encodeCart(cart), prefs: prefsParams(prefs) })) afterSwitch(true);
-              }}
-            >
-              Save as a new plan
-            </button>
-            <button
-              className="rounded border border-action bg-white px-3 py-1.5 font-semibold text-action hover:bg-action-tint"
+              type="button"
+              className={BTN_SECOND}
               onClick={() => {
                 setPrefs(loadPrefs() ?? DEFAULT_PREFS);
                 setShared(null);
@@ -628,13 +623,13 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
             </button>
           </div>
         </div>
-      )}
-      {shared && !shared.rules && (
-        <div className="rounded bg-panel p-4" role="status">
-          You opened a shared schedule. You already have {MAX_PLANS} plans, the most this browser keeps, so it isn&apos;t saved as a new plan.
+      ) : shared && !shared.rules ? (
+        <div className={BANNER} role="status" data-testid="link-banner" data-kind="full">
+          <p>You opened a shared schedule. You already have {MAX_PLANS} plans, the most this browser keeps, so it isn&apos;t saved as a new plan.</p>
           <div className="mt-2 flex flex-wrap gap-2">
             <button
-              className="rounded bg-action px-3 py-1.5 font-semibold text-white hover:bg-action-dark"
+              type="button"
+              className={BTN_MAIN}
               onClick={() => {
                 writeCart(cart);
                 setShared(null);
@@ -643,7 +638,8 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
               Replace {plan ? `“${plan.name}”` : "my plan"} with it
             </button>
             <button
-              className="rounded border border-action bg-white px-3 py-1.5 font-semibold text-action hover:bg-action-tint"
+              type="button"
+              className={BTN_SECOND}
               onClick={() => {
                 setCart(shared.mine);
                 setPrefs(loadPrefs() ?? DEFAULT_PREFS);
@@ -655,6 +651,26 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
             </button>
           </div>
         </div>
+      ) : null}
+      {notice?.kind === "switched" && (
+        <Toast key={`switched-${notice.name}`} onDone={() => setNotice(null)}>
+          This link is your plan &ldquo;{notice.name}&rdquo;, so that plan is open.
+        </Toast>
+      )}
+      {notice?.kind === "deleted" && (
+        <Toast key={`deleted-${notice.deleted.plan.id}`} ms={8000} onDone={() => setNotice(null)}>
+          <span>Deleted &ldquo;{notice.deleted.plan.name}&rdquo;.</span>
+          <button
+            type="button"
+            className="font-semibold underline"
+            onClick={() => {
+              if (restorePlan(notice.deleted)) afterSwitch(false);
+              setNotice(null);
+            }}
+          >
+            Undo
+          </button>
+        </Toast>
       )}
       {comparing && plans && plans.plans.length > 1 && (
         <PlanCompare
@@ -1797,19 +1813,57 @@ function PlanBar({
   onDelete: () => void;
 }) {
   const [renaming, setRenaming] = useState<string | null>(null);
+  const [open, setOpen] = useState(false); // one "Plan: name" control opens the rest (#240)
+  const box = useRef<HTMLElement>(null);
+  const toggle = useRef<HTMLButtonElement>(null);
+  const menuId = useId();
   useEffect(() => setRenaming(null), [plan.id]);
+  useEffect(() => {
+    if (!open) return;
+    const away = (e: MouseEvent) => !box.current?.contains(e.target as Node) && setOpen(false);
+    const esc = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      setOpen(false);
+      toggle.current?.focus();
+    };
+    document.addEventListener("mousedown", away);
+    document.addEventListener("keydown", esc);
+    return () => {
+      document.removeEventListener("mousedown", away);
+      document.removeEventListener("keydown", esc);
+    };
+  }, [open]);
   const full = plans.plans.length >= MAX_PLANS;
   const fullNote = `${MAX_PLANS} plans is the most this browser keeps: delete one first`;
   const count = (p: Plan) => (p.cart ? p.cart.split(",").length : 0);
-  const btn =
-    "inline-flex items-center gap-1 rounded border border-line bg-white px-2 text-sm leading-8 font-semibold text-action hover:border-action disabled:text-muted disabled:hover:border-line";
+  const pick = (f: () => void) => () => {
+    setOpen(false);
+    f();
+  };
+  const item = "flex w-full items-center gap-2 rounded px-2 text-left leading-9 font-semibold text-action hover:bg-action-tint disabled:text-muted disabled:hover:bg-transparent";
   return (
-    <section aria-labelledby="plans-h" className="space-y-2" data-testid="plans">
-      <div className="flex flex-wrap items-center gap-2">
-        <h2 id="plans-h" className="font-semibold text-heading">
-          Your plans
-        </h2>
-        <div role="group" aria-label="Open a plan" className="flex flex-wrap gap-1.5">
+    <section ref={box} aria-label="Plans" className="relative space-y-2" data-testid="plans">
+      <button
+        ref={toggle}
+        type="button"
+        aria-expanded={open}
+        aria-controls={menuId}
+        onClick={() => setOpen((v) => !v)}
+        className="inline-flex max-w-full items-center gap-1.5 rounded border border-line bg-white px-3 leading-9 hover:border-action"
+        data-testid="plan-menu-toggle"
+      >
+        <span className="text-muted">Plan:</span>
+        <span className="truncate font-semibold text-heading">{plan.name}</span>
+        {plans.plans.length > 1 && <span className="shrink-0 text-sm text-muted tnum">of {plans.plans.length}</span>}
+        <Icon name="chevronDown" className={`shrink-0 transition-transform motion-reduce:transition-none ${open ? "rotate-180" : ""}`} />
+      </button>
+      <div
+        id={menuId}
+        hidden={!open}
+        className="absolute left-0 z-30 w-80 max-w-[calc(100vw-2rem)] rounded border border-line bg-white p-1 shadow-lg"
+        data-testid="plan-menu"
+      >
+        <div role="group" aria-label="Open a plan" className="border-b border-line pb-1">
           {plans.plans.map((p) => {
             const on = p.id === plan.id;
             return (
@@ -1817,11 +1871,12 @@ function PlanBar({
                 key={p.id}
                 type="button"
                 aria-pressed={on}
-                onClick={() => onSwitch(p.id)}
-                className={`max-w-full truncate rounded border px-2.5 leading-8 font-semibold ${on ? "border-action bg-action text-white" : "border-line bg-white text-action hover:border-action"}`}
+                onClick={pick(() => onSwitch(p.id))}
+                className={`flex w-full items-center gap-2 rounded px-2 text-left leading-9 hover:bg-action-tint ${on ? "font-semibold text-heading" : "text-action"}`}
               >
-                {p.name}
-                <span className={`ml-1.5 text-sm font-normal tnum ${on ? "text-white" : "text-muted"}`} aria-hidden>
+                <Icon name="check" className={on ? "shrink-0 text-action" : "shrink-0 invisible"} />
+                <span className="truncate">{p.name}</span>
+                <span className="ml-auto shrink-0 text-sm text-muted tnum" aria-hidden>
                   {count(p)}
                 </span>
                 <span className="sr-only">
@@ -1831,36 +1886,37 @@ function PlanBar({
             );
           })}
         </div>
-      </div>
-      <div className="flex flex-wrap gap-1.5">
-        <button type="button" className={btn} disabled={full} title={full ? fullNote : "An empty plan: no courses, and the default must-haves and priorities"} onClick={() => onNew(false)}>
-          <Icon name="plus" />
-          New plan
-        </button>
-        <button
-          type="button"
-          className={btn}
-          disabled={full}
-          title={full ? fullNote : "A copy to change, like “Plan B if CS 225 fills”"}
-          aria-label={`Duplicate ${plan.name}`}
-          onClick={() => onNew(true)}
-        >
-          <Icon name="copy" />
-          Duplicate
-        </button>
-        <button type="button" className={btn} aria-label={`Rename ${plan.name}`} onClick={() => setRenaming(plan.name)}>
-          Rename
-        </button>
-        <button type="button" className={btn} disabled={plans.plans.length < 2} aria-label={`Delete ${plan.name}`} onClick={onDelete}>
-          <Icon name="x" />
-          Delete
-        </button>
-        {plans.plans.length > 1 && (
-          <button type="button" className={`${btn} ${comparing ? "border-action bg-action-tint" : ""}`} aria-pressed={comparing} onClick={onCompare}>
-            <Icon name="table" />
-            Compare plans
+        <div className="pt-1">
+          <button type="button" className={item} disabled={full} title={full ? fullNote : "An empty plan: no courses, and the default must-haves and priorities"} onClick={pick(() => onNew(false))}>
+            <Icon name="plus" />
+            New plan
           </button>
-        )}
+          <button
+            type="button"
+            className={item}
+            disabled={full}
+            title={full ? fullNote : "A copy to change, like “Plan B if CS 225 fills”"}
+            aria-label={`Duplicate ${plan.name}`}
+            onClick={pick(() => onNew(true))}
+          >
+            <Icon name="copy" />
+            Duplicate
+          </button>
+          <button type="button" className={item} aria-label={`Rename ${plan.name}`} onClick={pick(() => setRenaming(plan.name))}>
+            <span aria-hidden className="w-4 shrink-0" />
+            Rename
+          </button>
+          <button type="button" className={item} disabled={plans.plans.length < 2} aria-label={`Delete ${plan.name}`} onClick={pick(onDelete)}>
+            <Icon name="x" />
+            Delete
+          </button>
+          {plans.plans.length > 1 && (
+            <button type="button" className={item} aria-pressed={comparing} onClick={pick(onCompare)}>
+              <Icon name="table" />
+              {comparing ? "Close the comparison" : "Compare plans"}
+            </button>
+          )}
+        </div>
       </div>
       {renaming !== null && (
         <form
