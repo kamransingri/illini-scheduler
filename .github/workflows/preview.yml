@@ -47,7 +47,8 @@ jobs:
       - name: Build for Cloudflare
         run: cd web && npm run cf:build
       - name: Keep the preview out of search results
-        run: printf '/*\n  X-Robots-Tag: noindex\n' > web/out/_headers
+        run: |
+          printf '/*\n  X-Robots-Tag: noindex\n' > web/out/_headers
       - name: Deploy the preview Worker
         run: cd web && npx wrangler deploy --name illini-scheduler-ui-redesign
         env:
