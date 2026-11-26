@@ -20,7 +20,7 @@ import { courseHref, dataUrl, fmtGpa, fmtInt, fmtPct, GENED_NAMES, GENED_SHORT, 
 import { loadPrefs, onPrefsChange, timeRulesSummary } from "@/lib/prefs";
 import { rankCourse } from "@/lib/rank";
 import type { Prefs } from "@/lib/schedule";
-import type { ScorePriors } from "@/lib/score";
+import { DEFAULT_WEIGHTS, type ScorePriors } from "@/lib/score";
 import { DEFAULT_SUMMER, summerHref } from "@/lib/summer";
 import type { GenedRow } from "@/lib/types";
 import { useWeights } from "@/lib/weights";
@@ -47,6 +47,7 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
   const [limit, setLimit] = useState(PAGE);
   const [restored, setRestored] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false); // everything but the categories and Double-dips only (#244)
   const [rules, setRules] = useState<Prefs | null>(null); // the schedule builder's saved must-haves
   const [inSchedule, setInSchedule] = useState(0);
   // ?term=summer: the newest summer's classes instead of next term's gen-eds (#123); SummerFinder keeps its own filters
@@ -96,6 +97,10 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
     setF((old) => ({ ...old, [k]: v }));
     setLimit(PAGE);
   };
+  // what's on under More filters, counted against a fresh visit so a folded "More filters" still says so (#244)
+  const customWeights = (Object.keys(DEFAULT_WEIGHTS) as (keyof typeof DEFAULT_WEIGHTS)[]).some((k) => weights[k] !== DEFAULT_WEIGHTS[k]);
+  const moreOn = [f.openNext !== DEFAULT_FILTERS.openNext, f.minStudents !== DEFAULT_FILTERS.minStudents, f.fits && timed !== null, f.credits !== null, f.minRmp !== null, customWeights].filter(Boolean).length;
+  const allOn = f.codes.length + (f.doubleDip ? 1 : 0) + moreOn;
   const toggleCode = (code: string) => set("codes", f.codes.includes(code) ? f.codes.filter((c) => c !== code) : [...f.codes, code]);
   const check = (label: React.ReactNode, checked: boolean, onChange: (v: boolean) => void) => (
     <label className="flex items-start gap-2 py-0.5">
@@ -138,7 +143,7 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
             onClick={() => setShowFilters((v) => !v)}
           >
             <Icon name={showFilters ? "chevronUp" : "chevronDown"} />
-            {showFilters ? "Hide filters" : `Filters${f.codes.length ? ` (${f.codes.length} categor${f.codes.length > 1 ? "ies" : "y"})` : ""}`}
+            {showFilters ? "Hide filters" : `Filters${allOn ? `, ${allOn} on` : ""}`}
           </button>
           <form id="gened-filters" className={`${showFilters ? "block" : "hidden"} space-y-6 md:block`} onSubmit={(e) => e.preventDefault()} aria-label="Filters">
             <fieldset>
@@ -168,6 +173,19 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
               </div>
               <div className="mt-3">{check("Double-dips only (2+ categories)", f.doubleDip, (v) => set("doubleDip", v))}</div>
             </fieldset>
+            <button
+              type="button"
+              className="flex min-h-11 w-fit items-center gap-1.5 font-semibold text-action hover:underline"
+              aria-expanded={moreOpen}
+              aria-controls="more-filters"
+              onClick={() => setMoreOpen((v) => !v)}
+              data-testid="more-filters-toggle"
+            >
+              More filters
+              {moreOn > 0 && <span className="rounded-full bg-action-tint px-2 text-sm leading-6 text-heading tnum">{moreOn} on</span>}
+              <Icon name="chevronDown" className={`transition-transform motion-reduce:transition-none ${moreOpen ? "rotate-180" : ""}`} />
+            </button>
+            <div id="more-filters" hidden={!moreOpen} className="space-y-6" data-testid="more-filters">
             <fieldset>
               <legend className="font-semibold text-heading">Show</legend>
               <div className="mt-1">
@@ -223,9 +241,13 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
               </select>
               {!rmpAvailable && <span className="mt-1 block text-sm text-muted">RMP unavailable in this build.</span>}
             </label>
-            <button type="button" className="font-semibold text-action hover:underline" onClick={() => setF(DEFAULT_FILTERS)}>
-              Reset filters
-            </button>
+            <WeightsControl />
+            </div>
+            {allOn > 0 && (
+              <button type="button" className="block font-semibold text-action hover:underline" onClick={() => setF(DEFAULT_FILTERS)}>
+                Reset filters
+              </button>
+            )}
           </form>
 
           <section aria-label="Results" className="min-w-0">
@@ -248,7 +270,6 @@ export default function GenedFinder({ nextTerm, rmpAvailable, priors }: { nextTe
                 </select>
               </label>
             </div>
-            <WeightsControl className="mb-3" />
             {inSchedule > 0 && (
               <p className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 rounded border border-line bg-panel px-3 py-2" data-testid="gened-handoff">
                 <span className="tnum">

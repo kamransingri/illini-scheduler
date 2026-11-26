@@ -33,6 +33,10 @@ history).
   (All, My schedule, Watched), next to **Closings too** and the search box. The home page's link is "All openings".
   Links with `?mine=1` and `?watch=1` work as before.
 
+- The gen-ed finder shows the term, the categories, Double-dips only and the sort (#244). Show, Your times, Credit
+  hours, Minimum RMP rating and the best pick score weights are under one **More filters** that says how many are on,
+  and the phone's Filters button counts every filter that's on. Filter links are unchanged.
+
 - The schedule builder's left column is shorter (#238). Must-haves show No classes before, Done by and Days off;
   lunch, blocked times, open-only, no rushed walks, only sections you can register for, special sections and About you
   are under one **More options** that says how many are on. What matters to you shows the six presets, with the

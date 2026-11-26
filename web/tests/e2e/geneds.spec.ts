@@ -4,6 +4,7 @@ test("one category + next term + sorted by GPA: rows sorted and all in that cate
   await page.goto("./geneds/");
   await expect(page.getByText(/\d+ courses/)).toBeVisible();
   await page.getByText("Hist & Phil", { exact: true }).first().click();
+  await page.getByTestId("more-filters-toggle").click();
   await page.getByLabel(/in Spring 2027/).check();
   await page.getByLabel("Sort by").selectOption("gpa");
   const rows = page.locator('[data-testid="gened-results"] > tr');
@@ -59,6 +60,7 @@ test("the finder checks courses against the schedule builder's times and hands t
   const rows = page.locator('[data-testid="gened-results"] > tr');
   await expect(rows.first()).toHaveAttribute("data-fit", /^(fits|times|special|closed)$/);
   const before = await rows.count();
+  await page.getByTestId("more-filters-toggle").click();
   await times.getByLabel("Only courses that fit them").check();
   await expect(page).toHaveURL(/fit=1/);
   await expect(rows.first()).toBeVisible();
@@ -77,4 +79,40 @@ test("the finder checks courses against the schedule builder's times and hands t
   const sections = page.getByTestId("schedule-sections").locator("li");
   for (const start of await sections.evaluateAll((els) => els.map((e) => Number(e.getAttribute("data-start"))))) expect(start).toBeGreaterThanOrEqual(600);
   for (const t of await sections.locator("span.tnum").allTextContents()) expect(t).not.toMatch(/(^|; )[MTWR]*F /);
+});
+
+test("a fresh visit shows the term, categories, Double-dips only and sort; the rest is under More filters (#244)", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("./geneds/");
+  await expect(page.getByText(/\d+ courses/)).toBeVisible();
+  await expect(page.getByTestId("gened-term")).toBeVisible();
+  await expect(page.getByText("Hist & Phil", { exact: true }).first()).toBeVisible();
+  await expect(page.getByLabel("Double-dips only (2+ categories)")).toBeVisible();
+  await expect(page.getByLabel("Sort by")).toBeVisible();
+  const toggle = page.getByTestId("more-filters-toggle");
+  await expect(toggle).toHaveText("More filters");
+  await expect(page.getByTestId("more-filters")).toBeHidden();
+  await expect(page.getByRole("button", { name: "Reset filters" })).toHaveCount(0);
+  await toggle.click();
+  await expect(page.getByLabel("Credit hours")).toBeVisible();
+  await expect(page.getByTestId("gened-times")).toBeVisible();
+});
+
+test("a link with every filter set opens with them on, and More filters says how many (#244)", async ({ page }) => {
+  await page.goto("./geneds/?codes=HP&dd=1&nx=0&min=0&cr=3&rmp=4");
+  await expect(page.getByTestId("more-filters-toggle")).toContainText("4 on");
+  await expect(page.getByLabel("Double-dips only (2+ categories)")).toBeChecked();
+  await expect(page.getByLabel("Humanities: Hist & Phil")).toBeChecked();
+  await page.getByTestId("more-filters-toggle").click();
+  await expect(page.getByLabel(/Only courses (with an open section|offered) in/)).not.toBeChecked();
+  await expect(page.getByLabel("Only GPA from 200+ students")).not.toBeChecked();
+  await expect(page.getByLabel("Credit hours")).toHaveValue("3");
+  await expect(page.getByLabel("Minimum RMP rating")).toHaveValue("4");
+  await page.getByRole("button", { name: "Reset filters" }).click();
+  await expect(page.getByTestId("more-filters-toggle")).toHaveText("More filters");
+  await expect(page).toHaveURL(/\/geneds\/$/);
+
+  await page.setViewportSize({ width: 375, height: 800 });
+  await page.goto("./geneds/?codes=HP&dd=1&cr=3");
+  await expect(page.getByRole("button", { name: "Filters, 3 on" })).toBeVisible();
 });
