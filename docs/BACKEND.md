@@ -2,7 +2,8 @@
 
 Illini Scheduler is a static site on GitHub Pages. What has to run on a server lives in [`api/`](../api/) and is
 deployed as a Supabase Edge Function (#150). Today that's the public HTTP API (#157, #158), documented in
-[API.md](API.md#http-api). The project doesn't use Cloudflare (#245).
+[API.md](API.md#http-api), and the MCP server itself at `/mcp`, so AI apps can add Illini Scheduler by URL (#102). The
+project doesn't use Cloudflare (#245).
 
 **The API needs no database.** It reads the site's public JSON from GitHub Pages, which GitHub Actions rebuilds every
 night, and answers with the MCP server's code: `mcp/src/schemas.ts` has the arguments and `mcp/src/answers.ts` the
@@ -16,6 +17,9 @@ later: accounts (#151), push subscriptions (#91) and reviews (#128).
   fetch), so it runs on Supabase (Deno) and in Node for the tests.
 - `api/src/supabase.ts`: the Edge Function. Supabase puts the function's name in front of every path (`/api/v1/terms`)
   and sets `SUPABASE_URL`; `DATA_URL` (a function secret) points it at another copy of the data.
+- `mcp/src/http.ts`: the MCP server over Streamable HTTP, served at `POST /mcp`. It's stateless: every request gets
+  its own server, so nothing is kept between requests. Each tool call is logged as `{"mcp_tool": "<name>"}` to count
+  use; the arguments, which are the questions people ask, are never logged.
 - `api/src/limit.ts`: 60 requests a minute per address, counted in each running instance's memory. Instances count
   separately, so it stops a script in a loop, not a determined caller.
 - `npm run bundle` builds all of it, zod and `web/lib` included, into one file with no imports,

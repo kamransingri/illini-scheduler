@@ -687,7 +687,8 @@ isn't deployed yet. Once the Supabase project is set up it's at `https://<ref>.s
 | GET /v1/courses/CS/124 | One course and every section of a term (`term`, `lectures_only`, `max_sections`) | get_course |
 | GET /v1/geneds?gened=HUM,ACP | The gen-ed finder (`credits`, `open_only`, `min_gpa_students`, `min_rmp`, `two_or_more_categories`, `sort`, `limit`) | find_geneds |
 | POST /v1/schedules | The schedule builder: a JSON body with `courses` and any must-haves and priorities | build_schedules |
-| GET /v1/openapi.json | The OpenAPI 3.1 description of all of the above | |
+| POST /mcp | The MCP server over Streamable HTTP: add `$API/mcp` to an AI app as a connector, with nothing to install | all five |
+| GET /v1/openapi.json | The OpenAPI 3.1 description of the `/v1/` endpoints | |
 | GET /health | `{"status": "ok", "version": ...}` | |
 
 ```sh
