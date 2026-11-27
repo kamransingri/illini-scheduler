@@ -232,7 +232,9 @@ def check(root: Path = ROOT, base: str | None = None) -> list[str]:
     if base:
         old = version_at(base, root)
         if old and old != current:
-            if v <= Version.parse(old):
+            # A version can only go up, unless the old one was withdrawn: never tagged, or its tag and release were
+            # deleted (1.0.0 was re-released as 0.17.0 on 2026-11-27, DECISIONS D69)
+            if v <= Version.parse(old) and f"v{old}" in tags(root):
                 problems.append(f"The version went from {old} to {current}: it can only go up")
             if f"v{current}" in tags(root):
                 problems.append(f"v{current} is already tagged: pick the next version")
