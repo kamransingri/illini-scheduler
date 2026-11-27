@@ -1606,3 +1606,14 @@ Every judgment call made during the autonomous build, newest phase last.
   screen readers hear "not out yet" or "not in the finder". On a phone the row scrolls, with the picked term kept in
   view. Summer is labelled with its year, so "Summer 2026" says plainly it's last summer's classes until the next
   summer's schedule is out.
+
+## Stepping through professors on the degree checklist (2026-11-27)
+
+- **D65.1 One professor at a time, any of them.** Each option row showed only the best next-term professor. Its
+  Professor column now has Previous and Next arrows ("2 of 4") that go through every next-term lecturer (up to six,
+  as exported), best first by the student's own weights, wrapping around. Arrows rather than a list keep the row the
+  same height (DESIGN Part 5, "rows don't grow"), and the count is read out when it changes.
+- **D65.2 The row follows the professor.** Score, RMP and open lectures use the professor shown; GPA is their own
+  recent GPA in the course (new `profs[].g`), or the course's average, labelled "course", when they have no grade
+  history. Open lectures are theirs when seat status is known. The option list stays ranked by each course's best
+  professor, so stepping never reorders it.

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { allCredits, apCredit, creditCourses, IB_LEVEL, ibCredit, isElective, isGrainger, pickIbYear, pickYear, subOptions, testCredit, testScores, type ApSummary, type ApTable, type ApYear, type IbLevel } from "@/lib/apcredit";
-import { alsoCounts, evaluate, hoursSoFar, hydrate, needText, listedByHand, notOpenRules, options, overlapChecks, parseHours, programCourses, rankCourse, trackSlug, withTrack, type Degree, type DegreeCourse, type DegreeIndex, type Evaluation, type GroupResult, type GroupStatus, type HoursSoFar, type OverlapCheck, type Ranked } from "@/lib/degree";
+import { alsoCounts, evaluate, hoursSoFar, hydrate, needText, listedByHand, notOpenRules, options, overlapChecks, parseHours, programCourses, rankCourse, rankTeachers, trackSlug, withTrack, type Degree, type DegreeCourse, type DegreeIndex, type Evaluation, type GroupResult, type GroupStatus, type HoursSoFar, type OverlapCheck, type Ranked } from "@/lib/degree";
 import { courseHref, dataUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, termLabel } from "@/lib/format";
 import { EMPTY, MAX_MINORS, minorTick, onMineChange, pickedTrack, readMine, sameState, setTrack, STATUS_LABEL, stateFromParams, stateToParams, ticksOf, writeMine, type CourseStatus, type MyState } from "@/lib/mycourses";
 import { COURSE_DRAG, finishTerms, isEmptyPlan, planTerms, type FinishAt } from "@/lib/plan";
@@ -27,6 +27,8 @@ import WeightsControl from "./WeightsControl";
 
 const COLS: CourseCols = { score: true, gpa: true, best: true, rmp: true, next: true, action: true };
 const SHOW = 5;
+// the arrows that step through a course's professors
+const STEP = "inline-flex size-7 items-center justify-center rounded border border-line bg-white text-action hover:border-action";
 
 const STATUS: Record<GroupStatus, { label: string; icon: IconName; cls: string }> = {
   done: { label: "Done", icon: "check", cls: "bg-heading text-white" },
@@ -1170,20 +1172,29 @@ function Requirement({
                     <span className="inline-flex items-center justify-end">
                       Score
                       <Info label="About the score">
-                        Best pick score of the course with its best {termLabel(meta.next_term)} professor: course GPA, that professor&apos;s GPA difference, RMP and open
-                        seats, small samples pulled toward an average. Open a score&apos;s (i) for its parts.
+                        Best pick score of the course with the {termLabel(meta.next_term)} professor shown (the best one first; the arrows go through the
+                        others): course GPA, that professor&apos;s GPA difference, RMP and open seats, small samples pulled toward an average. Open a
+                        score&apos;s (i) for its parts.
                       </Info>
                     </span>
                   ),
-                  gpa: "Recent GPA",
-                  best: `Best professor, ${termLabel(meta.next_term)}`,
+                  gpa: (
+                    <span className="inline-flex items-center justify-end">
+                      GPA
+                      <Info label="About the GPA">
+                        The professor shown: their average GPA in this course over the recent terms. When they have no grade history, the course&apos;s recent
+                        average.
+                      </Info>
+                    </span>
+                  ),
+                  best: "Professor",
                   rmp: "RMP",
                   next: "Open lectures",
                 }}
               />
               <ul>
                 {shown.map((x) => (
-                  <OptionRow key={x.code} x={x} r={r} results={results} deg={deg} taken={taken} nextTerm={meta.next_term} plannable={plannable} />
+                  <OptionRow key={x.code} x={x} r={r} results={results} deg={deg} taken={taken} nextTerm={meta.next_term} plannable={plannable} priors={meta.score_priors} weights={weights} />
                 ))}
               </ul>
               {ranked.length > SHOW && (
@@ -1225,6 +1236,8 @@ function OptionRow({
   taken,
   nextTerm,
   plannable,
+  priors,
+  weights,
 }: {
   x: Ranked<DegreeCourse>;
   r: GroupResult;
@@ -1233,6 +1246,8 @@ function OptionRow({
   taken: Set<string>;
   nextTerm: string;
   plannable: boolean;
+  priors: ScorePriors | null;
+  weights: ReturnType<typeof useWeights>;
 }) {
   const [s, n] = x.code.split(" ");
   const c = x.course;
@@ -1240,7 +1255,15 @@ function OptionRow({
   const yes = marks.filter((m) => m.verdict.allow === true);
   const unclear = marks.filter((m) => m.verdict.allow === "unclear");
   const no = marks.filter((m) => m.verdict.allow === false);
-  const best = x.best;
+  // every next-term professor, best first: the arrows step through them and the row's numbers follow
+  const teachers = useMemo(() => rankTeachers(x.code, c, priors, weights), [x.code, c, priors, weights]);
+  const [picked, setPicked] = useState<string | null>(null);
+  const at = Math.max(0, teachers.findIndex((t) => t.best?.k === picked));
+  const pick = teachers[at] ?? null;
+  const prof = pick?.best ?? null;
+  const score = pick?.score ?? x.score;
+  const step = (by: number) => setPicked(teachers[(at + by + teachers.length) % teachers.length].best!.k);
+  const theirGpa = prof?.g != null;
   return (
     <CourseRow
       subject={s}
@@ -1282,30 +1305,70 @@ function OptionRow({
         score: {
           label: "Score",
           value:
-            x.score && x.score.score !== null ? (
+            score && score.score !== null ? (
               <span className="inline-flex items-center">
-                <span className="tnum text-lg font-semibold text-heading">{x.score.score}</span>
-                <Info label={`How ${x.code}'s score is worked out`}>
-                  <ScoreBreakdown result={x.score} />
+                <span className="tnum text-lg font-semibold text-heading">{score.score}</span>
+                <Info label={`How ${x.code}'s score is worked out${prof ? ` with ${prof.name}` : ""}`}>
+                  <ScoreBreakdown result={score} />
                 </Info>
               </span>
             ) : undefined,
         },
         gpa: {
-          label: "Recent GPA",
-          value: c.gpa != null ? <span className="tnum font-semibold">{fmtGpa(c.gpa)}</span> : <span className="text-muted">No data</span>,
-          sub: c.gpa != null ? `${fmtInt(c.gn ?? 0)} students` : undefined,
+          label: "GPA",
+          value: theirGpa ? (
+            <span className="tnum font-semibold">{fmtGpa(prof!.g!)}</span>
+          ) : c.gpa != null ? (
+            <span className="tnum font-semibold">{fmtGpa(c.gpa)}</span>
+          ) : (
+            <span className="text-muted">No data</span>
+          ),
+          sub: theirGpa ? `${fmtInt(prof!.dn)} students` : c.gpa != null ? `course, ${fmtInt(c.gn ?? 0)} students` : undefined,
         },
         best: {
-          label: `Best professor, ${termLabel(nextTerm)}`,
-          value: best ? <span className="font-semibold">{best.name}</span> : undefined,
-          sub: best && best.d !== null ? `${best.d >= 0 ? "+" : "−"}${Math.abs(best.d).toFixed(2)} vs course` : best ? "No grade history" : undefined,
+          label: "Professor",
+          value: prof ? <span className="font-semibold">{prof.name}</span> : undefined,
+          sub: prof ? (
+            <>
+              <span className="block">{prof.d !== null ? `${prof.d >= 0 ? "+" : "−"}${Math.abs(prof.d).toFixed(2)} vs course` : "No grade history"}</span>
+              {teachers.length > 1 && (
+                <span className="mt-1 flex items-center gap-1.5" role="group" aria-label={`${x.code} professors`} data-testid="prof-stepper">
+                  <button type="button" className={STEP} aria-label={`Previous professor for ${x.code}`} onClick={() => step(-1)}>
+                    <Icon name="chevronRight" className="rotate-180" />
+                  </button>
+                  <span aria-live="polite">
+                    {at + 1} of {teachers.length}
+                    {at === 0 && priors ? ", best" : ""}
+                    <span className="sr-only">: {prof.name}</span>
+                  </span>
+                  <button type="button" className={STEP} aria-label={`Next professor for ${x.code}`} onClick={() => step(1)}>
+                    <Icon name="chevronRight" />
+                  </button>
+                </span>
+              )}
+            </>
+          ) : undefined,
         },
-        rmp: { label: "RMP", value: best?.rmp && best.rmp[0] !== null ? <span className="tnum">{best.rmp[0].toFixed(1)}</span> : undefined, sub: best?.rmp ? `${best.rmp[3]} ratings` : undefined },
+        rmp: { label: "RMP", value: prof?.rmp && prof.rmp[0] !== null ? <span className="tnum">{prof.rmp[0].toFixed(1)}</span> : undefined, sub: prof?.rmp ? `${prof.rmp[3]} ratings` : undefined },
         next: {
           label: "Open lectures",
-          value: c.nx ? <span className="tnum">{c.known ? `${c.nOpen ?? 0} of ${c.nSec}` : `${c.nSec} listed`}</span> : <span className="text-muted">Not offered</span>,
-          sub: termLabel(nextTerm),
+          value: !c.nx ? (
+            <span className="text-muted">Not offered</span>
+          ) : prof?.open ? (
+            <span className="tnum">
+              {prof.open[0]} of {prof.open[1]}
+            </span>
+          ) : (
+            <span className="tnum">{c.known ? `${c.nOpen ?? 0} of ${c.nSec}` : `${c.nSec} listed`}</span>
+          ),
+          sub: prof?.open ? (
+            <>
+              <span className="block">theirs</span>
+              <span className="block">{termLabel(nextTerm)}</span>
+            </>
+          ) : (
+            termLabel(nextTerm)
+          ),
         },
       }}
       action={c.nx ? <AddToCart subject={s} number={n} small /> : null}

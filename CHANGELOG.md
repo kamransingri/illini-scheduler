@@ -28,6 +28,11 @@ history).
 
 ### Changed
 
+- Degree checklist: each course option's "Best professor" column is now **Professor**, with arrows that step through
+  everyone teaching it next term, best first. The row's GPA (that professor's own GPA in the course), score, RMP and
+  open lectures change with the professor shown. The exported course summaries gain each professor's GPA (`profs[].g`,
+  docs/API.md).
+
 - The home page's popular gen-eds are course codes now (PSYC 100, ECON 102...): the gen-ed courses the most students
   took, each opening its course page, with "All gen-eds" for the finder.
 - The header's Search is part of the tab strip instead of a boxed button next to it, and shows its `/` shortcut.
