@@ -10,6 +10,10 @@ history).
 
 ## [Unreleased]
 
+### Changed
+
+- The header's Search no longer shows a `/` box next to it. Pressing `/` still opens the search.
+
 ## [1.0.0] - 2026-11-27
 
 ### Added
