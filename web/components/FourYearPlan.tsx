@@ -210,7 +210,7 @@ function Term({
           <Icon name="alert" className="mt-0.5 shrink-0" />
           <span>
             {w.text}{" "}
-            <a href={w.href} className="text-action underline hover:text-action-dark">
+            <a href={w.href} target="_blank" rel="noopener noreferrer" className="text-action underline hover:text-action-dark">
               Registrar&apos;s limits
             </a>
           </span>

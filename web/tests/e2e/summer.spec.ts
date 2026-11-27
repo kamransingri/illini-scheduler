@@ -81,10 +81,10 @@ test("the search marks summer courses and finds summer-only ones", async ({ page
   }
 });
 
-test("the header has three tabs and no Summer courses page", async ({ page }) => {
+test("the header has four tabs, the gen-ed finder one of them, and no Summer courses page", async ({ page }) => {
   await page.goto("./");
   const nav = page.getByRole("navigation", { name: "Main" });
-  await expect(nav.locator("li")).toHaveCount(3); // the gen-ed finder is reached from Course search, Just opened from the footer (D61)
+  await expect(nav.getByRole("link")).toHaveText(["Course search", "Gen-ed finder", "Degree checklist", "Schedule builder"]); // D73
   await expect(page.getByRole("link", { name: "Summer courses" })).toHaveCount(0);
 });
 
@@ -97,21 +97,15 @@ test("the home page is the search, often-searched courses and Just opened", asyn
   await expect(page.getByRole("heading", { name: "Everything you need before registration" })).toHaveCount(0);
 });
 
-test("popular gen-eds on the home page are course codes, and All gen-eds opens the gen-ed finder (D64)", async ({ page }) => {
+test("the home page has no popular gen-eds row; the Gen-ed finder tab opens the finder and is lit there (D73)", async ({ page }) => {
   await page.goto("./");
-  const geneds = page.getByTestId("home-geneds");
-  const courses = geneds.getByRole("link").filter({ hasNotText: "All gen-eds" });
-  for (const link of await courses.all()) {
-    await expect(link).toHaveText(/^[A-Z]{2,4} \d{3}$/);
-    await expect(link).toHaveAttribute("href", /\/course\/[A-Z]+\/\d+\/$/);
-  }
-  // none repeats a course already under Often searched
-  const often = await page.getByTestId("home-popular").getByRole("link").allTextContents();
-  for (const t of await courses.allTextContents()) expect(often).not.toContain(t);
-  await geneds.getByRole("link", { name: "All gen-eds" }).click();
+  await expect(page.getByTestId("home-geneds")).toHaveCount(0);
+  await expect(page.getByText("Popular gen-eds")).toHaveCount(0);
+  const nav = page.getByRole("navigation", { name: "Main" });
+  await nav.getByRole("link", { name: "Gen-ed finder" }).click();
   await expect(page).toHaveURL(/\/geneds\/$/);
-  // the finder belongs to Course search now, so that tab stays lit
-  await expect(page.getByRole("navigation", { name: "Main" }).getByRole("link", { name: "Course search" })).toHaveAttribute("aria-current", "page");
+  await expect(nav.getByRole("link", { name: "Gen-ed finder" })).toHaveAttribute("aria-current", "page");
+  await expect(nav.getByRole("link", { name: "Course search" })).not.toHaveAttribute("aria-current", "page");
 });
 
 test("375px: the Summer view doesn't make the page scroll sideways", async ({ page }) => {

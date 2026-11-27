@@ -351,4 +351,14 @@ class RmpClient:
         if t is None and len(found) >= SEARCH_PAGE and p.first_name:
             # A common surname ("Lee", "Wang") fills RMP's 20 results before this person: ask for the full name.
             t = choose_match(p, subjects, self.search_teachers(f"{p.first_name} {last}"), taught)
+        if t is None:
+            # RMP can list a two-part surname under one part: Course Explorer's "Fagen-Ulmschneider, W" (the GPA
+            # dataset's "Fagen-Ulmschnei, Wade") is RMP's "Wade Fagen", and searching the whole surname finds nothing.
+            # Search each part as the surname; the given name and the department or review checks still apply.
+            given = raw_name.partition(",")[2] if "," in raw_name else " ".join(raw_name.split()[:-1])
+            parts = [x for x in re.split(r"[\s\-]+", last) if len(re.sub(r"[^A-Za-z]", "", x)) >= 3]
+            for part in parts if len(parts) > 1 else []:
+                q = parse_name(f"{part}, {given}")
+                if q is not None and (t := choose_match(q, subjects, self.search_teachers(part), taught)):
+                    break
         return t

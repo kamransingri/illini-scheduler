@@ -23,13 +23,13 @@ function Line({ text, repo }: { text: string; repo?: string }) {
         if (t.kind === "strong") return <strong key={i}>{t.text}</strong>;
         if (t.kind === "link")
           return (
-            <a key={i} href={t.href} className={LINK}>
+            <a key={i} href={t.href} className={LINK} {...(/^https?:/.test(t.href) ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
               {t.text}
             </a>
           );
         if (t.kind === "issue" && repo)
           return (
-            <a key={i} href={`${repo}/issues/${t.text}`} className={LINK}>
+            <a target="_blank" rel="noopener noreferrer" key={i} href={`${repo}/issues/${t.text}`} className={LINK}>
               #{t.text}
             </a>
           );
@@ -51,7 +51,7 @@ function ReleaseSection({ r, repo }: { r: Release; repo?: string }) {
         {r.date && <span className="text-muted">{fmtDate(r.date)}</span>}
         {r.version === pkg.version && <span className="rounded bg-action-tint px-2 text-sm font-semibold text-heading">This site</span>}
         {!pending && repo && (
-          <a className={`text-sm ${LINK}`} href={`${repo}/releases/tag/v${r.version}`}>
+          <a target="_blank" rel="noopener noreferrer" className={`text-sm ${LINK}`} href={`${repo}/releases/tag/v${r.version}`}>
             Release on GitHub
           </a>
         )}
@@ -85,7 +85,7 @@ export default function VersionsPage() {
           <>
             {" "}
             The same notes are in{" "}
-            <a className={LINK} href={`${repo}/blob/main/CHANGELOG.md`}>
+            <a target="_blank" rel="noopener noreferrer" className={LINK} href={`${repo}/blob/main/CHANGELOG.md`}>
               CHANGELOG.md
             </a>
             .

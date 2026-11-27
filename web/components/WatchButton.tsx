@@ -29,7 +29,13 @@ export default function WatchButton({ item }: { item: Watched }) {
       disabled={blocked}
       aria-pressed={on}
       aria-label={blocked ? `Watch list full (${MAX_WATCH} sections): ${name}` : `${on ? "Watching" : "Watch"} ${name}`}
-      title={blocked ? `You're watching ${MAX_WATCH} sections, the most a list holds. Stop watching one on Just opened first.` : undefined}
+      title={
+        blocked
+          ? `You're watching ${MAX_WATCH} sections, the most a list holds. Stop watching one on Just opened first.`
+          : on
+            ? "Watching: Just opened lists this section first, and can notify you when a seat opens. Press to stop."
+            : "Follow this section: Just opened lists it first, and can notify you when a seat opens"
+      }
       className={`inline-flex items-center gap-1 rounded border px-2 text-sm leading-7 font-semibold whitespace-nowrap ${
         on ? "border-action bg-action-tint text-heading" : blocked ? "border-line bg-white text-muted" : "border-action bg-white text-action hover:bg-action-tint"
       }`}

@@ -38,11 +38,11 @@ export default function TermsPage() {
           </li>
           <li>
             Before you register, confirm sections, seats and restrictions in{" "}
-            <a className={LINK} href="https://courses.illinois.edu/">
+            <a target="_blank" rel="noopener noreferrer" className={LINK} href="https://courses.illinois.edu/">
               Course Explorer
             </a>{" "}
             and Self-Service, and degree requirements with your advisor. The site&apos;s limits are listed in{" "}
-            <a className={LINK} href={`${repo}/blob/main/docs/LIMITATIONS.md`}>
+            <a target="_blank" rel="noopener noreferrer" className={LINK} href={`${repo}/blob/main/docs/LIMITATIONS.md`}>
               LIMITATIONS.md
             </a>
             .
@@ -67,7 +67,7 @@ export default function TermsPage() {
         </h2>
         <p className="mt-2">
           Everything the site shows is public JSON you can read from scripts, notebooks or AI tools, described in the{" "}
-          <a className={LINK} href={`${repo}/blob/main/docs/API.md`}>
+          <a target="_blank" rel="noopener noreferrer" className={LINK} href={`${repo}/blob/main/docs/API.md`}>
             data API docs
           </a>
           . You may reuse it if you:
@@ -106,11 +106,11 @@ export default function TermsPage() {
             privacy page
           </Link>
           , and how AI tools are used to build it and read it is in the{" "}
-          <a className={LINK} href={`${repo}/blob/main/docs/AI-USE.md`}>
+          <a target="_blank" rel="noopener noreferrer" className={LINK} href={`${repo}/blob/main/docs/AI-USE.md`}>
             AI use policy
           </a>
           . Ask about these terms, or report something the site gets wrong, in a{" "}
-          <a className={LINK} href={`${repo}/issues/new`}>
+          <a target="_blank" rel="noopener noreferrer" className={LINK} href={`${repo}/issues/new`}>
             GitHub issue
           </a>
           . Changes are made in public and dated above.

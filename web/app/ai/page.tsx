@@ -44,7 +44,7 @@ export default function AiPage() {
     <div className="max-w-3xl">
       <h1 className="font-display text-2xl font-bold text-heading">Use it from your AI app</h1>
       <p className="mt-2">
-        Connect Claude, or any other app that supports <a className={LINK} href="https://modelcontextprotocol.io">MCP</a>, to this site&apos;s data. It
+        Connect Claude, or any other app that supports <a target="_blank" rel="noopener noreferrer" className={LINK} href="https://modelcontextprotocol.io">MCP</a>, to this site&apos;s data. It
         then answers from the same sections, seats, GPAs and ratings you see here instead of from memory, and builds schedules with the same builder.
         Try asking:
       </p>
@@ -69,7 +69,7 @@ export default function AiPage() {
 
       <h2 className="mt-8 font-display text-xl font-bold text-heading">Set it up</h2>
       <p className="mt-2">
-        You need <a className={LINK} href="https://nodejs.org">Node.js</a> 20 or newer. Then add the server to your app.
+        You need <a target="_blank" rel="noopener noreferrer" className={LINK} href="https://nodejs.org">Node.js</a> 20 or newer. Then add the server to your app.
       </p>
       <h3 className="mt-4 font-semibold text-heading">Claude Code</h3>
       <Command text={`claude mcp add illini-scheduler -- npx -y ${pkg}`} label="command" />
@@ -83,11 +83,11 @@ export default function AiPage() {
       <Command text={desktop} label="config" />
       <p className="mt-4">
         Other apps, options and versions are in the{" "}
-        <a className={LINK} href={guide}>
+        <a target="_blank" rel="noopener noreferrer" className={LINK} href={guide}>
           full setup guide
         </a>
         . Developers can also read the data directly: see the{" "}
-        <a className={LINK} href={`${repo}/blob/main/docs/API.md`}>
+        <a target="_blank" rel="noopener noreferrer" className={LINK} href={`${repo}/blob/main/docs/API.md`}>
           data API
         </a>
         .

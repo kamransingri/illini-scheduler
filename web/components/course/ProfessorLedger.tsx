@@ -155,7 +155,7 @@ export function ProfessorRow({ p, ctx, open, onToggle, rank }: { p: Scored; ctx:
           <Cell label="Rate My Professors" className="col-span-3 md:text-center">
             <span className="text-muted">{ctx.rmpStatus.startsWith("unavailable") ? "RMP unavailable in this build" : p.ins.rmp ? "On RMP, no ratings yet" : "No RMP match"}</span>
             {p.ins.rmp && (
-              <a href={rmpRateUrl(p.ins.rmp)} className="block text-sm font-semibold text-action underline" rel="noopener" data-testid="rmp-rate">
+              <a href={rmpRateUrl(p.ins.rmp)} className="block text-sm font-semibold text-action underline" target="_blank" rel="noopener noreferrer" data-testid="rmp-rate">
                 Be the first to rate
               </a>
             )}
@@ -187,7 +187,7 @@ function SectionMini({ s, course, term }: { s: Section; course: Course; term: st
         </span>
         <span className="inline-flex items-center gap-2">
           <SeatStatus status={s.status} known={course.terms[term]?.status_known} title={s.status_at ? `Checked ${fmtDate(s.status_at)}` : undefined} />
-          <a className="inline-flex items-center gap-1 text-sm text-action underline" href={cisUrl(term, course.subject, course.number, s.crn)} rel="noopener">
+          <a className="inline-flex items-center gap-1 text-sm text-action underline" href={cisUrl(term, course.subject, course.number, s.crn)} target="_blank" rel="noopener noreferrer">
             Live seats
             <Icon name="external" />
           </a>
@@ -247,10 +247,14 @@ function Reviews({ p, course }: { p: ProfEntry; course: Course }) {
   const [all, setAll] = useState(false);
   const rmp = p.ins.rmp;
   const here = `${course.subject} ${course.number}`;
-  const reviews = useMemo(() => {
-    const list = (rmp?.reviews ?? []).map((r) => ({ ...r, code: normCourse(r.course), mine: normCourse(r.course) === here }));
-    return [...list.filter((r) => r.mine), ...list.filter((r) => !r.mine)];
-  }, [rmp, here]);
+  // Only this course's reviews (its old numbers count too); when there are none, their reviews for other courses, so
+  // students still get an idea of the professor (DECISIONS D73)
+  const { reviews, others } = useMemo(() => {
+    const codes = new Set([here, ...(course.formerly ?? []).map((f) => f.code)]);
+    const list = (rmp?.reviews ?? []).map((r) => ({ ...r, code: normCourse(r.course), mine: codes.has(normCourse(r.course)) }));
+    const mine = list.filter((r) => r.mine);
+    return mine.length ? { reviews: mine, others: false } : { reviews: list, others: list.length > 0 };
+  }, [rmp, here, course.formerly]);
   if (!rmp) return null;
   const shown = all ? reviews : reviews.slice(0, 2);
   return (
@@ -263,6 +267,11 @@ function Reviews({ p, course }: { p: ProfEntry; course: Course }) {
             </li>
           ))}
         </ul>
+      )}
+      {others && (
+        <p className="mb-2 text-sm text-muted" data-testid="other-course-reviews">
+          No written reviews for {here} yet. Their reviews for other courses:
+        </p>
       )}
       {reviews.length ? (
         <ul className="space-y-3">
@@ -334,11 +343,11 @@ function ProfessorPanel({ p, ctx }: { p: ProfEntry; ctx: Ctx }) {
         <p className="mt-3">
           {rmp ? (
             <span className="flex flex-wrap gap-x-5 gap-y-1">
-              <a href={rmp.url} className="inline-flex items-center gap-1 font-semibold text-action underline" rel="noopener">
+              <a href={rmp.url} className="inline-flex items-center gap-1 font-semibold text-action underline" target="_blank" rel="noopener noreferrer">
                 Rate My Professors page
                 <Icon name="external" />
               </a>
-              <a href={rmpRateUrl(rmp)} className="inline-flex items-center gap-1 font-semibold text-action underline" rel="noopener" data-testid="rmp-rate">
+              <a href={rmpRateUrl(rmp)} className="inline-flex items-center gap-1 font-semibold text-action underline" target="_blank" rel="noopener noreferrer" data-testid="rmp-rate">
                 Took {course.subject} {course.number} with them? Rate them on RMP
                 <Icon name="external" />
               </a>
@@ -346,7 +355,7 @@ function ProfessorPanel({ p, ctx }: { p: ProfEntry; ctx: Ctx }) {
           ) : (
             <>
               <span className="text-muted">{ctx.rmpStatus.startsWith("unavailable") ? "RMP unavailable in this build. " : "No confident RMP match. "}</span>
-              <a href={rmpSearchUrl(p.ins.name)} className="inline-flex items-center gap-1 font-semibold text-action underline" rel="noopener">
+              <a href={rmpSearchUrl(p.ins.name)} className="inline-flex items-center gap-1 font-semibold text-action underline" target="_blank" rel="noopener noreferrer">
                 Search Rate My Professors
                 <Icon name="external" />
               </a>

@@ -89,9 +89,11 @@ you change something listed here, change this page in the same pull request.
   match show a search link.
 - **Matching is by name, department and reviews.** Nicknames, middle names and one-letter spelling slips match only
   when the department or the reviews back them up, so some professors will still be missed, and a profile shows only
-  on courses whose subject it fits.
-- **Reviews.** Only a professor's 20 newest RMP ratings are read; a course page shows up to 6, that course's first. A
-  professor with many newer reviews for other courses may show none for this one.
+  on courses whose subject it fits. A two-part surname that RMP lists under one part ("Fagen-Ulmschneider" as "Wade
+  Fagen") is searched part by part when the whole name finds no one.
+- **Reviews.** Only a professor's 20 newest RMP ratings are read. A course page shows only that course's (and its old
+  numbers'), or, when there are none, the professor's reviews for other courses, marked as such. A professor with many
+  newer reviews for other courses may show none for this one.
 - **RMP ratings are self-selected.** The people who rate are not a random sample, which is why the best pick score
   pulls ratings with few reviews toward an average.
 
@@ -119,7 +121,7 @@ you change something listed here, change this page in the same pull request.
   checklist). About 87% of those sentences are read: level, class standing, majors and minors, colleges, departments
   and graduate or non-degree programs. Program cohorts (James Scholars, Merit, living-learning communities, ESL
   placement), sections that open to more students on a date, and Banner's own names for majors that differ from the
-  catalog's are shown as "may be restricted" with the text. A department is never a "no", since a major's department
+  catalog's are shown as "restricted" with the text. A department is never a "no", since a major's department
   can't be told from its name. Self-Service has the final word.
 - **Credit-hour warnings** use the campus undergraduate limits (18 hours in fall and spring, 12 for full-time). Your
   college may add its own rules, graduate limits differ, and a variable-credit course counts as a range until you pick

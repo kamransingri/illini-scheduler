@@ -1470,7 +1470,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                 </p>
               )}
               <div className="flex flex-wrap items-center gap-2">
-                <a href={SELF_SERVICE_URL} className="inline-flex items-center gap-1.5 rounded bg-action px-3 font-semibold leading-9 text-white hover:bg-action-dark" rel="noopener">
+                <a href={SELF_SERVICE_URL} className="inline-flex items-center gap-1.5 rounded bg-action px-3 font-semibold leading-9 text-white hover:bg-action-dark" target="_blank" rel="noopener noreferrer">
                   Register in Self-Service
                   <Icon name="external" />
                 </a>
@@ -1659,7 +1659,7 @@ function SaveMenu({ children }: { children: React.ReactNode }) {
 /** A section's restriction for this student (#81): left out, unclear, or restricted to students like them. */
 function RestrictionBadge({ e }: { e: Eligibility | undefined }) {
   if (!e || e.status === "open") return null;
-  const label = e.status === "no" ? "Not for you" : e.status === "maybe" ? "May be restricted" : "Restricted: you qualify";
+  const label = e.status === "no" ? "Not for you" : e.status === "maybe" ? "Restricted" : "Restricted: you qualify";
   return (
     <span data-testid="restriction" data-status={e.status} title={e.because.join(" ")}>
       <Badge icon={e.status === "ok" ? "check" : "alert"}>{label}</Badge>

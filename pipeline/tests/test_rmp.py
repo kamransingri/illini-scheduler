@@ -245,3 +245,29 @@ def test_rmp_failing_mid_run_falls_back_to_older_answers(tmp_path):
     down = rmp.RmpClient(tmp_path, transport=httpx.MockTransport(lambda r: httpx.Response(503)), delay=0)
     assert down.lookup("Challen, G", "CS").rmp_id == "2327680"
     assert down.error and "503" in down.error
+
+
+def test_a_two_part_surname_is_found_under_one_part(tmp_path):
+    # RMP lists Course Explorer's "Fagen-Ulmschneider, W" (GPA dataset: "Fagen-Ulmschnei, Wade") as "Wade Fagen"
+    wade = {"node": {"legacyId": 1234, "firstName": "Wade", "lastName": "Fagen", "department": "Computer Science",
+                     "numRatings": 79}}
+    texts = []
+
+    def handler(request):
+        body = json.loads(request.content)
+        if "schools" in body["query"]:
+            return httpx.Response(200, json=SCHOOL)
+        texts.append(body["variables"]["query"]["text"])
+        edges = [wade] if texts[-1] == "Fagen" else []
+        return httpx.Response(200, json={"data": {"newSearch": {"teachers": {"edges": edges}}}})
+
+    c = rmp.RmpClient(tmp_path, transport=httpx.MockTransport(handler), delay=0)
+    assert c.lookup("Fagen-Ulmschnei, Wade", "CS").rmp_id == "1234"
+    assert texts == ["Fagen-Ulmschnei", "Fagen"]
+    assert c.lookup("Fagen-Ulmschneider, W", {"CS", "STAT"}).rmp_id == "1234"
+    # the given name and the department still have to fit
+    assert c.lookup("Fagen-Ulmschneider, Joe", "CS") is None
+    assert c.lookup("Fagen-Ulmschneider, Wade", "ENGL") is None
+    # a one-part surname isn't searched again
+    texts.clear()
+    assert c.lookup("Smith, Wade", "CS") is None and texts == ["Smith"]

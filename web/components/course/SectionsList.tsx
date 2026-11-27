@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import type { Course, SeatEvent, TermBlock } from "@/lib/types";
-import { cisUrl, daysStr, fmtAgo, fmtDate, fmtTime, seatChangeText, SELF_SERVICE_URL, termLabel } from "@/lib/format";
+import type { Course, TermBlock } from "@/lib/types";
+import { cisUrl, daysStr, fmtDate, fmtTime, SELF_SERVICE_URL, termLabel } from "@/lib/format";
 import { eligibility } from "@/lib/restrictions";
 import { groupSections } from "@/lib/sections";
 import { useAboutYou } from "@/lib/useAboutYou";
@@ -20,7 +20,6 @@ export default function SectionsList({
   onPickProf,
   focusCrn = null,
   watchable = false,
-  events = [],
 }: {
   course: Course;
   term: string;
@@ -30,8 +29,6 @@ export default function SectionsList({
   focusCrn?: string | null;
   /** The current or next term, which Just opened follows: each row gets a Watch button (#15). */
   watchable?: boolean;
-  /** The course's recent seat changes, newest first (course JSON `seat_events`): each row shows its latest one (#241). */
-  events?: SeatEvent[];
 }) {
   const { me } = useAboutYou();
   const groups = groupSections(block.sections);
@@ -39,8 +36,6 @@ export default function SectionsList({
   const focusAt = focusCrn ? flat.findIndex((s) => s.crn === focusCrn) : -1;
   const [showAll, setShowAll] = useState(focusAt >= 40);
   const total = block.sections.length;
-  const latest = new Map<string, SeatEvent>();
-  for (const e of events) if (e.term === term && !latest.has(e.crn)) latest.set(e.crn, e);
   useEffect(() => {
     if (focusAt < 0) return;
     if (focusAt >= 40) setShowAll(true);
@@ -58,7 +53,7 @@ export default function SectionsList({
             waitlists are only in Self-Service, which needs a NetID and is never scraped.
           </Info>
         </span>
-        <a className="inline-flex items-center gap-1 font-semibold text-action underline" href={SELF_SERVICE_URL} rel="noopener">
+        <a className="inline-flex items-center gap-1 font-semibold text-action underline" href={SELF_SERVICE_URL} target="_blank" rel="noopener noreferrer">
           Register in Self-Service
           <Icon name="external" />
         </a>
@@ -158,16 +153,8 @@ export default function SectionsList({
                           known={block.status_known}
                           title={s.status_at ? `Checked ${fmtDate(s.status_at)}${s.status_since ? `; ${s.status} since ${fmtDate(s.status_since)}` : ""}` : undefined}
                         />
-                        {latest.has(s.crn) ? (
-                          <span className="text-sm text-muted" data-testid="seat-change">
-                            {seatChangeText(latest.get(s.crn)!.old, latest.get(s.crn)!.new)} {fmtAgo(latest.get(s.crn)!.at)}
-                          </span>
-                        ) : (
-                          s.status_since &&
-                          Date.now() - new Date(s.status_since).getTime() < 14 * 86400000 && <span className="text-sm text-muted">since {fmtAgo(s.status_since)}</span>
-                        )}
                       </span>
-                      <a className="inline-flex items-center gap-1 text-sm text-action underline" href={cisUrl(term, course.subject, course.number, s.crn)} rel="noopener">
+                      <a className="inline-flex items-center gap-1 text-sm text-action underline" href={cisUrl(term, course.subject, course.number, s.crn)} target="_blank" rel="noopener noreferrer">
                         Check live seats
                         <Icon name="external" />
                       </a>
@@ -199,7 +186,7 @@ export default function SectionsList({
 function SectionRestriction({ text, status, me }: { text: string; status: string; me: import("@/lib/restrictions").AboutYou }) {
   const e = eligibility(text, status, me);
   if (e.status === "open") return null;
-  const label = e.status === "no" ? "not for you" : e.status === "maybe" ? "may be restricted" : "restricted: you qualify";
+  const label = e.status === "no" ? "not for you" : e.status === "maybe" ? "restricted" : "restricted: you qualify";
   return (
     <span data-testid="restriction" data-status={e.status}>
       <Badge icon={e.status === "ok" ? "check" : "alert"} title={e.because.join(" ")}>

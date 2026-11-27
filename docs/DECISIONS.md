@@ -1689,3 +1689,26 @@ which ("replaces D39.3"). Refer to entries by number from code comments and othe
 - **D71.3 Who can use them.** Anyone with write access, checked against the API, on pull requests from this
   repository's own branches. `/no-checks-main` skips the one-review rule too, which is the point (a solo change you
   want live now); the merge comment names who used it.
+
+## Gen-ed finder tab, RMP colours and course-only reviews (2026-11-27)
+
+- **D73.1 The gen-ed finder is a tab again.** D61 and D64 folded it into Course search through a "Popular gen-eds"
+  row on the home page, which students missed. It's now the second header tab (`web/lib/nav.ts`), lit on `/geneds/`,
+  and the home page row is gone. Four tabs still fit the strip from 1024px.
+- **D73.2 External links open in a new tab.** Every link to another site (`target="_blank" rel="noopener noreferrer"`),
+  so a student checking RMP or Course Explorer doesn't lose their place in a plan.
+- **D73.3 RMP bars are coloured by what's good for a student.** Each bar goes from `--color-down` (red) to
+  `--color-up` (green) through `color-mix`: quality and would-take-again by their value, difficulty by its inverse
+  (1 is green, 5 red). That replaces the "lower is easier" note. The numbers and the screen reader sentence are
+  unchanged, so colour isn't the only signal.
+- **D73.4 Reviews are this course's only.** A professor's RMP reviews for other courses crowded out the few for this
+  one (STAT 107 showed nine STAT 212 reviews). Now a course page shows only reviews tagged with this course or its old
+  numbers; if there are none, it shows the professor's other reviews under "No written reviews for X yet".
+- **D73.5 Seats and restrictions in one word.** "may be restricted" became "restricted" (on the course page and in
+  the builder; the reason is still in the badge's tooltip and the section notes), and the "since" date and the
+  latest-change line next to a section's seat status are gone (D67.2); the date stays in the badge's tooltip, and
+  changes are on Just opened and in the RSS feed.
+- **D73.6 Two-part surnames on RMP.** RMP lists some hyphenated surnames under one part: Course Explorer's
+  "Fagen-Ulmschneider, W" is RMP's "Wade Fagen", so searching the whole surname found no one. `RmpClient.lookup` now
+  searches each part (three letters or more) when the whole name finds no match, and the usual given-name and
+  department or review checks decide.

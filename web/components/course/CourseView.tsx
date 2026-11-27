@@ -337,8 +337,8 @@ export default function CourseView({ subject, number, meta }: { subject: string;
                   Seat feed (RSS)
                 </a>
                 <Info label="About the seat feed">
-                  Each section&apos;s latest open or closed change in the last three weeks shows on its row. Add the feed to any feed reader, or to a
-                  Slack or Discord feed bot, to hear when a section opens or closes. Status is checked about once a day, so confirm in Self-Service.
+                  Every open or closed change in the last three weeks. Add the feed to any feed reader, or to a Slack or Discord feed bot, to hear when
+                  a section opens or closes. Status is checked about once a day, so confirm in Self-Service.
                 </Info>
               </span>
             }
@@ -357,7 +357,6 @@ export default function CourseView({ subject, number, meta }: { subject: string;
               onPickProf={pickProf}
               focusCrn={focusCrn}
               watchable={term === meta.next_term || term === meta.current_term}
-              events={course.seat_events ?? []}
             />
           )}
         </section>

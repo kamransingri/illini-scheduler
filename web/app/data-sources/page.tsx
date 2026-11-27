@@ -40,11 +40,11 @@ export default function DataSourcesPage() {
       <Source id="course-explorer" title="Course Explorer">
         <p>
           Sections, meeting times, instructors, descriptions, gen-ed attributes, final exams and seat status come from the University of Illinois&apos;{" "}
-          <a href="https://courses.illinois.edu/" className={LINK} rel="noopener">
+          <a href="https://courses.illinois.edu/" className={LINK} target="_blank" rel="noopener noreferrer">
             Course Explorer
           </a>
           . Older terms come from Wade Fagen-Ulmschneider&apos;s{" "}
-          <a href={`${WADE}/tree/main/course-catalog`} className={LINK} rel="noopener">
+          <a href={`${WADE}/tree/main/course-catalog`} className={LINK} target="_blank" rel="noopener noreferrer">
             copy of the course catalog
           </a>
           . The current and next term are read from the live course pages every day, and the busiest courses about every 10 minutes for{" "}
@@ -58,7 +58,7 @@ export default function DataSourcesPage() {
       <Source id="gpa" title="Grades: the UIUC GPA dataset">
         <p>
           Course and professor GPAs and grade distributions come from{" "}
-          <a href={`${WADE}/tree/main/gpa`} className={LINK} rel="noopener">
+          <a href={`${WADE}/tree/main/gpa`} className={LINK} target="_blank" rel="noopener noreferrer">
             Wade Fagen-Ulmschneider&apos;s GPA dataset
           </a>
           . The University released terms before Spring 2025 in response to FOIA requests, and terms from Spring 2025 on in response to Urbana Senate
@@ -81,7 +81,7 @@ export default function DataSourcesPage() {
       <Source id="geneds" title="Gen-ed categories">
         <p>
           Which courses count for which general education requirement comes from{" "}
-          <a href={`${WADE}/tree/main/geneds`} className={LINK} rel="noopener">
+          <a href={`${WADE}/tree/main/geneds`} className={LINK} target="_blank" rel="noopener noreferrer">
             Wade Fagen-Ulmschneider&apos;s gen-ed list
           </a>
           .
@@ -91,7 +91,7 @@ export default function DataSourcesPage() {
       <Source id="tre" title="Teachers Ranked as Excellent">
         <p>
           The &quot;Teachers Ranked as Excellent&quot; badges on professors come from{" "}
-          <a href={`${WADE}/tree/main/teachers-ranked-as-excellent`} className={LINK} rel="noopener">
+          <a href={`${WADE}/tree/main/teachers-ranked-as-excellent`} className={LINK} target="_blank" rel="noopener noreferrer">
             Wade Fagen-Ulmschneider&apos;s copy of the campus list
           </a>
           , which is based on student ratings. It covers instructors only, not teaching assistants.
@@ -101,7 +101,7 @@ export default function DataSourcesPage() {
       <Source id="rmp" title="Rate My Professors">
         <p>
           Professor ratings, tags and review snippets come from{" "}
-          <a href="https://www.ratemyprofessors.com/" className={LINK} rel="noopener">
+          <a href="https://www.ratemyprofessors.com/" className={LINK} target="_blank" rel="noopener noreferrer">
             Rate My Professors
           </a>
           , written by students and not checked by the University. The site keeps them for up to 7 days before reading them again, and works without them. Its matches between
