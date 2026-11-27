@@ -10,8 +10,6 @@ history).
 
 ## [Unreleased]
 
-## [1.0.0] - 2026-11-27
-
 ### Added
 
 - Degree checklist: tracks. Programs that ask you to pick one track (the Economics, Classical Languages and Legal
@@ -34,47 +32,57 @@ history).
   everyone teaching it next term, best first. The row's GPA (that professor's own GPA in the course), score, RMP and
   open lectures change with the professor shown. The exported course summaries gain each professor's GPA (`profs[].g`,
   docs/API.md).
+
 - The home page's popular gen-eds are course codes now (PSYC 100, ECON 102...): the gen-ed courses the most students
   took, each opening its course page, with "All gen-eds" for the finder.
 - The header's Search is part of the tab strip instead of a boxed button next to it, and shows its `/` shortcut.
 - The gen-ed finder's term switch is a row of terms in order with their years (Summer 2026, Fall 2026, Spring 2027,
   Summer 2027...) across the page. The terms without data are greyed out.
+
 - Seat changes have one wording everywhere (#242): "Opened", "Opened, restricted" or "Closed", on the home page,
   Just opened, course pages and the schedule builder. Just opened's two "Only" checkboxes are one **Show** control
   (All, My schedule, Watched), next to **Closings too** and the search box. The home page's link is "All openings".
   Links with `?mine=1` and `?watch=1` work as before.
+
 - The schedule builder's plans are one control (#240): "Plan: Fall main" opens a menu with your other plans, New
   plan, Duplicate, Rename, Delete and Compare plans, so it stays one line on a phone. A shared link shows one banner
   with at most two buttons: keep it as a new plan, or go back to yours ("How they differ" opens the must-haves). "This
   link is your plan" and "Deleted Fall main. Undo" are short notices that go away on their own. Saved plans and share
   links are unchanged.
+
 - The gen-ed finder shows the term, the categories, Double-dips only and the sort (#244). Show, Your times, Credit
   hours, Minimum RMP rating and the best pick score weights are under one **More filters** that says how many are on,
   and the phone's Filters button counts every filter that's on. Filter links are unchanged.
+
 - The schedule builder's left column is shorter (#238). Must-haves show No classes before, Done by and Days off;
   lunch, blocked times, open-only, no rushed walks, only sections you can register for, special sections and About you
   are under one **More options** that says how many are on. What matters to you shows the six presets, with the
   sliders under **Customize** ("Custom" shows when they don't match a preset). Each course's section dropdowns are
   behind **Pick sections**, and the course says what's locked ("Locked: L1", with Unlock). Saved settings and share
   links are unchanged.
+
 - Pages have a budget (#237): docs/DESIGN.md Part 5 gives each page's main job and what shows first at 1280px and
   375px, and the rules that keep pages from growing back (one banner at a time, one "More" per area that says how many
   options are on, rows don't grow, one place per thing, three tabs). Task and Parent issues now say "Where it goes",
   and pull requests that change a page show it before and after.
+
 - The site header is easier to get around (header critique). It has three tabs: Course
-  search, Degree checklist and Schedule builder. The gen-ed finder is part of Course search: the home page's
-  "Popular gen-eds" row links to it. Just opened is still a click away from the home page, course
+  search, Degree checklist and Schedule builder. The gen-ed finder is part of Course search: the home page's new
+  "Popular gen-eds" row opens it with a category picked. Just opened is still a click away from the home page, course
   pages, the schedule builder and the footer. Search works from every page: a Search button in the header
   (and next to Menu on phones), or press `/`. The header slides away while you scroll down and comes back as soon as
   you scroll up, so it's never a long scroll away. After "Add to schedule" on a course page, "Open schedule builder"
   is right next to it. Keyboard focus in the header is now clearly visible, the phone buttons are easier to tap,
   Escape or a tap outside closes the menu, and screen readers hear the schedule count.
+
 - A tidier footer: links grouped into Plan, More and Policies, only the current version (every version is on What's
   new), and the long data-sources paragraph moved to the Data sources page it already had.
 - Faster deploys: a push to `main` reuses the database from the last nightly refresh instead of fetching every source
   again, so it goes live in a few minutes instead of about 28. The nightly run still refreshes everything; add
   `[refresh data]` to a commit message or pull request title (or tick "Refresh data" on a manual run) to refresh on a
   push. Lighthouse runs on refresh runs only.
+- The header has four links: Just opened left it and is reached from the home page, course pages, the schedule
+  builder and the footer.
 
 ## [0.16.0] - 2026-11-25
 
@@ -537,8 +545,7 @@ history).
 - A partial Rate My Professors error no longer stops `make data`.
 - RSS feeds are written as UTF-8.
 
-[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.16.0...v1.0.0
+[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.16.0...HEAD
 [0.16.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.15.0...v0.16.0
 [0.15.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.14.1...v0.15.0
 [0.14.1]: https://github.com/kamransingri/illini-scheduler/compare/v0.14.0...v0.14.1
