@@ -1644,3 +1644,15 @@ which ("replaces D39.3"). Refer to entries by number from code comments and othe
 - **D71.3 Who can use them.** Anyone with write access, checked against the API, on pull requests from this
   repository's own branches. `/no-checks-main` skips the one-review rule too, which is the point (a solo change you
   want live now); the merge comment names who used it.
+
+## Only the main contributors can skip checks (2026-11-27)
+
+- **D72.1 A list, not write access.** D71.3 let anyone with write access use the commands, and five people have it.
+  Now the commenter must also be in `.github/pr-command-users.txt` (the owner, kamransingri, and the main
+  contributor, ishaanman7898). The script reads the list from `main` through the API, never from the pull request, and
+  `/.github/` is owned by kamransingri in CODEOWNERS, so adding a name needs the owner's review.
+- **D72.2 `/no-checks-main` only merges the main contributors' own pull requests.** It skips the review, so a pull
+  request by anyone else still needs one, even when a main contributor comments.
+- **D72.3 A hand-added label doesn't count.** Anyone with write access can add the `no-checks-pr` label. `ci.yml`'s
+  `gate` job now looks up who added it last: the checks are skipped only if it was the command (github-actions[bot])
+  or someone on the list. Otherwise they run, with a warning.

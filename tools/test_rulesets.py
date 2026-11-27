@@ -36,3 +36,15 @@ def test_codeowners_paths_exist_and_name_people():
     for path, *owners in lines:
         assert owners and all(re.fullmatch(r"@[A-Za-z0-9-]+", o) for o in owners), path
         assert path == "*" or (ROOT / path.strip("/")).exists(), path
+
+
+def test_only_the_main_contributors_can_skip_checks_and_the_owner_reviews_that_list():
+    """/no-checks-main and /no-checks-pr (tools/pr-command.sh) read .github/pr-command-users.txt from main."""
+    lines = (ROOT / ".github" / "pr-command-users.txt").read_text(encoding="utf-8").splitlines()
+    users = {line.split("#")[0].strip().lower() for line in lines} - {""}
+    assert "kamransingri" in users and 0 < len(users) <= 3
+    owners = [line.split() for line in (ROOT / ".github" / "CODEOWNERS").read_text(encoding="utf-8").splitlines()
+              if line.strip() and not line.startswith("#")]
+    assert ["/.github/", "@kamransingri"] in owners  # a change to the list needs the owner's review
+    script = (ROOT / "tools" / "pr-command.sh").read_text(encoding="utf-8")
+    assert "pr-command-users.txt" in script and "pr-command-users.txt" in (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")

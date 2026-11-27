@@ -186,7 +186,7 @@ site can't do: [docs/LIMITATIONS.md](docs/LIMITATIONS.md).
 | `data-check.yml` | The 10th of January, April, July and October, manual | How old each data source is on the live site; opens one "Data check" issue with what needs a look (#71) |
 | `reddit.yml` | Sundays, manual | The r/UIUC signal; collects nothing until the Reddit secrets are set ([docs/REDDIT.md](docs/REDDIT.md)) |
 | `branch-cleanup.yml` | A pull request merged, manual | Deletes the merged branch; a manual run deletes older merged branches |
-| `commands.yml` | A `/no-checks-main` or `/no-checks-pr` comment on a pull request, from someone with write access | Merges and deploys without waiting for checks, or skips `test` and `e2e` on the pull request (CONTRIBUTING.md) |
+| `commands.yml` | A `/no-checks-main` or `/no-checks-pr` comment on a pull request, from a main contributor (`.github/pr-command-users.txt`) | Merges and deploys without waiting for checks, or skips `test` and `e2e` on the pull request (CONTRIBUTING.md) |
 | `fetch-data.yml` | Manual | Refreshes `fixtures/` from the live sources |
 
 ## Contributing

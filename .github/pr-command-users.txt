@@ -1,0 +1,7 @@
+# Who can use /no-checks-main and /no-checks-pr on a pull request (tools/pr-command.sh, CONTRIBUTING.md).
+# One GitHub login per line: the project's owner and main contributors. They also need write access.
+# /no-checks-main also needs the pull request to be by someone on this list.
+# The commands read this file from main, so a pull request can't add its author. CODEOWNERS: /.github/ changes need
+# the owner's review.
+kamransingri
+ishaanman7898
