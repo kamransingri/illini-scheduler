@@ -21,6 +21,7 @@ test("a schedule copies its sections and must-haves", async ({ page }) => {
   await page.goto("./schedule/?c=STAT107&t=2027-sp&e=540");
   await page.getByRole("button", { name: "Generate schedules" }).click();
   await expect(page.getByTestId("schedule-result")).toBeVisible();
+  await page.getByRole("button", { name: "Save or share" }).click(); // Ask your AI is in the Save or share menu (#239)
   await page.getByTestId("schedule-result").getByRole("button", { name: "Ask your AI" }).click();
   const preview = page.getByTestId("ask-ai-text");
   await expect(preview).toContainText("My Spring 2027 schedule");

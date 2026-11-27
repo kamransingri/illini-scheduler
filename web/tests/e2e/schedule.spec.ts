@@ -24,7 +24,7 @@ test("CS 124 + MATH 221 + RHET 105 + STAT 107, no 8am: no schedule has an 8am cl
   await page.getByLabel("No classes before").selectOption("540");
   await page.getByRole("button", { name: "Generate schedules" }).click();
   await expect(page.getByTestId("schedule-result")).toBeVisible();
-  await expect(page.getByTestId("summary")).toContainText("Expected GPA");
+  await expect(page.getByTestId("schedule-stats")).toContainText("Expected GPA");
   const counter = await page.getByText(/Schedule 1 of \d+/).textContent();
   const n = Number(counter!.match(/of (\d+)/)![1]);
   expect(n).toBeGreaterThan(1);
@@ -33,7 +33,8 @@ test("CS 124 + MATH 221 + RHET 105 + STAT 107, no 8am: no schedule has an 8am cl
     for (const s of starts) expect(s).toBeGreaterThanOrEqual(540);
     if (i < n - 1) await page.getByRole("button", { name: "Next schedule" }).click();
   }
-  // export: .ics download works
+  // export: .ics download works, from the one Save or share menu (#239)
+  await page.getByRole("button", { name: "Save or share" }).click();
   const [dl] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Download .ics" }).click()]);
   // the edited link opened as a new plan, "Shared plan" (#117), and each plan's calendar file has its name (#118)
   expect(dl.suggestedFilename()).toBe("illini-schedule-2027-sp-shared-plan.ics");
@@ -65,7 +66,7 @@ test("empty cart shows guidance, not a blank page", async ({ page }) => {
   await expect(page.getByText("Your cart is empty")).toBeVisible();
 });
 
-test("sections to watch: a schedule that needs closed sections lists them and links to Just opened (#27)", async ({ page }) => {
+test("a closed section says so on its own row, with Watch and its backup, and one line links to Just opened (#27, #239)", async ({ page }) => {
   // every STAT 107 section closed, as after a busy registration day
   await page.route("**/data/course/STAT/107.json", async (route) => {
     const course = await (await route.fetch()).json();
@@ -75,18 +76,22 @@ test("sections to watch: a schedule that needs closed sections lists them and li
   await page.goto("./schedule/?c=STAT107,RHET105&t=2027-sp");
   await expect(page.getByTestId("cart").locator("li")).toHaveCount(2);
   await page.getByRole("button", { name: "Generate schedules" }).click();
-  const watch = page.getByTestId("watch-list");
-  await expect(watch).toBeVisible();
-  await expect(watch).toContainText(/needs (a section that was|\d+ sections that were) Closed/);
-  const rows = watch.locator("li");
-  expect(await rows.count()).toBeGreaterThan(0);
-  for (const t of await rows.allTextContents()) expect(t).toContain("STAT 107");
-  await expect(watch.getByRole("link", { name: "Self-Service" })).toHaveAttribute("href", /^https:/);
+  // nothing sits between the calendar and the section list: no just-closed box, no Sections to watch
+  await expect(page.getByTestId("schedule-sections")).toBeVisible();
+  await expect(page.getByTestId("watch-list")).toHaveCount(0);
+  await expect(page.getByTestId("just-closed")).toHaveCount(0);
+  const closed = page.getByTestId("schedule-row").filter({ has: page.getByTestId("closed-line") });
+  expect(await closed.count()).toBeGreaterThan(0);
+  for (const t of await closed.allTextContents()) expect(t).toContain("STAT 107");
+  for (const t of await page.getByTestId("schedule-row").filter({ hasText: "RHET 105" }).allTextContents()) expect(t).not.toContain("Closed:");
+  const line = closed.first().getByTestId("closed-line");
+  await expect(line).toContainText("Closed:");
   // watch one (#15): it's on Just opened's list
-  await rows.first().getByRole("button", { name: /^Watch STAT 107 / }).click();
-  await expect(rows.first().getByRole("button", { name: /^Watching STAT 107 / })).toHaveAttribute("aria-pressed", "true");
-  await expect(watch.getByRole("link", { name: "your watched sections" })).toHaveAttribute("href", /\/opened\/\?watch=1$/);
-  await watch.getByRole("link", { name: "Just opened" }).click();
+  await line.getByRole("button", { name: /^Watch STAT 107 / }).click();
+  await expect(line.getByRole("button", { name: /^Watching STAT 107 / })).toHaveAttribute("aria-pressed", "true");
+  const watchLine = page.getByTestId("watch-line");
+  await expect(watchLine.getByRole("link", { name: "the ones you watch" })).toHaveAttribute("href", /\/opened\/\?watch=1$/);
+  await watchLine.getByRole("link", { name: "Just opened" }).click();
   await expect(page).toHaveURL(/\/opened\/\?mine=1$/);
   await expect(page.getByTestId("opened-show").getByRole("button", { name: /^My schedule/ })).toHaveAttribute("aria-pressed", "true");
   const watched = page.getByTestId("watched").getByTestId("watched-row");
@@ -225,9 +230,9 @@ test("finals week: three finals in 24 hours is flagged with the Student Code rul
   await expect(conflict).toContainText("CS 124 or RHET 105, whichever has more students, offers it"); // combined exams rank below STAT 107's
   await expect(conflict.getByRole("link", { name: "Student Code § 3-201" })).toHaveAttribute("href", "https://studentcode.illinois.edu/article3/part2/3-201");
   await expect(fw.locator("[data-conflict]")).toHaveCount(3);
-  await expect(page.getByTestId("compare-finals").first()).toHaveText("1 conflict");
 
   // the .ics carries the finals unless the box is unticked
+  await page.getByRole("button", { name: "Save or share" }).click();
   const box = page.getByLabel("Include final exams in the .ics");
   await expect(box).toBeChecked();
   const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Download .ics" }).click()]);
@@ -249,6 +254,8 @@ test("finals week before the Registrar publishes finals says so (#85)", async ({
   await page.getByRole("button", { name: "Generate schedules" }).click();
   await page.getByRole("tab", { name: "Finals week" }).click();
   await expect(page.getByTestId("finals-week")).toContainText("No final exams are listed for Spring 2027 yet");
+  await page.getByRole("button", { name: "Save or share" }).click();
+  await expect(page.getByRole("button", { name: "Download .ics" })).toBeVisible();
   await expect(page.getByLabel("Include final exams in the .ics")).toHaveCount(0);
 });
 
@@ -260,6 +267,7 @@ test("registration backups: each section has a backup with its CRN, and one clic
   await expect(rows.first()).toBeVisible();
   // the first RHET 105 row has a backup line with a CRN to copy
   const statRow = rows.filter({ hasText: "RHET 105" }).first();
+  await statRow.getByText("Professor, backup and more").click(); // backups are in the row's details (#239)
   const backup = statRow.getByTestId("backup");
   await expect(backup).toContainText("Backup:");
   const before = (await statRow.locator("span.w-24").nth(1).textContent())!.trim();
@@ -292,10 +300,10 @@ test("a chosen section that closes during registration is flagged with its backu
   await expect(statRow).toBeVisible();
   closedCrn = /Copy (\d{5})/.exec((await statRow.getByRole("button", { name: /^Copy \d{5}$/ }).first().getAttribute("aria-label"))!)![1];
   await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
-  const banner = page.getByTestId("just-closed");
-  await expect(banner).toContainText(/RHET 105 \S+ Closed/);
-  await expect(banner).toContainText("Backup:");
-  await banner.getByRole("button", { name: "Use the backup" }).click();
+  // the row itself says it closed, with its backup one click away (#239)
+  const banner = statRow.getByTestId("closed-line");
+  await expect(banner).toContainText(/^Closed \(checked/);
+  await banner.getByRole("button", { name: /^use backup / }).click();
   await expect(page.getByTestId("schedule-sections").locator("li").filter({ hasText: "RHET 105" }).first()).not.toContainText(closedCrn);
 });
 
@@ -304,7 +312,10 @@ test("375px: backup lines don't make the schedule scroll sideways", async ({ pag
   await page.goto("./schedule/?c=CS124,RHET105,CS128&t=2027-sp");
   await expect(page.getByTestId("cart").locator("li")).toHaveCount(3);
   await page.getByRole("button", { name: "Generate schedules" }).click();
-  await expect(page.getByTestId("backup").first()).toBeVisible();
+  // open the details of a row that has a backup (#239), once the rows are there
+  const row = page.getByTestId("schedule-row").filter({ has: page.getByTestId("backup") }).first();
+  await row.getByText("Professor, backup and more").click();
+  await expect(row.getByTestId("backup")).toBeVisible();
   const [sw, iw] = await page.evaluate(() => [document.documentElement.scrollWidth, window.innerWidth]);
   expect(sw).toBeLessThanOrEqual(iw);
 });

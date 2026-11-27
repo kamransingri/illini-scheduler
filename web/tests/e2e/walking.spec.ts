@@ -26,11 +26,10 @@ test("a cross-campus walk with 10 minutes between classes is flagged, and the mu
   const walks = page.getByTestId("rushed-walks");
   for (let i = 0; i < 2 && !(await walks.isVisible()); i++) await page.getByRole("button", { name: "Next schedule" }).click();
   await expect(walks).toContainText(/Mon: STAT 107 in North Test Hall to RHET 105 in South Test Hall, \d+ min walk, 10 min gap/);
-  await expect(page.getByTestId("summary")).toContainText("1 rushed walk");
+  await expect(walks.locator("li")).toHaveCount(1);
 
   await page.getByTestId("more-options-toggle").click(); // under More options (#238)
   await page.getByLabel("No rushed walks between classes").check();
-  await expect(page.getByTestId("summary")).not.toContainText("rushed walk");
   await expect(walks).toHaveCount(0);
   await expect(page).toHaveURL(/nw=1/);
 });

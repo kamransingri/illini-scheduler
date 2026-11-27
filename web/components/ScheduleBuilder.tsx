@@ -38,8 +38,6 @@ import {
   generate,
   locksToBlame,
   LUNCH,
-  sectionsToWatch,
-  summaryLine,
   warnings,
   type CourseInput,
   type GenerateResult,
@@ -58,6 +56,7 @@ import CopyButton from "./CopyButton";
 import GettingThere from "./GettingThere";
 import { Badge, SeatStatus } from "./ui/Badge";
 import Icon from "./ui/Icon";
+import Expandable from "./ui/Expandable";
 import Info from "./ui/Info";
 import Toast from "./ui/Toast";
 import SearchBox from "./SearchBox";
@@ -430,9 +429,6 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
     () => (sched ? backupsFor(sched, inputs, term, prefs, { statusOf: (crn) => live.get(crn)?.[0] }) : []),
     [sched, inputs, term, prefs, live],
   );
-  const justClosed = sched
-    ? sched.bundles.flatMap((b) => b.sections.filter((s) => /closed/i.test(live.get(s.crn)?.[0] ?? "") && !/closed/i.test(s.status)).map((s) => ({ course: b.course, s })))
-    : [];
   /** Swap a backup in (#76): lock its sections, and stay on the schedule that has it with everything else unchanged. */
   const swapBackup = (course: string, bk: Backup) => {
     const it = itemOf(course);
@@ -1289,10 +1285,6 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                   {result.truncated ? " (search stopped early to stay fast)" : ""}
                 </span>
               </div>
-              <p className="text-lg font-semibold text-heading" data-testid="summary">
-                {summaryLine(sched.stats, (m) => fmtTime(m))}
-                {missing.length > 0 && <span> (without {missing.map((m) => m.key).join(", ")})</span>}
-              </p>
               {sched.stats.walks.length > 0 && (
                 <ul className="space-y-0.5 text-sm" data-testid="rushed-walks" aria-label="Rushed walks">
                   {sched.stats.walks.map((w, k) => (
@@ -1303,19 +1295,30 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                   ))}
                 </ul>
               )}
-              <dl className="grid grid-cols-2 gap-y-3 border-y border-line py-3 sm:grid-cols-3 xl:grid-cols-6 xl:divide-x xl:divide-line" data-testid="schedule-stats">
+              <dl className="grid grid-cols-2 gap-y-3 border-y border-line py-3 sm:grid-cols-4 sm:divide-x sm:divide-line" data-testid="schedule-stats">
                 {(
                   [
                     ["Expected GPA", sched.stats.expectedGpa === null ? "–" : fmtGpa(sched.stats.expectedGpa)],
                     ["Credit hours", fmtCredits(hoursRange)],
                     ["Days off", sched.stats.daysOff.length ? sched.stats.daysOff.join(", ") : "none"],
                     ["Day span", sched.stats.earliest === null ? "–" : `${fmtTime(sched.stats.earliest)}–${fmtTime(sched.stats.latest)}`.replace(/:00/g, "")],
-                    ["Gaps a week", fmtHours(sched.stats.gapMinutes)],
-                    ["Open now", `${sched.bundles.filter((b) => bundleOpen(b)).length} of ${sched.bundles.length}`],
                   ] as [string, string][]
                 ).map(([l, v]) => (
-                  <div key={l} className="flex flex-col xl:px-3 xl:first:pl-0">
-                    <dt className="text-sm text-muted">{l}</dt>
+                  <div key={l} className="flex flex-col sm:px-3 sm:first:pl-0">
+                    <dt className="inline-flex items-center text-sm text-muted">
+                      {l}
+                      {l === "Expected GPA" && (
+                        <Info label="How Expected GPA and the calendar dates are worked out">
+                          Expected GPA uses each section&apos;s instructor GPA for that course (GPA dataset), else the course average:{" "}
+                          {sched.bundles.map((b) => `${b.course} ${b.gpa === null ? "no data" : fmtGpa(b.gpa)}`).join(", ")}.
+                          {TERM_DATES[term] &&
+                            (TERM_DATES[term].estimated
+                              ? ` Calendar dates are estimates (${TERM_DATES[term].start} to ${TERM_DATES[term].end}); the Registrar hasn't published this term's calendar yet.`
+                              : ` Calendar export: ${TERM_DATES[term].start} to ${TERM_DATES[term].end}, skipping ${breakNames(TERM_DATES[term])}, from the Registrar's academic calendar.`)}{" "}
+                          Seats and restrictions: confirm in Self-Service.
+                        </Info>
+                      )}
+                    </dt>
                     <dd className="order-first font-semibold text-heading tnum">{v}</dd>
                   </div>
                 ))}
@@ -1349,117 +1352,164 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
               ) : (
                 <GettingThere schedule={sched} termName={termLabel(term)} />
               )}
-              {justClosed.length > 0 && (
-                <ul className="space-y-1 rounded border-2 border-heading p-3" data-testid="just-closed" role="status">
-                  {justClosed.map(({ course, s }) => {
-                    const bk = backups.find((x) => x.section.crn === s.crn)?.backups[0];
-                    return (
-                      <li key={s.crn} className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                        <Icon name="alert" className="text-heading" />
-                        <strong>
-                          {course} {s.code} {seatChangeText(s.status, live.get(s.crn)![0])}
-                        </strong>
-                        <span className="text-sm text-muted">(checked {fmtSince(live.get(s.crn)![1], now)})</span>
-                        {bk ? (
-                          <>
-                            <span>
-                              Backup: {bk.changed.map((x) => x.code).join(" + ")}, CRN {bk.changed.map((x) => x.crn).join(", ")}
-                            </span>
-                            <button type="button" className="font-semibold text-action underline" onClick={() => swapBackup(course, bk)}>
-                              Use the backup
-                            </button>
-                          </>
-                        ) : (
-                          <span>{backups.find((x) => x.section.crn === s.crn)?.none ?? "No backup fits."}</span>
-                        )}
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
               <ul className="border-t border-line" data-testid="schedule-sections">
                 {sched.bundles.flatMap((b) =>
-                  b.sections.map((s) => (
-                    <li key={s.crn} className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-line py-2" data-start={Math.min(...s.meetings.map((m) => m.s ?? 9999))}>
-                      <span className={`course-swatch inline-block size-3 rounded-sm border-l-[12px] ${colorOf(b.course)}`} aria-hidden />
-                      <span className="w-24 font-semibold">{b.course}</span>
-                      <span className="w-24">
-                        {s.code} {s.type}
-                      </span>
-                      <CopyButton text={s.crn} />
-                      <button
-                        type="button"
-                        aria-pressed={isLockedSec(b.course, s.crn)}
-                        aria-label={`Lock ${b.course} ${s.code}`}
-                        title={isLockedSec(b.course, s.crn) ? "Locked: every schedule keeps this section. Press again to unlock it." : "Keep this section in every schedule and build the others around it"}
-                        onClick={() => toggleLock(b.course, s)}
-                        className={`inline-flex items-center gap-1 rounded border px-2 text-sm leading-7 font-semibold ${isLockedSec(b.course, s.crn) ? "border-action bg-action text-white" : "border-line bg-white text-action hover:border-action"}`}
-                      >
-                        <Icon name={isLockedSec(b.course, s.crn) ? "lock" : "unlock"} />
-                        Lock
-                      </button>
-                      {(() => {
-                        const at = atOf(b.course, s);
-                        if (!at) return null;
-                        const t = parseAt(at)!;
-                        const on = hasAt(b.course, at);
-                        return (
+                  b.sections.map((s, si) => {
+                    const locked = isLockedSec(b.course, s.crn);
+                    const status = live.get(s.crn)?.[0] ?? s.status;
+                    const closed = /closed/i.test(status);
+                    const e = elig.get(s.crn);
+                    const problem = !!e && (e.status === "no" || e.status === "maybe");
+                    const info = backups.find((x) => x.section.crn === s.crn);
+                    const bk = info?.backups[0];
+                    const at = atOf(b.course, s);
+                    const alts = si === 0 ? b.alternatives.filter((alt) => alt.map((x) => x.crn).join() !== b.crns.join()) : [];
+                    const [subj, num] = b.course.split(" ");
+                    return (
+                      <li key={s.crn} className="border-b border-line py-2" data-start={Math.min(...s.meetings.map((m) => m.s ?? 9999))} data-testid="schedule-row">
+                        {/* the row: course, section, times, seats, Copy CRN and Lock; a closed or restricted section says so here too */}
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                          <span className={`course-swatch inline-block size-3 rounded-sm border-l-[12px] ${colorOf(b.course)}`} aria-hidden />
+                          <span className="w-24 font-semibold">{b.course}</span>
+                          <span className="w-24">
+                            {s.code} {s.type}
+                          </span>
+                          <span className="min-w-[9rem] flex-1 tnum">{s.meetings.map((m) => (m.s === null ? "No set time" : `${daysStr(m.d)} ${fmtTime(m.s)}–${fmtTime(m.e)}`)).join("; ")}</span>
+                          {status && <SeatStatus status={status} />}
+                          <CopyButton text={s.crn} />
                           <button
                             type="button"
-                            aria-pressed={on}
-                            aria-label={`Keep ${b.course} at ${fmtTime(t.s)} ${daysStr(t.d)}, any section`}
-                            title={on ? "Every schedule has this course at this time, in any section that meets then. Press again to remove." : "Keep this time in every schedule, whichever section meets then"}
-                            onClick={() => toggleAt(b.course, at)}
-                            className={`inline-flex items-center gap-1 rounded border px-2 text-sm leading-7 font-semibold ${on ? "border-action bg-action text-white" : "border-line bg-white text-action hover:border-action"}`}
+                            aria-pressed={locked}
+                            aria-label={`Lock ${b.course} ${s.code}`}
+                            title={locked ? "Locked: every schedule keeps this section. Press again to unlock it." : "Keep this section in every schedule and build the others around it"}
+                            onClick={() => toggleLock(b.course, s)}
+                            className={`inline-flex items-center gap-1 rounded border px-2 text-sm leading-7 font-semibold ${locked ? "border-action bg-action text-white" : "border-line bg-white text-action hover:border-action"}`}
                           >
-                            <Icon name={on ? "lock" : "clock"} />
-                            Keep {fmtTime(t.s).replace(":00", "")} {daysStr(t.d)}, any section
+                            <Icon name={locked ? "lock" : "unlock"} />
+                            Lock
                           </button>
-                        );
-                      })()}
-                      <span className="min-w-[9rem] flex-1 tnum">{s.meetings.map((m) => (m.s === null ? "No set time" : `${daysStr(m.d)} ${fmtTime(m.s)}–${fmtTime(m.e)}`)).join("; ")}</span>
-                      {s.status && <SeatStatus status={s.status} />}
-                      <RestrictionBadge e={elig.get(s.crn)} />
-                      <span className="text-sm text-muted">{s.instructors_raw.join("; ") || "TBA"}</span>
-                      {b.prof && s.component === "primary" && s.instructors.includes(b.prof.key) && (
-                        <ProfBadge name={inputs.find((x) => x.key === b.course)?.course.instructors[b.prof.key]?.name ?? ""} score={b.prof.score} best={profRanks[b.course]?.best === b.prof.key} />
-                      )}
-                      {s.special && (
-                        <span className="w-full">
-                          <Badge icon="alert">Special section: {s.special}</Badge>
-                        </span>
-                      )}
-                      <BackupLine
-                        info={backups.find((x) => x.section.crn === s.crn)}
-                        live={live}
-                        now={now}
-                        onUse={(bk) => swapBackup(b.course, bk)}
-                      />
-                    </li>
-                  )),
+                          {problem && <RestrictionBadge e={e} />}
+                        </div>
+                        {closed && (
+                          <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm" data-testid="closed-line">
+                            <Icon name="alert" className="text-heading" />
+                            <strong>
+                              {live.has(s.crn) && !/closed/i.test(s.status) ? `${seatChangeText(s.status, status)} (checked ${fmtSince(live.get(s.crn)![1], now)})` : "Closed"}:
+                            </strong>
+                            <WatchButton item={{ t: term, crn: s.crn, s: subj, n: num, code: s.code }} />
+                            {bk ? (
+                              <>
+                                <span>or</span>
+                                <button type="button" className="font-semibold text-action underline" onClick={() => swapBackup(b.course, bk)}>
+                                  use backup {bk.changed.map((x) => x.code).join(" + ")}
+                                </button>
+                                <span className="text-muted">CRN {bk.changed.map((x) => x.crn).join(", ")}</span>
+                              </>
+                            ) : (
+                              <span className="text-muted">{info?.none ?? "No backup fits."}</span>
+                            )}
+                          </p>
+                        )}
+                        {/* everything else waits in the row's details (#239) */}
+                        <details className="mt-1 text-sm" data-testid="section-details">
+                          <summary className="cursor-pointer text-action">Professor, backup and more</summary>
+                          <div className="mt-1 space-y-1.5 border-l-2 border-line pl-3">
+                            <p className="flex flex-wrap items-center gap-2">
+                              <span>{s.instructors_raw.join("; ") || "Professor TBA"}</span>
+                              {b.prof && s.component === "primary" && s.instructors.includes(b.prof.key) && (
+                                <ProfBadge name={inputs.find((x) => x.key === b.course)?.course.instructors[b.prof.key]?.name ?? ""} score={b.prof.score} best={profRanks[b.course]?.best === b.prof.key} />
+                              )}
+                              {e && !problem && <RestrictionBadge e={e} />}
+                            </p>
+                            {s.special && (
+                              <p>
+                                <Badge icon="alert">Special section: {s.special}</Badge>
+                              </p>
+                            )}
+                            {at &&
+                              (() => {
+                                const t = parseAt(at)!;
+                                const on = hasAt(b.course, at);
+                                return (
+                                  <button
+                                    type="button"
+                                    aria-pressed={on}
+                                    aria-label={`Keep ${b.course} at ${fmtTime(t.s)} ${daysStr(t.d)}, any section`}
+                                    title={on ? "Every schedule has this course at this time, in any section that meets then. Press again to remove." : "Keep this time in every schedule, whichever section meets then"}
+                                    onClick={() => toggleAt(b.course, at)}
+                                    className={`inline-flex items-center gap-1 rounded border px-2 text-sm leading-7 font-semibold ${on ? "border-action bg-action text-white" : "border-line bg-white text-action hover:border-action"}`}
+                                  >
+                                    <Icon name={on ? "lock" : "clock"} />
+                                    Keep {fmtTime(t.s).replace(":00", "")} {daysStr(t.d)}, any section
+                                  </button>
+                                );
+                              })()}
+                            {alts.length > 0 && (
+                              <p data-testid="same-time">
+                                <span className="font-semibold text-heading">Same time and area:</span> {alts.map((alt) => alt.map((x) => `${x.code} (${x.crn})`).join(" + ")).join("; ")}
+                              </p>
+                            )}
+                            <BackupLine info={info} live={live} now={now} onUse={(x) => swapBackup(b.course, x)} />
+                          </div>
+                        </details>
+                      </li>
+                    );
+                  }),
                 )}
               </ul>
-              <WatchList schedule={sched} term={term} openWeight={prefs.weights.open} />
-              {sched.bundles.some((b) => b.alternatives.length > 1) && (
-                <details className="text-sm">
-                  <summary className="cursor-pointer font-semibold text-action">Same-time alternatives (identical times and area)</summary>
-                  <ul className="mt-1 space-y-0.5">
-                    {sched.bundles
-                      .filter((b) => b.alternatives.length > 1)
-                      .map((b) => (
-                        <li key={b.course}>
-                          <strong>{b.course}:</strong>{" "}
-                          {b.alternatives
-                            .filter((alt) => alt.map((x) => x.crn).join() !== b.crns.join())
-                            .map((alt) => alt.map((x) => `${x.code} (${x.crn})`).join(" + "))
-                            .join("; ")}
-                        </li>
-                      ))}
-                  </ul>
-                </details>
+              {sched.bundles.some((b) => b.sections.some((s) => /closed/i.test(live.get(s.crn)?.[0] ?? s.status))) && (
+                <p className="text-sm" data-testid="watch-line">
+                  <Link href="/opened/?mine=1" className="font-semibold text-action underline">
+                    Just opened
+                  </Link>{" "}
+                  lists your schedule&apos;s closed sections as soon as a seat opens, with{" "}
+                  <Link href="/opened/?watch=1" className="text-action underline">
+                    the ones you watch
+                  </Link>{" "}
+                  first.
+                </p>
               )}
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <a href={SELF_SERVICE_URL} className="inline-flex items-center gap-1.5 rounded bg-action px-3 font-semibold leading-9 text-white hover:bg-action-dark" rel="noopener">
+                  Register in Self-Service
+                  <Icon name="external" />
+                </a>
                 <CopyButton text={sched.bundles.flatMap((b) => b.crns).join(", ")} label="Copy all CRNs" className="!px-3 !leading-9" />
+                <SaveMenu>
+                  <button
+                    type="button"
+                    className="flex w-full items-center gap-2 rounded px-2 text-left leading-9 font-semibold text-action hover:bg-action-tint"
+                    onClick={() => {
+                      try {
+                        setIcsError(null);
+                        const ics = buildIcs(sched, term, termLabel(term), new Date(), { finals: icsFinals });
+                        const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+                        const a = document.createElement("a");
+                        a.href = url;
+                        a.download = icsFileName(term, shared && !shared.rules ? null : (plan?.name ?? null));
+                        a.click();
+                        setTimeout(() => URL.revokeObjectURL(url), 1000);
+                      } catch (err) {
+                        setIcsError((err as Error).message);
+                      }
+                    }}
+                  >
+                    <Icon name="calendar" className="text-muted" />
+                    Download .ics
+                  </button>
+                  {finalsOf(sched).length > 0 && (
+                    <label className="flex items-center gap-1.5 px-2 pb-1 text-sm">
+                      <input type="checkbox" checked={icsFinals} onChange={(e) => setIcsFinals(e.target.checked)} />
+                      Include final exams in the .ics
+                    </label>
+                  )}
+                  <div className="border-t border-line px-2 py-1.5">
+                    <ShareButton />
+                  </div>
+                  <div className="border-t border-line px-2 py-1.5">
+                    <AskAi text={scheduleSummary(sched, term, must, courses)} what="this schedule" />
+                  </div>
+                </SaveMenu>
                 {!sched.bundles.every((b) => b.crns.every((crn) => isLockedSec(b.course, crn))) && (
                   <button
                     type="button"
@@ -1481,40 +1531,7 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                     Unlock all
                   </button>
                 )}
-                <button
-                  type="button"
-                  className="inline-flex items-center gap-1.5 rounded border border-line bg-white px-3 font-semibold leading-9 hover:border-action hover:text-action"
-                  onClick={() => {
-                    try {
-                      setIcsError(null);
-                      const ics = buildIcs(sched, term, termLabel(term), new Date(), { finals: icsFinals });
-                      const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
-                      const a = document.createElement("a");
-                      a.href = url;
-                      a.download = icsFileName(term, shared && !shared.rules ? null : (plan?.name ?? null));
-                      a.click();
-                      setTimeout(() => URL.revokeObjectURL(url), 1000);
-                    } catch (e) {
-                      setIcsError((e as Error).message);
-                    }
-                  }}
-                >
-                  <Icon name="calendar" className="text-muted" />
-                  Download .ics
-                </button>
-                {finalsOf(sched).length > 0 && (
-                  <label className="inline-flex items-center gap-1.5 text-sm">
-                    <input type="checkbox" checked={icsFinals} onChange={(e) => setIcsFinals(e.target.checked)} />
-                    Include final exams in the .ics
-                  </label>
-                )}
-                <ShareButton />
-                <a href={SELF_SERVICE_URL} className="inline-flex items-center gap-1.5 rounded bg-action px-3 font-semibold leading-9 text-white hover:bg-action-dark" rel="noopener">
-                  Register in Self-Service
-                  <Icon name="external" />
-                </a>
               </div>
-              <AskAi text={scheduleSummary(sched, term, must, courses)} what="this schedule" />
               {icsError && (
                 <p className="flex items-start gap-2" role="alert">
                   <Icon name="alert" className="mt-1" />
@@ -1522,15 +1539,6 @@ export default function ScheduleBuilder({ meta }: { meta: MetaLite }) {
                 </p>
               )}
               {result.schedules.length > 1 && <CompareTop schedules={result.schedules} idx={idx} onPick={setIdx} />}
-              <p className="text-sm text-muted">
-                Expected GPA uses each section&apos;s instructor GPA for that course (GPA dataset), else the course average:{" "}
-                {sched.bundles.map((b) => `${b.course} ${b.gpa === null ? "no data" : fmtGpa(b.gpa)}`).join(", ")}.
-                {TERM_DATES[term] &&
-                  (TERM_DATES[term].estimated
-                    ? ` Calendar dates are estimates (${TERM_DATES[term].start} to ${TERM_DATES[term].end}); the Registrar hasn't published this term's calendar yet.`
-                    : ` Calendar export: ${TERM_DATES[term].start} to ${TERM_DATES[term].end}, skipping ${breakNames(TERM_DATES[term])}, from the Registrar's academic calendar.`)}{" "}
-                Seats and restrictions: confirm in Self-Service.
-              </p>
             </div>
           )}
         </section>
@@ -1559,16 +1567,17 @@ function ProfBadge({ name, score, best }: { name: string; score: number; best: b
 function CompareTop({ schedules, idx, onPick }: { schedules: Schedule[]; idx: number; onPick: (i: number) => void }) {
   const [n, setN] = useState(8);
   const id = useId();
+  const span = (s: Schedule) => (s.stats.earliest === null ? "–" : `${fmtTime(s.stats.earliest)}–${fmtTime(s.stats.latest)}`.replace(/:00/g, ""));
   return (
-    <section aria-labelledby={id}>
-      <h3 id={id} className="text-lg font-semibold text-heading">
-        Compare the top schedules
-      </h3>
-      <div className="mt-2 overflow-x-auto rounded border border-line" role="region" aria-labelledby={id} tabIndex={0}>
-        <table className="w-full min-w-[40rem] border-collapse text-left text-sm">
+    <Expandable summary={`Compare the top schedules (${Math.min(n, schedules.length)})`} className="border-t border-line pt-3">
+      <div className="mt-2 overflow-x-auto rounded border border-line" role="region" aria-labelledby={id} tabIndex={0} data-testid="compare-top">
+        <table className="w-full min-w-[36rem] border-collapse text-left text-sm">
+          <caption id={id} className="sr-only">
+            The top schedules side by side
+          </caption>
           <thead className="bg-panel text-heading">
             <tr>
-              {["#", "Expected GPA", "Days off", "Earliest", "Latest", "Gaps a week", "Open now", "Finals", "Different sections from #1"].map((h) => (
+              {["#", "Expected GPA", "Days off", "Day span", "Gaps a week", "Open now", "What's different"].map((h) => (
                 <th key={h} scope="col" className="px-2 py-1.5 font-semibold whitespace-nowrap">
                   {h}
                 </th>
@@ -1585,14 +1594,10 @@ function CompareTop({ schedules, idx, onPick }: { schedules: Schedule[]; idx: nu
                 </td>
                 <td className="px-2 py-1.5 tnum">{s.stats.expectedGpa === null ? "–" : fmtGpa(s.stats.expectedGpa)}</td>
                 <td className="px-2 py-1.5">{s.stats.daysOff.join(", ") || "none"}</td>
-                <td className="px-2 py-1.5 tnum">{s.stats.earliest === null ? "–" : fmtTime(s.stats.earliest)}</td>
-                <td className="px-2 py-1.5 tnum">{s.stats.latest === null ? "–" : fmtTime(s.stats.latest)}</td>
+                <td className="px-2 py-1.5 tnum whitespace-nowrap">{span(s)}</td>
                 <td className="px-2 py-1.5 tnum">{fmtHours(s.stats.gapMinutes)}</td>
                 <td className="px-2 py-1.5 tnum">
                   {s.bundles.filter((b) => bundleOpen(b)).length} of {s.bundles.length}
-                </td>
-                <td className="px-2 py-1.5 whitespace-nowrap" data-testid="compare-finals">
-                  {finalsSummary(s)}
                 </td>
                 <td className="px-2 py-1.5">{i === 0 ? <span className="text-muted">Top pick</span> : diffFromFirst(schedules[0], s)}</td>
               </tr>
@@ -1605,7 +1610,49 @@ function CompareTop({ schedules, idx, onPick }: { schedules: Schedule[]; idx: nu
           Show {Math.min(10, schedules.length - n)} more
         </button>
       )}
-    </section>
+    </Expandable>
+  );
+}
+
+/** One "Save or share" menu (#239): the calendar file, the share link and Ask your AI. */
+function SaveMenu({ children }: { children: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
+  const box = useRef<HTMLDivElement>(null);
+  const toggle = useRef<HTMLButtonElement>(null);
+  const id = useId();
+  useEffect(() => {
+    if (!open) return;
+    const away = (e: MouseEvent) => !box.current?.contains(e.target as Node) && setOpen(false);
+    const esc = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      setOpen(false);
+      toggle.current?.focus();
+    };
+    document.addEventListener("mousedown", away);
+    document.addEventListener("keydown", esc);
+    return () => {
+      document.removeEventListener("mousedown", away);
+      document.removeEventListener("keydown", esc);
+    };
+  }, [open]);
+  return (
+    <div ref={box} className="relative">
+      <button
+        ref={toggle}
+        type="button"
+        aria-expanded={open}
+        aria-controls={id}
+        onClick={() => setOpen((v) => !v)}
+        className="inline-flex items-center gap-1.5 rounded border border-line bg-white px-3 font-semibold leading-9 hover:border-action hover:text-action"
+        data-testid="save-menu-toggle"
+      >
+        Save or share
+        <Icon name="chevronDown" className={`transition-transform motion-reduce:transition-none ${open ? "rotate-180" : ""}`} />
+      </button>
+      <div id={id} hidden={!open} className="absolute left-0 z-30 mt-1 w-96 max-w-[calc(100vw-2rem)] rounded border border-line bg-white p-1 shadow-lg" data-testid="save-menu">
+        {children}
+      </div>
+    </div>
   );
 }
 
@@ -1735,60 +1782,6 @@ function FinalsWeek({ schedule, colorOf, termName }: { schedule: Schedule; color
       )}
       <p className="text-sm text-muted">From Course Explorer&apos;s final exam schedule. Times and rooms can change; check the course page before finals week.</p>
     </div>
-  );
-}
-
-/** Closed sections the shown schedule depends on (#27): what to watch (#15), and where waitlist numbers live. */
-function WatchList({ schedule, term, openWeight }: { schedule: Schedule; term: string; openWeight: number }) {
-  const id = useId();
-  const watch = sectionsToWatch(schedule);
-  if (!watch.length) return null;
-  const n = watch.length;
-  return (
-    <section aria-labelledby={id} className="rounded border border-line bg-panel p-3" data-testid="watch-list">
-      <h3 id={id} className="flex items-center gap-2 font-semibold text-heading">
-        <Icon name="bell" className="text-muted" />
-        Sections to watch
-      </h3>
-      <p className="mt-1">
-        This schedule needs {n === 1 ? "a section that was" : `${n} sections that were`} Closed at the last check. The site only knows open or closed, not
-        whether there&apos;s a waitlist or how long it is:{" "}
-        <a href={SELF_SERVICE_URL} className="text-action underline" rel="noopener">
-          Self-Service
-        </a>{" "}
-        shows that.
-      </p>
-      <ul className="mt-2 border-t border-line">
-        {watch.map(({ course, section: s }) => {
-          const [subj, num] = course.split(" ");
-          return (
-            <li key={s.crn} className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-line py-1.5">
-              <span className="w-24 font-semibold">{course}</span>
-              <span className="w-24">
-                {s.code} {s.type}
-              </span>
-              <CopyButton text={s.crn} />
-              <SeatStatus status={s.status} />
-              <Link href={`${courseHref(subj, num)}#crn-${s.crn}`} className="text-sm text-action underline">
-                On the course page
-              </Link>
-              <WatchButton item={{ t: term, crn: s.crn, s: subj, n: num, code: s.code }} />
-            </li>
-          );
-        })}
-      </ul>
-      <p className="mt-2 text-sm">
-        <Link href="/opened/?mine=1" className="font-semibold text-action underline">
-          Just opened
-        </Link>{" "}
-        lists your schedule&apos;s sections as soon as a seat opens. Press Watch to follow a section:{" "}
-        <Link href="/opened/?watch=1" className="text-action underline">
-          your watched sections
-        </Link>{" "}
-        are listed at the top of Just opened with their latest status, and the page can notify you when one opens.
-        {openWeight < 3 && " To rank schedules that need fewer closed sections first, raise “Sections open right now” under What matters to you."}
-      </p>
-    </section>
   );
 }
 
