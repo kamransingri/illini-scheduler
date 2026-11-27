@@ -1,0 +1,34 @@
+name: Pull request commands
+# /no-checks-main and /no-checks-pr in a pull request comment, from someone with write access (CONTRIBUTING.md).
+# tools/pr-command.sh does the work. A comment workflow always runs this file as it is on main, so a pull request
+# can't change what a command does.
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write # merge, and delete the merged branch
+  pull-requests: write # label, comment
+  issues: write # create the no-checks-pr label
+  actions: write # re-run CI, start the deploy
+
+concurrency:
+  group: pr-command-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  command:
+    if: >-
+      github.event.issue.pull_request &&
+      (startsWith(github.event.comment.body, '/no-checks-main') || startsWith(github.event.comment.body, '/no-checks-pr'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Run the command
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.issue.number }}
+          ACTOR: ${{ github.event.comment.user.login }}
+          BODY: ${{ github.event.comment.body }}
+        run: bash tools/pr-command.sh

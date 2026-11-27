@@ -1628,3 +1628,29 @@ which ("replaces D39.3"). Refer to entries by number from code comments and othe
 - **D66.1 The shortcut stays, the hint goes.** D64.2 put a boxed `/` after "Search" in the tab strip. It read as a
   stray character in the navy header rather than a key, and no other cell carries one. `/` still opens the search
   (`aria-keyshortcuts="/"` tells screen readers), and DESIGN Part 5 no longer asks for the hint.
+
+## 1.0.0 re-released as 0.17.0 (2026-11-27)
+
+- **D69.1 Still a beta.** "Release 1.0.0" went out on 2026-11-27 without checking Semantic Versioning: 1.0.0 is for
+  when the site can be relied on outside the beta (CONTRIBUTING, Versions), and nothing in it broke old links or data.
+  Its GitHub release and `v1.0.0` tag were deleted (it never reached npm), the release commit was reverted, and the same
+  changes are 0.17.0, the next minor after 0.16.0.
+- **D69.2 A withdrawn version can be replaced by a lower one.** `tools/release.py check --base` refused any version
+  that goes down. It now allows it when the old version has no `v` tag, so a release whose tag was deleted can be
+  re-released lower. Lowering past a tagged release still fails.
+
+## Pull request commands that skip the checks (2026-11-27)
+
+- **D71.1 `/no-checks-main` merges and deploys without waiting.** A small change took 15 to 25 minutes to go live:
+  the pull request's checks (3 to 4 minutes), a review, then `pages.yml`'s build with lint, unit and browser tests
+  (7 to 13 minutes). The comment merges at once with the workflow's token, which the `main` ruleset already lets
+  through (GitHub Actions is its bypass actor, for the bots), then dispatches `pages.yml` with `skip_checks`, which
+  drops about 2.5 minutes of tests and the post-deploy smoke run. A merge made with that token starts no push
+  workflows, so the command starts `pages.yml`, `release.yml` and `api.yml` itself when their paths changed, and
+  deletes the branch as `branch-cleanup.yml` would.
+- **D71.2 `/no-checks-pr` skips `test` and `e2e`, not `versions`.** A `gate` job in `ci.yml` reads the pull request's
+  labels live; with `no-checks-pr` the two slow jobs are skipped, which counts as passing for the required checks.
+  `versions` takes seconds and catches broken version files, so it stays. If `gate` fails, the tests run.
+- **D71.3 Who can use them.** Anyone with write access, checked against the API, on pull requests from this
+  repository's own branches. `/no-checks-main` skips the one-review rule too, which is the point (a solo change you
+  want live now); the merge comment names who used it.
