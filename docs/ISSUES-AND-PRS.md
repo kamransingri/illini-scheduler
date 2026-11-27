@@ -181,8 +181,6 @@ Closes #98.
 
 **Tests:** pytest and Vitest pass; Playwright schedule.spec.ts; checked /schedule/ at 375px.
 
-**Before / after:** screenshots at 1280px and 375px, for any change to a page.
-
 **Different from the issue:** only if you changed the plan, and why.
 ```
 

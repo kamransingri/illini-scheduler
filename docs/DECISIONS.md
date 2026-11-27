@@ -1622,3 +1622,10 @@ which ("replaces D39.3"). Refer to entries by number from code comments and othe
   recent GPA in the course (new `profs[].g`), or the course's average, labelled "course", when they have no grade
   history. Open lectures are theirs when seat status is known. The option list stays ranked by each course's best
   professor, so stepping never reorders it.
+
+## No screenshots in pull requests (2026-11-27)
+
+- **D70.1 Screenshots aren't asked for.** DESIGN Part 5's budget rule 7 and the pull request template asked every
+  change to a page for before and after screenshots at 1280px and 375px. The site is a beta and reviewers read the
+  diff, so the rule is gone from DESIGN Part 5, the template, docs/ISSUES-AND-PRS.md and AGENTS.md. Checking a page at
+  both widths yourself (CONTRIBUTING) stays.

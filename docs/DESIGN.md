@@ -258,5 +258,4 @@ picked).
    opens from Course search's "Popular gen-eds" row, and Just opened from the home page, course pages, the builder and
    the footer. A new page goes in the footer unless it replaces one of them.
 7. **Say where it goes.** Every issue that adds to a page names the page, the block it joins, and what it replaces or
-   hides ("Where it goes" in the issue templates). Every pull request that changes a page shows it before and after
-   at 1280px and 375px.
+   hides ("Where it goes" in the issue templates).

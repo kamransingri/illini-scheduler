@@ -131,6 +131,5 @@ students; name files, functions and fields; give numbers, not adjectives. No emo
 - Issue titles and bodies follow [docs/ISSUES-AND-PRS.md](docs/ISSUES-AND-PRS.md) and the templates in
   `.github/ISSUE_TEMPLATE/`: Task, Parent (with GitHub sub-issues), Data and Bug, each with "Where it goes".
 - A pull request title reads like a commit with the issues it closes: "Area: what changes (#N)". The body is short:
-  `Closes #N`, a few bullets on what people will notice, and a one-line **Tests:** summary. A change to a page shows
-  it before and after at 1280px and 375px.
+  `Closes #N`, a few bullets on what people will notice, and a one-line **Tests:** summary. No screenshots.
 - When an AI tool wrote most of a pull request, the description says so in one line.
