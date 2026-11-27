@@ -9,8 +9,9 @@ the policy, and [AGENTS.md](AGENTS.md) (copied to [CLAUDE.md](CLAUDE.md)) is wha
 ## Your first change
 
 1. Set up as in the README: `pip install -r requirements.txt`, `npm ci` in `web/` and `mcp/`, then `make data-quick`.
-2. Pick an issue (`good first issue` is a good start), assign yourself or ask on it, so two people don't do the same
-   work.
+2. Pick an issue, highest priority first (`priority: critical`, `high`, `medium`, `low`; `good first issue` is a good
+   start), and assign yourself or ask on it, so two people don't do the same work. Every new issue gets one priority
+   label: [docs/ISSUES-AND-PRS.md](docs/ISSUES-AND-PRS.md#priority) says which.
 3. Branch, change, and run `make test-quick` and `make lint`. For a page, `make dev` and look at it at 1280px and
    375px.
 4. Add a CHANGELOG line if students will notice, update the docs the change touches, and open a pull request.

@@ -5,6 +5,8 @@ title: ""
 labels: enhancement
 ---
 
+<!-- Add one priority label: priority: critical, high, medium or low (docs/ISSUES-AND-PRS.md#priority). -->
+
 <!-- The problem or the goal in a short paragraph: who it's for and what's wrong today. -->
 
 ### What to do

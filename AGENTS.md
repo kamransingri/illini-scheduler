@@ -132,6 +132,9 @@ students; name files, functions and fields; give numbers, not adjectives. No emo
 
 - Issue titles and bodies follow [docs/ISSUES-AND-PRS.md](docs/ISSUES-AND-PRS.md) and the templates in
   `.github/ISSUE_TEMPLATE/`: Task, Parent (with GitHub sub-issues), Data and Bug, each with "Where it goes".
+- Every issue gets a kind label, an area label, a milestone and one priority label: `priority: critical` (site down or
+  wrong data students could act on), `priority: high` (blocks a milestone or registration, or a project-wide risk),
+  `priority: medium` (normal work) or `priority: low` (nice to have). Work on the highest priority first.
 - A pull request title reads like a commit with the issues it closes: "Area: what changes (#N)". The body is short:
   `Closes #N`, a few bullets on what people will notice, and a one-line **Tests:** summary. A change to a page shows
   it before and after at 1280px and 375px.
