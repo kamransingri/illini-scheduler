@@ -70,7 +70,8 @@ ignores case; it passes on CI. Write files as UTF-8 explicitly.
 - Work on a `type/short-name` branch from the latest `main`: `feature/`, `fix/`, `docs/`, `chore/`, `data/`,
   `hotfix/`, `release/`. Lower case with hyphens; CI fails other names.
 - Changes reach `main` through a pull request with `test`, `versions` and `e2e` passing and one approving review,
-  merged with a merge commit. Push straight to `main` only when the person explicitly tells you to.
+  merged with a merge commit. Push straight to `main`, or comment `/no-checks-main` or `/no-checks-pr` on a pull
+  request (CONTRIBUTING.md), only when the person explicitly tells you to.
 - Never branch from, merge or push to `live-seats` or `availability`: each is one commit a workflow replaces.
 - Don't commit, push, open pull requests or comment on issues unless the person asked.
 
