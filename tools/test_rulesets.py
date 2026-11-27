@@ -22,7 +22,8 @@ def test_main_needs_a_review_and_the_ci_checks_but_lets_the_bots_through():
     assert review["required_approving_review_count"] == 1 and review["dismiss_stale_reviews_on_push"] is True
     checks = {c["context"] for c in rules["required_status_checks"]["required_status_checks"]}
     jobs = set(yaml.safe_load((ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8"))["jobs"])
-    assert checks == jobs == {"test", "versions", "e2e"}  # a renamed CI job would block every merge
+    # a renamed CI job would block every merge; gate (/no-checks-pr) only decides whether test and e2e run
+    assert checks == jobs - {"gate"} == {"test", "versions", "e2e"}
     for name in ("main.json", "version-tags.json"):
         assert {"actor_id": GITHUB_ACTIONS_APP, "actor_type": "Integration", "bypass_mode": "always"} \
             in ruleset(name)["bypass_actors"]
