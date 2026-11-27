@@ -12,11 +12,7 @@ history).
 
 ### Changed
 
-- Course pages say each thing once (#241). What changed is gone as a section: "All changes" under Biggest recent change
-  opens the list in place. Seat changes is gone too: each section's row shows its latest change ("Opened yesterday"),
-  and the RSS seat feed is in the Sections heading. Took this course? is one line under Professors, and the best pick
-  weights are behind "How the best pick is scored" under the professor list. The in-page links are Professors,
-  Sections and Grades.
+- The header's Search no longer shows a `/` box next to it. Pressing `/` still opens the search.
 
 ## [1.0.0] - 2026-11-27
 
