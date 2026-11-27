@@ -456,7 +456,7 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA, rename: Renamer | No
 def course_summary(g: dict | None, nxt: dict | None, rec: dict, gi: dict[str, dict], display: Any, rmp_block: Any,
                    raw_for: dict[str, str]) -> dict:
     """What a list of courses (the degree checklist) needs about one course: recent GPA with its sample size,
-    next-term lecture counts, the prerequisite text, and each next-term lecturer's score inputs."""
+    next-term lecture counts, the prerequisite text, and each next-term lecturer's score inputs and GPA."""
     profs = []
     for k in teach_next_course(nxt) if nxt else []:
         mine = [s for s in nxt["sections"] if s["component"] == "primary" and k in s["instructors"]]  # type: ignore[index]
@@ -466,6 +466,7 @@ def course_summary(g: dict | None, nxt: dict | None, rec: dict, gi: dict[str, di
         profs.append({
             "k": k, "name": display(k, raw_for.get(k, "")),
             "d": ig["delta"] if ig else None, "dn": ig["students"] if ig else 0,
+            "g": (ig["recent"] or ig["avg"]) if ig else None,  # their own GPA in this course (degree checklist)
             "rmp": [rb["rating"], rb["difficulty"], rb["would_take_again"], rb["num_ratings"]]
             if rb and rb["num_ratings"] else None,
             "open": [sum(1 for s in mine if status_open(s["status"])), len(mine)] if known else None,

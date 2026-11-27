@@ -3,7 +3,7 @@
 import type { CourseStatus, MyCourse } from "./mycourses";
 import type { DegreeProf } from "./rank";
 
-export { rankCourse, type DegreeProf, type Ranked } from "./rank";
+export { rankCourse, rankTeachers, type DegreeProf, type Ranked } from "./rank";
 
 export type DegreeGroup = {
   id: string;

@@ -338,6 +338,7 @@ The gen-ed finder: every course with a gen-ed code that has sections next term o
 | `[].profs[].name` | string | Name |
 | `[].profs[].d` | number \| null | Their GPA minus the course GPA |
 | `[].profs[].dn` | number | Grades behind `d` |
+| `[].profs[].g` | number \| null | Their own recent GPA in this course, `null` with no grade history |
 | `[].profs[].rmp` | array \| null | `[quality, difficulty, would take again, ratings]` |
 | `[].profs[].open` | [number, number] \| null | `[open lectures, lectures]` they teach, `null` when status isn't known |
 
@@ -539,6 +540,7 @@ files are checked.
 | `courses.<code>.profs[].name` | string | |
 | `courses.<code>.profs[].d` | number \| null | |
 | `courses.<code>.profs[].dn` | number | |
+| `courses.<code>.profs[].g` | number \| null | |
 | `courses.<code>.profs[].rmp` | array \| null | |
 | `courses.<code>.profs[].open` | [number, number] \| null | |
 
@@ -563,6 +565,7 @@ Every course with a gen-ed code, shared by all programs. Same fields as `courses
 | `<code>.profs[].name` | string | |
 | `<code>.profs[].d` | number \| null | |
 | `<code>.profs[].dn` | number | |
+| `<code>.profs[].g` | number \| null | |
 | `<code>.profs[].rmp` | array \| null | |
 | `<code>.profs[].open` | [number, number] \| null | |
 
