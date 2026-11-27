@@ -77,7 +77,8 @@ ignores case; it passes on CI. Write files as UTF-8 explicitly.
 **Versions and the changelog**
 
 - Never edit version numbers by hand (`pyproject.toml`, `web/package.json`, `mcp/package.json` and their lock files).
-  `make release V=patch|minor|major` changes them all and turns **Unreleased** into the new version.
+  `make release V=patch|minor` changes them all and turns **Unreleased** into the new version. The project is a beta,
+  before 1.0: never a major bump unless the person says it's time for 1.0 ([CONTRIBUTING.md](CONTRIBUTING.md), Versions).
 - Never create, move or delete `v*` tags. `release.yml` tags the commit that reaches `main`.
 - A change people will notice gets one line under **Unreleased** in [CHANGELOG.md](CHANGELOG.md), under Added,
   Changed, Fixed or Removed, written for students. Internal changes get none.
