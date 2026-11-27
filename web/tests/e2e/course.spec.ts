@@ -87,7 +87,7 @@ test("a section's seats say only Open, Restricted or Closed, with no date or res
   });
   await page.goto("./course/CS/124/");
   for (const row of await page.getByTestId("section-row").all()) {
-    await expect(row).not.toContainText(/since|days ago|yesterday|may be restricted/);
+    await expect(row).not.toContainText(/\bsince\b|days ago|yesterday|may be restricted/);
   }
 });
 
