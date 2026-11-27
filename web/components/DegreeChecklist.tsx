@@ -384,7 +384,7 @@ export default function DegreeChecklist({ programs, meta }: { programs: DegreeIn
                 <Icon name="alert" className="mt-1 shrink-0 text-heading" />
                 <span>
                   <strong>{nameOf(id)} isn&apos;t open to {selectedMajor?.program}.</strong> The rule: &ldquo;{rule.quote}&rdquo;{" "}
-                  <a className="font-semibold text-action underline" href={rule.source} rel="noopener">Check the source page.</a>
+                  <a className="font-semibold text-action underline" href={rule.source} target="_blank" rel="noopener noreferrer">Check the source page.</a>
                   {rule.caveat && <span className="mt-1 block">{rule.caveat}</span>}
                 </span>
               </p>
@@ -706,7 +706,7 @@ function ApForm({
       {kind === "IB" && year && ibTable && !ibYear && (
         <p className="text-sm" data-testid="ib-no-table">
           IB credit here starts with students entering in {ibTable.years[ibTable.years.length - 1]?.entering}. For {year.label}, see{" "}
-          <a href="https://citl.illinois.edu/current-cutoff-scores" className="font-semibold text-action underline" rel="noopener">
+          <a href="https://citl.illinois.edu/current-cutoff-scores" className="font-semibold text-action underline" target="_blank" rel="noopener noreferrer">
             CITL&apos;s cutoff scores
           </a>{" "}
           and add the courses you get as credit above.
@@ -781,7 +781,7 @@ function ApForm({
       </button>
       <p className="text-sm text-muted" data-testid="transfer-hint">
         Dual credit or community college courses: look each one up on{" "}
-        <a href="https://www.transferology.com/school/illinois" className="font-semibold text-action underline" rel="noopener">
+        <a href="https://www.transferology.com/school/illinois" className="font-semibold text-action underline" target="_blank" rel="noopener noreferrer">
           Transferology
         </a>
         , which Illinois uses for transfer equivalencies, then add the Illinois course above as AP, IB or transfer credit.
@@ -891,7 +891,7 @@ function ApCredits({ st, update, exams }: { st: MyState; update: (s: MyState) =>
       {tables.map(({ y, kind }) => (
         <p key={kind} className="mt-2 text-sm text-muted">
           From CITL&apos;s{" "}
-          <a href={y.source} className="font-semibold text-action underline" rel="noopener">
+          <a href={y.source} className="font-semibold text-action underline" target="_blank" rel="noopener noreferrer">
             {y.label} {kind} credit table
           </a>{" "}
           for students starting in {y.entering}, read {fmtDate(y.read_on)}.
@@ -975,7 +975,7 @@ function Checklist({
       <header className="border-b border-line pb-5">
         <p className="text-muted">
           {deg.college}, {deg.catalog_year} catalog{" "}
-          <a href={deg.source} className="inline-flex items-center gap-1 font-semibold text-action underline" rel="noopener">
+          <a href={deg.source} className="inline-flex items-center gap-1 font-semibold text-action underline" target="_blank" rel="noopener noreferrer">
             {deg.type === "certificate" ? "Program page" : "Catalog page"}
             <Icon name="external" />
           </a>

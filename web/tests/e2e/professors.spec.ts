@@ -28,7 +28,7 @@ test("clicking a section's professor opens and scrolls to that professor's row",
   await expect(row.getByRole("button", { name, exact: true })).toBeFocused();
 });
 
-test("reviews sit under their professor and say when they were written for another course", async ({ page }) => {
+test("reviews sit under their professor: only this course's, or their other courses' when it has none", async ({ page }) => {
   await page.goto("./course/CS/124/");
   const row = page.getByTestId("prof-row").first();
   await row.getByRole("button", { expanded: false }).first().click();
@@ -36,7 +36,30 @@ test("reviews sit under their professor and say when they were written for anoth
   const n = await reviews.count();
   test.skip(n === 0, "no RMP reviews in this build");
   expect(n).toBeLessThanOrEqual(2); // two by default
-  for (const label of await row.locator("li:has(> blockquote) > p").allTextContents()) expect(label).toMatch(/^(CS 124|Written for )/);
+  const labels = await row.locator("li:has(> blockquote) > p").allTextContents();
+  if (await row.getByTestId("other-course-reviews").count()) for (const label of labels) expect(label).toMatch(/^Written for /);
+  else for (const label of labels) expect(label).toMatch(/^CS 124/); // never mixed with other courses (D73)
+});
+
+test("a professor with reviews for this course shows no other course's (D73)", async ({ page }) => {
+  // STAT 107's first professor, with one STAT 107 review and two for STAT 212
+  await page.route("**/data/course/STAT/107.json", async (route) => {
+    const course = await (await route.fetch()).json();
+    const reviews = [
+      { text: "Clear lectures.", course: "STAT107", date: "2026-05-01" },
+      { text: "Hard exams.", course: "STAT212", date: "2026-04-01" },
+      { text: "Fair grader.", course: "STAT212", date: "2026-03-01" },
+    ];
+    for (const ins of Object.values(course.instructors) as { rmp: unknown }[])
+      ins.rmp = { id: "1", url: "https://www.ratemyprofessors.com/professor/1", rating: 4, difficulty: 3, would_take_again: 80, num_ratings: 3, tags: [], reviews, fetched_at: "2026-11-20" };
+    await route.fulfill({ json: course });
+  });
+  await page.goto("./course/STAT/107/");
+  const row = page.getByTestId("prof-row").first();
+  await row.getByRole("button", { expanded: false }).first().click();
+  await expect(row.locator("blockquote")).toHaveText(["Clear lectures."]);
+  await expect(row.getByTestId("other-course-reviews")).toHaveCount(0);
+  await expect(row).not.toContainText("STAT 212");
 });
 
 test("compare view sorts professors by a column", async ({ page }) => {
@@ -106,7 +129,8 @@ test("RMP averages show as three meters with a label that reads the numbers (#19
   }
   test.skip(!meters, "no professor with RMP ratings in this build");
   await expect(meters!.locator("[data-meter]")).toHaveCount(3);
-  await expect(meters!.locator('[data-meter="difficulty"]')).toContainText("lower is easier");
+  await expect(meters!).not.toContainText("lower is easier"); // the bars' colour says it: red is bad, green is good
+  await expect(meters!.locator("[data-good]").first()).toHaveAttribute("style", /color-mix/);
   await expect(meters!.getByRole("img")).toHaveAttribute("aria-label", /^Rate My Professors: Quality (\d\.\d|–) of 5, difficulty (\d\.\d|–) of 5, .+ from [\d,]+ ratings \(all courses\)$/);
   await expect(meters!).toContainText(/ratings \(all courses\), fetched/);
 });

@@ -57,7 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     {g.links.map((l) => (
                       <li key={l.href}>
                         {l.href.startsWith("https://") ? (
-                          <a className="underline-offset-2 hover:text-orange hover:underline" href={l.href}>
+                          <a className="underline-offset-2 hover:text-orange hover:underline" href={l.href} target="_blank" rel="noopener noreferrer">
                             {l.label}
                           </a>
                         ) : (

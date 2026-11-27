@@ -79,7 +79,7 @@ export default async function CoursePage({ params }: Props) {
               {GENED_NAMES[code] ?? code}
             </Badge>
           ))}
-          <a href={cisUrl(cisTerm, course.subject, course.number)} className="inline-flex items-center gap-1 font-semibold text-action underline" rel="noopener">
+          <a href={cisUrl(cisTerm, course.subject, course.number)} className="inline-flex items-center gap-1 font-semibold text-action underline" target="_blank" rel="noopener noreferrer">
             Course Explorer
             <Icon name="external" />
           </a>
@@ -108,7 +108,7 @@ export default async function CoursePage({ params }: Props) {
             }
             source={
               <span data-testid="gpa-source">
-                <a href={GPA_DATASET} className="underline" rel="noopener">
+                <a href={GPA_DATASET} className="underline" target="_blank" rel="noopener noreferrer">
                   Wade Fagen-Ulmschneider&apos;s GPA dataset
                 </a>
                 {g
@@ -116,7 +116,7 @@ export default async function CoursePage({ params }: Props) {
                     ? `, ${recentLabel}, ${fmtInt(g.recent_students)} graded students, ${gpaRelease(g.recent_terms?.[0], g.recent_terms?.[1])}. All-time (${termRange(g.first_term, g.last_term)}): ${fmtGpa(g.avg)} from ${fmtInt(g.students)} students.`
                     : `, ${termRange(g.first_term, g.last_term)}, ${fmtInt(g.students)} students (none in the recent window), ${gpaRelease(g.first_term, g.last_term)}.`
                   : " leaves out sections of 20 or fewer students (FERPA), so small courses have no grade data."}{" "}
-                <a href={GPA_SOURCES} className="underline" rel="noopener">
+                <a href={GPA_SOURCES} className="underline" target="_blank" rel="noopener noreferrer">
                   Which request released each term
                 </a>
               </span>

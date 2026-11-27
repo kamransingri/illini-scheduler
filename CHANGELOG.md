@@ -12,9 +12,19 @@ history).
 
 ### Changed
 
+- The header has a **Gen-ed finder** tab again, next to Course search, and the home page's "Popular gen-eds" row is
+  gone.
+- Links to other sites (Rate My Professors, Course Explorer, Self-Service, GitHub...) open in a new tab.
+- A professor's Rate My Professors bars are coloured from red to green by how good they are for you: high quality,
+  low difficulty and high would-take-again are green. The "lower is easier" note is gone.
+- A professor's reviews on a course page are only that course's. When there are none for it, their reviews for other
+  courses show instead, marked as such.
+- A course page's sections say "restricted" instead of "may be restricted", and so does the schedule builder. Seats
+  say only Open, Restricted or Closed, without "since" a date.
+- The Watch button says what it does when you point at it: Just opened lists the section first and can notify you.
 - Course pages say each thing once (#241). What changed is gone as a section: "All changes" under Biggest recent change
-  opens the list in place. Seat changes is gone too: each section's row shows its latest change ("Opened yesterday"),
-  and the RSS seat feed is in the Sections heading. Took this course? is one line under Professors, and the best pick
+  opens the list in place. Seat changes is gone too: they're on Just opened, and the RSS seat
+  feed is in the Sections heading. Took this course? is one line under Professors, and the best pick
   weights are behind "How the best pick is scored" under the professor list. The in-page links are Professors,
   Sections and Grades.
 - The schedule builder's results say each thing once (#239). Four numbers sit above the calendar (Expected GPA, Credit
@@ -26,6 +36,11 @@ history).
   Self-Service and Copy all CRNs. Compare the top schedules starts closed, with Expected GPA, Days off, Day span, Gaps,
   Open now and what's different.
 - The header's Search no longer shows a `/` box next to it. Pressing `/` still opens the search.
+
+### Fixed
+
+- Professors with a two-part surname that Rate My Professors lists under one part now get their ratings, such as Wade
+  Fagen-Ulmschneider ("Wade Fagen" on RMP). They show after the next nightly data refresh.
 
 ## [0.17.0] - 2026-11-27
 

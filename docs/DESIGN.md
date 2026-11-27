@@ -174,10 +174,10 @@ the navy header and footer) and the wordmark "**Illini** Scheduler" (bold, then 
 
 ### Navigation
 
-- Three tabs, two words each, in the order students use them: Course search, Degree checklist, Schedule builder. The
-  labels say what the page does, not just its topic ("Degree" told you nothing about what's there). The list lives in
-  `web/lib/nav.ts` and feeds the header, the phone menu and the footer. The gen-ed finder is part of Course search
-  (its "Popular gen-eds" row, and the tab stays lit there); the footer adds Gen-ed finder and Just opened (D61).
+- Four tabs, two words each, in the order students use them: Course search, Gen-ed finder, Degree checklist,
+  Schedule builder. The labels say what the page does, not just its topic ("Degree" told you nothing about what's
+  there). The list lives in `web/lib/nav.ts` and feeds the header, the phone menu and the footer; the footer adds Just
+  opened (D61, D73).
 - Hairline dividers (white at 25%) between items so each one reads as its own target, and a 16px line icon before
   each label.
 - The current page: light fill, bold, and a 4px orange bar at the bottom that joins the header's orange rule. Orange is
@@ -236,7 +236,7 @@ picked).
 
 | Page | Main job | First view at 1280px | First view at 375px |
 | --- | --- | --- | --- |
-| Course search (`/`) | Find a course, a professor or a CRN | The title, the search box, often-searched courses, popular gen-ed courses, and Just opened's newest openings beside them | The title, the search box and often-searched courses; Just opened's box comes next |
+| Course search (`/`) | Find a course, a professor or a CRN | The title, the search box, often-searched courses, and Just opened's newest openings beside them | The title, the search box and often-searched courses; Just opened's box comes next |
 | Course page | Decide whether to take the course, and with whom | Code, title, Add to schedule (then "Open schedule builder"), recent GPA, next-term lectures open, the best pick, and "Before you register" | Code, title, Add to schedule and the three numbers, stacked |
 | Gen-ed finder | Find courses that fill a gen-ed, best first | The term row (terms in order with years, across the page, greyed out without data), the category grid, Double-dips only, sort, then results; the other filters under "More filters" with how many are on | Term, a Filters button with how many are on, then results |
 | Degree checklist | See what's left of my program and what to take next | Three steps: 1 Your program (major, minors, level and standing), 2 What you've taken (one "Add what you've taken" box), 3 What's left (open requirements first; finished ones one line each) | The same three steps, stacked; the four-year plan closed as "Plan by term" |
@@ -254,9 +254,9 @@ picked).
    reading it first.
 5. **One place per thing.** When two blocks show the same information, keep one and link to it from the other (seat
    changes live on Just opened; the course page and the builder show one line and link there).
-6. **Three tabs.** The header holds Course search, Degree checklist and Schedule builder (Part 4). The gen-ed finder
-   opens from Course search's "Popular gen-eds" row, and Just opened from the home page, course pages, the builder and
-   the footer. A new page goes in the footer unless it replaces one of them.
+6. **Four tabs.** The header holds Course search, Gen-ed finder, Degree checklist and Schedule builder (Part 4, D73).
+   Just opened opens from the home page, course pages, the builder and the footer. A new page goes in the footer unless
+   it replaces one of them.
 7. **Say where it goes.** Every issue that adds to a page names the page, the block it joins, and what it replaces or
    hides ("Where it goes" in the issue templates). Every pull request that changes a page shows it before and after
    at 1280px and 375px.

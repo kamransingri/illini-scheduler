@@ -150,7 +150,7 @@ export default function SummerFinder() {
                         {r.s} {r.n}
                       </Link>
                     ) : (
-                      <a href={cisUrl(data.term, r.s, r.n)} className="font-semibold text-action hover:underline" rel="noopener">
+                      <a href={cisUrl(data.term, r.s, r.n)} className="font-semibold text-action hover:underline" target="_blank" rel="noopener noreferrer">
                         {r.s} {r.n}
                       </a>
                     )}

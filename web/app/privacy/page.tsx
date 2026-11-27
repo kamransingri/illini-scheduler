@@ -80,7 +80,7 @@ export default function PrivacyPage() {
           </li>
           <li>
             <strong>Map tiles, when you open a map.</strong> &ldquo;Show Monday&apos;s map&rdquo; (Getting there) loads the map&apos;s streets and
-            labels from <a className={LINK} href="https://openfreemap.org/">OpenFreeMap</a>, so like any web host it sees your IP address and
+            labels from <a target="_blank" rel="noopener noreferrer" className={LINK} href="https://openfreemap.org/">OpenFreeMap</a>, so like any web host it sees your IP address and
             which part of the map is on screen. Your courses, schedule and where you live aren&apos;t sent; the pins are drawn in your browser.
             No map is loaded until you open one.
           </li>
@@ -93,7 +93,7 @@ export default function PrivacyPage() {
           <li>
             <strong>Loading the site.</strong> GitHub hosts the site and the live seat file, so like any web host it sees your IP address and browser
             when pages load, under{" "}
-            <a className={LINK} href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">
+            <a target="_blank" rel="noopener noreferrer" className={LINK} href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">
               GitHub&apos;s privacy statement
             </a>
             . Fonts are served by the site itself, not by a font service.
@@ -133,7 +133,7 @@ export default function PrivacyPage() {
         <p className="mt-2">
           Illini Scheduler is an unofficial student project, not run by the University of Illinois. Ask about this page, or report something it gets
           wrong, in a{" "}
-          <a className={LINK} href={`${repo}/issues/new`}>
+          <a target="_blank" rel="noopener noreferrer" className={LINK} href={`${repo}/issues/new`}>
             GitHub issue
           </a>
           . Changes to what the site keeps are made in public, in the same pull request as this page, and dated above.

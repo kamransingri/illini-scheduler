@@ -10,7 +10,7 @@ import Icon from "./ui/Icon";
 
 function isCurrent(path: string, href: string): boolean {
   const p = path.endsWith("/") ? path : `${path}/`;
-  if (href === "/") return p === "/" || p.startsWith("/course/") || p.startsWith("/geneds/");
+  if (href === "/") return p === "/" || p.startsWith("/course/");
   return p.startsWith(href);
 }
 

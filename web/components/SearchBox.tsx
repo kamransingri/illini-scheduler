@@ -242,7 +242,7 @@ const WHERE: Record<SummerRow["online"], string> = { all: "online", some: "onlin
 
 function SummerHit({ row, data }: { row: SummerRow; data: SummerData }) {
   return (
-    <a href={cisUrl(data.term, row.s, row.n)} rel="noopener" className="group block border-b border-line py-3" data-testid="summer-hit">
+    <a href={cisUrl(data.term, row.s, row.n)} target="_blank" rel="noopener noreferrer" className="group block border-b border-line py-3" data-testid="summer-hit">
       <span className="font-semibold text-action group-hover:underline">
         {row.s} {row.n}
       </span>{" "}

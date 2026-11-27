@@ -26,8 +26,8 @@ each version: [CHANGELOG.md](CHANGELOG.md), or "What's new" at the bottom of eve
 
 ## What it does
 
-The header has three tabs: **Course search**, **Degree checklist** and **Schedule builder**. Press `/` on any page to
-search.
+The header has four tabs: **Course search**, **Gen-ed finder**, **Degree checklist** and **Schedule builder**. Press
+`/` on any page to search.
 
 | Page | What it answers |
 | --- | --- |

@@ -298,7 +298,7 @@ export default function JustOpened({ nextTerm, currentTerm, liveUrl, dailyAt }: 
       </ul>
       <p className="mt-4 inline-flex flex-wrap items-center gap-x-2 text-sm text-muted">
         A seat can go in seconds: copy the CRN and register right away.
-        <a className="inline-flex items-center gap-1 font-semibold text-action underline" href={SELF_SERVICE_URL} rel="noopener">
+        <a className="inline-flex items-center gap-1 font-semibold text-action underline" href={SELF_SERVICE_URL} target="_blank" rel="noopener noreferrer">
           Register in Self-Service
           <Icon name="external" />
         </a>

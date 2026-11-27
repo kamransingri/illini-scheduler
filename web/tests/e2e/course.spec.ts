@@ -74,20 +74,21 @@ test("Biggest recent change opens every change in place (#241)", async ({ page }
   await expect(page.getByTestId("all-changes").locator("li").first()).toBeVisible();
 });
 
-test("a section's latest seat change shows on its row (#241)", async ({ page }) => {
-  await page.goto("./course/CS/124/");
-  const row = page.getByTestId("section-row").first();
-  const crn = (await row.getByRole("button", { name: /^Copy \d{5}$/ }).textContent())!.replace(/\D/g, "");
-  const term = (await page.getByRole("tab", { selected: true }).first().getAttribute("data-term"))!;
-  // replace the course file's seat changes with one that opened this section yesterday
+test("a section's seats say only Open, Restricted or Closed, with no date or restricted hedge (D73)", async ({ page }) => {
+  // a section that closed recently, with a change in the feed, and a "maybe" restriction
   await page.route("**/data/course/CS/124.json", async (r) => {
     const json = await (await r.fetch()).json();
-    const at = new Date(Date.now() - 86400000 - 3600000).toISOString();
-    json.seat_events = [{ term, at, crn, s: "CS", n: "124", code: "X", old: "Closed", new: "Open" }];
+    const block = Object.values(json.terms)[0] as { sections: { crn: string; status: string; status_since?: string }[] };
+    const s = block.sections[0];
+    s.status = "Closed";
+    s.status_since = new Date(Date.now() - 3 * 86400000).toISOString();
+    json.seat_events = [{ term: Object.keys(json.terms)[0], at: s.status_since, crn: s.crn, s: "CS", n: "124", code: "X", old: "Open", new: "Closed" }];
     await r.fulfill({ json });
   });
-  await page.reload();
-  await expect(page.getByTestId("section-row").first().getByTestId("seat-change")).toHaveText("Opened yesterday");
+  await page.goto("./course/CS/124/");
+  for (const row of await page.getByTestId("section-row").all()) {
+    await expect(row).not.toContainText(/\bsince\b|days ago|yesterday|may be restricted/);
+  }
 });
 
 test("a renumbered course: the old URL and the old number lead to it, and it says what it was (#29)", async ({ page }) => {
