@@ -34,6 +34,19 @@ main ─────────────●───────────
 The bots (the nightly data refresh, the seat availability job, the release tags) don't go through pull requests:
 the ruleset lets GitHub Actions through (Repository settings, below).
 
+### Skipping the wait: `/no-checks-main` and `/no-checks-pr`
+
+For a small change you want live now, comment on its pull request (you need write access; not on pull requests from
+forks). `commands.yml` runs `tools/pr-command.sh`:
+
+| Comment | What happens |
+| --- | --- |
+| `/no-checks-main` | Merges the pull request into `main` straight away, without waiting for its checks or a review, and deploys without lint, unit tests, browser tests, Lighthouse or the live smoke test (`pages.yml` with `skip_checks`), so the site updates in about 5 minutes instead of 10 to 15. The pull request's own checks keep running, so you still see whether they pass. It also starts `release.yml` and `api.yml` when the change touches their files, and deletes the branch |
+| `/no-checks-pr` | Labels the pull request `no-checks-pr` and re-runs its CI without `test` and `e2e` (skipped jobs count as passed); `versions` still runs. Later pushes skip them too. Remove the label to bring them back from the next push |
+
+Both skip the safety net, so use them for changes you've checked yourself. If something breaks, `main` is fixed by
+the next pull request, as usual.
+
 ## Branches
 
 | Branch | What it is | Who writes to it |
@@ -111,18 +124,21 @@ section must match its GitHub release.
 
 One version number for the whole repo, in `pyproject.toml`, `web/package.json` and `mcp/package.json` (and their lock
 files), always the same. The MCP server's package and the GitHub release carry it too. It follows
-[Semantic Versioning](https://semver.org/); 1.0.0 was released on 2026-11-27.
+[Semantic Versioning](https://semver.org/). Until 1.0:
 
 | Bump | When | Example |
 | --- | --- | --- |
-| major `X.0.0` | Something that breaks what people or programs rely on: old share links or saved data stop working, a public JSON field, API endpoint or MCP tool argument is renamed or removed (`DATA_FORMAT` goes up) | None since 1.0.0 |
-| minor `1.X.0` | A new page or feature, or a change in behaviour people will notice that keeps old links and data working | Tracks in the degree checklist, the HTTP API |
-| patch `1.0.X` | Fixes, wording, speed, and docs about the site | A gen-ed chip that wrapped |
-| pre-release `1.X.0-beta.N` | Part of a bigger change, put live to try out | `0.2.0-beta.1` before the redesign was finished |
+| minor `0.X.0` | A new page or feature, a change in behaviour people will notice, or anything that breaks old share links or saved data | Tracks in the degree checklist, the HTTP API |
+| patch `0.17.X` | Fixes, wording, speed, and docs about the site | A gen-ed chip that wrapped |
+| pre-release `0.X.0-beta.N` | Part of a bigger change, put live to try out | `0.2.0-beta.1` before the redesign was finished |
 | none | Data refreshes, CI and tooling, internal docs | The nightly refresh, this file |
 
 Never edit the version files by hand. `make release` keeps them in step, and CI fails if they disagree. `make version`
 checks them locally.
+
+1.0.0 is for when the site is ready to be relied on outside the beta: degree data checked by hand, seat alerts. A
+1.0.0 went out by mistake on 2026-11-27; its tag and release were deleted and the same changes re-released as 0.17.0
+(DECISIONS D69). CI's `versions` check lets the version go down only when the higher one has no tag, as then.
 
 ## Changelog
 
@@ -136,17 +152,17 @@ line under **Changed** or **Removed**.
 
 ## Releasing
 
-1. On the branch that finishes the work (or a `release/1.1.0` branch from `main`):
+1. On the branch that finishes the work (or a `release/0.18.0` branch from `main`):
 
    ```sh
-   make release V=minor          # or patch, major, 1.1.0-beta.1
-   git commit -am "Release 1.1.0"
+   make release V=minor          # or patch, 0.18.0-beta.1
+   git commit -am "Release 0.18.0"
    ```
 
-   This moves every version file to 1.1.0 and turns Unreleased into `## [1.1.0] - <today>` with a fresh, empty
+   This moves every version file to 0.18.0 and turns Unreleased into `## [0.18.0] - <today>` with a fresh, empty
    Unreleased above it. Read the section once more: it becomes the release notes.
 2. Push and open the pull request. CI checks the new version is higher than `main`'s and not tagged yet.
-3. Merge it. The **Release** workflow (`release.yml`) tags the merge commit `v1.1.0`, publishes a GitHub release with
+3. Merge it. The **Release** workflow (`release.yml`) tags the merge commit `v0.18.0`, publishes a GitHub release with
    that changelog section (pre-releases marked as such) and attaches the MCP server package
    (`illini-scheduler-mcp.tgz`). The deploy runs at the same time.
 

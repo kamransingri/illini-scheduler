@@ -128,6 +128,10 @@ def test_check_against_a_base_branch(repo: Path) -> None:
     (repo / r.CHANGELOG).write_text(LOG.replace("## [0.4.0] - 2026-11-17", "## [0.3.0] - 2026-11-17"), encoding="utf-8")
     git(repo, "commit", "-qam", "down")
     assert r.check(repo, base="main") == ["The version went from 0.4.0 to 0.3.0: it can only go up"]
+    # unless the higher version was withdrawn: its tag is gone, so going down replaces it
+    git(repo, "tag", "-d", "v0.4.0")
+    assert r.check(repo, base="main") == []
+    git(repo, "tag", "v0.4.0", "main")
     # a version that's already tagged
     git(repo, "tag", "v0.5.0", "main")
     r.write_version(r.Version.parse("0.5.0"), repo)

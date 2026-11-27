@@ -185,8 +185,8 @@ the navy header and footer) and the wordmark "**Illini** Scheduler" (bold, then 
 - Below 1024px the items don't fit in one row, so a Menu button (with the cart count and a calendar glyph, so the
   number reads as a schedule) opens the same list as full-width rows separated by hairlines, the current one marked by
   an orange bar on its left.
-- **Search from every page.** Search is the last cell of the tab strip, styled like the tabs with its `/` shortcut
-  shown (labelled from 1280px, an icon from 1024px; a 44px icon button next to Menu on phones), not a boxed button
+- **Search from every page.** Search is the last cell of the tab strip, styled like the tabs, with no `/` hint
+  (labelled from 1280px, an icon from 1024px; a 44px icon button next to Menu on phones), not a boxed button
   beside them (D64). It opens the search in a light panel under the header; `/` opens it from
   anywhere that isn't a text field. The home page is the search, so it has no header search and `/` focuses its box.
 - **Always one gesture away.** The header is sticky but slides up while you scroll down and comes back as soon as you

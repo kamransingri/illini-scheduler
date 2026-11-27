@@ -70,14 +70,16 @@ ignores case; it passes on CI. Write files as UTF-8 explicitly.
 - Work on a `type/short-name` branch from the latest `main`: `feature/`, `fix/`, `docs/`, `chore/`, `data/`,
   `hotfix/`, `release/`. Lower case with hyphens; CI fails other names.
 - Changes reach `main` through a pull request with `test`, `versions` and `e2e` passing and one approving review,
-  merged with a merge commit. Push straight to `main` only when the person explicitly tells you to.
+  merged with a merge commit. Push straight to `main`, or comment `/no-checks-main` or `/no-checks-pr` on a pull
+  request (CONTRIBUTING.md), only when the person explicitly tells you to.
 - Never branch from, merge or push to `live-seats` or `availability`: each is one commit a workflow replaces.
 - Don't commit, push, open pull requests or comment on issues unless the person asked.
 
 **Versions and the changelog**
 
 - Never edit version numbers by hand (`pyproject.toml`, `web/package.json`, `mcp/package.json` and their lock files).
-  `make release V=patch|minor|major` changes them all and turns **Unreleased** into the new version.
+  `make release V=patch|minor` changes them all and turns **Unreleased** into the new version. The project is a beta,
+  before 1.0: never a major bump unless the person says it's time for 1.0 ([CONTRIBUTING.md](CONTRIBUTING.md), Versions).
 - Never create, move or delete `v*` tags. `release.yml` tags the commit that reaches `main`.
 - A change people will notice gets one line under **Unreleased** in [CHANGELOG.md](CHANGELOG.md), under Added,
   Changed, Fixed or Removed, written for students. Internal changes get none.

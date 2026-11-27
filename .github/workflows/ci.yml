@@ -10,7 +10,37 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # /no-checks-pr (commands.yml): on a pull request labelled no-checks-pr, test and e2e are skipped, and a job skipped
+  # by its `if` counts as passed for the required checks. The label is read live, so a re-run after adding it skips
+  # them. This job never fails, and if it does anyway the tests run.
+  gate:
+    runs-on: ubuntu-24.04
+    permissions:
+      pull-requests: read
+      issues: read
+    outputs:
+      skip: ${{ steps.label.outputs.skip }}
+    steps:
+      - id: label
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          labels=""
+          if [ -n "$PR" ]; then
+            labels=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR/labels" --jq '.[].name' || true)
+          elif [ "$BRANCH" != main ]; then
+            labels=$(gh pr list -R "$GITHUB_REPOSITORY" --head "$BRANCH" --state open --json labels --jq '.[].labels[].name' || true)
+          fi
+          if grep -qx no-checks-pr <<<"$labels"; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::Labelled no-checks-pr (/no-checks-pr): test and e2e are skipped"
+          fi
+
   test:
+    needs: gate
+    if: ${{ !cancelled() && needs.gate.outputs.skip != 'true' }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
@@ -39,7 +69,8 @@ jobs:
   # deploy (pages.yml caches it), so no fetching. Skipped for changes that can't affect a page; pages.yml runs the
   # whole suite again after merge.
   e2e:
-    if: github.event_name == 'pull_request'
+    needs: gate
+    if: ${{ !cancelled() && github.event_name == 'pull_request' && needs.gate.outputs.skip != 'true' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
