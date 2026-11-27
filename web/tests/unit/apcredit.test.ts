@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { allCredits, apCredit, creditCourses, decodeAp, decodeIb, encodeAp, encodeIb, ibCredit, isGrainger, pickIbYear, pickYear, subOptions, type ApExam, type ApRow, type ApTable, type ApYear } from "@/lib/apcredit";
+import { allCredits, apCredit, creditCourses, decodeAp, decodeIb, encodeAp, encodeIb, ibCredit, isGrainger, nextTable, pickIbYear, pickYear, subOptions, type ApExam, type ApRow, type ApTable, type ApYear } from "@/lib/apcredit";
 import { evaluate, hoursSoFar, parseHours, selectorMatches, type Degree, type DegreeCourse, type DegreeGroup } from "@/lib/degree";
 import { decodeState, EMPTY, encodeState, stateFromParams, stateToParams, type MyState } from "@/lib/mycourses";
 
@@ -264,5 +264,20 @@ describe("IB credit", () => {
     expect(params.toString()).toBe("i=ANTH-HL-6&y=2026&d=ANTH230");
     expect(stateFromParams(params)).toEqual(st);
     expect(decodeState(encodeState(st))).toEqual(st);
+  });
+});
+
+describe("nextTable", () => {
+  const Y25: ApYear = { ...Y26, id: "2025", label: "2025-2026", entering: "Summer 2025, Fall 2025 or Spring 2026" };
+  const table: ApTable = { years: [Y26, Y25] };
+
+  it("names next year's table and when CITL usually publishes it, for the newest year", () => {
+    expect(nextTable(table, Y26)).toEqual({ label: "2027-2028", expected: "the end of April 2027" });
+  });
+
+  it("says nothing for an older year, no year, or a label that isn't a year range", () => {
+    expect(nextTable(table, Y25)).toBeNull();
+    expect(nextTable(table, null)).toBeNull();
+    expect(nextTable({ years: [{ ...Y26, label: "2026" }] }, { ...Y26, label: "2026" })).toBeNull();
   });
 });

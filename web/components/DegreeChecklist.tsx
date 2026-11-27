@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { allCredits, apCredit, creditCourses, IB_LEVEL, ibCredit, isElective, isGrainger, pickIbYear, pickYear, subOptions, testCredit, testScores, type ApSummary, type ApTable, type ApYear, type IbLevel } from "@/lib/apcredit";
+import { allCredits, apCredit, creditCourses, IB_LEVEL, ibCredit, isElective, isGrainger, nextTable, pickIbYear, pickYear, subOptions, testCredit, testScores, type ApSummary, type ApTable, type ApYear, type IbLevel } from "@/lib/apcredit";
 import { alsoCounts, evaluate, hoursSoFar, hydrate, needText, listedByHand, notOpenRules, options, overlapChecks, parseHours, programCourses, rankCourse, rankTeachers, trackSlug, withTrack, type Degree, type DegreeCourse, type DegreeIndex, type Evaluation, type GroupResult, type GroupStatus, type HoursSoFar, type OverlapCheck, type Ranked } from "@/lib/degree";
 import { courseHref, dataUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, termLabel } from "@/lib/format";
 import { EMPTY, MAX_MINORS, minorTick, onMineChange, pickedTrack, readMine, sameState, setTrack, STATUS_LABEL, stateFromParams, stateToParams, ticksOf, writeMine, type CourseStatus, type MyState } from "@/lib/mycourses";
@@ -621,6 +621,7 @@ function ApForm({
   const [sub, setSub] = useState("");
   const [level, setLevel] = useState<IbLevel | "">("");
   const year = table ? pickYear(table, st.year) : null;
+  const next = table ? nextTable(table, year) : null;
   const ibYear = ibTable && year ? pickIbYear(ibTable, year) : null;
   const testYear = testTable && year ? pickIbYear(testTable, year) : null;
   const exams = kind === "AP" ? year?.exams : kind === "IB" ? ibYear?.exams : testYear?.exams;
@@ -682,6 +683,11 @@ function ApForm({
           ))}
         </select>
       </label>
+      {next && (
+        <p className="text-sm text-muted" data-testid="next-credit-table">
+          These are the newest tables CITL has published. The {next.label} tables usually come out around {next.expected}; we add them then.
+        </p>
+      )}
       <div className="flex gap-1.5" role="group" aria-label="Exam type">
         {(["AP", "IB", "ACT/SAT"] as const).map((k) => (
           <button

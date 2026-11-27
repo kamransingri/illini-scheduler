@@ -10,6 +10,11 @@ history).
 
 ## [Unreleased]
 
+### Added
+
+- The degree checklist says when the next AP, IB, ACT and SAT credit tables are due: CITL usually publishes the
+  2027-2028 tables around the end of April 2027 (#109).
+
 ### Changed
 
 - The header has a **Gen-ed finder** tab again, next to Course search, and the home page's "Popular gen-eds" row is
