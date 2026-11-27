@@ -1622,3 +1622,9 @@ which ("replaces D39.3"). Refer to entries by number from code comments and othe
   recent GPA in the course (new `profs[].g`), or the course's average, labelled "course", when they have no grade
   history. Open lectures are theirs when seat status is known. The option list stays ranked by each course's best
   professor, so stepping never reorders it.
+
+## No `/` hint on the header search (2026-11-27)
+
+- **D66.1 The shortcut stays, the hint goes.** D64.2 put a boxed `/` after "Search" in the tab strip. It read as a
+  stray character in the navy header rather than a key, and no other cell carries one. `/` still opens the search
+  (`aria-keyshortcuts="/"` tells screen readers), and DESIGN Part 5 no longer asks for the hint.

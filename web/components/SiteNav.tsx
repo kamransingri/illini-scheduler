@@ -136,7 +136,7 @@ export default function SiteNav({ nextTerm }: { nextTerm: string }) {
               ))}
             </ul>
           </nav>
-          {/* a cell at the end of the tab strip, not a boxed button beside it, with the "/" shortcut shown */}
+          {/* a cell at the end of the tab strip, not a boxed button beside it; "/" still opens it, without a hint (D66) */}
           {!home && (
             <button
               ref={deskSearchBtn}
@@ -149,9 +149,6 @@ export default function SiteNav({ nextTerm }: { nextTerm: string }) {
             >
               <Icon name={panel === "search" ? "x" : "search"} className={panel === "search" ? "text-white" : "text-white/70"} />
               <span className="sr-only xl:not-sr-only">Search</span>
-              <kbd aria-hidden className="hidden rounded border border-white/30 px-1.5 font-sans text-sm leading-5 text-white/70 xl:inline">
-                /
-              </kbd>
             </button>
           )}
         </div>
