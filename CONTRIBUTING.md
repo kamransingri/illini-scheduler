@@ -36,9 +36,10 @@ the ruleset lets GitHub Actions through (Repository settings, below).
 
 ### Skipping the wait: `/no-checks-main` and `/no-checks-pr`
 
-For a small change you want live now, comment on its pull request. Only the project's main contributors can:
-the logins in `.github/pr-command-users.txt` (read from `main`, so a pull request can't add its author; changing it
-needs the owner's review), who also need write access. Anyone else's command is answered and ignored, and so is a
+For a small change you want live now, comment on its pull request. Only the project's contributors as of
+2026-11-27 can: the five logins in `.github/pr-command-users.txt`, who also need write access. The list is locked:
+`tools/test_rulesets.py` fails if anyone is added, it's read from `main` (so a pull request can't add its author), and
+`/.github/` changes need the owners' review. Anyone else's command is answered and ignored, and so is a
 `no-checks-pr` label they add by hand. Never on pull requests from forks. `commands.yml` runs `tools/pr-command.sh`:
 
 | Comment | What happens |

@@ -6,7 +6,7 @@
 #   /no-checks-pr    skip the slow checks (test, e2e) on this pull request: label it no-checks-pr and re-run its CI.
 #                    The versions check still runs.
 #
-# Only the people in .github/pr-command-users.txt (the owner and main contributors) can use them, read from main so a
+# Only the people in .github/pr-command-users.txt (the contributors when it was locked) can use them, read from main so a
 # pull request can't add anyone, and they also need write access. /no-checks-main also needs the pull request to be by
 # one of them, since it skips the review. Never on pull requests from forks.
 # Needs GH_TOKEN, GITHUB_REPOSITORY, PR (number), ACTOR (who commented) and BODY (the comment).
@@ -40,7 +40,7 @@ users=$(sed 's/#.*//' <<<"$list" | tr -d ' \r' | grep . || true)
 listed() { [ -n "$1" ] && grep -qixF -- "$1" <<<"$users"; }
 
 if ! listed "$ACTOR"; then
-  say "\`$cmd\` is only for the project's main contributors (\`.github/pr-command-users.txt\`), so it was ignored."
+  say "\`$cmd\` is only for the project's contributors in \`.github/pr-command-users.txt\`, so it was ignored."
   exit 1
 fi
 perm=$(gh api "repos/$repo/collaborators/$ACTOR/permission" --jq .permission 2>/dev/null || echo none)
@@ -55,7 +55,7 @@ IFS=$'\t' read -r state cross branch sha author < <(gh pr view "$PR" -R "$repo" 
 if [ "$state" != OPEN ]; then say "\`$cmd\` only works on an open pull request."; exit 1; fi
 if [ "$cross" != false ]; then say "\`$cmd\` doesn't work on pull requests from forks."; exit 1; fi
 if [ "$cmd" = /no-checks-main ] && ! listed "$author"; then
-  say "\`/no-checks-main\` skips the review, so it only merges pull requests by the main contributors, and this one is by $author. It needs a review as usual."
+  say "\`/no-checks-main\` skips the review, so it only merges pull requests by the contributors in the list, and this one is by $author. It needs a review as usual."
   exit 1
 fi
 files=$(gh pr view "$PR" -R "$repo" --json files --jq '.files[].path')
