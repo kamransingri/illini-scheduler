@@ -312,8 +312,10 @@ test("375px: backup lines don't make the schedule scroll sideways", async ({ pag
   await page.goto("./schedule/?c=CS124,RHET105,CS128&t=2027-sp");
   await expect(page.getByTestId("cart").locator("li")).toHaveCount(3);
   await page.getByRole("button", { name: "Generate schedules" }).click();
-  for (const d of await page.getByText("Professor, backup and more").all()) await d.click();
-  await expect(page.getByTestId("backup").first()).toBeVisible();
+  // open the details of a row that has a backup (#239), once the rows are there
+  const row = page.getByTestId("schedule-row").filter({ has: page.getByTestId("backup") }).first();
+  await row.getByText("Professor, backup and more").click();
+  await expect(row.getByTestId("backup")).toBeVisible();
   const [sw, iw] = await page.evaluate(() => [document.documentElement.scrollWidth, window.innerWidth]);
   expect(sw).toBeLessThanOrEqual(iw);
 });
