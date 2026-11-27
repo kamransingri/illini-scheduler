@@ -1629,6 +1629,19 @@ which ("replaces D39.3"). Refer to entries by number from code comments and othe
   stray character in the navy header rather than a key, and no other cell carries one. `/` still opens the search
   (`aria-keyshortcuts="/"` tells screen readers), and DESIGN Part 5 no longer asks for the hint.
 
+## The course page says each thing once (2026-11-27, issue #241)
+
+- **D67.1 Changes live under Biggest recent change.** The What changed section repeated the "Before you register"
+  row. The row keeps the biggest change and an "All changes" button that opens the same 12-term list in place; the
+  section and its in-page link are gone.
+- **D67.2 Seat changes go on section rows.** The Seat changes list said the same as Just opened and the Sections
+  list. Each row in Sections shows its latest open or closed change from the course's `seat_events` (the last three
+  weeks, so "Opened yesterday" or "Closed Nov 12") where it used to say "since ..."; rows without a change keep
+  "since ...". The RSS link moved to the Sections heading as "Seat feed (RSS)".
+- **D67.3 One line for reviews, weights behind a button.** Took this course? repeated the "Rate them on RMP" link in
+  each professor row, so it's one line under Professors. The best pick weights (`WeightsControl`) sat above every
+  professor list; they're now the last control under it, as "How the best pick is scored".
+
 ## 1.0.0 re-released as 0.17.0 (2026-11-27)
 
 - **D69.1 Still a beta.** "Release 1.0.0" went out on 2026-11-27 without checking Semantic Versioning: 1.0.0 is for
