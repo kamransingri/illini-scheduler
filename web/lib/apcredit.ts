@@ -43,6 +43,17 @@ export function pickYear(table: ApTable, id: string): ApYear | null {
   return table.years.find((y) => y.id === id) ?? table.years[0] ?? null;
 }
 
+/**
+ * When the chosen year is the newest table we have, the next year's table and when CITL usually publishes it: around the
+ * end of April of the year the newest one ends ("2026-2027" -> "2027-2028", April 2027). Null for older years or an odd label.
+ */
+export function nextTable(table: ApTable, year: ApYear | null): { label: string; expected: string } | null {
+  const m = year && year.id === table.years[0]?.id ? /^(\d{4})-(\d{4})$/.exec(year.label) : null;
+  if (!m) return null;
+  const end = Number(m[2]);
+  return { label: `${end}-${end + 1}`, expected: `the end of April ${end}` };
+}
+
 export const isGrainger = (college: string | null | undefined) => !!college && /grainger/i.test(college);
 
 const subApplies = (r: ApRow, sub: number) => !r.sub || r.sub.includes(sub);
