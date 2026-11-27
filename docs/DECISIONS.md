@@ -1629,6 +1629,16 @@ which ("replaces D39.3"). Refer to entries by number from code comments and othe
   stray character in the navy header rather than a key, and no other cell carries one. `/` still opens the search
   (`aria-keyshortcuts="/"` tells screen readers), and DESIGN Part 5 no longer asks for the hint.
 
+## 1.0.0 re-released as 0.17.0 (2026-11-27)
+
+- **D69.1 Still a beta.** "Release 1.0.0" went out on 2026-11-27 without checking Semantic Versioning: 1.0.0 is for
+  when the site can be relied on outside the beta (CONTRIBUTING, Versions), and nothing in it broke old links or data.
+  Its GitHub release and `v1.0.0` tag were deleted (it never reached npm), the release commit was reverted, and the same
+  changes are 0.17.0, the next minor after 0.16.0.
+- **D69.2 A withdrawn version can be replaced by a lower one.** `tools/release.py check --base` refused any version
+  that goes down. It now allows it when the old version has no `v` tag, so a release whose tag was deleted can be
+  re-released lower. Lowering past a tagged release still fails.
+
 ## Pull request commands that skip the checks (2026-11-27)
 
 - **D71.1 `/no-checks-main` merges and deploys without waiting.** A small change took 15 to 25 minutes to go live:

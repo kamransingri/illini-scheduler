@@ -158,7 +158,7 @@ site can't do: [docs/LIMITATIONS.md](docs/LIMITATIONS.md).
 | `make clean` | Delete `data/illini.db`, `web/out`, `web/.next` and `web/public/data` |
 | `make availability-files` | Fetch the daily crawl's `data/availability/*.json` from the `availability` branch (`make data` does this first) |
 | `make version` | Check that the version files agree and CHANGELOG.md covers the version |
-| `make release V=minor` | Next version (`major`, `minor`, `patch` or `1.1.0-beta.1`) in every version file, and Unreleased in CHANGELOG.md becomes that version |
+| `make release V=minor` | Next version (`minor`, `patch` or `0.18.0-beta.1`; no `major` until 1.0) in every version file, and Unreleased in CHANGELOG.md becomes that version |
 | `python -m pipeline.availability --minutes 30` | The daily seat crawl, by hand |
 | `python -m pipeline.live_seats --state s.json --out out/ --minutes 2` | One round of the live seat check, by hand (reads the watch list, `data/watch.txt`) |
 | `python -m pipeline.degrees` | Validate `data/degrees/*.yaml` and list course codes the loaded data doesn't know |
