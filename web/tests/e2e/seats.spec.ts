@@ -1,9 +1,9 @@
 import { expect, test } from "@playwright/test";
 
-test("course page has a seat-changes section with an RSS feed that exists", async ({ page, request }) => {
+test("course page's Sections heading links an RSS seat feed that exists", async ({ page, request }) => {
   await page.goto("./course/CS/124/");
-  await expect(page.getByRole("heading", { name: "Seat changes" })).toBeVisible();
-  const link = page.getByRole("link", { name: /Watch seats for CS 124/ });
+  await expect(page.getByRole("heading", { name: /^Sections/ })).toBeVisible();
+  const link = page.getByRole("link", { name: /Seat changes for CS 124 \(RSS feed\)/ });
   const href = await link.getAttribute("href");
   const res = await request.get(new URL(href!, page.url()).toString());
   expect(res.ok()).toBe(true);

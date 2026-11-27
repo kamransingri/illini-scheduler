@@ -15,11 +15,11 @@ const LABELS: [keyof ScoreWeights, string][] = [
 const LEVEL = ["off", "low", "medium", "high"];
 
 /** The student's weights for the best-pick score; saved in this browser and used on every page that ranks things. */
-export default function WeightsControl({ className = "" }: { className?: string }) {
+export default function WeightsControl({ className = "", summary = "Adjust the best pick score" }: { className?: string; summary?: string }) {
   const w = useWeights();
   const changed = LABELS.some(([k]) => w[k] !== DEFAULT_WEIGHTS[k]);
   return (
-    <Expandable className={className} summary={<span>Adjust the best pick score{changed ? " (custom)" : ""}</span>}>
+    <Expandable className={className} summary={<span>{summary}{changed ? " (custom)" : ""}</span>}>
       <fieldset className="max-w-md space-y-2 rounded bg-panel p-3">
         <legend className="sr-only">How much each part counts</legend>
         {LABELS.map(([k, label]) => (

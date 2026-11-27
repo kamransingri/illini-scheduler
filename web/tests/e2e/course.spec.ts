@@ -41,14 +41,53 @@ test("course with no GPA data says so", async ({ page }) => {
   await expect(page.getByText("No grade data", { exact: true })).toBeVisible();
 });
 
-test("Took this course? sends students to Rate My Professors, not to GitHub", async ({ page }) => {
+test("Took this course? is one line under Professors that sends students to Rate My Professors, not to GitHub", async ({ page }) => {
   await page.goto("./course/CS/124/");
   const block = page.getByTestId("review-block");
   await expect(block).toContainText("Rate them on RMP");
-  await expect(block).toContainText("Pick CS 124 as the course");
-  await block.getByRole("link", { name: "Professors" }).click();
+  await expect(block).toContainText("pick CS 124 as the course");
+  await expect(page.getByRole("heading", { name: "Took this course?" })).toHaveCount(0);
+  await block.getByRole("link", { name: "your professor's row" }).click();
   await expect(page).toHaveURL(/#professors$/);
   await expect(page.locator('a[href*="/issues/new"]')).toHaveCount(0);
+});
+
+test("the course page says each thing once (#241)", async ({ page }) => {
+  await page.goto("./course/STAT/107/");
+  await expect(page.getByRole("heading", { name: /^Sections/ })).toBeVisible();
+  // the in-page nav: Professors, Sections and Grades; What changed and Seat changes are no longer sections
+  await expect(page.getByRole("navigation", { name: "On this page" }).getByRole("link")).toHaveText(["Professors", "Sections", "Grades"]);
+  await expect(page.getByRole("heading", { name: "What changed" })).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "Seat changes" })).toHaveCount(0);
+  // the best-pick weights sit behind one closed control under the professor list
+  const how = page.getByRole("button", { name: "How the best pick is scored" });
+  await expect(how).toHaveAttribute("aria-expanded", "false");
+  await how.click();
+  await expect(page.getByRole("slider", { name: "Course GPA" })).toBeVisible();
+});
+
+test("Biggest recent change opens every change in place (#241)", async ({ page }) => {
+  await page.goto("./course/STAT/107/");
+  const all = page.getByRole("button", { name: "All changes" });
+  await expect(all).toHaveAttribute("aria-expanded", "false");
+  await all.click();
+  await expect(page.getByTestId("all-changes").locator("li").first()).toBeVisible();
+});
+
+test("a section's latest seat change shows on its row (#241)", async ({ page }) => {
+  await page.goto("./course/CS/124/");
+  const row = page.getByTestId("section-row").first();
+  const crn = (await row.getByRole("button", { name: /^Copy \d{5}$/ }).textContent())!.replace(/\D/g, "");
+  const term = (await page.getByRole("tab", { selected: true }).first().getAttribute("data-term"))!;
+  // replace the course file's seat changes with one that opened this section yesterday
+  await page.route("**/data/course/CS/124.json", async (r) => {
+    const json = await (await r.fetch()).json();
+    const at = new Date(Date.now() - 86400000 - 3600000).toISOString();
+    json.seat_events = [{ term, at, crn, s: "CS", n: "124", code: "X", old: "Closed", new: "Open" }];
+    await r.fulfill({ json });
+  });
+  await page.reload();
+  await expect(page.getByTestId("section-row").first().getByTestId("seat-change")).toHaveText("Opened yesterday");
 });
 
 test("a renumbered course: the old URL and the old number lead to it, and it says what it was (#29)", async ({ page }) => {

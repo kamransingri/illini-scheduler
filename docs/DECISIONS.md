@@ -1622,3 +1622,16 @@ which ("replaces D39.3"). Refer to entries by number from code comments and othe
   recent GPA in the course (new `profs[].g`), or the course's average, labelled "course", when they have no grade
   history. Open lectures are theirs when seat status is known. The option list stays ranked by each course's best
   professor, so stepping never reorders it.
+
+## The course page says each thing once (2026-11-27, issue #241)
+
+- **D67.1 Changes live under Biggest recent change.** The What changed section repeated the "Before you register"
+  row. The row keeps the biggest change and an "All changes" button that opens the same 12-term list in place; the
+  section and its in-page link are gone.
+- **D67.2 Seat changes go on section rows.** The Seat changes list said the same as Just opened and the Sections
+  list. Each row in Sections shows its latest open or closed change from the course's `seat_events` (the last three
+  weeks, so "Opened yesterday" or "Closed Nov 12") where it used to say "since ..."; rows without a change keep
+  "since ...". The RSS link moved to the Sections heading as "Seat feed (RSS)".
+- **D67.3 One line for reviews, weights behind a button.** Took this course? repeated the "Rate them on RMP" link in
+  each professor row, so it's one line under Professors. The best pick weights (`WeightsControl`) sat above every
+  professor list; they're now the last control under it, as "How the best pick is scored".

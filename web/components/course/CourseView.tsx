@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Course } from "@/lib/types";
-import { dataUrl, fmtGpa, fmtInt, seatChangeText, fmtAgo, termLabel, termOrder, termRange } from "@/lib/format";
+import { dataUrl, fmtGpa, fmtInt, termLabel, termOrder, termRange } from "@/lib/format";
 import { professorsFor, profDomId } from "@/lib/sections";
 import { POSTED_IN, tabTerms } from "@/lib/terms";
 import { rankProfs } from "@/lib/rank";
@@ -36,7 +36,6 @@ const NAV = [
   ["professors", "Professors"],
   ["sections", "Sections"],
   ["grades", "Grades"],
-  ["changes", "What changed"],
 ] as const;
 
 export default function CourseView({ subject, number, meta }: { subject: string; number: string; meta: CourseMeta }) {
@@ -210,14 +209,7 @@ export default function CourseView({ subject, number, meta }: { subject: string;
             {NAV.map(([id, label]) => (
               <li key={id}>
                 <a href={`#${id}`} className="text-sm font-semibold whitespace-nowrap text-action hover:underline sm:text-base">
-                  {id === "changes" ? (
-                    <>
-                      <span className="sm:hidden">Changes</span>
-                      <span className="hidden sm:inline">{label}</span>
-                    </>
-                  ) : (
-                    label
-                  )}
+                  {label}
                 </a>
               </li>
             ))}
@@ -282,7 +274,6 @@ export default function CourseView({ subject, number, meta }: { subject: string;
               <GradeBar pct={g.pct} source={`UIUC GPA dataset, ${termRange(g.first_term, g.last_term)}, ${fmtInt(g.students)} students`} />
             </div>
           )}
-          {meta.score_priors && scored.profs.length > 1 && <WeightsControl className="mb-4" />}
           {!scored.profs.length ? (
             <p className="text-muted">No professors listed{term ? ` for ${termLabel(term)}` : ""} yet.</p>
           ) : view === "compare" ? (
@@ -320,7 +311,9 @@ export default function CourseView({ subject, number, meta }: { subject: string;
                 </ul>
               </Expandable>
             )}
+            {meta.score_priors && scored.profs.length > 1 && <WeightsControl summary="How the best pick is scored" />}
           </div>
+          <ReviewLine course={course} />
           {course.exam_course && (
             <div className="mt-6 max-w-3xl">
               <h3 className="text-lg font-semibold text-heading">Course format, from the catalog description</h3>
@@ -330,7 +323,26 @@ export default function CourseView({ subject, number, meta }: { subject: string;
         </section>
 
         <section id="sections" aria-labelledby="sections-h" className="scroll-mt-16">
-          <SectionHeader id="sections-h" title={term ? `Sections in ${termLabel(term)}` : "Sections"} />
+          <SectionHeader
+            id="sections-h"
+            title={term ? `Sections in ${termLabel(term)}` : "Sections"}
+            actions={
+              <span className="inline-flex items-center">
+                <a
+                  href={dataUrl(`feeds/${course.subject}/${course.number}.xml`)}
+                  className="inline-flex items-center gap-1.5 font-semibold text-action underline"
+                  aria-label={`Seat changes for ${course.subject} ${course.number} (RSS feed)`}
+                >
+                  <Icon name="rss" />
+                  Seat feed (RSS)
+                </a>
+                <Info label="About the seat feed">
+                  Each section&apos;s latest open or closed change in the last three weeks shows on its row. Add the feed to any feed reader, or to a
+                  Slack or Discord feed bot, to hear when a section opens or closes. Status is checked about once a day, so confirm in Self-Service.
+                </Info>
+              </span>
+            }
+          />
           {term && meta.summer?.line && meta.summer.term === term && !block?.sections.length ? (
             <p data-testid="summer-tab">{meta.summer.line}</p>
           ) : !block || !block.sections.length ? (
@@ -345,6 +357,7 @@ export default function CourseView({ subject, number, meta }: { subject: string;
               onPickProf={pickProf}
               focusCrn={focusCrn}
               watchable={term === meta.next_term || term === meta.current_term}
+              events={course.seat_events ?? []}
             />
           )}
         </section>
@@ -353,106 +366,25 @@ export default function CourseView({ subject, number, meta }: { subject: string;
           <SectionHeader id="grades-h" title="Grades over time" />
           {g && g.by_term.length > 0 ? <GpaChart gpa={g} /> : <p className="text-muted">No grade data for this course.</p>}
         </section>
-
-        <section id="changes" aria-labelledby="changes-h" className="scroll-mt-16">
-          <SectionHeader
-            id="changes-h"
-            title={
-              <span className="inline-flex items-center gap-1">
-                What changed
-                <Info label="How changes are found">
-                  Course Explorer catalog records compared between consecutive fall and spring offerings: description, credit hours, prerequisites,
-                  gen-ed codes, delivery mode and new instructors.
-                </Info>
-              </span>
-            }
-          />
-          {course.changes.length ? (
-            <ol className="max-w-3xl">
-              {course.changes.slice(0, 12).map((c, i) => (
-                <li key={i} className="grid grid-cols-[7.5rem_1fr] gap-x-4 border-b border-line py-2">
-                  <span className="font-semibold text-heading">{termLabel(c.term)}</span>
-                  <span>{c.summary}</span>
-                </li>
-              ))}
-            </ol>
-          ) : (
-            <p className="text-muted">No catalog changes between offerings since {termLabel(course.history[0]?.term)}.</p>
-          )}
-        </section>
-
-        <SeatChanges course={course} />
-        <ReviewBlock course={course} />
       </div>
     </div>
   );
 }
 
-function SeatChanges({ course }: { course: Course }) {
-  const events = course.seat_events ?? [];
-  const feed = dataUrl(`feeds/${course.subject}/${course.number}.xml`);
+/** One line under Professors: students review a course on Rate My Professors, through their professor's page. */
+function ReviewLine({ course }: { course: Course }) {
   return (
-    <section aria-labelledby="seats-h">
-      <SectionHeader
-        id="seats-h"
-        title="Seat changes"
-        actions={
-          <a href={feed} className="inline-flex items-center gap-1.5 font-semibold text-action underline">
-            <Icon name="rss" />
-            Watch seats for {course.subject} {course.number} (RSS)
-          </a>
-        }
-        lead={
-          <span className="inline-flex flex-wrap items-center">
-            Open and closed changes in the last three weeks.
-            <Info label="About seat changes and the feed">
-              Status is checked about once a day, so confirm in Self-Service. Add the RSS feed to any feed reader, or to a Slack or Discord feed bot,
-              to hear when a section opens or closes.
-            </Info>
-          </span>
-        }
-      />
-      {events.length ? (
-        <ul className="max-w-3xl" data-testid="seat-events">
-          {events.slice(0, 15).map((e) => {
-            return (
-              <li key={e.term + e.crn + e.at} className="grid grid-cols-[1fr_auto] gap-x-4 border-b border-line py-2">
-                <span>
-                  <span className="font-semibold">
-                    {e.code} {seatChangeText(e.old, e.new)}
-                  </span>{" "}
-                  <span className="text-muted">
-                    {e.old} to {e.new}, CRN {e.crn}, {termLabel(e.term)}
-                  </span>
-                </span>
-                <span className="text-sm text-muted">{fmtAgo(e.at)}</span>
-              </li>
-            );
-          })}
-        </ul>
-      ) : (
-        <p className="text-muted">No open or closed changes recorded in the last three weeks.</p>
-      )}
-    </section>
-  );
-}
-
-/** Students review a course on Rate My Professors, through their professor's page; the site has no form of its own. */
-function ReviewBlock({ course }: { course: Course }) {
-  const code = `${course.subject} ${course.number}`;
-  return (
-    <section aria-labelledby="review-h" data-testid="review-block">
-      <SectionHeader id="review-h" title="Took this course?" />
-      <p className="max-w-prose">
-        Review it on Rate My Professors: find your professor under{" "}
+    <div className="mt-6 max-w-3xl" data-testid="review-block">
+      <p className="text-muted">
+        <span className="font-semibold text-ink">Took this course?</span> Open{" "}
         <a href="#professors" className="font-semibold text-action underline">
-          Professors
+          your professor&apos;s row
         </a>
-        , open their row and use <span className="font-semibold">Rate them on RMP</span>. Pick {code} as the course, and your review shows up here with
-        theirs after the next nightly update.
+        , use{" "}
+        <span className="font-semibold text-ink">Rate them on RMP</span> and pick {course.subject} {course.number} as the course.
       </p>
       {course.notes.length > 0 && (
-        <ul className="mt-4 max-w-3xl space-y-3">
+        <ul className="mt-3 space-y-3">
           {course.notes.map((n, i) => (
             <li key={i}>
               <p className="text-sm text-muted">
@@ -464,6 +396,6 @@ function ReviewBlock({ course }: { course: Course }) {
           ))}
         </ul>
       )}
-    </section>
+    </div>
   );
 }
