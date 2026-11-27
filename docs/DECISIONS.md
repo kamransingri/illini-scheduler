@@ -1622,3 +1622,25 @@ which ("replaces D39.3"). Refer to entries by number from code comments and othe
   recent GPA in the course (new `profs[].g`), or the course's average, labelled "course", when they have no grade
   history. Open lectures are theirs when seat status is known. The option list stays ranked by each course's best
   professor, so stepping never reorders it.
+
+## The schedule builder's results say each thing once (2026-11-27, issue #239)
+
+- **D68.1 Four numbers, no sentence.** The summary sentence repeated the stat row. The row keeps Expected GPA, Credit
+  hours, Days off and Day span; Gaps a week and Open now moved to Compare the top schedules. The footnote (each
+  course's GPA and the calendar dates) is an `Info` popover next to Expected GPA. A schedule that leaves a course out
+  says so in the "can't be scheduled" box above, not in the summary.
+- **D68.2 Six things on a row.** A section row shows the course, section, times, seat status, Copy CRN and Lock. The
+  instructor, professor score, restriction you qualify for, special-section note, "Keep this time, any section",
+  same-time alternatives and backups open from "Professor, backup and more". A closed section or one that may not be
+  for you (`eligibility` "no" or "maybe") shows that on the row itself (DESIGN Part 5, budget rule 3).
+- **D68.3 A closed section is explained once.** The just-closed box, the backup line and Sections to watch said the
+  same thing three times. Now a closed row (closed at the last check, or in the live feed since) has one line: Watch,
+  or use its first backup with its CRN. One line under the list links to Just opened and the watched sections. The
+  waitlist paragraph went: Register in Self-Service is beside the list.
+- **D68.4 One menu for saving.** Register in Self-Service (the next step) and Copy all CRNs stay as buttons. Download
+  .ics with "Include final exams", Copy share link and Ask your AI are in one "Save or share" menu that closes on
+  Escape or a click outside, like the plan menu (D63).
+- **D68.5 The comparison starts closed.** Compare the top schedules opens on request, with Expected GPA, Days off, Day
+  span, Gaps a week, Open now and what's different from the top pick. Earliest and Latest became Day span; the Finals
+  column went, since exam clashes are in the warnings and the Finals week tab. Gaps stayed, as the only place they're
+  shown now.

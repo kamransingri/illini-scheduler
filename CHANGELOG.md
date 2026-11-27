@@ -10,6 +10,17 @@ history).
 
 ## [Unreleased]
 
+### Changed
+
+- The schedule builder's results say each thing once (#239). Four numbers sit above the calendar (Expected GPA, Credit
+  hours, Days off, Day span), with how Expected GPA is worked out behind its info button. The section list comes
+  straight after the calendar, and each row shows the course, section, times, seats, Copy CRN and Lock; the professor,
+  their score, backups, same-time sections and "Keep this time" are under "Professor, backup and more". A closed
+  section says so on its own row ("Closed: Watch, or use backup AD4"), so the just-closed box and Sections to watch are
+  gone. Download .ics, Copy share link and Ask your AI are in one **Save or share** menu next to Register in
+  Self-Service and Copy all CRNs. Compare the top schedules starts closed, with Expected GPA, Days off, Day span, Gaps,
+  Open now and what's different.
+
 ## [1.0.0] - 2026-11-27
 
 ### Added

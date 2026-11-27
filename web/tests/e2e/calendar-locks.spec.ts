@@ -38,7 +38,8 @@ test("Lock this schedule locks every section on screen, and Unlock all frees the
   await expect(page.getByTestId("cart").locator("li")).toHaveCount(2);
   await page.getByRole("button", { name: "Generate schedules" }).click();
   await page.getByRole("button", { name: "Next schedule" }).click();
-  const rows = page.getByTestId("schedule-sections").locator("li");
+  // the rows themselves (course, section, times, seats), not their details, whose same-time list shrinks once locked
+  const rows = page.getByTestId("schedule-row").locator("> div");
   const before = await rows.allTextContents();
 
   await page.getByRole("button", { name: "Lock this schedule" }).click();
