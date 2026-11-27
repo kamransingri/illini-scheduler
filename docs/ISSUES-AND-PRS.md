@@ -130,7 +130,7 @@ Part of #104.
 
 ## Labels, milestones and assignees
 
-Every issue gets one kind label, at least one area label, and any flags that apply.
+Every issue gets one kind label, at least one area label, one priority label, and any flags that apply.
 
 | Labels | Use |
 | --- | --- |
@@ -141,6 +141,23 @@ Every issue gets one kind label, at least one area label, and any flags that app
 | `needs-human` | Needs a person: a manual check, an advisor, admin access |
 | `accessibility` | A barrier for people with disabilities |
 | `good first issue`, `help wanted` | Good for someone new, or open for anyone to take |
+| `priority: critical`, `priority: high`, `priority: medium`, `priority: low` | How soon it needs doing (below) |
+
+### Priority
+
+Whoever opens the issue picks a priority; if you're not sure, pick `priority: medium` and say why in the body. Anyone
+can suggest a different one in a comment, and the project owner has the final say. Change the label when things
+change (a registration date gets close, a source starts refusing us).
+
+| Label | When | What happens |
+| --- | --- | --- |
+| `priority: critical` | The live site is down or shows wrong data students could act on (times, seats, requirements), student data could leak, or a source is about to cut us off | Drop other work. Fix or work around it within a day, and release it as a hotfix (CONTRIBUTING.md) |
+| `priority: high` | It blocks a milestone or a coming registration period, or it's a risk to the whole project: data access, terms of use, security | Next up. Someone is assigned within a few days |
+| `priority: medium` | Normal planned work | Done in milestone order |
+| `priority: low` | Nice to have: polish, ideas, small annoyances | When there's time; often a good first issue |
+
+Pick the next issue to work on from the highest priority first, then by milestone. A bug is at least
+`priority: high` when it gives students wrong information, however small it looks.
 
 **Milestones.** Every issue goes in one milestone, the goal it helps ship. A parent and its sub-issues go in the same
 one. The [milestones page](https://github.com/kamransingri/illini-scheduler/milestones) lists them with their due
@@ -148,7 +165,8 @@ dates. Ask before you start a new one.
 
 **Assignees.** One person per issue. Assign yourself, or ask in a comment, before you start, so two people don't do
 the same work. If you stop, say so in a comment and unassign yourself. A parent is assigned to whoever owns that
-area.
+area. The exception is a project-wide risk everyone should follow (such as #256, asking the university for data
+access): assign every contributor, and say in a comment who is doing each step.
 
 ## Pull requests
 

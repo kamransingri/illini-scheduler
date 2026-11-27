@@ -5,6 +5,8 @@ title: "<Track> <N>: <outcome>"
 labels: enhancement
 ---
 
+<!-- Add one priority label: priority: critical, high, medium or low (docs/ISSUES-AND-PRS.md#priority). -->
+
 Part of #. Needs #.
 
 <!-- Why it's needed and where things are today, in one or two sentences. Name the files. -->

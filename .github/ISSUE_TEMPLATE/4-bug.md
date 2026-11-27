@@ -5,6 +5,8 @@ title: "<Page>: <what's wrong>"
 labels: bug
 ---
 
+<!-- Add one priority label: priority: critical, high, medium or low (docs/ISSUES-AND-PRS.md#priority). -->
+
 ### What happened
 
 ### Steps to reproduce
