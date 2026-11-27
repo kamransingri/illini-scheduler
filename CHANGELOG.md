@@ -10,6 +10,8 @@ history).
 
 ## [Unreleased]
 
+## [0.17.0] - 2026-11-27
+
 ### Added
 
 - Degree checklist: tracks. Programs that ask you to pick one track (the Economics, Classical Languages and Legal
@@ -545,7 +547,8 @@ history).
 - A partial Rate My Professors error no longer stops `make data`.
 - RSS feeds are written as UTF-8.
 
-[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.16.0...HEAD
+[Unreleased]: https://github.com/kamransingri/illini-scheduler/compare/v0.17.0...HEAD
+[0.17.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.16.0...v0.17.0
 [0.16.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.15.0...v0.16.0
 [0.15.0]: https://github.com/kamransingri/illini-scheduler/compare/v0.14.1...v0.15.0
 [0.14.1]: https://github.com/kamransingri/illini-scheduler/compare/v0.14.0...v0.14.1
