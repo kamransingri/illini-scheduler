@@ -29,9 +29,11 @@ only checked once the student opens the link.
 
 ## Set it up
 
-**Coming soon, with nothing to install:** the same server is hosted at `https://<ref>.supabase.co/functions/v1/api/mcp`
-(#102). Once it's live (#247), AI apps that add connectors by URL can use that address, and this section will have the
-real one. Until then, run it yourself as below.
+**Coming soon, with nothing to install:** the same server is built to run at
+`https://<ref>.supabase.co/functions/v1/api/mcp` (#102, [docs/BACKEND.md](../docs/BACKEND.md)). Once it's live
+(#247), AI apps that add connectors by URL can use that address, and this section will have the real one. Until then,
+run it yourself as below. The site's [Use it from your AI app](https://kamransingri.github.io/illini-scheduler/ai/)
+page has the same steps with copy buttons.
 
 You need [Node.js](https://nodejs.org) 20 or newer. Every release of the site comes with the server as a package, and
 `npx` (part of Node.js) downloads and starts it, so there's nothing else to install. The link below always points to
@@ -66,7 +68,7 @@ current folder.
 ```
 
 **Other apps** (Cursor, VS Code, ...) take the same command, `npx -y` and the link, in their MCP settings. Apps that
-only accept a URL need the hosted server, which comes later (#102).
+only accept a URL need the hosted server, which comes later (#247).
 
 **A fixed version.** Each release on the [releases page](https://github.com/kamransingri/illini-scheduler/releases)
 also has `illini-scheduler-mcp-X.Y.Z.tgz`; use its link instead to stay on that version. npx keeps the copy it

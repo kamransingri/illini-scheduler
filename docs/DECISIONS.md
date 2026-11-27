@@ -1,6 +1,11 @@
 # Decisions
 
-Every judgment call made during the autonomous build, newest phase last.
+Every judgment call behind the site, newest last: a threshold, a rule, a trade-off, or something left out on purpose.
+The first phases (D0 to D12) were the autonomous first build; later entries are numbered one per feature or issue.
+
+To add one, append a `## <What it's about> (<date>, issue #N)` section at the end with the next number (`D66.1`,
+`D66.2`...), one bold-titled bullet per call saying what was decided and why. When a call replaces an older one, say
+which ("replaces D39.3"). Refer to entries by number from code comments and other docs.
 
 ## Phase 0
 

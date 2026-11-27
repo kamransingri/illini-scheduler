@@ -5,6 +5,23 @@ deployed as a Supabase Edge Function (#150). Today that's the public HTTP API (#
 [API.md](API.md#http-api), and the MCP server itself at `/mcp`, so AI apps can add Illini Scheduler by URL (#102). The
 project doesn't use Cloudflare (#245).
 
+**Status:** built, tested and bundled on every pull request, but not live: the deploy job waits for the Supabase
+project (#247, steps under [Deploying](#deploying)). Until then, AI apps use the MCP server with `npx`
+([mcp/README.md](../mcp/README.md)) and scripts read the JSON files directly ([API.md](API.md)).
+
+| Endpoint | What it answers |
+| --- | --- |
+| `GET /health` | `{"status": "ok", "version": ...}`, for the deploy check |
+| `GET /v1/openapi.json` | The OpenAPI description of every endpoint |
+| `GET /v1/terms` | The current and next term and when the data was built (MCP `term_info`) |
+| `GET /v1/courses?q=` | Course search (MCP `search_courses`) |
+| `GET /v1/courses/{subject}/{number}` | One course and its sections (MCP `get_course`) |
+| `GET /v1/geneds` | The gen-ed finder (MCP `find_geneds`) |
+| `POST /v1/schedules` | The schedule builder, up to 10 courses (MCP `build_schedules`) |
+| `POST /mcp` | The MCP server over Streamable HTTP |
+
+Arguments and answers: [API.md](API.md#http-api) and `/v1/openapi.json`.
+
 **The API needs no database.** It reads the site's public JSON from GitHub Pages, which GitHub Actions rebuilds every
 night, and answers with the MCP server's code: `mcp/src/schemas.ts` has the arguments and `mcp/src/answers.ts` the
 answers. So the API, the MCP server and the site agree, and `api/test/api.test.ts` asks each endpoint and the

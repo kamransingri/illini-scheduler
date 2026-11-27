@@ -1,15 +1,19 @@
 # Limitations
 
-What Illini Scheduler can't do, or does only approximately, as of v0.6.0 (2026-11-17). Each item says where the gap
-comes from. For future plans, see the [GitHub issues](https://github.com/kamransingri/illini-scheduler/issues).
+What Illini Scheduler can't do, or does only approximately, as of v1.0.0 (2026-11-27). Each item says where the gap
+comes from. For future plans, see the [GitHub issues](https://github.com/kamransingri/illini-scheduler/issues). When
+you change something listed here, change this page in the same pull request.
 
 ## The site itself
 
 - **Unofficial.** It isn't affiliated with the University of Illinois. Confirm sections, seats and restrictions in
   Self-Service before registering.
-- **Static, no backend.** The site is a set of files on GitHub Pages. There are no accounts. Your courses, degree
-  progress and schedule live in your browser's storage (and in the share link), so they don't sync between devices
-  and are lost if you clear site data.
+- **Static, no accounts.** The site is a set of files on GitHub Pages. Your courses, degree progress and schedule live
+  in your browser's storage (and in the share link), so they don't sync between devices and are lost if you clear site
+  data. Accounts are planned (#151) but not built.
+- **The HTTP API and hosted MCP server aren't live yet.** Both are built and tested in `api/`, and go live once the
+  Supabase project is set up (#247). Until then, use the JSON files or run the MCP server with `npx`
+  ([mcp/README.md](../mcp/README.md)).
 - **Rebuilt once a day.** The site rebuilds nightly at 09:00 UTC from data read daily at 04:17 UTC. Course pages,
   the gen-ed finder and the schedule builder show seat status from that daily read. The Just opened page, the home
   page's Just opened panel and the schedule builder's backups are fresher (next section): a chosen section the live
@@ -32,7 +36,8 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
 - **A seat can be gone already.** Openings in popular courses can fill within minutes. Copy the CRN and confirm in
   Self-Service.
 - **Notifications only while the page is open.** "Notify me" uses the browser's notifications for changes that arrive
-  while the tab is open; there are no email or phone alerts (that needs a backend, [#16](https://github.com/kamransingri/illini-scheduler/issues/16)).
+  while the tab is open; there are no email or phone alerts. Alerts with the site closed need an alert server: the
+  site's half is built and hidden ([PUSH.md](PUSH.md), [#16](https://github.com/kamransingri/illini-scheduler/issues/16)).
 
 ## Course and seat data
 
@@ -128,8 +133,8 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
 ## Degree planner
 
 - **Not an official degree audit.** Use DARS and your advisor for that.
-- **Mostly imported automatically.** 291 majors and concentrations were read by `pipeline/catalog_import.py` from the
-  2026-2027 catalog. Seven were checked by hand, line by line, against their catalog pages: Computer Science,
+- **Mostly imported automatically.** 317 majors and concentrations and 127 minors were read by
+  `pipeline/catalog_import.py` from the 2026-2027 catalog. Seven were checked by hand, line by line, against their catalog pages: Computer Science,
   Psychology (its main page; the ten concentrations are imported), Economics, Mechanical Engineering, Finance,
   Accountancy, and Finance + Data Science. The others say they were read automatically.
 - **Prose rules aren't checked.** Requirements the catalog states in words (advanced electives, CS focus areas,
@@ -142,9 +147,13 @@ comes from. For future plans, see the [GitHub issues](https://github.com/kamrans
 - **Scope.** Undergraduate majors (with their concentrations) and minors in the 2026-2027 catalog, plus the 22 LAS
   undergraduate certificates as a link and one box to tick (D54). No other colleges' certificates, graduate programs or
   earlier catalog years.
+- **Tracks are found by name.** A program offers a track choice only when the catalog lists its tracks as groups named
+  "... Track" (D58.1). Options listed another way, such as Industrial Engineering's "Track Option Electives", show as
+  requirements you tick yourself.
 - **Major and minor overlap.** A course counts toward both your major and your minor on the checklist. The 30 minors
   whose catalog page asks for coursework distinct from the major show how much you have (D43, D47); other limits
-  (no overlap with one named major, majors that can't take the minor) are only in the minor page's words.
+  (no overlap with one named major) are only in the minor page's words. Minors closed to your major are greyed out
+  only where the catalog or the department says so in words (24 minors, D55); others aren't checked.
 - **Transcript and DARS import reads text, not the systems.** Both sit behind a NetID, so you copy the page and paste
   it; it's read in your browser. The parser was written from the transcript's published layout and the registrar's
   grade key, with hand-written samples, so a layout it hasn't seen may leave lines unread: it lists them instead of

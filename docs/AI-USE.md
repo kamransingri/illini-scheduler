@@ -1,7 +1,7 @@
 # AI use policy
 
 How AI tools are used to build Illini Scheduler, what the site does (and doesn't) send to them, and how AI tools may
-read its data. Last updated 2026-11-26. Change this page in the same pull request as anything it describes.
+read its data. Last updated 2026-11-27. Change this page in the same pull request as anything it describes.
 
 ## Building the site
 
@@ -12,6 +12,9 @@ read its data. Last updated 2026-11-26. Change this page in the same pull reques
   branch (`git switch main && git pull`, then `git switch <your-branch> && git merge main`). A tool working from an
   old copy rebuilds on code that has since changed, and its pull request brings back what `main` already fixed or
   removed. [AGENTS.md](../AGENTS.md) tells AI tools to do this first; check they did.
+- **The tools read [AGENTS.md](../AGENTS.md).** It holds the repository's rules for AI tools: commands, what CI
+  enforces, where data comes from and which doc to update. [CLAUDE.md](../CLAUDE.md) is a copy for Claude Code;
+  change both together, and change them in the same pull request as the rule they describe.
 - **Say so.** When an AI tool wrote most of a pull request, the pull request says so in one line. The reviewer reads it
   as closely as any other.
 - **Facts come from sources, not models.** Data the site shows as fact (degree requirements, AP, IB and test credit
@@ -30,6 +33,8 @@ read its data. Last updated 2026-11-26. Change this page in the same pull reques
 
 - The site is made to be read by AI tools: [`llms.txt`](../web/public/llms.txt), the [JSON data API](API.md) and the
   [MCP server](../mcp/README.md).
+- The hosted MCP server at `/mcp` ([BACKEND.md](BACKEND.md)), once live, keeps nothing between requests and logs
+  only which tool was called, never the question asked.
 - Each of them says the data is unofficial and can be out of date, and tells the AI tool to have students confirm
   sections, seats and restrictions in Course Explorer and Self-Service before registering.
 - Reusing the data means crediting its sources, as the [terms of use](https://kamransingri.github.io/illini-scheduler/terms/)

@@ -43,3 +43,5 @@ graphify-out/
 Thumbs.db
 desktop.ini
 .claude/
+#Testing-Env
+/reddit-search

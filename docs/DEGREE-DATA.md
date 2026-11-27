@@ -2,7 +2,10 @@
 
 One YAML file per program in `data/degrees/`, read from the official Academic Catalog page for one catalog year
 (https://catalog.illinois.edu/). Most files are written by `python -m pipeline.catalog_import` (they carry a
-`generated:` date); `finance-data-science.yaml` was checked by hand. Never fill a file in from memory: if the catalog
+`generated:` date). Seven were checked by hand line by line and have no `generated:` key: `accountancy-bs`,
+`computer-science-bs`, `economics-balas`, `finance-bs`, `finance-data-science`, `mechanical-engineering-bs` and
+`psychology-bslas`. In all there are 466 files: 317 majors and concentrations, 127 minors (`-minor`) and 22
+certificates (`type: certificate`). Never fill a file in from memory: if the catalog
 can't be read, leave `groups: []` and say so in the pull request. `make data` validates every file (`pipeline/degrees.py`), checks each course code against
 the Course Explorer data it loads, logs codes it can't find, and exports `web/public/data/degrees/<id>.json` for the
 degree checklist at `/degree/`.
@@ -110,6 +113,16 @@ The checklist counts the minor's courses in My courses (on its lists, or in `fro
 major's own requirements don't use (its gen-eds aren't the major), nor another minor's with `minors_too`. A course on a
 hand-ticked list of the major is counted, with a note that it may count there. The importer keeps this key when it
 rewrites a generated file, so it survives a re-import (DECISIONS.md D43).
+
+## Tracks
+
+There is no `tracks` key: a track is the groups whose `name` ends in "Track" (`Microeconomics Track`, `Econometrics
+Track`), which is how the importer already writes them. Two or more different track names make a choice. The checklist
+then shows a **Track** picker, counts only the picked track's groups (`withTrack` in `web/lib/degree.ts`), and keeps a
+"Pick a track" requirement open until one is picked; the pick travels in the share link as `tr=` (DECISIONS.md D58.1).
+
+To make a track choice work by hand, give each of its groups the same `name` ending in "Track". A list of options by
+area that isn't named that way (Industrial Engineering's "Track Option Electives") isn't a choice yet.
 
 ## Eligibility (minors and certificates)
 

@@ -154,11 +154,13 @@ area.
 
 ### Before you open one
 
-- Work on a `type/short-name` branch from `main`: `feature/`, `fix/`, `docs/`, `chore/`, `data/` (CONTRIBUTING.md).
-- `make lint` and `make test` pass. Run Playwright for the pages you changed:
+- Work on a `type/short-name` branch from the latest `main`: `feature/`, `fix/`, `docs/`, `chore/`, `data/`,
+  `hotfix/` or `release/` (CONTRIBUTING.md).
+- `make lint` and `make test` pass (`make test-quick` is enough while you work). Run Playwright for the pages you changed:
   `cd web && npx playwright test <spec> --workers=1`.
 - Add a line under **Unreleased** in CHANGELOG.md if people will notice the change.
-- Update the docs where behaviour changed: LIMITATIONS, DECISIONS, and API.md for a new data field.
+- Update the docs where behaviour changed: LIMITATIONS, DECISIONS, and API.md for a new data field
+  ([AGENTS.md](../AGENTS.md#5-keep-the-docs-true) has the full table).
 - If an AI tool wrote most of it, say so in one line ([AI-USE.md](AI-USE.md)).
 
 ### Title

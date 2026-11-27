@@ -12,6 +12,9 @@ with the site closed. It's Web Push, in three parts:
 Until the alert server runs, `web/public/push.json` stays empty and Just opened works as before, with its in-tab
 **Notify me**.
 
+The alert server is meant to live with the HTTP API on Supabase, with the subscriptions in its database
+([BACKEND.md](BACKEND.md)); nothing in it is built yet.
+
 ## Switching it on
 
 Fill in `web/public/push.json` once the server is up:

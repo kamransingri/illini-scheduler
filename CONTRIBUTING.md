@@ -1,9 +1,19 @@
 # Contributing
 
 How changes get from a laptop to the live site: branches, commits, pull requests, versions and releases. Setup and
-commands are in the [README](README.md); the docs index is [docs/README.md](docs/README.md). How to write an issue
-or a pull request (titles, the shape of each kind of issue, labels, milestones, assignees) is in
-[docs/ISSUES-AND-PRS.md](docs/ISSUES-AND-PRS.md).
+commands are in the [README](README.md#run-it-locally); the docs index is [docs/README.md](docs/README.md). How to
+write an issue or a pull request (titles, the shape of each kind of issue, labels, milestones, assignees) is in
+[docs/ISSUES-AND-PRS.md](docs/ISSUES-AND-PRS.md). AI coding tools are welcome: [docs/AI-USE.md](docs/AI-USE.md) is
+the policy, and [AGENTS.md](AGENTS.md) (copied to [CLAUDE.md](CLAUDE.md)) is what the tools read.
+
+## Your first change
+
+1. Set up as in the README: `pip install -r requirements.txt`, `npm ci` in `web/` and `mcp/`, then `make data-quick`.
+2. Pick an issue (`good first issue` is a good start), assign yourself or ask on it, so two people don't do the same
+   work.
+3. Branch, change, and run `make test-quick` and `make lint`. For a page, `make dev` and look at it at 1280px and
+   375px.
+4. Add a CHANGELOG line if students will notice, update the docs the change touches, and open a pull request.
 
 ## The flow
 
@@ -99,19 +109,20 @@ section must match its GitHub release.
 
 ## Versions
 
-One version number for the whole repo, in `web/package.json` (and its lock file) and `pyproject.toml`, always the same.
-It follows [Semantic Versioning](https://semver.org/). Until 1.0:
+One version number for the whole repo, in `pyproject.toml`, `web/package.json` and `mcp/package.json` (and their lock
+files), always the same. The MCP server's package and the GitHub release carry it too. It follows
+[Semantic Versioning](https://semver.org/); 1.0.0 was released on 2026-11-27.
 
 | Bump | When | Example |
 | --- | --- | --- |
-| minor `0.X.0` | A new page or feature, a change in behaviour people will notice, or anything that breaks old share links or saved data | Search by CRN, the program search |
-| patch `0.4.X` | Fixes, wording, speed, and docs about the site | A gen-ed chip that wrapped |
-| pre-release `0.X.0-beta.N` | Part of a bigger change, put live to try out | `0.2.0-beta.1` before the redesign was finished |
-| none | Data refreshes, CI and tooling, internal docs | The nightly refresh |
+| major `X.0.0` | Something that breaks what people or programs rely on: old share links or saved data stop working, a public JSON field, API endpoint or MCP tool argument is renamed or removed (`DATA_FORMAT` goes up) | None since 1.0.0 |
+| minor `1.X.0` | A new page or feature, or a change in behaviour people will notice that keeps old links and data working | Tracks in the degree checklist, the HTTP API |
+| patch `1.0.X` | Fixes, wording, speed, and docs about the site | A gen-ed chip that wrapped |
+| pre-release `1.X.0-beta.N` | Part of a bigger change, put live to try out | `0.2.0-beta.1` before the redesign was finished |
+| none | Data refreshes, CI and tooling, internal docs | The nightly refresh, this file |
 
-1.0.0 is for when the site is ready to be relied on outside the beta: degree data checked by hand, seat alerts.
-
-Never edit the version files by hand. `make release` keeps them in step, and CI fails if they disagree.
+Never edit the version files by hand. `make release` keeps them in step, and CI fails if they disagree. `make version`
+checks them locally.
 
 ## Changelog
 
@@ -125,18 +136,19 @@ line under **Changed** or **Removed**.
 
 ## Releasing
 
-1. On the branch that finishes the work (or a `release/0.5.0` branch from `main`):
+1. On the branch that finishes the work (or a `release/1.1.0` branch from `main`):
 
    ```sh
-   make release V=minor          # or patch, major, 0.6.0-beta.1
-   git commit -am "Release 0.5.0"
+   make release V=minor          # or patch, major, 1.1.0-beta.1
+   git commit -am "Release 1.1.0"
    ```
 
-   This moves every version file to 0.5.0 and turns Unreleased into `## [0.5.0] - <today>` with a fresh, empty
+   This moves every version file to 1.1.0 and turns Unreleased into `## [1.1.0] - <today>` with a fresh, empty
    Unreleased above it. Read the section once more: it becomes the release notes.
 2. Push and open the pull request. CI checks the new version is higher than `main`'s and not tagged yet.
-3. Merge it. The **Release** workflow (`release.yml`) tags the merge commit `v0.5.0` and publishes a GitHub release
-   with that changelog section (pre-releases marked as such). The deploy runs at the same time.
+3. Merge it. The **Release** workflow (`release.yml`) tags the merge commit `v1.1.0`, publishes a GitHub release with
+   that changelog section (pre-releases marked as such) and attaches the MCP server package
+   (`illini-scheduler-mcp.tgz`). The deploy runs at the same time.
 
 Don't create `v*` tags by hand: the workflow tags the commit that actually reached `main`. To re-run a release that
 failed, use "Run workflow" on the Release workflow in the Actions tab; it only does what's missing.
