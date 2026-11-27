@@ -12,6 +12,11 @@ history).
 
 ### Changed
 
+- Course pages say each thing once (#241). What changed is gone as a section: "All changes" under Biggest recent change
+  opens the list in place. Seat changes is gone too: each section's row shows its latest change ("Opened yesterday"),
+  and the RSS seat feed is in the Sections heading. Took this course? is one line under Professors, and the best pick
+  weights are behind "How the best pick is scored" under the professor list. The in-page links are Professors,
+  Sections and Grades.
 - The schedule builder's results say each thing once (#239). Four numbers sit above the calendar (Expected GPA, Credit
   hours, Days off, Day span), with how Expected GPA is worked out behind its info button. The section list comes
   straight after the calendar, and each row shows the course, section, times, seats, Copy CRN and Lock; the professor,
