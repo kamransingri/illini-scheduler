@@ -1629,6 +1629,51 @@ which ("replaces D39.3"). Refer to entries by number from code comments and othe
   stray character in the navy header rather than a key, and no other cell carries one. `/` still opens the search
   (`aria-keyshortcuts="/"` tells screen readers), and DESIGN Part 5 no longer asks for the hint.
 
+## The course page says each thing once (2026-11-27, issue #241)
+
+- **D67.1 Changes live under Biggest recent change.** The What changed section repeated the "Before you register"
+  row. The row keeps the biggest change and an "All changes" button that opens the same 12-term list in place; the
+  section and its in-page link are gone.
+- **D67.2 Seat changes go on section rows.** The Seat changes list said the same as Just opened and the Sections
+  list. Each row in Sections shows its latest open or closed change from the course's `seat_events` (the last three
+  weeks, so "Opened yesterday" or "Closed Nov 12") where it used to say "since ..."; rows without a change keep
+  "since ...". The RSS link moved to the Sections heading as "Seat feed (RSS)".
+- **D67.3 One line for reviews, weights behind a button.** Took this course? repeated the "Rate them on RMP" link in
+  each professor row, so it's one line under Professors. The best pick weights (`WeightsControl`) sat above every
+  professor list; they're now the last control under it, as "How the best pick is scored".
+
+## The schedule builder's results say each thing once (2026-11-27, issue #239)
+
+- **D68.1 Four numbers, no sentence.** The summary sentence repeated the stat row. The row keeps Expected GPA, Credit
+  hours, Days off and Day span; Gaps a week and Open now moved to Compare the top schedules. The footnote (each
+  course's GPA and the calendar dates) is an `Info` popover next to Expected GPA. A schedule that leaves a course out
+  says so in the "can't be scheduled" box above, not in the summary.
+- **D68.2 Six things on a row.** A section row shows the course, section, times, seat status, Copy CRN and Lock. The
+  instructor, professor score, restriction you qualify for, special-section note, "Keep this time, any section",
+  same-time alternatives and backups open from "Professor, backup and more". A closed section or one that may not be
+  for you (`eligibility` "no" or "maybe") shows that on the row itself (DESIGN Part 5, budget rule 3).
+- **D68.3 A closed section is explained once.** The just-closed box, the backup line and Sections to watch said the
+  same thing three times. Now a closed row (closed at the last check, or in the live feed since) has one line: Watch,
+  or use its first backup with its CRN. One line under the list links to Just opened and the watched sections. The
+  waitlist paragraph went: Register in Self-Service is beside the list.
+- **D68.4 One menu for saving.** Register in Self-Service (the next step) and Copy all CRNs stay as buttons. Download
+  .ics with "Include final exams", Copy share link and Ask your AI are in one "Save or share" menu that closes on
+  Escape or a click outside, like the plan menu (D63).
+- **D68.5 The comparison starts closed.** Compare the top schedules opens on request, with Expected GPA, Days off, Day
+  span, Gaps a week, Open now and what's different from the top pick. Earliest and Latest became Day span; the Finals
+  column went, since exam clashes are in the warnings and the Finals week tab. Gaps stayed, as the only place they're
+  shown now.
+
+## 1.0.0 re-released as 0.17.0 (2026-11-27)
+
+- **D69.1 Still a beta.** "Release 1.0.0" went out on 2026-11-27 without checking Semantic Versioning: 1.0.0 is for
+  when the site can be relied on outside the beta (CONTRIBUTING, Versions), and nothing in it broke old links or data.
+  Its GitHub release and `v1.0.0` tag were deleted (it never reached npm), the release commit was reverted, and the same
+  changes are 0.17.0, the next minor after 0.16.0.
+- **D69.2 A withdrawn version can be replaced by a lower one.** `tools/release.py check --base` refused any version
+  that goes down. It now allows it when the old version has no `v` tag, so a release whose tag was deleted can be
+  re-released lower. Lowering past a tagged release still fails.
+
 ## Pull request commands that skip the checks (2026-11-27)
 
 - **D71.1 `/no-checks-main` merges and deploys without waiting.** A small change took 15 to 25 minutes to go live:

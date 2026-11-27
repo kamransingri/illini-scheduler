@@ -1,6 +1,6 @@
 # Limitations
 
-What Illini Scheduler can't do, or does only approximately, as of v1.0.0 (2026-11-27). Each item says where the gap
+What Illini Scheduler can't do, or does only approximately, as of v0.17.0 (2026-11-27). Each item says where the gap
 comes from. For future plans, see the [GitHub issues](https://github.com/kamransingri/illini-scheduler/issues). When
 you change something listed here, change this page in the same pull request.
 

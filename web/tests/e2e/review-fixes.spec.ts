@@ -31,7 +31,7 @@ test("an impossible lock is explained and the schedule is marked incomplete", as
   await page.getByRole("button", { name: "Generate schedules" }).click();
   await expect(page.getByTestId("missing")).toContainText("MATH 231 can't be scheduled");
   await expect(page.getByTestId("missing")).toContainText("can't be taken together");
-  await expect(page.getByTestId("summary")).toContainText("without MATH 231");
+  await expect(page.getByTestId("missing")).toContainText("The schedules below are incomplete: they leave it out.");
   // choosing the placeholder clears a lock
   await dis.selectOption("");
   await expect(dis).toHaveValue("");

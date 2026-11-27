@@ -67,6 +67,7 @@ test("two plans keep their own courses, rules, links and calendar files through 
   // each plan's calendar file has its name
   await page.getByRole("button", { name: "Generate schedules" }).click();
   await expect(page.getByTestId("schedule-result")).toBeVisible();
+  await page.getByRole("button", { name: "Save or share" }).click();
   const [dl] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Download .ics" }).click()]);
   expect(dl.suggestedFilename()).toBe("illini-schedule-2027-sp-plan-b-if-stat-100-fills.ics");
 

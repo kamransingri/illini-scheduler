@@ -178,11 +178,24 @@ export default async function CoursePage({ params }: Props) {
               </Link>
             </DataRow>
           )}
-          <DataRow
-            label="Biggest recent change"
-            source={course.biggest_change ? `Course Explorer catalog, compared term to term (${termLabel(course.biggest_change.term)}).` : undefined}
-          >
+          <DataRow label="Biggest recent change">
             {course.biggest_change ? course.biggest_change.summary : "No changes this term or last"}
+            <Info label="How changes are found">
+              Course Explorer catalog records compared between consecutive fall and spring offerings: description, credit hours, prerequisites, gen-ed
+              codes, delivery mode and new instructors.
+            </Info>
+            {course.changes.length > 0 && (
+              <Expandable summary="All changes" className="mt-1" buttonClassName="text-sm">
+                <ol className="mt-1 max-w-3xl" data-testid="all-changes">
+                  {course.changes.slice(0, 12).map((c, i) => (
+                    <li key={i} className="grid grid-cols-[7.5rem_1fr] gap-x-4 border-b border-line py-2 last:border-b-0">
+                      <span className="font-semibold text-heading">{termLabel(c.term)}</span>
+                      <span>{c.summary}</span>
+                    </li>
+                  ))}
+                </ol>
+              </Expandable>
+            )}
           </DataRow>
           {course.prereq && <DataRow label="Prerequisites">{course.prereq}</DataRow>}
         </dl>
