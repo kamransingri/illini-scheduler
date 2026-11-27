@@ -26,7 +26,7 @@ read its data. Last updated 2026-11-27. Change this page in the same pull reques
 
 - **The site never sends anything to an AI service.** Everything a student enters stays in their browser
   ([privacy page](https://kamransingri.github.io/illini-scheduler/privacy/)), and no page calls an AI API.
-- **"Ask your AI" buttons (#103), when they arrive, only copy text the student has seen first.** The student pastes it
+- **"Ask your AI" buttons ([Issue #103](https://github.com/kamransingri/illini-scheduler/issues/103)), only copy text the student has seen first.** The student pastes it
   into their own AI app themselves, under that app's policy.
 
 ## AI tools reading the site

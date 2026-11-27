@@ -14,6 +14,10 @@ on:
         description: Refresh data (about 20 minutes) instead of reusing the last refresh's database
         type: boolean
         default: false
+      skip_checks:
+        description: Skip lint, unit and browser tests and the live smoke test (/no-checks-main on a pull request)
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -115,6 +119,7 @@ jobs:
           path: data/illini.db
           key: pipeline-db-${{ github.run_id }}
       - name: Lint + type check + unit tests
+        if: ${{ !inputs.skip_checks }}
         run: make lint && make test
         env:
           PYTEST_ARGS: -n auto
@@ -128,18 +133,23 @@ jobs:
         run: make build
         env:
           BASE_PATH: /${{ github.event.repository.name }}
+      # /no-checks-main (commands.yml) dispatches this with skip_checks: the browser tests, Lighthouse and smoke are skipped
       - name: Playwright's version
+        if: ${{ !inputs.skip_checks }}
         id: pw
         run: echo "v=$(node -p "require('./web/node_modules/@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
       - name: Playwright's browser (cached)
+        if: ${{ !inputs.skip_checks }}
         uses: actions/cache@v6
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ steps.pw.outputs.v }}
       # The runner image already has Chrome's system libraries; apt only runs if Chromium can't start without it (#148)
       - name: Install Chromium (and its system libraries if missing)
+        if: ${{ !inputs.skip_checks }}
         run: cd web && npx playwright install chromium && (node -e "require('@playwright/test').chromium.launch().then((b) => b.close())" || npx playwright install-deps chromium)
       - name: End-to-end tests against the build
+        if: ${{ !inputs.skip_checks }}
         run: |
           cd web
           mkdir -p ../site/${{ github.event.repository.name }}
@@ -148,7 +158,7 @@ jobs:
           (npx serve ../site -l 4173 --no-clipboard &) && sleep 3
           E2E_BASE_URL=http://127.0.0.1:4173/${{ github.event.repository.name }}/ npx playwright test
       - name: Lighthouse on a course page (median of 3 runs; performance >= 0.80, accessibility >= 0.90; refresh runs only)
-        if: steps.mode.outputs.refresh == 'true'
+        if: steps.mode.outputs.refresh == 'true' && !inputs.skip_checks
         run: |
           curl -s -o /dev/null http://127.0.0.1:4173/ || ((cd web && npx serve ../site -l 4173 --no-clipboard &) && sleep 3)
           for i in 1 2 3; do
@@ -226,6 +236,7 @@ jobs:
   smoke:
     # Load the live site after every deploy and run the core browser tests against it.
     needs: deploy
+    if: ${{ !inputs.skip_checks }}
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
