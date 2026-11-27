@@ -36,3 +36,21 @@ def test_codeowners_paths_exist_and_name_people():
     for path, *owners in lines:
         assert owners and all(re.fullmatch(r"@[A-Za-z0-9-]+", o) for o in owners), path
         assert path == "*" or (ROOT / path.strip("/")).exists(), path
+
+
+# Everyone who could use /no-checks-main and /no-checks-pr when the list was locked (2026-11-27, DECISIONS D72).
+# Nobody new gets the commands: adding a name to .github/pr-command-users.txt fails this test.
+COMMAND_USERS = {"kamransingri", "ishaanman7898", "smyans", "nityagehlot", "mc-git-lab"}
+
+
+def test_the_skip_checks_list_is_locked_to_the_contributors_and_the_owners_review_it():
+    """/no-checks-main and /no-checks-pr (tools/pr-command.sh) read .github/pr-command-users.txt from main."""
+    lines = (ROOT / ".github" / "pr-command-users.txt").read_text(encoding="utf-8").splitlines()
+    users = {line.split("#")[0].strip().lower() for line in lines} - {""}
+    assert users == COMMAND_USERS  # locked: no one added, no one renamed
+    owners = [line.split() for line in (ROOT / ".github" / "CODEOWNERS").read_text(encoding="utf-8").splitlines()
+              if line.strip() and not line.startswith("#")]
+    assert ["/.github/", "@kamransingri", "@ishaanman7898"] in owners  # a change to the list needs their review
+    script = (ROOT / "tools" / "pr-command.sh").read_text(encoding="utf-8")
+    ci = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
+    assert "pr-command-users.txt" in script and "pr-command-users.txt" in ci

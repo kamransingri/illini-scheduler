@@ -1690,6 +1690,20 @@ which ("replaces D39.3"). Refer to entries by number from code comments and othe
   repository's own branches. `/no-checks-main` skips the one-review rule too, which is the point (a solo change you
   want live now); the merge comment names who used it.
 
+## Only the current contributors can skip checks (2026-11-27)
+
+- **D72.1 A locked list, not write access.** D71.3 let anyone with write access use the commands. Now the
+  commenter must also be in `.github/pr-command-users.txt`: the five contributors on 2026-11-27 (kamransingri,
+  ishaanman7898, smyans, NityaGehlot, MC-git-lab). The list is locked: `tools/test_rulesets.py` holds the same five
+  names and fails if one is added, so a newcomer can't be given the commands by editing one file. The script reads
+  the list from `main` through the API, never from the pull request, and `/.github/` is owned by kamransingri and
+  ishaanman7898 in CODEOWNERS.
+- **D72.2 `/no-checks-main` only merges pull requests by someone on the list.** It skips the review, so a pull request
+  by anyone else (a new contributor, a fork) still needs one, even when someone on the list comments.
+- **D72.3 A hand-added label doesn't count.** Anyone with write access can add the `no-checks-pr` label. `ci.yml`'s
+  `gate` job now looks up who added it last: the checks are skipped only if it was the command (github-actions[bot])
+  or someone on the list. Otherwise they run, with a warning.
+
 ## Gen-ed finder tab, RMP colours and course-only reviews (2026-11-27)
 
 - **D73.1 The gen-ed finder is a tab again.** D61 and D64 folded it into Course search through a "Popular gen-eds"

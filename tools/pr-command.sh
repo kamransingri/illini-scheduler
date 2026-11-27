@@ -6,9 +6,12 @@
 #   /no-checks-pr    skip the slow checks (test, e2e) on this pull request: label it no-checks-pr and re-run its CI.
 #                    The versions check still runs.
 #
-# Only someone with write access can use them, and only on a pull request from a branch of this repository.
+# Only the people in .github/pr-command-users.txt (the contributors when it was locked) can use them, read from main so a
+# pull request can't add anyone, and they also need write access. /no-checks-main also needs the pull request to be by
+# one of them, since it skips the review. Never on pull requests from forks.
 # Needs GH_TOKEN, GITHUB_REPOSITORY, PR (number), ACTOR (who commented) and BODY (the comment).
-# DRY_RUN=1 reads everything but prints what it would change instead of changing it.
+# DRY_RUN=1 reads everything but prints what it would change instead of changing it; with DRY_RUN, USERS_FILE can
+# point at a local copy of the list to try a change to it.
 set -euo pipefail
 
 repo=$GITHUB_REPOSITORY
@@ -27,16 +30,34 @@ case "$cmd" in
   *) echo "Not a command: '$cmd'"; exit 0 ;;
 esac
 
+if [ -n "${DRY_RUN:-}" ] && [ -n "${USERS_FILE:-}" ]; then
+  list=$(cat "$USERS_FILE")
+else
+  list=$(gh api "repos/$repo/contents/.github/pr-command-users.txt" -H "Accept: application/vnd.github.raw" 2>/dev/null || true)
+fi
+# shellcheck disable=SC2001 # strip comments from each line
+users=$(sed 's/#.*//' <<<"$list" | tr -d ' \r' | grep . || true)
+listed() { [ -n "$1" ] && grep -qixF -- "$1" <<<"$users"; }
+
+if ! listed "$ACTOR"; then
+  say "\`$cmd\` is only for the project's contributors in \`.github/pr-command-users.txt\`, so it was ignored."
+  exit 1
+fi
 perm=$(gh api "repos/$repo/collaborators/$ACTOR/permission" --jq .permission 2>/dev/null || echo none)
 case "$perm" in
   admin | maintain | write) ;;
   *) say "\`$cmd\` needs write access to this repository, and $ACTOR has \`$perm\`."; exit 1 ;;
 esac
 
-IFS=$'\t' read -r state cross branch sha < <(gh pr view "$PR" -R "$repo" \
-  --json state,isCrossRepository,headRefName,headRefOid --jq '[.state, .isCrossRepository, .headRefName, .headRefOid] | @tsv')
+IFS=$'\t' read -r state cross branch sha author < <(gh pr view "$PR" -R "$repo" \
+  --json state,isCrossRepository,headRefName,headRefOid,author \
+  --jq '[.state, .isCrossRepository, .headRefName, .headRefOid, .author.login] | @tsv')
 if [ "$state" != OPEN ]; then say "\`$cmd\` only works on an open pull request."; exit 1; fi
 if [ "$cross" != false ]; then say "\`$cmd\` doesn't work on pull requests from forks."; exit 1; fi
+if [ "$cmd" = /no-checks-main ] && ! listed "$author"; then
+  say "\`/no-checks-main\` skips the review, so it only merges pull requests by the contributors in the list, and this one is by $author. It needs a review as usual."
+  exit 1
+fi
 files=$(gh pr view "$PR" -R "$repo" --json files --jq '.files[].path')
 echo "$cmd by $ACTOR ($perm) on #$PR: $branch at $sha, $(grep -c . <<<"$files" || true) files"
 

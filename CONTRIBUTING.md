@@ -36,12 +36,15 @@ the ruleset lets GitHub Actions through (Repository settings, below).
 
 ### Skipping the wait: `/no-checks-main` and `/no-checks-pr`
 
-For a small change you want live now, comment on its pull request (you need write access; not on pull requests from
-forks). `commands.yml` runs `tools/pr-command.sh`:
+For a small change you want live now, comment on its pull request. Only the project's contributors as of
+2026-11-27 can: the five logins in `.github/pr-command-users.txt`, who also need write access. The list is locked:
+`tools/test_rulesets.py` fails if anyone is added, it's read from `main` (so a pull request can't add its author), and
+`/.github/` changes need the owners' review. Anyone else's command is answered and ignored, and so is a
+`no-checks-pr` label they add by hand. Never on pull requests from forks. `commands.yml` runs `tools/pr-command.sh`:
 
 | Comment | What happens |
 | --- | --- |
-| `/no-checks-main` | Merges the pull request into `main` straight away, without waiting for its checks or a review, and deploys without lint, unit tests, browser tests, Lighthouse or the live smoke test (`pages.yml` with `skip_checks`), so the site updates in about 5 minutes instead of 10 to 15. The pull request's own checks keep running, so you still see whether they pass. It also starts `release.yml` and `api.yml` when the change touches their files, and deletes the branch |
+| `/no-checks-main` | Only for a pull request by someone on the list, since it skips the review. Merges it into `main` straight away, without waiting for its checks or a review, and deploys without lint, unit tests, browser tests, Lighthouse or the live smoke test (`pages.yml` with `skip_checks`), so the site updates in about 5 minutes instead of 10 to 15. The pull request's own checks keep running, so you still see whether they pass. It also starts `release.yml` and `api.yml` when the change touches their files, and deletes the branch |
 | `/no-checks-pr` | Labels the pull request `no-checks-pr` and re-runs its CI without `test` and `e2e` (skipped jobs count as passed); `versions` still runs. Later pushes skip them too. Remove the label to bring them back from the next push |
 
 Both skip the safety net, so use them for changes you've checked yourself. If something breaks, `main` is fixed by
