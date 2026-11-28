@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { looksLikeCrn, searchCrn, type CrnHit, type CrnIndex } from "@/lib/crn";
 import { cisUrl, courseHref, dataUrl, fmtGpa, GENED_NAMES, termLabel } from "@/lib/format";
 import { search, type SearchHit } from "@/lib/search";
-import { SESSION_SHORT, type SummerData, type SummerRow } from "@/lib/summer";
+import { sessionText, WHERE, type SummerData, type SummerRow } from "@/lib/summer";
 import type { SearchIndex } from "@/lib/types";
 import AddToCart from "./AddToCart";
 import { Badge } from "./ui/Badge";
@@ -31,17 +31,23 @@ function loader<T>(file: string): () => Promise<T> {
 export const loadIndex = loader<SearchIndex>("search.json");
 const loadCrns = loader<CrnIndex>("crns.json");
 const loadSummer = loader<SummerData>("summer.json");
+const loadWinter = loader<SummerData>("winter.json");
+/** summer.json and, when the build has one, winter.json (#270); the search shows them the same way. A build without a
+ * winter has no winter.json, so asking for it would only log a 404. */
+const loadSeasons = (winter: boolean) =>
+  Promise.all([loadSummer().catch(() => null), winter ? loadWinter().catch(() => null) : null]).then((ds) => ds.filter((d): d is SummerData => d !== null));
 
-// Summer-only classes (no course page: not offered this term or next) are searched too and open Course Explorer (#122).
-type Hit = SearchHit | { kind: "section"; section: CrnHit } | { kind: "summer"; row: SummerRow; score: number };
+// Summer- and winter-only classes (no course page: not offered this term or next) are searched too and open Course
+// Explorer (#122, #270).
+type Hit = SearchHit | { kind: "section"; section: CrnHit } | { kind: "summer"; row: SummerRow; data: SummerData; score: number };
 
 function hitKey(h: Hit): string {
-  if (h.kind === "summer") return `su-${h.row.s}${h.row.n}`;
+  if (h.kind === "summer") return `su-${h.data.term}-${h.row.s}${h.row.n}`;
   return h.kind === "course" ? `c-${h.course.s}${h.course.n}` : h.kind === "instructor" ? `i-${h.instructor.k}` : `s-${h.section.term}-${h.section.crn}`;
 }
 
-function hitHref(h: Hit, summerTerm = ""): string {
-  if (h.kind === "summer") return cisUrl(summerTerm, h.row.s, h.row.n);
+function hitHref(h: Hit): string {
+  if (h.kind === "summer") return cisUrl(h.data.term, h.row.s, h.row.n);
   if (h.kind === "course") return courseHref(h.course.s, h.course.n);
   if (h.kind === "section") return `${courseHref(h.section.s, h.section.n)}#crn-${h.section.crn}`;
   const [s, n] = h.instructor.c[0]?.split(" ") ?? [];
@@ -56,8 +62,11 @@ export default function SearchBox({
   onPick,
   id = "q",
   compact = false,
+  winter = false,
 }: {
   nextTerm: string;
+  /** The build has a winter.json (lib/data.ts getWinter), so winter classes are searched too. */
+  winter?: boolean;
   autoFocus?: boolean;
   /** The input's id: the site header has its own search, so a page with a second one gives it another id. */
   id?: string;
@@ -71,7 +80,7 @@ export default function SearchBox({
   const [q, setQ] = useState("");
   const [index, setIndex] = useState<SearchIndex | null>(null);
   const [crns, setCrns] = useState<CrnIndex | null>(null);
-  const [summer, setSummer] = useState<SummerData | null>(null);
+  const [seasons, setSeasons] = useState<SummerData[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [active, setActive] = useState(0);
   const router = useRouter();
@@ -90,34 +99,40 @@ export default function SearchBox({
         .catch(() => setCrns({}));
   }, [wantCrns, crns]);
 
-  // The schedule builder plans next term, so its search leaves summer out.
+  // The schedule builder plans next term, so its search leaves summer and winter out.
   const withSummer = !onPick;
   const typed = q.trim() !== "";
   useEffect(() => {
-    if (withSummer && typed && !summer)
-      loadSummer()
-        .then(setSummer)
-        .catch(() => undefined);
-  }, [withSummer, typed, summer]);
-  const summerBy = useMemo(() => new Map((summer?.courses ?? []).map((r) => [`${r.s} ${r.n}`, r])), [summer]);
-  // summer classes with no course page (a course with recent grades has one even when it isn't offered now)
-  const summerOnly = useMemo<SearchIndex>(() => {
+    if (withSummer && typed && !seasons) void loadSeasons(winter).then(setSeasons);
+  }, [withSummer, typed, seasons, winter]);
+  const seasonBy = useMemo(() => (seasons ?? []).map((d) => ({ data: d, by: new Map(d.courses.map((r) => [`${r.s} ${r.n}`, r])) })), [seasons]);
+  // summer and winter classes with no course page (a course with recent grades has one even when it isn't offered now)
+  const summerOnly = useMemo(() => {
     const paged = new Set((index?.courses ?? []).map((c) => `${c.s} ${c.n}`));
-    return {
-      courses: (summer?.courses ?? []).filter((r) => !r.page && !paged.has(`${r.s} ${r.n}`)).map((r) => ({ s: r.s, n: r.n, t: r.t, c: "", g: r.codes, gpa: r.gpa, nx: 0, cu: 0 })),
-      instructors: [],
-    };
-  }, [summer, index]);
+    return seasonBy.map(({ data, by }) => ({
+      data,
+      by,
+      index: {
+        courses: data.courses.filter((r) => !r.page && !paged.has(`${r.s} ${r.n}`)).map((r) => ({ s: r.s, n: r.n, t: r.t, c: "", g: r.codes, gpa: r.gpa, nx: 0, cu: 0 })),
+        instructors: [],
+      } as SearchIndex,
+    }));
+  }, [seasonBy, index]);
 
   const hits: Hit[] = useMemo(() => {
     const sections: Hit[] = crns && wantCrns ? searchCrn(crns, q).map((section) => ({ kind: "section", section })) : [];
     const found: Hit[] = index ? search(index, q, 25) : [];
     const summerHits: Hit[] = withSummer
-      ? search(summerOnly, q, 5).flatMap((h) => (h.kind === "course" && summerBy.get(`${h.course.s} ${h.course.n}`) ? [{ kind: "summer" as const, row: summerBy.get(`${h.course.s} ${h.course.n}`)!, score: h.score }] : []))
+      ? summerOnly.flatMap(({ data, by, index: only }) =>
+          search(only, q, 5).flatMap((h) => {
+            const row = h.kind === "course" ? by.get(`${h.course.s} ${h.course.n}`) : undefined;
+            return row && h.kind === "course" ? [{ kind: "summer" as const, row, data, score: h.score }] : [];
+          }),
+        )
       : [];
     const ranked = [...found, ...summerHits].sort((a, b) => ("score" in b ? b.score : 0) - ("score" in a ? a.score : 0));
     return [...sections, ...ranked].slice(0, 25);
-  }, [index, crns, wantCrns, q, withSummer, summerOnly, summerBy]);
+  }, [index, crns, wantCrns, q, withSummer, summerOnly]);
   const titleOf = useMemo(() => new Map((index?.courses ?? []).map((c) => [`${c.s} ${c.n}`, c.t])), [index]);
   useEffect(() => setActive(0), [q]);
 
@@ -128,7 +143,7 @@ export default function SearchBox({
     } else if (onPick && h.kind === "section" && h.section.term === nextTerm) {
       onPick(h.section.s, h.section.n, h.section.crn);
       setQ("");
-    } else if (h.kind === "summer") window.location.assign(hitHref(h, summer?.term));
+    } else if (h.kind === "summer") window.location.assign(hitHref(h));
     else router.push(hitHref(h));
   };
 
@@ -185,7 +200,7 @@ export default function SearchBox({
           {hits.map((h, i) => (
             <li key={hitKey(h)} role="option" aria-selected={i === active} className={`-mx-3 px-3 ${i === active ? "bg-action-tint" : ""}`}>
               {h.kind === "summer" ? (
-                <SummerHit row={h.row} data={summer!} />
+                <SummerHit row={h.row} data={h.data} />
               ) : h.kind === "section" ? (
                 <SectionHit hit={h.section} title={titleOf.get(`${h.section.s} ${h.section.n}`) ?? ""} nextTerm={nextTerm} withCart={withCart} />
               ) : h.kind === "course" ? (
@@ -202,9 +217,15 @@ export default function SearchBox({
                       {h.course.g.map((g) => (
                         <Badge key={g}>{GENED_NAMES[g] ?? g}</Badge>
                       ))}
-                      {withSummer && summer && summerBy.get(`${h.course.s} ${h.course.n}`) && (
-                        <Badge title={sessionsOf(summerBy.get(`${h.course.s} ${h.course.n}`)!)}>{summer.upcoming ? summer.label : `Ran in ${summer.label}`}</Badge>
-                      )}
+                      {withSummer &&
+                        seasonBy.map(({ data, by }) => {
+                          const row = by.get(`${h.course.s} ${h.course.n}`);
+                          return row ? (
+                            <Badge key={data.term} title={sessionText(row, data.term)}>
+                              {data.upcoming ? data.label : `Ran in ${data.label}`}
+                            </Badge>
+                          ) : null;
+                        })}
                     </>
                   }
                   slots={{
@@ -237,8 +258,6 @@ export default function SearchBox({
   );
 }
 
-const sessionsOf = (r: SummerRow) => r.sess.map((x) => SESSION_SHORT[x] ?? x).join(", ");
-const WHERE: Record<SummerRow["online"], string> = { all: "online", some: "online or on campus", none: "on campus" };
 
 function SummerHit({ row, data }: { row: SummerRow; data: SummerData }) {
   return (
@@ -249,7 +268,7 @@ function SummerHit({ row, data }: { row: SummerRow; data: SummerData }) {
       <span className="group-hover:underline">{row.t}</span>
       <span className="mt-0.5 flex items-center gap-1 text-sm text-muted">
         {data.upcoming ? "" : "Ran in "}
-        {data.label} ({sessionsOf(row)}, {WHERE[row.online]}). Not offered this term or next, so it opens Course Explorer
+        {data.label} ({sessionText(row, data.term)}, {WHERE[row.online]}). Not offered this term or next, so it opens Course Explorer
         <Icon name="external" />
       </span>
     </a>

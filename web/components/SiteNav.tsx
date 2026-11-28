@@ -26,7 +26,7 @@ const typing = (el: Element | null) => !!el && (/^(INPUT|TEXTAREA|SELECT)$/.test
  * underneath instead of being covered. Escape or a tap outside closes the menu or the search and returns focus to the
  * button that opened it; "/" opens the search from anywhere that isn't a text field.
  */
-export default function SiteNav({ nextTerm }: { nextTerm: string }) {
+export default function SiteNav({ nextTerm, winter = false }: { nextTerm: string; winter?: boolean }) {
   const path = usePathname() ?? "/";
   const home = path === "/";
   const [panel, setPanel] = useState<Panel>(null);
@@ -183,7 +183,7 @@ export default function SiteNav({ nextTerm }: { nextTerm: string }) {
       {!home && (
         <div id="site-search" role="search" aria-label="Search the site" hidden={panel !== "search"} className="border-t border-white/25 bg-panel text-ink">
           <div className="mx-auto max-w-3xl px-4 py-3">
-            {panel === "search" && <SearchBox nextTerm={nextTerm} id="site-search-q" compact autoFocus />}
+            {panel === "search" && <SearchBox nextTerm={nextTerm} winter={winter} id="site-search-q" compact autoFocus />}
           </div>
         </div>
       )}

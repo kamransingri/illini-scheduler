@@ -108,7 +108,8 @@ you change something listed here, change this page in the same pull request.
   Course Explorer.
 - **Winter session** (#269) comes from the Course Explorer API for the coming winter, read once a night one page at a
   time, and from Wade Fagen-Ulmschneider's mirror for earlier winters. If the API can't be read that night, the build
-  goes on without `winter.json`. Like summer: classes only, no seats, not in the schedule builder.
+  goes on without `winter.json`. Like summer: classes only, no seats, not in the schedule builder. The gen-ed finder's
+  Winter view shows only a winter still ahead; after it ends, course pages say it ran until the next is listed.
 
 ## Gen-ed finder and schedule builder
 

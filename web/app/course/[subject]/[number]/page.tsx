@@ -17,7 +17,6 @@ import { cisUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, GPA_DATASET, GPA_SOURCES,
 import { profInput } from "@/lib/rank";
 import { professorsFor, tally } from "@/lib/sections";
 import { DEFAULT_SUMMER, summerHref, summerLine } from "@/lib/summer";
-import { winterLine } from "@/lib/winter";
 
 export const dynamicParams = false;
 
@@ -186,7 +185,10 @@ export default async function CoursePage({ params }: Props) {
               label="Winter"
               source={`Course Explorer's ${winter.data.label} schedule, and the winters ${winter.data.recent.map((t) => termLabel(t)).join(", ")}.`}
             >
-              <span data-testid="winter-line">{winterLine(inWinter, winter.data)}</span>
+              <span data-testid="winter-line">{summerLine(inWinter, winter.data)}</span>{" "}
+              <Link href={summerHref({ ...DEFAULT_SUMMER, gened: "all", q: course.subject }, "winter")} className="text-action underline">
+                Every winter {course.subject} class
+              </Link>
             </DataRow>
           )}
           <DataRow label="Biggest recent change">
@@ -231,7 +233,7 @@ export default async function CoursePage({ params }: Props) {
           score_priors: meta.score_priors,
           published: Object.keys(meta.terms ?? {}),
           summer: summer ? { term: summer.data.upcoming ? summer.data.term : summer.data.next, line: inSummer ? summerLine(inSummer, summer.data) : null } : null,
-          winter: winter && inWinter ? { term: winter.data.upcoming ? winter.data.term : winter.data.next, line: winterLine(inWinter, winter.data) } : null,
+          winter: winter && inWinter ? { term: winter.data.upcoming ? winter.data.term : winter.data.next, line: summerLine(inWinter, winter.data) } : null,
         }}
       />
     </article>

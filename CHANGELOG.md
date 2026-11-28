@@ -14,11 +14,13 @@ history).
 
 - Winter session classes are in the data (`winter.json`, for scripts and AI tools): Winter 2027's 59 classes, all
   online, with how many of the last three winters each ran in. A course that runs only in winter is "Winter only"
-  instead of "Not offered recently". The Summer page and gen-ed finder show them next (#269, #270).
+  instead of "Not offered recently", and "When it's offered" says "plus winter" for a class that runs most winters
+  (#269).
+- Winter session classes on the site (#270): a **Winter** view in the gen-ed finder's term row (Winter 2027, before
+  Spring 2027), a Winter line and tab on the course pages of courses that run in it, and a winter badge in the
+  search. Winter classes with no course page here open Course Explorer.
 - The degree checklist says when the next AP, IB, ACT and SAT credit tables are due: CITL usually publishes the
   2027-2028 tables around the end of April 2027 (#109).
-- Course pages show winter: a class in the coming winter session has a Winter line and tab saying so, and how many of
-  the last three winters it ran in. "When it's offered" says "plus winter" for a class that runs most winters.
 
 ### Changed
 

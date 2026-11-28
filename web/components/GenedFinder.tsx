@@ -21,7 +21,7 @@ import { loadPrefs, onPrefsChange, timeRulesSummary } from "@/lib/prefs";
 import { rankCourse } from "@/lib/rank";
 import type { Prefs } from "@/lib/schedule";
 import { DEFAULT_WEIGHTS, type ScorePriors } from "@/lib/score";
-import { DEFAULT_SUMMER, summerHref } from "@/lib/summer";
+import { DEFAULT_SUMMER, summerHref, type Season } from "@/lib/summer";
 import { termAfter } from "@/lib/terms";
 import type { GenedRow } from "@/lib/types";
 import { useWeights } from "@/lib/weights";
@@ -44,11 +44,13 @@ const TD = "border-l border-line px-2.5 py-2.5 first:border-l-0";
 export default function GenedFinder({
   nextTerm,
   summerTerm,
+  winterTerm = null,
   rmpAvailable,
   priors,
 }: {
   nextTerm: string;
   summerTerm: string | null; // the summer the Summer view shows (summer.json), null when there's none
+  winterTerm?: string | null; // the coming winter the Winter view shows (winter.json, #270), null when there's none
   rmpAvailable: boolean;
   priors: ScorePriors | null;
 }) {
@@ -63,28 +65,35 @@ export default function GenedFinder({
   const [moreOpen, setMoreOpen] = useState(false); // everything but the categories and Double-dips only (#244)
   const [rules, setRules] = useState<Prefs | null>(null); // the schedule builder's saved must-haves
   const [inSchedule, setInSchedule] = useState(0);
-  // ?term=summer: the newest summer's classes instead of next term's gen-eds (#123); SummerFinder keeps its own filters
-  const [summer, setSummer] = useState(false);
+  // ?term=summer or ?term=winter: the newest summer's (or coming winter's) classes instead of next term's gen-eds (#123,
+  // #270); SummerFinder keeps its own filters
+  const [season, setSeason] = useState<Season | null>(null);
+  const summer = season !== null;
+  const setSummer = (on: boolean) => setSeason(on ? "summer" : null);
   const termRow = useRef<HTMLDivElement>(null);
   const terms = useMemo(() => {
     const out = [summerTerm && termOrder(summerTerm) < termOrder(nextTerm) ? summerTerm : nextTerm];
     while (out.length < TERM_ROW) out.push(termAfter(out[out.length - 1]));
+    // termAfter skips winter: the coming winter goes in its place in the row (Winter 2027 before Spring 2027)
+    if (winterTerm && termOrder(winterTerm) >= termOrder(out[0]) - 1 && termOrder(winterTerm) < termOrder(out[out.length - 1]))
+      return [...out, winterTerm].sort((a, b) => termOrder(a) - termOrder(b));
     return out;
-  }, [nextTerm, summerTerm]);
+  }, [nextTerm, summerTerm, winterTerm]);
   // on a phone the row scrolls: keep the picked term in view
   // (braces: newer browsers return a promise from scrollIntoView, and React would call it as the effect's cleanup)
   useEffect(() => {
     termRow.current?.querySelector('[aria-pressed="true"]')?.scrollIntoView({ block: "nearest", inline: "nearest" });
-  }, [summer]);
+  }, [season]);
 
   // Filters live in the URL so Back, reload and shared links keep them.
   useEffect(() => {
     const { f: f0, sort: s0 } = filtersFromQuery(window.location.search);
     setF(f0);
     setSort(s0);
-    setSummer(new URLSearchParams(window.location.search).get("term") === "summer");
+    const term = new URLSearchParams(window.location.search).get("term");
+    setSeason(term === "summer" ? "summer" : term === "winter" && winterTerm ? "winter" : null);
     setRestored(true);
-  }, []);
+  }, [winterTerm]);
   useEffect(() => {
     if (!restored || summer) return;
     const q = filtersToQuery(f, sort);
@@ -138,6 +147,10 @@ export default function GenedFinder({
     window.history.replaceState(null, "", `${window.location.pathname}${summerHref({ ...DEFAULT_SUMMER, gened: f.codes[0] ?? DEFAULT_SUMMER.gened }).replace("/geneds/", "")}`);
     setSummer(true);
   };
+  const toWinter = () => {
+    window.history.replaceState(null, "", `${window.location.pathname}${summerHref({ ...DEFAULT_SUMMER, gened: f.codes[0] ?? DEFAULT_SUMMER.gened }, "winter").replace("/geneds/", "")}`);
+    setSeason("winter");
+  };
   const tab = (on: boolean, label: string, onClick: () => void) => (
     <button
       type="button"
@@ -162,7 +175,9 @@ export default function GenedFinder({
           t === nextTerm ? (
             <Fragment key={t}>{tab(!summer, termLabel(t), () => setSummer(false))}</Fragment>
           ) : t === summerTerm ? (
-            <Fragment key={t}>{tab(summer, termLabel(t), toSummer)}</Fragment>
+            <Fragment key={t}>{tab(season === "summer", termLabel(t), toSummer)}</Fragment>
+          ) : t === winterTerm ? (
+            <Fragment key={t}>{tab(season === "winter", termLabel(t), toWinter)}</Fragment>
           ) : (
             // no gen-ed or summer data for this term: greyed out
             <button key={t} type="button" disabled className="cursor-not-allowed bg-panel px-3 py-1.5 whitespace-nowrap text-muted/70">
@@ -172,8 +187,8 @@ export default function GenedFinder({
           ),
         )}
       </div>
-      {summer ? (
-        <SummerFinder />
+      {season ? (
+        <SummerFinder key={season} season={season} />
       ) : (
         <div className="grid grid-cols-1 gap-8 md:grid-cols-[15rem_minmax(0,1fr)]">
           <button
