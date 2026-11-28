@@ -32,8 +32,10 @@ export const loadIndex = loader<SearchIndex>("search.json");
 const loadCrns = loader<CrnIndex>("crns.json");
 const loadSummer = loader<SummerData>("summer.json");
 const loadWinter = loader<SummerData>("winter.json");
-/** summer.json and winter.json (#270), whichever load; the search shows them the same way. */
-const loadSeasons = () => Promise.all([loadSummer().catch(() => null), loadWinter().catch(() => null)]).then((ds) => ds.filter((d): d is SummerData => d !== null));
+/** summer.json and, when the build has one, winter.json (#270); the search shows them the same way. A build without a
+ * winter has no winter.json, so asking for it would only log a 404. */
+const loadSeasons = (winter: boolean) =>
+  Promise.all([loadSummer().catch(() => null), winter ? loadWinter().catch(() => null) : null]).then((ds) => ds.filter((d): d is SummerData => d !== null));
 
 // Summer- and winter-only classes (no course page: not offered this term or next) are searched too and open Course
 // Explorer (#122, #270).
@@ -60,8 +62,11 @@ export default function SearchBox({
   onPick,
   id = "q",
   compact = false,
+  winter = false,
 }: {
   nextTerm: string;
+  /** The build has a winter.json (lib/data.ts getWinter), so winter classes are searched too. */
+  winter?: boolean;
   autoFocus?: boolean;
   /** The input's id: the site header has its own search, so a page with a second one gives it another id. */
   id?: string;
@@ -98,8 +103,8 @@ export default function SearchBox({
   const withSummer = !onPick;
   const typed = q.trim() !== "";
   useEffect(() => {
-    if (withSummer && typed && !seasons) void loadSeasons().then(setSeasons);
-  }, [withSummer, typed, seasons]);
+    if (withSummer && typed && !seasons) void loadSeasons(winter).then(setSeasons);
+  }, [withSummer, typed, seasons, winter]);
   const seasonBy = useMemo(() => (seasons ?? []).map((d) => ({ data: d, by: new Map(d.courses.map((r) => [`${r.s} ${r.n}`, r])) })), [seasons]);
   // summer and winter classes with no course page (a course with recent grades has one even when it isn't offered now)
   const summerOnly = useMemo(() => {

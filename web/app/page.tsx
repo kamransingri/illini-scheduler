@@ -1,7 +1,7 @@
 import Link from "next/link";
 import LiveOpenings from "@/components/home/LiveOpenings";
 import SearchBox from "@/components/SearchBox";
-import { getMeta, getSearchIndex } from "@/lib/data";
+import { getMeta, getSearchIndex, getWinter } from "@/lib/data";
 import { courseHref, termLabel } from "@/lib/format";
 
 const POPULAR: [string, string][] = [
@@ -38,7 +38,7 @@ export default function Home() {
         </h1>
         <p className="mt-2 max-w-prose text-lg">Find a course, compare its professors by GPA and ratings, and build a week with no conflicts.</p>
         <div className="mt-6">
-          <SearchBox nextTerm={meta.next_term} autoFocus />
+          <SearchBox nextTerm={meta.next_term} winter={getWinter() !== null} autoFocus />
         </div>
         <div className="mt-3 flex flex-wrap items-center gap-2" data-testid="home-popular">
           <span className="mr-1 text-muted">Often searched:</span>
