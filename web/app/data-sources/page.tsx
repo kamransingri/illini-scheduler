@@ -88,13 +88,15 @@ export default function DataSourcesPage() {
         </p>
       </Source>
 
-      <Source id="tre" title="Teachers Ranked as Excellent">
+      <Source id="tre" title="Teaching awards">
         <p>
-          The &quot;Teachers Ranked as Excellent&quot; badges on professors come from{" "}
+          The teaching award badges on professors come from{" "}
           <a href={`${WADE}/tree/main/teachers-ranked-as-excellent`} className={LINK} target="_blank" rel="noopener noreferrer">
-            Wade Fagen-Ulmschneider&apos;s copy of the campus list
+            Wade Fagen-Ulmschneider&apos;s copy of the campus lists
           </a>
-          , which is based on student ratings. It covers instructors only, not teaching assistants.
+          , which is based on student ratings: Teachers Ranked as Excellent until Summer 2025, then the Illinois Student
+          Government (ISG) FLEX Award, which replaced it when the FLEX survey replaced ICES in Fall 2025. It covers
+          instructors only, not teaching assistants.
         </p>
       </Source>
 

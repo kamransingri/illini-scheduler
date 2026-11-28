@@ -4,7 +4,7 @@ import { encodeCart, type CartItem } from "../../web/lib/cart";
 import { fmtCredits, hourWarnings, totalHours } from "../../web/lib/credits";
 import { examConflicts, finalsSummary } from "../../web/lib/finals";
 import { applyFilters, DEFAULT_FILTERS, filtersToQuery, GENED_GROUPS, type Filters, type SortKey } from "../../web/lib/geneds";
-import { cisUrl, daysStr, fmtTime, GENED_NAMES, termLabel, termRange } from "../../web/lib/format";
+import { cisUrl, daysStr, fmtTime, GENED_NAMES, termLabel, termRange, treLabel } from "../../web/lib/format";
 import { courseInput, type InputContext } from "../../web/lib/inputs";
 import { prefsFromParams, prefsToParams, PRESETS, timeRulesSummary } from "../../web/lib/prefs";
 import { rankCourse } from "../../web/lib/rank";
@@ -231,7 +231,7 @@ export function getCourse(course: Course, meta: Meta, site: string, a: CourseArg
       rate_my_professors: p.rmp
         ? { quality: p.rmp.rating, difficulty: p.rmp.difficulty, would_take_again_percent: p.rmp.would_take_again !== null && p.rmp.would_take_again >= 0 ? Math.round(p.rmp.would_take_again) : null, ratings: p.rmp.num_ratings, url: p.rmp.url }
         : null,
-      ...(p.tre.length ? { teachers_ranked_excellent: p.tre.map(termLabel) } : {}),
+      ...(p.tre.length ? { teachers_ranked_excellent: p.tre.map(treLabel) } : {}),
     })),
     ...(known.length ? { exam_hints: Object.fromEntries(known.map(([k, f]) => [k, f.value])) } : {}),
     ...(course.notes.length ? { notes: course.notes.map((n) => n.text) } : {}),

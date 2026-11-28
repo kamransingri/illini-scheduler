@@ -22,7 +22,7 @@ DATES_FILE = WADE_DIR / "snapshot_dates.json"
 STATIC_FILES = [
     "gpa/uiuc-gpa-dataset.csv",
     "geneds/gened-courses.csv",
-    "teachers-ranked-as-excellent/uiuc-tre-dataset.csv",
+    "teachers-ranked-as-excellent/highly-ranked-instructors.csv",  # TRE to Summer 2025, ISG FLEX Award after
 ]
 
 # Terms used for offering history (Phase 4): the last 8 regular terms plus summers, and the next term.

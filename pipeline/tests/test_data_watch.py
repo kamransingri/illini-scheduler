@@ -134,7 +134,7 @@ def test_github_api_failure_is_not_fatal(capsys):
     by = {r.source: r for r in rows}
     assert by["Wade's GPA dataset"].status == dw.OK  # judged from the live site alone
     assert by["Wade's gen-ed list"].now == "file changed 2026-10-30"  # falls back to the live site's snapshot
-    assert by["Wade's Teachers Ranked as Excellent list"].status == dw.CHECK
+    assert by["Wade's teaching awards list (TRE, ISG FLEX Award)"].status == dw.CHECK
     assert "couldn't read when" in capsys.readouterr().err
 
 

@@ -76,7 +76,7 @@ def main(argv: list[str] | None = None) -> int:
         dates = snapshot_dates()
         cat_path = catalog_path
         gpa_path, gened_path = WADE_DIR / "gpa" / "uiuc-gpa-dataset.csv", WADE_DIR / "geneds" / "gened-courses.csv"
-        tre_path = WADE_DIR / "teachers-ranked-as-excellent" / "uiuc-tre-dataset.csv"
+        tre_path = WADE_DIR / "teachers-ranked-as-excellent" / "highly-ranked-instructors.csv"
         try:
             osm_path = buildings.fetch()
         except buildings.BuildingsUnavailable as e:  # the site builds without locations, as it does without RMP

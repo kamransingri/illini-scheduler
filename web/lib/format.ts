@@ -168,7 +168,8 @@ export function seatChangeText(oldStatus: string, newStatus: string): string {
   return verb === "closed" ? "Closed" : "Changed";
 }
 
-/** Teachers Ranked as Excellent label: "2024-fa Excellent" -> "Fall 2024, Excellent". */
+/** Teaching award label: "2024-fa Excellent" -> "Fall 2024, Excellent"; "2025-fa ISG FLEX Award" -> "Fall 2025, ISG FLEX
+ * Award" (the Teachers Ranked as Excellent list ended with Summer 2025, #267). */
 export function treLabel(s: string): string {
   const m = /^(\d{4}-(?:sp|su|fa|wi))\s+(.+)$/.exec(s.trim());
   return m ? `${termLabel(m[1])}, ${m[2]}` : s;

@@ -32,7 +32,7 @@ Credit these sources if you republish the data:
   [course-catalog](https://github.com/wadefagen/datasets/tree/main/course-catalog) mirror.
 - **[UIUC GPA dataset](https://github.com/wadefagen/datasets/tree/main/gpa)**,
   **[gen-ed list](https://github.com/wadefagen/datasets/tree/main/geneds)** and
-  **[Teachers Ranked as Excellent](https://github.com/wadefagen/datasets/tree/main/teachers-ranked-as-excellent)**
+  **[teaching awards](https://github.com/wadefagen/datasets/tree/main/teachers-ranked-as-excellent)** (Teachers Ranked as Excellent, then the ISG FLEX Award)
   by Wade Fagen-Ulmschneider. The University released the grade terms before Spring 2025 through FOIA requests and
   the terms from Spring 2025 on under Urbana Senate item EP.25.072, brought by the Illinois Student Council. The
   dataset's [data source table](https://github.com/wadefagen/datasets/tree/main/gpa#data-source) lists each request.
@@ -241,7 +241,7 @@ One file per course offered this term or next, or with recent GPA data: `data/co
 | `instructors.<instructor key>.name` | string | Display name |
 | `instructors.<instructor key>.teaching` | string[] | Terms they teach it, of this term and next |
 | `instructors.<instructor key>.in_gpa_dataset` | boolean | Has grades for this course |
-| `instructors.<instructor key>.tre` | string[] | Recent terms on the Teachers Ranked as Excellent list |
+| `instructors.<instructor key>.tre` | string[] | Recent teaching awards, newest first: `2024-sp Excellent` or `Outstanding` (Teachers Ranked as Excellent, to Summer 2025), `2025-fa ISG FLEX Award` (from Fall 2025) |
 | `instructors.<instructor key>.gpa` | object \| null | Their grades in this course |
 | `instructors.<instructor key>.gpa.avg` | number | All-time average GPA |
 | `instructors.<instructor key>.gpa.recent` | number \| null | Recent average GPA |
