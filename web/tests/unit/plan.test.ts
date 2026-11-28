@@ -126,6 +126,7 @@ describe("terms a course doesn't usually run in (#116)", () => {
     expect(offeringWarning("f,s", "2028-su", "Summer 2028")).toBe("Usually runs in fall and spring only, not in Summer 2028.");
     expect(offeringWarning("f,s,u", "2028-su", "Summer 2028")).toBeNull();
     expect(offeringWarning("f,s", "2028-sp", "Spring 2028")).toBeNull();
+    expect(offeringWarning("s,w", "2028-fa", "Fall 2028")).toBe("Usually runs in spring and winter only, not in Fall 2028.");
   });
   it("follows odd and even years", () => {
     expect(offeringWarning("fo", "2027-fa", "Fall 2027")).toBeNull();

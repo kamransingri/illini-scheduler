@@ -44,6 +44,16 @@ test("arrow keys move between the tabs that can be opened, and the summer tab sh
   await expect(tab(page, "Summer 2027")).toHaveAttribute("aria-selected", "true");
 });
 
+test("a course that ran last winter has a winter tab showing the winter line", async ({ page }) => {
+  await page.goto("./course/BADM/275/");
+  await expect(page.getByRole("tablist", { name: "Term" }).locator("visible=true").getByRole("tab").first()).toBeVisible();
+  test.skip(!(await page.getByTestId("winter-line").count()), "no winter.json in this build's data");
+  const winter = page.getByRole("tablist", { name: "Term" }).locator("visible=true").locator('[data-term$="-wi"]');
+  await expect(winter).toHaveAttribute("data-state", "winter");
+  await winter.click();
+  await expect(page.getByTestId("winter-tab")).toHaveText(await page.getByTestId("winter-line").innerText());
+});
+
 test("375px: the tabs scroll inside their bar, not the page", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 800 });
   await page.goto("./course/STAT/107/");
