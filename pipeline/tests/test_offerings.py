@@ -101,7 +101,7 @@ def test_pattern_codes_for_search_json():
     assert code("Every fall and spring, plus summers") == "f,s,u"
     assert code("Fall only") == "f" and code("Spring only, plus summers") == "s,u"
     assert code("Fall, odd years") == "fo" and code("Spring, even years, plus summers") == "se,u"
-    assert code("Summer only") == "u" and code("Not offered recently") == "n"
+    assert code("Summer only") == "u" and code("Not offered recently") == "n" and code("Winter only") == "w"
     assert code("Irregular (3 of the last 8 fall/spring terms)") == "i"
     assert code("Irregular (3 of the last 8 fall/spring terms), plus summers") == "i,u"
     assert code("Every fall and spring, plus winter") == "f,s,w"
@@ -111,3 +111,11 @@ def test_pattern_codes_for_search_json():
     window = regular_window("2026-fa")
     for offered in ([], window, window[::2], window[1::2], window[:3], ["2025-su"], ["2026-wi"]):
         assert code(label_pattern(offered, window)) in {"f,s", "f", "s", "fo", "fe", "so", "se", "u", "w", "n", "i"}
+
+
+def test_winter_only():
+    # #269: HIST 262 and JS 262 run only in winter session; before winters were loaded they had no pattern at all
+    window = regular_window("2026-fa")
+    assert label_pattern(["2025-wi", "2026-wi"], window) == "Winter only"
+    assert label_pattern(["2026-wi", "2026-su"], window) == "Summer and winter only"
+    assert label_pattern(window + ["2026-wi"], window) == "Every fall and spring"  # winter doesn't change the rest

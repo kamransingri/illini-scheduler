@@ -8,7 +8,7 @@ from __future__ import annotations
 import csv
 
 from .config import FIXTURES, REFERENCE_COURSES
-from .fetch import HISTORY_TERMS, NOT_YET_PUBLISHED_OK, WADE_DIR, catalog_path
+from .fetch import HISTORY_TERMS, WADE_DIR, catalog_path
 from .textio import open_mixed
 
 REF = set(REFERENCE_COURSES)
@@ -30,7 +30,7 @@ def slice_csv(src, dest, key_fn) -> int:  # type: ignore[no-untyped-def]
 
 def main() -> None:
     for term in HISTORY_TERMS:
-        if term in NOT_YET_PUBLISHED_OK and not catalog_path(term).exists():
+        if not catalog_path(term).exists():  # the coming winter isn't mirrored yet
             continue
         n = slice_csv(catalog_path(term), FIXTURES / "course-catalog" / f"{term}.csv",
                       lambda r: (r["Subject"], r["Number"]) in REF)

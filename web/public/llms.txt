@@ -32,6 +32,7 @@ How to use the data:
 - [course/CS/124.json](https://kamransingri.github.io/illini-scheduler/data/course/CS/124.json): one course: sections with CRNs, times, rooms, seats and finals; GPA by term and professor; RMP ratings; offering history. Swap in any subject and number from search.json
 - [geneds.json](https://kamransingri.github.io/illini-scheduler/data/geneds.json): next term's gen-ed courses with GPA, open lectures and the best professor
 - [summer.json](https://kamransingri.github.io/illini-scheduler/data/summer.json): the newest summer's classes, sessions and online options
+- [winter.json](https://kamransingri.github.io/illini-scheduler/data/winter.json): the coming winter session's classes (same fields)
 - [crns.json](https://kamransingri.github.io/illini-scheduler/data/crns.json): CRN to course and section
 - [degrees/index.json](https://kamransingri.github.io/illini-scheduler/data/degrees/index.json): every major and minor; each has its requirements in degrees/<id>.json
 - [seat-events.json](https://kamransingri.github.io/illini-scheduler/data/seat-events.json): seat status changes from the last 7 days

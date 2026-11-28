@@ -573,11 +573,12 @@ def insert_sections(conn: sqlite3.Connection, term: str, sections: Iterable[Sect
 
 def load_term(
     conn: sqlite3.Connection, term: str, subjects: set[str] | None, source: str = "auto",
-    catalog_csv: Path | None = None, checked_at: str = "",
+    catalog_csv: Path | None = None, checked_at: str = "", crawler: ApiCrawler | None = None,
 ) -> tuple[int, str]:
-    """Load one term from the chosen source. Returns (n_sections, source_used)."""
+    """Load one term from the chosen source. Returns (n_sections, source_used). `crawler`: a crawler with other limits
+    (the winter term's is one request at a time and doesn't reuse its cache)."""
     if source in ("api", "auto") and (source == "api" or api_reachable()):
-        crawler = ApiCrawler()
+        crawler = crawler or ApiCrawler()
         try:
             courses, sections, names = asyncio.run(crawler.crawl_term(term, subjects))
         except Exception as e:  # noqa: BLE001 - any crawl failure falls back to the mirror in auto mode

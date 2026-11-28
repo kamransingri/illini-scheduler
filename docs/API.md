@@ -76,7 +76,7 @@ Credit these sources if you republish the data:
 | `course/<SUBJECT>/<NUMBER>.json` | Everything about one course: sections, GPA, professors, history | 5–200 KB each |
 | `geneds.json` | Gen-ed courses for next term, with their scores | ~300 KB |
 | `summer.json` | The newest summer's classes | ~100 KB |
-| `winter.json` | The newest winter's classes | ~3 KB |
+| `winter.json` | The coming (or newest) winter session's classes | ~10 KB |
 | `crns.json` | CRN to course and section | ~1 MB |
 | `renumbered.json` | Old course numbers to new ones | small |
 | `buildings.json` | Where each building in the section data is | ~12 KB |
