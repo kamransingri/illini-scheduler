@@ -449,8 +449,11 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA, rename: Renamer | No
     from .summer import export as export_summer
 
     summer = export_summer(conn, out_dir, tuple(live_terms), keys)  # `page` means a course file was written
+    from .winter import export as export_winter
+
+    winter = export_winter(conn, out_dir, tuple(live_terms))
     return (f"{n_files} course files, {len(gened_rows)} gen-ed rows, {len(inst_index)} instructors, {deg}, {ap}, "
-            f"{ib}, {summer} -> {out_dir}")
+            f"{ib}, {summer}, {winter} -> {out_dir}")
 
 
 def course_summary(g: dict | None, nxt: dict | None, rec: dict, gi: dict[str, dict], display: Any, rmp_block: Any,

@@ -106,7 +106,10 @@ you change something listed here, change this page in the same pull request.
   aren't in the schedule builder or the seat checks; confirm sections in Course Explorer and Self-Service. A summer
   class with no fall or spring section in the current or next term has no course page here, so the search sends it to
   Course Explorer.
-- **No winter session.** There's no open source for winter courses.
+- **Winter is last winter's classes until the next is in Wade's dataset.** Course pages show a Winter line and tab
+  for a class that ran last winter (Winter 2026 in November 2026), with how many of the last three winters it ran in.
+  Winter sections aren't in the schedule builder, the four-year plan or the seat checks; confirm them in Course
+  Explorer.
 
 ## Gen-ed finder and schedule builder
 

@@ -25,11 +25,13 @@ STATIC_FILES = [
     "teachers-ranked-as-excellent/uiuc-tre-dataset.csv",
 ]
 
-# Terms used for offering history (Phase 4): the last 8 regular terms plus summers, and the next term.
+# Terms used for offering history (Phase 4): the last 8 regular terms plus summers and winters, and the next term.
 HISTORY_TERMS = [
-    "2022-fa", "2023-sp", "2023-su", "2023-fa", "2024-sp", "2024-su", "2024-fa", "2025-sp", "2025-su",
-    "2025-fa", "2026-sp", "2026-su", "2026-fa", "2027-sp",
+    "2022-fa", "2023-sp", "2023-su", "2023-fa", "2024-wi", "2024-sp", "2024-su", "2024-fa", "2025-wi", "2025-sp",
+    "2025-su", "2025-fa", "2026-wi", "2026-sp", "2026-su", "2026-fa", "2027-wi", "2027-sp",
 ]
+# Listed before Wade's dataset has them: until it does, the fetch and the build skip them (winter files come late).
+NOT_YET_PUBLISHED_OK = {"2027-wi"}
 CURRENT_TERM = "2026-fa"
 NEXT_TERM = "2027-sp"
 
@@ -60,7 +62,10 @@ def fetch_wade(terms: list[str] | None = None, max_age_hours: float = 20) -> lis
             try:
                 out.append(_download(rel, timedelta(hours=max_age_hours), client))
             except httpx.HTTPError as e:
-                if (WADE_DIR / rel).exists():
+                if isinstance(e, httpx.HTTPStatusError) and e.response.status_code == 404 \
+                        and Path(rel).stem in NOT_YET_PUBLISHED_OK:
+                    print(f"note: {rel} isn't published yet; skipping it", file=sys.stderr)
+                elif (WADE_DIR / rel).exists():
                     print(f"warn: could not refresh {rel} ({e}); using cached copy", file=sys.stderr)
                     out.append(WADE_DIR / rel)
                 else:

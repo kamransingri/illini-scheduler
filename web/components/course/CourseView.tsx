@@ -28,9 +28,11 @@ export type CourseMeta = {
   published?: string[];
   /** this course's line from summer.json (#122), shown on the summer tab instead of sections */
   summer?: { term: string; line: string | null } | null;
+  /** this course's line from winter.json, only when it ran last winter: adds a winter tab showing the line */
+  winter?: { term: string; line: string } | null;
 };
 
-type Tab = { term: string; state: "open" | "none" | "summer" | "unpublished" };
+type Tab = { term: string; state: "open" | "none" | "summer" | "winter" | "unpublished" };
 
 const NAV = [
   ["professors", "Professors"],
@@ -129,9 +131,11 @@ export default function CourseView({ subject, number, meta }: { subject: string;
   if (!course || !scored) return <p className="min-h-screen text-muted">Loading sections and professors…</p>;
 
   // The same tabs on every course page (#140): this term, next term, and the next summer and fall, plus any other term
-  // this course's file has. A term not published yet is disabled; one with no sections for this course is greyed.
+  // this course's file has, and the winter for a course that runs in winter. A term not published yet is disabled; one
+  // with no sections for this course is greyed.
   const published = meta.published ?? Object.keys(course.terms);
-  const tabs: Tab[] = [...new Set([...tabTerms(meta.current_term), ...Object.keys(course.terms)])]
+  const extra = (t: string) => (meta.summer?.term === t ? meta.summer.line : meta.winter?.term === t ? meta.winter.line : null);
+  const tabs: Tab[] = [...new Set([...tabTerms(meta.current_term), ...Object.keys(course.terms), ...(meta.winter ? [meta.winter.term] : [])])]
     .sort((a, b) => termOrder(a) - termOrder(b))
     .map((t) => ({
       term: t,
@@ -143,7 +147,9 @@ export default function CourseView({ subject, number, meta }: { subject: string;
             ? meta.summer.line
               ? "summer"
               : "none"
-            : "unpublished",
+            : meta.winter?.term === t
+              ? "winter"
+              : "unpublished",
     }));
   const openable = tabs.filter((x) => x.state !== "unpublished");
   const pick = (t: string) => {
@@ -343,8 +349,8 @@ export default function CourseView({ subject, number, meta }: { subject: string;
               </span>
             }
           />
-          {term && meta.summer?.line && meta.summer.term === term && !block?.sections.length ? (
-            <p data-testid="summer-tab">{meta.summer.line}</p>
+          {term && extra(term) && !block?.sections.length ? (
+            <p data-testid={term.endsWith("-wi") ? "winter-tab" : "summer-tab"}>{extra(term)}</p>
           ) : !block || !block.sections.length ? (
             <p className="text-muted">
               Not offered in {termLabel(term ?? meta.next_term)}.{course.pattern ? ` Usual pattern: ${course.pattern.label}.` : ""}
