@@ -14,6 +14,9 @@ history).
 
 - The degree checklist says when the next AP, IB, ACT and SAT credit tables are due: CITL usually publishes the
   2027-2028 tables around the end of April 2027 (#109).
+- The course data files (`course/<SUBJECT>/<NUMBER>.json`, for scripts and AI tools) list what a course says to buy,
+  each with the sentence it came from: Day1Access charges, lab fees, iClicker, access codes, lab kits and laptops, from
+  Course Explorer and the physics course pages (#61). Course pages will show it later (#62).
 
 ### Changed
 

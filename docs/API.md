@@ -128,6 +128,8 @@ Build information. Read it first to learn the current and next term.
 | `score_priors.rmp.difficulty` | number | Mean RMP difficulty |
 | `score_priors.rmp.would_take_again` | number | Mean would-take-again, 0 to 100 |
 | `score_priors.rmp.n_instructors` | number | Rated instructors in those means |
+| `iclicker_notes[].text` | string | The campus iClicker rules, word for word from the campus guide |
+| `iclicker_notes[].url` | string | The guide they're quoted from |
 
 The site's "best pick" score pulls small samples toward `score_priors`
 ([DECISIONS.md](DECISIONS.md) D13).
@@ -238,6 +240,16 @@ One file per course offered this term or next, or with recent GPA data: `data/co
 | `terms.<term>.sections[].meetings[].b` | string | Building |
 | `terms.<term>.sections[].meetings[].r` | string | Room |
 | `terms.<term>.sections[].fx` | array | Final exams: `[date, start, end, type]`; type `Conflict` is the make-up slot (optional) |
+| `terms.<term>.materials[]` | array | What to buy, from Course Explorer text and official course pages; left out when nothing was found, which doesn't mean nothing to buy (optional) |
+| `terms.<term>.materials[].kind` | string | `textbook`, `access-code`, `day1access`, `fee`, `iclicker` (option not stated), `iclicker-remote`, `iclicker-subscription`, `lab-kit`, `laptop`, `calculator` or `platform` |
+| `terms.<term>.materials[].title` | string | "iClicker remote", "WebAssign", "Lab fee", ... |
+| `terms.<term>.materials[].need` | string | `required`, `recommended`, `optional`, `choose-one` (one of the items marked so) or `none` ("no required textbook"); left out when the source doesn't say (optional) |
+| `terms.<term>.materials[].price` | string | As the source writes it, `$89.40`, or `free` (optional) |
+| `terms.<term>.materials[].crns` | string[] | The sections it's for; left out when it's for every section (optional) |
+| `terms.<term>.materials[].source` | string | `Course Explorer section text`, `Course Explorer section information` or `Course page` |
+| `terms.<term>.materials[].quote` | string | The sentence it was found in, at most 160 characters |
+| `terms.<term>.materials[].url` | string | The course page, or the program's page for Day1Access (optional) |
+| `terms.<term>.materials[].read_on` | string | Date the source was read, `2026-11-27` |
 | `instructors.<instructor key>.name` | string | Display name |
 | `instructors.<instructor key>.teaching` | string[] | Terms they teach it, of this term and next |
 | `instructors.<instructor key>.in_gpa_dataset` | boolean | Has grades for this course |

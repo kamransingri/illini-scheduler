@@ -41,6 +41,7 @@ def main(argv: list[str] | None = None) -> int:
         export,
         gpa,
         instructors,
+        materials_text,
         offerings,
         renumbered,
         transit,
@@ -143,6 +144,11 @@ def main(argv: list[str] | None = None) -> int:
 
     log("phase 5: exam format")
     log(f"  {exam_format.run(conn)}")
+    conn.commit()
+
+    log("phase 5b: course materials from Course Explorer text and course pages")
+    live = [t for t in (CURRENT_TERM, NEXT_TERM) if t in terms]
+    log(f"  {materials_text.run(conn, live, None if args.fixtures else materials_text.Fetcher())}")
     conn.commit()
 
     log("phase 6: building locations (OpenStreetMap)")

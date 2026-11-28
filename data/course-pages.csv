@@ -1,0 +1,19 @@
+# Official course pages read for what to buy (#61, pipeline/materials_text.py). One row per page, under *.illinois.edu
+# only, read where robots.txt allows it, at most one request a second. {term} becomes the term as the site writes it
+# (fa2026, sp2027); a page missing for a term, or one that doesn't name the course, adds nothing that term.
+course,url
+PHYS 100,https://courses.grainger.illinois.edu/PHYS100/{term}/iclicker.html
+PHYS 100,https://courses.grainger.illinois.edu/PHYS100/{term}/required-materials.html
+PHYS 101,https://courses.grainger.illinois.edu/PHYS101/{term}/iclicker.html
+PHYS 101,https://courses.grainger.illinois.edu/PHYS101/{term}/required-materials.html
+PHYS 102,https://courses.grainger.illinois.edu/PHYS102/{term}/iclicker.html
+PHYS 102,https://courses.grainger.illinois.edu/PHYS102/{term}/required-materials.html
+PHYS 211,https://courses.grainger.illinois.edu/PHYS211/{term}/iclicker.html
+PHYS 211,https://courses.grainger.illinois.edu/PHYS211/{term}/required-materials.html
+PHYS 212,https://courses.grainger.illinois.edu/PHYS212/{term}/iclicker.html
+PHYS 212,https://courses.grainger.illinois.edu/PHYS212/{term}/required-materials.html
+PHYS 213,https://courses.grainger.illinois.edu/PHYS213/{term}/iclicker.html
+PHYS 213,https://courses.grainger.illinois.edu/PHYS213/{term}/required-materials.html
+PHYS 214,https://courses.grainger.illinois.edu/PHYS214/{term}/iclicker.html
+PHYS 214,https://courses.grainger.illinois.edu/PHYS214/{term}/required-materials.html
+PHYS 485,https://courses.grainger.illinois.edu/PHYS485/{term}/required-materials.html

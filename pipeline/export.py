@@ -23,6 +23,7 @@ from .buildings import CREDIT as BUILDINGS_CREDIT
 from .buildings import export_rows as building_rows
 from .config import WEB_DATA
 from .fetch import CURRENT_TERM, NEXT_TERM
+from .materials_text import ICLICKER_GUIDE, ICLICKER_NOTES
 from .names import alias_key, load_aliases, parse_name, term_order
 from .offerings import pattern_code
 from .renumbered import Renamer
@@ -219,6 +220,8 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA, rename: Renamer | No
     changes: dict[tuple[str, str], list[dict]] = defaultdict(list)
     for r in conn.execute("SELECT * FROM course_changes"):
         changes[(r["subject"], r["number"])].append({"term": r["term"], "field": r["field"], "summary": r["summary"]})
+    materials = {(r["term"], r["subject"], r["number"]): json.loads(r["items_json"])
+                 for r in conn.execute("SELECT * FROM materials")}
     exam: dict[tuple[str, str], dict[str, dict]] = defaultdict(dict)
     for r in conn.execute("SELECT * FROM exam_format"):
         p = load_profile(r["profile_json"])
@@ -305,6 +308,8 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA, rename: Renamer | No
             term_blocks[t] = {"label": terms[t]["label"], "checked_at": terms[t]["checked_at"],
                               "source": terms[t]["source"], "status_known": known,
                               "n_primary": len(prim), "n_open": n_open, "sections": secs}
+            if (t, subj, num) in materials:
+                term_blocks[t]["materials"] = materials[(t, subj, num)]
             for s in secs:
                 for k in s["instructors"]:
                     inst_keys[k].add(t)
@@ -435,6 +440,7 @@ def run(conn: sqlite3.Connection, out_dir: Path = WEB_DATA, rename: Renamer | No
         "repo_url": REPO_URL, "live_url": LIVE_URL, "n_courses": n_files,
         "history_terms": sorted(terms, key=term_order),
         "score_priors": score_priors(gpa_course.values(), rmp.values()),
+        "iclicker_notes": [{"text": n, "url": ICLICKER_GUIDE} for n in ICLICKER_NOTES],
     }
     (out_dir / "meta.json").write_text(json.dumps(meta, indent=1))
     from .degrees import export as export_degrees

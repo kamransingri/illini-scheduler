@@ -12,6 +12,7 @@ the network.
 | `mtd/google_transit.zip` | MTD's GTFS feed cut to the ILLINI and SILVER routes, September 2026 and the stops in the core of campus, rows unchanged | 2026-11-21 | `python -m pipeline.transit --save-fixture` |
 | `course-explorer-web/` | Course Explorer web pages (sections, seat status, final exams) | 2026-11-16 | saved by hand from the site |
 | `catalog/` | Academic catalog program pages and the undergraduate index (`undergraduate-index.html`, 2026-11-24) for the importer tests | 2026-11-17 | saved by hand from the catalog |
+| `course-pages/` | Official course pages for the materials tests: PHYS 100 and 102 iClicker pages, PHYS 211 required materials (Fall 2026), and ME 200's address, which answers with a department page | 2026-11-27 | `python -m pipeline.materials_text --save-fixtures` |
 | `bundle-parity.json` | Section bundles both test suites must agree on | 2026-11-16, cases added 2026-11-17 | `pipeline/tests` |
 
 `course-explorer/` and `rmp/` can be refreshed with the "Fetch data" workflow (or the command above). Then update

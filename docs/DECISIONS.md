@@ -1726,3 +1726,30 @@ which ("replaces D39.3"). Refer to entries by number from code comments and othe
   "Fagen-Ulmschneider, W" is RMP's "Wade Fagen", so searching the whole surname found no one. `RmpClient.lookup` now
   searches each part (three letters or more) when the whole name finds no match, and the usual given-name and
   department or review checks decide.
+
+## What to buy, from text the University publishes (2026-11-27, #61)
+
+- **D74.1 Two sources, rules only.** `pipeline/materials_text.py` reads Course Explorer section text and section
+  information, and the official course pages in `data/course-pages.csv` (`*.illinois.edu` only, where `robots.txt`
+  allows, cached 7 days, one request a second). Keyword rules like `exam_format.py`, no AI: every item keeps the
+  sentence it came from (at most 160 characters), and nothing is added from a course title or a guess.
+- **D74.2 `need` only when the text says it.** From the sentence ("required", "must", "need to", "recommended",
+  "optional"), else from the page heading above it ("Required Materials", "Optional Materials"). A bare mention, such
+  as "WebAssign homework is due every Friday", has no `need`. Day1Access has none either: the charge is printed, but
+  students can opt out (go.illinois.edu/Day1Access).
+- **D74.3 iClicker: one answer per page.** Remote only when the same line rules the app out ("not the phone app",
+  "the app is not compatible"), app only when it rules remotes out, both as `choose-one` when it offers either, and
+  `iclicker` (option not stated) otherwise; a specific answer from another page of the course replaces the unstated
+  one. "Either the older iClicker+ or the newer iClicker 2" is two remotes, not a choice of option.
+- **D74.4 Placement tests and other fees aren't purchases.** "An adequate ALEKS score" and math.illinois.edu/ALEKS are
+  the placement exam. Lab fees and class materials fees charged to the tuition bill count; field trip, program,
+  internship and ID verification fees don't.
+- **D74.5 Free platforms are listed as free.** PrairieLearn, PrairieTest and Canvas get `price: "free"` when the text
+  names them, as #61 asks, so a student can tell them apart from paid ones.
+- **D74.6 The campus iClicker rules are quoted, not paraphrased.** `meta.json`'s `iclicker_notes` are five sentences
+  from the campus guide (answers.illinois.edu/120820). The guide says the app is required in attendance-only courses,
+  so we don't say such courses need nothing (#61's wording).
+- **D74.7 Hand check.** 30 large courses (PHYS 100-214, CHEM 102-105, MATH 220-241, ECON 102 and 103, STAT 100 and
+  107, PSYC 100, CS 107, 124, 128 and 173, RHET 105, ACCY 201 and 202, MCB 150, IB 150), Fall 2026 and Spring 2027: 55
+  items, 54 right against their source. The one doubtful item is PHYS 100's "recommended" textbook: the page says
+  there's no physical textbook and any introductory one is a good reference.

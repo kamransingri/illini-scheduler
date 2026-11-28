@@ -116,6 +116,13 @@ CREATE TABLE IF NOT EXISTS exam_format (
     PRIMARY KEY (instructor_key, subject, number)
 );
 
+-- Course materials 3 (#61): what to buy, from Course Explorer text and course pages (pipeline/materials_text.py)
+CREATE TABLE IF NOT EXISTS materials (
+    term TEXT, subject TEXT, number TEXT,
+    items_json TEXT,                -- [{kind, title, need?, price?, crns?, source, quote, url?, read_on}]
+    PRIMARY KEY (term, subject, number)
+);
+
 -- Map 1 (#93): where each building name in `meetings` is, from OpenStreetMap (pipeline/buildings.py)
 CREATE TABLE IF NOT EXISTS buildings (
     building TEXT PRIMARY KEY,      -- the name as the section data has it
