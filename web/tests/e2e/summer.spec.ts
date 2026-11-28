@@ -116,17 +116,20 @@ test("375px: the Summer view doesn't make the page scroll sideways", async ({ pa
   expect(sw).toBeLessThanOrEqual(iw);
 });
 
-test("the gen-ed finder's term row: terms in order with years, greyed out without data, across the page (D64)", async ({ page }) => {
+test("the gen-ed finder's term row: terms in order with years, greyed out without data, across the page (D64)", async ({ page, request, baseURL }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("./geneds/");
   const row = page.getByTestId("gened-term");
   const labels = (await row.getByRole("button").allTextContents()).map((t) => t.split(",")[0]);
   expect(labels.length).toBeGreaterThanOrEqual(6);
-  for (const l of labels) expect(l).toMatch(/^(Spring|Summer|Fall) 20\d\d$/);
-  const seasons = labels.map((l) => l.split(" ")[0]);
+  for (const l of labels) expect(l).toMatch(/^(Winter|Spring|Summer|Fall) 20\d\d$/);
+  // the coming winter sits between fall and spring (#270); the regular terms follow each other
+  const seasons = labels.map((l) => l.split(" ")[0]).filter((x) => x !== "Winter");
   for (let i = 1; i < seasons.length; i++) expect(seasons[i]).toBe({ Spring: "Summer", Summer: "Fall", Fall: "Spring" }[seasons[i - 1]]);
-  // two terms have data: next term (picked) and the summer; the rest are greyed out and can't be picked
-  await expect(row.locator("button:enabled")).toHaveCount(2);
+  const w = await request.get(new URL("data/winter.json", baseURL).toString());
+  const winter = w.ok() && ((await w.json()) as { upcoming: boolean }).upcoming;
+  // next term (picked), the summer and the coming winter have data; the rest are greyed out and can't be picked
+  await expect(row.locator("button:enabled")).toHaveCount(winter ? 3 : 2);
   await expect(row.locator('button[aria-pressed="true"]')).toHaveText(/^(Spring|Fall) 20\d\d$/);
   await expect(row.locator("button:enabled").filter({ hasText: /^Summer 20\d\d$/ })).toHaveCount(1);
   // it runs from the page's left margin to its right edge

@@ -1,5 +1,6 @@
-// Summer courses (#35, #121): the newest summer's classes from web/public/data/summer.json (pipeline/summer.py). They
-// show on course pages, in the search and in the gen-ed finder's Summer view; /summer/ redirects there. Pure
+// Summer and winter courses (#35, #121, #270): the newest summer's classes from web/public/data/summer.json, and the
+// coming winter session's from winter.json, both written by pipeline/summer.py with the same fields. They show on
+// course pages, in the search and in the gen-ed finder's Summer and Winter views; /summer/ redirects there. Pure
 // functions, so they're unit tested.
 
 /** One course's classes in the summer shown. */
@@ -18,6 +19,10 @@ export type SummerRow = {
 };
 /** `upcoming`: the summer shown is still ahead (its schedule is out); otherwise it's last summer's, until the next is out. */
 export type SummerData = { term: string; label: string; recent: string[]; upcoming: boolean; next: string; next_label: string; courses: SummerRow[] };
+
+/** Which file a term's classes come from: "2027-wi" -> winter.json, anything else -> summer.json. */
+export type Season = "summer" | "winter";
+export const seasonOf = (term: string): Season => (term.endsWith("-wi") ? "winter" : "summer");
 
 /** pipeline/summer.py SESSIONS, by the id the page filters on. Weeks are from Summer 2026's dates. */
 export const SESSION_LABEL: Record<string, string> = {
@@ -98,10 +103,11 @@ export function summerFromQuery(q: string): SummerFilters {
   };
 }
 
-/** The gen-ed finder's Summer view with these filters: `?term=summer&...`. */
-export function summerHref(f: SummerFilters): string {
-  const q = summerToQuery(f);
-  return `/geneds/?term=summer${q ? `&${q}` : ""}`;
+/** The gen-ed finder's Summer (or Winter) view with these filters: `?term=summer&...`. Winter has one session, so it
+ * carries no session filter. */
+export function summerHref(f: SummerFilters, season: Season = "summer"): string {
+  const q = summerToQuery(season === "winter" ? { ...f, session: "" } : f);
+  return `/geneds/?term=${season}${q ? `&${q}` : ""}`;
 }
 
 /**
@@ -114,12 +120,18 @@ export function summerRedirect(search: string): string {
   return summerHref(old.get("gened") ? f : { ...f, gened: "all" });
 }
 
-const WHERE: Record<SummerRow["online"], string> = { all: "online", some: "online or on campus", none: "on campus" };
+export const WHERE: Record<SummerRow["online"], string> = { all: "online", some: "online or on campus", none: "on campus" };
 
-/** The course page's Summer line: "Summer 2027: Session II, online. Ran in 3 of the last 3 summers." */
-export function summerLine(r: SummerRow, d: Pick<SummerData, "label" | "recent" | "upcoming" | "next_label">): string {
-  const sessions = r.sess.map((x) => SESSION_SHORT[x] ?? x).join(", ");
-  const ran = d.recent.length > 1 ? ` in ${r.ran} of the last ${d.recent.length} summers` : "";
+/** "Session II, Session I" for a summer class; "Winter session" for a winter one (it's one session). */
+export function sessionText(r: SummerRow, term: string): string {
+  return seasonOf(term) === "winter" ? "Winter session" : r.sess.map((x) => SESSION_SHORT[x] ?? x).join(", ");
+}
+
+/** The course page's Summer line: "Summer 2027: Session II, online. Ran in 3 of the last 3 summers." A winter one:
+ * "Winter 2027: Winter session, online. Ran in 3 of the last 3 winters." */
+export function summerLine(r: SummerRow, d: Pick<SummerData, "term" | "label" | "recent" | "upcoming" | "next_label">): string {
+  const sessions = sessionText(r, d.term);
+  const ran = d.recent.length > 1 ? ` in ${r.ran} of the last ${d.recent.length} ${seasonOf(d.term)}s` : "";
   return d.upcoming
     ? `${d.label}: ${sessions}, ${WHERE[r.online]}.${ran ? ` Ran${ran}.` : ""}`
     : `Ran in ${d.label} (${sessions}, ${WHERE[r.online]})${ran ? `, and${ran}` : ""}. ${d.next_label}'s schedule isn't out yet.`;

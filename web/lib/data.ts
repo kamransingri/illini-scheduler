@@ -59,6 +59,17 @@ export function getSummer(): { data: SummerData; by: Map<string, SummerRow> } | 
   return summer;
 }
 
+let winter: { data: SummerData; by: Map<string, SummerRow> } | null | undefined;
+
+/** The coming winter session's classes (winter.json, #270), read once per build; null when no winter is loaded. */
+export function getWinter(): { data: SummerData; by: Map<string, SummerRow> } | null {
+  if (winter === undefined) {
+    const data = readJson<SummerData>("winter.json");
+    winter = data ? { data, by: new Map(data.courses.map((r) => [`${r.s} ${r.n}`, r])) } : null;
+  }
+  return winter;
+}
+
 export function getDegreeIndex(): DegreeIndex {
   return readJson<DegreeIndex>("degrees/index.json") ?? [];
 }

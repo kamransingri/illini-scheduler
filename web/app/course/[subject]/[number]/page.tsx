@@ -12,7 +12,7 @@ import Icon from "@/components/ui/Icon";
 import Info from "@/components/ui/Info";
 import Stat from "@/components/ui/Stat";
 import { courseSummary } from "@/lib/askai";
-import { courseParams, getCourse, getMeta, getSummer } from "@/lib/data";
+import { courseParams, getCourse, getMeta, getSummer, getWinter } from "@/lib/data";
 import { cisUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, GPA_DATASET, GPA_SOURCES, gpaRelease, termLabel, termRange } from "@/lib/format";
 import { profInput } from "@/lib/rank";
 import { professorsFor, tally } from "@/lib/sections";
@@ -50,6 +50,8 @@ export default async function CoursePage({ params }: Props) {
   const credits = course.credits.replace(" hours.", "");
   const summer = getSummer();
   const inSummer = summer?.by.get(`${course.subject} ${course.number}`);
+  const winter = getWinter();
+  const inWinter = winter?.by.get(`${course.subject} ${course.number}`);
   return (
     <article>
       <header className="pb-6">
@@ -175,6 +177,17 @@ export default async function CoursePage({ params }: Props) {
               <span data-testid="summer-line">{summerLine(inSummer, summer.data)}</span>{" "}
               <Link href={summerHref({ ...DEFAULT_SUMMER, gened: "all", q: course.subject })} className="text-action underline">
                 Every summer {course.subject} class
+              </Link>
+            </DataRow>
+          )}
+          {winter && inWinter && (
+            <DataRow
+              label="Winter"
+              source={`Course Explorer's ${winter.data.label} schedule, and the winters ${winter.data.recent.map((t) => termLabel(t)).join(", ")}.`}
+            >
+              <span data-testid="winter-line">{summerLine(inWinter, winter.data)}</span>{" "}
+              <Link href={summerHref({ ...DEFAULT_SUMMER, gened: "all", q: course.subject }, "winter")} className="text-action underline">
+                Every winter {course.subject} class
               </Link>
             </DataRow>
           )}

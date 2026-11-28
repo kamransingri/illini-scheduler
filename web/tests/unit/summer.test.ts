@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_SUMMER, filterSummer, matchesQuery, summerFromQuery, summerHref, summerLine, summerRedirect, summerToQuery, type SummerRow } from "@/lib/summer";
+import { DEFAULT_SUMMER, filterSummer, matchesQuery, seasonOf, sessionText, summerFromQuery, summerHref, summerLine, summerRedirect, summerToQuery, type SummerRow } from "@/lib/summer";
 
 const row = (p: Partial<SummerRow> & { s: string; n: string }): SummerRow => ({ t: "", cr: [3, 3], codes: [], nSec: 1, online: "all", sess: ["S2"], ran: 3, gpa: null, page: true, ...p });
 const ROWS = [
@@ -56,12 +56,33 @@ describe("summer filters", () => {
 });
 
 describe("summer line on course pages", () => {
-  const d = { label: "Summer 2026", recent: ["2024-su", "2025-su", "2026-su"], next_label: "Summer 2027" };
+  const d = { term: "2026-su", label: "Summer 2026", recent: ["2024-su", "2025-su", "2026-su"], next_label: "Summer 2027" };
   it("says when and where it runs, and how often", () => {
     expect(summerLine(ROWS[0], { ...d, upcoming: true })).toBe("Summer 2026: Session I, Session II, online or on campus. Ran in 3 of the last 3 summers.");
     expect(summerLine(ROWS[1], { ...d, upcoming: false })).toBe(
       "Ran in Summer 2026 (Full summer, online), and in 1 of the last 3 summers. Summer 2027's schedule isn't out yet.",
     );
     expect(summerLine(ROWS[2], { ...d, recent: ["2026-su"], upcoming: true })).toBe("Summer 2026: Session II, on campus.");
+  });
+});
+
+describe("winter session (#270)", () => {
+  const w = { term: "2027-wi", label: "Winter 2027", recent: ["2025-wi", "2026-wi", "2027-wi"], next_label: "Winter 2028" };
+  const astr = row({ s: "ASTR", n: "100", t: "Introduction to Astronomy", codes: ["PS"], sess: ["full"] });
+  it("reads the season from the term", () => {
+    expect(seasonOf("2027-wi")).toBe("winter");
+    expect(seasonOf("2026-su")).toBe("summer");
+  });
+  it("calls the one session winter session, and counts winters", () => {
+    expect(sessionText(astr, "2027-wi")).toBe("Winter session");
+    expect(sessionText(astr, "2026-su")).toBe("Full summer");
+    expect(summerLine(astr, { ...w, upcoming: true })).toBe("Winter 2027: Winter session, online. Ran in 3 of the last 3 winters.");
+    expect(summerLine({ ...astr, ran: 2 }, { ...w, upcoming: false })).toBe(
+      "Ran in Winter 2027 (Winter session, online), and in 2 of the last 3 winters. Winter 2028's schedule isn't out yet.",
+    );
+  });
+  it("links to the gen-ed finder's Winter view, without a session", () => {
+    expect(summerHref({ ...DEFAULT_SUMMER, gened: "all", q: "ASTR" }, "winter")).toBe("/geneds/?term=winter&q=ASTR&gened=all");
+    expect(summerHref({ ...DEFAULT_SUMMER, session: "S1" }, "winter")).toBe("/geneds/?term=winter");
   });
 });

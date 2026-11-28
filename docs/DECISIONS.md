@@ -1740,3 +1740,8 @@ which ("replaces D39.3"). Refer to entries by number from code comments and othe
 - **D76.3 "Winter only".** Offering patterns still count fall and spring; winter changes a pattern only when it's all
   a course has. With winters loaded, 3 of 8,640 patterns change (HIST 262, JS 262, IS 199 become "Winter only", `o` =
   `w`), and the four-year plan says "Usually runs in winter only".
+- **D76.4 Winter on the site the way summer is** (#270). The gen-ed finder's term row gets the coming winter between
+  fall and spring (`?term=winter`, the same `SummerFinder` with `season="winter"`), course pages a Winter line next to
+  the Summer one, and the search a winter badge and winter-only hits. Winter is one session, so its view has no
+  session filter or column and says "Winter session". A winter that has ended isn't in the term row; course pages say
+  it ran until the next one is listed. No new header tab (D73).
