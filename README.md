@@ -165,7 +165,7 @@ site can't do: [docs/LIMITATIONS.md](docs/LIMITATIONS.md).
 | `python -m pipeline.catalog_import` | Import every undergraduate program's requirements from the Academic Catalog |
 | `python -m pipeline.ap_credit` | Validate the AP, IB and test credit files and list credited codes the loaded data doesn't know |
 | `python -m pipeline.citl_watch [--update]` | Compare CITL's credit tables with the saved snapshots (what `citl-watch.yml` runs) |
-| `python -m pipeline.summer` | What the summer classes (gen-ed finder, course pages, search) would show from the loaded data |
+| `python -m pipeline.summer` | What the summer and winter classes (`summer.json`, `winter.json`) would show from the loaded data |
 | `python -m pipeline.names --report [--subjects CS,MATH,STAT]` | How many of next term's instructors link to their grade history, per subject, and the lecture names that don't |
 | `python -m pipeline.renumbered [--suggest]` | Check `data/renumbered.csv` (old course number to new), or list candidate links from Course Explorer text to review |
 | `python -m pipeline.reddit collect\|extract\|aggregate\|sample\|agreement\|status` | The r/UIUC signal (#14), not switched on yet: needs Reddit API access ([docs/REDDIT.md](docs/REDDIT.md)) |

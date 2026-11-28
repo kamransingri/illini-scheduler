@@ -30,6 +30,8 @@ def slice_csv(src, dest, key_fn) -> int:  # type: ignore[no-untyped-def]
 
 def main() -> None:
     for term in HISTORY_TERMS:
+        if not catalog_path(term).exists():  # the coming winter isn't mirrored yet
+            continue
         n = slice_csv(catalog_path(term), FIXTURES / "course-catalog" / f"{term}.csv",
                       lambda r: (r["Subject"], r["Number"]) in REF)
         print(term, n)

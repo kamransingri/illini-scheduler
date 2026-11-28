@@ -161,6 +161,7 @@ const SEASON_WORDS: Record<string, string> = {
   f: "fall",
   s: "spring",
   u: "summer",
+  w: "winter",
   fo: "fall of odd years",
   fe: "fall of even years",
   so: "spring of odd years",
@@ -176,7 +177,7 @@ export function usuallyOffered(o: string | undefined, term: string): boolean | n
   const codes = o.split(",");
   if (codes.includes("n")) return false;
   const [year, season] = term.split("-");
-  const s = season === "fa" ? "f" : season === "sp" ? "s" : season === "su" ? "u" : null;
+  const s = season === "fa" ? "f" : season === "sp" ? "s" : season === "su" ? "u" : season === "wi" ? "w" : null;
   if (!s) return null;
   if (codes.includes(s)) return true;
   const parity = codes.find((c) => c.length === 2 && c[0] === s);

@@ -68,7 +68,9 @@ def label_pattern(offered: Iterable[str], window: Sequence[str], summers: Sequen
     summer_n = sum(1 for t in summers if t in off)
     suffix = ", plus summers" if summers and summer_n >= max(2, len(summers) - 1) else ""
     if n == 0:
-        return "Summer only" if any(season(t) == "su" for t in off) else "Not offered recently"
+        if any(season(t) == "su" for t in off):
+            return "Summer only"
+        return "Winter only" if any(season(t) == "wi" for t in off) else "Not offered recently"
     if len(of) == len(falls) and len(os_) == len(springs):
         return "Every fall and spring" + suffix
     if len(of) == len(falls) and not os_:
@@ -93,13 +95,14 @@ def label_pattern(offered: Iterable[str], window: Sequence[str], summers: Sequen
 PATTERN_CODES = {
     "Every fall and spring": "f,s", "Almost every fall and spring": "f,s", "Fall only": "f", "Spring only": "s",
     "Fall, odd years": "fo", "Fall, even years": "fe", "Spring, odd years": "so", "Spring, even years": "se",
-    "Summer only": "u", "Not offered recently": "n",
+    "Summer only": "u", "Winter only": "w", "Not offered recently": "n",
 }
 
 
 def pattern_code(label: str) -> str:
-    """The pattern as search.json's short `o` (docs/API.md): the seasons it runs in ("f", "s", "u"), a fall or spring in
-    odd or even years only ("fo", "se"), "i" irregular, "n" not offered recently. "Fall only, plus summers" is "f,u"."""
+    """The pattern as search.json's short `o` (docs/API.md): the seasons it runs in ("f", "s", "u", "w" for winter), a
+    fall or spring in odd or even years only ("fo", "se"), "i" irregular, "n" not offered recently. "Fall only, plus
+    summers" is "f,u"."""
     base, plus, _ = label.partition(", plus summers")
     code = "i" if base.startswith("Irregular") else PATTERN_CODES.get(base, "i")
     return f"{code},u" if plus and code != "u" else code

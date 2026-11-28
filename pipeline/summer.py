@@ -1,14 +1,19 @@
-"""Summer courses (#35): export web/public/data/summer.json from the newest summer term loaded.
+"""Summer and winter courses (#35, #269): export web/public/data/summer.json and winter.json from the newest summer
+and winter term loaded.
 
 Course Explorer publishes a summer's schedule around March (Summer 2027: about March 2027), so until then the newest
 summer loaded is last year's. Most summer classes run again each year, so the page shows that summer's classes and
 says how many of the last three summers each one ran in. A new summer is loaded by adding it to
 `pipeline/fetch.py` HISTORY_TERMS (the term-watch issue says so); this module picks it up on its own.
 
+Winter session is one short session (part of term 1; Winter 2027 is Dec 18, 2026 to Jan 15, 2027), about 60 classes,
+nearly all online. Course Explorer lists it in the fall, while Wade's mirror adds a winter only after it's over, so the
+coming winter (`fetch.WINTER_TERM`) is read from the Course Explorer API and earlier winters from the mirror.
+
 Only classes are listed: a course needs a primary section that meets as a class (lecture, online, lab, seminar...),
 not only independent study, internships, research or study abroad.
 
-    python -m pipeline.summer      # print what the export would hold (uses data/illini.db)
+    python -m pipeline.summer      # print what the exports would hold (uses data/illini.db)
 """
 
 from __future__ import annotations
@@ -49,9 +54,16 @@ def session_id(pot: str) -> str:
     return pot if pot in SESSIONS else "other"
 
 
-def summers(conn: sqlite3.Connection) -> list[str]:
-    terms = [r[0] for r in conn.execute("SELECT DISTINCT term FROM sections WHERE term LIKE '%-su'")]
+SEASON_NAMES = {"su": "summer", "wi": "winter"}
+
+
+def season_terms(conn: sqlite3.Connection, season: str = "su") -> list[str]:
+    terms = [r[0] for r in conn.execute("SELECT DISTINCT term FROM sections WHERE term LIKE ?", (f"%-{season}",))]
     return sorted(terms, key=term_sort_key)
+
+
+def summers(conn: sqlite3.Connection) -> list[str]:
+    return season_terms(conn, "su")
 
 
 def class_courses(conn: sqlite3.Connection, term: str) -> dict[tuple[str, str], list[sqlite3.Row]]:
@@ -66,15 +78,16 @@ def class_courses(conn: sqlite3.Connection, term: str) -> dict[tuple[str, str], 
 
 
 def build(conn: sqlite3.Connection, live_terms: tuple[str, ...] = (),
-          pages: set[tuple[str, str]] | None = None) -> dict | None:
-    """The newest summer's classes, or None when no summer is loaded. `live_terms`: the current and next term.
+          pages: set[tuple[str, str]] | None = None, season: str = "su") -> dict | None:
+    """The newest summer's (or with season="wi", winter's) classes, or None when none is loaded. `live_terms`: the
+    current and next term.
     `pages`: the courses export.run writes a course file for (offered in a live term, or with recent grades);
     without it, a course has a page when it has sections in a live term."""
     from .degrees import catalog_from_db
     from .export import r3
 
     conn.row_factory = sqlite3.Row
-    loaded = summers(conn)
+    loaded = season_terms(conn, season)
     if not loaded:
         return None
     term, recent = loaded[-1], loaded[-3:]
@@ -100,21 +113,25 @@ def build(conn: sqlite3.Connection, live_terms: tuple[str, ...] = (),
             "gpa": r3(g["recent_avg_gpa"]) if g else None, "page": (s, n) in pages,
         })
     year = int(term[:4])
-    # after the spring rollover the newest summer is still ahead (current term Spring 2027, Summer 2027 loaded)
+    # after the spring rollover the newest summer is still ahead (current term Spring 2027, Summer 2027 loaded); the
+    # coming winter is ahead of the fall term it's read in (Winter 2027 while the current term is Fall 2026)
     upcoming = bool(live_terms) and term_sort_key(term) > term_sort_key(live_terms[0])
     return {
         "term": term, "label": term_label(term), "recent": recent, "upcoming": upcoming,
-        "next": f"{year + 1}-su", "next_label": term_label(f"{year + 1}-su"),
+        "next": f"{year + 1}-{season}", "next_label": term_label(f"{year + 1}-{season}"),
         "courses": rows,
     }
 
 
 def export(conn: sqlite3.Connection, out_dir: Path, live_terms: tuple[str, ...] = (),
-           pages: set[tuple[str, str]] | None = None) -> str:
-    data = build(conn, live_terms, pages)
+           pages: set[tuple[str, str]] | None = None, season: str = "su") -> str:
+    name = SEASON_NAMES[season]
+    data = build(conn, live_terms, pages, season)
+    path = out_dir / f"{name}.json"
     if data is None:
-        return "no summer term loaded"
-    (out_dir / "summer.json").write_text(json.dumps(data, separators=(",", ":")), encoding="utf-8")
+        path.unlink(missing_ok=True)  # an old file would show last year's classes as this year's
+        return f"no {name} term loaded"
+    path.write_text(json.dumps(data, separators=(",", ":")), encoding="utf-8")
     return f"{len(data['courses'])} {data['label']} classes"
 
 
@@ -123,17 +140,18 @@ def main() -> int:
     from .fetch import CURRENT_TERM, NEXT_TERM
 
     conn = sqlite3.connect(DB_PATH)
-    data = build(conn, (CURRENT_TERM, NEXT_TERM))
-    if data is None:
-        print("no summer term loaded")
-        return 1
-    rows = data["courses"]
-    by_sess: dict[str, int] = defaultdict(int)
-    for r in rows:
-        for x in r["sess"]:
-            by_sess[x] += 1
-    print(f"{data['label']}: {len(rows)} classes ({sum(r['online'] == 'all' for r in rows)} online only), "
-          f"summers {', '.join(data['recent'])}; by session {dict(by_sess)}")
+    for season, name in SEASON_NAMES.items():
+        data = build(conn, (CURRENT_TERM, NEXT_TERM), season=season)
+        if data is None:
+            print(f"no {name} term loaded")
+            continue
+        rows = data["courses"]
+        by_sess: dict[str, int] = defaultdict(int)
+        for r in rows:
+            for x in r["sess"]:
+                by_sess[x] += 1
+        print(f"{data['label']}: {len(rows)} classes ({sum(r['online'] == 'all' for r in rows)} online only), "
+              f"{name}s {', '.join(data['recent'])}; by session {dict(by_sess)}")
     return 0
 
 

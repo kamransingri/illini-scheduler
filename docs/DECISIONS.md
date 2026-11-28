@@ -1726,3 +1726,17 @@ which ("replaces D39.3"). Refer to entries by number from code comments and othe
   "Fagen-Ulmschneider, W" is RMP's "Wade Fagen", so searching the whole surname found no one. `RmpClient.lookup` now
   searches each part (three letters or more) when the whole name finds no match, and the usual given-name and
   department or review checks decide.
+
+## Winter session (2026-11-27, #269)
+
+- **D76.1 Winter has an open source after all.** D28.4 left winter out for lack of one, but the Course Explorer API
+  lists Winter 2027 (Dec 18, 2026 to Jan 15, 2027: 62 sections, 59 classes, all online) and Wade's mirror has every past
+  winter. `pipeline/fetch.py` adds `2024-wi` to `2027-wi` to `HISTORY_TERMS`, and `winter.json` is built by the same
+  code as `summer.json` (`pipeline/summer.py`, `season="wi"`).
+- **D76.2 The coming winter from the API, slowly.** Wade mirrors a winter only after it's over, so `WINTER_TERM` is
+  read from the API even though the nightly build uses the mirror (`SOURCE=csv`, D11.3): one request at a time and not
+  from the crawl cache, about 90 pages (5 s on 2026-11-27). A failure leaves winter out of that build; it never stops
+  it.
+- **D76.3 "Winter only".** Offering patterns still count fall and spring; winter changes a pattern only when it's all
+  a course has. With winters loaded, 3 of 8,640 patterns change (HIST 262, JS 262, IS 199 become "Winter only", `o` =
+  `w`), and the four-year plan says "Usually runs in winter only".

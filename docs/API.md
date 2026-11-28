@@ -76,6 +76,7 @@ Credit these sources if you republish the data:
 | `course/<SUBJECT>/<NUMBER>.json` | Everything about one course: sections, GPA, professors, history | 5–200 KB each |
 | `geneds.json` | Gen-ed courses for next term, with their scores | ~300 KB |
 | `summer.json` | The newest summer's classes | ~100 KB |
+| `winter.json` | The coming (or newest) winter session's classes | ~10 KB |
 | `crns.json` | CRN to course and section | ~1 MB |
 | `renumbered.json` | Old course numbers to new ones | small |
 | `buildings.json` | Where each building in the section data is | ~12 KB |
@@ -147,7 +148,7 @@ The home page search. Short field names keep it small.
 | `courses[].nx` | 0 \| 1 | Has sections next term |
 | `courses[].cu` | 0 \| 1 | Has sections this term |
 | `courses[].f` | string[] | Old codes of a renumbered course (optional) |
-| `courses[].o` | string | When it usually runs, from the last four years: the seasons it runs in, comma-separated (`f` fall, `s` spring, `u` summer), `fo`/`fe`/`so`/`se` for a fall or spring in odd or even years only, `i` irregular, `n` not offered recently. `f,s` is every fall and spring (optional) |
+| `courses[].o` | string | When it usually runs, from the last four years: the seasons it runs in, comma-separated (`f` fall, `s` spring, `u` summer, `w` winter for a course that runs only in winter session), `fo`/`fe`/`so`/`se` for a fall or spring in odd or even years only, `i` irregular, `n` not offered recently. `f,s` is every fall and spring (optional) |
 | `instructors[].name` | string | Display name |
 | `instructors[].k` | string | Instructor key |
 | `instructors[].c` | string[] | Courses they teach next term, `["CS 124"]` |
@@ -363,6 +364,32 @@ written when no summer term is loaded.
 | `courses[].nSec` | number | Class sections |
 | `courses[].online` | string | `all`, `some` or `none` of its sections online |
 | `courses[].sess` | string[] | Sessions: `S1` Session I (4 weeks from mid-May), `S2` Session II (8 weeks from mid-June), `full` (12 weeks), `S18`, `A`, `S2A`, `S2B`, `B`, `other` |
+| `courses[].ran` | number | How many of `recent` it ran in |
+| `courses[].gpa` | number \| null | Recent average GPA over all terms |
+| `courses[].page` | boolean | Has a course file (offered this term or next, or with recent grades) |
+
+### `data/winter.json`
+
+Winter session's classes, with the same fields as `summer.json`. Course Explorer lists a winter in the fall (Winter
+2027, Dec 18, 2026 to Jan 15, 2027, in November 2026), so the coming winter is read from the Course Explorer API each
+build and earlier winters from Wade Fagen-Ulmschneider's mirror. Not written when no winter term is loaded.
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `term` | string | `2027-wi` |
+| `label` | string | "Winter 2027" |
+| `recent` | string[] | Up to the last 3 winters, oldest first |
+| `upcoming` | boolean | The winter is still ahead of the current term |
+| `next` | string | The winter after `term` |
+| `next_label` | string | "Winter 2028" |
+| `courses[].s` | string | Subject |
+| `courses[].n` | string | Number |
+| `courses[].t` | string | Title |
+| `courses[].cr` | [number, number] \| null | Fewest and most credit hours |
+| `courses[].codes` | string[] | Gen-ed codes |
+| `courses[].nSec` | number | Class sections |
+| `courses[].online` | string | `all`, `some` or `none` of its sections online |
+| `courses[].sess` | string[] | `full` (winter is one session) |
 | `courses[].ran` | number | How many of `recent` it ran in |
 | `courses[].gpa` | number \| null | Recent average GPA over all terms |
 | `courses[].page` | boolean | Has a course file (offered this term or next, or with recent grades) |

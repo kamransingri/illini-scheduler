@@ -25,13 +25,16 @@ STATIC_FILES = [
     "teachers-ranked-as-excellent/uiuc-tre-dataset.csv",
 ]
 
-# Terms used for offering history (Phase 4): the last 8 regular terms plus summers, and the next term.
+# Terms used for offering history (Phase 4): the last 8 regular terms plus summers and winters, and the next term.
 HISTORY_TERMS = [
-    "2022-fa", "2023-sp", "2023-su", "2023-fa", "2024-sp", "2024-su", "2024-fa", "2025-sp", "2025-su",
-    "2025-fa", "2026-sp", "2026-su", "2026-fa", "2027-sp",
+    "2022-fa", "2023-sp", "2023-su", "2023-fa", "2024-wi", "2024-sp", "2024-su", "2024-fa", "2025-wi", "2025-sp",
+    "2025-su", "2025-fa", "2026-wi", "2026-sp", "2026-su", "2026-fa", "2027-wi", "2027-sp",
 ]
 CURRENT_TERM = "2026-fa"
 NEXT_TERM = "2027-sp"
+# The coming winter session (Winter 2027 runs Dec 18, 2026 to Jan 15, 2027). Wade's mirror adds a winter only after
+# it's over, so this one is read from the Course Explorer API like the current and next term (#269).
+WINTER_TERM = "2027-wi"
 
 
 def catalog_path(term: str) -> Path:
@@ -59,6 +62,14 @@ def fetch_wade(terms: list[str] | None = None, max_age_hours: float = 20) -> lis
         for rel in rels:
             try:
                 out.append(_download(rel, timedelta(hours=max_age_hours), client))
+            except httpx.HTTPStatusError as e:
+                if e.response.status_code == 404 and rel == f"course-catalog/data/{WINTER_TERM}.csv":
+                    continue  # not mirrored yet: read from the API (run.py)
+                if (WADE_DIR / rel).exists():
+                    print(f"warn: could not refresh {rel} ({e}); using cached copy", file=sys.stderr)
+                    out.append(WADE_DIR / rel)
+                else:
+                    raise
             except httpx.HTTPError as e:
                 if (WADE_DIR / rel).exists():
                     print(f"warn: could not refresh {rel} ({e}); using cached copy", file=sys.stderr)

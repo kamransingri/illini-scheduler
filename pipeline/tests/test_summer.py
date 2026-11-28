@@ -62,3 +62,29 @@ def test_no_summer_loaded(tmp_path):
 def test_session_ids():
     assert [summer.session_id(p) for p in ("1", "SF", "LF", "S1", "S2B", "", "Z9")] == \
         ["full", "full", "full", "S1", "S2B", "other", "other"]
+
+
+def test_the_coming_winter_lists_its_classes(tmp_path):
+    """#269: winter.json is built like summer.json; Winter 2027 (read in Fall 2026) is ahead of the current term."""
+    conn = db.connect(tmp_path / "t.db")
+    for t in ("2025-wi", "2026-wi", "2027-wi"):
+        section(conn, t, f"9{t[:4]}", "ASTR", "100", pot="1")
+    section(conn, "2027-wi", "2", "ANTH", "246", pot="1")
+    section(conn, "2026-su", "3", "ECON", "102")  # a summer doesn't show up in winter
+    course(conn, "2027-wi", "ASTR", "100", "Introduction to Astronomy", gened="PS")
+    data = summer.build(conn, ("2026-fa", "2027-sp"), {("ASTR", "100")}, season="wi")
+    assert data is not None
+    assert (data["term"], data["label"], data["next"], data["upcoming"]) == ("2027-wi", "Winter 2027", "2028-wi", True)
+    assert data["recent"] == ["2025-wi", "2026-wi", "2027-wi"]
+    anth, astr = data["courses"]
+    assert (anth["n"], anth["ran"], anth["page"]) == ("246", 1, False)
+    assert (astr["sess"], astr["ran"], astr["online"], astr["page"]) == (["full"], 3, "all", True)
+    assert summer.export(conn, tmp_path, ("2026-fa", "2027-sp"), season="wi") == "2 Winter 2027 classes"
+    assert (tmp_path / "winter.json").exists()
+
+
+def test_no_winter_loaded_removes_an_old_file(tmp_path):
+    conn = db.connect(tmp_path / "t.db")
+    (tmp_path / "winter.json").write_text("{}", encoding="utf-8")
+    assert summer.export(conn, tmp_path, season="wi") == "no winter term loaded"
+    assert not (tmp_path / "winter.json").exists()

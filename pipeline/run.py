@@ -10,7 +10,16 @@ from pathlib import Path
 
 from . import db
 from .config import DATA, RAW
-from .fetch import CURRENT_TERM, HISTORY_TERMS, NEXT_TERM, WADE_DIR, catalog_path, fetch_wade, snapshot_dates
+from .fetch import (
+    CURRENT_TERM,
+    HISTORY_TERMS,
+    NEXT_TERM,
+    WADE_DIR,
+    WINTER_TERM,
+    catalog_path,
+    fetch_wade,
+    snapshot_dates,
+)
 
 
 def log(msg: str) -> None:
@@ -96,8 +105,18 @@ def main(argv: list[str] | None = None) -> int:
     log("phase 1: Course Explorer")
     for term in terms:
         src = args.source if term in (CURRENT_TERM, NEXT_TERM) else "csv"
-        n, used = course_explorer.load_term(conn, term, subjects, src, cat_path(term),
-                                            dates.get(f"course-catalog/data/{term}.csv", ""))
+        crawler = None
+        if term == WINTER_TERM and not cat_path(term).exists():
+            # about 90 pages: slow enough for the feed that refuses the nightly build's bursts (D11.3)
+            src, crawler = "api", course_explorer.ApiCrawler(concurrency=1, refresh=True)
+        try:
+            n, used = course_explorer.load_term(conn, term, subjects, src, cat_path(term),
+                                                dates.get(f"course-catalog/data/{term}.csv", ""), crawler)
+        except Exception as e:  # noqa: BLE001 - the coming winter is extra: the site builds without it
+            if term != WINTER_TERM:
+                raise
+            log(f"  {term}: not loaded, no winter.json this build ({type(e).__name__}: {e})")
+            continue
         log(f"  {term}: {n} sections ({used})")
     conn.commit()
 

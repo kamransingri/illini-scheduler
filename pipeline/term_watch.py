@@ -111,9 +111,12 @@ def issue_body(new: list[str], current_term: str, next_term: str) -> str:
             "with the next fall or spring term, and this check opens another issue then.",
         ]
         summers = [t for t in new if t.endswith("-su")]
-        lines += [""] if summers else []
+        winters = [t for t in new if t.endswith("-wi")]
+        lines += [""] if summers or winters else []
         lines += [f"- [ ] `pipeline/fetch.py`: add `\"{t}\"` to `HISTORY_TERMS`, so the site's summer classes show "
                   f"{term_label(t)} instead of last summer (#35)" for t in summers]
+        lines += [f"- [ ] `pipeline/fetch.py`: `WINTER_TERM = \"{t}\"` and add it to `HISTORY_TERMS`, so the site's "
+                  f"winter classes show {term_label(t)} (#269)" for t in winters]
     return "\n".join(lines) + "\n"
 
 

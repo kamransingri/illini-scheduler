@@ -106,7 +106,9 @@ you change something listed here, change this page in the same pull request.
   aren't in the schedule builder or the seat checks; confirm sections in Course Explorer and Self-Service. A summer
   class with no fall or spring section in the current or next term has no course page here, so the search sends it to
   Course Explorer.
-- **No winter session.** There's no open source for winter courses.
+- **Winter session** (#269) comes from the Course Explorer API for the coming winter, read once a night one page at a
+  time, and from Wade Fagen-Ulmschneider's mirror for earlier winters. If the API can't be read that night, the build
+  goes on without `winter.json`. Like summer: classes only, no seats, not in the schedule builder.
 
 ## Gen-ed finder and schedule builder
 
