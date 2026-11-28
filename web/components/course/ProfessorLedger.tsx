@@ -102,8 +102,8 @@ export function ProfessorRow({ p, ctx, open, onToggle, rank }: { p: Scored; ctx:
               </span>
             )}
             {p.ins.tre.length > 0 && (
-              <Badge icon="award" title={`Teachers Ranked as Excellent: ${p.ins.tre.map(treLabel).join("; ")}`}>
-                Ranked excellent ×{p.ins.tre.length}
+              <Badge icon="award" title={`Teaching awards from student ratings: ${p.ins.tre.map(treLabel).join("; ")}`}>
+                Teaching award ×{p.ins.tre.length}
               </Badge>
             )}
             {g?.limited && <Badge title="Fewer than 60 graded students with this professor in this course">Limited data</Badge>}
@@ -328,7 +328,7 @@ function ProfessorPanel({ p, ctx }: { p: ProfEntry; ctx: Ctx }) {
         )}
         {p.ins.tre.length > 0 && (
           <p className="mt-4">
-            <span className="font-semibold text-heading">Teachers Ranked as Excellent</span> (campus list from student ratings): {p.ins.tre.map(treLabel).join("; ")}.
+            <span className="font-semibold text-heading">Teaching awards</span> (campus lists from student ratings: Teachers Ranked as Excellent to Summer 2025, then the ISG FLEX Award): {p.ins.tre.map(treLabel).join("; ")}.
           </p>
         )}
       </section>

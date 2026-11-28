@@ -1,4 +1,4 @@
-"""Phase 3: one instructor identity across Course Explorer, the GPA dataset, RMP and the TRE list."""
+"""Phase 3: one instructor identity across Course Explorer, the GPA dataset, RMP and the teaching awards list."""
 
 from __future__ import annotations
 
@@ -28,6 +28,32 @@ def split_raw(raw: str) -> list[str]:
 def tre_term(t: str) -> str:
     """'fa2023' -> '2023-fa'."""
     return f"{t[2:]}-{t[:2]}"
+
+
+def award_labels(tdf: pd.DataFrame, taught_numbers: dict[str, set[str]],
+                 people: dict[str, dict]) -> dict[str, list[str]]:
+    """Instructor key -> ["2025-fa ISG FLEX Award", "2024-sp Excellent", ...] from Wade's highly-ranked-instructors.csv
+    (#267). A row counts only when exactly one instructor with that surname taught that course number and the first
+    initial fits; names come in upper case before Fall 2025 and mixed case after, and parse_name ignores case."""
+    tdf = tdf[(tdf["role"] == "Instructor")]
+    tdf = tdf[tdf["term"].map(lambda t: term_order(tre_term(t)) >= term_order(TRE_SINCE))]
+    by_last_num: dict[tuple[str, str], set[str]] = defaultdict(set)
+    for k, nums in taught_numbers.items():
+        for n in nums:
+            by_last_num[(k.split("|")[0], n)].add(k)
+    out: dict[str, list[str]] = defaultdict(list)
+    for t in tdf.to_dict("records"):
+        p = parse_name(f"{t['lname']}, {t['fname']}")
+        if p is None:
+            continue
+        keys = {k for k in by_last_num.get((p.last, t["course"]), set())
+                if k in people and compatible(p, people[k]["p"])}
+        if len(keys) == 1:
+            label = f"{tre_term(t['term'])} {t['ranking']}"
+            k = keys.pop()
+            if label not in out[k]:
+                out[k].append(label)
+    return dict(out)
 
 
 UNLINKED = ("unmatched", "ambiguous", "blank")
@@ -175,29 +201,12 @@ def run(conn: sqlite3.Connection, gpa_df: pd.DataFrame, rmp_enabled: bool, tre_p
     stats = match_stats(rows, links)
     n_unmatched = matcher.write_unmatched(unmatched_path)
 
-    # Teachers Ranked as Excellent (instructors only, recent terms).
-    tre: dict[str, list[str]] = defaultdict(list)
+    # Teaching awards: Teachers Ranked as Excellent, then the ISG FLEX Award from Fall 2025 (instructors only)
+    tre: dict[str, list[str]] = {}
     if tre_path.exists():
-        tdf = pd.read_csv(tre_path, dtype=str, keep_default_na=False)
-        tdf = tdf[(tdf["role"] == "Instructor")]
-        tdf = tdf[tdf["term"].map(lambda t: term_order(tre_term(t)) >= term_order(TRE_SINCE))]
         for r in conn.execute("SELECT instructor_key, number FROM gpa_instructor_course"):
             taught_numbers[r[0]].add(r[1])
-        by_last_num: dict[tuple[str, str], set[str]] = defaultdict(set)
-        for k, nums in taught_numbers.items():
-            for n in nums:
-                by_last_num[(k.split("|")[0], n)].add(k)
-        for t in tdf.to_dict("records"):
-            p = parse_name(f"{t['lname']}, {t['fname']}")
-            if p is None:
-                continue
-            keys = {k for k in by_last_num.get((p.last, t["course"]), set())
-                    if k in people and compatible(p, people[k]["p"])}
-            if len(keys) == 1:
-                label = f"{tre_term(t['term'])} {t['ranking']}"
-                k = keys.pop()
-                if label not in tre[k]:
-                    tre[k].append(label)
+        tre = award_labels(pd.read_csv(tre_path, dtype=str, keep_default_na=False), taught_numbers, people)
 
     # RMP for everyone a course page shows: next term's teachers first, then this term's, then past instructors.
     gpa_recency: dict[str, tuple[int, int]] = {}  # key -> (latest term taught, students graded)

@@ -21,6 +21,7 @@ describe("format", () => {
     expect(termOrder("2026-fa")).toBeGreaterThan(termOrder("2026-sp"));
     expect(treLabel("2024-fa Excellent")).toBe("Fall 2024, Excellent");
     expect(treLabel("2022-sp Outstanding")).toBe("Spring 2022, Outstanding");
+    expect(treLabel("2025-fa ISG FLEX Award")).toBe("Fall 2025, ISG FLEX Award"); // the award after TRE (#267)
     expect(treLabel("something else")).toBe("something else");
     expect(fmtDate("2026-11-16")).toBe("Nov 16, 2026"); // a calendar day stays that day
     expect(fmtDate("2026-11-16T03:00:00+00:00")).toBe("Nov 15, 2026"); // a timestamp is shown in Chicago time

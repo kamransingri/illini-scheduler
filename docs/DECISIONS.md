@@ -1726,3 +1726,13 @@ which ("replaces D39.3"). Refer to entries by number from code comments and othe
   "Fagen-Ulmschneider, W" is RMP's "Wade Fagen", so searching the whole surname found no one. `RmpClient.lookup` now
   searches each part (three letters or more) when the whole name finds no match, and the usual given-name and
   department or review checks decide.
+
+## Teaching awards after Teachers Ranked as Excellent (2026-11-27, #267)
+
+- **D75.1 One list, both awards.** CITL's Teachers Ranked as Excellent ended with Summer 2025, when the FLEX survey
+  replaced ICES; the Illinois Student Government FLEX Award took its place. Wade publishes both in
+  `highly-ranked-instructors.csv`, and `uiuc-tre-dataset.csv` stays at Summer 2025, so the pipeline reads the combined
+  file. Its TRE rows match the old file exactly (127,880 rows, 0 differences, checked 2026-11-27).
+- **D75.2 Each badge names its award.** `tre` keeps one label per term, now with `ISG FLEX Award` as a ranking. The
+  badge says "Teaching award ×N" and lists each term's award, because the two awards are given on different surveys
+  and shouldn't read as one.

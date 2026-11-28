@@ -137,3 +137,31 @@ def test_an_old_database_gets_the_per_course_alias_table(tmp_path):
     assert "number" in {r[1] for r in conn.execute("PRAGMA table_info(instructor_aliases)")}
     conn.execute("INSERT INTO instructor_aliases (source, raw_name, subject, number, instructor_key, method) "
                  "VALUES ('course-explorer', 'Li, H', 'HIST', '120', 'li|haiyi', 'recent-course')")
+
+
+def test_award_labels_read_both_awards():
+    """#267: rows as Wade's highly-ranked-instructors.csv has them, upper case to Summer 2025 and mixed case after."""
+    import pandas as pd
+
+    from pipeline.names import parse_name
+
+    rows = pd.DataFrame([
+        {"term": "sp2026", "unit": "Computer Science", "lname": "Solomon", "fname": "B", "role": "Instructor",
+         "ranking": "ISG FLEX Award", "course": "225"},
+        {"term": "fa2025", "unit": "Computer Science", "lname": "Solomon", "fname": "B", "role": "Instructor",
+         "ranking": "ISG FLEX Award", "course": "225"},
+        {"term": "sp2022", "unit": "COMPUTER SCIENCE", "lname": "SOLOMON", "fname": "B", "role": "Instructor",
+         "ranking": "Excellent", "course": "225"},
+        {"term": "fa2025", "unit": "Computer Science", "lname": "Srimath Tirumala", "fname": "H", "role": "TA",
+         "ranking": "ISG FLEX Award", "course": "225"},  # TAs aren't shown
+        {"term": "fa2018", "unit": "COMPUTER SCIENCE", "lname": "CHALLEN", "fname": "G", "role": "Instructor",
+         "ranking": "Excellent", "course": "125"},  # before TRE_SINCE
+    ])
+    people = {"solomon|brad": {"p": parse_name("Solomon, Brad")}, "challen|geoffrey": {"p": parse_name("Challen, G")}}
+    taught = {"solomon|brad": {"225"}, "challen|geoffrey": {"125"}}
+    assert instructors.award_labels(rows, taught, people) == {
+        "solomon|brad": ["2026-sp ISG FLEX Award", "2025-fa ISG FLEX Award", "2022-sp Excellent"]}
+    # two instructors with the surname in the course: no badge for either
+    people["solomon|bob"] = {"p": parse_name("Solomon, B")}
+    taught["solomon|bob"] = {"225"}
+    assert instructors.award_labels(rows, taught, people) == {}

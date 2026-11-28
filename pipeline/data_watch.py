@@ -32,7 +32,7 @@ WADE_REPO = "wadefagen/datasets"
 WADE_FILES = {
     "gpa": "gpa/uiuc-gpa-dataset.csv",
     "geneds": "geneds/gened-courses.csv",
-    "tre": "teachers-ranked-as-excellent/uiuc-tre-dataset.csv",
+    "tre": "teachers-ranked-as-excellent/highly-ranked-instructors.csv",
 }
 SEASONS = ["sp", "su", "fa"]  # winter terms aren't in the GPA dataset's way: they're skipped
 
@@ -202,7 +202,8 @@ def collect(client: Any, repo: Path, today: date, token: str | None = None) -> l
         gpa_row(meta, changed["gpa"], today),
         wade_file_row("Wade's gen-ed list", "downloaded nightly", changed["geneds"] or meta.get("geneds_snapshot"),
                       today, 270),
-        wade_file_row("Wade's Teachers Ranked as Excellent list", "downloaded nightly", changed["tre"], today, 400),
+        wade_file_row("Wade's teaching awards list (TRE, ISG FLEX Award)", "downloaded nightly", changed["tre"],
+                      today, 400),
         rmp_row(meta),
         terms_row(meta),
         *repo_rows(repo, meta, today),

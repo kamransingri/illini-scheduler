@@ -17,6 +17,8 @@ history).
 
 ### Changed
 
+- Professors' award badges include the ISG FLEX Award, which replaced Teachers Ranked as Excellent in Fall 2025, so
+  Fall 2025 to Summer 2026 awards show. The badge says "Teaching award" (#267).
 - The header has a **Gen-ed finder** tab again, next to Course search, and the home page's "Popular gen-eds" row is
   gone.
 - Links to other sites (Rate My Professors, Course Explorer, Self-Service, GitHub...) open in a new tab.
