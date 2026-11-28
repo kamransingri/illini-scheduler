@@ -86,9 +86,12 @@ test("a section's seats say only Open, Restricted or Closed, with no date or res
     await r.fulfill({ json });
   });
   await page.goto("./course/CS/124/");
+  // wait for the rows: .all() doesn't, and a test that ends first leaves the route above fetching
+  await expect(page.getByTestId("section-row").first()).toBeVisible();
   for (const row of await page.getByTestId("section-row").all()) {
     await expect(row).not.toContainText(/\bsince\b|days ago|yesterday|may be restricted/);
   }
+  await page.unrouteAll({ behavior: "wait" });
 });
 
 test("a renumbered course: the old URL and the old number lead to it, and it says what it was (#29)", async ({ page }) => {
