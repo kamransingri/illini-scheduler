@@ -120,7 +120,7 @@ Course Explorer ───> pipeline/live_seats.py every ~10 min ─> live.json o
 
 | Source | Used for | Coverage in this build |
 | --- | --- | --- |
-| [Course Explorer API](https://courses.illinois.edu/cisdocs/explorer) (public XML) and course pages | Sections, meeting times, instructors, descriptions, gen-ed attributes, seat status, final exams | History from Wade Fagen-Ulmschneider's mirror ([wadefagen/datasets `course-catalog/`](https://github.com/wadefagen/datasets/tree/main/course-catalog)), Fall 2022 to Spring 2027 (14 terms). The current and next term are read from the live course pages by the availability jobs |
+| [Course Explorer API](https://courses.illinois.edu/cisdocs/explorer) (public XML) and course pages | Sections, meeting times, instructors, descriptions, gen-ed attributes, seat status, final exams | History from Wade Fagen-Ulmschneider's mirror ([wadefagen/datasets `course-catalog/`](https://github.com/wadefagen/datasets/tree/main/course-catalog)), Fall 2022 to Spring 2027 (17 terms with Winter 2024 to 2026). The coming winter (Winter 2027) is read from the Course Explorer API, and the current and next term are read from the live course pages by the availability jobs |
 | [UIUC GPA dataset](https://github.com/wadefagen/datasets/tree/main/gpa) | Course and instructor GPA, grade distributions | Fall 2015 to Summer 2026. "Recent" = Fall 2022 to Spring 2026 |
 | [Gen-ed list](https://github.com/wadefagen/datasets/tree/main/geneds) | Gen-ed categories | Spring 2027 |
 | [Teachers Ranked as Excellent](https://github.com/wadefagen/datasets/tree/main/teachers-ranked-as-excellent) | Instructor badges | Fall 2020 to Summer 2025, instructors only |
@@ -144,7 +144,7 @@ site can't do: [docs/LIMITATIONS.md](docs/LIMITATIONS.md).
 
 | Command | What it does |
 | --- | --- |
-| `make data` | Full pipeline (all subjects, 14 terms) |
+| `make data` | Full pipeline (all subjects, 18 terms) |
 | `make data-quick` | Only CS, MATH, STAT, RHET |
 | `make export` | Export `web/public/data` again from `data/illini.db`, without fetching |
 | `make test` | pytest (pipeline and tools) and Vitest (web and the MCP server) |

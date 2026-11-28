@@ -155,7 +155,7 @@ export default async function CoursePage({ params }: Props) {
         <dl className="divide-y divide-line">
           <DataRow
             label="When it's offered"
-            source={`Course Explorer schedules, the last 8 fall and spring terms (${termRange(regularWindow[0], regularWindow[regularWindow.length - 1])}) plus summers${course.formerly?.length ? `, including terms as ${course.formerly.map((f) => f.code).join(" and ")}` : ""}.${course.pattern ? ` ${course.pattern.reason}.` : ""}`}
+            source={`Course Explorer schedules, the last 8 fall and spring terms (${termRange(regularWindow[0], regularWindow[regularWindow.length - 1])}) plus summers and winters${course.formerly?.length ? `, including terms as ${course.formerly.map((f) => f.code).join(" and ")}` : ""}.${course.pattern ? ` ${course.pattern.reason}.` : ""}`}
           >
             {course.pattern ? (
               <>
@@ -233,6 +233,7 @@ export default async function CoursePage({ params }: Props) {
           score_priors: meta.score_priors,
           published: Object.keys(meta.terms ?? {}),
           summer: summer ? { term: summer.data.upcoming ? summer.data.term : summer.data.next, line: inSummer ? summerLine(inSummer, summer.data) : null } : null,
+          winter: winter && inWinter ? { term: winter.data.upcoming ? winter.data.term : winter.data.next, line: summerLine(inWinter, winter.data) } : null,
         }}
       />
     </article>
