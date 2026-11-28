@@ -57,18 +57,22 @@ class Pattern:
     reason: str
 
 
-def label_pattern(offered: Iterable[str], window: Sequence[str], summers: Sequence[str] = ()) -> str:
-    """Label the offering history over `window` (regular terms, oldest first)."""
+def label_pattern(offered: Iterable[str], window: Sequence[str], summers: Sequence[str] = (),
+                  winters: Sequence[str] = ()) -> str:
+    """Label the offering history over `window` (regular terms, oldest first). `summers` and `winters`: the last few
+    of each loaded; a course that ran in nearly all of them gets ", plus summers", ", plus winter" or both."""
     off = set(offered)
     falls = [t for t in window if season(t) == "fa"]
     springs = [t for t in window if season(t) == "sp"]
     of = [t for t in falls if t in off]
     os_ = [t for t in springs if t in off]
     n = len(of) + len(os_)
-    summer_n = sum(1 for t in summers if t in off)
-    suffix = ", plus summers" if summers and summer_n >= max(2, len(summers) - 1) else ""
+    extra = [name for name, ts in (("summers", summers), ("winter", winters))
+             if ts and sum(1 for t in ts if t in off) >= max(2, len(ts) - 1)]
+    suffix = f", plus {' and '.join(extra)}" if extra else ""
     if n == 0:
-        return "Summer only" if any(season(t) == "su" for t in off) else "Not offered recently"
+        only = [name for name, code in (("Summer", "su"), ("winter", "wi")) if any(season(t) == code for t in off)]
+        return f"{' and '.join(only).capitalize()} only" if only else "Not offered recently"
     if len(of) == len(falls) and len(os_) == len(springs):
         return "Every fall and spring" + suffix
     if len(of) == len(falls) and not os_:
@@ -93,16 +97,22 @@ def label_pattern(offered: Iterable[str], window: Sequence[str], summers: Sequen
 PATTERN_CODES = {
     "Every fall and spring": "f,s", "Almost every fall and spring": "f,s", "Fall only": "f", "Spring only": "s",
     "Fall, odd years": "fo", "Fall, even years": "fe", "Spring, odd years": "so", "Spring, even years": "se",
-    "Summer only": "u", "Not offered recently": "n",
+    "Summer only": "u", "Winter only": "w", "Summer and winter only": "u,w", "Not offered recently": "n",
 }
+SUFFIX_CODES = {", plus summers and winter": ",u,w", ", plus summers": ",u", ", plus winter": ",w"}
 
 
 def pattern_code(label: str) -> str:
-    """The pattern as search.json's short `o` (docs/API.md): the seasons it runs in ("f", "s", "u"), a fall or spring in
-    odd or even years only ("fo", "se"), "i" irregular, "n" not offered recently. "Fall only, plus summers" is "f,u"."""
-    base, plus, _ = label.partition(", plus summers")
+    """The pattern as search.json's short `o` (docs/API.md): the seasons it runs in ("f", "s", "u", "w"), a fall or
+    spring in odd or even years only ("fo", "se"), "i" irregular, "n" not offered recently. "Fall only, plus summers"
+    is "f,u"."""
+    base, extra = label, ""
+    for suffix, codes in SUFFIX_CODES.items():
+        if label.endswith(suffix):
+            base, extra = label[: -len(suffix)], codes
+            break
     code = "i" if base.startswith("Irregular") else PATTERN_CODES.get(base, "i")
-    return f"{code},u" if plus and code != "u" else code
+    return code + extra
 
 
 def predict(offered: Iterable[str], window: Sequence[str], target: str) -> tuple[str, str]:
@@ -269,9 +279,10 @@ def run(conn: sqlite3.Connection, next_term: str, rename: Renamer | None = None)
     last_pub = published_regular[-1] if published_regular else next_term
     window = [t for t in regular_window(last_pub) if t in terms] or published_regular
     summers = [t for t in terms if season(t) == "su"][-3:]
+    winters = [t for t in terms if season(t) == "wi"][-3:]
     target = next_regular_term(last_pub)
     for (subj, num), offered in by_course.items():
-        lab = label_pattern(offered, window, summers)
+        lab = label_pattern(offered, window, summers, winters)
         like, why = predict(offered, window, target)
         conn.execute("INSERT INTO offering_pattern VALUES (?,?,?,?,?,?)", (subj, num, lab, target, like, why))
 

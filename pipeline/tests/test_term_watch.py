@@ -86,6 +86,12 @@ def test_summer_alone_says_there_is_nothing_to_roll_over_yet():
     assert term_watch.issue_title(["2027-su"]) != term_watch.issue_title(["2027-su", "2027-fa"])
 
 
+def test_winter_asks_to_list_it_until_wade_has_it():
+    body = term_watch.issue_body(["2028-wi"], "2027-sp", "2027-fa")
+    assert "nothing to roll over yet" in body
+    assert 'add `"2028-wi"` to `HISTORY_TERMS` and `NOT_YET_PUBLISHED_OK`' in body
+
+
 def test_retries_a_202_then_gives_up():
     pages = pages_for()
     c = client(pages, {f"{CIS_BASE}/schedule.xml": 202})

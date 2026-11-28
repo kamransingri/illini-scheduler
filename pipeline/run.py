@@ -10,7 +10,16 @@ from pathlib import Path
 
 from . import db
 from .config import DATA, RAW
-from .fetch import CURRENT_TERM, HISTORY_TERMS, NEXT_TERM, WADE_DIR, catalog_path, fetch_wade, snapshot_dates
+from .fetch import (
+    CURRENT_TERM,
+    HISTORY_TERMS,
+    NEXT_TERM,
+    NOT_YET_PUBLISHED_OK,
+    WADE_DIR,
+    catalog_path,
+    fetch_wade,
+    snapshot_dates,
+)
 
 
 def log(msg: str) -> None:
@@ -96,6 +105,9 @@ def main(argv: list[str] | None = None) -> int:
     log("phase 1: Course Explorer")
     for term in terms:
         src = args.source if term in (CURRENT_TERM, NEXT_TERM) else "csv"
+        if src == "csv" and not cat_path(term).exists() and term in NOT_YET_PUBLISHED_OK:
+            log(f"  {term}: not published yet, skipped")
+            continue
         n, used = course_explorer.load_term(conn, term, subjects, src, cat_path(term),
                                             dates.get(f"course-catalog/data/{term}.csv", ""))
         log(f"  {term}: {n} sections ({used})")
