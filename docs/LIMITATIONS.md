@@ -68,6 +68,12 @@ you change something listed here, change this page in the same pull request.
   German, Italian, Spanish and Scandinavian sequences). Each needs a source, so a renumbering the catalog doesn't
   state stays unlinked and that course's history stops at the change. My courses and the degree checklist don't
   translate old numbers: a student who took SPAN 200 adds it as SPAN 210 by hand (D23.4).
+- **What to buy** (`terms.<term>.materials`, #61) comes only from Course Explorer section text and the official course
+  pages listed in `data/course-pages.csv` (15 physics pages in 2026-11), never from the bookstore, whose
+  `robots.txt` disallows its textbook lists (#59). About 215 courses a term have anything listed, most of them a
+  Day1Access charge or a mention of Canvas; a course with no list may still need things, so the syllabus and the
+  bookstore have the final word. A course page counts only for the term in its address (`fa2026`), so next term has
+  nothing from course pages until the department publishes them. Prices are as written on the read date.
 
 ## GPA data
 

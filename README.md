@@ -93,7 +93,8 @@ Course Explorer ───> pipeline/live_seats.py every ~10 min ─> live.json o
 
 - **`pipeline/`** (Python 3.11+, pandas, httpx, lxml): `course_explorer.py` (ingest and linked sections), `gpa.py`,
   `names.py` (one instructor identity across sources), `rmp.py`, `instructors.py`, `offerings.py` (patterns and
-  changes), `exam_format.py`, `availability.py` (daily seat status, section rows and final exams from the Course
+  changes), `exam_format.py`, `materials_text.py` (what to buy, from section text and the course pages in
+  `data/course-pages.csv`), `availability.py` (daily seat status, section rows and final exams from the Course
   Explorer pages), `live_seats.py` (re-checks the busiest courses between builds), `buildings.py` and `transit.py`
   (OpenStreetMap and MTD), `degrees.py` and `catalog_import.py` (degree requirements), `ap_credit.py`, and
   `export.py`. `run.py` runs them in order.
