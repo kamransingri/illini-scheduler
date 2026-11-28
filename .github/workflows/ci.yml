@@ -90,7 +90,11 @@ jobs:
         env:
           BASE: origin/${{ github.base_ref }}
         run: |
-          if git diff --name-only "$BASE"...HEAD | grep -qE '^(web/|mcp/|pipeline/|data/|\.github/workflows/ci\.yml)'; then
+          # A base that's gone (its branch deleted after a merge) can't be compared: run the tests rather than skip them.
+          if ! files=$(git diff --name-only "$BASE"...HEAD); then
+            echo "::warning::Couldn't compare with $BASE, so the browser tests run"
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          elif grep -qE '^(web/|mcp/|pipeline/|data/|\.github/workflows/ci\.yml)' <<<"$files"; then
             echo "run=true" >> "$GITHUB_OUTPUT"
           else
             echo "::notice::No change under web/, mcp/, pipeline/ or data/: no browser tests needed"
