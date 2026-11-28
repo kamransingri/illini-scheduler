@@ -1727,6 +1727,22 @@ which ("replaces D39.3"). Refer to entries by number from code comments and othe
   searches each part (three letters or more) when the whole name finds no match, and the usual given-name and
   department or review checks decide.
 
+## Winter courses (2026-11-28)
+
+- **D74.1 Winter comes from Wade's dataset, like summer.** LIMITATIONS said there was no open source for winter, but
+  Wade's course catalog has `2024-wi` to `2026-wi` (57 to 66 sections each, nearly all online). `HISTORY_TERMS` now
+  loads the last three winters, and `pipeline/winter.py` writes `winter.json` from the newest one. Replaced by D76.1:
+  `pipeline/summer.py` builds `winter.json` and `pipeline/winter.py` is gone.
+- **D74.2 The next winter is listed before it's published.** Winter 2027 sorts before Spring 2027, so the term watch,
+  which looks past `NEXT_TERM`, never flags it. `2027-wi` is in `HISTORY_TERMS` and `NOT_YET_PUBLISHED_OK`: while
+  Wade's file is a 404 the fetch and the build skip it, and the first nightly build after it appears loads it. Replaced by D76.2: the
+  coming winter is read from the Course Explorer API, so `NOT_YET_PUBLISHED_OK` is gone.
+- **D74.3 A winter tab only for courses that run in winter.** About 60 courses run in a winter, so a tab on all 7,100
+  pages would almost always say "Not offered". Only a course in `winter.json` gets the tab and the Winter line.
+- **D74.4 "Plus winter" by the summer rule.** A course gets ", plus winter" when it ran in at least 2 of the last 3
+  winters (the same threshold as ", plus summers"), and the `o` code gains `w`. Winter stays out of the schedule
+  builder (D28.4) and the four-year plan.
+
 ## Winter session (2026-11-27, #269)
 
 - **D76.1 Winter has an open source after all.** D28.4 left winter out for lack of one, but the Course Explorer API
@@ -1737,6 +1753,6 @@ which ("replaces D39.3"). Refer to entries by number from code comments and othe
   read from the API even though the nightly build uses the mirror (`SOURCE=csv`, D11.3): one request at a time and not
   from the crawl cache, about 90 pages (5 s on 2026-11-27). A failure leaves winter out of that build; it never stops
   it.
-- **D76.3 "Winter only".** Offering patterns still count fall and spring; winter changes a pattern only when it's all
-  a course has. With winters loaded, 3 of 8,640 patterns change (HIST 262, JS 262, IS 199 become "Winter only", `o` =
-  `w`), and the four-year plan says "Usually runs in winter only".
+- **D76.3 "Winter only".** Offering patterns still count fall and spring. Winter adds ", plus winter" by D74.4, and a
+  course with no fall or spring offering is "Winter only" (HIST 262, JS 262, IS 199) or "Summer and winter only"
+  (`o` = `w` or `u,w`). The four-year plan says "Usually runs in winter only".

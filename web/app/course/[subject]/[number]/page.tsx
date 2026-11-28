@@ -12,11 +12,12 @@ import Icon from "@/components/ui/Icon";
 import Info from "@/components/ui/Info";
 import Stat from "@/components/ui/Stat";
 import { courseSummary } from "@/lib/askai";
-import { courseParams, getCourse, getMeta, getSummer } from "@/lib/data";
+import { courseParams, getCourse, getMeta, getSummer, getWinter } from "@/lib/data";
 import { cisUrl, fmtDate, fmtGpa, fmtInt, GENED_NAMES, GPA_DATASET, GPA_SOURCES, gpaRelease, termLabel, termRange } from "@/lib/format";
 import { profInput } from "@/lib/rank";
 import { professorsFor, tally } from "@/lib/sections";
 import { DEFAULT_SUMMER, summerHref, summerLine } from "@/lib/summer";
+import { winterLine } from "@/lib/winter";
 
 export const dynamicParams = false;
 
@@ -50,6 +51,8 @@ export default async function CoursePage({ params }: Props) {
   const credits = course.credits.replace(" hours.", "");
   const summer = getSummer();
   const inSummer = summer?.by.get(`${course.subject} ${course.number}`);
+  const winter = getWinter();
+  const inWinter = winter?.by.get(`${course.subject} ${course.number}`);
   return (
     <article>
       <header className="pb-6">
@@ -153,7 +156,7 @@ export default async function CoursePage({ params }: Props) {
         <dl className="divide-y divide-line">
           <DataRow
             label="When it's offered"
-            source={`Course Explorer schedules, the last 8 fall and spring terms (${termRange(regularWindow[0], regularWindow[regularWindow.length - 1])}) plus summers${course.formerly?.length ? `, including terms as ${course.formerly.map((f) => f.code).join(" and ")}` : ""}.${course.pattern ? ` ${course.pattern.reason}.` : ""}`}
+            source={`Course Explorer schedules, the last 8 fall and spring terms (${termRange(regularWindow[0], regularWindow[regularWindow.length - 1])}) plus summers and winters${course.formerly?.length ? `, including terms as ${course.formerly.map((f) => f.code).join(" and ")}` : ""}.${course.pattern ? ` ${course.pattern.reason}.` : ""}`}
           >
             {course.pattern ? (
               <>
@@ -176,6 +179,14 @@ export default async function CoursePage({ params }: Props) {
               <Link href={summerHref({ ...DEFAULT_SUMMER, gened: "all", q: course.subject })} className="text-action underline">
                 Every summer {course.subject} class
               </Link>
+            </DataRow>
+          )}
+          {winter && inWinter && (
+            <DataRow
+              label="Winter"
+              source={`Course Explorer's ${winter.data.label} schedule, and the winters ${winter.data.recent.map((t) => termLabel(t)).join(", ")}.`}
+            >
+              <span data-testid="winter-line">{winterLine(inWinter, winter.data)}</span>
             </DataRow>
           )}
           <DataRow label="Biggest recent change">
@@ -220,6 +231,7 @@ export default async function CoursePage({ params }: Props) {
           score_priors: meta.score_priors,
           published: Object.keys(meta.terms ?? {}),
           summer: summer ? { term: summer.data.upcoming ? summer.data.term : summer.data.next, line: inSummer ? summerLine(inSummer, summer.data) : null } : null,
+          winter: winter && inWinter ? { term: winter.data.upcoming ? winter.data.term : winter.data.next, line: winterLine(inWinter, winter.data) } : null,
         }}
       />
     </article>

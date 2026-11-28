@@ -17,6 +17,8 @@ history).
   instead of "Not offered recently". The Summer page and gen-ed finder show them next (#269, #270).
 - The degree checklist says when the next AP, IB, ACT and SAT credit tables are due: CITL usually publishes the
   2027-2028 tables around the end of April 2027 (#109).
+- Course pages show winter: a class in the coming winter session has a Winter line and tab saying so, and how many of
+  the last three winters it ran in. "When it's offered" says "plus winter" for a class that runs most winters.
 
 ### Changed
 
